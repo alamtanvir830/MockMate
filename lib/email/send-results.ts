@@ -1,7 +1,5 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 // Update this to your verified Resend sender domain before going live.
 // In development you can use 'onboarding@resend.dev' to send only to
 // the address that owns the Resend account.
@@ -139,10 +137,15 @@ export async function sendResultsToFriends(
   friends: { name: string; email: string }[],
   data: ResultsEmailData,
 ): Promise<void> {
+  // Skip silently if RESEND_API_KEY is not configured
+  if (!process.env.RESEND_API_KEY) return
+
   const validFriends = friends.filter(
     (f) => f.name.trim() && f.email.trim() && f.email.includes('@'),
   )
   if (validFriends.length === 0) return
+
+  const resend = new Resend(process.env.RESEND_API_KEY)
 
   await Promise.allSettled(
     validFriends.map((friend) =>
@@ -154,5 +157,4 @@ export async function sendResultsToFriends(
       }),
     ),
   )
-  // allSettled — one failed send does not block others
 }
