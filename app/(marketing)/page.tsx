@@ -18,9 +18,6 @@ export default function LandingPage() {
               <a href="#how-it-works" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
                 How it works
               </a>
-              <a href="#pricing" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
-                Pricing
-              </a>
             </nav>
             <div className="flex items-center gap-3">
               <Link href="/login" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
@@ -66,10 +63,9 @@ export default function LandingPage() {
             </h1>
 
             <p className="mx-auto mt-8 max-w-2xl text-lg sm:text-xl text-slate-500 leading-relaxed">
-              take the exam before the real exam, get the score instantly and
-              have it sent to three friends for accountability, and get an
-              automatically generated progress report that shows exactly what
-              to work on.
+              your real exam is coming. don&apos;t let the first full test be the real one.
+              <br className="hidden sm:block" />
+              build a realistic mock exam from your actual materials, get scored instantly, and know exactly what to fix before test day.
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -176,78 +172,6 @@ export default function LandingPage() {
                     <p className="text-sm text-slate-500 leading-relaxed">{description}</p>
                   </div>
                 ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Pricing */}
-        <section id="pricing" className="py-24">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
-                simple pricing
-              </h2>
-              <p className="mt-4 text-lg text-slate-500">
-                Start with one free mock. Upgrade when you need more.
-              </p>
-            </div>
-
-            <div className="mx-auto grid max-w-3xl gap-8 sm:grid-cols-2">
-              {/* Free */}
-              <div className="rounded-2xl border border-slate-200 bg-white p-8">
-                <p className="text-sm font-medium text-slate-500 uppercase tracking-widest">Free</p>
-                <p className="mt-4 text-4xl font-bold text-slate-900">£0</p>
-                <p className="mt-1 text-sm text-slate-500">Forever free</p>
-                <ul className="mt-8 space-y-3 text-sm text-slate-600">
-                  {[
-                    '1 mock exam per month',
-                    'Instant scoring',
-                    'Basic topic breakdown',
-                  ].map((f) => (
-                    <li key={f} className="flex items-center gap-2">
-                      <svg className="h-4 w-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/signup" className="block mt-8">
-                  <Button variant="outline" className="w-full">Get started</Button>
-                </Link>
-              </div>
-
-              {/* Pro */}
-              <div className="relative rounded-2xl p-8 text-white shadow-xl" style={{ backgroundColor: '#059669' }}>
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-amber-400 px-3 py-0.5 text-xs font-semibold text-amber-900">
-                  Most popular
-                </div>
-                <p className="text-sm font-medium uppercase tracking-widest" style={{ color: '#a7f3d0' }}>Pro</p>
-                <p className="mt-4 text-4xl font-bold">£12</p>
-                <p className="mt-1 text-sm" style={{ color: '#a7f3d0' }}>per month</p>
-                <ul className="mt-8 space-y-3 text-sm" style={{ color: '#d1fae5' }}>
-                  {[
-                    'Unlimited mock exams',
-                    'Full topic-by-topic breakdown',
-                    'Accountability emails to 3 friends',
-                    'Exam-style matching from your materials',
-                    'Progress reports across attempts',
-                    'Priority support',
-                  ].map((f) => (
-                    <li key={f} className="flex items-center gap-2">
-                      <svg className="h-4 w-4 shrink-0" style={{ color: '#6ee7b7' }} fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/signup" className="block mt-8">
-                  <Button className="w-full bg-white hover:bg-emerald-50" style={{ color: '#059669' }}>
-                    Start free trial
-                  </Button>
-                </Link>
               </div>
             </div>
           </div>

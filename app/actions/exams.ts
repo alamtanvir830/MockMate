@@ -3,8 +3,6 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { generateQuestions } from '@/lib/ai/generate-questions'
-import { PLAN_LIMITS } from '@/types'
-import type { SubscriptionTier } from '@/types'
 
 export interface CreateExamInput {
   title: string
@@ -28,30 +26,6 @@ export async function createExam(
 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'Not authenticated' }
-
-  // Check plan limit
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('subscription_tier')
-    .eq('id', user.id)
-    .single()
-
-  const tier = ((profile?.subscription_tier as SubscriptionTier) ?? 'free')
-  const limit = PLAN_LIMITS[tier]
-  const { count } = await supabase
-    .from('exams')
-    .select('*', { count: 'exact', head: true })
-    .eq('user_id', user.id)
-
-  if (count !== null && count >= limit) {
-    if (tier === 'free') {
-      return { error: 'Free plan is limited to 1 exam. Upgrade to Pro or Premium to create more.' }
-    }
-    if (tier === 'pro') {
-      return { error: 'Pro plan is limited to 3 exams. Upgrade to Premium for unlimited exams.' }
-    }
-    return { error: 'Exam limit reached for your current plan.' }
-  }
 
   // Compute unlock_date: N days before the real exam
   const examDateObj = new Date(input.examDate)
