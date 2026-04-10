@@ -1,9 +1,14 @@
 import { headers } from 'next/headers'
 import type Stripe from 'stripe'
-import { stripe, tierFromPriceId } from '@/lib/stripe'
+import { getStripe, tierFromPriceId } from '@/lib/stripe'
 import { createAdminClient } from '@/lib/supabase/admin'
 
 export async function POST(request: Request) {
+  // Stripe is not yet configured — return early without crashing
+  if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
+    return new Response('Stripe not configured', { status: 503 })
+  }
+
   const body = await request.text()
   const headersList = await headers()
   const sig = headersList.get('stripe-signature')
@@ -12,9 +17,11 @@ export async function POST(request: Request) {
     return new Response('Missing stripe-signature header', { status: 400 })
   }
 
+  const stripe = getStripe()
+
   let event: Stripe.Event
   try {
-    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
+    event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET)
   } catch (err) {
     return new Response(
       `Webhook signature verification failed: ${err instanceof Error ? err.message : 'unknown'}`,
@@ -102,7 +109,6 @@ async function resolveUserId(
 ): Promise<string | null> {
   if (subscription.metadata?.user_id) return subscription.metadata.user_id
 
-  // Fallback: look up by stripe_customer_id
   const { data } = await supabase
     .from('profiles')
     .select('id')

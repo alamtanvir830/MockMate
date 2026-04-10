@@ -2,11 +2,15 @@
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { stripe } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe'
 
 export async function createCheckoutSession(
   priceId: string,
 ): Promise<{ error: string } | void> {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return { error: 'Billing is not available yet.' }
+  }
+
   const supabase = await createClient()
   const {
     data: { user },
@@ -19,6 +23,7 @@ export async function createCheckoutSession(
     .eq('id', user.id)
     .single()
 
+  const stripe = getStripe()
   const session = await stripe.checkout.sessions.create({
     ...(profile?.stripe_customer_id
       ? { customer: profile.stripe_customer_id }
@@ -27,7 +32,6 @@ export async function createCheckoutSession(
     mode: 'subscription',
     success_url: `${process.env.APP_URL}/billing?success=true`,
     cancel_url: `${process.env.APP_URL}/billing`,
-    // Embed user_id in both the session and the subscription for webhook use
     metadata: { user_id: user.id },
     subscription_data: { metadata: { user_id: user.id } },
   })
@@ -36,6 +40,10 @@ export async function createCheckoutSession(
 }
 
 export async function createPortalSession(): Promise<{ error: string } | void> {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    return { error: 'Billing is not available yet.' }
+  }
+
   const supabase = await createClient()
   const {
     data: { user },
@@ -50,6 +58,7 @@ export async function createPortalSession(): Promise<{ error: string } | void> {
 
   if (!profile?.stripe_customer_id) return { error: 'No billing account found' }
 
+  const stripe = getStripe()
   const session = await stripe.billingPortal.sessions.create({
     customer: profile.stripe_customer_id,
     return_url: `${process.env.APP_URL}/billing`,
