@@ -70,6 +70,21 @@ export function CreateExamForm() {
   ])
   const [accountabilityChoiceError, setAccountabilityChoiceError] = useState('')
 
+  // Share exact exam with group
+  const [sharedPeople, setSharedPeople] = useState<Friend[]>([
+    { name: '', email: '' },
+    { name: '', email: '' },
+    { name: '', email: '' },
+  ])
+  const [wantsToShare, setWantsToShare] = useState<boolean | null>(null)
+  const [visibleShared, setVisibleShared] = useState(1)
+  const [sharedErrors, setSharedErrors] = useState<{ name: string; email: string }[]>([
+    { name: '', email: '' },
+    { name: '', email: '' },
+    { name: '', email: '' },
+  ])
+  const [shareChoiceError, setShareChoiceError] = useState('')
+
   function updateFriend(index: number, field: keyof Friend, value: string) {
     setFriends((prev) => {
       const next = [...prev]
@@ -101,6 +116,25 @@ export function CreateExamForm() {
   function removeFile(name: string) {
     setUploadedFiles((prev) => prev.filter((f) => f.name !== name))
     setExtractionError('')
+  }
+
+  function updateSharedPerson(index: number, field: keyof Friend, value: string) {
+    setSharedPeople((prev) => {
+      const next = [...prev]
+      next[index] = { ...next[index], [field]: value }
+      return next
+    })
+    setSharedErrors((prev) => {
+      const next = [...prev]
+      next[index] = { ...next[index], [field]: '' }
+      return next
+    })
+  }
+
+  function handleShareChoice(choice: boolean) {
+    setWantsToShare(choice)
+    setShareChoiceError('')
+    if (choice) setVisibleShared(1)
   }
 
   function handleAccountabilityChoice(choice: boolean) {
@@ -165,6 +199,38 @@ export function CreateExamForm() {
 
     const friendsToSend = wantsAccountability ? friends.slice(0, visibleFriends) : []
 
+    // Validate shared group
+    if (wantsToShare === null) {
+      setShareChoiceError('Please choose yes or no before continuing.')
+      setLoading(false)
+      return
+    }
+
+    if (wantsToShare === true) {
+      const errors = sharedErrors.map((e) => ({ ...e }))
+      let hasError = false
+      for (let i = 0; i < visibleShared; i++) {
+        if (!sharedPeople[i].name.trim()) {
+          errors[i].name = 'Name is required'
+          hasError = true
+        }
+        if (!sharedPeople[i].email.trim()) {
+          errors[i].email = 'Email is required'
+          hasError = true
+        } else if (!sharedPeople[i].email.includes('@')) {
+          errors[i].email = 'Enter a valid email address'
+          hasError = true
+        }
+      }
+      setSharedErrors(errors)
+      if (hasError) {
+        setLoading(false)
+        return
+      }
+    }
+
+    const sharedWithToSend = wantsToShare ? sharedPeople.slice(0, visibleShared) : []
+
     const result = await createExam({
       title,
       subject,
@@ -178,6 +244,7 @@ export function CreateExamForm() {
       questionCount: parseInt(questionCount, 10),
       unlockDaysBefore: parseInt(unlockDaysBefore, 10),
       friends: friendsToSend,
+      sharedWith: sharedWithToSend,
     })
 
     if (result?.error) {
@@ -549,6 +616,112 @@ export function CreateExamForm() {
                 No problem — you can always add accountability friends later from your exam settings.
               </p>
             )}
+
+            {/* ── Divider ── */}
+            <div className="border-t border-slate-100 pt-5 mt-2">
+              <div>
+                <h2 className="text-base font-semibold text-slate-900">
+                  Share this exam with a group
+                </h2>
+                <p className="text-sm text-slate-500 mt-0.5">
+                  Would you like to share this same exact exam with anyone else?
+                </p>
+              </div>
+
+              <div className="flex gap-3 mt-4">
+                <button
+                  type="button"
+                  onClick={() => handleShareChoice(false)}
+                  className={cn(
+                    'flex-1 rounded-lg border px-4 py-3 text-sm font-medium transition-colors',
+                    wantsToShare === false
+                      ? 'border-slate-800 bg-slate-800 text-white'
+                      : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                  )}
+                >
+                  No, just me
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleShareChoice(true)}
+                  className={cn(
+                    'flex-1 rounded-lg border px-4 py-3 text-sm font-medium transition-colors',
+                    wantsToShare === true
+                      ? 'border-indigo-600 bg-indigo-600 text-white'
+                      : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                  )}
+                >
+                  Yes, share with group
+                </button>
+              </div>
+
+              {shareChoiceError && (
+                <p className="text-sm text-red-600 mt-2">{shareChoiceError}</p>
+              )}
+
+              {wantsToShare === true && (
+                <div className="space-y-4 mt-4">
+                  <div className="rounded-lg bg-indigo-50 border border-indigo-200 px-4 py-3 text-sm text-indigo-800">
+                    These people will be linked to the exact same generated exam — so they can access or take the same questions you created.
+                  </div>
+
+                  {Array.from({ length: visibleShared }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="rounded-lg border border-slate-200 p-4 space-y-3"
+                    >
+                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                        Person {i + 1}
+                      </p>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="space-y-1">
+                          <Input
+                            placeholder="Name"
+                            value={sharedPeople[i].name}
+                            onChange={(e) => updateSharedPerson(i, 'name', e.target.value)}
+                            className={sharedErrors[i]?.name ? 'border-red-400 focus:ring-red-400' : ''}
+                          />
+                          {sharedErrors[i]?.name && (
+                            <p className="text-xs text-red-600">{sharedErrors[i].name}</p>
+                          )}
+                        </div>
+                        <div className="space-y-1">
+                          <Input
+                            type="email"
+                            placeholder="Email"
+                            value={sharedPeople[i].email}
+                            onChange={(e) => updateSharedPerson(i, 'email', e.target.value)}
+                            className={sharedErrors[i]?.email ? 'border-red-400 focus:ring-red-400' : ''}
+                          />
+                          {sharedErrors[i]?.email && (
+                            <p className="text-xs text-red-600">{sharedErrors[i].email}</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+
+                  {visibleShared < 3 && (
+                    <button
+                      type="button"
+                      onClick={() => setVisibleShared((v) => Math.min(v + 1, 3))}
+                      className="flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+                    >
+                      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                      </svg>
+                      Add person
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {wantsToShare === false && (
+                <p className="text-sm text-slate-500 mt-3">
+                  Only you will have access to this exam.
+                </p>
+              )}
+            </div>
           </div>
         )}
       </Card>

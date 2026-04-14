@@ -17,6 +17,7 @@ export interface CreateExamInput {
   questionCount: number
   unlockDaysBefore: number
   friends: { name: string; email: string }[]
+  sharedWith: { name: string; email: string }[]
 }
 
 export async function createExam(
@@ -110,6 +111,21 @@ export async function createExam(
         user_id: user.id,
         name: f.name.trim(),
         email: f.email.trim(),
+      })),
+    )
+  }
+
+  // 6. Save shared exam recipients (non-fatal)
+  const validShared = input.sharedWith.filter(
+    (p) => p.name.trim() && p.email.trim() && p.email.includes('@'),
+  )
+  if (validShared.length > 0) {
+    await supabase.from('exam_shared_recipients').insert(
+      validShared.map((p) => ({
+        exam_id: exam.id,
+        user_id: user.id,
+        name: p.name.trim(),
+        email: p.email.trim(),
       })),
     )
   }
