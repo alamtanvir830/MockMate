@@ -18,6 +18,8 @@ export interface CreateExamInput {
   unlockDaysBefore: number
   friends: { name: string; email: string }[]
   sharedWith: { name: string; email: string }[]
+  standardizedExam?: string
+  usmleStyle?: string
 }
 
 export async function createExam(
@@ -66,6 +68,8 @@ export async function createExam(
       pastPaperStyle: input.pastPaperStyle,
       additionalNotes: input.additionalNotes,
       questionCount: input.questionCount,
+      standardizedExam: input.standardizedExam,
+      usmleStyle: input.usmleStyle,
     })
   } catch (err) {
     // Clean up the exam row so the user isn't left with a broken draft

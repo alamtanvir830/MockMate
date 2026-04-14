@@ -31,6 +31,26 @@ const formatOptions = [
   { value: 'mixed', label: 'Mixed' },
 ]
 
+const standardizedExamOptions = [
+  { value: '', label: 'None / Not a standardized exam' },
+  { value: 'usmle_step1', label: 'USMLE Step 1' },
+  { value: 'usmle_step2_ck', label: 'USMLE Step 2 CK' },
+  { value: 'mcat', label: 'MCAT' },
+  { value: 'sat', label: 'SAT' },
+  { value: 'neet', label: 'NEET (India)' },
+  { value: 'other_standardized', label: 'Other standardized exam' },
+]
+
+const usmleStyleOptions = [
+  { value: 'mixed_usmle', label: 'Mixed USMLE Step 1 style' },
+  { value: 'clinical_vignette', label: 'Classic clinical vignette' },
+  { value: 'basic_science_vignette', label: 'Basic science vignette' },
+  { value: 'mechanism_based', label: 'Mechanism-based reasoning' },
+  { value: 'multi_step_integration', label: 'Multi-step integration' },
+  { value: 'lab_pathology', label: 'Lab / pathology interpretation' },
+  { value: 'pharmacology_vignette', label: 'Pharmacology-focused vignette' },
+]
+
 interface Friend {
   name: string
   email: string
@@ -56,6 +76,8 @@ export function CreateExamForm() {
   const [questionCount, setQuestionCount] = useState('20')
   const [pastPaperStyle, setPastPaperStyle] = useState('')
   const [additionalNotes, setAdditionalNotes] = useState('')
+  const [standardizedExam, setStandardizedExam] = useState('')
+  const [usmleStyle, setUsmleStyle] = useState('mixed_usmle')
   const [friends, setFriends] = useState<Friend[]>([
     { name: '', email: '' },
     { name: '', email: '' },
@@ -245,6 +267,8 @@ export function CreateExamForm() {
       unlockDaysBefore: parseInt(unlockDaysBefore, 10),
       friends: friendsToSend,
       sharedWith: sharedWithToSend,
+      standardizedExam: standardizedExam || undefined,
+      usmleStyle: standardizedExam === 'usmle_step1' ? usmleStyle : undefined,
     })
 
     if (result?.error) {
@@ -506,6 +530,39 @@ export function CreateExamForm() {
               onChange={(e) => setAdditionalNotes(e.target.value)}
               rows={3}
             />
+
+            {/* Standardized exam — optional enhancement */}
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-4">
+              <div>
+                <p className="text-sm font-medium text-slate-700">
+                  Standardized exam targeting{' '}
+                  <span className="ml-1 inline-flex items-center rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-500">
+                    Optional
+                  </span>
+                </p>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  If you are preparing for a standardized exam, select it here to tailor the question style.
+                </p>
+              </div>
+              <Select
+                label=""
+                options={standardizedExamOptions}
+                value={standardizedExam}
+                onChange={(e) => {
+                  setStandardizedExam(e.target.value)
+                  if (e.target.value !== 'usmle_step1') setUsmleStyle('mixed_usmle')
+                }}
+              />
+              {standardizedExam === 'usmle_step1' && (
+                <Select
+                  label="Question style preference"
+                  options={usmleStyleOptions}
+                  value={usmleStyle}
+                  onChange={(e) => setUsmleStyle(e.target.value)}
+                  hint="Controls how questions are written — defaults to mixed if unsure"
+                />
+              )}
+            </div>
           </div>
         )}
 
