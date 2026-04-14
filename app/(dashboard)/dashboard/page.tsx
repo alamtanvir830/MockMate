@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ExamStatusBadge } from '@/components/ui/badge'
@@ -19,10 +20,12 @@ function greeting() {
 export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  const admin = createAdminClient()
 
   const fullName = user?.user_metadata?.full_name as string | undefined
   const displayName = fullName ?? user?.email?.split('@')[0] ?? 'there'
 
+  // Owned exams
   const { data: exams } = await supabase
     .from('exams')
     .select('*')
@@ -34,8 +37,37 @@ export default async function DashboardPage() {
   const nextExam = allExams
     .filter((e) => e.status !== 'completed' && daysUntil(e.exam_date) >= 0)
     .sort((a, b) => new Date(a.exam_date).getTime() - new Date(b.exam_date).getTime())[0]
-
   const recentExams = allExams.slice(0, 5)
+
+  // Shared exams — find exams shared with this user's email via admin client (bypasses RLS)
+  const { data: sharedRecipients } = await admin
+    .from('exam_shared_recipients')
+    .select('exam_id')
+    .eq('email', user!.email!)
+
+  const sharedExamIds = (sharedRecipients ?? []).map((r) => r.exam_id)
+  let sharedExams: Exam[] = []
+
+  if (sharedExamIds.length > 0) {
+    const { data } = await admin
+      .from('exams')
+      .select('*')
+      .in('id', sharedExamIds)
+      .order('created_at', { ascending: false })
+    sharedExams = data ?? []
+  }
+
+  // Which shared exams has this user already completed (their own attempt)?
+  const completedSharedIds = new Set<string>()
+  if (sharedExamIds.length > 0) {
+    const { data: myAttempts } = await admin
+      .from('exam_attempts')
+      .select('exam_id')
+      .in('exam_id', sharedExamIds)
+      .eq('user_id', user!.id)
+      .eq('status', 'completed')
+    for (const a of myAttempts ?? []) completedSharedIds.add(a.exam_id)
+  }
 
   return (
     <div className="space-y-8">
@@ -71,7 +103,7 @@ export default async function DashboardPage() {
           </div>
           <div>
             <p className="text-2xl font-bold text-slate-900">{allExams.length}</p>
-            <p className="text-sm text-slate-500">Total exams</p>
+            <p className="text-sm text-slate-500">My exams</p>
           </div>
         </Card>
 
@@ -111,26 +143,18 @@ export default async function DashboardPage() {
           <Card className="bg-gradient-to-br from-emerald-600 to-teal-600 text-white border-0 shadow-lg shadow-emerald-200">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-medium text-emerald-200 uppercase tracking-widest mb-1">
-                  Next exam
-                </p>
+                <p className="text-xs font-medium text-emerald-200 uppercase tracking-widest mb-1">Next exam</p>
                 <h2 className="text-xl font-bold">{nextExam.title}</h2>
                 <p className="text-emerald-200 mt-1 text-sm">{nextExam.subject}</p>
                 <p className="mt-3 text-sm text-emerald-100">
                   <span className="font-semibold text-white">{daysToExam} days</span>{' '}
                   until{' '}
-                  {new Date(nextExam.exam_date).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                  })}
+                  {new Date(nextExam.exam_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
                 </p>
                 {locked && (
                   <p className="mt-1 text-xs text-emerald-300">
                     Mock unlocks in {daysToUnlock} day{daysToUnlock !== 1 ? 's' : ''} ·{' '}
-                    {new Date(nextExam.unlock_date).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                    })}
+                    {new Date(nextExam.unlock_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                   </p>
                 )}
               </div>
@@ -153,14 +177,11 @@ export default async function DashboardPage() {
         )
       })()}
 
-      {/* Recent exams */}
+      {/* Recent owned exams */}
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-base font-semibold text-slate-900">Recent exams</h2>
-          <Link
-            href="/exams"
-            className="text-sm text-emerald-600 hover:text-emerald-500 font-medium transition-colors"
-          >
+          <Link href="/exams" className="text-sm text-emerald-600 hover:text-emerald-500 font-medium transition-colors">
             View all
           </Link>
         </div>
@@ -173,9 +194,7 @@ export default async function DashboardPage() {
               </svg>
             </div>
             <p className="font-medium text-slate-700">No exams yet</p>
-            <p className="mt-1 text-sm text-slate-400">
-              Create your first mock exam to get started
-            </p>
+            <p className="mt-1 text-sm text-slate-400">Create your first mock exam to get started</p>
             <Link href="/exams/create" className="inline-block mt-4">
               <Button size="sm">Create exam</Button>
             </Link>
@@ -186,10 +205,7 @@ export default async function DashboardPage() {
               const days = daysUntil(exam.exam_date)
               const locked = isExamLocked(exam.unlock_date)
               return (
-                <div
-                  key={exam.id}
-                  className="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 transition-colors"
-                >
+                <div key={exam.id} className="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 transition-colors">
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-slate-900 truncate">{exam.title}</p>
                     <p className="text-sm text-slate-400 mt-0.5">
@@ -205,10 +221,7 @@ export default async function DashboardPage() {
                   </div>
                   <ExamStatusBadge status={exam.status} locked={locked} />
                   {exam.status === 'completed' ? (
-                    <Link
-                      href={`/exams/${exam.id}/results`}
-                      className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors shrink-0"
-                    >
+                    <Link href={`/exams/${exam.id}/results`} className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors shrink-0">
                       View results
                     </Link>
                   ) : locked ? (
@@ -219,10 +232,7 @@ export default async function DashboardPage() {
                       Locked
                     </span>
                   ) : (
-                    <Link
-                      href={`/exams/${exam.id}/take`}
-                      className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors shrink-0"
-                    >
+                    <Link href={`/exams/${exam.id}/take`} className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors shrink-0">
                       Open →
                     </Link>
                   )}
@@ -232,6 +242,45 @@ export default async function DashboardPage() {
           </Card>
         )}
       </div>
+
+      {/* Shared with you */}
+      {sharedExams.length > 0 && (
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="text-base font-semibold text-slate-900">Shared with you</h2>
+              <p className="text-xs text-slate-500 mt-0.5">Exams shared by others — your attempt is independent</p>
+            </div>
+          </div>
+          <Card padded={false} className="divide-y divide-slate-100">
+            {sharedExams.map((exam) => {
+              const isCompleted = completedSharedIds.has(exam.id)
+              return (
+                <div key={exam.id} className="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium text-slate-900 truncate">{exam.title}</p>
+                      <span className="shrink-0 inline-flex items-center rounded-full bg-indigo-50 border border-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-600">
+                        Shared
+                      </span>
+                    </div>
+                    <p className="text-sm text-slate-400 mt-0.5">{exam.subject}</p>
+                  </div>
+                  {isCompleted ? (
+                    <Link href={`/exams/${exam.id}/shared`} className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors shrink-0">
+                      View results
+                    </Link>
+                  ) : (
+                    <Link href={`/exams/${exam.id}/shared`} className="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors shrink-0">
+                      Take exam →
+                    </Link>
+                  )}
+                </div>
+              )
+            })}
+          </Card>
+        </div>
+      )}
     </div>
   )
 }

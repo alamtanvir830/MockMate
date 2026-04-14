@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ExamStatusBadge } from '@/components/ui/badge'
@@ -12,6 +13,7 @@ export const metadata: Metadata = { title: 'My Exams' }
 export default async function ExamsPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  const admin = createAdminClient()
 
   const { data: exams } = await supabase
     .from('exams')
@@ -20,6 +22,36 @@ export default async function ExamsPage() {
     .order('created_at', { ascending: false })
 
   const allExams: Exam[] = exams ?? []
+
+  // Shared exams — find exams shared with this user's email via admin client (bypasses RLS)
+  const { data: sharedRecipients } = await admin
+    .from('exam_shared_recipients')
+    .select('exam_id')
+    .eq('email', user!.email!)
+
+  const sharedExamIds = (sharedRecipients ?? []).map((r) => r.exam_id)
+  let sharedExams: Exam[] = []
+
+  if (sharedExamIds.length > 0) {
+    const { data } = await admin
+      .from('exams')
+      .select('*')
+      .in('id', sharedExamIds)
+      .order('created_at', { ascending: false })
+    sharedExams = data ?? []
+  }
+
+  // Which shared exams has this user already completed (their own attempt)?
+  const completedSharedIds = new Set<string>()
+  if (sharedExamIds.length > 0) {
+    const { data: myAttempts } = await admin
+      .from('exam_attempts')
+      .select('exam_id')
+      .in('exam_id', sharedExamIds)
+      .eq('user_id', user!.id)
+      .eq('status', 'completed')
+    for (const a of myAttempts ?? []) completedSharedIds.add(a.exam_id)
+  }
 
   return (
     <div className="space-y-6">
@@ -115,6 +147,50 @@ export default async function ExamsPage() {
           </div>
         )}
       </Card>
+
+      {/* Shared with you */}
+      {sharedExams.length > 0 && (
+        <div>
+          <div className="mb-4">
+            <h2 className="text-base font-semibold text-slate-900">Shared with you</h2>
+            <p className="text-xs text-slate-500 mt-0.5">Exams shared by others — your attempt is independent</p>
+          </div>
+          <Card padded={false} className="divide-y divide-slate-100">
+            {sharedExams.map((exam) => {
+              const isCompleted = completedSharedIds.has(exam.id)
+              return (
+                <div key={exam.id} className="flex items-center gap-4 px-6 py-5 hover:bg-slate-50 transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <p className="font-semibold text-slate-900 truncate">{exam.title}</p>
+                      <span className="shrink-0 inline-flex items-center rounded-full bg-indigo-50 border border-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-600">
+                        Shared
+                      </span>
+                    </div>
+                    <p className="text-sm text-slate-400 mt-0.5">
+                      {exam.subject} ·{' '}
+                      {new Date(exam.exam_date).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      })}
+                    </p>
+                  </div>
+                  {isCompleted ? (
+                    <Link href={`/exams/${exam.id}/shared`} className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors shrink-0">
+                      View results
+                    </Link>
+                  ) : (
+                    <Link href={`/exams/${exam.id}/shared`} className="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors shrink-0">
+                      Take exam →
+                    </Link>
+                  )}
+                </div>
+              )
+            })}
+          </Card>
+        </div>
+      )}
     </div>
   )
 }
