@@ -25,7 +25,7 @@ const questionCountOptions = Array.from({ length: 99 }, (_, i) => ({
 }))
 
 const formatOptions = [
-  { value: 'multiple_choice', label: 'Multiple choice' },
+  { value: 'multiple_choice', label: 'Multiple choice (recommended)' },
   { value: 'short_answer', label: 'Short answer' },
   { value: 'essay', label: 'Essay / long form' },
   { value: 'mixed', label: 'Mixed' },
@@ -49,7 +49,7 @@ export function CreateExamForm() {
   const [subtopics, setSubtopics] = useState('')
   const [lectureContent, setLectureContent] = useState('')
   const [unlockDaysBefore, setUnlockDaysBefore] = useState('7')
-  const [format, setFormat] = useState('mixed')
+  const [format, setFormat] = useState('multiple_choice')
   const [questionCount, setQuestionCount] = useState('20')
   const [pastPaperStyle, setPastPaperStyle] = useState('')
   const [additionalNotes, setAdditionalNotes] = useState('')
