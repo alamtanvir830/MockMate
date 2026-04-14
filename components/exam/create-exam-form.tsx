@@ -370,7 +370,7 @@ export function CreateExamForm() {
               options={unlockDaysOptions}
               value={unlockDaysBefore}
               onChange={(e) => setUnlockDaysBefore(e.target.value)}
-              hint="Your practice exam will be locked until this many days before the real exam"
+              hint="Your practice exam will be locked until this many days before the real exam. To take it right away, set this to a number greater than or equal to the days remaining until your exam date."
             />
           </div>
         )}
