@@ -63,6 +63,14 @@ export function CreateExamForm() {
     { name: '', email: '' },
     { name: '', email: '' },
   ])
+  const [wantsAccountability, setWantsAccountability] = useState<boolean | null>(null)
+  const [visibleFriends, setVisibleFriends] = useState(1)
+  const [friendErrors, setFriendErrors] = useState<{ name: string; email: string }[]>([
+    { name: '', email: '' },
+    { name: '', email: '' },
+    { name: '', email: '' },
+  ])
+  const [accountabilityChoiceError, setAccountabilityChoiceError] = useState('')
 
   function updateFriend(index: number, field: keyof Friend, value: string) {
     setFriends((prev) => {
@@ -70,11 +78,55 @@ export function CreateExamForm() {
       next[index] = { ...next[index], [field]: value }
       return next
     })
+    // clear error on change
+    setFriendErrors((prev) => {
+      const next = [...prev]
+      next[index] = { ...next[index], [field]: '' }
+      return next
+    })
+  }
+
+  function handleAccountabilityChoice(choice: boolean) {
+    setWantsAccountability(choice)
+    setAccountabilityChoiceError('')
+    if (choice) setVisibleFriends(1)
   }
 
   async function handleSubmit() {
     setLoading(true)
     setSubmitError('')
+
+    // Validate step 4
+    if (wantsAccountability === null) {
+      setAccountabilityChoiceError('Please choose yes or no before continuing.')
+      setLoading(false)
+      return
+    }
+
+    if (wantsAccountability === true) {
+      const errors = friendErrors.map((e) => ({ ...e }))
+      let hasError = false
+      for (let i = 0; i < visibleFriends; i++) {
+        if (!friends[i].name.trim()) {
+          errors[i].name = 'Name is required'
+          hasError = true
+        }
+        if (!friends[i].email.trim()) {
+          errors[i].email = 'Email is required'
+          hasError = true
+        } else if (!friends[i].email.includes('@')) {
+          errors[i].email = 'Enter a valid email address'
+          hasError = true
+        }
+      }
+      setFriendErrors(errors)
+      if (hasError) {
+        setLoading(false)
+        return
+      }
+    }
+
+    const friendsToSend = wantsAccountability ? friends.slice(0, visibleFriends) : []
 
     const result = await createExam({
       title,
@@ -88,7 +140,7 @@ export function CreateExamForm() {
       additionalNotes,
       questionCount: parseInt(questionCount, 10),
       unlockDaysBefore: parseInt(unlockDaysBefore, 10),
-      friends,
+      friends: friendsToSend,
     })
 
     if (result?.error) {
@@ -277,51 +329,106 @@ export function CreateExamForm() {
                 Accountability friends
               </h2>
               <p className="text-sm text-slate-500 mt-0.5">
-                After you complete the exam, these friends will automatically
-                receive your score by email.
+                Would you like your score emailed to any friends for accountability?
               </p>
             </div>
 
-            <div className="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
-              <strong>Why accountability matters:</strong> Students who share
-              their results with others study 40% more consistently. No hiding
-              from a bad score!
+            {/* Yes / No toggle */}
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => handleAccountabilityChoice(false)}
+                className={cn(
+                  'flex-1 rounded-lg border px-4 py-3 text-sm font-medium transition-colors',
+                  wantsAccountability === false
+                    ? 'border-slate-800 bg-slate-800 text-white'
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                )}
+              >
+                No, just me
+              </button>
+              <button
+                type="button"
+                onClick={() => handleAccountabilityChoice(true)}
+                className={cn(
+                  'flex-1 rounded-lg border px-4 py-3 text-sm font-medium transition-colors',
+                  wantsAccountability === true
+                    ? 'border-indigo-600 bg-indigo-600 text-white'
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                )}
+              >
+                Yes, add friends
+              </button>
             </div>
 
-            <div className="space-y-4">
-              {friends.map((friend, i) => (
-                <div
-                  key={i}
-                  className="rounded-lg border border-slate-200 p-4 space-y-3"
-                >
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                    Friend {i + 1}{' '}
-                    {i > 0 && (
-                      <span className="font-normal normal-case text-slate-400">
-                        (optional)
-                      </span>
-                    )}
-                  </p>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <Input
-                      placeholder="Name"
-                      value={friend.name}
-                      onChange={(e) => updateFriend(i, 'name', e.target.value)}
-                    />
-                    <Input
-                      type="email"
-                      placeholder="Email"
-                      value={friend.email}
-                      onChange={(e) => updateFriend(i, 'email', e.target.value)}
-                    />
-                  </div>
+            {accountabilityChoiceError && (
+              <p className="text-sm text-red-600">{accountabilityChoiceError}</p>
+            )}
+
+            {/* Friend fields — only when Yes */}
+            {wantsAccountability === true && (
+              <div className="space-y-4">
+                <div className="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800">
+                  <strong>Why it works:</strong> Students who share results with
+                  others study 40% more consistently. No hiding from a bad score!
                 </div>
-              ))}
-            </div>
 
-            <p className="text-xs text-slate-400">
-              You can skip this step and add friends later from your settings.
-            </p>
+                {Array.from({ length: visibleFriends }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="rounded-lg border border-slate-200 p-4 space-y-3"
+                  >
+                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                      Friend {i + 1}
+                    </p>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      <div className="space-y-1">
+                        <Input
+                          placeholder="Name"
+                          value={friends[i].name}
+                          onChange={(e) => updateFriend(i, 'name', e.target.value)}
+                          className={friendErrors[i]?.name ? 'border-red-400 focus:ring-red-400' : ''}
+                        />
+                        {friendErrors[i]?.name && (
+                          <p className="text-xs text-red-600">{friendErrors[i].name}</p>
+                        )}
+                      </div>
+                      <div className="space-y-1">
+                        <Input
+                          type="email"
+                          placeholder="Email"
+                          value={friends[i].email}
+                          onChange={(e) => updateFriend(i, 'email', e.target.value)}
+                          className={friendErrors[i]?.email ? 'border-red-400 focus:ring-red-400' : ''}
+                        />
+                        {friendErrors[i]?.email && (
+                          <p className="text-xs text-red-600">{friendErrors[i].email}</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {visibleFriends < 3 && (
+                  <button
+                    type="button"
+                    onClick={() => setVisibleFriends((v) => Math.min(v + 1, 3))}
+                    className="flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+                  >
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    Add friend
+                  </button>
+                )}
+              </div>
+            )}
+
+            {wantsAccountability === false && (
+              <p className="text-sm text-slate-500">
+                No problem — you can always add accountability friends later from your exam settings.
+              </p>
+            )}
           </div>
         )}
       </Card>
