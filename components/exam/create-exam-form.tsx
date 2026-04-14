@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Input, Textarea, Select } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
@@ -47,7 +47,10 @@ export function CreateExamForm() {
   const [examDate, setExamDate] = useState('')
   const [topics, setTopics] = useState('')
   const [subtopics, setSubtopics] = useState('')
-  const [lectureContent, setLectureContent] = useState('')
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+  const [isDragOver, setIsDragOver] = useState(false)
+  const [extractionError, setExtractionError] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [unlockDaysBefore, setUnlockDaysBefore] = useState('7')
   const [format, setFormat] = useState('multiple_choice')
   const [questionCount, setQuestionCount] = useState('20')
@@ -81,6 +84,25 @@ export function CreateExamForm() {
     })
   }
 
+  function addFiles(incoming: FileList | null) {
+    if (!incoming) return
+    setExtractionError('')
+    const accepted = ['.pdf', '.docx', '.txt', '.md']
+    const newFiles = Array.from(incoming).filter((f) => {
+      const name = f.name.toLowerCase()
+      return accepted.some((ext) => name.endsWith(ext))
+    })
+    setUploadedFiles((prev) => {
+      const names = new Set(prev.map((f) => f.name))
+      return [...prev, ...newFiles.filter((f) => !names.has(f.name))]
+    })
+  }
+
+  function removeFile(name: string) {
+    setUploadedFiles((prev) => prev.filter((f) => f.name !== name))
+    setExtractionError('')
+  }
+
   function handleAccountabilityChoice(choice: boolean) {
     setWantsAccountability(choice)
     setAccountabilityChoiceError('')
@@ -90,6 +112,26 @@ export function CreateExamForm() {
   async function handleSubmit() {
     setLoading(true)
     setSubmitError('')
+    setExtractionError('')
+
+    // Extract text from uploaded files
+    let lectureContent = ''
+    if (uploadedFiles.length > 0) {
+      try {
+        const body = new FormData()
+        uploadedFiles.forEach((f) => body.append('files', f))
+        const res = await fetch('/api/extract-text', { method: 'POST', body })
+        const json: { text: string; errors: string[] } = await res.json()
+        lectureContent = json.text
+        if (json.errors.length > 0) {
+          setExtractionError(`Some files could not be read: ${json.errors.join(', ')}`)
+        }
+      } catch {
+        setSubmitError('Failed to read uploaded files. Please try again.')
+        setLoading(false)
+        return
+      }
+    }
 
     // Validate step 4
     if (wantsAccountability === null) {
@@ -129,7 +171,7 @@ export function CreateExamForm() {
       examDate,
       topics,
       subtopics,
-      lectureContent,
+      lectureContent, // populated from uploaded files above
       format,
       pastPaperStyle,
       additionalNotes,
@@ -269,14 +311,94 @@ export function CreateExamForm() {
               rows={3}
               hint="More specific concepts or subtopics"
             />
-            <Textarea
-              label="Lecture content / syllabus notes"
-              placeholder="Paste in key lecture notes, summaries, or specific content your professor emphasized..."
-              value={lectureContent}
-              onChange={(e) => setLectureContent(e.target.value)}
-              rows={5}
-              hint="The more context you give, the more accurate your exam will be"
-            />
+            {/* File upload */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-medium text-slate-700">
+                Lecture content / syllabus notes
+              </label>
+
+              {/* Hidden file input */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                multiple
+                accept=".pdf,.docx,.txt,.md"
+                className="hidden"
+                onChange={(e) => addFiles(e.target.files)}
+              />
+
+              {/* Drop zone */}
+              <div
+                onClick={() => fileInputRef.current?.click()}
+                onDragOver={(e) => { e.preventDefault(); setIsDragOver(true) }}
+                onDragLeave={() => setIsDragOver(false)}
+                onDrop={(e) => {
+                  e.preventDefault()
+                  setIsDragOver(false)
+                  addFiles(e.dataTransfer.files)
+                }}
+                className={cn(
+                  'cursor-pointer rounded-lg border-2 border-dashed px-6 py-8 text-center transition-colors',
+                  isDragOver
+                    ? 'border-indigo-400 bg-indigo-50'
+                    : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50',
+                )}
+              >
+                <div className="flex flex-col items-center gap-2">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-8 w-8 text-slate-400">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                  </svg>
+                  <p className="text-sm font-medium text-slate-700">
+                    Click to upload or drag and drop
+                  </p>
+                  <p className="text-xs text-slate-400">
+                    PDF, DOCX, TXT, MD — up to 10 MB per file
+                  </p>
+                </div>
+              </div>
+
+              {/* File list */}
+              {uploadedFiles.length > 0 && (
+                <ul className="mt-2 space-y-2">
+                  {uploadedFiles.map((file) => (
+                    <li
+                      key={file.name}
+                      className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2"
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4 shrink-0 text-slate-400">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                        </svg>
+                        <span className="text-sm text-slate-700 truncate">{file.name}</span>
+                        <span className="text-xs text-slate-400 shrink-0">
+                          {file.size < 1024 * 1024
+                            ? `${Math.round(file.size / 1024)} KB`
+                            : `${(file.size / (1024 * 1024)).toFixed(1)} MB`}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeFile(file.name)}
+                        className="shrink-0 text-slate-400 hover:text-red-500 transition-colors"
+                        aria-label={`Remove ${file.name}`}
+                      >
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {extractionError && (
+                <p className="text-xs text-amber-600">{extractionError}</p>
+              )}
+
+              <p className="text-xs text-slate-500">
+                Upload your lecture notes, slides, or syllabus. The more content you provide, the more accurate your exam will be.
+              </p>
+            </div>
           </div>
         )}
 
