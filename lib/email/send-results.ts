@@ -57,10 +57,14 @@ function buildHtml(data: ResultsEmailData, friendName: string): string {
                     <h1 style="margin:0 0 4px;font-size:22px;font-weight:700;color:#ffffff;">${data.examTitle}</h1>
                     <p style="margin:0;font-size:14px;color:#94a3b8;">${data.subject} &middot; ${formattedDate}</p>
 
-                    <!-- Score ring placeholder — big number -->
-                    <div style="margin:24px auto 0;width:96px;height:96px;border-radius:50%;border:6px solid ${scoreColor};display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.05);">
-                      <span style="font-size:28px;font-weight:700;color:${scoreColor};">${data.percentage}%</span>
-                    </div>
+                    <!-- Score ring — table-based centering for Gmail/mobile compatibility -->
+                    <table width="96" height="96" cellpadding="0" cellspacing="0" style="margin:24px auto 0;width:96px;height:96px;border-radius:50%;border:6px solid ${scoreColor};background:rgba(255,255,255,0.05);">
+                      <tr>
+                        <td align="center" valign="middle" style="text-align:center;vertical-align:middle;">
+                          <span style="font-size:28px;font-weight:700;color:${scoreColor};line-height:1;">${data.percentage}%</span>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
                 </tr>
               </table>
