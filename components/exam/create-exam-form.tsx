@@ -42,13 +42,13 @@ const standardizedExamOptions = [
 ]
 
 const usmleStyleOptions = [
-  { value: 'mixed_usmle', label: 'Mixed USMLE Step 1 style' },
   { value: 'clinical_vignette', label: 'Classic clinical vignette' },
   { value: 'basic_science_vignette', label: 'Basic science vignette' },
   { value: 'mechanism_based', label: 'Mechanism-based reasoning' },
   { value: 'multi_step_integration', label: 'Multi-step integration' },
   { value: 'lab_pathology', label: 'Lab / pathology interpretation' },
   { value: 'pharmacology_vignette', label: 'Pharmacology-focused vignette' },
+  { value: 'mixed_usmle', label: 'Mixed USMLE Step 1 style' },
 ]
 
 interface Friend {
@@ -77,7 +77,7 @@ export function CreateExamForm() {
   const [pastPaperStyle, setPastPaperStyle] = useState('')
   const [additionalNotes, setAdditionalNotes] = useState('')
   const [standardizedExam, setStandardizedExam] = useState('')
-  const [usmleStyle, setUsmleStyle] = useState('mixed_usmle')
+  const [usmleStyles, setUsmleStyles] = useState<string[]>([])
   const [friends, setFriends] = useState<Friend[]>([
     { name: '', email: '' },
     { name: '', email: '' },
@@ -268,7 +268,7 @@ export function CreateExamForm() {
       friends: friendsToSend,
       sharedWith: sharedWithToSend,
       standardizedExam: standardizedExam || undefined,
-      usmleStyle: standardizedExam === 'usmle_step1' ? usmleStyle : undefined,
+      usmleStyles: standardizedExam === 'usmle_step1' ? usmleStyles : undefined,
     })
 
     if (result?.error) {
@@ -550,17 +550,49 @@ export function CreateExamForm() {
                 value={standardizedExam}
                 onChange={(e) => {
                   setStandardizedExam(e.target.value)
-                  if (e.target.value !== 'usmle_step1') setUsmleStyle('mixed_usmle')
+                  if (e.target.value !== 'usmle_step1') setUsmleStyles([])
                 }}
               />
               {standardizedExam === 'usmle_step1' && (
-                <Select
-                  label="Question style preference"
-                  options={usmleStyleOptions}
-                  value={usmleStyle}
-                  onChange={(e) => setUsmleStyle(e.target.value)}
-                  hint="Controls how questions are written — defaults to mixed if unsure"
-                />
+                <div className="space-y-2">
+                  <p className="text-sm font-medium text-slate-700">
+                    Question style preference{' '}
+                    <span className="text-slate-400 font-normal">(select all that apply)</span>
+                  </p>
+                  <div className="space-y-2">
+                    {usmleStyleOptions.map((opt) => {
+                      const checked = usmleStyles.includes(opt.value)
+                      return (
+                        <label
+                          key={opt.value}
+                          className={cn(
+                            'flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-colors',
+                            checked
+                              ? 'border-indigo-300 bg-indigo-50'
+                              : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
+                          )}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={checked}
+                            onChange={() =>
+                              setUsmleStyles((prev) =>
+                                checked
+                                  ? prev.filter((v) => v !== opt.value)
+                                  : [...prev, opt.value],
+                              )
+                            }
+                            className="h-4 w-4 rounded border-slate-300 text-indigo-600 accent-indigo-600"
+                          />
+                          <span className="text-sm text-slate-700">{opt.label}</span>
+                        </label>
+                      )
+                    })}
+                  </div>
+                  <p className="text-xs text-slate-400">
+                    If nothing is selected, questions will default to Mixed USMLE Step 1 style.
+                  </p>
+                </div>
               )}
             </div>
           </div>

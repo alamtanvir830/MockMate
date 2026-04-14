@@ -21,7 +21,7 @@ interface GenerateInput {
   additionalNotes: string
   questionCount: number
   standardizedExam?: string
-  usmleStyle?: string
+  usmleStyles?: string[]
 }
 
 const USMLE_STYLE_DESCRIPTIONS: Record<string, string> = {
@@ -45,7 +45,10 @@ export async function generateQuestions(
   input: GenerateInput,
 ): Promise<GeneratedQuestion[]> {
   const isUSMLE1 = input.standardizedExam === 'usmle_step1'
-  const resolvedUSMLEStyle = input.usmleStyle || 'mixed_usmle'
+  const resolvedUSMLEStyles =
+    input.usmleStyles && input.usmleStyles.length > 0
+      ? input.usmleStyles
+      : ['mixed_usmle']
 
   const contextParts = [
     `Title: ${input.title}`,
@@ -61,12 +64,33 @@ export async function generateQuestions(
 
   let usmleSection = ''
   if (isUSMLE1) {
-    const styleDesc =
-      USMLE_STYLE_DESCRIPTIONS[resolvedUSMLEStyle] ?? USMLE_STYLE_DESCRIPTIONS.mixed_usmle
+    const styleDescriptions = resolvedUSMLEStyles
+      .map((s) => USMLE_STYLE_DESCRIPTIONS[s] ?? USMLE_STYLE_DESCRIPTIONS.mixed_usmle)
+    const styleList = resolvedUSMLEStyles
+      .map((s) => {
+        const opt = {
+          clinical_vignette: 'Classic clinical vignette',
+          basic_science_vignette: 'Basic science vignette',
+          mechanism_based: 'Mechanism-based reasoning',
+          multi_step_integration: 'Multi-step integration',
+          lab_pathology: 'Lab / pathology interpretation',
+          pharmacology_vignette: 'Pharmacology-focused vignette',
+          mixed_usmle: 'Mixed USMLE Step 1 style',
+        }[s] ?? s
+        return opt
+      })
+      .join(', ')
+
+    const blendInstruction =
+      resolvedUSMLEStyles.length > 1
+        ? `Generate questions in the following styles: ${styleList}. Combine these elements naturally within each question — a single question may incorporate multiple styles simultaneously.`
+        : `Generate questions in the following style: ${styleList}.`
+
     usmleSection = `
 USMLE Step 1 Question Style Requirements:
 - This exam targets USMLE Step 1 / NBME-style questions.
-- Selected style: ${styleDesc}
+- ${blendInstruction}
+${styleDescriptions.map((d) => `  • ${d}`).join('\n')}
 - All questions must be vignette-based (3–6 sentence stem presenting a patient or scientific scenario), not direct recall questions.
 - All four answer choices must be plausible — avoid obviously wrong distractors.
 - The correct answer must require integration or application, not simple memorization.
