@@ -14,6 +14,11 @@ const STEPS = [
   { id: 4, label: 'Friends' },
 ]
 
+const unlockDaysOptions = Array.from({ length: 30 }, (_, i) => ({
+  value: String(i + 1),
+  label: i === 0 ? '1 day before' : `${i + 1} days before`,
+}))
+
 const formatOptions = [
   { value: 'multiple_choice', label: 'Multiple choice' },
   { value: 'short_answer', label: 'Short answer' },
@@ -39,7 +44,6 @@ export function CreateExamForm() {
   const [subtopics, setSubtopics] = useState('')
   const [lectureContent, setLectureContent] = useState('')
   const [unlockDaysBefore, setUnlockDaysBefore] = useState('7')
-  const [unlockDaysError, setUnlockDaysError] = useState('')
   const [format, setFormat] = useState('mixed')
   const [questionCount, setQuestionCount] = useState('20')
   const [questionCountError, setQuestionCountError] = useState('')
@@ -80,16 +84,6 @@ export function CreateExamForm() {
       setQuestionCountError('Enter a number between 1 and 99')
     } else {
       setQuestionCountError('')
-    }
-  }
-
-  function handleUnlockDaysChange(val: string) {
-    setUnlockDaysBefore(val)
-    const n = parseInt(val, 10)
-    if (!val || isNaN(n) || n < 1 || n > 30) {
-      setUnlockDaysError('Enter a number between 1 and 30')
-    } else {
-      setUnlockDaysError('')
     }
   }
 
@@ -159,8 +153,7 @@ export function CreateExamForm() {
 
   function canAdvance() {
     if (step === 1) {
-      const days = parseInt(unlockDaysBefore, 10)
-      return !!(title.trim() && subject.trim() && examDate && !isNaN(days) && days >= 1 && days <= 30)
+      return !!(title.trim() && subject.trim() && examDate)
     }
     if (step === 2) return !!topics.trim()
     if (step === 3) {
@@ -248,15 +241,12 @@ export function CreateExamForm() {
               onChange={(e) => setExamDate(e.target.value)}
               required
             />
-            <Input
+            <Select
               label="Days before exam to unlock"
-              type="number"
-              min={1}
-              max={30}
+              options={unlockDaysOptions}
               value={unlockDaysBefore}
-              onChange={(e) => handleUnlockDaysChange(e.target.value)}
-              error={unlockDaysError}
-              hint={!unlockDaysError ? 'Your practice exam will be locked until this many days before the real exam (1–30)' : undefined}
+              onChange={(e) => setUnlockDaysBefore(e.target.value)}
+              hint="Your practice exam will be locked until this many days before the real exam"
             />
           </div>
         )}
