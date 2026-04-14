@@ -114,5 +114,5 @@ export async function createExam(
     )
   }
 
-  redirect(`/exams/${exam.id}/take`)
+  redirect('/dashboard')
 }
