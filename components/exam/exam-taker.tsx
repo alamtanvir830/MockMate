@@ -6,6 +6,11 @@ import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { submitExam } from '@/app/actions/attempts'
 
+type SubmitAction = (input: {
+  examId: string
+  answers: Record<string, string>
+}) => Promise<{ error: string } | void>
+
 interface Question {
   id: string
   question_text: string
@@ -25,9 +30,10 @@ interface Exam {
 interface ExamTakerProps {
   exam: Exam
   questions: Question[]
+  submitAction?: SubmitAction
 }
 
-export function ExamTaker({ exam, questions }: ExamTakerProps) {
+export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTakerProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [submitting, setSubmitting] = useState(false)
@@ -55,7 +61,7 @@ export function ExamTaker({ exam, questions }: ExamTakerProps) {
     setConfirming(false)
     setSubmitting(true)
     setError('')
-    const result = await submitExam({ examId: exam.id, answers })
+    const result = await submitAction({ examId: exam.id, answers })
     if (result?.error) {
       setError(result.error)
       setSubmitting(false)
