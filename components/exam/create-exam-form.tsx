@@ -19,6 +19,11 @@ const unlockDaysOptions = Array.from({ length: 30 }, (_, i) => ({
   label: i === 0 ? '1 day before' : `${i + 1} days before`,
 }))
 
+const questionCountOptions = Array.from({ length: 99 }, (_, i) => ({
+  value: String(i + 1),
+  label: i === 0 ? '1 question' : `${i + 1} questions`,
+}))
+
 const formatOptions = [
   { value: 'multiple_choice', label: 'Multiple choice' },
   { value: 'short_answer', label: 'Short answer' },
@@ -46,7 +51,6 @@ export function CreateExamForm() {
   const [unlockDaysBefore, setUnlockDaysBefore] = useState('7')
   const [format, setFormat] = useState('mixed')
   const [questionCount, setQuestionCount] = useState('20')
-  const [questionCountError, setQuestionCountError] = useState('')
   const [pastPaperStyle, setPastPaperStyle] = useState('')
   const [additionalNotes, setAdditionalNotes] = useState('')
   const [friends, setFriends] = useState<Friend[]>([
@@ -75,16 +79,6 @@ export function CreateExamForm() {
       next[index] = { ...next[index], [field]: '' }
       return next
     })
-  }
-
-  function handleQuestionCountChange(val: string) {
-    setQuestionCount(val)
-    const n = parseInt(val, 10)
-    if (!val || isNaN(n) || n < 1 || n > 99) {
-      setQuestionCountError('Enter a number between 1 and 99')
-    } else {
-      setQuestionCountError('')
-    }
   }
 
   function handleAccountabilityChoice(choice: boolean) {
@@ -156,10 +150,7 @@ export function CreateExamForm() {
       return !!(title.trim() && subject.trim() && examDate)
     }
     if (step === 2) return !!topics.trim()
-    if (step === 3) {
-      const qc = parseInt(questionCount, 10)
-      return !isNaN(qc) && qc >= 1 && qc <= 99
-    }
+    if (step === 3) return true
     return true
   }
 
@@ -305,15 +296,11 @@ export function CreateExamForm() {
               value={format}
               onChange={(e) => setFormat(e.target.value)}
             />
-            <Input
+            <Select
               label="Number of questions"
-              type="number"
-              min={1}
-              max={99}
+              options={questionCountOptions}
               value={questionCount}
-              onChange={(e) => handleQuestionCountChange(e.target.value)}
-              error={questionCountError}
-              hint={!questionCountError ? 'Choose between 1 and 99 questions' : undefined}
+              onChange={(e) => setQuestionCount(e.target.value)}
             />
             <Textarea
               label="Past paper style (optional)"
