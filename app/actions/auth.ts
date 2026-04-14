@@ -29,6 +29,8 @@ export async function signup(
 ): Promise<AuthState> {
   const supabase = await createClient()
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+
   const { error } = await supabase.auth.signUp({
     email: formData.get('email') as string,
     password: formData.get('password') as string,
@@ -36,6 +38,7 @@ export async function signup(
       data: {
         full_name: formData.get('full_name') as string,
       },
+      emailRedirectTo: `${siteUrl}/auth/callback`,
     },
   })
 
