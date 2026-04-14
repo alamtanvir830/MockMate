@@ -122,25 +122,18 @@ export default async function ResultsPage({
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       {/* Header */}
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900">Exam Results</h1>
-          <p className="mt-1 text-sm text-slate-500">
-            {exam.title} ·{' '}
-            {attempt.submitted_at
-              ? new Date(attempt.submitted_at).toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric',
-                })
-              : 'Completed'}
-          </p>
-        </div>
-        <Link href="/exams/create">
-          <Button size="sm" variant="outline">
-            New exam
-          </Button>
-        </Link>
+      <div>
+        <h1 className="text-2xl font-bold text-slate-900">Exam Results</h1>
+        <p className="mt-1 text-sm text-slate-500">
+          {exam.title} ·{' '}
+          {attempt.submitted_at
+            ? new Date(attempt.submitted_at).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })
+            : 'Completed'}
+        </p>
       </div>
 
       {/* Score hero */}
@@ -278,22 +271,25 @@ export default async function ResultsPage({
         </div>
       </Card>
 
-      {/* Actions */}
-      <div className="flex flex-col sm:flex-row gap-3 pb-4">
-        <Link href="/exams/create" className="flex-1">
-          <Button className="w-full">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            New exam
-          </Button>
-        </Link>
-        <Link href="/dashboard" className="flex-1">
-          <Button variant="outline" className="w-full">
-            Back to dashboard
+      {/* Performance nudge */}
+      <div className="rounded-xl border border-indigo-100 bg-indigo-50 px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-4">
+        <div className="flex-1">
+          <p className="text-sm font-medium text-indigo-900">
+            Be sure to input your real exam score in the{' '}
+            <span className="font-semibold">Previous Exam Performance</span> page!
+          </p>
+          <p className="mt-0.5 text-xs text-indigo-600">
+            Track how your practice results compare to the real thing.
+          </p>
+        </div>
+        <Link href="/dashboard" className="shrink-0">
+          <Button variant="outline" size="sm" className="w-full sm:w-auto">
+            Return to Dashboard
           </Button>
         </Link>
       </div>
+
+      <div className="pb-4" />
     </div>
   )
 }
