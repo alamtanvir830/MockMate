@@ -126,10 +126,16 @@ export async function submitExam(input: {
 
   // Send results email to accountability friends — non-fatal
   try {
-    const { data: friends } = await supabase
+    const { data: friends, error: friendsErr } = await supabase
       .from('accountability_friends')
       .select('name, email')
       .eq('exam_id', input.examId)
+
+    console.log('[attempts] accountability_friends query:', {
+      examId: input.examId,
+      friends,
+      error: friendsErr?.message,
+    })
 
     if (friends && friends.length > 0) {
       const studentName =
@@ -150,9 +156,11 @@ export async function submitExam(input: {
         incorrectCount: questions.length - correctCount,
         submittedAt: new Date().toISOString(),
       })
+    } else {
+      console.log('[attempts] no accountability friends found for exam', input.examId)
     }
-  } catch {
-    // Email failure does not block results
+  } catch (err) {
+    console.error('[attempts] email block error:', err)
   }
 
   redirect(`/exams/${input.examId}/results`)

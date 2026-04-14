@@ -1,9 +1,6 @@
 import { Resend } from 'resend'
 
-// Update this to your verified Resend sender domain before going live.
-// In development you can use 'onboarding@resend.dev' to send only to
-// the address that owns the Resend account.
-const FROM = 'onboarding@resend.dev'
+const FROM = 'MockMate <results@updates.mockmateapp.com>'
 
 export interface ResultsEmailData {
   examTitle: string
@@ -137,17 +134,31 @@ export async function sendResultsToFriends(
   friends: { name: string; email: string }[],
   data: ResultsEmailData,
 ): Promise<void> {
-  // Skip silently if RESEND_API_KEY is not configured
-  if (!process.env.RESEND_API_KEY) return
+  console.log('[email] sendResultsToFriends called', {
+    friendCount: friends.length,
+    hasApiKey: !!process.env.RESEND_API_KEY,
+    from: FROM,
+  })
+
+  if (!process.env.RESEND_API_KEY) {
+    console.log('[email] skipping — RESEND_API_KEY not set')
+    return
+  }
 
   const validFriends = friends.filter(
     (f) => f.name.trim() && f.email.trim() && f.email.includes('@'),
   )
-  if (validFriends.length === 0) return
+
+  console.log('[email] valid recipients:', validFriends.map((f) => f.email))
+
+  if (validFriends.length === 0) {
+    console.log('[email] skipping — no valid recipients')
+    return
+  }
 
   const resend = new Resend(process.env.RESEND_API_KEY)
 
-  await Promise.allSettled(
+  const results = await Promise.allSettled(
     validFriends.map((friend) =>
       resend.emails.send({
         from: FROM,
@@ -157,4 +168,12 @@ export async function sendResultsToFriends(
       }),
     ),
   )
+
+  results.forEach((result, i) => {
+    if (result.status === 'fulfilled') {
+      console.log(`[email] sent to ${validFriends[i].email}:`, result.value)
+    } else {
+      console.error(`[email] failed to send to ${validFriends[i].email}:`, result.reason)
+    }
+  })
 }
