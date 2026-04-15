@@ -74,12 +74,32 @@ export default async function GroupDetailPage({
     .select('name, email')
     .eq('exam_id', examId)
 
-  // Fetch all completed attempts for this exam (includes preference columns)
-  const { data: attempts } = await admin
+  // ── Query 1: Completion status — does NOT depend on new preference columns.
+  //    This always works, even if the SQL migration has not been run yet.
+  const { data: baseAttempts } = await admin
     .from('exam_attempts')
-    .select('user_id, submitted_at, score, total_marks, percentage, show_score_to_group, include_in_rankings')
+    .select('user_id, submitted_at, score, total_marks, percentage')
     .eq('exam_id', examId)
     .eq('status', 'completed')
+
+  // ── Query 2: Preferences — only available after the SQL migration has been run.
+  //    If the columns don't exist yet, this query errors and we fall back to null for all prefs.
+  const { data: prefAttempts, error: prefError } = await admin
+    .from('exam_attempts')
+    .select('user_id, show_score_to_group, include_in_rankings')
+    .eq('exam_id', examId)
+    .eq('status', 'completed')
+
+  // Build a user_id → preferences map (empty if migration not yet run)
+  const prefByUserId = new Map<string, { showScore: boolean | null; includeRankings: boolean | null }>()
+  if (!prefError) {
+    for (const p of prefAttempts ?? []) {
+      prefByUserId.set(p.user_id, {
+        showScore: p.show_score_to_group ?? null,
+        includeRankings: p.include_in_rankings ?? null,
+      })
+    }
+  }
 
   // Resolve each attempt's user_id → email via admin auth
   interface AttemptInfo {
@@ -91,17 +111,19 @@ export default async function GroupDetailPage({
     includeInRankings: boolean | null
   }
   const attemptByEmail = new Map<string, AttemptInfo>()
-  for (const a of attempts ?? []) {
+  for (const a of baseAttempts ?? []) {
     try {
       const { data: authData } = await admin.auth.admin.getUserById(a.user_id)
       if (authData?.user?.email) {
+        const prefs = prefByUserId.get(a.user_id)
         attemptByEmail.set(authData.user.email, {
           submittedAt: a.submitted_at,
           score: a.score,
           totalMarks: a.total_marks,
           percentage: a.percentage,
-          showScoreToGroup: a.show_score_to_group,
-          includeInRankings: a.include_in_rankings,
+          // Null means "not set" — safe private defaults: score hidden, not in rankings
+          showScoreToGroup: prefs?.showScore ?? null,
+          includeInRankings: prefs?.includeRankings ?? null,
         })
       }
     } catch {

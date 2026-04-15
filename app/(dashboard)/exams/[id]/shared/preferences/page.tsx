@@ -25,7 +25,7 @@ export default async function SharedPreferencesPage({
     .select('id')
     .eq('exam_id', id)
     .eq('email', user!.email!)
-    .single()
+    .maybeSingle()
 
   if (!recipient) {
     return (
@@ -43,22 +43,27 @@ export default async function SharedPreferencesPage({
     )
   }
 
-  // Verify a completed attempt exists
+  // Check for a completed attempt.
+  // Use .limit(1).maybeSingle() to safely handle 0 or multiple rows without error.
   const { data: attempt } = await admin
     .from('exam_attempts')
     .select('id, show_score_to_group')
     .eq('exam_id', id)
     .eq('user_id', user!.id)
     .eq('status', 'completed')
-    .single()
+    .order('submitted_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
 
   if (!attempt) {
-    // No attempt — send them to take the exam
+    // No completed attempt — send them to take the exam
     redirect(`/exams/${id}/shared`)
   }
 
-  // If preferences already set — skip straight to results
-  if (attempt.show_score_to_group != null) {
+  // If preferences already saved, skip to results.
+  // Checking !== null and !== undefined handles both the column-exists-with-value case
+  // and the column-doesn't-exist-yet case safely.
+  if (attempt.show_score_to_group !== null && attempt.show_score_to_group !== undefined) {
     redirect(`/exams/${id}/shared`)
   }
 

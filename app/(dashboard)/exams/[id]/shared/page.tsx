@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { ExamTaker } from '@/components/exam/exam-taker'
@@ -88,11 +88,6 @@ export default async function SharedExamPage({
     .order('submitted_at', { ascending: false })
     .limit(1)
     .single()
-
-  // If attempt exists but preferences not yet set, redirect to preferences page
-  if (attempt && attempt.show_score_to_group == null) {
-    redirect(`/exams/${id}/shared/preferences`)
-  }
 
   // ── RESULTS VIEW — user has already submitted ──
   if (attempt) {
