@@ -132,6 +132,51 @@ export async function submitSharedExam(input: {
     // non-fatal
   }
 
-  // Redirect back to the shared page — it will detect the completed attempt and show results
+  // Redirect to preferences page — user must answer visibility questions before seeing results
+  redirect(`/exams/${input.examId}/shared/preferences`)
+}
+
+export async function saveSharedExamPreferences(input: {
+  examId: string
+  showScoreToGroup: boolean
+  includeInRankings: boolean
+}): Promise<{ error: string } | void> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'Not authenticated' }
+
+  const admin = createAdminClient()
+
+  // Verify this user is a recipient
+  const { data: recipient } = await admin
+    .from('exam_shared_recipients')
+    .select('id')
+    .eq('exam_id', input.examId)
+    .eq('email', user.email!)
+    .single()
+
+  if (!recipient) return { error: 'You do not have access to this exam' }
+
+  // Find the completed attempt
+  const { data: attempt } = await admin
+    .from('exam_attempts')
+    .select('id')
+    .eq('exam_id', input.examId)
+    .eq('user_id', user.id)
+    .eq('status', 'completed')
+    .single()
+
+  if (!attempt) return { error: 'No completed attempt found' }
+
+  const { error } = await admin
+    .from('exam_attempts')
+    .update({
+      show_score_to_group: input.showScoreToGroup,
+      include_in_rankings: input.includeInRankings,
+    })
+    .eq('id', attempt.id)
+
+  if (error) return { error: `Failed to save preferences: ${error.message}` }
+
   redirect(`/exams/${input.examId}/shared`)
 }
