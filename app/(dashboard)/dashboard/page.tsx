@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ExamStatusBadge } from '@/components/ui/badge'
 import { daysUntil, isExamLocked } from '@/lib/utils'
+import { seedDemoExam } from '@/lib/demo/seed-demo-exam'
 import type { Exam } from '@/types'
 
 export const metadata: Metadata = { title: 'Dashboard' }
@@ -21,6 +22,25 @@ export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   const admin = createAdminClient()
+
+  // ── First-time onboarding: seed a demo exam for brand new users ────────
+  // Runs once per user, guarded by user_metadata.demo_created.
+  if (!user?.user_metadata?.demo_created) {
+    try {
+      await seedDemoExam(user!.id, admin)
+    } catch (e) {
+      console.error('[dashboard] demo seed failed:', e)
+    }
+    // Mark flag regardless of outcome — on failure the user simply won't have
+    // the demo, but we avoid hammering the DB on every subsequent page load.
+    try {
+      await admin.auth.admin.updateUserById(user!.id, {
+        user_metadata: { ...user!.user_metadata, demo_created: true },
+      })
+    } catch (e) {
+      console.error('[dashboard] failed to set demo_created flag:', e)
+    }
+  }
 
   const fullName = user?.user_metadata?.full_name as string | undefined
   const displayName = fullName ?? user?.email?.split('@')[0] ?? 'there'
@@ -207,7 +227,14 @@ export default async function DashboardPage() {
               return (
                 <div key={exam.id} className="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 transition-colors">
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-slate-900 truncate">{exam.title}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium text-slate-900 truncate">{exam.title}</p>
+                      {exam.title === 'Biology Demo Exam' && (
+                        <span className="shrink-0 inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-xs font-medium text-slate-500">
+                          Demo
+                        </span>
+                      )}
+                    </div>
                     <p className="text-sm text-slate-400 mt-0.5">
                       {exam.subject} ·{' '}
                       {exam.status === 'completed'
