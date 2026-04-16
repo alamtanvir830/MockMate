@@ -148,8 +148,7 @@ export default async function GroupDetailPage({
   // Build member list
   const members: Member[] = []
 
-  // Creator — the creator's own attempt is in exam_attempts but NOT subject to
-  // the shared preferences flow. We show their completion status but no score/preferences.
+  // Creator — look up their actual attempt preferences so they can participate in rankings.
   const creatorAttemptInfo = attemptByEmail.get(isCreator ? user!.email! : creatorEmail)
   members.push({
     name: isCreator
@@ -160,16 +159,18 @@ export default async function GroupDetailPage({
     isCurrentUser: isCreator,
     status: creatorAttemptInfo ? 'completed' : 'not_started',
     completedAt: creatorAttemptInfo?.submittedAt ?? null,
-    // Creator doesn't go through the shared preferences flow
-    showScoreToGroup: null,
-    includeInRankings: null,
-    percentage: null,
-    score: null,
-    totalMarks: null,
+    showScoreToGroup: creatorAttemptInfo?.showScoreToGroup ?? null,
+    includeInRankings: creatorAttemptInfo?.includeInRankings ?? null,
+    percentage: creatorAttemptInfo?.percentage ?? null,
+    score: creatorAttemptInfo?.score ?? null,
+    totalMarks: creatorAttemptInfo?.totalMarks ?? null,
   })
 
-  // Recipients
+  // Recipients — skip any whose email matches the creator's to avoid duplication
+  // when the creator was also added as a recipient (e.g. in demo exams).
+  const resolvedCreatorEmail = isCreator ? user!.email! : creatorEmail
   for (const r of recipients ?? []) {
+    if (r.email === resolvedCreatorEmail) continue
     const isCurrentUserMember = r.email === user!.email!
     const info = attemptByEmail.get(r.email)
     members.push({
@@ -189,13 +190,13 @@ export default async function GroupDetailPage({
     })
   }
 
-  // Build rankings — members who opted in, sorted by score desc
+  // Build rankings — anyone (creator or member) who opted in, sorted by score desc
   const rankingMembers = members
-    .filter((m) => m.role === 'member' && m.includeInRankings === true && m.percentage !== null)
+    .filter((m) => m.includeInRankings === true && m.percentage !== null)
     .sort((a, b) => (b.percentage ?? 0) - (a.percentage ?? 0))
 
-  // Is the current user (as a member) excluded from rankings by their own choice?
-  const currentMember = members.find((m) => m.isCurrentUser && m.role === 'member')
+  // Is the current user excluded from rankings by their own choice?
+  const currentMember = members.find((m) => m.isCurrentUser)
   const currentUserOptedOutOfRankings =
     currentMember?.status === 'completed' && currentMember.includeInRankings === false
 

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ExamStatusBadge } from '@/components/ui/badge'
 import { daysUntil, isExamLocked } from '@/lib/utils'
-import { seedDemoExam } from '@/lib/demo/seed-demo-exam'
+import { seedDemoExam, seedDemoGroupExam } from '@/lib/demo/seed-demo-exam'
 import type { Exam } from '@/types'
 
 export const metadata: Metadata = { title: 'Dashboard' }
@@ -23,22 +23,40 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   const admin = createAdminClient()
 
-  // ── First-time onboarding: seed a demo exam for brand new users ────────
-  // Runs once per user, guarded by user_metadata.demo_created.
+  // ── First-time onboarding: seed demo exams for brand new users ─────────
+  // Each demo runs once per user, guarded by user_metadata flags.
   if (!user?.user_metadata?.demo_created) {
     try {
       await seedDemoExam(user!.id, admin)
     } catch (e) {
-      console.error('[dashboard] demo seed failed:', e)
+      console.error('[dashboard] solo demo seed failed:', e)
     }
-    // Mark flag regardless of outcome — on failure the user simply won't have
-    // the demo, but we avoid hammering the DB on every subsequent page load.
     try {
       await admin.auth.admin.updateUserById(user!.id, {
         user_metadata: { ...user!.user_metadata, demo_created: true },
       })
     } catch (e) {
       console.error('[dashboard] failed to set demo_created flag:', e)
+    }
+  }
+
+  if (!user?.user_metadata?.demo_group_created) {
+    const userEmail = user!.email!
+    const userName =
+      (user!.user_metadata?.full_name as string | undefined) ??
+      userEmail.split('@')[0] ??
+      'You'
+    try {
+      await seedDemoGroupExam(user!.id, userEmail, userName, admin)
+    } catch (e) {
+      console.error('[dashboard] group demo seed failed:', e)
+    }
+    try {
+      await admin.auth.admin.updateUserById(user!.id, {
+        user_metadata: { ...user!.user_metadata, demo_group_created: true },
+      })
+    } catch (e) {
+      console.error('[dashboard] failed to set demo_group_created flag:', e)
     }
   }
 
