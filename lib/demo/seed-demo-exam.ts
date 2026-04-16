@@ -959,6 +959,29 @@ export async function seedDemoGroupExam(
 ): Promise<void> {
   console.log('[demo-group] seeding group demo exam for user', userId)
 
+  // ── DB-level guard: skip if already seeded for this user ──────────────
+  // Checks whether the user is already a recipient in a Physics Group Demo Exam.
+  // This prevents double-seeding even when the user_metadata flag is stale or missing.
+  const { data: existingRecipients } = await admin
+    .from('exam_shared_recipients')
+    .select('exam_id')
+    .eq('email', userEmail)
+
+  if (existingRecipients && existingRecipients.length > 0) {
+    const existingIds = existingRecipients.map((r: { exam_id: string }) => r.exam_id)
+    const { data: existingDemo } = await admin
+      .from('exams')
+      .select('id')
+      .in('id', existingIds)
+      .eq('title', 'Physics Group Demo Exam')
+      .limit(1)
+
+    if (existingDemo && existingDemo.length > 0) {
+      console.log('[demo-group] demo already seeded for this user — skipping')
+      return
+    }
+  }
+
   // ── 1. Create fake auth users ──────────────────────────────────────────
   const suffix = userId.slice(0, 8)
   const bobEmail = `demo-bob-${suffix}@mockmate-demo.invalid`
@@ -1065,61 +1088,42 @@ export async function seedDemoGroupExam(
   }
 
   // ── 5. Create the new user's completed attempt (16/20 = 80%) ──────────
-  const newUserAttemptRow = {
-    exam_id: exam.id,
-    user_id: userId,
-    status: 'completed',
-    score: 16,
-    total_marks: 20,
-    percentage: 80,
-    submitted_at: '2026-03-17T14:00:00.000Z',
-    show_score_to_group: true,
-    include_in_rankings: true,
-    ai_feedback: {
-      what_went_well:
-        'You demonstrated solid understanding across most of the syllabus — Newtonian mechanics, kinetic energy, electric force, Ohm\'s law, nuclear decay, capacitors in series, the Carnot cycle, circular motion, work–energy calculations, special relativity, and the de Broglie hypothesis were all handled correctly.',
-      what_to_review:
-        'Focus on four specific areas: (1) Snell\'s law — when crossing into a denser medium the ray bends towards the normal, not away; (2) simple harmonic motion — maximum acceleration occurs at maximum displacement, not at equilibrium; (3) Faraday\'s law — EMF is induced by the rate of change of flux, not by the static field magnitude; (4) the Doppler effect — a source approaching an observer produces a higher detected frequency, not lower.',
-      mistake_pattern:
-        'Your errors share a common theme: confusing the direction or sign of a physical effect (bending toward vs. away from normal, higher vs. lower frequency) or identifying the wrong variable as the cause (static field magnitude vs. rate of change). Building explicit "before and after" mental models for each wave/field phenomenon — and practising the right-hand rule and directional reasoning — should resolve these mistakes.',
-    },
+  // Two-step: insert base columns first (always works), then patch pref columns.
+  const aiFeedback = {
+    what_went_well:
+      'You demonstrated solid understanding across most of the syllabus — Newtonian mechanics, kinetic energy, electric force, Ohm\'s law, nuclear decay, capacitors in series, the Carnot cycle, circular motion, work–energy calculations, special relativity, and the de Broglie hypothesis were all handled correctly.',
+    what_to_review:
+      'Focus on four specific areas: (1) Snell\'s law — when crossing into a denser medium the ray bends towards the normal, not away; (2) simple harmonic motion — maximum acceleration occurs at maximum displacement, not at equilibrium; (3) Faraday\'s law — EMF is induced by the rate of change of flux, not by the static field magnitude; (4) the Doppler effect — a source approaching an observer produces a higher detected frequency, not lower.',
+    mistake_pattern:
+      'Your errors share a common theme: confusing the direction or sign of a physical effect (bending toward vs. away from normal, higher vs. lower frequency) or identifying the wrong variable as the cause (static field magnitude vs. rate of change). Building explicit "before and after" mental models for each wave/field phenomenon — and practising the right-hand rule and directional reasoning — should resolve these mistakes.',
   }
 
-  // Try with show_score_to_group / include_in_rankings; fall back if columns missing
-  let { data: newUserAttempt, error: newUserAttemptError } = await admin
+  const { data: newUserAttempt, error: newUserAttemptError } = await admin
     .from('exam_attempts')
-    .insert(newUserAttemptRow)
+    .insert({
+      exam_id: exam.id,
+      user_id: userId,
+      status: 'completed',
+      score: 16,
+      total_marks: 20,
+      percentage: 80,
+      submitted_at: '2026-03-17T14:00:00.000Z',
+      ai_feedback: aiFeedback,
+    })
     .select('id')
     .single()
-
-  if (
-    newUserAttemptError &&
-    (newUserAttemptError.message?.includes('show_score_to_group') ||
-      newUserAttemptError.message?.includes('include_in_rankings'))
-  ) {
-    const { data: retry, error: retryError } = await admin
-      .from('exam_attempts')
-      .insert({
-        exam_id: exam.id,
-        user_id: userId,
-        status: 'completed',
-        score: 16,
-        total_marks: 20,
-        percentage: 80,
-        submitted_at: '2026-03-17T14:00:00.000Z',
-        ai_feedback: newUserAttemptRow.ai_feedback,
-      })
-      .select('id')
-      .single()
-    newUserAttempt = retry
-    newUserAttemptError = retryError ?? null
-  }
 
   if (newUserAttemptError || !newUserAttempt) {
     console.error('[demo-group] failed to create new user attempt:', newUserAttemptError)
     await admin.from('exams').delete().eq('id', exam.id)
     return
   }
+
+  // Patch preference columns — non-fatal if migration not yet run
+  await admin
+    .from('exam_attempts')
+    .update({ show_score_to_group: true, include_in_rankings: true })
+    .eq('id', newUserAttempt.id)
 
   // ── 6. Create exam_responses for new user (4 wrong: indices 3, 7, 11, 15) ─
   const wrongIndexSet = new Set(
@@ -1160,6 +1164,7 @@ export async function seedDemoGroupExam(
   }
 
   // ── 7. Create fake member attempts (no responses needed) ──────────────
+  // Two-step: base insert first (always works), then patch pref columns.
   const fakeAttempts = [
     { user_id: bobId, score: 18, percentage: 90 },
     { user_id: johnId, score: 17, percentage: 85 },
@@ -1167,26 +1172,9 @@ export async function seedDemoGroupExam(
   ]
 
   for (const fa of fakeAttempts) {
-    const fakeRow = {
-      exam_id: exam.id,
-      user_id: fa.user_id,
-      status: 'completed',
-      score: fa.score,
-      total_marks: 20,
-      percentage: fa.percentage,
-      submitted_at: '2026-03-17T14:00:00.000Z',
-      show_score_to_group: true,
-      include_in_rankings: true,
-    }
-
-    let { error: fakeError } = await admin.from('exam_attempts').insert(fakeRow)
-
-    if (
-      fakeError &&
-      (fakeError.message?.includes('show_score_to_group') ||
-        fakeError.message?.includes('include_in_rankings'))
-    ) {
-      const { error: retryErr } = await admin.from('exam_attempts').insert({
+    const { data: insertedAttempt, error: fakeError } = await admin
+      .from('exam_attempts')
+      .insert({
         exam_id: exam.id,
         user_id: fa.user_id,
         status: 'completed',
@@ -1195,12 +1183,21 @@ export async function seedDemoGroupExam(
         percentage: fa.percentage,
         submitted_at: '2026-03-17T14:00:00.000Z',
       })
-      fakeError = retryErr ?? null
-    }
+      .select('id')
+      .single()
 
     if (fakeError) {
       console.error('[demo-group] failed to insert fake attempt for', fa.user_id, ':', fakeError)
       // Non-fatal: partial attempts still make a useful demo
+      continue
+    }
+
+    // Patch preference columns — non-fatal if migration not yet run
+    if (insertedAttempt) {
+      await admin
+        .from('exam_attempts')
+        .update({ show_score_to_group: true, include_in_rankings: true })
+        .eq('id', insertedAttempt.id)
     }
   }
 
