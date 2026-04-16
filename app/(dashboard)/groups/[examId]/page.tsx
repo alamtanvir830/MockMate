@@ -194,6 +194,11 @@ export default async function GroupDetailPage({
     .filter((m) => m.role === 'member' && m.includeInRankings === true && m.percentage !== null)
     .sort((a, b) => (b.percentage ?? 0) - (a.percentage ?? 0))
 
+  // Is the current user (as a member) excluded from rankings by their own choice?
+  const currentMember = members.find((m) => m.isCurrentUser && m.role === 'member')
+  const currentUserOptedOutOfRankings =
+    currentMember?.status === 'completed' && currentMember.includeInRankings === false
+
   const locked = isExamLocked(exam.unlock_date)
   const daysToExam = daysUntil(exam.exam_date)
   const daysToUnlock = locked ? daysUntil(exam.unlock_date) : 0
@@ -342,12 +347,13 @@ export default async function GroupDetailPage({
                 <div className="shrink-0 text-right space-y-1">
                   {member.status === 'completed' ? (
                     <>
-                      {/* Score — only if viewer is allowed to see it */}
-                      {canSeeScore && member.percentage !== null && (
+                      {canSeeScore && member.percentage !== null ? (
                         <p className="text-sm font-semibold text-slate-800">
                           {member.percentage}%
                         </p>
-                      )}
+                      ) : !member.isCurrentUser && member.role === 'member' ? (
+                        <p className="text-xs text-slate-400 italic">Score private</p>
+                      ) : null}
                       <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-xs font-medium text-emerald-700">
                         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="h-3 w-3">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -377,7 +383,7 @@ export default async function GroupDetailPage({
       </Card>
 
       {/* Group Rankings — only shown if at least one member opted in */}
-      {rankingMembers.length > 0 && (
+      {(rankingMembers.length > 0 || currentUserOptedOutOfRankings) && (
         <Card padded={false}>
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -387,45 +393,57 @@ export default async function GroupDetailPage({
               Only members who opted into rankings are shown. Scores are hidden unless the member chose to share them.
             </p>
           </CardHeader>
-          <div className="divide-y divide-slate-100">
-            {rankingMembers.map((member, i) => {
-              const rank = i + 1
-              const canSeeScore = member.isCurrentUser || member.showScoreToGroup === true
-              const medal = rankMedals[i]
 
-              return (
-                <div key={member.email} className="flex items-center gap-4 px-6 py-4">
-                  {/* Rank */}
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center">
-                    {medal ? (
-                      <span className="text-xl">{medal}</span>
-                    ) : (
-                      <span className="text-sm font-bold text-slate-500">#{rank}</span>
-                    )}
-                  </div>
+          {rankingMembers.length > 0 ? (
+            <div className="divide-y divide-slate-100">
+              {rankingMembers.map((member, i) => {
+                const rank = i + 1
+                const canSeeScore = member.isCurrentUser || member.showScoreToGroup === true
+                const medal = rankMedals[i]
 
-                  {/* Name */}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-900 truncate">
-                      {member.name}
-                      {member.isCurrentUser && (
-                        <span className="ml-1.5 text-xs font-normal text-slate-400">(you)</span>
+                return (
+                  <div key={member.email} className="flex items-center gap-4 px-6 py-4">
+                    {/* Rank */}
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center">
+                      {medal ? (
+                        <span className="text-xl">{medal}</span>
+                      ) : (
+                        <span className="text-sm font-bold text-slate-500">#{rank}</span>
                       )}
-                    </p>
-                  </div>
+                    </div>
 
-                  {/* Score or hidden */}
-                  <div className="shrink-0 text-right">
-                    {canSeeScore && member.percentage !== null ? (
-                      <p className="text-sm font-semibold text-slate-800">{member.percentage}%</p>
-                    ) : (
-                      <p className="text-xs text-slate-400 italic">Score hidden</p>
-                    )}
+                    {/* Name */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-slate-900 truncate">
+                        {member.name}
+                        {member.isCurrentUser && (
+                          <span className="ml-1.5 text-xs font-normal text-slate-400">(you)</span>
+                        )}
+                      </p>
+                    </div>
+
+                    {/* Score or hidden */}
+                    <div className="shrink-0 text-right">
+                      {canSeeScore && member.percentage !== null ? (
+                        <p className="text-sm font-semibold text-slate-800">{member.percentage}%</p>
+                      ) : (
+                        <p className="text-xs text-slate-400 italic">Score hidden</p>
+                      )}
+                    </div>
                   </div>
-                </div>
-              )
-            })}
-          </div>
+                )
+              })}
+            </div>
+          ) : null}
+
+          {/* Nudge if the current user opted out */}
+          {currentUserOptedOutOfRankings && (
+            <div className="px-6 py-4 border-t border-slate-100">
+              <p className="text-xs text-slate-500">
+                You chose not to appear in the group rankings. Only you can see this notice.
+              </p>
+            </div>
+          )}
         </Card>
       )}
 

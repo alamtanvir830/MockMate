@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { generateQuestions } from '@/lib/ai/generate-questions'
+import { sendGroupAddedEmails } from '@/lib/email/send-group-added'
 
 export interface CreateExamInput {
   title: string
@@ -119,19 +120,56 @@ export async function createExam(
     )
   }
 
-  // 6. Save shared exam recipients (non-fatal)
+  // 6. Save shared exam recipients and notify them by email (non-fatal)
+  console.log('[createExam] sharedWith raw input:', JSON.stringify(input.sharedWith))
+
   const validShared = input.sharedWith.filter(
     (p) => p.name.trim() && p.email.trim() && p.email.includes('@'),
   )
+
+  console.log(
+    `[createExam] validShared after filter: ${validShared.length} recipient(s)`,
+    validShared.map((p) => p.email),
+  )
+
   if (validShared.length > 0) {
-    await supabase.from('exam_shared_recipients').insert(
-      validShared.map((p) => ({
-        exam_id: exam.id,
-        user_id: user.id,
-        name: p.name.trim(),
-        email: p.email.trim(),
-      })),
+    console.log('[createExam] inserting exam_shared_recipients rows...')
+    const { error: recipientsInsertError } = await supabase
+      .from('exam_shared_recipients')
+      .insert(
+        validShared.map((p) => ({
+          exam_id: exam.id,
+          user_id: user.id,
+          name: p.name.trim(),
+          email: p.email.trim(),
+        })),
+      )
+
+    if (recipientsInsertError) {
+      console.error('[createExam] exam_shared_recipients insert error:', recipientsInsertError)
+    } else {
+      console.log('[createExam] exam_shared_recipients insert succeeded')
+    }
+
+    // Notify each recipient that they have been added to the group
+    const addedByName =
+      user.user_metadata?.full_name ?? user.email?.split('@')[0] ?? 'Someone'
+
+    console.log(
+      `[createExam] calling sendGroupAddedEmails for ${validShared.length} recipient(s), addedByName="${addedByName}", RESEND_API_KEY set=${!!process.env.RESEND_API_KEY}`,
     )
+
+    try {
+      await sendGroupAddedEmails(validShared, {
+        examTitle: input.title.trim(),
+        addedByName,
+      })
+      console.log('[createExam] sendGroupAddedEmails returned without throwing')
+    } catch (e) {
+      console.error('[createExam] sendGroupAddedEmails threw an unexpected error:', e)
+    }
+  } else {
+    console.log('[createExam] no valid shared recipients — skipping group-added email')
   }
 
   redirect('/dashboard')
