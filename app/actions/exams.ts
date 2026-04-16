@@ -88,11 +88,32 @@ export async function createExam(
     correct_answer: q.correct_answer,
     marks: 1,
     order: i + 1,
+    // Include explanation columns if present (requires SQL migration;
+    // falls back to omitting them if columns don't exist yet)
+    ...(q.explanation_correct !== undefined ? { explanation_correct: q.explanation_correct } : {}),
+    ...(q.explanation_incorrect !== undefined ? { explanation_incorrect: q.explanation_incorrect } : {}),
   }))
 
-  const { error: questionsError } = await supabase
-    .from('questions')
-    .insert(rows)
+  let { error: questionsError } = await supabase.from('questions').insert(rows)
+
+  // If the error mentions explanation columns (migration not yet run), retry without them
+  if (
+    questionsError &&
+    (questionsError.message?.includes('explanation_correct') ||
+      questionsError.message?.includes('explanation_incorrect'))
+  ) {
+    const rowsWithoutExplanations = questions.map((q, i) => ({
+      exam_id: exam.id,
+      question_text: q.question_text,
+      question_type: 'multiple_choice' as const,
+      options: q.options,
+      correct_answer: q.correct_answer,
+      marks: 1,
+      order: i + 1,
+    }))
+    const { error: retryError } = await supabase.from('questions').insert(rowsWithoutExplanations)
+    questionsError = retryError ?? null
+  }
 
   if (questionsError) {
     await supabase.from('exams').delete().eq('id', exam.id)

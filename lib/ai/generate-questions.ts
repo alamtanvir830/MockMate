@@ -8,6 +8,10 @@ export interface GeneratedQuestion {
   question_text: string
   options: [string, string, string, string]
   correct_answer: string
+  // explanation_correct: why the correct answer is right (1-2 sentences)
+  // explanation_incorrect: keyed by A/B/C/D (positions in options array), for wrong options only
+  explanation_correct?: string
+  explanation_incorrect?: Record<string, string>
 }
 
 interface GenerateInput {
@@ -131,11 +135,22 @@ Return a JSON object in this exact format:
   "questions": [
     {
       "question_text": "...",
-      "options": ["option A", "option B", "option C", "option D"],
-      "correct_answer": "option A"
+      "options": ["option A text", "option B text", "option C text", "option D text"],
+      "correct_answer": "option A text",
+      "explanation_correct": "1-2 sentence explanation of why the correct answer is right, tied to the key concept or mechanism.",
+      "explanation_incorrect": {
+        "B": "1-2 sentence explanation of why option B is wrong.",
+        "C": "1-2 sentence explanation of why option C is wrong.",
+        "D": "1-2 sentence explanation of why option D is wrong."
+      }
     }
   ]
-}`,
+}
+
+Notes for explanations:
+- explanation_correct: explain the mechanism or concept — do not just restate the answer
+- explanation_incorrect: include only the WRONG options. The keys A/B/C/D correspond to the positions in the options array (A=index 0, B=index 1, C=index 2, D=index 3). Omit the key for whichever letter is the correct answer.
+- Keep each explanation 1-2 sentences, concise and high-yield`,
       },
     ],
   })
@@ -172,6 +187,17 @@ Return a JSON object in this exact format:
       question_text: q.question_text,
       options: q.options as [string, string, string, string],
       correct_answer: q.correct_answer,
+      // Non-fatal: accept explanations if present and well-formed; skip silently if not
+      explanation_correct:
+        typeof q.explanation_correct === 'string' && q.explanation_correct.trim()
+          ? q.explanation_correct.trim()
+          : undefined,
+      explanation_incorrect:
+        q.explanation_incorrect &&
+        typeof q.explanation_incorrect === 'object' &&
+        !Array.isArray(q.explanation_incorrect)
+          ? (q.explanation_incorrect as Record<string, string>)
+          : undefined,
     })
   }
 
