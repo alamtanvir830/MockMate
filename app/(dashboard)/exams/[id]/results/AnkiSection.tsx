@@ -288,12 +288,11 @@ export function AnkiSection({ incorrectQuestions, subject, examTitle }: Props) {
             </p>
             <ol className="space-y-1">
               {[
-                'Click the button above to download the CSV file and save it anywhere on your computer.',
+                'Click Download CSV file above.',
                 'Open Anki.',
                 'Click File.',
-                'Click Import.',
-                'Select the CSV file you just downloaded.',
-                'In the new window, make sure Type is set to: Basic',
+                'Click Import, then select the CSV file you downloaded.',
+                'In the new window, make sure card type is set to: Basic',
                 'Click Import — and that\'s it.',
               ].map((step, i) => (
                 <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
