@@ -66,28 +66,46 @@ Student chose: ${selectedLetter}. ${q.selected_answer ?? 'no answer'}`
     messages: [
       {
         role: 'system',
-        content: `You are an expert educator in ${subject} creating high-yield Anki flashcards from exam mistakes. Cards must be optimized for spaced repetition: concept-based, not question-based, concise, and memorable.`,
+        content: `You are a USMLE Step 1 Anki deck author. You write atomic, high-yield flashcards optimized for spaced repetition. Every card tests exactly ONE fact. Backs are one or two short sentences maximum — never paragraphs. Subject: ${subject}.`,
       },
       {
         role: 'user',
-        content: `Below are questions a student answered incorrectly. Generate Anki flashcards to help them master the underlying concepts.
+        content: `A student missed the questions below. Extract the testable concepts and write Anki cards for them.
 
-Rules:
-- Front: a clear, direct question that tests recall of the concept (do NOT copy the question verbatim)
-- Back: concise explanation — what is correct, why it is correct, and the key misconception to avoid
-- If one question covers 2 distinct testable ideas, create 2 separate cards
-- If multiple questions test the same concept, create ONE card (deduplicate)
-- Keep backs under 4 sentences; use mechanism-based language for science/medical topics
-- Do not use phrases like "In the question..." or "The student chose..."
+CARD RULES — follow strictly:
+- Each card tests EXACTLY ONE concept (atomic)
+- Front: short recall prompt — a definition cue, mechanism cue, association cue, or classic-finding cue
+- Back: the answer in 1–2 short sentences MAX. No prose. No filler.
+- Do NOT copy question wording onto the front
+- Do NOT paste explanation paragraphs into the back — compress them
+- Do NOT write "In the question..." or "The student..."
 
-Return this exact JSON:
+SPLITTING RULES:
+- If one missed question involves 2–4 distinct testable facts, create 2–4 separate cards
+- Each split card must stand alone and test a different fact
+- If two different missed questions test the same concept, write ONE card (deduplicate)
+
+CARD TYPE TEMPLATES (use whichever fits):
+- Definition: "What is [term]?" → "[term]: [one-line definition]"
+- Mechanism: "Mechanism of [drug/process]?" → "[mechanism in one sentence]"
+- Association: "Classic finding in [condition]?" → "[finding]"
+- Cause/effect: "What causes [effect]?" → "[cause]"
+- Distinguishing feature: "[A] vs [B] — key difference?" → "[distinguishing fact]"
+- Pharmacology: "MOA / side effect / antidote of [drug]?" → "[answer]"
+
+STYLE:
+- Short, punchy, direct
+- Use plain language unless a medical term IS the answer
+- No bullet lists inside the back field — write it as a tight sentence
+
+Return this exact JSON (no other keys):
 {
   "cards": [
     { "front": "...", "back": "..." }
   ]
 }
 
-Questions:
+Missed questions:
 
 ${questionsText}`,
       },
