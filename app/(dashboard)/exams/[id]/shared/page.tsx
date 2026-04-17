@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { cn, scoreColor } from '@/lib/utils'
 import { submitSharedExam } from '@/app/actions/shared-attempts'
 import { generateExplanations } from '@/lib/ai/generate-explanations'
+import { GroupPrivacyPrefs } from '../GroupPrivacyPrefs'
 
 export const metadata: Metadata = { title: 'Shared Exam' }
 
@@ -324,6 +325,13 @@ export default async function SharedExamPage({
             </div>
           </div>
         </Card>
+
+        {/* Group privacy preferences */}
+        <GroupPrivacyPrefs
+          attemptId={attempt.id}
+          initialShowScore={attempt.show_score_to_group ?? null}
+          initialIncludeInRankings={attempt.include_in_rankings ?? null}
+        />
 
         {/* AI Feedback */}
         {aiFeedback && (

@@ -8,6 +8,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/ca
 import { cn, scoreColor } from '@/lib/utils'
 import { generateExplanations } from '@/lib/ai/generate-explanations'
 import { AnkiSection } from './AnkiSection'
+import { GroupPrivacyPrefs } from '../GroupPrivacyPrefs'
 
 export const metadata: Metadata = { title: 'Exam Results' }
 
@@ -106,6 +107,14 @@ export default async function ResultsPage({
       </div>
     )
   }
+
+  // Check if this is a group exam (has shared recipients)
+  const { data: sharedRecipients } = await supabase
+    .from('exam_shared_recipients')
+    .select('id')
+    .eq('exam_id', id)
+    .limit(1)
+  const isGroupExam = (sharedRecipients?.length ?? 0) > 0
 
   // Get responses for this attempt
   const { data: responses } = await supabase
@@ -270,6 +279,17 @@ export default async function ResultsPage({
           </div>
         </div>
       </Card>
+
+      {/* Group privacy preferences — only for group exams */}
+      {isGroupExam && (
+        <GroupPrivacyPrefs
+          attemptId={attempt.id}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          initialShowScore={(attempt as any).show_score_to_group ?? null}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          initialIncludeInRankings={(attempt as any).include_in_rankings ?? null}
+        />
+      )}
 
       {/* AI Feedback */}
       {aiFeedback && (
