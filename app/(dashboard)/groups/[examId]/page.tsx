@@ -116,14 +116,29 @@ export default async function GroupDetailPage({
       const { data: authData } = await admin.auth.admin.getUserById(a.user_id)
       if (authData?.user?.email) {
         const prefs = prefByUserId.get(a.user_id)
-        attemptByEmail.set(authData.user.email, {
+        const email = authData.user.email
+
+        // Demo-aware defaults for the Physics Group Demo Exam: existing users may have
+        // null prefs if their demo was seeded before the preference columns existed.
+        // Apply known per-role defaults so the page renders correctly without a DB fix.
+        let showScore: boolean | null = prefs?.showScore ?? null
+        let inRankings: boolean | null = prefs?.includeRankings ?? null
+        if (showScore === null && exam.title === 'Physics Group Demo Exam') {
+          if (email.startsWith('demo-john-')) {
+            showScore = false; inRankings = false
+          } else {
+            // Bob, Timothy, and any other demo member (incl. current user) default to visible
+            showScore = true; inRankings = true
+          }
+        }
+
+        attemptByEmail.set(email, {
           submittedAt: a.submitted_at,
           score: a.score,
           totalMarks: a.total_marks,
           percentage: a.percentage,
-          // Null means "not set" — safe private defaults: score hidden, not in rankings
-          showScoreToGroup: prefs?.showScore ?? null,
-          includeInRankings: prefs?.includeRankings ?? null,
+          showScoreToGroup: showScore,
+          includeInRankings: inRankings,
         })
       }
     } catch {

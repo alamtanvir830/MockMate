@@ -1186,15 +1186,19 @@ export async function seedDemoGroupExam(
   }
 
   // ── 7. Create fake member attempts (no responses needed) ──────────────
-  // Two-step: base insert first (always works), then patch pref columns.
+  // Intentional per-member privacy settings for the demo:
+  //   Bob     → score visible,  in rankings (show demo best case)
+  //   John    → score private,  NOT in rankings (show "Score private" path)
+  //   Timothy → score visible,  in rankings
   const fakeAttempts = [
-    { user_id: bobId, score: 18, percentage: 90 },
-    { user_id: johnId, score: 17, percentage: 85 },
-    { user_id: timothyId, score: 14, percentage: 70 },
+    { user_id: bobId,     score: 18, percentage: 90, showScore: true,  inRankings: true  },
+    { user_id: johnId,    score: 17, percentage: 85, showScore: false, inRankings: false },
+    { user_id: timothyId, score: 14, percentage: 70, showScore: true,  inRankings: true  },
   ]
 
   for (const fa of fakeAttempts) {
-    const { data: insertedAttempt, error: fakeError } = await admin
+    // Try INSERT with preference columns first (works when migration has run).
+    const { data: withPrefs, error: withPrefsError } = await admin
       .from('exam_attempts')
       .insert({
         exam_id: exam.id,
@@ -1204,22 +1208,47 @@ export async function seedDemoGroupExam(
         total_marks: 20,
         percentage: fa.percentage,
         submitted_at: '2026-03-17T14:00:00.000Z',
+        show_score_to_group: fa.showScore,
+        include_in_rankings: fa.inRankings,
       })
       .select('id')
       .single()
 
-    if (fakeError) {
-      console.error('[demo-group] failed to insert fake attempt for', fa.user_id, ':', fakeError)
-      // Non-fatal: partial attempts still make a useful demo
-      continue
-    }
+    if (!withPrefsError) continue  // inserted cleanly with prefs — done
 
-    // Patch preference columns — non-fatal if migration not yet run
-    if (insertedAttempt) {
-      await admin
+    // Preference columns don't exist yet: fall back to base insert + UPDATE.
+    if (
+      withPrefsError.message?.includes('show_score_to_group') ||
+      withPrefsError.message?.includes('include_in_rankings')
+    ) {
+      const { data: baseAttempt, error: baseError } = await admin
         .from('exam_attempts')
-        .update({ show_score_to_group: true, include_in_rankings: true })
-        .eq('id', insertedAttempt.id)
+        .insert({
+          exam_id: exam.id,
+          user_id: fa.user_id,
+          status: 'completed',
+          score: fa.score,
+          total_marks: 20,
+          percentage: fa.percentage,
+          submitted_at: '2026-03-17T14:00:00.000Z',
+        })
+        .select('id')
+        .single()
+
+      if (baseError) {
+        console.error('[demo-group] failed to insert fake attempt for', fa.user_id, ':', baseError)
+        continue
+      }
+
+      if (baseAttempt) {
+        // Best-effort UPDATE — silently ignored if columns still absent
+        await admin
+          .from('exam_attempts')
+          .update({ show_score_to_group: fa.showScore, include_in_rankings: fa.inRankings })
+          .eq('id', baseAttempt.id)
+      }
+    } else {
+      console.error('[demo-group] failed to insert fake attempt for', fa.user_id, ':', withPrefsError)
     }
   }
 
