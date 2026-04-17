@@ -328,7 +328,7 @@ export default async function SharedExamPage({
 
         {/* Group privacy preferences */}
         <GroupPrivacyPrefs
-          attemptId={attempt.id}
+          examId={id}
           initialShowScore={attempt.show_score_to_group ?? null}
           initialIncludeInRankings={attempt.include_in_rankings ?? null}
         />

@@ -136,6 +136,103 @@ export async function submitSharedExam(input: {
   redirect(`/exams/${input.examId}/shared/preferences`)
 }
 
+/**
+ * In-place update of group privacy preferences — does NOT redirect.
+ * Used by the GroupPrivacyPrefs client component on the results page.
+ * Works for both exam recipients and the exam creator.
+ */
+export async function updateGroupPrivacyInPlace(input: {
+  examId: string
+  showScoreToGroup: boolean
+  includeInRankings: boolean
+}): Promise<{ error: string } | { ok: true }> {
+  const supabase = await createClient()
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+  if (authError || !user) {
+    console.error('[updateGroupPrivacyInPlace] auth error:', authError)
+    return { error: 'Not authenticated' }
+  }
+
+  const admin = createAdminClient()
+
+  // Accept both recipients and the exam creator
+  const [recipientResult, examResult] = await Promise.all([
+    admin
+      .from('exam_shared_recipients')
+      .select('id')
+      .eq('exam_id', input.examId)
+      .eq('email', user.email!)
+      .maybeSingle(),
+    admin
+      .from('exams')
+      .select('id')
+      .eq('id', input.examId)
+      .eq('user_id', user.id)
+      .maybeSingle(),
+  ])
+
+  const isRecipient = !!recipientResult.data
+  const isCreator = !!examResult.data
+
+  if (!isRecipient && !isCreator) {
+    console.error('[updateGroupPrivacyInPlace] access denied — user:', user.id, 'exam:', input.examId)
+    return { error: 'You do not have access to this exam' }
+  }
+
+  // Find the completed attempt for this user
+  const { data: attempt, error: attemptError } = await admin
+    .from('exam_attempts')
+    .select('id')
+    .eq('exam_id', input.examId)
+    .eq('user_id', user.id)
+    .eq('status', 'completed')
+    .order('submitted_at', { ascending: false })
+    .limit(1)
+    .maybeSingle()
+
+  if (attemptError) {
+    console.error('[updateGroupPrivacyInPlace] attempt lookup failed:', attemptError)
+    return { error: `Could not find attempt: ${attemptError.message}` }
+  }
+  if (!attempt) {
+    console.error('[updateGroupPrivacyInPlace] no completed attempt — user:', user.id, 'exam:', input.examId)
+    return { error: 'No completed attempt found for this exam' }
+  }
+
+  // Update preference columns
+  const { error: updateError } = await admin
+    .from('exam_attempts')
+    .update({
+      show_score_to_group: input.showScoreToGroup,
+      include_in_rankings: input.includeInRankings,
+    })
+    .eq('id', attempt.id)
+
+  if (updateError) {
+    const msg = updateError.message ?? ''
+    const isColumnMissing =
+      msg.includes('show_score_to_group') ||
+      msg.includes('include_in_rankings') ||
+      (msg.includes('column') && msg.includes('does not exist'))
+
+    if (isColumnMissing) {
+      console.error(
+        '[updateGroupPrivacyInPlace] preference columns missing on exam_attempts.',
+        'Run this SQL in your Supabase dashboard:',
+        'ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS show_score_to_group boolean;',
+        'ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS include_in_rankings boolean;',
+        updateError,
+      )
+      return { error: 'columns_missing' }
+    }
+
+    console.error('[updateGroupPrivacyInPlace] update failed:', updateError)
+    return { error: `Failed to save: ${updateError.message}` }
+  }
+
+  return { ok: true }
+}
+
 export async function saveSharedExamPreferences(input: {
   examId: string
   showScoreToGroup: boolean

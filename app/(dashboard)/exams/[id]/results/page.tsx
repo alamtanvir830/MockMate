@@ -283,10 +283,8 @@ export default async function ResultsPage({
       {/* Group privacy preferences — only for group exams */}
       {isGroupExam && (
         <GroupPrivacyPrefs
-          attemptId={attempt.id}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          examId={id}
           initialShowScore={(attempt as any).show_score_to_group ?? null}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           initialIncludeInRankings={(attempt as any).include_in_rankings ?? null}
         />
       )}

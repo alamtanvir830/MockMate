@@ -3,18 +3,19 @@
 import { useState } from 'react'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
+import { updateGroupPrivacyInPlace } from '@/app/actions/shared-attempts'
 
 interface Props {
-  attemptId: string
+  examId: string
   /** Current saved value from DB — null means not yet answered (treated as private) */
   initialShowScore: boolean | null
   initialIncludeInRankings: boolean | null
 }
 
-type SaveStatus = 'idle' | 'saving' | 'saved' | 'error'
+type SaveStatus = 'idle' | 'saving' | 'saved' | 'error' | 'columns_missing'
 
 export function GroupPrivacyPrefs({
-  attemptId,
+  examId,
   initialShowScore,
   initialIncludeInRankings,
 }: Props) {
@@ -27,21 +28,17 @@ export function GroupPrivacyPrefs({
 
   async function persist(nextShowScore: boolean, nextIncludeRankings: boolean) {
     setStatus('saving')
-    try {
-      const res = await fetch('/api/group-privacy', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          attemptId,
-          showScore: nextShowScore,
-          includeInRankings: nextIncludeRankings,
-        }),
-      })
-      if (!res.ok) throw new Error()
+    const result = await updateGroupPrivacyInPlace({
+      examId,
+      showScoreToGroup: nextShowScore,
+      includeInRankings: nextIncludeRankings,
+    })
+    if ('error' in result) {
+      console.error('[GroupPrivacyPrefs] save failed:', result.error)
+      setStatus(result.error === 'columns_missing' ? 'columns_missing' : 'error')
+    } else {
       setStatus('saved')
       setTimeout(() => setStatus('idle'), 2000)
-    } catch {
-      setStatus('error')
     }
   }
 
@@ -93,6 +90,9 @@ export function GroupPrivacyPrefs({
             )}
             {status === 'error' && (
               <span className="text-xs text-red-500">Failed to save — try again</span>
+            )}
+            {status === 'columns_missing' && (
+              <span className="text-xs text-amber-600">DB migration needed — see server logs</span>
             )}
           </div>
         </div>
