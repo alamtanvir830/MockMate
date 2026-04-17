@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { cn, scoreColor } from '@/lib/utils'
 import { generateExplanations } from '@/lib/ai/generate-explanations'
+import { AnkiSection } from './AnkiSection'
 
 export const metadata: Metadata = { title: 'Exam Results' }
 
@@ -208,6 +209,17 @@ export default async function ResultsPage({
   const incorrectCount = reviewItems.length - correctCount
   const aiFeedback = attempt.ai_feedback as AIFeedback | null
 
+  const incorrectQuestions = reviewItems
+    .filter((q) => !q.is_correct)
+    .map((q) => ({
+      question_text: q.question_text,
+      options: q.options,
+      correct_answer: q.correct_answer,
+      selected_answer: q.selected_answer,
+      explanation_correct: q.explanation_correct,
+      explanation_incorrect: q.explanation_incorrect,
+    }))
+
   return (
     <div className="max-w-3xl mx-auto space-y-8">
       {/* Header */}
@@ -297,6 +309,13 @@ export default async function ResultsPage({
           </div>
         </Card>
       )}
+
+      {/* Anki flashcard generation */}
+      <AnkiSection
+        incorrectQuestions={incorrectQuestions}
+        subject={exam.subject}
+        examTitle={exam.title}
+      />
 
       {/* Per-question review */}
       <Card>
