@@ -53,17 +53,32 @@ export default async function GroupsPage() {
   }
 
   // Fetch exam details
-  const { data: exams } = await admin
+  const { data: rawExams } = await admin
     .from('exams')
     .select('id, title, subject, exam_date, unlock_date, status, user_id')
     .in('id', allExamIds)
     .order('created_at', { ascending: false })
 
+  // Safety-net deduplication: if demo exam creation ran more than once (e.g.
+  // due to stale JWT + metadata overwrite bug), multiple exam rows with the
+  // same title can end up in the DB.  Keep only the first (newest) per demo
+  // title so My Groups never shows duplicate cards.
+  // Real user exams with identical titles are unaffected because they are
+  // never named after a known demo title.
+  const DEMO_EXAM_TITLES = new Set(['Physics Group Demo Exam', 'Biology Demo Exam'])
+  const seenDemoTitles = new Set<string>()
+  const exams = (rawExams ?? []).filter((exam) => {
+    if (!DEMO_EXAM_TITLES.has(exam.title)) return true   // keep all non-demo exams
+    if (seenDemoTitles.has(exam.title)) return false     // drop subsequent duplicates
+    seenDemoTitles.add(exam.title)
+    return true
+  })
+
   // Fetch all recipients for these exams (to show member names)
   const { data: allRecipients } = await admin
     .from('exam_shared_recipients')
     .select('exam_id, name, email')
-    .in('exam_id', allExamIds)
+    .in('exam_id', exams.map((e) => e.id))
 
   // Group recipients by exam_id
   const recipientsByExam = new Map<string, { name: string; email: string }[]>()
@@ -77,12 +92,12 @@ export default async function GroupsPage() {
       <div>
         <h1 className="text-2xl font-bold text-slate-900">My Groups</h1>
         <p className="mt-1 text-sm text-slate-500">
-          {allExamIds.length} group{allExamIds.length !== 1 ? 's' : ''}
+          {exams.length} group{exams.length !== 1 ? 's' : ''}
         </p>
       </div>
 
       <div className="space-y-3">
-        {(exams ?? []).map((exam) => {
+        {exams.map((exam) => {
           const recipients = recipientsByExam.get(exam.id) ?? []
           const isCreator = creatorExamIds.has(exam.id)
           const locked = isExamLocked(exam.unlock_date)

@@ -24,39 +24,54 @@ export default async function DashboardPage() {
   const admin = createAdminClient()
 
   // ── First-time onboarding: seed demo exams for brand new users ─────────
-  // Each demo runs once per user, guarded by user_metadata flags.
-  if (!user?.user_metadata?.demo_created) {
-    try {
-      await seedDemoExam(user!.id, admin)
-    } catch (e) {
-      console.error('[dashboard] solo demo seed failed:', e)
-    }
-    try {
-      await admin.auth.admin.updateUserById(user!.id, {
-        user_metadata: { ...user!.user_metadata, demo_created: true },
-      })
-    } catch (e) {
-      console.error('[dashboard] failed to set demo_created flag:', e)
-    }
-  }
+  // IMPORTANT: always read metadata fresh from the DB via the admin API.
+  // supabase.auth.getUser() returns the JWT from the cookie, which can be
+  // stale for up to an hour after updateUserById() writes new flags.
+  // Reading from admin bypasses the JWT cache entirely.
+  const { data: freshAuthData } = await admin.auth.admin.getUserById(user!.id)
+  const currentMeta = (freshAuthData?.user?.user_metadata ??
+    user?.user_metadata ??
+    {}) as Record<string, unknown>
 
-  if (!user?.user_metadata?.demo_group_created) {
+  const needsBioDemo = !currentMeta.demo_created
+  const needsGroupDemo = !currentMeta.demo_group_created
+
+  if (needsBioDemo || needsGroupDemo) {
     const userEmail = user!.email!
     const userName =
-      (user!.user_metadata?.full_name as string | undefined) ??
+      (currentMeta.full_name as string | undefined) ??
       userEmail.split('@')[0] ??
       'You'
-    try {
-      await seedDemoGroupExam(user!.id, userEmail, userName, admin)
-    } catch (e) {
-      console.error('[dashboard] group demo seed failed:', e)
+
+    if (needsBioDemo) {
+      try {
+        await seedDemoExam(user!.id, admin)
+      } catch (e) {
+        console.error('[dashboard] solo demo seed failed:', e)
+      }
     }
+
+    if (needsGroupDemo) {
+      try {
+        await seedDemoGroupExam(user!.id, userEmail, userName, admin)
+      } catch (e) {
+        console.error('[dashboard] group demo seed failed:', e)
+      }
+    }
+
+    // Single updateUserById call with both flags merged — prevents either flag
+    // from overwriting the other (the old two-call approach spread the same
+    // stale user.user_metadata each time, causing one flag to erase the other).
     try {
       await admin.auth.admin.updateUserById(user!.id, {
-        user_metadata: { ...user!.user_metadata, demo_group_created: true },
+        user_metadata: {
+          ...currentMeta,
+          ...(needsBioDemo ? { demo_created: true } : {}),
+          ...(needsGroupDemo ? { demo_group_created: true } : {}),
+        },
       })
     } catch (e) {
-      console.error('[dashboard] failed to set demo_group_created flag:', e)
+      console.error('[dashboard] failed to persist demo flags:', e)
     }
   }
 

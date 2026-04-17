@@ -959,13 +959,20 @@ export async function seedDemoGroupExam(
 ): Promise<void> {
   console.log('[demo-group] seeding group demo exam for user', userId)
 
-  // ── DB-level guard: skip if already seeded for this user ──────────────
-  // Checks whether the user is already a recipient in a Physics Group Demo Exam.
-  // This prevents double-seeding even when the user_metadata flag is stale or missing.
-  const { data: existingRecipients } = await admin
+  // ── DB-level guard: fail-CLOSED — skip if already seeded or on any query error ─
+  //
+  // Guard A: check via exam_shared_recipients (user is a recipient)
+  const { data: existingRecipients, error: guardQueryError } = await admin
     .from('exam_shared_recipients')
     .select('exam_id')
     .eq('email', userEmail)
+
+  // If the query itself failed (network error, Supabase issue, etc.) treat as
+  // "don't know" and abort — fail-closed prevents duplicate creation.
+  if (guardQueryError) {
+    console.error('[demo-group] guard query failed — aborting to prevent duplicate:', guardQueryError)
+    return
+  }
 
   if (existingRecipients && existingRecipients.length > 0) {
     const existingIds = existingRecipients.map((r: { exam_id: string }) => r.exam_id)
@@ -977,9 +984,24 @@ export async function seedDemoGroupExam(
       .limit(1)
 
     if (existingDemo && existingDemo.length > 0) {
-      console.log('[demo-group] demo already seeded for this user — skipping')
+      console.log('[demo-group] demo already seeded (recipient check) — skipping')
       return
     }
+  }
+
+  // Guard B: check via attempts table (new user already has an attempt for this exam)
+  // Catches the race-condition window between recipient insert and the guard query.
+  const { data: existingAttempt } = await admin
+    .from('exam_attempts')
+    .select('exam_id, exams!inner(title)')
+    .eq('user_id', userId)
+    .eq('status', 'completed')
+    .eq('exams.title', 'Physics Group Demo Exam')
+    .limit(1)
+
+  if (existingAttempt && existingAttempt.length > 0) {
+    console.log('[demo-group] demo already seeded (attempt check) — skipping')
+    return
   }
 
   // ── 1. Create fake auth users ──────────────────────────────────────────
