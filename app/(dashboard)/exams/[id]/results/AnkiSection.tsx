@@ -280,6 +280,31 @@ export function AnkiSection({ incorrectQuestions, subject, examTitle }: Props) {
               Download Anki CSV
             </Button>
           </div>
+
+          {/* Import instructions */}
+          <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3.5 space-y-2">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+              How to import into Anki
+            </p>
+            <ol className="space-y-1">
+              {[
+                'Click the button above to download the CSV file and save it anywhere on your computer.',
+                'Open Anki.',
+                'Click File.',
+                'Click Import.',
+                'Select the CSV file you just downloaded.',
+                'In the new window, make sure Type is set to: Basic',
+                'Click Import — and that\'s it.',
+              ].map((step, i) => (
+                <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
+                  <span className="shrink-0 mt-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-slate-200 text-[10px] font-semibold text-slate-500">
+                    {i + 1}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       )}
 
