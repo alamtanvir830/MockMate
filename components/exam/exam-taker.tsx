@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
@@ -25,6 +25,13 @@ interface Exam {
   id: string
   title: string
   subject: string
+  time_limit_minutes?: number | null
+}
+
+function formatTime(totalSeconds: number): string {
+  const m = Math.floor(totalSeconds / 60)
+  const s = totalSeconds % 60
+  return `${m}:${s.toString().padStart(2, '0')}`
 }
 
 interface ExamTakerProps {
@@ -40,10 +47,34 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
   const [confirming, setConfirming] = useState(false)
   const [error, setError] = useState('')
 
+  const [secondsLeft, setSecondsLeft] = useState<number | null>(
+    exam.time_limit_minutes ? exam.time_limit_minutes * 60 : null,
+  )
+  const autoSubmittedRef = useRef(false)
+
   const totalMarks = questions.reduce((sum, q) => sum + q.marks, 0)
   const current = questions[currentIndex]
   const answeredCount = Object.keys(answers).length
   const unansweredCount = questions.length - answeredCount
+
+  // Countdown tick
+  useEffect(() => {
+    if (secondsLeft === null || secondsLeft <= 0) return
+    const id = setTimeout(
+      () => setSecondsLeft((s) => (s !== null && s > 0 ? s - 1 : s)),
+      1000,
+    )
+    return () => clearTimeout(id)
+  }, [secondsLeft])
+
+  // Auto-submit when timer reaches 0
+  useEffect(() => {
+    if (secondsLeft === 0 && !autoSubmittedRef.current) {
+      autoSubmittedRef.current = true
+      doSubmit()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [secondsLeft])
 
   function setAnswer(questionId: string, answer: string) {
     setAnswers((prev) => ({ ...prev, [questionId]: answer }))
@@ -79,6 +110,25 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
             {questions.length} questions · {totalMarks} mark{totalMarks !== 1 ? 's' : ''}
           </p>
         </div>
+        {secondsLeft !== null && (
+          <div
+            className={cn(
+              'flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-mono font-semibold tabular-nums',
+              secondsLeft === 0
+                ? 'border-red-300 bg-red-100 text-red-700'
+                : secondsLeft < 300
+                ? 'border-red-200 bg-red-50 text-red-700'
+                : secondsLeft < 600
+                ? 'border-amber-200 bg-amber-50 text-amber-700'
+                : 'border-slate-200 bg-slate-50 text-slate-700',
+            )}
+          >
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 shrink-0">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+            </svg>
+            {secondsLeft === 0 ? "Time's up" : formatTime(secondsLeft)}
+          </div>
+        )}
       </div>
 
       {/* Progress bar */}
@@ -236,6 +286,14 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
               Go back
             </Button>
           </div>
+        </div>
+      )}
+
+      {/* Time expired banner */}
+      {secondsLeft === 0 && (
+        <div className="rounded-xl border border-red-200 bg-red-50 p-5 text-center">
+          <p className="text-sm font-semibold text-red-900">Time's up!</p>
+          <p className="mt-1 text-sm text-red-700">Your exam is being submitted automatically…</p>
         </div>
       )}
 

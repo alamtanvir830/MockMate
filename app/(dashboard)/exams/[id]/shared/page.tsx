@@ -175,7 +175,7 @@ export default async function SharedExamPage({
   // Fetch exam info
   const { data: exam } = await admin
     .from('exams')
-    .select('id, title, subject, exam_date')
+    .select('id, title, subject, exam_date, time_limit_minutes')
     .eq('id', id)
     .single()
 

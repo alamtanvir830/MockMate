@@ -78,6 +78,8 @@ export function CreateExamForm() {
   const [additionalNotes, setAdditionalNotes] = useState('')
   const [standardizedExam, setStandardizedExam] = useState('')
   const [usmleStyles, setUsmleStyles] = useState<string[]>([])
+  const [isTimed, setIsTimed] = useState(false)
+  const [timeLimitMinutes, setTimeLimitMinutes] = useState('60')
   const [friends, setFriends] = useState<Friend[]>([
     { name: '', email: '' },
     { name: '', email: '' },
@@ -269,6 +271,7 @@ export function CreateExamForm() {
       sharedWith: sharedWithToSend,
       standardizedExam: standardizedExam || undefined,
       usmleStyles: standardizedExam === 'usmle_step1' ? usmleStyles : undefined,
+      timeLimitMinutes: isTimed ? parseInt(timeLimitMinutes, 10) : null,
     })
 
     if (result?.error) {
@@ -530,6 +533,58 @@ export function CreateExamForm() {
               onChange={(e) => setAdditionalNotes(e.target.value)}
               rows={3}
             />
+
+            {/* Time limit — optional */}
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-4">
+              <div>
+                <p className="text-sm font-medium text-slate-700">
+                  Time limit{' '}
+                  <span className="ml-1 inline-flex items-center rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-500">
+                    Optional
+                  </span>
+                </p>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Set a countdown timer for when you take this exam.
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsTimed(false)}
+                  className={cn(
+                    'flex-1 rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors',
+                    !isTimed
+                      ? 'border-slate-800 bg-slate-800 text-white'
+                      : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                  )}
+                >
+                  No limit
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsTimed(true)}
+                  className={cn(
+                    'flex-1 rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors',
+                    isTimed
+                      ? 'border-indigo-600 bg-indigo-600 text-white'
+                      : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                  )}
+                >
+                  Timed
+                </button>
+              </div>
+              {isTimed && (
+                <Input
+                  label="Time limit (minutes)"
+                  type="number"
+                  min="5"
+                  max="300"
+                  value={timeLimitMinutes}
+                  onChange={(e) => setTimeLimitMinutes(e.target.value)}
+                  hint="Minimum 5 minutes, maximum 300 minutes"
+                />
+              )}
+            </div>
 
             {/* Standardized exam — optional enhancement */}
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-4">

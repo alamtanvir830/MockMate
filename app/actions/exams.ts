@@ -21,6 +21,7 @@ export interface CreateExamInput {
   sharedWith: { name: string; email: string }[]
   standardizedExam?: string
   usmleStyles?: string[]
+  timeLimitMinutes?: number | null
 }
 
 export async function createExam(
@@ -48,6 +49,7 @@ export async function createExam(
       unlock_days_before: input.unlockDaysBefore,
       unlock_date: unlockDate,
       status: 'draft',
+      ...(input.timeLimitMinutes != null ? { time_limit_minutes: input.timeLimitMinutes } : {}),
     })
     .select('id')
     .single()
