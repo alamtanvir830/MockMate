@@ -184,7 +184,7 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
         {current.question_type === 'multiple_choice' && current.options && (
           <div className="space-y-3">
             {current.options.map((option, i) => {
-              const letters = ['A', 'B', 'C', 'D']
+              const letters = ['A', 'B', 'C', 'D', 'E']
               const isSelected = answers[current.id] === option
               return (
                 <button
