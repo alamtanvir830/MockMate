@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -11,6 +11,53 @@ interface Props {
   examId: string
   initialMessage: string | null
   isCreator: boolean
+}
+
+function MessageBody({ text }: { text: string }) {
+  const textRef = useRef<HTMLParagraphElement>(null)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [showToggle, setShowToggle] = useState(false)
+
+  // Re-measure whenever the text content changes or collapsed state is restored.
+  // requestAnimationFrame ensures the browser has painted the clamped layout
+  // before we read scrollHeight, avoiding measuring the unclamped height.
+  useEffect(() => {
+    setIsExpanded(false)
+    setShowToggle(false)
+  }, [text])
+
+  useEffect(() => {
+    if (isExpanded) return
+    const el = textRef.current
+    if (!el) return
+    const id = requestAnimationFrame(() => {
+      setShowToggle(el.scrollHeight > el.clientHeight + 1)
+    })
+    return () => cancelAnimationFrame(id)
+  }, [text, isExpanded])
+
+  return (
+    <div>
+      <p
+        ref={textRef}
+        className={cn(
+          'text-sm text-slate-700 leading-relaxed whitespace-pre-wrap',
+          !isExpanded && 'line-clamp-3',
+        )}
+      >
+        {text}
+      </p>
+      {showToggle && (
+        <button
+          type="button"
+          onClick={() => setIsExpanded((v) => !v)}
+          className="mt-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+        >
+          {isExpanded ? 'Show less' : 'Show more'}
+        </button>
+      )}
+    </div>
+  )
 }
 
 export function CreatorMessagePanel({ examId, initialMessage, isCreator }: Props) {
@@ -107,9 +154,8 @@ export function CreatorMessagePanel({ examId, initialMessage, isCreator }: Props
           </div>
         </div>
       ) : message ? (
-        <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{message}</p>
+        <MessageBody text={message} />
       ) : (
-        /* Creator, no message yet */
         <p className="text-sm text-slate-400 italic">No note added yet.</p>
       )}
     </Card>
