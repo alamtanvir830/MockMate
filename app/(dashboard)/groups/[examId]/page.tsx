@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { isExamLocked, daysUntil } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { AddMembersPanel } from './AddMembersPanel'
 
 export const metadata: Metadata = { title: 'Group Detail' }
 
@@ -464,6 +465,17 @@ export default async function GroupDetailPage({
           })}
         </div>
       </Card>
+
+      {/* Add members — creator only */}
+      {isCreator && (
+        <AddMembersPanel
+          examId={examId}
+          existingEmails={[
+            resolvedCreatorEmail,
+            ...(recipients ?? []).map((r) => r.email),
+          ].filter(Boolean)}
+        />
+      )}
 
       {/* CTA for current user if not started and exam is open */}
       {!locked && members.find((m) => m.isCurrentUser && m.status === 'not_started') && (
