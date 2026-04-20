@@ -218,9 +218,9 @@ export async function updateGroupPrivacyInPlace(input: {
     if (isColumnMissing) {
       console.error(
         '[updateGroupPrivacyInPlace] preference columns missing on exam_attempts.',
-        'Run this SQL in your Supabase dashboard:',
-        'ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS show_score_to_group boolean;',
-        'ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS include_in_rankings boolean;',
+        'Run this SQL in your Supabase SQL editor:\n',
+        'ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS show_score_to_group boolean DEFAULT false;\n' +
+        'ALTER TABLE exam_attempts ADD COLUMN IF NOT EXISTS include_in_rankings boolean DEFAULT false;',
         updateError,
       )
       return { error: 'columns_missing' }

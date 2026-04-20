@@ -92,7 +92,9 @@ export function GroupPrivacyPrefs({
               <span className="text-xs text-red-500">Failed to save — try again</span>
             )}
             {status === 'columns_missing' && (
-              <span className="text-xs text-amber-600">DB migration needed — see server logs</span>
+              <span className="text-xs text-amber-600">
+                Missing columns on <code className="font-mono">exam_attempts</code> — run migration in Supabase
+              </span>
             )}
           </div>
         </div>
