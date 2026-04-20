@@ -8,6 +8,7 @@ import { isExamLocked, daysUntil } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { AddMembersPanel } from './AddMembersPanel'
+import { CreatorMessagePanel } from './CreatorMessagePanel'
 
 export const metadata: Metadata = { title: 'Group Detail' }
 
@@ -40,7 +41,7 @@ export default async function GroupDetailPage({
   // Fetch exam
   const { data: exam } = await admin
     .from('exams')
-    .select('id, title, subject, exam_date, unlock_date, status, user_id')
+    .select('id, title, subject, exam_date, unlock_date, status, user_id, group_message')
     .eq('id', examId)
     .single()
 
@@ -303,6 +304,13 @@ export default async function GroupDetailPage({
           </div>
         </div>
       </Card>
+
+      {/* Creator message */}
+      <CreatorMessagePanel
+        examId={examId}
+        initialMessage={(exam as any).group_message ?? null}
+        isCreator={isCreator}
+      />
 
       {/* Group Rankings — shown above members if anyone opted in */}
       {(rankingMembers.length > 0 || currentUserOptedOutOfRankings) && (

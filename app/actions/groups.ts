@@ -4,6 +4,39 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { sendGroupAddedEmails } from '@/lib/email/send-group-added'
 
+export async function updateGroupMessage(input: {
+  examId: string
+  message: string
+}): Promise<{ ok: true } | { error: string }> {
+  const supabase = await createClient()
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+  if (authError || !user) return { error: 'Not authenticated' }
+
+  const admin = createAdminClient()
+
+  // Only the exam creator may update the message
+  const { data: exam } = await admin
+    .from('exams')
+    .select('id')
+    .eq('id', input.examId)
+    .eq('user_id', user.id)
+    .maybeSingle()
+
+  if (!exam) return { error: 'Only the group creator can edit the message.' }
+
+  const { error: updateError } = await admin
+    .from('exams')
+    .update({ group_message: input.message.trim() || null })
+    .eq('id', input.examId)
+
+  if (updateError) {
+    console.error('[updateGroupMessage] update failed:', updateError)
+    return { error: `Failed to save: ${updateError.message}` }
+  }
+
+  return { ok: true }
+}
+
 export type AddGroupMembersResult =
   | { ok: true; added: number; duplicates: string[] }
   | { error: string }

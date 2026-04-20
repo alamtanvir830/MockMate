@@ -22,6 +22,7 @@ export interface CreateExamInput {
   standardizedExam?: string
   usmleStyles?: string[]
   timeLimitMinutes?: number | null
+  groupMessage?: string | null
 }
 
 export async function createExam(
@@ -50,6 +51,7 @@ export async function createExam(
       unlock_date: unlockDate,
       status: 'draft',
       ...(input.timeLimitMinutes != null ? { time_limit_minutes: input.timeLimitMinutes } : {}),
+      ...(input.groupMessage ? { group_message: input.groupMessage } : {}),
     })
     .select('id')
     .single()

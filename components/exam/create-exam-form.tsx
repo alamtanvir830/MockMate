@@ -80,6 +80,7 @@ export function CreateExamForm() {
   const [usmleStyles, setUsmleStyles] = useState<string[]>([])
   const [isTimed, setIsTimed] = useState(false)
   const [timeLimitMinutes, setTimeLimitMinutes] = useState('60')
+  const [groupMessage, setGroupMessage] = useState('')
   const [friends, setFriends] = useState<Friend[]>([
     { name: '', email: '' },
     { name: '', email: '' },
@@ -272,6 +273,7 @@ export function CreateExamForm() {
       standardizedExam: standardizedExam || undefined,
       usmleStyles: standardizedExam === 'usmle_step1' ? usmleStyles : undefined,
       timeLimitMinutes: isTimed ? parseInt(timeLimitMinutes, 10) : null,
+      groupMessage: wantsToShare ? groupMessage.trim() || null : null,
     })
 
     if (result?.error) {
@@ -857,6 +859,23 @@ export function CreateExamForm() {
                       Add person
                     </button>
                   )}
+
+                  {/* Group message */}
+                  <div className="border-t border-slate-100 pt-4 space-y-1.5">
+                    <label className="text-sm font-medium text-slate-700">
+                      Message for your group{' '}
+                      <span className="font-normal text-slate-400">(optional)</span>
+                    </label>
+                    <p className="text-xs text-slate-500">
+                      Add a short note for your group — for example, when to take the exam, what to focus on, or anything else they should know.
+                    </p>
+                    <Textarea
+                      placeholder="e.g. Please complete this before Friday. Focus on chapters 3–5."
+                      value={groupMessage}
+                      onChange={(e) => setGroupMessage(e.target.value)}
+                      rows={3}
+                    />
+                  </div>
                 </div>
               )}
 
