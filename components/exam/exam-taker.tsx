@@ -69,6 +69,7 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
   const [adaptiveDifficulty, setAdaptiveDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium')
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [markedQuestions, setMarkedQuestions] = useState<Set<string>>(new Set())
+  const [showReview, setShowReview] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [confirming, setConfirming] = useState(false)
   const [error, setError] = useState('')
@@ -195,13 +196,10 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
             </button>
           </div>
 
-          {/* Center: MockMate branding */}
-          <div className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none select-none hidden sm:block">
-            <p className="text-sm font-semibold text-white tracking-wide">
-              MockMate USMLE Step 1
-            </p>
-            <p className="text-xs mt-0.5" style={{ color: '#94a89f' }}>
-              Comprehensive Basic Science Self-Assessment
+          {/* Center: dynamic exam title */}
+          <div className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none select-none hidden sm:block max-w-xs lg:max-w-lg px-2">
+            <p className="text-sm font-semibold text-white tracking-wide truncate">
+              MockMate — {exam.title}
             </p>
           </div>
 
@@ -233,83 +231,182 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
 
         {/* ── Main content ────────────────────────────────────────────────── */}
         <main className="flex-1 overflow-y-auto bg-white">
-          <div className="max-w-4xl mx-auto px-8 sm:px-12 py-10">
-            {/* Question stem */}
-            <div className="mb-9">
-              <p className="text-base leading-[1.75] text-gray-900 whitespace-pre-wrap">
-                {current.question_text}
+          {showReview ? (
+            /* ── Review panel ───────────────────────────────────────────── */
+            <div className="max-w-4xl mx-auto px-8 sm:px-12 py-10">
+              <h2 className="text-base font-bold text-gray-900 mb-1">Item Review</h2>
+              <p className="text-sm text-gray-500 mb-6">
+                Click any item number to navigate to it. Close this panel to continue answering.
               </p>
-            </div>
 
-            {/* Answer choices */}
-            {current.question_type === 'multiple_choice' && current.options && (
-              <div>
-                {current.options.map((option, i) => {
-                  const letter = LETTERS[i] ?? String.fromCharCode(65 + i)
-                  const isSelected = answers[current.id] === option
+              {/* Legend */}
+              <div className="flex flex-wrap gap-4 mb-7 text-xs text-gray-600">
+                <span className="flex items-center gap-1.5">
+                  <span className="inline-block h-5 w-5 rounded" style={{ background: '#2d7a52' }} />
+                  Answered
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="inline-block h-5 w-5 rounded" style={{ background: '#f3f4f6', border: '1px solid #d1d5db' }} />
+                  Unanswered
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="inline-block h-5 w-5 rounded" style={{ background: '#fef08a', border: '1px solid #ca8a04' }} />
+                  Marked for review
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="inline-block h-5 w-5 rounded" style={{ background: '#34d399', border: '2px solid #059669' }} />
+                  Current item
+                </span>
+              </div>
+
+              {/* Summary counts */}
+              <div className="flex flex-wrap gap-4 mb-7 text-sm">
+                <span className="font-medium text-gray-700">
+                  {answeredCount} <span className="font-normal text-gray-500">answered</span>
+                </span>
+                <span className="text-gray-300">|</span>
+                <span className="font-medium text-gray-700">
+                  {unansweredCount} <span className="font-normal text-gray-500">unanswered</span>
+                </span>
+                <span className="text-gray-300">|</span>
+                <span className="font-medium text-gray-700">
+                  {markedQuestions.size} <span className="font-normal text-gray-500">marked</span>
+                </span>
+              </div>
+
+              {/* Item grid */}
+              <div className="grid gap-2" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(3rem, 1fr))' }}>
+                {questions.map((q, i) => {
+                  const isCurrent = i === currentIndex
+                  const isAnswered = !!answers[q.id]
+                  const isFlagged = markedQuestions.has(q.id)
+
+                  let bg = '#f3f4f6'
+                  let border = '1px solid #d1d5db'
+                  let textColor = '#374151'
+
+                  if (isCurrent) {
+                    bg = '#34d399'; border = '2px solid #059669'; textColor = '#064e3b'
+                  } else if (isAnswered && isFlagged) {
+                    bg = '#fef08a'; border = '1px solid #ca8a04'; textColor = '#713f12'
+                  } else if (isAnswered) {
+                    bg = '#2d7a52'; border = '1px solid #166534'; textColor = '#ffffff'
+                  } else if (isFlagged) {
+                    bg = 'rgba(254,240,138,0.3)'; border = '1px solid #ca8a04'; textColor = '#713f12'
+                  }
+
                   return (
                     <button
-                      key={i}
+                      key={q.id}
                       type="button"
-                      onClick={() => setAnswer(current.id, option)}
-                      className={cn(
-                        'w-full flex items-start gap-4 px-4 py-3 text-left transition-colors',
-                        isSelected
-                          ? 'border-l-4 border-[#1b7a4a] bg-[#edf7f1]'
-                          : 'border-l-4 border-transparent hover:bg-gray-50',
-                      )}
+                      onClick={() => { setCurrentIndex(i); setShowReview(false) }}
+                      className="h-10 rounded text-xs font-semibold transition-opacity hover:opacity-80 flex flex-col items-center justify-center gap-0.5"
+                      style={{ background: bg, border, color: textColor }}
+                      title={`Item ${i + 1}${isFlagged ? ' — marked' : ''}${isAnswered ? ' — answered' : ' — unanswered'}`}
                     >
-                      {/* Radio ring */}
-                      <span
-                        className={cn(
-                          'mt-[3px] flex h-4 w-4 shrink-0 rounded-full border-2 items-center justify-center',
-                        )}
-                        style={{
-                          borderColor: isSelected ? '#1b7a4a' : '#9ca3af',
-                        }}
-                      >
-                        {isSelected && (
-                          <span
-                            className="h-2 w-2 rounded-full"
-                            style={{ background: '#1b7a4a' }}
-                          />
-                        )}
-                      </span>
-                      {/* Letter label */}
-                      <span
-                        className="shrink-0 text-sm font-bold w-5 leading-relaxed"
-                        style={{ color: isSelected ? '#1b7a4a' : '#4b5563' }}
-                      >
-                        {letter}.
-                      </span>
-                      {/* Answer text */}
-                      <span className="text-sm text-gray-900 leading-relaxed">{option}</span>
+                      <span>{i + 1}</span>
+                      {isFlagged && (
+                        <svg viewBox="0 0 12 12" fill="currentColor" className="h-2.5 w-2.5 opacity-70">
+                          <path d="M2 1.5a.5.5 0 01.5-.5h7a.5.5 0 01.5.5v8l-4-1.75L2 9.5V1.5z" />
+                        </svg>
+                      )}
                     </button>
                   )
                 })}
               </div>
-            )}
+            </div>
+          ) : (
+            /* ── Question view ──────────────────────────────────────────── */
+            <div className="max-w-4xl mx-auto px-8 sm:px-12 py-10">
+              {/* Question stem */}
+              <div className="mb-9">
+                <p className="text-base leading-[1.75] text-gray-900 whitespace-pre-wrap">
+                  {current.question_text}
+                </p>
+              </div>
 
-            {current.question_type === 'short_answer' && (
-              <textarea
-                value={answers[current.id] ?? ''}
-                onChange={(e) => setAnswer(current.id, e.target.value)}
-                placeholder="Write your answer here..."
-                rows={8}
-                className="w-full border border-gray-300 rounded px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 resize-none focus:outline-none focus:ring-2 focus:border-transparent"
-                style={{ '--tw-ring-color': '#1b7a4a' } as React.CSSProperties}
-              />
-            )}
-          </div>
+              {/* Answer choices */}
+              {current.question_type === 'multiple_choice' && current.options && (
+                <div>
+                  {current.options.map((option, i) => {
+                    const letter = LETTERS[i] ?? String.fromCharCode(65 + i)
+                    const isSelected = answers[current.id] === option
+                    return (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setAnswer(current.id, option)}
+                        className={cn(
+                          'w-full flex items-start gap-4 px-4 py-3 text-left transition-colors',
+                          isSelected
+                            ? 'border-l-4 border-[#1b7a4a] bg-[#edf7f1]'
+                            : 'border-l-4 border-transparent hover:bg-gray-50',
+                        )}
+                      >
+                        {/* Radio ring */}
+                        <span
+                          className="mt-[3px] flex h-4 w-4 shrink-0 rounded-full border-2 items-center justify-center"
+                          style={{ borderColor: isSelected ? '#1b7a4a' : '#9ca3af' }}
+                        >
+                          {isSelected && (
+                            <span className="h-2 w-2 rounded-full" style={{ background: '#1b7a4a' }} />
+                          )}
+                        </span>
+                        {/* Letter label */}
+                        <span
+                          className="shrink-0 text-sm font-bold w-5 leading-relaxed"
+                          style={{ color: isSelected ? '#1b7a4a' : '#4b5563' }}
+                        >
+                          {letter}.
+                        </span>
+                        {/* Answer text */}
+                        <span className="text-sm text-gray-900 leading-relaxed">{option}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
+
+              {current.question_type === 'short_answer' && (
+                <textarea
+                  value={answers[current.id] ?? ''}
+                  onChange={(e) => setAnswer(current.id, e.target.value)}
+                  placeholder="Write your answer here..."
+                  rows={8}
+                  className="w-full border border-gray-300 rounded px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 resize-none focus:outline-none focus:ring-2 focus:border-transparent"
+                  style={{ '--tw-ring-color': '#1b7a4a' } as React.CSSProperties}
+                />
+              )}
+            </div>
+          )}
         </main>
 
         {/* ── Footer ──────────────────────────────────────────────────────── */}
         <footer
-          className="shrink-0 px-5 py-2 flex items-center justify-between gap-4"
+          className="shrink-0 px-5 py-2 flex items-center gap-3"
           style={{ background: '#1b3d2e', borderTop: '1px solid #2d5a43' }}
         >
-          {/* Question navigator */}
-          <div className="flex items-center gap-1 flex-wrap overflow-hidden" style={{ maxHeight: '1.75rem', flex: '1 1 0' }}>
+          {/* Back button */}
+          <button
+            type="button"
+            onClick={() => { setCurrentIndex((i) => Math.max(i - 1, 0)); setShowReview(false) }}
+            disabled={currentIndex === 0 && !showReview}
+            className="shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold transition-colors disabled:opacity-30"
+            style={{ background: 'rgba(255,255,255,0.08)', color: '#d1fae5' }}
+            onMouseOver={(e) => { if (!(e.currentTarget as HTMLButtonElement).disabled) (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.15)' }}
+            onMouseOut={(e) => (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.08)'}
+          >
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="h-3.5 w-3.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            Back
+          </button>
+
+          {/* Question navigator — fills remaining space */}
+          <div
+            className="flex items-center gap-1 flex-wrap overflow-hidden"
+            style={{ flex: '1 1 0', maxHeight: '1.75rem' }}
+          >
             {questions.map((q, i) => {
               const isCurrent = i === currentIndex
               const isAnswered = !!answers[q.id]
@@ -318,7 +415,7 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
                 <button
                   key={q.id}
                   type="button"
-                  onClick={() => setCurrentIndex(i)}
+                  onClick={() => { setCurrentIndex(i); setShowReview(false) }}
                   title={`Item ${i + 1}${isFlagged ? ' — marked' : ''}`}
                   className={cn(
                     'h-6 min-w-[1.5rem] px-1 text-xs rounded font-medium transition-colors',
@@ -350,11 +447,29 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
             })}
           </div>
 
-          {/* Navigation + submit */}
+          {/* Right controls: Review + Next/End Block */}
           <div className="flex items-center gap-2 shrink-0">
             {error && <span className="text-xs text-red-300">{error}</span>}
 
-            {isOnLastQuestion || allAnswered ? (
+            {/* Review toggle */}
+            <button
+              type="button"
+              onClick={() => setShowReview((v) => !v)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-semibold transition-colors"
+              style={{
+                background: showReview ? 'rgba(52,211,153,0.2)' : 'rgba(255,255,255,0.08)',
+                color: showReview ? '#6ee7b7' : '#d1fae5',
+                outline: showReview ? '1px solid rgba(52,211,153,0.4)' : 'none',
+              }}
+            >
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 shrink-0">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              {showReview ? 'Close' : 'Review'}
+            </button>
+
+            {/* Next / End Block */}
+            {!showReview && (isOnLastQuestion || allAnswered) ? (
               <button
                 type="button"
                 onClick={handleSubmitClick}
@@ -376,7 +491,7 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
                   'End Block'
                 )}
               </button>
-            ) : (
+            ) : !showReview ? (
               <button
                 type="button"
                 onClick={() => setCurrentIndex((i) => i + 1)}
@@ -389,6 +504,18 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="h-3.5 w-3.5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={handleSubmitClick}
+                disabled={submitting}
+                className="flex items-center gap-2 px-5 py-1.5 rounded text-sm font-semibold transition-colors disabled:opacity-60"
+                style={{ background: '#166534', color: '#fff' }}
+                onMouseOver={(e) => !submitting && ((e.currentTarget as HTMLButtonElement).style.background = '#15803d')}
+                onMouseOut={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#166534')}
+              >
+                {submitting ? 'Submitting…' : 'End Block'}
               </button>
             )}
           </div>
