@@ -54,6 +54,7 @@ export async function createExam(
       ...(input.timeLimitMinutes != null ? { time_limit_minutes: input.timeLimitMinutes } : {}),
       ...(input.groupMessage ? { group_message: input.groupMessage } : {}),
       ...(input.adaptiveMode ? { adaptive_mode: true } : {}),
+      ...(input.standardizedExam ? { standardized_exam: input.standardizedExam } : {}),
     })
     .select('id')
     .single()

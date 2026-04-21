@@ -28,12 +28,24 @@ interface Exam {
   subject: string
   time_limit_minutes?: number | null
   adaptive_mode?: boolean | null
+  standardized_exam?: string | null
 }
 
 function formatTime(totalSeconds: number): string {
   const m = Math.floor(totalSeconds / 60)
   const s = totalSeconds % 60
   return `${m}:${s.toString().padStart(2, '0')}`
+}
+
+/** HH:MM:SS for board-style header; falls back to MM:SS if under 1 hour */
+function formatTimeBoard(totalSeconds: number): string {
+  const h = Math.floor(totalSeconds / 3600)
+  const m = Math.floor((totalSeconds % 3600) / 60)
+  const s = totalSeconds % 60
+  if (h > 0) {
+    return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
+  }
+  return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
 }
 
 interface ExamTakerProps {
@@ -43,18 +55,20 @@ interface ExamTakerProps {
 }
 
 const DIFFICULTY_ORDER = ['easy', 'medium', 'hard'] as const
+const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
 export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTakerProps) {
   const isAdaptive = !!(exam.adaptive_mode)
+  const isUSMLE1 = exam.standardized_exam === 'usmle_step1'
 
   const [currentIndex, setCurrentIndex] = useState(() => {
     if (!isAdaptive) return 0
-    // Start at first medium question, fall back to first question
     const medIdx = questions.findIndex((q) => q.difficulty === 'medium')
     return medIdx >= 0 ? medIdx : 0
   })
   const [adaptiveDifficulty, setAdaptiveDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium')
   const [answers, setAnswers] = useState<Record<string, string>>({})
+  const [markedQuestions, setMarkedQuestions] = useState<Set<string>>(new Set())
   const [submitting, setSubmitting] = useState(false)
   const [confirming, setConfirming] = useState(false)
   const [error, setError] = useState('')
@@ -70,6 +84,15 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
   const unansweredCount = questions.length - answeredCount
   const allAnswered = answeredCount === questions.length
 
+  function toggleMark(questionId: string) {
+    setMarkedQuestions((prev) => {
+      const next = new Set(prev)
+      if (next.has(questionId)) next.delete(questionId)
+      else next.add(questionId)
+      return next
+    })
+  }
+
   function getAdaptiveNextIndex(wasCorrect: boolean): number {
     const currentDiffIdx = DIFFICULTY_ORDER.indexOf(adaptiveDifficulty)
     const nextDiffIdx = wasCorrect
@@ -78,13 +101,11 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
     const nextDifficulty = DIFFICULTY_ORDER[nextDiffIdx]
     setAdaptiveDifficulty(nextDifficulty)
 
-    // Find first unanswered question at target difficulty
     const candidate = questions.findIndex(
       (q, i) => i !== currentIndex && !answers[q.id] && q.difficulty === nextDifficulty,
     )
     if (candidate >= 0) return candidate
 
-    // Fall back: any unanswered question
     const fallback = questions.findIndex((q, i) => i !== currentIndex && !answers[q.id])
     return fallback >= 0 ? fallback : currentIndex
   }
@@ -129,9 +150,307 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
       setError(result.error)
       setSubmitting(false)
     }
-    // on success, server action calls redirect() — no further action needed
+    // on success, server action calls redirect()
   }
 
+  // ─── USMLE Step 1 board-style layout ──────────────────────────────────────
+  if (isUSMLE1) {
+    const isMarked = markedQuestions.has(current.id)
+    const isOnLastQuestion = currentIndex === questions.length - 1
+
+    return (
+      <div
+        className="fixed inset-0 z-50 flex flex-col bg-white"
+        style={{ fontFamily: '"Helvetica Neue", Arial, "Liberation Sans", sans-serif' }}
+      >
+        {/* ── Header ──────────────────────────────────────────────────────── */}
+        <header
+          className="shrink-0 text-white px-5 py-3 flex items-center justify-between gap-4"
+          style={{ background: '#1b3d2e', borderBottom: '1px solid #2d5a43' }}
+        >
+          {/* Left: block info + mark */}
+          <div className="flex flex-col gap-1 min-w-[160px]">
+            <span className="text-xs font-medium tracking-wider" style={{ color: '#94a89f' }}>
+              BLOCK 1 &nbsp;·&nbsp; ITEM {currentIndex + 1} OF {questions.length}
+            </span>
+            <button
+              type="button"
+              onClick={() => toggleMark(current.id)}
+              className={cn(
+                'flex items-center gap-1.5 w-fit text-xs font-semibold tracking-wide transition-colors',
+                isMarked ? 'text-yellow-300' : 'hover:text-gray-200',
+              )}
+              style={{ color: isMarked ? undefined : '#94a89f' }}
+            >
+              <svg
+                viewBox="0 0 20 20"
+                fill={isMarked ? 'currentColor' : 'none'}
+                stroke="currentColor"
+                strokeWidth={isMarked ? 0 : 1.8}
+                className="h-3.5 w-3.5 shrink-0"
+              >
+                <path d="M3 3a1 1 0 011-1h12a1 1 0 011 1v14l-7-3-7 3V3z" />
+              </svg>
+              {isMarked ? 'Marked' : 'Mark'}
+            </button>
+          </div>
+
+          {/* Center: MockMate branding */}
+          <div className="absolute left-1/2 -translate-x-1/2 text-center pointer-events-none select-none hidden sm:block">
+            <p className="text-sm font-semibold text-white tracking-wide">
+              MockMate USMLE Step 1
+            </p>
+            <p className="text-xs mt-0.5" style={{ color: '#94a89f' }}>
+              Comprehensive Basic Science Self-Assessment
+            </p>
+          </div>
+
+          {/* Right: timer */}
+          <div className="text-right shrink-0 min-w-[110px]">
+            <p className="text-xs uppercase tracking-wider" style={{ color: '#94a89f' }}>
+              Time Remaining
+            </p>
+            {secondsLeft !== null ? (
+              <p
+                className={cn(
+                  'text-xl font-mono font-bold tabular-nums leading-tight',
+                  secondsLeft === 0
+                    ? 'text-red-400'
+                    : secondsLeft < 300
+                    ? 'text-red-300'
+                    : secondsLeft < 600
+                    ? 'text-amber-300'
+                    : 'text-white',
+                )}
+              >
+                {formatTimeBoard(secondsLeft)}
+              </p>
+            ) : (
+              <p className="text-sm" style={{ color: '#94a89f' }}>Untimed</p>
+            )}
+          </div>
+        </header>
+
+        {/* ── Main content ────────────────────────────────────────────────── */}
+        <main className="flex-1 overflow-y-auto bg-white">
+          <div className="max-w-4xl mx-auto px-8 sm:px-12 py-10">
+            {/* Question stem */}
+            <div className="mb-9">
+              <p className="text-base leading-[1.75] text-gray-900 whitespace-pre-wrap">
+                {current.question_text}
+              </p>
+            </div>
+
+            {/* Answer choices */}
+            {current.question_type === 'multiple_choice' && current.options && (
+              <div>
+                {current.options.map((option, i) => {
+                  const letter = LETTERS[i] ?? String.fromCharCode(65 + i)
+                  const isSelected = answers[current.id] === option
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setAnswer(current.id, option)}
+                      className={cn(
+                        'w-full flex items-start gap-4 px-4 py-3 text-left transition-colors',
+                        isSelected
+                          ? 'border-l-4 border-[#1b7a4a] bg-[#edf7f1]'
+                          : 'border-l-4 border-transparent hover:bg-gray-50',
+                      )}
+                    >
+                      {/* Radio ring */}
+                      <span
+                        className={cn(
+                          'mt-[3px] flex h-4 w-4 shrink-0 rounded-full border-2 items-center justify-center',
+                        )}
+                        style={{
+                          borderColor: isSelected ? '#1b7a4a' : '#9ca3af',
+                        }}
+                      >
+                        {isSelected && (
+                          <span
+                            className="h-2 w-2 rounded-full"
+                            style={{ background: '#1b7a4a' }}
+                          />
+                        )}
+                      </span>
+                      {/* Letter label */}
+                      <span
+                        className="shrink-0 text-sm font-bold w-5 leading-relaxed"
+                        style={{ color: isSelected ? '#1b7a4a' : '#4b5563' }}
+                      >
+                        {letter}.
+                      </span>
+                      {/* Answer text */}
+                      <span className="text-sm text-gray-900 leading-relaxed">{option}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+
+            {current.question_type === 'short_answer' && (
+              <textarea
+                value={answers[current.id] ?? ''}
+                onChange={(e) => setAnswer(current.id, e.target.value)}
+                placeholder="Write your answer here..."
+                rows={8}
+                className="w-full border border-gray-300 rounded px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 resize-none focus:outline-none focus:ring-2 focus:border-transparent"
+                style={{ '--tw-ring-color': '#1b7a4a' } as React.CSSProperties}
+              />
+            )}
+          </div>
+        </main>
+
+        {/* ── Footer ──────────────────────────────────────────────────────── */}
+        <footer
+          className="shrink-0 px-5 py-2 flex items-center justify-between gap-4"
+          style={{ background: '#1b3d2e', borderTop: '1px solid #2d5a43' }}
+        >
+          {/* Question navigator */}
+          <div className="flex items-center gap-1 flex-wrap overflow-hidden" style={{ maxHeight: '1.75rem', flex: '1 1 0' }}>
+            {questions.map((q, i) => {
+              const isCurrent = i === currentIndex
+              const isAnswered = !!answers[q.id]
+              const isFlagged = markedQuestions.has(q.id)
+              return (
+                <button
+                  key={q.id}
+                  type="button"
+                  onClick={() => setCurrentIndex(i)}
+                  title={`Item ${i + 1}${isFlagged ? ' — marked' : ''}`}
+                  className={cn(
+                    'h-6 min-w-[1.5rem] px-1 text-xs rounded font-medium transition-colors',
+                    isCurrent
+                      ? 'bg-emerald-400 text-emerald-950'
+                      : isAnswered && isFlagged
+                      ? 'bg-yellow-400 text-yellow-950'
+                      : isAnswered
+                      ? 'text-white'
+                      : isFlagged
+                      ? 'text-yellow-200'
+                      : 'text-gray-300 hover:bg-white/20',
+                  )}
+                  style={
+                    !isCurrent
+                      ? isAnswered && isFlagged
+                        ? {}
+                        : isAnswered
+                        ? { background: '#2d7a52' }
+                        : isFlagged
+                        ? { background: 'rgba(234,179,8,0.25)', outline: '1px solid rgba(234,179,8,0.5)' }
+                        : { background: 'rgba(255,255,255,0.1)' }
+                      : {}
+                  }
+                >
+                  {i + 1}
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Navigation + submit */}
+          <div className="flex items-center gap-2 shrink-0">
+            {error && <span className="text-xs text-red-300">{error}</span>}
+
+            {isOnLastQuestion || allAnswered ? (
+              <button
+                type="button"
+                onClick={handleSubmitClick}
+                disabled={submitting}
+                className="flex items-center gap-2 px-5 py-1.5 rounded text-sm font-semibold transition-colors disabled:opacity-60"
+                style={{ background: '#166534', color: '#fff' }}
+                onMouseOver={(e) => !submitting && ((e.currentTarget as HTMLButtonElement).style.background = '#15803d')}
+                onMouseOut={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#166534')}
+              >
+                {submitting ? (
+                  <>
+                    <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    Submitting…
+                  </>
+                ) : (
+                  'End Block'
+                )}
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setCurrentIndex((i) => i + 1)}
+                className="flex items-center gap-2 px-5 py-1.5 rounded text-sm font-semibold transition-colors"
+                style={{ background: '#166534', color: '#fff' }}
+                onMouseOver={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#15803d')}
+                onMouseOut={(e) => ((e.currentTarget as HTMLButtonElement).style.background = '#166534')}
+              >
+                Next
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="h-3.5 w-3.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </button>
+            )}
+          </div>
+        </footer>
+
+        {/* ── Confirmation modal ─────────────────────────────────────────── */}
+        {confirming && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60">
+            <div className="bg-white rounded-lg shadow-2xl p-6 max-w-sm w-full mx-4">
+              <h2 className="text-base font-bold text-gray-900 mb-2">End block?</h2>
+              <p className="text-sm text-gray-600 mb-1">
+                {unansweredCount} item{unansweredCount !== 1 ? 's are' : ' is'} unanswered.
+              </p>
+              <p className="text-sm text-gray-600 mb-5">
+                Unanswered items score 0. You cannot return once the block is ended.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={doSubmit}
+                  disabled={submitting}
+                  className="flex-1 text-white px-4 py-2 rounded text-sm font-semibold transition-colors disabled:opacity-60"
+                  style={{ background: '#1b3d2e' }}
+                >
+                  {submitting ? 'Submitting…' : 'End block'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setConfirming(false)}
+                  className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 px-4 py-2 rounded text-sm font-semibold transition-colors"
+                >
+                  Continue reviewing
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Time expired overlay ───────────────────────────────────────── */}
+        {secondsLeft === 0 && !confirming && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70">
+            <div className="bg-white rounded-lg shadow-2xl p-6 max-w-sm w-full mx-4 text-center">
+              <div
+                className="h-12 w-12 rounded-full flex items-center justify-center mx-auto mb-4"
+                style={{ background: '#fef2f2' }}
+              >
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-6 w-6 text-red-600">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+                </svg>
+              </div>
+              <h2 className="text-base font-bold text-gray-900 mb-1">Time Expired</h2>
+              <p className="text-sm text-gray-500">
+                Your block is being submitted automatically.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  // ─── Standard MockMate layout ────────────────────────────────────────────
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Exam header */}
