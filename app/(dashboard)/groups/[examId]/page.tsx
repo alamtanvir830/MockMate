@@ -42,7 +42,7 @@ export default async function GroupDetailPage({
   // Fetch exam
   const { data: exam } = await admin
     .from('exams')
-    .select('id, title, subject, exam_date, unlock_date, status, user_id, group_message')
+    .select('id, title, subject, exam_date, unlock_date, status, user_id, group_message, parent_exam_id, version_number')
     .eq('id', examId)
     .single()
 
@@ -227,6 +227,7 @@ export default async function GroupDetailPage({
 
   // Editing is locked once any completed attempt exists (protects attempt data integrity)
   const editingLocked = (baseAttempts ?? []).length > 0
+  const versionNumber = (exam as any).version_number ?? null
 
   const locked = isExamLocked(exam.unlock_date)
   const daysToExam = daysUntil(exam.exam_date)
@@ -255,6 +256,11 @@ export default async function GroupDetailPage({
           <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-600">
             {isCreator ? 'Created by you' : 'Member'}
           </span>
+          {versionNumber != null && versionNumber > 1 && (
+            <span className="inline-flex items-center rounded-full bg-violet-50 border border-violet-100 px-2 py-0.5 text-xs font-medium text-violet-600">
+              Version {versionNumber}
+            </span>
+          )}
         </div>
         <h1 className="text-2xl font-bold text-slate-900">{exam.title}</h1>
         <p className="mt-1 text-sm text-slate-500">{exam.subject}</p>
@@ -502,6 +508,7 @@ export default async function GroupDetailPage({
           examId={examId}
           questions={(examQuestions ?? []) as { id: string; question_text: string; options: string[] | null; correct_answer: string; order: number }[]}
           editingLocked={editingLocked}
+          versionNumber={versionNumber}
         />
       )}
 
