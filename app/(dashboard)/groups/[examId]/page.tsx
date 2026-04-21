@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { AddMembersPanel } from './AddMembersPanel'
 import { CreatorMessagePanel } from './CreatorMessagePanel'
+import { EditQuestionsPanel } from './EditQuestionsPanel'
 
 export const metadata: Metadata = { title: 'Group Detail' }
 
@@ -216,6 +217,16 @@ export default async function GroupDetailPage({
   const currentMember = members.find((m) => m.isCurrentUser)
   const currentUserOptedOutOfRankings =
     currentMember?.status === 'completed' && currentMember.includeInRankings === false
+
+  // Fetch questions for creator edit panel
+  const { data: examQuestions } = await admin
+    .from('questions')
+    .select('id, question_text, options, correct_answer, order')
+    .eq('exam_id', examId)
+    .order('order', { ascending: true })
+
+  // Editing is locked once any completed attempt exists (protects attempt data integrity)
+  const editingLocked = (baseAttempts ?? []).length > 0
 
   const locked = isExamLocked(exam.unlock_date)
   const daysToExam = daysUntil(exam.exam_date)
@@ -482,6 +493,15 @@ export default async function GroupDetailPage({
             resolvedCreatorEmail,
             ...(recipients ?? []).map((r) => r.email),
           ].filter(Boolean)}
+        />
+      )}
+
+      {/* Edit questions — creator only */}
+      {isCreator && (
+        <EditQuestionsPanel
+          examId={examId}
+          questions={(examQuestions ?? []) as { id: string; question_text: string; options: string[] | null; correct_answer: string; order: number }[]}
+          editingLocked={editingLocked}
         />
       )}
 

@@ -10,6 +10,7 @@ import { cn, scoreColor } from '@/lib/utils'
 import { submitSharedExam } from '@/app/actions/shared-attempts'
 import { generateExplanations } from '@/lib/ai/generate-explanations'
 import { GroupPrivacyPrefs } from '../GroupPrivacyPrefs'
+import { AnkiSection } from '../results/AnkiSection'
 
 export const metadata: Metadata = { title: 'Shared Exam' }
 
@@ -175,7 +176,7 @@ export default async function SharedExamPage({
   // Fetch exam info
   const { data: exam } = await admin
     .from('exams')
-    .select('id, title, subject, exam_date, time_limit_minutes, adaptive_mode')
+    .select('id, title, subject, exam_date, time_limit_minutes, adaptive_mode, standardized_exam')
     .eq('id', id)
     .single()
 
@@ -281,6 +282,17 @@ export default async function SharedExamPage({
     const incorrectCount = reviewItems.length - correctCount
     const aiFeedback = attempt.ai_feedback as AIFeedback | null
 
+    const incorrectQuestions = reviewItems
+      .filter((q) => !q.is_correct)
+      .map((q) => ({
+        question_text: q.question_text,
+        options: q.options,
+        correct_answer: q.correct_answer,
+        selected_answer: q.selected_answer,
+        explanation_correct: q.explanation_correct,
+        explanation_incorrect: q.explanation_incorrect,
+      }))
+
     return (
       <div className="max-w-3xl mx-auto space-y-8">
         <div>
@@ -365,6 +377,13 @@ export default async function SharedExamPage({
             </div>
           </Card>
         )}
+
+        {/* Anki flashcard generation */}
+        <AnkiSection
+          incorrectQuestions={incorrectQuestions}
+          subject={exam.subject}
+          examTitle={exam.title}
+        />
 
         {/* Question review */}
         <Card>
