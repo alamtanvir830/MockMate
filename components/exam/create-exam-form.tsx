@@ -98,16 +98,9 @@ export function CreateExamForm() {
   const [accountabilityChoiceError, setAccountabilityChoiceError] = useState('')
 
   // Share exact exam with group
-  const [sharedPeople, setSharedPeople] = useState<Friend[]>([
-    { name: '', email: '' },
-    { name: '', email: '' },
-    { name: '', email: '' },
-  ])
+  const [sharedPeople, setSharedPeople] = useState<Friend[]>([{ name: '', email: '' }])
   const [wantsToShare, setWantsToShare] = useState<boolean | null>(null)
-  const [visibleShared, setVisibleShared] = useState(1)
   const [sharedErrors, setSharedErrors] = useState<{ name: string; email: string }[]>([
-    { name: '', email: '' },
-    { name: '', email: '' },
     { name: '', email: '' },
   ])
   const [shareChoiceError, setShareChoiceError] = useState('')
@@ -153,9 +146,19 @@ export function CreateExamForm() {
     })
     setSharedErrors((prev) => {
       const next = [...prev]
-      next[index] = { ...next[index], [field]: '' }
+      if (next[index]) next[index] = { ...next[index], [field]: '' }
       return next
     })
+  }
+
+  function addSharedPerson() {
+    setSharedPeople((prev) => [...prev, { name: '', email: '' }])
+    setSharedErrors((prev) => [...prev, { name: '', email: '' }])
+  }
+
+  function removeSharedPerson(index: number) {
+    setSharedPeople((prev) => prev.filter((_, i) => i !== index))
+    setSharedErrors((prev) => prev.filter((_, i) => i !== index))
   }
 
   function handleShareChoice(choice: boolean) {
@@ -234,21 +237,28 @@ export function CreateExamForm() {
     }
 
     if (wantsToShare === true) {
-      const errors = sharedErrors.map((e) => ({ ...e }))
-      let hasError = false
-      for (let i = 0; i < visibleShared; i++) {
-        if (!sharedPeople[i].name.trim()) {
-          errors[i].name = 'Name is required'
-          hasError = true
-        }
-        if (!sharedPeople[i].email.trim()) {
-          errors[i].email = 'Email is required'
-          hasError = true
-        } else if (!sharedPeople[i].email.includes('@')) {
-          errors[i].email = 'Enter a valid email address'
-          hasError = true
-        }
+      // Filter to rows that have any content
+      const filledRows = sharedPeople.filter(
+        (p) => p.name.trim() || p.email.trim(),
+      )
+      if (filledRows.length === 0) {
+        setShareChoiceError('Please add at least one person to share with.')
+        setLoading(false)
+        return
       }
+      // Validate filled rows
+      const errors = sharedPeople.map((p) => {
+        const e = { name: '', email: '' }
+        if (!p.name.trim() && !p.email.trim()) return e // fully empty row — skip
+        if (!p.name.trim()) e.name = 'Name is required'
+        if (!p.email.trim()) {
+          e.email = 'Email is required'
+        } else if (!p.email.includes('@')) {
+          e.email = 'Enter a valid email address'
+        }
+        return e
+      })
+      const hasError = errors.some((e) => e.name || e.email)
       setSharedErrors(errors)
       if (hasError) {
         setLoading(false)
@@ -256,7 +266,10 @@ export function CreateExamForm() {
       }
     }
 
-    const sharedWithToSend = wantsToShare ? sharedPeople.slice(0, visibleShared) : []
+    // Only send rows that have both name and email filled
+    const sharedWithToSend = wantsToShare
+      ? sharedPeople.filter((p) => p.name.trim() && p.email.trim())
+      : []
 
     const result = await createExam({
       title,
@@ -862,19 +875,33 @@ export function CreateExamForm() {
                     These people will be linked to the exact same generated exam — so they can access or take the same questions you created.
                   </div>
 
-                  {Array.from({ length: visibleShared }).map((_, i) => (
+                  {sharedPeople.map((person, i) => (
                     <div
                       key={i}
                       className="rounded-lg border border-slate-200 p-4 space-y-3"
                     >
-                      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
-                        Person {i + 1}
-                      </p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
+                          Person {i + 1}
+                        </p>
+                        {sharedPeople.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeSharedPerson(i)}
+                            className="text-slate-300 hover:text-red-500 transition-colors"
+                            title="Remove this person"
+                          >
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
                       <div className="grid gap-3 sm:grid-cols-2">
                         <div className="space-y-1">
                           <Input
                             placeholder="Name"
-                            value={sharedPeople[i].name}
+                            value={person.name}
                             onChange={(e) => updateSharedPerson(i, 'name', e.target.value)}
                             className={sharedErrors[i]?.name ? 'border-red-400 focus:ring-red-400' : ''}
                           />
@@ -886,7 +913,7 @@ export function CreateExamForm() {
                           <Input
                             type="email"
                             placeholder="Email"
-                            value={sharedPeople[i].email}
+                            value={person.email}
                             onChange={(e) => updateSharedPerson(i, 'email', e.target.value)}
                             className={sharedErrors[i]?.email ? 'border-red-400 focus:ring-red-400' : ''}
                           />
@@ -898,18 +925,16 @@ export function CreateExamForm() {
                     </div>
                   ))}
 
-                  {visibleShared < 3 && (
-                    <button
-                      type="button"
-                      onClick={() => setVisibleShared((v) => Math.min(v + 1, 3))}
-                      className="flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
-                    >
-                      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                      </svg>
-                      Add person
-                    </button>
-                  )}
+                  <button
+                    type="button"
+                    onClick={addSharedPerson}
+                    className="flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+                  >
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    Add person
+                  </button>
 
                   {/* Group message */}
                   <div className="border-t border-slate-100 pt-4 space-y-1.5">
