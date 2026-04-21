@@ -164,7 +164,7 @@ export function CreateExamForm() {
   function handleShareChoice(choice: boolean) {
     setWantsToShare(choice)
     setShareChoiceError('')
-    if (choice) setVisibleShared(1)
+    if (choice) { setSharedPeople([{ name: '', email: '' }]); setSharedErrors([{ name: '', email: '' }]) }
   }
 
   function handleAccountabilityChoice(choice: boolean) {
