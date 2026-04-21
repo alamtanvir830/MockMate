@@ -48,6 +48,79 @@ function formatTimeBoard(totalSeconds: number): string {
   return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
 }
 
+/** Render question text with yellow highlight spans overlaid on selected character ranges */
+function renderHighlightedText(
+  text: string,
+  ranges: Array<{ start: number; end: number }>,
+): React.ReactNode {
+  if (!ranges.length) return text
+
+  // Sort then merge overlapping ranges
+  const sorted = [...ranges].sort((a, b) => a.start - b.start)
+  const merged: Array<{ start: number; end: number }> = []
+  for (const r of sorted) {
+    const last = merged[merged.length - 1]
+    if (last && r.start <= last.end) {
+      last.end = Math.max(last.end, r.end)
+    } else {
+      merged.push({ ...r })
+    }
+  }
+
+  const parts: React.ReactNode[] = []
+  let cursor = 0
+  for (const { start, end } of merged) {
+    if (cursor < start) parts.push(<span key={`t${cursor}`}>{text.slice(cursor, start)}</span>)
+    parts.push(
+      <mark
+        key={`h${start}`}
+        style={{ background: '#fef08a', borderRadius: '2px', padding: '0 1px' }}
+      >
+        {text.slice(start, end)}
+      </mark>,
+    )
+    cursor = end
+  }
+  if (cursor < text.length) parts.push(<span key={`t${cursor}`}>{text.slice(cursor)}</span>)
+  return <>{parts}</>
+}
+
+/**
+ * Walk the text nodes of a container to find the character offsets of the
+ * current selection, accounting for child elements (e.g. <mark> spans).
+ */
+function getSelectionOffsets(
+  container: Element,
+): { start: number; end: number } | null {
+  const sel = window.getSelection()
+  if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return null
+  const range = sel.getRangeAt(0)
+  if (!container.contains(range.commonAncestorContainer)) return null
+
+  let charCount = 0
+  let start = -1
+  let end = -1
+
+  const walk = (node: Node) => {
+    if (end !== -1) return
+    if (node.nodeType === Node.TEXT_NODE) {
+      const len = node.textContent?.length ?? 0
+      if (start === -1 && node === range.startContainer) start = charCount + range.startOffset
+      if (end === -1 && node === range.endContainer) end = charCount + range.endOffset
+      charCount += len
+    } else {
+      for (const child of Array.from(node.childNodes)) {
+        walk(child)
+        if (end !== -1) return
+      }
+    }
+  }
+  walk(container)
+
+  if (start === -1 || end === -1) return null
+  return start <= end ? { start, end } : { start: end, end: start }
+}
+
 interface ExamTakerProps {
   exam: Exam
   questions: Question[]
@@ -69,7 +142,10 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
   const [adaptiveDifficulty, setAdaptiveDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium')
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [markedQuestions, setMarkedQuestions] = useState<Set<string>>(new Set())
+  const [struckOptions, setStruckOptions] = useState<Record<string, Set<number>>>({})
+  const [highlights, setHighlights] = useState<Record<string, Array<{ start: number; end: number }>>>({})
   const [showReview, setShowReview] = useState(false)
+  const questionStemRef = useRef<HTMLDivElement | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [confirming, setConfirming] = useState(false)
   const [error, setError] = useState('')
@@ -92,6 +168,38 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
       else next.add(questionId)
       return next
     })
+  }
+
+  function toggleStrike(questionId: string, optionIndex: number) {
+    setStruckOptions((prev) => {
+      const cur = new Set(prev[questionId] ?? [])
+      if (cur.has(optionIndex)) {
+        cur.delete(optionIndex)
+      } else {
+        cur.add(optionIndex)
+        // If the struck option was selected, deselect it
+        const q = questions.find((x) => x.id === questionId)
+        if (q?.options?.[optionIndex] !== undefined && answers[questionId] === q.options[optionIndex]) {
+          setAnswers((a) => { const next = { ...a }; delete next[questionId]; return next })
+        }
+      }
+      return { ...prev, [questionId]: cur }
+    })
+  }
+
+  function handleStemMouseUp() {
+    if (!questionStemRef.current) return
+    const offsets = getSelectionOffsets(questionStemRef.current)
+    if (!offsets || offsets.start >= offsets.end) return
+    setHighlights((prev) => ({
+      ...prev,
+      [current.id]: [...(prev[current.id] ?? []), offsets],
+    }))
+    window.getSelection()?.removeAllRanges()
+  }
+
+  function clearHighlightsForQuestion(questionId: string) {
+    setHighlights((prev) => { const next = { ...prev }; delete next[questionId]; return next })
   }
 
   function getAdaptiveNextIndex(wasCorrect: boolean): number {
@@ -320,9 +428,31 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
             <div className="max-w-4xl mx-auto px-8 sm:px-12 py-10">
               {/* Question stem */}
               <div className="mb-9">
-                <p className="text-base leading-[1.75] text-gray-900 whitespace-pre-wrap">
-                  {current.question_text}
-                </p>
+                {/* Highlight toolbar */}
+                <div className="flex items-center gap-3 mb-3 text-xs" style={{ color: '#9ca3af' }}>
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 shrink-0">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6.071-6.071a2.25 2.25 0 013.182 3.182L12 14.25H9v-3.25z" />
+                  </svg>
+                  <span>Select text to highlight</span>
+                  {(highlights[current.id]?.length ?? 0) > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => clearHighlightsForQuestion(current.id)}
+                      className="rounded px-2 py-0.5 transition-colors"
+                      style={{ background: 'rgba(254,240,138,0.25)', border: '1px solid rgba(202,138,4,0.4)', color: '#fef08a' }}
+                    >
+                      Clear highlights
+                    </button>
+                  )}
+                </div>
+                <div
+                  ref={questionStemRef}
+                  onMouseUp={handleStemMouseUp}
+                  className="text-base leading-[1.75] text-gray-900"
+                  style={{ whiteSpace: 'pre-wrap', userSelect: 'text', cursor: 'text' }}
+                >
+                  {renderHighlightedText(current.question_text, highlights[current.id] ?? [])}
+                </div>
               </div>
 
               {/* Answer choices */}
@@ -331,37 +461,67 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
                   {current.options.map((option, i) => {
                     const letter = LETTERS[i] ?? String.fromCharCode(65 + i)
                     const isSelected = answers[current.id] === option
+                    const isStruck = struckOptions[current.id]?.has(i) ?? false
                     return (
-                      <button
-                        key={i}
-                        type="button"
-                        onClick={() => setAnswer(current.id, option)}
-                        className={cn(
-                          'w-full flex items-start gap-4 px-4 py-3 text-left transition-colors',
-                          isSelected
-                            ? 'border-l-4 border-[#1b7a4a] bg-[#edf7f1]'
-                            : 'border-l-4 border-transparent hover:bg-gray-50',
-                        )}
-                      >
-                        {/* Radio ring */}
-                        <span
-                          className="mt-[3px] flex h-4 w-4 shrink-0 rounded-full border-2 items-center justify-center"
-                          style={{ borderColor: isSelected ? '#1b7a4a' : '#9ca3af' }}
-                        >
-                          {isSelected && (
-                            <span className="h-2 w-2 rounded-full" style={{ background: '#1b7a4a' }} />
+                      <div key={i} className="flex items-stretch group">
+                        <button
+                          type="button"
+                          onClick={() => !isStruck && setAnswer(current.id, option)}
+                          className={cn(
+                            'flex-1 flex items-start gap-4 px-4 py-3 text-left transition-colors',
+                            isSelected && !isStruck
+                              ? 'border-l-4 border-[#1b7a4a] bg-[#edf7f1]'
+                              : 'border-l-4 border-transparent',
+                            !isStruck && !isSelected && 'hover:bg-gray-50',
+                            isStruck && 'opacity-40 cursor-default',
                           )}
-                        </span>
-                        {/* Letter label */}
-                        <span
-                          className="shrink-0 text-sm font-bold w-5 leading-relaxed"
-                          style={{ color: isSelected ? '#1b7a4a' : '#4b5563' }}
                         >
-                          {letter}.
-                        </span>
-                        {/* Answer text */}
-                        <span className="text-sm text-gray-900 leading-relaxed">{option}</span>
-                      </button>
+                          {/* Radio ring */}
+                          <span
+                            className="mt-[3px] flex h-4 w-4 shrink-0 rounded-full border-2 items-center justify-center"
+                            style={{ borderColor: isSelected && !isStruck ? '#1b7a4a' : '#9ca3af' }}
+                          >
+                            {isSelected && !isStruck && (
+                              <span className="h-2 w-2 rounded-full" style={{ background: '#1b7a4a' }} />
+                            )}
+                          </span>
+                          {/* Letter label */}
+                          <span
+                            className="shrink-0 text-sm font-bold w-5 leading-relaxed"
+                            style={{ color: isSelected && !isStruck ? '#1b7a4a' : '#4b5563' }}
+                          >
+                            {letter}.
+                          </span>
+                          {/* Answer text */}
+                          <span
+                            className={cn(
+                              'text-sm leading-relaxed',
+                              isStruck ? 'line-through text-gray-400' : 'text-gray-900',
+                            )}
+                          >
+                            {option}
+                          </span>
+                        </button>
+                        {/* Strikethrough toggle — appears on row hover, stays visible when struck */}
+                        <button
+                          type="button"
+                          onClick={() => toggleStrike(current.id, i)}
+                          className={cn(
+                            'shrink-0 w-9 flex items-center justify-center transition-all',
+                            isStruck
+                              ? 'text-red-400 hover:text-red-600'
+                              : 'text-gray-300 opacity-0 group-hover:opacity-100 hover:text-gray-500',
+                          )}
+                          title={isStruck ? 'Remove strikethrough' : 'Strike through this option'}
+                        >
+                          <span
+                            className="text-xs font-bold select-none"
+                            style={{ textDecoration: 'line-through' }}
+                          >
+                            S
+                          </span>
+                        </button>
+                      </div>
                     )
                   })}
                 </div>
@@ -625,22 +785,30 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
 
       {/* Question navigation dots */}
       <div className="flex flex-wrap gap-2">
-        {questions.map((q, i) => (
-          <button
-            key={q.id}
-            onClick={() => setCurrentIndex(i)}
-            className={cn(
-              'h-8 w-8 rounded-lg text-xs font-medium transition-colors',
-              i === currentIndex
-                ? 'bg-emerald-600 text-white'
-                : answers[q.id]
-                ? 'bg-emerald-100 text-emerald-700'
-                : 'bg-slate-100 text-slate-500 hover:bg-slate-200',
-            )}
-          >
-            {i + 1}
-          </button>
-        ))}
+        {questions.map((q, i) => {
+          const isMarkedDot = markedQuestions.has(q.id)
+          return (
+            <button
+              key={q.id}
+              onClick={() => setCurrentIndex(i)}
+              className={cn(
+                'relative h-8 w-8 rounded-lg text-xs font-medium transition-colors',
+                i === currentIndex
+                  ? 'bg-emerald-600 text-white'
+                  : isMarkedDot
+                  ? 'bg-amber-100 text-amber-700 ring-1 ring-amber-300'
+                  : answers[q.id]
+                  ? 'bg-emerald-100 text-emerald-700'
+                  : 'bg-slate-100 text-slate-500 hover:bg-slate-200',
+              )}
+            >
+              {i + 1}
+              {isMarkedDot && (
+                <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-amber-400 ring-1 ring-white" />
+              )}
+            </button>
+          )
+        })}
       </div>
 
       {/* Question card */}
@@ -649,10 +817,55 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-600 text-white text-sm font-bold">
             {currentIndex + 1}
           </div>
-          <div className="flex-1">
-            <p className="text-sm font-medium text-slate-900 leading-relaxed">
-              {current.question_text}
-            </p>
+          <div className="flex-1 min-w-0">
+            {/* Toolbar: highlight hint + clear + mark */}
+            <div className="flex items-center gap-2 mb-2 flex-wrap">
+              <span className="text-xs text-slate-400 flex items-center gap-1">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3 w-3 shrink-0">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536M9 11l6.071-6.071a2.25 2.25 0 013.182 3.182L12 14.25H9v-3.25z" />
+                </svg>
+                Select text to highlight
+              </span>
+              {(highlights[current.id]?.length ?? 0) > 0 && (
+                <button
+                  type="button"
+                  onClick={() => clearHighlightsForQuestion(current.id)}
+                  className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-2 py-0.5 hover:bg-amber-100 transition-colors"
+                >
+                  Clear highlights
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => toggleMark(current.id)}
+                className={cn(
+                  'ml-auto flex items-center gap-1.5 text-xs font-medium rounded-full px-2.5 py-1 transition-colors shrink-0',
+                  markedQuestions.has(current.id)
+                    ? 'bg-amber-100 text-amber-700 ring-1 ring-amber-200'
+                    : 'bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600',
+                )}
+              >
+                <svg
+                  viewBox="0 0 20 20"
+                  fill={markedQuestions.has(current.id) ? 'currentColor' : 'none'}
+                  stroke="currentColor"
+                  strokeWidth={markedQuestions.has(current.id) ? 0 : 1.8}
+                  className="h-3 w-3 shrink-0"
+                >
+                  <path d="M3 3a1 1 0 011-1h12a1 1 0 011 1v14l-7-3-7 3V3z" />
+                </svg>
+                {markedQuestions.has(current.id) ? 'Marked' : 'Mark'}
+              </button>
+            </div>
+            {/* Question text with highlight support */}
+            <div
+              ref={questionStemRef}
+              onMouseUp={handleStemMouseUp}
+              className="text-sm font-medium text-slate-900 leading-relaxed"
+              style={{ userSelect: 'text', cursor: 'text' }}
+            >
+              {renderHighlightedText(current.question_text, highlights[current.id] ?? [])}
+            </div>
             <p className="mt-1 text-xs text-slate-400">
               {current.marks} mark{current.marks !== 1 ? 's' : ''}
             </p>
@@ -664,29 +877,59 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
             {current.options.map((option, i) => {
               const letters = ['A', 'B', 'C', 'D', 'E']
               const isSelected = answers[current.id] === option
+              const isStruck = struckOptions[current.id]?.has(i) ?? false
               return (
-                <button
-                  key={i}
-                  onClick={() => setAnswer(current.id, option)}
-                  className={cn(
-                    'w-full flex items-center gap-3 rounded-xl border p-4 text-left transition-colors',
-                    isSelected
-                      ? 'border-emerald-300 bg-emerald-50'
-                      : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50',
-                  )}
-                >
-                  <span
+                <div key={i} className="flex items-center gap-2 group">
+                  <button
+                    onClick={() => !isStruck && setAnswer(current.id, option)}
                     className={cn(
-                      'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
-                      isSelected
-                        ? 'bg-emerald-600 text-white'
-                        : 'bg-slate-100 text-slate-500',
+                      'flex-1 flex items-center gap-3 rounded-xl border p-4 text-left transition-colors',
+                      isSelected && !isStruck
+                        ? 'border-emerald-300 bg-emerald-50'
+                        : isStruck
+                        ? 'border-slate-200 opacity-50 cursor-default'
+                        : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50',
                     )}
                   >
-                    {letters[i] ?? String.fromCharCode(65 + i)}
-                  </span>
-                  <span className="text-sm text-slate-700">{option}</span>
-                </button>
+                    <span
+                      className={cn(
+                        'flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold',
+                        isSelected && !isStruck
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-slate-100 text-slate-500',
+                      )}
+                    >
+                      {letters[i] ?? String.fromCharCode(65 + i)}
+                    </span>
+                    <span
+                      className={cn(
+                        'text-sm',
+                        isStruck ? 'line-through text-slate-400' : 'text-slate-700',
+                      )}
+                    >
+                      {option}
+                    </span>
+                  </button>
+                  {/* Strikethrough toggle */}
+                  <button
+                    type="button"
+                    onClick={() => toggleStrike(current.id, i)}
+                    className={cn(
+                      'shrink-0 h-9 w-9 rounded-lg flex items-center justify-center transition-all',
+                      isStruck
+                        ? 'bg-red-50 text-red-400 hover:bg-red-100 hover:text-red-600'
+                        : 'text-slate-300 opacity-0 group-hover:opacity-100 hover:bg-slate-100 hover:text-slate-500',
+                    )}
+                    title={isStruck ? 'Remove strikethrough' : 'Strike through this option'}
+                  >
+                    <span
+                      className="text-xs font-bold select-none"
+                      style={{ textDecoration: 'line-through' }}
+                    >
+                      S
+                    </span>
+                  </button>
+                </div>
               )
             })}
           </div>
