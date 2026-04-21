@@ -2,13 +2,55 @@ import { Resend } from 'resend'
 
 const FROM = 'MockMate <noreply@updates.mockmateapp.com>'
 
+/** Characters before the message is truncated in the email preview */
+const MESSAGE_TRUNCATE_AT = 280
+
 function buildHtml(params: {
   recipientName: string
   examTitle: string
   addedByName: string
   dashboardUrl: string
   signupUrl: string
+  groupMessage?: string | null
 }): string {
+  // Build the creator message block — only when a message exists
+  let creatorMessageBlock = ''
+  if (params.groupMessage && params.groupMessage.trim()) {
+    const raw = params.groupMessage.trim()
+    const isLong = raw.length > MESSAGE_TRUNCATE_AT
+    // Escape HTML special chars so the message renders safely
+    const escape = (s: string) =>
+      s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+
+    const preview = isLong
+      ? escape(raw.slice(0, MESSAGE_TRUNCATE_AT).trimEnd()) + '&hellip;'
+      : escape(raw)
+
+    const seeMoreLink = isLong
+      ? `<p style="margin:10px 0 0;">
+           <a href="${params.dashboardUrl}" style="font-size:13px;font-weight:600;color:#166534;text-decoration:underline;">
+             Read full message &rarr;
+           </a>
+         </p>`
+      : ''
+
+    creatorMessageBlock = `
+          <!-- Creator message -->
+          <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+            <tr>
+              <td style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px 20px;">
+                <p style="margin:0 0 10px;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#166534;">
+                  Message from ${params.addedByName}
+                </p>
+                <p style="margin:0;font-size:14px;color:#374151;line-height:1.65;white-space:pre-wrap;">
+                  ${preview}
+                </p>
+                ${seeMoreLink}
+              </td>
+            </tr>
+          </table>`
+  }
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,8 +108,10 @@ function buildHtml(params: {
                     </table>
 
                     <p style="margin:0 0 24px;font-size:14px;color:#6b7280;line-height:1.6;">
-                      You can take this exam as part of the group and compare your results with other members once everyone has completed it.
+                      Take the timed exam just to see where you stand and get immediate Anki/Quizlet-generated cards based off wrong questions, plus feedback on what topics to focus on before test day. You can choose whether or not to reveal your score to your friends!
                     </p>
+
+                    ${creatorMessageBlock}
 
                     <!-- CTA -->
                     <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
@@ -123,12 +167,14 @@ export async function sendGroupAddedEmails(
   params: {
     examTitle: string
     addedByName: string
+    groupMessage?: string | null
   },
 ): Promise<void> {
   console.log('[email:group-added] sendGroupAddedEmails called', {
     recipientCount: recipients.length,
     examTitle: params.examTitle,
     addedBy: params.addedByName,
+    hasGroupMessage: !!(params.groupMessage),
     hasApiKey: !!process.env.RESEND_API_KEY,
     from: FROM,
   })
@@ -170,6 +216,7 @@ export async function sendGroupAddedEmails(
           addedByName: params.addedByName,
           dashboardUrl: `${siteUrl}/dashboard`,
           signupUrl: `${siteUrl}/signup`,
+          groupMessage: params.groupMessage,
         }),
       }),
     ),

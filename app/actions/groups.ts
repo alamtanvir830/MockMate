@@ -54,7 +54,7 @@ export async function addGroupMembers(input: {
   // Only the exam creator may add members
   const { data: exam } = await admin
     .from('exams')
-    .select('id, title, subject, user_id')
+    .select('id, title, subject, user_id, group_message')
     .eq('id', input.examId)
     .eq('user_id', user.id)
     .maybeSingle()
@@ -120,6 +120,7 @@ export async function addGroupMembers(input: {
     await sendGroupAddedEmails(toAdd, {
       examTitle: exam.title,
       addedByName,
+      groupMessage: (exam as any).group_message ?? null,
     })
   } catch (e) {
     console.error('[addGroupMembers] email send failed:', e)

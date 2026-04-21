@@ -223,6 +223,7 @@ export async function createExam(
       await sendGroupAddedEmails(validShared, {
         examTitle: input.title.trim(),
         addedByName,
+        groupMessage: input.groupMessage ?? null,
       })
       console.log('[createExam] sendGroupAddedEmails returned without throwing')
     } catch (e) {
