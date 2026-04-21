@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Card, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { deleteExamQuestion, addExamQuestion, createExamVersion } from '@/app/actions/questions'
+import { deleteExamQuestion, addExamQuestion } from '@/app/actions/questions'
 
 interface Question {
   id: string
@@ -18,15 +18,11 @@ interface Question {
 interface Props {
   examId: string
   questions: Question[]
-  /** true when any completed attempt (creator or member) already exists */
-  editingLocked: boolean
-  /** version number of this exam (1 = original, 2+ = versioned copy) */
-  versionNumber?: number | null
 }
 
 const LETTERS = ['A', 'B', 'C', 'D', 'E']
 
-export function EditQuestionsPanel({ examId, questions, editingLocked, versionNumber }: Props) {
+export function EditQuestionsPanel({ examId, questions }: Props) {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [removingId, setRemovingId] = useState<string | null>(null)
@@ -38,9 +34,6 @@ export function EditQuestionsPanel({ examId, questions, editingLocked, versionNu
   const [newCorrect, setNewCorrect] = useState('')
   const [addError, setAddError] = useState('')
   const [addLoading, setAddLoading] = useState(false)
-
-  const [versionLoading, setVersionLoading] = useState(false)
-  const [versionError, setVersionError] = useState('')
 
   async function handleRemove(questionId: string) {
     setRemovingId(questionId)
@@ -97,20 +90,6 @@ export function EditQuestionsPanel({ examId, questions, editingLocked, versionNu
     }
   }
 
-  async function handleCreateVersion() {
-    setVersionLoading(true)
-    setVersionError('')
-    const result = await createExamVersion({ examId })
-    setVersionLoading(false)
-    if ('error' in result) {
-      setVersionError(result.error)
-    } else {
-      router.push(`/groups/${result.newExamId}`)
-    }
-  }
-
-  const isVersionedCopy = versionNumber != null && versionNumber > 1
-
   return (
     <Card>
       <CardHeader>
@@ -132,110 +111,24 @@ export function EditQuestionsPanel({ examId, questions, editingLocked, versionNu
               </svg>
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <CardTitle>Edit Questions</CardTitle>
-                {isVersionedCopy && (
-                  <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-600">
-                    Version {versionNumber}
-                  </span>
-                )}
-              </div>
+              <CardTitle>Edit Questions</CardTitle>
               <p className="text-xs text-slate-400 mt-0.5">
                 {questions.length} question{questions.length !== 1 ? 's' : ''}
-                {editingLocked ? ' · locked' : ''}
               </p>
             </div>
           </div>
 
-          {!editingLocked && (
-            <button
-              type="button"
-              onClick={() => { setIsOpen((v) => !v); setRemoveError(''); resetAddForm() }}
-              className="shrink-0 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
-            >
-              {isOpen ? 'Done' : 'Edit'}
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => { setIsOpen((v) => !v); setRemoveError(''); resetAddForm() }}
+            className="shrink-0 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+          >
+            {isOpen ? 'Done' : 'Edit'}
+          </button>
         </div>
-
-        {/* Versioned copy notice */}
-        {isVersionedCopy && (
-          <div className="mt-3 flex items-start gap-2 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2.5">
-            <svg
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-              className="h-4 w-4 shrink-0 text-indigo-600 mt-0.5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-              />
-            </svg>
-            <p className="text-xs text-indigo-800 leading-relaxed">
-              <strong>You&apos;re editing a new version of this exam.</strong> The original exam and all
-              existing attempts are preserved — this version starts fresh and is fully editable.
-            </p>
-          </div>
-        )}
-
-        {/* Locked — offer to create a new version */}
-        {editingLocked && !isVersionedCopy && (
-          <div className="mt-3 space-y-3">
-            <div className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5">
-              <svg
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                className="h-4 w-4 shrink-0 text-amber-600 mt-0.5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                />
-              </svg>
-              <p className="text-xs text-amber-800 leading-relaxed">
-                Participants have already submitted attempts. Editing will create a new version of this exam.
-              </p>
-            </div>
-
-            {versionError && (
-              <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
-                {versionError}
-              </p>
-            )}
-
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={handleCreateVersion}
-              loading={versionLoading}
-              className="w-full"
-            >
-              <svg
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-                className="h-4 w-4 mr-1.5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"
-                />
-              </svg>
-              Create updated version
-            </Button>
-          </div>
-        )}
       </CardHeader>
 
-      {isOpen && !editingLocked && (
+      {isOpen && (
         <div className="space-y-4">
           {removeError && (
             <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">

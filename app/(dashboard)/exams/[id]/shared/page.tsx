@@ -408,11 +408,21 @@ export default async function SharedExamPage({
   }
 
   // ── TAKE VIEW — user hasn't submitted yet ──
-  const { data: questions, error: qErr } = await admin
+  // Filter to active questions only so removed questions are hidden from unstarted takers
+  const { data: questionsActive, error: qActiveErr } = await admin
     .from('questions')
     .select('*')
     .eq('exam_id', id)
+    .eq('is_active', true)
     .order('order', { ascending: true })
+
+  // Fallback if is_active column hasn't been migrated yet
+  const { data: questionsFallback, error: qFallbackErr } = qActiveErr?.message?.includes('is_active')
+    ? await admin.from('questions').select('*').eq('exam_id', id).order('order', { ascending: true })
+    : { data: null, error: null }
+
+  const questions = questionsFallback ?? questionsActive
+  const qErr = qFallbackErr ?? (qActiveErr?.message?.includes('is_active') ? null : qActiveErr)
 
   if (qErr || !questions || questions.length === 0) {
     return (

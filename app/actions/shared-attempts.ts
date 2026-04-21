@@ -47,12 +47,25 @@ export async function submitSharedExam(input: {
 
   if (!exam) return { error: 'Exam not found' }
 
-  // Fetch questions
-  const { data: questions, error: qErr } = await admin
+  // Fetch active questions only — removed questions are excluded from scoring
+  const { data: questionsActive, error: qActiveErr } = await admin
     .from('questions')
     .select('id, question_text, correct_answer, marks, options, "order"')
     .eq('exam_id', input.examId)
+    .eq('is_active', true)
     .order('order', { ascending: true })
+
+  // Fallback if is_active column hasn't been migrated yet
+  const { data: questionsFallback, error: qFallbackErr } = qActiveErr?.message?.includes('is_active')
+    ? await admin
+        .from('questions')
+        .select('id, question_text, correct_answer, marks, options, "order"')
+        .eq('exam_id', input.examId)
+        .order('order', { ascending: true })
+    : { data: null, error: null }
+
+  const questions = questionsFallback ?? questionsActive
+  const qErr = qFallbackErr ?? (qActiveErr?.message?.includes('is_active') ? null : qActiveErr)
 
   if (qErr || !questions || questions.length === 0) {
     return { error: 'Could not load questions' }

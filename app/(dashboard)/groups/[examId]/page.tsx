@@ -218,16 +218,22 @@ export default async function GroupDetailPage({
   const currentUserOptedOutOfRankings =
     currentMember?.status === 'completed' && currentMember.includeInRankings === false
 
-  // Fetch questions for creator edit panel
-  const { data: examQuestions } = await admin
+  // Fetch active questions for creator edit panel (soft-deleted questions are filtered out)
+  const { data: examQuestionsActive, error: qActiveErr } = await admin
     .from('questions')
     .select('id, question_text, options, correct_answer, order')
     .eq('exam_id', examId)
+    .eq('is_active', true)
     .order('order', { ascending: true })
 
-  // Editing is locked once any completed attempt exists (protects attempt data integrity)
-  const editingLocked = (baseAttempts ?? []).length > 0
-  const versionNumber = (exam as any).version_number ?? null
+  // Fallback if is_active column hasn't been migrated yet
+  const examQuestions = qActiveErr?.message?.includes('is_active')
+    ? ((await admin
+        .from('questions')
+        .select('id, question_text, options, correct_answer, order')
+        .eq('exam_id', examId)
+        .order('order', { ascending: true })).data ?? [])
+    : (examQuestionsActive ?? [])
 
   const locked = isExamLocked(exam.unlock_date)
   const daysToExam = daysUntil(exam.exam_date)
@@ -256,11 +262,6 @@ export default async function GroupDetailPage({
           <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-600">
             {isCreator ? 'Created by you' : 'Member'}
           </span>
-          {versionNumber != null && versionNumber > 1 && (
-            <span className="inline-flex items-center rounded-full bg-violet-50 border border-violet-100 px-2 py-0.5 text-xs font-medium text-violet-600">
-              Version {versionNumber}
-            </span>
-          )}
         </div>
         <h1 className="text-2xl font-bold text-slate-900">{exam.title}</h1>
         <p className="mt-1 text-sm text-slate-500">{exam.subject}</p>
@@ -507,8 +508,6 @@ export default async function GroupDetailPage({
         <EditQuestionsPanel
           examId={examId}
           questions={(examQuestions ?? []) as { id: string; question_text: string; options: string[] | null; correct_answer: string; order: number }[]}
-          editingLocked={editingLocked}
-          versionNumber={versionNumber}
         />
       )}
 

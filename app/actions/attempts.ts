@@ -32,12 +32,25 @@ export async function submitExam(input: {
   // Block re-submission
   if (exam.status === 'completed') return { error: 'This exam has already been submitted' }
 
-  // Fetch all questions with correct answers
-  const { data: questions, error: qErr } = await supabase
+  // Fetch active questions only — removed questions are excluded from scoring
+  const { data: questionsActive, error: qActiveErr } = await supabase
     .from('questions')
     .select('id, question_text, correct_answer, marks, options, "order"')
     .eq('exam_id', input.examId)
+    .eq('is_active', true)
     .order('order', { ascending: true })
+
+  // Fallback if is_active column hasn't been migrated yet
+  const { data: questionsFallback, error: qFallbackErr } = qActiveErr?.message?.includes('is_active')
+    ? await supabase
+        .from('questions')
+        .select('id, question_text, correct_answer, marks, options, "order"')
+        .eq('exam_id', input.examId)
+        .order('order', { ascending: true })
+    : { data: null, error: null }
+
+  const questions = questionsFallback ?? questionsActive
+  const qErr = qFallbackErr ?? (qActiveErr?.message?.includes('is_active') ? null : qActiveErr)
 
   if (qErr || !questions || questions.length === 0) {
     return { error: 'Could not load questions' }

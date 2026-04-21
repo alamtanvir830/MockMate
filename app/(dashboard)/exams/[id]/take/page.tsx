@@ -77,11 +77,20 @@ export default async function TakeExamPage({
     )
   }
 
-  const { data: questions, error } = await supabase
+  const { data: questionsActive, error: questionsActiveErr } = await supabase
     .from('questions')
     .select('*')
     .eq('exam_id', id)
+    .eq('is_active', true)
     .order('order', { ascending: true })
+
+  // Fallback if is_active column hasn't been added yet
+  const { data: questionsFallback, error: questionsFallbackErr } = questionsActiveErr?.message?.includes('is_active')
+    ? await supabase.from('questions').select('*').eq('exam_id', id).order('order', { ascending: true })
+    : { data: null, error: null }
+
+  const questions = questionsFallback ?? questionsActive
+  const error = questionsFallbackErr ?? (questionsActiveErr?.message?.includes('is_active') ? null : questionsActiveErr)
 
   if (error || !questions || questions.length === 0) {
     return (
