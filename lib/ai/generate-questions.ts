@@ -12,6 +12,8 @@ export interface GeneratedQuestion {
   // explanation_incorrect: keyed by A/B/C/D/E (positions in options array), wrong options only
   explanation_correct?: string
   explanation_incorrect?: Record<string, string>
+  // difficulty: only set when adaptive_mode is enabled (e.g. SHSAT adaptive)
+  difficulty?: 'easy' | 'medium' | 'hard'
 }
 
 interface GenerateInput {
@@ -26,6 +28,7 @@ interface GenerateInput {
   questionCount: number
   standardizedExam?: string
   usmleStyles?: string[]
+  adaptiveMode?: boolean
 }
 
 // ─── Step 1 style type labels (used in distribution instructions) ──────────────
@@ -231,12 +234,75 @@ VIGNETTE RULES
 `
 }
 
+// ─── SHSAT adaptive section ───────────────────────────────────────────────────
+
+function buildShsatSection(questionCount: number): string {
+  const easyCount = Math.round(questionCount / 3)
+  const hardCount = Math.round(questionCount / 3)
+  const mediumCount = questionCount - easyCount - hardCount
+
+  return `
+═══════════════════════════════════════════════════════
+SHSAT (NYC SPECIALIZED HIGH SCHOOLS ADMISSIONS TEST) — 2026 ADAPTIVE FORMAT
+═══════════════════════════════════════════════════════
+
+You are generating a question bank for an adaptive SHSAT simulation. Questions will be served adaptively based on student performance, so you MUST tag every question with a difficulty level.
+
+SUBJECT AREAS (blend both across the block)
+• Mathematics: arithmetic, number properties, algebra, geometry, statistics, probability, word problems, data interpretation
+• English Language Arts (ELA): reading comprehension, grammar, sentence revision, editing, vocabulary in context
+
+DIFFICULTY DISTRIBUTION (strictly required)
+Generate exactly ${questionCount} questions with this split:
+  • ${easyCount} questions tagged "easy"   — single-concept, direct application, grade 6-7 level
+  • ${mediumCount} questions tagged "medium" — 2-step reasoning or concept combination, solid grade 8 level
+  • ${hardCount} questions tagged "hard"   — multi-step, complex word problems, or subtle language distinctions
+
+DIFFICULTY DEFINITIONS
+- easy:   One concept applied directly. A student with basic preparation can answer quickly.
+- medium: Requires setting up a relationship or combining two ideas. Typical SHSAT range.
+- hard:   Multi-step problem or nuanced distinction. Top-tier preparation needed.
+
+QUESTION WRITING RULES
+• All questions must have exactly 4 answer choices (A–D)
+• Math questions: show all necessary information in the stem; no diagrams needed
+• ELA questions: use a short passage (3-6 sentences) or standalone sentence for revision tasks
+• Distractors must be plausible mistakes (calculation errors, common misconceptions, partial answers)
+• Avoid trivial or joke answers
+• Do not reference any real people, brands, or current events
+• Language should be clear and age-appropriate for motivated 8th graders
+
+ADAPTIVE TAG REQUIREMENT
+Every question MUST include "difficulty": "easy" | "medium" | "hard" in the JSON output.
+`
+}
+
+// ─── Difficulty tagging instruction (appended when adaptive mode active) ──────
+
+function buildDifficultyTaggingSection(questionCount: number): string {
+  const easyCount = Math.round(questionCount / 3)
+  const hardCount = Math.round(questionCount / 3)
+  const mediumCount = questionCount - easyCount - hardCount
+
+  return `
+ADAPTIVE DIFFICULTY TAGGING (REQUIRED)
+Every question MUST include a "difficulty" field set to exactly "easy", "medium", or "hard".
+Distribute across the block:
+  • ~${easyCount} questions: "easy"   — single concept, direct application
+  • ~${mediumCount} questions: "medium" — 1-2 reasoning steps or concept combination
+  • ~${hardCount} questions: "hard"   — multi-step, cross-domain, or nuanced distinctions
+Do NOT cluster all easy or all hard questions together — interleave the difficulties.
+`
+}
+
 // ─── Main generation function ─────────────────────────────────────────────────
 
 export async function generateQuestions(
   input: GenerateInput,
 ): Promise<GeneratedQuestion[]> {
   const isUSMLE1 = input.standardizedExam === 'usmle_step1'
+  const isSHSAT = input.standardizedExam === 'shsat'
+  const isAdaptive = !!(input.adaptiveMode)
   const resolvedUSMLEStyles =
     input.usmleStyles && input.usmleStyles.length > 0
       ? input.usmleStyles
@@ -256,6 +322,10 @@ export async function generateQuestions(
 
   const usmleSection = isUSMLE1
     ? buildUsmleSection(resolvedUSMLEStyles, input.questionCount)
+    : isSHSAT
+    ? buildShsatSection(input.questionCount)
+    : isAdaptive
+    ? buildDifficultyTaggingSection(input.questionCount)
     : ''
 
   // Use gpt-4o for Step 1 (meaningfully better vignette quality and distractor realism)
@@ -268,6 +338,10 @@ Your questions are indistinguishable from official NBME Step 1 items. \
 You never write simple recall questions. Every question has 5 plausible answer choices. \
 You vary question type, discipline, vignette length, and difficulty systematically across every block you write. \
 Always return valid JSON.`
+    : isSHSAT
+    ? 'You are an expert SHSAT question writer creating adaptive exam questions for NYC 8th graders. \
+You write clear, rigorous math and ELA questions at the appropriate difficulty level. \
+Every question must include a difficulty tag ("easy", "medium", or "hard"). Always return valid JSON.'
     : 'You are an expert exam question generator. You generate accurate, well-written multiple-choice questions based on provided exam material. Always return valid JSON.'
 
   const optionCount = isUSMLE1 ? 5 : 4
@@ -278,6 +352,8 @@ Always return valid JSON.`
   const exampleIncorrect = isUSMLE1
     ? `"B": "...", "C": "...", "D": "...", "E": "..."`
     : `"B": "...", "C": "...", "D": "..."`
+  const needsDifficulty = isSHSAT || isAdaptive
+  const difficultyField = needsDifficulty ? `\n      "difficulty": "medium",` : ''
 
   const explanationRules = isUSMLE1
     ? `
@@ -323,7 +399,7 @@ Return a JSON object in this exact format:
     {
       "question_text": "...",
       "options": ${exampleOptions},
-      "correct_answer": "option A text",
+      "correct_answer": "option A text",${difficultyField}
       "explanation_correct": "...",
       "explanation_incorrect": {
         ${exampleIncorrect}
@@ -378,6 +454,10 @@ ${explanationRules}`,
         typeof q.explanation_incorrect === 'object' &&
         !Array.isArray(q.explanation_incorrect)
           ? (q.explanation_incorrect as Record<string, string>)
+          : undefined,
+      difficulty:
+        q.difficulty === 'easy' || q.difficulty === 'medium' || q.difficulty === 'hard'
+          ? q.difficulty
           : undefined,
     })
   }

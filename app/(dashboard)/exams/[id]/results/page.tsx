@@ -74,7 +74,7 @@ export default async function ResultsPage({
   // Verify exam ownership
   const { data: exam } = await supabase
     .from('exams')
-    .select('id, title, subject, exam_date')
+    .select('id, title, subject, exam_date, adaptive_mode')
     .eq('id', id)
     .eq('user_id', user!.id)
     .single()
@@ -275,6 +275,11 @@ export default async function ResultsPage({
               <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-slate-200">
                 {exam.subject}
               </span>
+              {(exam as any).adaptive_mode && (
+                <span className="rounded-full bg-indigo-500/30 border border-indigo-400/40 px-3 py-1 text-indigo-200">
+                  Adaptive difficulty
+                </span>
+              )}
             </div>
           </div>
         </div>

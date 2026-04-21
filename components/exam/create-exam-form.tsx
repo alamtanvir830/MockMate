@@ -37,6 +37,7 @@ const standardizedExamOptions = [
   { value: 'usmle_step2_ck', label: 'USMLE Step 2 CK' },
   { value: 'mcat', label: 'MCAT' },
   { value: 'sat', label: 'SAT' },
+  { value: 'shsat', label: 'SHSAT (NYC)' },
   { value: 'neet', label: 'NEET (India)' },
   { value: 'other_standardized', label: 'Other standardized exam' },
 ]
@@ -80,6 +81,7 @@ export function CreateExamForm() {
   const [usmleStyles, setUsmleStyles] = useState<string[]>([])
   const [isTimed, setIsTimed] = useState(false)
   const [timeLimitMinutes, setTimeLimitMinutes] = useState('60')
+  const [isAdaptive, setIsAdaptive] = useState(true)
   const [groupMessage, setGroupMessage] = useState('')
   const [friends, setFriends] = useState<Friend[]>([
     { name: '', email: '' },
@@ -274,6 +276,7 @@ export function CreateExamForm() {
       usmleStyles: standardizedExam === 'usmle_step1' ? usmleStyles : undefined,
       timeLimitMinutes: isTimed ? parseInt(timeLimitMinutes, 10) : null,
       groupMessage: wantsToShare ? groupMessage.trim() || null : null,
+      adaptiveMode: standardizedExam === 'shsat' ? isAdaptive : undefined,
     })
 
     if (result?.error) {
@@ -608,6 +611,7 @@ export function CreateExamForm() {
                 onChange={(e) => {
                   setStandardizedExam(e.target.value)
                   if (e.target.value !== 'usmle_step1') setUsmleStyles([])
+                  if (e.target.value === 'shsat') setIsAdaptive(true)
                 }}
               />
               {standardizedExam === 'usmle_step1' && (
@@ -649,6 +653,53 @@ export function CreateExamForm() {
                   <p className="text-xs text-slate-400">
                     If nothing is selected, questions will default to Mixed USMLE Step 1 style.
                   </p>
+                </div>
+              )}
+
+              {standardizedExam === 'shsat' && (
+                <div className="rounded-lg border border-indigo-200 bg-indigo-50 p-4 space-y-3">
+                  <div>
+                    <p className="text-sm font-semibold text-indigo-900">
+                      SHSAT Adaptive Mode (2026 format)
+                    </p>
+                    <p className="text-xs text-indigo-700 mt-0.5">
+                      Questions are tagged easy / medium / hard. During the exam, the difficulty
+                      adjusts based on your answers — correct responses unlock harder questions,
+                      incorrect responses step down to easier ones.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsAdaptive((v) => !v)}
+                    className={cn(
+                      'flex w-full items-center justify-between rounded-lg border px-4 py-3 text-sm font-medium transition-colors',
+                      isAdaptive
+                        ? 'border-indigo-400 bg-indigo-600 text-white'
+                        : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                    )}
+                  >
+                    <span>Enable adaptive mode</span>
+                    <span
+                      className={cn(
+                        'ml-3 inline-flex h-5 w-9 shrink-0 rounded-full border-2 transition-colors',
+                        isAdaptive
+                          ? 'border-indigo-300 bg-white/30'
+                          : 'border-slate-300 bg-slate-200',
+                      )}
+                    >
+                      <span
+                        className={cn(
+                          'inline-block h-full w-4 rounded-full bg-white shadow transition-transform',
+                          isAdaptive ? 'translate-x-4' : 'translate-x-0',
+                        )}
+                      />
+                    </span>
+                  </button>
+                  {!isAdaptive && (
+                    <p className="text-xs text-indigo-700">
+                      Adaptive mode is off — questions will be generated but presented in a fixed order.
+                    </p>
+                  )}
                 </div>
               )}
             </div>

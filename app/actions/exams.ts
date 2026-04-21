@@ -23,6 +23,7 @@ export interface CreateExamInput {
   usmleStyles?: string[]
   timeLimitMinutes?: number | null
   groupMessage?: string | null
+  adaptiveMode?: boolean
 }
 
 export async function createExam(
@@ -52,6 +53,7 @@ export async function createExam(
       status: 'draft',
       ...(input.timeLimitMinutes != null ? { time_limit_minutes: input.timeLimitMinutes } : {}),
       ...(input.groupMessage ? { group_message: input.groupMessage } : {}),
+      ...(input.adaptiveMode ? { adaptive_mode: true } : {}),
     })
     .select('id')
     .single()
@@ -75,6 +77,7 @@ export async function createExam(
       questionCount: input.questionCount,
       standardizedExam: input.standardizedExam,
       usmleStyles: input.usmleStyles,
+      adaptiveMode: input.adaptiveMode,
     })
   } catch (err) {
     // Clean up the exam row so the user isn't left with a broken draft
@@ -92,15 +95,46 @@ export async function createExam(
     correct_answer: q.correct_answer,
     marks: 1,
     order: i + 1,
-    // Include explanation columns if present (requires SQL migration;
-    // falls back to omitting them if columns don't exist yet)
+    // Include explanation + difficulty columns if present (requires SQL migrations;
+    // falls back gracefully if columns don't exist yet)
     ...(q.explanation_correct !== undefined ? { explanation_correct: q.explanation_correct } : {}),
     ...(q.explanation_incorrect !== undefined ? { explanation_incorrect: q.explanation_incorrect } : {}),
+    ...(q.difficulty !== undefined ? { difficulty: q.difficulty } : {}),
   }))
 
   let { error: questionsError } = await supabase.from('questions').insert(rows)
 
-  // If the error mentions explanation columns (migration not yet run), retry without them
+  // If the error mentions optional columns (migrations not yet run), retry with progressively
+  // fewer optional columns until the insert succeeds.
+  if (questionsError) {
+    const msg = questionsError.message ?? ''
+    const missingExplanations =
+      msg.includes('explanation_correct') || msg.includes('explanation_incorrect')
+    const missingDifficulty = msg.includes('difficulty')
+
+    if (missingExplanations || missingDifficulty) {
+      const rowsReduced = questions.map((q, i) => ({
+        exam_id: exam.id,
+        question_text: q.question_text,
+        question_type: 'multiple_choice' as const,
+        options: q.options,
+        correct_answer: q.correct_answer,
+        marks: 1,
+        order: i + 1,
+        // Only include whichever columns are not causing the error
+        ...(!missingExplanations && q.explanation_correct !== undefined
+          ? { explanation_correct: q.explanation_correct }
+          : {}),
+        ...(!missingExplanations && q.explanation_incorrect !== undefined
+          ? { explanation_incorrect: q.explanation_incorrect }
+          : {}),
+      }))
+      const { error: retryError } = await supabase.from('questions').insert(rowsReduced)
+      questionsError = retryError ?? null
+    }
+  }
+
+  // Legacy fallback: strip all optional columns
   if (
     questionsError &&
     (questionsError.message?.includes('explanation_correct') ||
