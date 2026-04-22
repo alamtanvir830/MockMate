@@ -16,6 +16,25 @@ export interface GeneratedQuestion {
   difficulty?: 'easy' | 'medium' | 'hard'
 }
 
+interface AdvancedCustomization {
+  recall: string; understanding: string; application: string; multiStep: string
+  styleShort: string; styleScenario: string; styleProblem: string; styleConceptual: string
+  lenVeryShort: string; lenMedium: string; lenLong: string
+  overallDifficulty: string
+  distEasy: string; distMedium: string; distHard: string
+  trickiness: string; trickinessPercent: string
+  answerSimilarity: string
+  answerChoiceCount: string
+  questionSources: string[]
+  repetition: string
+  topicIntegration: string
+  calcIntensity: string
+  visuals: string[]
+  professorStyle: string
+  commonMistakes: string
+  highYieldTopics: string
+}
+
 interface GenerateInput {
   title: string
   subject: string
@@ -29,6 +48,7 @@ interface GenerateInput {
   standardizedExam?: string
   usmleStyles?: string[]
   adaptiveMode?: boolean
+  advancedCustomization?: AdvancedCustomization
 }
 
 // ─── Step 1 style type labels (used in distribution instructions) ──────────────
@@ -295,6 +315,102 @@ Do NOT cluster all easy or all hard questions together — interleave the diffic
 `
 }
 
+// ─── Advanced customization prompt builder ────────────────────────────────────
+
+function buildAdvancedSection(adv: AdvancedCustomization): string {
+  const lines: string[] = []
+
+  const pctLine = (label: string, pairs: [string, string][]) => {
+    const filled = pairs.filter(([, v]) => v.trim())
+    if (filled.length === 0) return
+    lines.push(`${label}: ${filled.map(([k, v]) => `${v}% ${k}`).join(', ')}`)
+  }
+
+  pctLine('Thinking level distribution', [
+    ['Recall/Knowledge', adv.recall],
+    ['Understanding/Comprehension', adv.understanding],
+    ['Application', adv.application],
+    ['Multi-step/Synthesis', adv.multiStep],
+  ])
+
+  pctLine('Question style distribution', [
+    ['Short/Direct', adv.styleShort],
+    ['Scenario-based', adv.styleScenario],
+    ['Problem-solving', adv.styleProblem],
+    ['Conceptual', adv.styleConceptual],
+  ])
+
+  pctLine('Question length distribution', [
+    ['Very short (≤30 words)', adv.lenVeryShort],
+    ['Medium (31–80 words)', adv.lenMedium],
+    ['Long (80+ words)', adv.lenLong],
+  ])
+
+  if (adv.overallDifficulty) {
+    lines.push(`Overall difficulty target: ${adv.overallDifficulty}`)
+  }
+
+  pctLine('Difficulty distribution', [
+    ['Easy', adv.distEasy],
+    ['Medium', adv.distMedium],
+    ['Hard', adv.distHard],
+  ])
+
+  if (adv.trickiness) {
+    const tp = adv.trickinessPercent ? ` (approximately ${adv.trickinessPercent}% of questions)` : ''
+    lines.push(`Trickiness level: ${adv.trickiness}${tp}`)
+  }
+
+  if (adv.answerSimilarity) {
+    lines.push(`Answer choice similarity: ${adv.answerSimilarity}`)
+  }
+
+  if (adv.answerChoiceCount) {
+    lines.push(`Answer choices per question: ${adv.answerChoiceCount}`)
+  }
+
+  if (adv.questionSources.length > 0) {
+    lines.push(`Preferred question sources: ${adv.questionSources.join(', ')}`)
+  }
+
+  if (adv.repetition) {
+    lines.push(`Topic repetition tolerance: ${adv.repetition}`)
+  }
+
+  if (adv.topicIntegration) {
+    lines.push(`Topic integration: ${adv.topicIntegration}`)
+  }
+
+  if (adv.calcIntensity) {
+    lines.push(`Calculation intensity: ${adv.calcIntensity}`)
+  }
+
+  if (adv.visuals.length > 0) {
+    lines.push(`Include visual elements: ${adv.visuals.join(', ')} (describe in question text since output is text-only)`)
+  }
+
+  if (adv.professorStyle.trim()) {
+    lines.push(`Professor/exam style notes: ${adv.professorStyle.trim()}`)
+  }
+
+  if (adv.commonMistakes.trim()) {
+    lines.push(`Common student mistakes to test for: ${adv.commonMistakes.trim()}`)
+  }
+
+  if (adv.highYieldTopics.trim()) {
+    lines.push(`High-yield / most important topics: ${adv.highYieldTopics.trim()}`)
+  }
+
+  if (lines.length === 0) return ''
+
+  return `
+═══════════════════════════════════════════════════════
+ADVANCED CUSTOMIZATION (follow these instructions carefully)
+═══════════════════════════════════════════════════════
+${lines.map((l) => `• ${l}`).join('\n')}
+`
+}
+
 // ─── Main generation function ─────────────────────────────────────────────────
 
 export async function generateQuestions(
@@ -326,6 +442,10 @@ export async function generateQuestions(
     ? buildShsatSection(input.questionCount)
     : isAdaptive
     ? buildDifficultyTaggingSection(input.questionCount)
+    : ''
+
+  const advancedSection = input.advancedCustomization
+    ? buildAdvancedSection(input.advancedCustomization)
     : ''
 
   // Use gpt-4o for Step 1 (meaningfully better vignette quality and distractor realism)
@@ -384,7 +504,7 @@ Notes for explanations:
         content: `Generate exactly ${input.questionCount} multiple-choice exam questions based on the following exam details:
 
 ${contextParts}
-${usmleSection}
+${usmleSection}${advancedSection}
 General rules:
 - Each question must be directly relevant to the topics and content provided
 - Each question must have exactly ${optionCount} answer options

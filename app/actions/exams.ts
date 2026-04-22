@@ -5,6 +5,25 @@ import { createClient } from '@/lib/supabase/server'
 import { generateQuestions } from '@/lib/ai/generate-questions'
 import { sendGroupAddedEmails } from '@/lib/email/send-group-added'
 
+export interface AdvancedCustomization {
+  recall: string; understanding: string; application: string; multiStep: string
+  styleShort: string; styleScenario: string; styleProblem: string; styleConceptual: string
+  lenVeryShort: string; lenMedium: string; lenLong: string
+  overallDifficulty: string
+  distEasy: string; distMedium: string; distHard: string
+  trickiness: string; trickinessPercent: string
+  answerSimilarity: string
+  answerChoiceCount: string
+  questionSources: string[]
+  repetition: string
+  topicIntegration: string
+  calcIntensity: string
+  visuals: string[]
+  professorStyle: string
+  commonMistakes: string
+  highYieldTopics: string
+}
+
 export interface CreateExamInput {
   title: string
   subject: string
@@ -24,6 +43,7 @@ export interface CreateExamInput {
   timeLimitMinutes?: number | null
   groupMessage?: string | null
   adaptiveMode?: boolean
+  advancedCustomization?: AdvancedCustomization
 }
 
 export async function createExam(
@@ -79,6 +99,7 @@ export async function createExam(
       standardizedExam: input.standardizedExam,
       usmleStyles: input.usmleStyles,
       adaptiveMode: input.adaptiveMode,
+      advancedCustomization: input.advancedCustomization,
     })
   } catch (err) {
     // Clean up the exam row so the user isn't left with a broken draft
