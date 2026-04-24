@@ -95,7 +95,6 @@ export function CreateExamForm() {
   const [unlockDaysBefore, setUnlockDaysBefore] = useState('7')
   const [format, setFormat] = useState('multiple_choice')
   const [questionCount, setQuestionCount] = useState('20')
-  const [pastPaperStyle, setPastPaperStyle] = useState('')
   const [additionalNotes, setAdditionalNotes] = useState('')
   const [standardizedExam, setStandardizedExam] = useState('')
   const [usmleStyles, setUsmleStyles] = useState<string[]>([])
@@ -126,7 +125,8 @@ export function CreateExamForm() {
   const [shareChoiceError, setShareChoiceError] = useState('')
 
   // Advanced customization
-  const [advOpen, setAdvOpen] = useState(false)
+  const [wantsAdvancedCustomization, setWantsAdvancedCustomization] = useState<boolean | null>(null)
+  const [advCustomizationError, setAdvCustomizationError] = useState('')
   const [adv, setAdv] = useState<AdvancedCustomization>(DEFAULT_ADV)
   const [advExtraFiles, setAdvExtraFiles] = useState<File[]>([])
   const advExtraFilesRef = useRef<HTMLInputElement>(null)
@@ -380,7 +380,7 @@ export function CreateExamForm() {
       subtopics,
       lectureContent, // populated from uploaded files above
       format,
-      pastPaperStyle,
+      pastPaperStyle: '',
       additionalNotes,
       questionCount: parseInt(questionCount, 10),
       unlockDaysBefore: parseInt(unlockDaysBefore, 10),
@@ -391,7 +391,7 @@ export function CreateExamForm() {
       timeLimitMinutes: isTimed ? parseInt(timeLimitMinutes, 10) : null,
       groupMessage: wantsToShare ? groupMessage.trim() || null : null,
       adaptiveMode: standardizedExam === 'shsat' ? isAdaptive : undefined,
-      advancedCustomization: adv,
+      advancedCustomization: wantsAdvancedCustomization === true ? adv : undefined,
     })
 
     if (result?.error) {
@@ -638,21 +638,534 @@ export function CreateExamForm() {
               value={questionCount}
               onChange={(e) => setQuestionCount(e.target.value)}
             />
-            <Textarea
-              label="Past paper style (optional)"
-              placeholder="e.g. Questions are typically scenario-based, 5 marks each, expect one 20-mark essay question at the end..."
-              value={pastPaperStyle}
-              onChange={(e) => setPastPaperStyle(e.target.value)}
-              rows={4}
-              hint="Describe the style of past papers or your professor's typical exam format"
-            />
-            <Textarea
-              label="Additional notes (optional)"
-              placeholder="Anything else the AI should know about your exam or study situation..."
-              value={additionalNotes}
-              onChange={(e) => setAdditionalNotes(e.target.value)}
-              rows={3}
-            />
+
+            {/* ── Make your exam more accurate (required toggle) ── */}
+            <div className="rounded-lg border border-slate-200 bg-slate-50 overflow-hidden">
+              <div className="px-4 py-4 space-y-3">
+                <div>
+                  <p className="text-sm font-semibold text-slate-800">Make your exam more accurate</p>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Answer a few quick questions to better match your professor&apos;s exam style.
+                  </p>
+                </div>
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setWantsAdvancedCustomization(true)
+                      setAdvCustomizationError('')
+                    }}
+                    className={cn(
+                      'flex-1 rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors',
+                      wantsAdvancedCustomization === true
+                        ? 'border-indigo-600 bg-indigo-600 text-white'
+                        : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                    )}
+                  >
+                    Yes, customize my exam
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setWantsAdvancedCustomization(false)
+                      setAdvCustomizationError('')
+                    }}
+                    className={cn(
+                      'flex-1 rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors',
+                      wantsAdvancedCustomization === false
+                        ? 'border-slate-800 bg-slate-800 text-white'
+                        : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                    )}
+                  >
+                    No, skip for now
+                  </button>
+                </div>
+                {advCustomizationError && (
+                  <p className="text-sm text-red-600">{advCustomizationError}</p>
+                )}
+              </div>
+
+              {wantsAdvancedCustomization === true && (
+                <div className="border-t border-slate-200 bg-white px-4 pb-5 pt-4 space-y-6">
+                  <p className="text-xs text-slate-500">
+                    Answer as much as you can below — the more detail you provide, the more accurate your exam will be.
+                  </p>
+
+                  {/* ── GROUP 1: Cognitive & Difficulty ── */}
+                  <div className="space-y-4">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Cognitive levels &amp; difficulty</p>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Thinking level breakdown{' '}
+                        <span className="font-normal text-slate-400 text-xs">(% of questions — must add to 100 if filled)</span>
+                      </label>
+                      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                        {[
+                          { key: 'recall' as const, label: 'Recall' },
+                          { key: 'understanding' as const, label: 'Understanding' },
+                          { key: 'application' as const, label: 'Application' },
+                          { key: 'multiStep' as const, label: 'Multi-step' },
+                        ].map(({ key, label }) => (
+                          <div key={key} className="space-y-1">
+                            <label className="text-xs text-slate-500">{label}</label>
+                            <div className="flex items-center gap-1">
+                              <input
+                                type="number" min="0" max="100"
+                                placeholder="0"
+                                value={adv[key]}
+                                onChange={(e) => updateAdv(key, e.target.value)}
+                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                              />
+                              <span className="text-xs text-slate-400">%</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {pctFilled([adv.recall, adv.understanding, adv.application, adv.multiStep]) && (
+                        <p className={cn('text-xs', pctSum([adv.recall, adv.understanding, adv.application, adv.multiStep]) === 100 ? 'text-emerald-600' : 'text-amber-600')}>
+                          Sum: {pctSum([adv.recall, adv.understanding, adv.application, adv.multiStep])}%
+                          {pctSum([adv.recall, adv.understanding, adv.application, adv.multiStep]) !== 100 && ' — must equal 100'}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">Overall difficulty</label>
+                      <div className="flex flex-wrap gap-2">
+                        {['Easy', 'Medium', 'Hard', 'Mixed'].map((opt) => (
+                          <button
+                            key={opt} type="button"
+                            onClick={() => updateAdv('overallDifficulty', adv.overallDifficulty === opt ? '' : opt)}
+                            className={cn(
+                              'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
+                              adv.overallDifficulty === opt
+                                ? 'border-indigo-600 bg-indigo-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                            )}
+                          >
+                            {opt}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Difficulty distribution{' '}
+                        <span className="font-normal text-slate-400 text-xs">(% — must add to 100 if filled)</span>
+                      </label>
+                      <div className="grid grid-cols-3 gap-2">
+                        {[
+                          { key: 'distEasy' as const, label: 'Easy' },
+                          { key: 'distMedium' as const, label: 'Medium' },
+                          { key: 'distHard' as const, label: 'Hard' },
+                        ].map(({ key, label }) => (
+                          <div key={key} className="space-y-1">
+                            <label className="text-xs text-slate-500">{label}</label>
+                            <div className="flex items-center gap-1">
+                              <input
+                                type="number" min="0" max="100"
+                                placeholder="0"
+                                value={adv[key]}
+                                onChange={(e) => updateAdv(key, e.target.value)}
+                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                              />
+                              <span className="text-xs text-slate-400">%</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {pctFilled([adv.distEasy, adv.distMedium, adv.distHard]) && (
+                        <p className={cn('text-xs', pctSum([adv.distEasy, adv.distMedium, adv.distHard]) === 100 ? 'text-emerald-600' : 'text-amber-600')}>
+                          Sum: {pctSum([adv.distEasy, adv.distMedium, adv.distHard])}%
+                          {pctSum([adv.distEasy, adv.distMedium, adv.distHard]) !== 100 && ' — must equal 100'}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* ── GROUP 2: Question Style ── */}
+                  <div className="space-y-4 border-t border-slate-100 pt-5">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Question style &amp; length</p>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Question style breakdown{' '}
+                        <span className="font-normal text-slate-400 text-xs">(% — must add to 100 if filled)</span>
+                      </label>
+                      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                        {[
+                          { key: 'styleShort' as const, label: 'Short/Direct' },
+                          { key: 'styleScenario' as const, label: 'Scenario' },
+                          { key: 'styleProblem' as const, label: 'Problem-solving' },
+                          { key: 'styleConceptual' as const, label: 'Conceptual' },
+                        ].map(({ key, label }) => (
+                          <div key={key} className="space-y-1">
+                            <label className="text-xs text-slate-500">{label}</label>
+                            <div className="flex items-center gap-1">
+                              <input
+                                type="number" min="0" max="100"
+                                placeholder="0"
+                                value={adv[key]}
+                                onChange={(e) => updateAdv(key, e.target.value)}
+                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                              />
+                              <span className="text-xs text-slate-400">%</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {pctFilled([adv.styleShort, adv.styleScenario, adv.styleProblem, adv.styleConceptual]) && (
+                        <p className={cn('text-xs', pctSum([adv.styleShort, adv.styleScenario, adv.styleProblem, adv.styleConceptual]) === 100 ? 'text-emerald-600' : 'text-amber-600')}>
+                          Sum: {pctSum([adv.styleShort, adv.styleScenario, adv.styleProblem, adv.styleConceptual])}%
+                          {pctSum([adv.styleShort, adv.styleScenario, adv.styleProblem, adv.styleConceptual]) !== 100 && ' — must equal 100'}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Question length breakdown{' '}
+                        <span className="font-normal text-slate-400 text-xs">(% — must add to 100 if filled)</span>
+                      </label>
+                      <div className="grid grid-cols-3 gap-2">
+                        {[
+                          { key: 'lenVeryShort' as const, label: 'Very short (≤30w)' },
+                          { key: 'lenMedium' as const, label: 'Medium (31–80w)' },
+                          { key: 'lenLong' as const, label: 'Long (80w+)' },
+                        ].map(({ key, label }) => (
+                          <div key={key} className="space-y-1">
+                            <label className="text-xs text-slate-500">{label}</label>
+                            <div className="flex items-center gap-1">
+                              <input
+                                type="number" min="0" max="100"
+                                placeholder="0"
+                                value={adv[key]}
+                                onChange={(e) => updateAdv(key, e.target.value)}
+                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                              />
+                              <span className="text-xs text-slate-400">%</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {pctFilled([adv.lenVeryShort, adv.lenMedium, adv.lenLong]) && (
+                        <p className={cn('text-xs', pctSum([adv.lenVeryShort, adv.lenMedium, adv.lenLong]) === 100 ? 'text-emerald-600' : 'text-amber-600')}>
+                          Sum: {pctSum([adv.lenVeryShort, adv.lenMedium, adv.lenLong])}%
+                          {pctSum([adv.lenVeryShort, adv.lenMedium, adv.lenLong]) !== 100 && ' — must equal 100'}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">Answer choices per question</label>
+                      <div className="flex gap-2">
+                        {['3', '4', '5'].map((n) => (
+                          <button
+                            key={n} type="button"
+                            onClick={() => updateAdv('answerChoiceCount', adv.answerChoiceCount === n ? '' : n)}
+                            className={cn(
+                              'flex-1 rounded-lg border px-3 py-2 text-sm font-medium transition-colors',
+                              adv.answerChoiceCount === n
+                                ? 'border-indigo-600 bg-indigo-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                            )}
+                          >
+                            {n} choices
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">Answer choice similarity</label>
+                      <div className="flex flex-wrap gap-2">
+                        {['Clearly distinct', 'Moderately similar', 'Highly similar'].map((opt) => (
+                          <button
+                            key={opt} type="button"
+                            onClick={() => updateAdv('answerSimilarity', adv.answerSimilarity === opt ? '' : opt)}
+                            className={cn(
+                              'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
+                              adv.answerSimilarity === opt
+                                ? 'border-indigo-600 bg-indigo-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                            )}
+                          >
+                            {opt}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ── GROUP 3: Trickiness ── */}
+                  <div className="space-y-4 border-t border-slate-100 pt-5">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Trickiness</p>
+                    <div className="space-y-3">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-slate-700">Trickiness level</label>
+                        <div className="flex gap-2">
+                          {['Low', 'Medium', 'High'].map((opt) => (
+                            <button
+                              key={opt} type="button"
+                              onClick={() => updateAdv('trickiness', adv.trickiness === opt ? '' : opt)}
+                              className={cn(
+                                'flex-1 rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
+                                adv.trickiness === opt
+                                  ? 'border-indigo-600 bg-indigo-600 text-white'
+                                  : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                              )}
+                            >
+                              {opt}
+                            </button>
+                          ))}
+                        </div>
+                        <p className="text-xs text-slate-400">
+                          High trickiness = questions targeting common misconceptions, near-identical choices, or subtle distinctions
+                        </p>
+                      </div>
+                      {adv.trickiness && (
+                        <div className="space-y-1">
+                          <label className="text-sm font-medium text-slate-700">
+                            % of questions that should be tricky{' '}
+                            <span className="font-normal text-slate-400">(optional)</span>
+                          </label>
+                          <div className="flex items-center gap-2 max-w-xs">
+                            <input
+                              type="number" min="0" max="100"
+                              placeholder="e.g. 30"
+                              value={adv.trickinessPercent}
+                              onChange={(e) => updateAdv('trickinessPercent', e.target.value)}
+                              className="w-full rounded-md border border-slate-200 px-3 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                            />
+                            <span className="text-sm text-slate-400">%</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* ── GROUP 4: Structure & Sources ── */}
+                  <div className="space-y-4 border-t border-slate-100 pt-5">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Structure &amp; sources</p>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Preferred question sources{' '}
+                        <span className="font-normal text-slate-400 text-xs">(select all that apply)</span>
+                      </label>
+                      <div className="space-y-2">
+                        {[
+                          { value: 'Lectures only', label: 'Lectures / class notes only' },
+                          { value: 'Past papers', label: 'Past exam papers' },
+                          { value: 'Textbook', label: 'Textbook content' },
+                          { value: 'Real exam bank', label: 'Official exam bank style' },
+                        ].map(({ value, label }) => {
+                          const checked = adv.questionSources.includes(value)
+                          return (
+                            <label
+                              key={value}
+                              className={cn(
+                                'flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-colors',
+                                checked ? 'border-indigo-300 bg-indigo-50' : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
+                              )}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={checked}
+                                onChange={() => toggleAdvMulti('questionSources', value)}
+                                className="h-4 w-4 rounded border-slate-300 text-indigo-600 accent-indigo-600"
+                              />
+                              <span className="text-sm text-slate-700">{label}</span>
+                            </label>
+                          )
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Additional source files{' '}
+                        <span className="font-normal text-slate-400 text-xs">(optional)</span>
+                      </label>
+                      <input
+                        ref={advExtraFilesRef}
+                        type="file"
+                        multiple
+                        accept=".pdf,.docx,.txt,.md"
+                        className="hidden"
+                        onChange={(e) => addAdvExtraFiles(e.target.files)}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => advExtraFilesRef.current?.click()}
+                        className="flex items-center gap-2 rounded-lg border border-dashed border-slate-200 px-4 py-3 text-sm text-slate-600 hover:border-indigo-300 hover:bg-indigo-50 transition-colors w-full justify-center"
+                      >
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                        </svg>
+                        Upload files
+                      </button>
+                      {advExtraFiles.length > 0 && (
+                        <ul className="space-y-1.5">
+                          {advExtraFiles.map((f) => (
+                            <li key={f.name} className="flex items-center justify-between gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
+                              <span className="text-sm text-slate-700 truncate">{f.name}</span>
+                              <button
+                                type="button"
+                                onClick={() => setAdvExtraFiles((prev) => prev.filter((x) => x.name !== f.name))}
+                                className="shrink-0 text-slate-400 hover:text-red-500 transition-colors"
+                              >
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">Topic repetition tolerance</label>
+                      <div className="flex flex-wrap gap-2">
+                        {['No repetition', 'Some OK', 'Heavy repetition OK'].map((opt) => (
+                          <button
+                            key={opt} type="button"
+                            onClick={() => updateAdv('repetition', adv.repetition === opt ? '' : opt)}
+                            className={cn(
+                              'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
+                              adv.repetition === opt
+                                ? 'border-indigo-600 bg-indigo-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                            )}
+                          >
+                            {opt}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">Cross-topic integration</label>
+                      <div className="flex flex-wrap gap-2">
+                        {['Single-topic', 'Some cross-topic', 'Heavy integration'].map((opt) => (
+                          <button
+                            key={opt} type="button"
+                            onClick={() => updateAdv('topicIntegration', adv.topicIntegration === opt ? '' : opt)}
+                            className={cn(
+                              'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
+                              adv.topicIntegration === opt
+                                ? 'border-indigo-600 bg-indigo-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                            )}
+                          >
+                            {opt}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">Calculation intensity</label>
+                      <div className="flex flex-wrap gap-2">
+                        {['None', 'Light', 'Moderate', 'Heavy'].map((opt) => (
+                          <button
+                            key={opt} type="button"
+                            onClick={() => updateAdv('calcIntensity', adv.calcIntensity === opt ? '' : opt)}
+                            className={cn(
+                              'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
+                              adv.calcIntensity === opt
+                                ? 'border-indigo-600 bg-indigo-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                            )}
+                          >
+                            {opt}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Include visual element descriptions{' '}
+                        <span className="font-normal text-slate-400 text-xs">(select all that apply)</span>
+                      </label>
+                      <div className="flex flex-wrap gap-2">
+                        {['Tables', 'Graphs / charts', 'Diagrams', 'Case vignettes'].map((opt) => {
+                          const checked = adv.visuals.includes(opt)
+                          return (
+                            <button
+                              key={opt} type="button"
+                              onClick={() => toggleAdvMulti('visuals', opt)}
+                              className={cn(
+                                'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
+                                checked
+                                  ? 'border-indigo-600 bg-indigo-600 text-white'
+                                  : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                              )}
+                            >
+                              {opt}
+                            </button>
+                          )
+                        })}
+                      </div>
+                      <p className="text-xs text-slate-400">
+                        Since questions are text-only, the AI will describe what a table or graph would show within the question text.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* ── GROUP 5: Professor Profile ── */}
+                  <div className="space-y-4 border-t border-slate-100 pt-5">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Professor &amp; exam profile</p>
+
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium text-slate-700">
+                        Professor / exam style{' '}
+                        <span className="font-normal text-slate-400 text-xs">(optional)</span>
+                      </label>
+                      <textarea
+                        placeholder="e.g. My professor loves to ask about edge cases and exceptions. Exams are heavily weighted toward application over memorization..."
+                        value={adv.professorStyle}
+                        onChange={(e) => updateAdv('professorStyle', e.target.value)}
+                        rows={3}
+                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 resize-none"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium text-slate-700">
+                        Common student mistakes to test for{' '}
+                        <span className="font-normal text-slate-400 text-xs">(optional)</span>
+                      </label>
+                      <textarea
+                        placeholder="e.g. Students confuse marginal cost with average cost. Common mistake is applying short-run rules to long-run scenarios..."
+                        value={adv.commonMistakes}
+                        onChange={(e) => updateAdv('commonMistakes', e.target.value)}
+                        rows={3}
+                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 resize-none"
+                      />
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="text-sm font-medium text-slate-700">
+                        High-yield topics{' '}
+                        <span className="font-normal text-slate-400 text-xs">(optional)</span>
+                      </label>
+                      <textarea
+                        placeholder="e.g. Game theory and Nash equilibrium are worth at least 20% of marks. Focus heavily on welfare economics and market failures..."
+                        value={adv.highYieldTopics}
+                        onChange={(e) => updateAdv('highYieldTopics', e.target.value)}
+                        rows={3}
+                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 resize-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Time limit — optional */}
             <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-4">
@@ -819,526 +1332,13 @@ export function CreateExamForm() {
               )}
             </div>
 
-            {/* ── Advanced customization ── */}
-            <div className="rounded-lg border border-slate-200 bg-slate-50 overflow-hidden">
-              <button
-                type="button"
-                onClick={() => setAdvOpen((v) => !v)}
-                className="flex w-full items-center justify-between px-4 py-3 text-left hover:bg-slate-100 transition-colors"
-              >
-                <div>
-                  <p className="text-sm font-medium text-slate-700">
-                    Advanced customization{' '}
-                    <span className="ml-1 inline-flex items-center rounded-full bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-500">
-                      Optional
-                    </span>
-                  </p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Fine-tune cognitive levels, difficulty, trickiness, style, and more
-                  </p>
-                </div>
-                <svg
-                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                  className={cn('h-4 w-4 shrink-0 text-slate-400 transition-transform', advOpen && 'rotate-180')}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                </svg>
-              </button>
-
-              {advOpen && (
-                <div className="px-4 pb-5 pt-1 space-y-6 border-t border-slate-200 bg-white">
-
-                  {/* ── GROUP 1: Cognitive & Difficulty ── */}
-                  <div className="space-y-4 pt-4">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Cognitive levels &amp; difficulty</p>
-
-                    {/* Thinking levels */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Thinking level breakdown{' '}
-                        <span className="font-normal text-slate-400 text-xs">(% of questions — must add to 100 if filled)</span>
-                      </label>
-                      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                        {[
-                          { key: 'recall' as const, label: 'Recall' },
-                          { key: 'understanding' as const, label: 'Understanding' },
-                          { key: 'application' as const, label: 'Application' },
-                          { key: 'multiStep' as const, label: 'Multi-step' },
-                        ].map(({ key, label }) => (
-                          <div key={key} className="space-y-1">
-                            <label className="text-xs text-slate-500">{label}</label>
-                            <div className="flex items-center gap-1">
-                              <input
-                                type="number" min="0" max="100"
-                                placeholder="0"
-                                value={adv[key]}
-                                onChange={(e) => updateAdv(key, e.target.value)}
-                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
-                              />
-                              <span className="text-xs text-slate-400">%</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      {pctFilled([adv.recall, adv.understanding, adv.application, adv.multiStep]) && (
-                        <p className={cn('text-xs', pctSum([adv.recall, adv.understanding, adv.application, adv.multiStep]) === 100 ? 'text-emerald-600' : 'text-amber-600')}>
-                          Sum: {pctSum([adv.recall, adv.understanding, adv.application, adv.multiStep])}%
-                          {pctSum([adv.recall, adv.understanding, adv.application, adv.multiStep]) !== 100 && ' — must equal 100'}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Overall difficulty */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">Overall difficulty</label>
-                      <div className="flex flex-wrap gap-2">
-                        {['Easy', 'Medium', 'Hard', 'Mixed'].map((opt) => (
-                          <button
-                            key={opt} type="button"
-                            onClick={() => updateAdv('overallDifficulty', adv.overallDifficulty === opt ? '' : opt)}
-                            className={cn(
-                              'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
-                              adv.overallDifficulty === opt
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
-                            )}
-                          >
-                            {opt}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Difficulty distribution */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Difficulty distribution{' '}
-                        <span className="font-normal text-slate-400 text-xs">(% — must add to 100 if filled)</span>
-                      </label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {[
-                          { key: 'distEasy' as const, label: 'Easy' },
-                          { key: 'distMedium' as const, label: 'Medium' },
-                          { key: 'distHard' as const, label: 'Hard' },
-                        ].map(({ key, label }) => (
-                          <div key={key} className="space-y-1">
-                            <label className="text-xs text-slate-500">{label}</label>
-                            <div className="flex items-center gap-1">
-                              <input
-                                type="number" min="0" max="100"
-                                placeholder="0"
-                                value={adv[key]}
-                                onChange={(e) => updateAdv(key, e.target.value)}
-                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
-                              />
-                              <span className="text-xs text-slate-400">%</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      {pctFilled([adv.distEasy, adv.distMedium, adv.distHard]) && (
-                        <p className={cn('text-xs', pctSum([adv.distEasy, adv.distMedium, adv.distHard]) === 100 ? 'text-emerald-600' : 'text-amber-600')}>
-                          Sum: {pctSum([adv.distEasy, adv.distMedium, adv.distHard])}%
-                          {pctSum([adv.distEasy, adv.distMedium, adv.distHard]) !== 100 && ' — must equal 100'}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* ── GROUP 2: Question Style ── */}
-                  <div className="space-y-4 border-t border-slate-100 pt-5">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Question style &amp; length</p>
-
-                    {/* Style breakdown */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Question style breakdown{' '}
-                        <span className="font-normal text-slate-400 text-xs">(% — must add to 100 if filled)</span>
-                      </label>
-                      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-                        {[
-                          { key: 'styleShort' as const, label: 'Short/Direct' },
-                          { key: 'styleScenario' as const, label: 'Scenario' },
-                          { key: 'styleProblem' as const, label: 'Problem-solving' },
-                          { key: 'styleConceptual' as const, label: 'Conceptual' },
-                        ].map(({ key, label }) => (
-                          <div key={key} className="space-y-1">
-                            <label className="text-xs text-slate-500">{label}</label>
-                            <div className="flex items-center gap-1">
-                              <input
-                                type="number" min="0" max="100"
-                                placeholder="0"
-                                value={adv[key]}
-                                onChange={(e) => updateAdv(key, e.target.value)}
-                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
-                              />
-                              <span className="text-xs text-slate-400">%</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      {pctFilled([adv.styleShort, adv.styleScenario, adv.styleProblem, adv.styleConceptual]) && (
-                        <p className={cn('text-xs', pctSum([adv.styleShort, adv.styleScenario, adv.styleProblem, adv.styleConceptual]) === 100 ? 'text-emerald-600' : 'text-amber-600')}>
-                          Sum: {pctSum([adv.styleShort, adv.styleScenario, adv.styleProblem, adv.styleConceptual])}%
-                          {pctSum([adv.styleShort, adv.styleScenario, adv.styleProblem, adv.styleConceptual]) !== 100 && ' — must equal 100'}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Length breakdown */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Question length breakdown{' '}
-                        <span className="font-normal text-slate-400 text-xs">(% — must add to 100 if filled)</span>
-                      </label>
-                      <div className="grid grid-cols-3 gap-2">
-                        {[
-                          { key: 'lenVeryShort' as const, label: 'Very short (≤30w)' },
-                          { key: 'lenMedium' as const, label: 'Medium (31–80w)' },
-                          { key: 'lenLong' as const, label: 'Long (80w+)' },
-                        ].map(({ key, label }) => (
-                          <div key={key} className="space-y-1">
-                            <label className="text-xs text-slate-500">{label}</label>
-                            <div className="flex items-center gap-1">
-                              <input
-                                type="number" min="0" max="100"
-                                placeholder="0"
-                                value={adv[key]}
-                                onChange={(e) => updateAdv(key, e.target.value)}
-                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
-                              />
-                              <span className="text-xs text-slate-400">%</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      {pctFilled([adv.lenVeryShort, adv.lenMedium, adv.lenLong]) && (
-                        <p className={cn('text-xs', pctSum([adv.lenVeryShort, adv.lenMedium, adv.lenLong]) === 100 ? 'text-emerald-600' : 'text-amber-600')}>
-                          Sum: {pctSum([adv.lenVeryShort, adv.lenMedium, adv.lenLong])}%
-                          {pctSum([adv.lenVeryShort, adv.lenMedium, adv.lenLong]) !== 100 && ' — must equal 100'}
-                        </p>
-                      )}
-                    </div>
-
-                    {/* Answer choice count */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">Answer choices per question</label>
-                      <div className="flex gap-2">
-                        {['3', '4', '5'].map((n) => (
-                          <button
-                            key={n} type="button"
-                            onClick={() => updateAdv('answerChoiceCount', adv.answerChoiceCount === n ? '' : n)}
-                            className={cn(
-                              'flex-1 rounded-lg border px-3 py-2 text-sm font-medium transition-colors',
-                              adv.answerChoiceCount === n
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
-                            )}
-                          >
-                            {n} choices
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Answer choice similarity */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">Answer choice similarity</label>
-                      <div className="flex flex-wrap gap-2">
-                        {['Clearly distinct', 'Moderately similar', 'Highly similar'].map((opt) => (
-                          <button
-                            key={opt} type="button"
-                            onClick={() => updateAdv('answerSimilarity', adv.answerSimilarity === opt ? '' : opt)}
-                            className={cn(
-                              'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
-                              adv.answerSimilarity === opt
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
-                            )}
-                          >
-                            {opt}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* ── GROUP 3: Trickiness ── */}
-                  <div className="space-y-4 border-t border-slate-100 pt-5">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Trickiness</p>
-
-                    <div className="space-y-3">
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-slate-700">Trickiness level</label>
-                        <div className="flex gap-2">
-                          {['Low', 'Medium', 'High'].map((opt) => (
-                            <button
-                              key={opt} type="button"
-                              onClick={() => updateAdv('trickiness', adv.trickiness === opt ? '' : opt)}
-                              className={cn(
-                                'flex-1 rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
-                                adv.trickiness === opt
-                                  ? 'border-indigo-600 bg-indigo-600 text-white'
-                                  : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
-                              )}
-                            >
-                              {opt}
-                            </button>
-                          ))}
-                        </div>
-                        <p className="text-xs text-slate-400">
-                          High trickiness = questions that target common misconceptions, near-identical answer choices, or subtle distinctions
-                        </p>
-                      </div>
-
-                      {adv.trickiness && (
-                        <div className="space-y-1">
-                          <label className="text-sm font-medium text-slate-700">
-                            % of questions that should be tricky{' '}
-                            <span className="font-normal text-slate-400">(optional)</span>
-                          </label>
-                          <div className="flex items-center gap-2 max-w-xs">
-                            <input
-                              type="number" min="0" max="100"
-                              placeholder="e.g. 30"
-                              value={adv.trickinessPercent}
-                              onChange={(e) => updateAdv('trickinessPercent', e.target.value)}
-                              className="w-full rounded-md border border-slate-200 px-3 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
-                            />
-                            <span className="text-sm text-slate-400">%</span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* ── GROUP 4: Structure & Sources ── */}
-                  <div className="space-y-4 border-t border-slate-100 pt-5">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Structure &amp; sources</p>
-
-                    {/* Question sources */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Preferred question sources{' '}
-                        <span className="font-normal text-slate-400 text-xs">(select all that apply)</span>
-                      </label>
-                      <div className="space-y-2">
-                        {[
-                          { value: 'Lectures only', label: 'Lectures / class notes only' },
-                          { value: 'Past papers', label: 'Past exam papers' },
-                          { value: 'Textbook', label: 'Textbook content' },
-                          { value: 'Real exam bank', label: 'Official exam bank style' },
-                        ].map(({ value, label }) => {
-                          const checked = adv.questionSources.includes(value)
-                          return (
-                            <label
-                              key={value}
-                              className={cn(
-                                'flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-colors',
-                                checked ? 'border-indigo-300 bg-indigo-50' : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
-                              )}
-                            >
-                              <input
-                                type="checkbox"
-                                checked={checked}
-                                onChange={() => toggleAdvMulti('questionSources', value)}
-                                className="h-4 w-4 rounded border-slate-300 text-indigo-600 accent-indigo-600"
-                              />
-                              <span className="text-sm text-slate-700">{label}</span>
-                            </label>
-                          )
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Extra source files */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Additional source files{' '}
-                        <span className="font-normal text-slate-400 text-xs">(optional — e.g. past papers, textbook excerpts)</span>
-                      </label>
-                      <input
-                        ref={advExtraFilesRef}
-                        type="file"
-                        multiple
-                        accept=".pdf,.docx,.txt,.md"
-                        className="hidden"
-                        onChange={(e) => addAdvExtraFiles(e.target.files)}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => advExtraFilesRef.current?.click()}
-                        className="flex items-center gap-2 rounded-lg border border-dashed border-slate-200 px-4 py-3 text-sm text-slate-600 hover:border-indigo-300 hover:bg-indigo-50 transition-colors w-full justify-center"
-                      >
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                        </svg>
-                        Upload files
-                      </button>
-                      {advExtraFiles.length > 0 && (
-                        <ul className="space-y-1.5">
-                          {advExtraFiles.map((f) => (
-                            <li key={f.name} className="flex items-center justify-between gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
-                              <span className="text-sm text-slate-700 truncate">{f.name}</span>
-                              <button
-                                type="button"
-                                onClick={() => setAdvExtraFiles((prev) => prev.filter((x) => x.name !== f.name))}
-                                className="shrink-0 text-slate-400 hover:text-red-500 transition-colors"
-                              >
-                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-
-                    {/* Topic repetition */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">Topic repetition tolerance</label>
-                      <div className="flex flex-wrap gap-2">
-                        {['No repetition', 'Some OK', 'Heavy repetition OK'].map((opt) => (
-                          <button
-                            key={opt} type="button"
-                            onClick={() => updateAdv('repetition', adv.repetition === opt ? '' : opt)}
-                            className={cn(
-                              'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
-                              adv.repetition === opt
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
-                            )}
-                          >
-                            {opt}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Topic integration */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">Cross-topic integration</label>
-                      <div className="flex flex-wrap gap-2">
-                        {['Single-topic', 'Some cross-topic', 'Heavy integration'].map((opt) => (
-                          <button
-                            key={opt} type="button"
-                            onClick={() => updateAdv('topicIntegration', adv.topicIntegration === opt ? '' : opt)}
-                            className={cn(
-                              'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
-                              adv.topicIntegration === opt
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
-                            )}
-                          >
-                            {opt}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Calculation intensity */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">Calculation intensity</label>
-                      <div className="flex flex-wrap gap-2">
-                        {['None', 'Light', 'Moderate', 'Heavy'].map((opt) => (
-                          <button
-                            key={opt} type="button"
-                            onClick={() => updateAdv('calcIntensity', adv.calcIntensity === opt ? '' : opt)}
-                            className={cn(
-                              'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
-                              adv.calcIntensity === opt
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
-                            )}
-                          >
-                            {opt}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Visuals */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Include visual element descriptions{' '}
-                        <span className="font-normal text-slate-400 text-xs">(select all that apply)</span>
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {['Tables', 'Graphs / charts', 'Diagrams', 'Case vignettes'].map((opt) => {
-                          const checked = adv.visuals.includes(opt)
-                          return (
-                            <button
-                              key={opt} type="button"
-                              onClick={() => toggleAdvMulti('visuals', opt)}
-                              className={cn(
-                                'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
-                                checked
-                                  ? 'border-indigo-600 bg-indigo-600 text-white'
-                                  : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
-                              )}
-                            >
-                              {opt}
-                            </button>
-                          )
-                        })}
-                      </div>
-                      <p className="text-xs text-slate-400">
-                        Since questions are text-only, the AI will describe what a table or graph would show within the question text.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* ── GROUP 5: Professor Profile ── */}
-                  <div className="space-y-4 border-t border-slate-100 pt-5">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Professor &amp; exam profile</p>
-
-                    <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-slate-700">
-                        Professor / exam style{' '}
-                        <span className="font-normal text-slate-400 text-xs">(optional)</span>
-                      </label>
-                      <textarea
-                        placeholder="e.g. My professor loves to ask about edge cases and exceptions. Exams are heavily weighted toward application over memorization. Often tests the 'why' behind concepts..."
-                        value={adv.professorStyle}
-                        onChange={(e) => updateAdv('professorStyle', e.target.value)}
-                        rows={3}
-                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 resize-none"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-slate-700">
-                        Common student mistakes to test for{' '}
-                        <span className="font-normal text-slate-400 text-xs">(optional)</span>
-                      </label>
-                      <textarea
-                        placeholder="e.g. Students confuse marginal cost with average cost. Common mistake is applying short-run rules to long-run scenarios..."
-                        value={adv.commonMistakes}
-                        onChange={(e) => updateAdv('commonMistakes', e.target.value)}
-                        rows={3}
-                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 resize-none"
-                      />
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-slate-700">
-                        High-yield topics{' '}
-                        <span className="font-normal text-slate-400 text-xs">(optional)</span>
-                      </label>
-                      <textarea
-                        placeholder="e.g. Game theory and Nash equilibrium are worth at least 20% of marks. Focus heavily on welfare economics and market failures..."
-                        value={adv.highYieldTopics}
-                        onChange={(e) => updateAdv('highYieldTopics', e.target.value)}
-                        rows={3}
-                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 resize-none"
-                      />
-                    </div>
-                  </div>
-
-                </div>
-              )}
-            </div>
+            <Textarea
+              label="Additional notes (optional)"
+              placeholder="Anything else the AI should know about your exam or study situation..."
+              value={additionalNotes}
+              onChange={(e) => setAdditionalNotes(e.target.value)}
+              rows={3}
+            />
           </div>
         )}
 
@@ -1609,7 +1609,13 @@ export function CreateExamForm() {
 
         {step < 4 ? (
           <Button
-            onClick={() => setStep((s) => s + 1)}
+            onClick={() => {
+              if (step === 3 && wantsAdvancedCustomization === null) {
+                setAdvCustomizationError('Please select an option to continue.')
+                return
+              }
+              setStep((s) => s + 1)
+            }}
             disabled={!canAdvance()}
           >
             Continue
