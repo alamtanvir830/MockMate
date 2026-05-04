@@ -1,18 +1,41 @@
 import { NextResponse } from 'next/server'
 import mammoth from 'mammoth'
 
-// pdf-parse must NOT be statically imported — it runs fs.readFileSync at module
-// init time which breaks when webpack bundles it. We use a dynamic require()
-// instead, and next.config.ts marks it as a serverExternalPackage so Next.js
-// skips bundling it entirely and lets Node.js require() it at runtime.
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const pdfParse = require('pdf-parse') as (buffer: Buffer) => Promise<{ text: string; numpages: number }>
-
 // Force dynamic rendering — this route handles file uploads, never cache it
 export const dynamic = 'force-dynamic'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB per file
 const ACCEPTED_TYPES = ['.pdf', '.docx', '.txt', '.md']
+// PDFs with fewer than 50 chars are almost certainly scanned/image-only
+const MIN_PDF_TEXT_LENGTH = 50
+
+/**
+ * Extract text from a single PDF buffer.
+ * pdfParse is required() here (not at module level) so that if pdf-parse
+ * fails to initialise, it only affects this one file — not the entire route.
+ */
+async function extractPdfText(buffer: Buffer, fileName: string): Promise<string> {
+  // Dynamic require keeps pdf-parse out of the webpack bundle.
+  // next.config.ts lists it in serverExternalPackages so Node.js require()s
+  // it natively at runtime.
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const pdfParse = require('pdf-parse') as (
+    buf: Buffer,
+  ) => Promise<{ text: string; numpages: number }>
+
+  const data = await pdfParse(buffer)
+  const text = data.text.trim()
+
+  console.log(
+    `[extract-text] "${fileName}" — ${data.numpages} pages, ${text.length} chars extracted`,
+  )
+
+  if (text.length < MIN_PDF_TEXT_LENGTH) {
+    throw new Error('PDF contains no readable text (scanned or image-only)')
+  }
+
+  return text
+}
 
 export async function POST(request: Request) {
   let formData: FormData
@@ -23,8 +46,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid form data' }, { status: 400 })
   }
 
-  const texts: string[] = []
-  const errors: string[] = []
+  const successfulTexts: string[] = []
+  const failedFiles: Array<{ name: string; reason: string }> = []
 
   for (const [, value] of formData.entries()) {
     if (!(value instanceof File)) continue
@@ -33,80 +56,78 @@ export async function POST(request: Request) {
     const nameLower = fileName.toLowerCase()
     const ext = ACCEPTED_TYPES.find((e) => nameLower.endsWith(e))
 
-    console.log(`[extract-text] processing file: "${fileName}" | type: ${value.type || 'unknown'} | size: ${value.size} bytes | ext: ${ext ?? 'unsupported'}`)
+    console.log(
+      `[extract-text] file: "${fileName}" | mime: ${value.type || 'unknown'} | size: ${value.size} bytes | ext: ${ext ?? 'unsupported'}`,
+    )
 
     if (!ext) {
-      const msg = `${fileName}: unsupported file type`
-      console.warn(`[extract-text] ${msg}`)
-      errors.push(msg)
+      console.warn(`[extract-text] "${fileName}" — unsupported type, skipping`)
+      failedFiles.push({ name: fileName, reason: 'unsupported file type' })
       continue
     }
 
     if (value.size > MAX_FILE_SIZE) {
-      const msg = `${fileName}: file too large (max 10 MB, got ${(value.size / (1024 * 1024)).toFixed(1)} MB)`
-      console.warn(`[extract-text] ${msg}`)
-      errors.push(msg)
+      const mb = (value.size / (1024 * 1024)).toFixed(1)
+      console.warn(`[extract-text] "${fileName}" — too large (${mb} MB), skipping`)
+      failedFiles.push({ name: fileName, reason: `file too large (${mb} MB, max 10 MB)` })
       continue
     }
 
+    // Each file gets its own try/catch — one failure never affects others
     try {
       const buffer = Buffer.from(await value.arrayBuffer())
-      console.log(`[extract-text] buffer read OK for "${fileName}" (${buffer.length} bytes)`)
+      console.log(`[extract-text] buffer OK for "${fileName}" (${buffer.length} bytes)`)
+
+      let extracted = ''
 
       if (ext === '.pdf') {
-        let data: { text: string; numpages: number }
-        try {
-          data = await pdfParse(buffer)
-        } catch (parseErr) {
-          const errMsg = parseErr instanceof Error ? parseErr.message : String(parseErr)
-          console.error(`[extract-text] pdf-parse failed for "${fileName}":`, errMsg)
-          errors.push(
-            `${fileName}: We couldn't read this PDF. Try uploading a text-based PDF, DOCX, or paste your notes instead.`,
-          )
-          continue
-        }
-
-        const extracted = data.text.trim()
-        console.log(`[extract-text] "${fileName}" — ${data.numpages} pages, ${extracted.length} chars extracted`)
-
-        if (!extracted) {
-          // Scanned/image-only PDF — no selectable text
-          console.warn(`[extract-text] "${fileName}" appears to be a scanned or image-only PDF (no text layer)`)
-          errors.push(
-            `${fileName}: We couldn't read this PDF. Try uploading a text-based PDF, DOCX, or paste your notes instead.`,
-          )
-        } else {
-          texts.push(extracted)
-        }
+        extracted = await extractPdfText(buffer, fileName)
       } else if (ext === '.docx') {
         const result = await mammoth.extractRawText({ buffer })
-        const extracted = result.value.trim()
-        console.log(`[extract-text] "${fileName}" — ${extracted.length} chars extracted from DOCX`)
-        if (extracted) texts.push(extracted)
+        extracted = result.value.trim()
+        console.log(`[extract-text] "${fileName}" — ${extracted.length} chars from DOCX`)
       } else {
-        // .txt / .md — read as UTF-8
-        const text = buffer.toString('utf-8').trim()
-        console.log(`[extract-text] "${fileName}" — ${text.length} chars extracted from text file`)
-        if (text) texts.push(text)
+        // .txt / .md
+        extracted = buffer.toString('utf-8').trim()
+        console.log(`[extract-text] "${fileName}" — ${extracted.length} chars from text file`)
+      }
+
+      if (extracted) {
+        successfulTexts.push(extracted)
+      } else {
+        console.warn(`[extract-text] "${fileName}" — extracted nothing, treating as failed`)
+        failedFiles.push({ name: fileName, reason: 'no text could be extracted' })
       }
     } catch (err) {
       const errMsg = err instanceof Error ? err.message : String(err)
-      console.error(`[extract-text] unexpected error for "${fileName}":`, errMsg)
+      console.error(`[extract-text] FAILED "${fileName}":`, errMsg)
 
-      if (ext === '.pdf') {
-        errors.push(
-          `${fileName}: We couldn't read this PDF. Try uploading a text-based PDF, DOCX, or paste your notes instead.`,
-        )
-      } else {
-        errors.push(`${fileName}: failed to extract text (${errMsg})`)
-      }
+      const isPdfReadError =
+        ext === '.pdf' ||
+        errMsg.includes('PDF') ||
+        errMsg.includes('scanned') ||
+        errMsg.includes('no readable text')
+
+      failedFiles.push({
+        name: fileName,
+        reason: isPdfReadError
+          ? "couldn't read PDF — try a text-based PDF, DOCX, or paste your notes instead"
+          : errMsg,
+      })
     }
   }
 
-  console.log(`[extract-text] done — ${texts.length} file(s) succeeded, ${errors.length} failed, total text length: ${texts.join('').length}`)
+  const successCount = successfulTexts.length
+  const failureCount = failedFiles.length
+
+  console.log(
+    `[extract-text] done — ${successCount} succeeded, ${failureCount} failed, ` +
+    `total text: ${successfulTexts.join('').length} chars`,
+  )
 
   return NextResponse.json({
-    text: texts.join('\n\n---\n\n'),
-    errors,
+    text: successfulTexts.join('\n\n---\n\n'),
+    successCount,
+    failedFiles, // [{ name, reason }] — client uses these for the warning UI
   })
 }

@@ -237,9 +237,10 @@ export function CreateExamForm() {
     setSubmitError('')
     setExtractionError('')
 
-    // Extract text from uploaded files
-    // Non-blocking: if extraction fails entirely we continue with typed content.
-    // Per-file failures are shown as warnings, not hard errors.
+    // Extract text from uploaded files.
+    // Each file is processed independently on the server — one failure never
+    // blocks others. We only hard-block if ALL files fail AND there are no
+    // typed topics to fall back on.
     let lectureContent = ''
     if (uploadedFiles.length > 0) {
       try {
@@ -247,20 +248,42 @@ export function CreateExamForm() {
         uploadedFiles.forEach((f) => body.append('files', f))
         const res = await fetch('/api/extract-text', { method: 'POST', body })
         if (!res.ok) throw new Error(`Server returned ${res.status}`)
-        const json: { text: string; errors: string[] } = await res.json()
+
+        const json: {
+          text: string
+          successCount: number
+          failedFiles: Array<{ name: string; reason: string }>
+        } = await res.json()
+
         lectureContent = json.text ?? ''
-        if (json.errors.length > 0) {
-          // Show per-file warnings but don't block submission
-          setExtractionError(json.errors.join('\n'))
+
+        const failed = json.failedFiles ?? []
+        const succeeded = json.successCount ?? 0
+
+        if (failed.length > 0 && succeeded === 0) {
+          // All files failed — block only if there are no typed topics either
+          if (!topics.trim() && !additionalNotes.trim()) {
+            setExtractionError(
+              `We couldn't read any of your uploaded files. Try uploading a text-based PDF or DOCX, or paste your notes in the topics field above.`,
+            )
+            setLoading(false)
+            return
+          }
+          // Has typed content — warn but continue
+          setExtractionError(
+            `__ALL_FAILED__${failed.map((f) => f.name).join('|')}`,
+          )
+        } else if (failed.length > 0) {
+          // Partial failure — continue with what worked
+          setExtractionError(`__PARTIAL__${succeeded}__${failed.map((f) => f.name).join('|')}`)
         }
+        // else: all succeeded, no message needed
       } catch (err) {
-        // API totally failed — warn but allow exam creation with typed notes
-        const errMsg = err instanceof Error ? err.message : 'unknown error'
-        console.warn('[create-exam] file extraction API failed:', errMsg)
-        setExtractionError(
-          'We couldn\'t read your uploaded files (server error). Your exam will be generated using your typed topics and notes instead.',
-        )
-        // Continue — lectureContent stays empty, typed fields still go to AI
+        // The API route itself crashed — warn but don't block
+        const errMsg = err instanceof Error ? err.message : 'unknown'
+        console.warn('[create-exam] file extraction API error:', errMsg)
+        setExtractionError('__API_ERROR__')
+        // lectureContent stays empty; typed topics/notes still reach the AI
       }
     }
 
@@ -271,7 +294,7 @@ export function CreateExamForm() {
         advExtraFiles.forEach((f) => body.append('files', f))
         const res = await fetch('/api/extract-text', { method: 'POST', body })
         if (!res.ok) throw new Error(`Server returned ${res.status}`)
-        const json: { text: string; errors: string[] } = await res.json()
+        const json: { text: string } = await res.json()
         if (json.text) {
           lectureContent = lectureContent
             ? `${lectureContent}\n\n--- Additional source material ---\n${json.text}`
@@ -614,14 +637,64 @@ export function CreateExamForm() {
                 </ul>
               )}
 
-              {extractionError && (
-                <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 space-y-1">
-                  {extractionError.split('\n').map((line, i) => (
-                    <p key={i} className="text-xs text-amber-700">{line}</p>
-                  ))}
-                  <p className="text-xs text-amber-600 mt-1">Your exam will still be generated using your typed topics and notes.</p>
-                </div>
-              )}
+              {extractionError && (() => {
+                if (extractionError.startsWith('__PARTIAL__')) {
+                  // Some files succeeded, some failed
+                  const [, succeededStr, namesStr] = extractionError.split('__').filter(Boolean)
+                  const succeeded = parseInt(succeededStr ?? '0', 10)
+                  const failedNames = (namesStr ?? '').split('|').filter(Boolean)
+                  return (
+                    <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2.5 space-y-1.5">
+                      <p className="text-xs font-medium text-amber-800">
+                        We couldn&apos;t read {failedNames.length} file{failedNames.length !== 1 ? 's' : ''}:
+                      </p>
+                      <ul className="list-disc list-inside space-y-0.5">
+                        {failedNames.map((name) => (
+                          <li key={name} className="text-xs text-amber-700">{name}</li>
+                        ))}
+                      </ul>
+                      <p className="text-xs text-amber-600">
+                        We&apos;ll continue using the {succeeded} remaining file{succeeded !== 1 ? 's' : ''} that worked.
+                      </p>
+                    </div>
+                  )
+                }
+                if (extractionError.startsWith('__ALL_FAILED__')) {
+                  const namesStr = extractionError.replace('__ALL_FAILED__', '')
+                  const failedNames = namesStr.split('|').filter(Boolean)
+                  return (
+                    <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2.5 space-y-1.5">
+                      <p className="text-xs font-medium text-amber-800">
+                        We couldn&apos;t read {failedNames.length > 1 ? 'any of your files' : 'this file'}:
+                      </p>
+                      <ul className="list-disc list-inside space-y-0.5">
+                        {failedNames.map((name) => (
+                          <li key={name} className="text-xs text-amber-700">{name}</li>
+                        ))}
+                      </ul>
+                      <p className="text-xs text-amber-600">
+                        This can happen with scanned or image-based PDFs. We&apos;ll generate your exam using your typed topics and notes instead.
+                      </p>
+                    </div>
+                  )
+                }
+                if (extractionError === '__API_ERROR__') {
+                  return (
+                    <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 space-y-1">
+                      <p className="text-xs text-amber-700">
+                        We couldn&apos;t read one or more of your files. This can happen with scanned or image-based PDFs. We&apos;ll continue with the files that worked.
+                      </p>
+                      <p className="text-xs text-amber-600">Your exam will be generated using your typed topics and notes.</p>
+                    </div>
+                  )
+                }
+                // Plain text fallback
+                return (
+                  <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2">
+                    <p className="text-xs text-amber-700">{extractionError}</p>
+                  </div>
+                )
+              })()}
 
               <p className="text-xs text-slate-500">
                 Upload your lecture notes, slides, or syllabus. The more content you provide, the more accurate your exam will be.
