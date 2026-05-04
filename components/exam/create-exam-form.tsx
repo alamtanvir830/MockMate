@@ -238,21 +238,29 @@ export function CreateExamForm() {
     setExtractionError('')
 
     // Extract text from uploaded files
+    // Non-blocking: if extraction fails entirely we continue with typed content.
+    // Per-file failures are shown as warnings, not hard errors.
     let lectureContent = ''
     if (uploadedFiles.length > 0) {
       try {
         const body = new FormData()
         uploadedFiles.forEach((f) => body.append('files', f))
         const res = await fetch('/api/extract-text', { method: 'POST', body })
+        if (!res.ok) throw new Error(`Server returned ${res.status}`)
         const json: { text: string; errors: string[] } = await res.json()
-        lectureContent = json.text
+        lectureContent = json.text ?? ''
         if (json.errors.length > 0) {
-          setExtractionError(`Some files could not be read: ${json.errors.join(', ')}`)
+          // Show per-file warnings but don't block submission
+          setExtractionError(json.errors.join('\n'))
         }
-      } catch {
-        setSubmitError('Failed to read uploaded files. Please try again.')
-        setLoading(false)
-        return
+      } catch (err) {
+        // API totally failed — warn but allow exam creation with typed notes
+        const errMsg = err instanceof Error ? err.message : 'unknown error'
+        console.warn('[create-exam] file extraction API failed:', errMsg)
+        setExtractionError(
+          'We couldn\'t read your uploaded files (server error). Your exam will be generated using your typed topics and notes instead.',
+        )
+        // Continue — lectureContent stays empty, typed fields still go to AI
       }
     }
 
@@ -262,6 +270,7 @@ export function CreateExamForm() {
         const body = new FormData()
         advExtraFiles.forEach((f) => body.append('files', f))
         const res = await fetch('/api/extract-text', { method: 'POST', body })
+        if (!res.ok) throw new Error(`Server returned ${res.status}`)
         const json: { text: string; errors: string[] } = await res.json()
         if (json.text) {
           lectureContent = lectureContent
@@ -606,7 +615,12 @@ export function CreateExamForm() {
               )}
 
               {extractionError && (
-                <p className="text-xs text-amber-600">{extractionError}</p>
+                <div className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 space-y-1">
+                  {extractionError.split('\n').map((line, i) => (
+                    <p key={i} className="text-xs text-amber-700">{line}</p>
+                  ))}
+                  <p className="text-xs text-amber-600 mt-1">Your exam will still be generated using your typed topics and notes.</p>
+                </div>
               )}
 
               <p className="text-xs text-slate-500">
