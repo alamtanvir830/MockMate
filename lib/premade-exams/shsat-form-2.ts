@@ -1,14 +1,24 @@
 /**
  * SHSAT Practice Test B — Form 2
  *
- * Same structure as shsat-form-1.ts.
- * Types are imported from shsat-form-1 (shared source of truth).
+ * Uses the v2 sections[] structure (compatible with PremadeExamTaker).
+ * Form 1 uses the newer subsections[] structure (SHSATExamTaker).
  *
  * To edit: update the passages[] and questions[] arrays below.
  * Question numbers are auto-derived at runtime — do not hard-code them.
  */
 
-import type { SHSATForm } from './shsat-form-1'
+// Self-contained types — does not import from shsat-form-1
+interface SHSATChoice { id: 'A'|'B'|'C'|'D'; text: string }
+interface SHSATMCQQuestion {
+  id: string; type: 'mcq'; question: string
+  choices: [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice]
+  correct_answer: 'A'|'B'|'C'|'D'
+}
+type SHSATQuestion = SHSATMCQQuestion
+interface SHSATPassage { id: string; title: string; author?: string; content: string; questions: SHSATQuestion[] }
+interface SHSATSection { id: string; number: number; title: string; passages: SHSATPassage[] }
+interface SHSATForm { id: string; title: string; description: string; timeLimitMinutes: number; sections: SHSATSection[] }
 
 export const shsatForm2: SHSATForm = {
   id: 'shsat-form-2',

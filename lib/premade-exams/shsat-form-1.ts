@@ -1,29 +1,40 @@
 /**
  * SHSAT Practice Test A — Form 1
  *
- * DATA STRUCTURE:
+ * STRUCTURE:
  *   SHSATForm
- *     └─ sections[]
- *          └─ passages[]
- *               ├─ title, author?, content (paragraphs separated by \n\n)
- *               └─ questions[]
- *                    ├─ type: 'mcq'
- *                    ├─ question
- *                    ├─ choices: [{ id: 'A'|'B'|'C'|'D', text }] × 4
- *                    └─ correct_answer: 'A'|'B'|'C'|'D'
+ *     └─ subsections[]          ← replaces old sections[]
+ *          ├─ type, title, sectionLabel, directions
+ *          ├─ passages[]        ← Reading Comprehension only
+ *          └─ questions[]       ← Revising/Editing + Math
  *
- * Question numbers (1-based) are auto-derived from position — do NOT
- * hard-code them here. passageQStart / passageQEnd are computed at
- * runtime in PremadeExamTaker.tsx.
+ * SECTION BREAKDOWN:
+ *   Reading Comprehension      Q  1 – Q 48   (subsections[0], 6 passages × 8 Q)
+ *   Revising/Editing Part A    Q 49 – Q 53   (subsections[1], 5 standalone Q)
+ *   Revising/Editing Part B    Q 54 – Q 57   (subsections[2], 4 standalone Q)
+ *   Mathematics                Q 58 – Q114   (subsections[3], 57 standalone Q)
  *
- * HOW TO ADD FORM 2:
- *   1. Create lib/premade-exams/shsat-form-2.ts — copy this file's
- *      structure, change id/title, fill in your passages and questions.
- *   2. Import shsatForm2 in app/(dashboard)/premade/shsat/page.tsx and
- *      activate the Form 2 card (link to /premade/shsat/form-2).
- *   3. Create app/(dashboard)/premade/shsat/form-2/page.tsx — identical
- *      to form-1/page.tsx but import shsatForm2.
+ * ADDING FULL 114-QUESTION DATASET:
+ *   • Replace the existing passage content in subsections[0].passages[].
+ *   • For passages 5 & 6 (Q33–Q48), replace the placeholderQuestions() call.
+ *   • For RevEdit A/B (Q49–Q57), replace placeholderQuestions() with real questions.
+ *   • For Math (Q58–Q114), replace placeholderQuestions() with real questions.
+ *   • Question numbers are auto-derived — never hard-code them.
+ *
+ * HOW TO ADD FORM 3:
+ *   1. Create lib/premade-exams/shsat-form-3.ts using this file as template.
+ *   2. Change id/title, fill subsections with new content.
+ *   3. Activate Form 3 card in app/(dashboard)/premade/shsat/page.tsx.
+ *   4. Create app/(dashboard)/premade/shsat/form-3/page.tsx (copy form-1/page.tsx).
  */
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+export type SHSATSubsectionType =
+  | 'reading_comprehension'
+  | 'revising_editing_a'
+  | 'revising_editing_b'
+  | 'mathematics'
 
 export interface SHSATChoice {
   id: 'A' | 'B' | 'C' | 'D'
@@ -48,37 +59,73 @@ export interface SHSATPassage {
   questions: SHSATQuestion[]
 }
 
-export interface SHSATSection {
+export interface SHSATSubsection {
   id: string
-  number: number // shown in breadcrumb: "SECTION 2"
-  title: string
-  passages: SHSATPassage[]
+  type: SHSATSubsectionType
+  sectionLabel: string       // shown above title on transition screen
+  title: string              // e.g. "READING COMPREHENSION"
+  directions: string
+  directionBullets?: string[] // Math "IMPORTANT NOTES" bullets
+  passages?: SHSATPassage[]   // Reading Comprehension only
+  questions?: SHSATQuestion[] // Revising/Editing + Math
 }
 
 export interface SHSATForm {
   id: string
-  title: string       // shown in top breadcrumb
+  title: string
   description: string
   timeLimitMinutes: number
-  sections: SHSATSection[]
+  sectionNumber: number
+  subsections: SHSATSubsection[]
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// ─── Placeholder generator ────────────────────────────────────────────────────
+// Replace calls to this with real arrays of SHSATMCQQuestion when you have the
+// full question set ready. The global number printed in the question text makes
+// it easy to identify which placeholder corresponds to which slot.
+
+function placeholderQuestions(
+  prefix: string,
+  startNum: number,
+  count: number,
+): SHSATMCQQuestion[] {
+  return Array.from({ length: count }, (_, i): SHSATMCQQuestion => ({
+    id: `${prefix}-${i + 1}`,
+    type: 'mcq',
+    question: `[PLACEHOLDER] Question ${startNum + i} — Replace with actual content.`,
+    choices: [
+      { id: 'A', text: 'Answer choice A — replace with actual option.' },
+      { id: 'B', text: 'Answer choice B — replace with actual option.' },
+      { id: 'C', text: 'Answer choice C — replace with actual option.' },
+      { id: 'D', text: 'Answer choice D — replace with actual option.' },
+    ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
+    correct_answer: 'A',
+  }))
+}
+
+// ─── Form 1 ───────────────────────────────────────────────────────────────────
 
 export const shsatForm1: SHSATForm = {
   id: 'shsat-form-1',
   title: 'SHSAT PRACTICE TEST A - 2025',
   description: 'Specialized High Schools Admissions Test — Practice Form 1',
   timeLimitMinutes: 180,
+  sectionNumber: 2,
 
-  sections: [
+  subsections: [
+
+    // ── Reading Comprehension  Q1–Q48 ────────────────────────────────────────
     {
-      id: 'section-2-ela',
-      number: 2,
-      title: 'English Language Arts',
+      id: 'rc',
+      type: 'reading_comprehension',
+      sectionLabel: 'English Language Arts',
+      title: 'READING COMPREHENSION',
+      directions:
+        'Read each of the following texts and answer the related questions. As needed, you may use the online notepad tool or write on the scrap paper given to you to take notes. You should reread relevant parts of each text, while being mindful of time, before selecting the best answer for each question. Base your answers only on the content within the text.',
+
       passages: [
 
-        // ── Passage 1  (Questions 1–8) ────────────────────────────────────
+        // ── Passage 1  (Q1–Q8) ─────────────────────────────────────────────
         {
           id: 'passage-1',
           title: 'Passage 1',
@@ -87,11 +134,9 @@ export const shsatForm1: SHSATForm = {
             'The arrival of the mail was one of the few events that gathered the townspeople together. Even when there was only a single letter, they stood around talking idly, as if there were nothing else to occupy their time. Their conversations drifted without purpose, and their actions suggested a lack of direction.\n\n' +
             'Hawkins had lived there for years, but he had begun to feel restless. Nothing ever seemed to change. The same routines repeated, and no one appeared to expect anything better. He compared his present life to the past, when he had been more energetic and hopeful. The difference troubled him deeply.\n\n' +
             'At last, he made a decision. He would leave. Somewhere beyond this place, he believed, there must be opportunity. Even if the future was uncertain, it seemed better than remaining where he was. Staying, he thought, would slowly wear him down.',
-
           questions: [
             {
-              id: 'p1q1',
-              type: 'mcq',
+              id: 'p1q1', type: 'mcq',
               question: 'Which statement best expresses the main idea of the passage?',
               choices: [
                 { id: 'A', text: 'Life in Obedstown is exciting.' },
@@ -102,8 +147,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'C',
             },
             {
-              id: 'p1q2',
-              type: 'mcq',
+              id: 'p1q2', type: 'mcq',
               question: 'Which detail best supports the idea that the town lacks purpose?',
               choices: [
                 { id: 'A', text: 'The morning is calm.' },
@@ -114,8 +158,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p1q3',
-              type: 'mcq',
+              id: 'p1q3', type: 'mcq',
               question: 'As used in the passage, "stagnant" most nearly means',
               choices: [
                 { id: 'A', text: 'active.' },
@@ -126,8 +169,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p1q4',
-              type: 'mcq',
+              id: 'p1q4', type: 'mcq',
               question: 'Hawkins decides to leave mainly because he',
               choices: [
                 { id: 'A', text: 'is forced to.' },
@@ -138,8 +180,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'C',
             },
             {
-              id: 'p1q5',
-              type: 'mcq',
+              id: 'p1q5', type: 'mcq',
               question: 'Which word best describes the tone of the passage?',
               choices: [
                 { id: 'A', text: 'Excited' },
@@ -150,8 +191,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'C',
             },
             {
-              id: 'p1q6',
-              type: 'mcq',
+              id: 'p1q6', type: 'mcq',
               question: 'What can the reader infer Hawkins fears?',
               choices: [
                 { id: 'A', text: 'Traveling alone' },
@@ -162,8 +202,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'C',
             },
             {
-              id: 'p1q7',
-              type: 'mcq',
+              id: 'p1q7', type: 'mcq',
               question: 'Why does the author include the detail about the mail?',
               choices: [
                 { id: 'A', text: 'To show the importance of communication' },
@@ -174,8 +213,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p1q8',
-              type: 'mcq',
+              id: 'p1q8', type: 'mcq',
               question: 'Which sentence best supports Hawkins\' dissatisfaction?',
               choices: [
                 { id: 'A', text: 'The air was calm.' },
@@ -188,7 +226,7 @@ export const shsatForm1: SHSATForm = {
           ],
         },
 
-        // ── Passage 2  (Questions 9–16) ───────────────────────────────────
+        // ── Passage 2  (Q9–Q16) ────────────────────────────────────────────
         {
           id: 'passage-2',
           title: 'Passage 2',
@@ -196,11 +234,9 @@ export const shsatForm1: SHSATForm = {
             'Hawkins explained to his wife that their land would one day become extremely valuable. Though it was nearly worthless now, he believed that future developments would transform it. He spoke of railroads and steamboats bringing people and trade into the region. What seemed empty now, he insisted, would one day be filled with opportunity.\n\n' +
             'He described resources hidden within the land — coal, iron, and copper — materials that others overlooked. To him, these were signs of future wealth. While others saw nothing, he saw potential.\n\n' +
             'His excitement grew as he spoke, imagining a future where their children would live in comfort and success. Though he admitted they might never see this change themselves, he believed firmly that it would come.',
-
           questions: [
             {
-              id: 'p2q1',
-              type: 'mcq',
+              id: 'p2q1', type: 'mcq',
               question: 'Hawkins believes the land will become valuable mainly because of',
               choices: [
                 { id: 'A', text: 'farming.' },
@@ -211,8 +247,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p2q2',
-              type: 'mcq',
+              id: 'p2q2', type: 'mcq',
               question: 'Which word best describes the tone of Hawkins\' speech?',
               choices: [
                 { id: 'A', text: 'Doubtful' },
@@ -223,8 +258,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p2q3',
-              type: 'mcq',
+              id: 'p2q3', type: 'mcq',
               question: 'The reader can infer that Hawkins is',
               choices: [
                 { id: 'A', text: 'cautious.' },
@@ -235,8 +269,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'C',
             },
             {
-              id: 'p2q4',
-              type: 'mcq',
+              id: 'p2q4', type: 'mcq',
               question: 'The phrase "hidden resources" suggests',
               choices: [
                 { id: 'A', text: 'visible wealth.' },
@@ -247,8 +280,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p2q5',
-              type: 'mcq',
+              id: 'p2q5', type: 'mcq',
               question: 'Which detail best supports Hawkins\' belief about the land?',
               choices: [
                 { id: 'A', text: 'The land is empty.' },
@@ -259,8 +291,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p2q6',
-              type: 'mcq',
+              id: 'p2q6', type: 'mcq',
               question: 'Hawkins\' vision of the future focuses mainly on',
               choices: [
                 { id: 'A', text: 'personal comfort.' },
@@ -271,8 +302,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p2q7',
-              type: 'mcq',
+              id: 'p2q7', type: 'mcq',
               question: 'The author presents Hawkins as someone who',
               choices: [
                 { id: 'A', text: 'ignores reality.' },
@@ -283,8 +313,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p2q8',
-              type: 'mcq',
+              id: 'p2q8', type: 'mcq',
               question: 'Which statement best expresses the main idea of the passage?',
               choices: [
                 { id: 'A', text: 'The land is currently valuable.' },
@@ -297,18 +326,16 @@ export const shsatForm1: SHSATForm = {
           ],
         },
 
-        // ── Passage 3  (Questions 17–24) ──────────────────────────────────
+        // ── Passage 3  (Q17–Q24) ───────────────────────────────────────────
         {
           id: 'passage-3',
           title: 'Passage 3',
           content:
             'Nancy listened to her husband\'s plans but remained uncertain. She remembered previous attempts to build wealth that had failed. Each time, hope had been followed by disappointment.\n\n' +
             'She did not doubt his intentions, but she questioned the outcome. Experience had taught her that not every idea leads to success. Though she supported him, she could not ignore what had happened before.',
-
           questions: [
             {
-              id: 'p3q1',
-              type: 'mcq',
+              id: 'p3q1', type: 'mcq',
               question: 'Nancy\'s reaction is best described as',
               choices: [
                 { id: 'A', text: 'excited.' },
@@ -319,8 +346,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p3q2',
-              type: 'mcq',
+              id: 'p3q2', type: 'mcq',
               question: 'Nancy doubts the plan mainly because',
               choices: [
                 { id: 'A', text: 'she dislikes change.' },
@@ -331,8 +357,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p3q3',
-              type: 'mcq',
+              id: 'p3q3', type: 'mcq',
               question: 'The contrast between Nancy and Hawkins mainly shows',
               choices: [
                 { id: 'A', text: 'optimism versus experience.' },
@@ -343,8 +368,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'A',
             },
             {
-              id: 'p3q4',
-              type: 'mcq',
+              id: 'p3q4', type: 'mcq',
               question: 'Which word best describes the tone of the passage?',
               choices: [
                 { id: 'A', text: 'Hopeful' },
@@ -355,8 +379,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'C',
             },
             {
-              id: 'p3q5',
-              type: 'mcq',
+              id: 'p3q5', type: 'mcq',
               question: 'Nancy supports Hawkins but',
               choices: [
                 { id: 'A', text: 'fully agrees.' },
@@ -367,8 +390,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p3q6',
-              type: 'mcq',
+              id: 'p3q6', type: 'mcq',
               question: 'Which statement best expresses the main idea of the passage?',
               choices: [
                 { id: 'A', text: 'Nancy opposes Hawkins.' },
@@ -379,8 +401,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p3q7',
-              type: 'mcq',
+              id: 'p3q7', type: 'mcq',
               question: 'The reader can infer that Nancy values',
               choices: [
                 { id: 'A', text: 'risk.' },
@@ -391,8 +412,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p3q8',
-              type: 'mcq',
+              id: 'p3q8', type: 'mcq',
               question: 'Nancy\'s perspective is shaped mainly by',
               choices: [
                 { id: 'A', text: 'imagination.' },
@@ -405,18 +425,16 @@ export const shsatForm1: SHSATForm = {
           ],
         },
 
-        // ── Passage 4  (Questions 25–32) ──────────────────────────────────
+        // ── Passage 4  (Q25–Q32) ───────────────────────────────────────────
         {
           id: 'passage-4',
           title: 'Passage 4',
           content:
             'Clay stood silently beside his mother\'s coffin, expressing his grief through quiet actions. He placed flowers gently and touched her face, showing love without words. His sorrow was deep, yet controlled.\n\n' +
             'Those around him watched with sympathy. Though he did not speak, his actions revealed everything. The loss had left him alone, without family or support.',
-
           questions: [
             {
-              id: 'p4q1',
-              type: 'mcq',
+              id: 'p4q1', type: 'mcq',
               question: 'Clay\'s grief is shown mainly through',
               choices: [
                 { id: 'A', text: 'loud crying.' },
@@ -427,8 +445,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p4q2',
-              type: 'mcq',
+              id: 'p4q2', type: 'mcq',
               question: 'Which word best describes the tone of the passage?',
               choices: [
                 { id: 'A', text: 'Joyful' },
@@ -439,8 +456,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'C',
             },
             {
-              id: 'p4q3',
-              type: 'mcq',
+              id: 'p4q3', type: 'mcq',
               question: 'The author emphasizes Clay\'s',
               choices: [
                 { id: 'A', text: 'emotional control.' },
@@ -451,8 +467,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'A',
             },
             {
-              id: 'p4q4',
-              type: 'mcq',
+              id: 'p4q4', type: 'mcq',
               question: 'Clay\'s actions suggest that he is',
               choices: [
                 { id: 'A', text: 'calm and unaffected.' },
@@ -463,8 +478,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p4q5',
-              type: 'mcq',
+              id: 'p4q5', type: 'mcq',
               question: 'Why does the author avoid dialogue in the passage?',
               choices: [
                 { id: 'A', text: 'To shorten the passage' },
@@ -475,8 +489,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p4q6',
-              type: 'mcq',
+              id: 'p4q6', type: 'mcq',
               question: 'Which statement best expresses the main idea of the passage?',
               choices: [
                 { id: 'A', text: 'Clay is strong.' },
@@ -487,8 +500,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p4q7',
-              type: 'mcq',
+              id: 'p4q7', type: 'mcq',
               question: 'The reader can infer that Clay feels',
               choices: [
                 { id: 'A', text: 'relief.' },
@@ -499,8 +511,7 @@ export const shsatForm1: SHSATForm = {
               correct_answer: 'B',
             },
             {
-              id: 'p4q8',
-              type: 'mcq',
+              id: 'p4q8', type: 'mcq',
               question: 'The passage suggests that emotions can be',
               choices: [
                 { id: 'A', text: 'hidden.' },
@@ -513,7 +524,67 @@ export const shsatForm1: SHSATForm = {
           ],
         },
 
-      ], // end passages
-    },   // end section 2
-  ],     // end sections
+        // ── Passage 5  (Q33–Q40) — PLACEHOLDER ─────────────────────────────
+        {
+          id: 'passage-5',
+          title: 'Passage 5 — [PLACEHOLDER]',
+          content:
+            '[PLACEHOLDER] Replace this text with the actual Passage 5 content.\n\n' +
+            'Questions 33–40 refer to this passage. Add as many paragraphs as needed, separated by blank lines in the string (\\n\\n).',
+          questions: placeholderQuestions('p5', 33, 8),
+        },
+
+        // ── Passage 6  (Q41–Q48) — PLACEHOLDER ─────────────────────────────
+        {
+          id: 'passage-6',
+          title: 'Passage 6 — [PLACEHOLDER]',
+          content:
+            '[PLACEHOLDER] Replace this text with the actual Passage 6 content.\n\n' +
+            'Questions 41–48 refer to this passage. Add as many paragraphs as needed.',
+          questions: placeholderQuestions('p6', 41, 8),
+        },
+
+      ], // end passages (RC)
+    }, // end Reading Comprehension
+
+    // ── Revising/Editing Part A  Q49–Q53 ─────────────────────────────────────
+    {
+      id: 'rev-edit-a',
+      type: 'revising_editing_a',
+      sectionLabel: 'English Language Arts',
+      title: 'REVISING/EDITING PART A',
+      directions:
+        'Read the text or texts that follow and answer the related questions. You will be asked to improve the writing quality of each text and to correct errors so that each text follows the conventions of standard written English. You should reread relevant parts of each text, while being mindful of time, before selecting the best answer for each question.',
+      questions: placeholderQuestions('re-a', 49, 5),
+    },
+
+    // ── Revising/Editing Part B  Q54–Q57 ─────────────────────────────────────
+    {
+      id: 'rev-edit-b',
+      type: 'revising_editing_b',
+      sectionLabel: 'English Language Arts',
+      title: 'REVISING/EDITING PART B',
+      directions:
+        'Read and answer the following questions. You will be asked to recognize and correct errors so that the sentences or short paragraphs follow the conventions of standard written English. As needed, you may use the notepad tool or write on the scrap paper given to you to take notes. You should reread relevant parts while being mindful of time.',
+      questions: placeholderQuestions('re-b', 54, 4),
+    },
+
+    // ── Mathematics  Q58–Q114 ─────────────────────────────────────────────────
+    {
+      id: 'math',
+      type: 'mathematics',
+      sectionLabel: 'Mathematics',
+      title: 'MATHEMATICS',
+      directionBullets: [
+        'Formulas and definitions are not provided.',
+        'Diagrams are not necessarily drawn to scale.',
+        'Assume all diagrams lie in one plane unless otherwise stated.',
+        'Graphs are drawn to scale unless otherwise stated.',
+      ],
+      directions:
+        'Solve each problem. Select the answer from the choices given or enter your answer in the space provided.',
+      questions: placeholderQuestions('math', 58, 57),
+    },
+
+  ], // end subsections
 }

@@ -2,7 +2,16 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { cn } from '@/lib/utils'
-import type { SHSATForm, SHSATQuestion } from '@/lib/premade-exams/shsat-form-1'
+// Local types — match the shsat-form-2.ts (v2 sections[] structure)
+interface SHSATChoice { id: 'A'|'B'|'C'|'D'; text: string }
+interface SHSATQuestion {
+  id: string; type: 'mcq'; question: string
+  choices: [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice]
+  correct_answer: 'A'|'B'|'C'|'D'
+}
+interface SHSATPassage { id: string; title: string; author?: string; content: string; questions: SHSATQuestion[] }
+interface SHSATSection { id: string; number: number; title: string; passages: SHSATPassage[] }
+interface SHSATForm { id: string; title: string; description: string; timeLimitMinutes: number; sections: SHSATSection[] }
 
 type AnswerKey = 'A' | 'B' | 'C' | 'D'
 
