@@ -49,13 +49,44 @@ export interface SHSATMCQQuestion {
   correct_answer: 'A' | 'B' | 'C' | 'D'
 }
 
-export type SHSATQuestion = SHSATMCQQuestion
+export interface SHSATPoemLine {
+  num: number   // 0 = stanza break (empty spacer); ≥1 = numbered poem line
+  text: string
+}
+
+export interface SHSATMultiSelectQuestion {
+  id: string
+  type: 'multi_select'
+  question: string
+  selectCount: number
+  choices: Array<{ id: string; text: string }>
+  correct_answers: string[]
+}
+
+export interface SHSATMatchItem { id: string; text: string }
+export interface SHSATMatchCategory { id: string; label: string }
+
+export interface SHSATMatchQuestion {
+  id: string
+  type: 'match'
+  question: string
+  items: SHSATMatchItem[]
+  categories: SHSATMatchCategory[]
+  correct_matches: Record<string, string>  // itemId → categoryId
+}
+
+export type SHSATQuestion =
+  | SHSATMCQQuestion
+  | SHSATMultiSelectQuestion
+  | SHSATMatchQuestion
 
 export interface SHSATPassage {
   id: string
   title: string
   author?: string
-  content: string // paragraphs separated by \n\n
+  contentType?: 'prose' | 'poem'
+  content: string          // paragraphs separated by \n\n (unused for poems)
+  lines?: SHSATPoemLine[]  // poem lines (used when contentType === 'poem')
   questions: SHSATQuestion[]
 }
 
@@ -125,103 +156,119 @@ export const shsatForm1: SHSATForm = {
 
       passages: [
 
-        // ── Passage 1  (Q1–Q8) ─────────────────────────────────────────────
+        // ── Passage 1  (Q1–Q7)  POEM ───────────────────────────────────────
         {
           id: 'passage-1',
-          title: 'Passage 1',
-          content:
-            'Squire Hawkins sat outside his worn-down cabin, quietly observing the morning. The town around him was scattered and poor, with little sign of growth or progress. Though the air was calm and filled with the sounds of nature, there was also a stillness that felt almost lifeless. The houses were spread apart, and the people seemed to move slowly, without urgency or ambition.\n\n' +
-            'The arrival of the mail was one of the few events that gathered the townspeople together. Even when there was only a single letter, they stood around talking idly, as if there were nothing else to occupy their time. Their conversations drifted without purpose, and their actions suggested a lack of direction.\n\n' +
-            'Hawkins had lived there for years, but he had begun to feel restless. Nothing ever seemed to change. The same routines repeated, and no one appeared to expect anything better. He compared his present life to the past, when he had been more energetic and hopeful. The difference troubled him deeply.\n\n' +
-            'At last, he made a decision. He would leave. Somewhere beyond this place, he believed, there must be opportunity. Even if the future was uncertain, it seemed better than remaining where he was. Staying, he thought, would slowly wear him down.',
+          title: 'The Grass',
+          author: 'Carl Sandburg',
+          contentType: 'poem',
+          content: '',  // unused for poems; see lines[] below
+          lines: [
+            { num: 1,  text: 'Pile the bodies high at Austerlitz and Waterloo.' },
+            { num: 2,  text: 'Shovel them under and let me work—' },
+            { num: 3,  text: 'I am the grass; I cover all.' },
+            { num: 0,  text: '' },
+            { num: 4,  text: 'And pile them high at Gettysburg' },
+            { num: 5,  text: 'And pile them high at Ypres and Verdun.' },
+            { num: 6,  text: 'Shovel them under and let me work.' },
+            { num: 0,  text: '' },
+            { num: 7,  text: 'Two years, ten years, and passengers ask the conductor:' },
+            { num: 8,  text: 'What place is this?' },
+            { num: 9,  text: 'Where are we now?' },
+            { num: 0,  text: '' },
+            { num: 10, text: 'I am the grass.' },
+            { num: 11, text: 'Let me work.' },
+          ],
           questions: [
             {
               id: 'p1q1', type: 'mcq',
-              question: 'Which statement best expresses the main idea of the passage?',
+              question: 'The description in lines 1–6 helps establish a central idea of the poem by',
               choices: [
-                { id: 'A', text: 'Life in Obedstown is exciting.' },
-                { id: 'B', text: 'Hawkins enjoys his environment.' },
-                { id: 'C', text: 'Hawkins feels trapped in a stagnant town.' },
-                { id: 'D', text: 'The town is growing rapidly.' },
+                { id: 'A', text: 'comparing different historical events to show their similarities' },
+                { id: 'B', text: 'emphasizing how quickly people forget the consequences of war' },
+                { id: 'C', text: 'describing the destruction of war and how it is eventually hidden' },
+                { id: 'D', text: 'suggesting that war is necessary for progress' },
               ],
               correct_answer: 'C',
             },
             {
               id: 'p1q2', type: 'mcq',
-              question: 'Which detail best supports the idea that the town lacks purpose?',
+              question: 'Which detail from the poem reflects the speaker\'s view that people often fail to remember the past?',
               choices: [
-                { id: 'A', text: 'The morning is calm.' },
-                { id: 'B', text: 'People gather around one letter.' },
-                { id: 'C', text: 'Hawkins sits outside.' },
-                { id: 'D', text: 'Houses are far apart.' },
+                { id: 'A', text: '"Pile the bodies high" (line 1)' },
+                { id: 'B', text: '"Shovel them under and let me work" (line 2)' },
+                { id: 'C', text: '"Two years, ten years, and passengers ask the conductor" (line 7)' },
+                { id: 'D', text: '"I am the grass" (line 10)' },
               ],
-              correct_answer: 'B',
+              correct_answer: 'C',
             },
             {
               id: 'p1q3', type: 'mcq',
-              question: 'As used in the passage, "stagnant" most nearly means',
+              question: 'How does the repetition of the phrase "let me work" affect the meaning of the poem?',
               choices: [
-                { id: 'A', text: 'active.' },
-                { id: 'B', text: 'unchanging.' },
-                { id: 'C', text: 'dangerous.' },
-                { id: 'D', text: 'confusing.' },
+                { id: 'A', text: 'It emphasizes the natural process of covering the past' },
+                { id: 'B', text: 'It shows that the speaker is struggling to complete a task' },
+                { id: 'C', text: 'It creates a hopeful tone about the future' },
+                { id: 'D', text: 'It suggests that people are working together' },
               ],
-              correct_answer: 'B',
+              correct_answer: 'A',
             },
             {
-              id: 'p1q4', type: 'mcq',
-              question: 'Hawkins decides to leave mainly because he',
+              id: 'p1q4', type: 'multi_select',
+              question: 'In which two ways does the poet develop the speaker\'s point of view?\n\nSelect the TWO correct answers.',
+              selectCount: 2,
               choices: [
-                { id: 'A', text: 'is forced to.' },
-                { id: 'B', text: 'wants to explore.' },
-                { id: 'C', text: 'sees no opportunity.' },
-                { id: 'D', text: 'dislikes his neighbors.' },
+                { id: 'A', text: 'by listing multiple historical battle locations' },
+                { id: 'B', text: 'by describing the emotional impact on soldiers' },
+                { id: 'C', text: 'by showing how time causes people to forget events' },
+                { id: 'D', text: 'by comparing nature to human progress' },
+                { id: 'E', text: 'by explaining the causes of war' },
               ],
-              correct_answer: 'C',
+              correct_answers: ['A', 'C'],
             },
             {
               id: 'p1q5', type: 'mcq',
-              question: 'Which word best describes the tone of the passage?',
+              question: 'How do lines 7–9 most contribute to a theme of the poem?',
               choices: [
-                { id: 'A', text: 'Excited' },
-                { id: 'B', text: 'Humorous' },
-                { id: 'C', text: 'Reflective and critical' },
-                { id: 'D', text: 'Joyful' },
+                { id: 'A', text: 'by showing that time erases memory of past events' },
+                { id: 'B', text: 'by explaining how people learn from history' },
+                { id: 'C', text: 'by describing how travel spreads knowledge' },
+                { id: 'D', text: 'by showing respect for historical events' },
               ],
-              correct_answer: 'C',
+              correct_answer: 'A',
             },
             {
               id: 'p1q6', type: 'mcq',
-              question: 'What can the reader infer Hawkins fears?',
+              question: 'The personification in the poem suggests that the grass is',
               choices: [
-                { id: 'A', text: 'Traveling alone' },
-                { id: 'B', text: 'Failure' },
-                { id: 'C', text: 'Becoming like the townspeople' },
-                { id: 'D', text: 'Losing money' },
+                { id: 'A', text: 'a symbol of nature\'s ability to erase human history' },
+                { id: 'B', text: 'a reminder of the importance of remembering the past' },
+                { id: 'C', text: 'a warning about future conflicts' },
+                { id: 'D', text: 'a symbol of human strength' },
               ],
-              correct_answer: 'C',
+              correct_answer: 'A',
             },
             {
-              id: 'p1q7', type: 'mcq',
-              question: 'Why does the author include the detail about the mail?',
-              choices: [
-                { id: 'A', text: 'To show the importance of communication' },
-                { id: 'B', text: 'To show the lack of activity in the town' },
-                { id: 'C', text: 'To introduce a conflict' },
-                { id: 'D', text: 'To describe Hawkins\' job' },
+              id: 'p1q7', type: 'match',
+              question: 'Which quotations support the idea that war causes destruction, and which support the idea that time erases memory?\n\nAssign each quotation to the correct category.',
+              items: [
+                { id: '1', text: '"Pile the bodies high at Austerlitz and Waterloo"' },
+                { id: '2', text: '"Shovel them under and let me work"' },
+                { id: '3', text: '"Two years, ten years…"' },
+                { id: '4', text: '"Where are we now?"' },
+                { id: '5', text: '"I am the grass; I cover all"' },
               ],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p1q8', type: 'mcq',
-              question: 'Which sentence best supports Hawkins\' dissatisfaction?',
-              choices: [
-                { id: 'A', text: 'The air was calm.' },
-                { id: 'B', text: 'Nothing ever changed.' },
-                { id: 'C', text: 'The houses were scattered.' },
-                { id: 'D', text: 'The people gathered.' },
+              categories: [
+                { id: 'war',  label: 'War Causes Destruction' },
+                { id: 'time', label: 'Time Erases Memory' },
               ],
-              correct_answer: 'B',
+              correct_matches: {
+                '1': 'war',
+                '2': 'war',
+                '3': 'time',
+                '4': 'time',
+                '5': 'time',
+              },
             },
           ],
         },

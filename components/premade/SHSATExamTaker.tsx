@@ -7,6 +7,7 @@ import type {
   SHSATSubsection,
   SHSATSubsectionType,
   SHSATQuestion,
+  SHSATPoemLine,
 } from '@/lib/premade-exams/shsat-form-1'
 
 type AnswerKey = 'A' | 'B' | 'C' | 'D'
@@ -24,14 +25,50 @@ interface FlatQuestion {
   globalNumber: number
   subIdx: number
   subType: SHSATSubsectionType
-  // Passage layout extras (RC only)
   passageId?: string
   passageTitle?: string
   passageContent?: string
   passageAuthor?: string
   passageQStart?: number
   passageQEnd?: number
+  passageContentType?: 'prose' | 'poem'
+  passageLines?: SHSATPoemLine[]
   question: SHSATQuestion
+}
+
+// ─── Answer helpers ────────────────────────────────────────────────────────────
+function isQuestionAnswered(
+  q: SHSATQuestion,
+  answers: Record<string, AnswerKey>,
+  multiAnswers: Record<string, string[]>,
+  matchAnswers: Record<string, Record<string, string>>,
+): boolean {
+  if (q.type === 'mcq') return !!answers[q.id]
+  if (q.type === 'multi_select') return (multiAnswers[q.id] ?? []).length === q.selectCount
+  if (q.type === 'match') {
+    const sel = matchAnswers[q.id] ?? {}
+    return q.items.every(item => !!sel[item.id])
+  }
+  return false
+}
+
+function isQuestionCorrect(
+  q: SHSATQuestion,
+  answers: Record<string, AnswerKey>,
+  multiAnswers: Record<string, string[]>,
+  matchAnswers: Record<string, Record<string, string>>,
+): boolean {
+  if (q.type === 'mcq') return answers[q.id] === q.correct_answer
+  if (q.type === 'multi_select') {
+    const sel = multiAnswers[q.id] ?? []
+    const correct = q.correct_answers
+    return sel.length === correct.length && correct.every(c => sel.includes(c))
+  }
+  if (q.type === 'match') {
+    const sel = matchAnswers[q.id] ?? {}
+    return q.items.every(item => sel[item.id] === q.correct_matches[item.id])
+  }
+  return false
 }
 
 function buildFlatQuestions(form: SHSATForm): FlatQuestion[] {
@@ -49,6 +86,8 @@ function buildFlatQuestions(form: SHSATForm): FlatQuestion[] {
             passageId: passage.id, passageTitle: passage.title,
             passageContent: passage.content, passageAuthor: passage.author,
             passageQStart: pStart, passageQEnd: pEnd,
+            passageContentType: passage.contentType,
+            passageLines: passage.lines,
             question: q,
           })
           g++
@@ -72,6 +111,25 @@ function formatTime(s: number): string {
   return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`
 }
 
+// ─── Poem renderer ─────────────────────────────────────────────────────────────
+function PoemRenderer({ lines }: { lines: SHSATPoemLine[] }) {
+  return (
+    <div className="font-serif text-[13px] text-slate-800 leading-[1.9]">
+      {lines.map((line, i) => {
+        if (line.num === 0) return <div key={i} className="h-4" />
+        return (
+          <div key={i} className="flex gap-3 items-baseline">
+            <span className="w-6 shrink-0 text-right text-[11px] text-slate-400 font-mono select-none">
+              {line.num}
+            </span>
+            <span>{line.text}</span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 // ─── Transition screen ─────────────────────────────────────────────────────────
 function TransitionScreen({
   sub, onBegin, timerEl,
@@ -82,12 +140,10 @@ function TransitionScreen({
 }) {
   return (
     <div className="fixed inset-0 z-50 bg-[#d6dce4] flex flex-col overflow-auto">
-      {/* minimal top strip with timer */}
       <div className="shrink-0 h-10 bg-[#1b3a5c] flex items-center justify-end px-5 gap-3">
         {timerEl}
         <span className="text-xs text-white/50">Guest</span>
       </div>
-
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-2xl bg-white rounded-xl shadow-lg p-10">
           <p className="text-xs font-bold tracking-widest uppercase text-slate-400 mb-2">
@@ -96,8 +152,6 @@ function TransitionScreen({
           <h1 className="text-2xl font-bold text-slate-900 mb-8 leading-tight">
             {sub.title}
           </h1>
-
-          {/* Math: important notes bullets first */}
           {sub.directionBullets && sub.directionBullets.length > 0 && (
             <div className="mb-6">
               <p className="text-xs font-bold uppercase tracking-wide text-slate-700 mb-3">
@@ -113,14 +167,12 @@ function TransitionScreen({
               </ol>
             </div>
           )}
-
           <div>
             <p className="text-xs font-bold uppercase tracking-wide text-slate-700 mb-2">
               Directions
             </p>
             <p className="text-sm text-slate-700 leading-relaxed">{sub.directions}</p>
           </div>
-
           <button
             onClick={onBegin}
             className="mt-8 rounded-lg bg-[#1b3a5c] text-white text-sm font-semibold px-8 py-3 hover:bg-[#142e4d] transition-colors"
@@ -135,24 +187,28 @@ function TransitionScreen({
 
 // ─── End / Review screen ───────────────────────────────────────────────────────
 function EndScreen({
-  sectionNumber, flatQuestions, answers, bookmarked,
-  onGoTo, onSubmit, timerEl,
+  sectionNumber, flatQuestions,
+  answers, multiAnswers, matchAnswers,
+  bookmarked, onGoTo, onSubmit, timerEl,
 }: {
   sectionNumber: number
   flatQuestions: FlatQuestion[]
   answers: Record<string, AnswerKey>
+  multiAnswers: Record<string, string[]>
+  matchAnswers: Record<string, Record<string, string>>
   bookmarked: Set<string>
   onGoTo: (i: number) => void
   onSubmit: () => void
   timerEl: React.ReactNode
 }) {
   const total      = flatQuestions.length
-  const answered   = flatQuestions.filter(fq => !!answers[fq.question.id]).length
+  const answered   = flatQuestions.filter(fq =>
+    isQuestionAnswered(fq.question, answers, multiAnswers, matchAnswers)
+  ).length
   const unanswered = total - answered
 
   return (
     <div className="fixed inset-0 z-50 bg-[#d6dce4] flex flex-col overflow-hidden">
-      {/* top strip */}
       <div className="shrink-0 h-10 bg-[#1b3a5c] flex items-center justify-between px-5">
         <span className="text-[11px] font-semibold tracking-widest uppercase text-white/80">
           End of Section {sectionNumber}
@@ -179,28 +235,27 @@ function EndScreen({
             </p>
           )}
 
-          {/* Question grid */}
           <div className="mt-6 grid grid-cols-10 gap-1.5">
             {flatQuestions.map((fq) => {
-              const isAnswered  = !!answers[fq.question.id]
-              const isBookmarked = bookmarked.has(fq.question.id)
+              const isAns = isQuestionAnswered(fq.question, answers, multiAnswers, matchAnswers)
+              const isBmk = bookmarked.has(fq.question.id)
               return (
                 <button
                   key={fq.question.id}
                   onClick={() => onGoTo(fq.globalIndex)}
-                  title={`Question ${fq.globalNumber}${!isAnswered ? ' — not answered' : ''}${isBookmarked ? ' — bookmarked' : ''}`}
+                  title={`Question ${fq.globalNumber}${!isAns ? ' — not answered' : ''}${isBmk ? ' — bookmarked' : ''}`}
                   className={cn(
                     'relative flex h-8 w-full items-center justify-center rounded text-xs font-semibold border transition-colors',
-                    isAnswered
+                    isAns
                       ? 'bg-[#e8edf3] border-[#b0bfcf] text-[#1b3a5c]'
                       : 'bg-white border-orange-400 text-slate-700',
                   )}
                 >
                   {fq.globalNumber}
-                  {!isAnswered && (
+                  {!isAns && (
                     <span className="absolute -top-0.5 -right-0.5 h-2 w-2 rounded-full bg-orange-500" />
                   )}
-                  {isBookmarked && (
+                  {isBmk && (
                     <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-amber-400" />
                   )}
                 </button>
@@ -208,7 +263,6 @@ function EndScreen({
             })}
           </div>
 
-          {/* Legend */}
           <div className="mt-4 flex items-center gap-6 text-xs text-slate-500">
             <div className="flex items-center gap-1.5">
               <span className="inline-block h-3 w-3 rounded bg-[#e8edf3] border border-[#b0bfcf]" />
@@ -242,17 +296,23 @@ function EndScreen({
 
 // ─── Results screen ────────────────────────────────────────────────────────────
 function ResultsScreen({
-  form, flatQuestions, answers, timedOut, onRetake,
+  form, flatQuestions,
+  answers, multiAnswers, matchAnswers,
+  timedOut, onRetake,
 }: {
   form: SHSATForm
   flatQuestions: FlatQuestion[]
   answers: Record<string, AnswerKey>
+  multiAnswers: Record<string, string[]>
+  matchAnswers: Record<string, Record<string, string>>
   timedOut: boolean
   onRetake: () => void
 }) {
   const total   = flatQuestions.length
-  const correct = flatQuestions.filter(fq => answers[fq.question.id] === fq.question.correct_answer).length
-  const pct     = total > 0 ? Math.round((correct / total) * 100) : 0
+  const correct = flatQuestions.filter(fq =>
+    isQuestionCorrect(fq.question, answers, multiAnswers, matchAnswers)
+  ).length
+  const pct = total > 0 ? Math.round((correct / total) * 100) : 0
 
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-4">
@@ -262,7 +322,6 @@ function ResultsScreen({
         </div>
       )}
       <div className={cn('mx-auto max-w-3xl space-y-6', timedOut && 'pt-8')}>
-        {/* Score */}
         <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
           <p className="text-sm font-medium text-slate-500 mb-1">{form.title}</p>
           <div className="mt-3 flex items-end justify-center gap-2">
@@ -272,39 +331,71 @@ function ResultsScreen({
           <p className="mt-1 text-lg font-semibold text-slate-700">{pct}% correct</p>
         </div>
 
-        {/* Per-question review */}
         <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-100">
             <h2 className="text-sm font-semibold text-slate-800">Question Review</h2>
           </div>
           <div className="divide-y divide-slate-100">
             {flatQuestions.map((fq) => {
-              const sel  = answers[fq.question.id] as AnswerKey | undefined
-              const ok   = sel === fq.question.correct_answer
-              const skip = !sel
-              const correctChoice  = fq.question.choices.find(c => c.id === fq.question.correct_answer)
-              const selectedChoice = sel ? fq.question.choices.find(c => c.id === sel) : undefined
+              const q = fq.question
+              const ok       = isQuestionCorrect(q, answers, multiAnswers, matchAnswers)
+              const isAns    = isQuestionAnswered(q, answers, multiAnswers, matchAnswers)
+
+              let reviewContent: React.ReactNode = null
+              if (q.type === 'mcq') {
+                const sel = answers[q.id] as AnswerKey | undefined
+                const correctChoice  = q.choices.find(c => c.id === q.correct_answer)
+                const selectedChoice = sel ? q.choices.find(c => c.id === sel) : undefined
+                reviewContent = (
+                  <div className="mt-1.5 space-y-0.5 text-xs">
+                    {isAns && !ok && selectedChoice && (
+                      <p className="text-red-600">Your answer: {selectedChoice.id}. {selectedChoice.text}</p>
+                    )}
+                    <p className="text-emerald-700 font-medium">
+                      Correct: {correctChoice?.id}. {correctChoice?.text}
+                    </p>
+                    {!isAns && <p className="text-slate-400 italic">Not answered</p>}
+                  </div>
+                )
+              } else if (q.type === 'multi_select') {
+                const sel = multiAnswers[q.id] ?? []
+                reviewContent = (
+                  <div className="mt-1.5 space-y-0.5 text-xs">
+                    {isAns && !ok && (
+                      <p className="text-red-600">Your answers: {sel.join(', ')}</p>
+                    )}
+                    <p className="text-emerald-700 font-medium">
+                      Correct: {q.correct_answers.join(', ')}
+                    </p>
+                    {!isAns && <p className="text-slate-400 italic">Not fully answered</p>}
+                  </div>
+                )
+              } else if (q.type === 'match') {
+                reviewContent = (
+                  <div className="mt-1.5 text-xs text-emerald-700 font-medium">
+                    Correct grouping:{' '}
+                    {q.categories.map(cat => {
+                      const items = q.items.filter(item => q.correct_matches[item.id] === cat.id)
+                      return `${cat.label}: items ${items.map(i => i.id).join(', ')}`
+                    }).join(' | ')}
+                    {!isAns && <span className="block text-slate-400 font-normal italic mt-0.5">Not fully answered</span>}
+                  </div>
+                )
+              }
+
               return (
-                <div key={fq.question.id} className="px-6 py-4">
+                <div key={q.id} className="px-6 py-4">
                   <div className="flex items-start gap-3">
                     <span className={cn(
                       'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold',
-                      skip ? 'bg-slate-100 text-slate-400' : ok ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-600',
+                      !isAns ? 'bg-slate-100 text-slate-400' : ok ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-600',
                     )}>
-                      {skip ? '–' : ok ? '✓' : '✗'}
+                      {!isAns ? '–' : ok ? '✓' : '✗'}
                     </span>
                     <div className="flex-1 min-w-0">
                       <p className="text-xs text-slate-400 mb-1">Q{fq.globalNumber}</p>
-                      <p className="text-sm text-slate-700 line-clamp-2">{fq.question.question}</p>
-                      <div className="mt-1.5 space-y-0.5 text-xs">
-                        {!ok && selectedChoice && (
-                          <p className="text-red-600">Your answer: {selectedChoice.id}. {selectedChoice.text}</p>
-                        )}
-                        <p className="text-emerald-700 font-medium">
-                          Correct: {correctChoice?.id}. {correctChoice?.text}
-                        </p>
-                        {skip && <p className="text-slate-400 italic">Not answered</p>}
-                      </div>
+                      <p className="text-sm text-slate-700 line-clamp-2">{q.question}</p>
+                      {reviewContent}
                     </div>
                   </div>
                 </div>
@@ -329,10 +420,9 @@ function ResultsScreen({
 interface Props { form: SHSATForm }
 
 export function SHSATExamTaker({ form }: Props) {
-  const flatQuestions  = useMemo(() => buildFlatQuestions(form), [form])
-  const totalQ         = flatQuestions.length
+  const flatQuestions = useMemo(() => buildFlatQuestions(form), [form])
+  const totalQ        = flatQuestions.length
 
-  // Index of the first question in each subsection
   const subsectionStarts = useMemo(() => {
     const starts: number[] = []
     flatQuestions.forEach((fq) => {
@@ -341,16 +431,18 @@ export function SHSATExamTaker({ form }: Props) {
     return starts
   }, [flatQuestions])
 
-  const [phase, setPhase]         = useState<Phase>({ tag: 'transition', subIdx: 0 })
-  const [answers, setAnswers]     = useState<Record<string, AnswerKey>>({})
-  const [bookmarked, setBookmarked] = useState<Set<string>>(new Set())
-  const [secondsLeft, setSecondsLeft] = useState(form.timeLimitMinutes * 60)
-  const [timedOut, setTimedOut]   = useState(false)
+  const [phase, setPhase]               = useState<Phase>({ tag: 'transition', subIdx: 0 })
+  const [answers, setAnswers]           = useState<Record<string, AnswerKey>>({})
+  const [multiAnswers, setMultiAnswers] = useState<Record<string, string[]>>({})
+  const [matchAnswers, setMatchAnswers] = useState<Record<string, Record<string, string>>>({})
+  const [bookmarked, setBookmarked]     = useState<Set<string>>(new Set())
+  const [secondsLeft, setSecondsLeft]   = useState(form.timeLimitMinutes * 60)
+  const [timedOut, setTimedOut]         = useState(false)
 
   const passagePanelRef = useRef<HTMLDivElement>(null)
   const prevPassageId   = useRef<string>('')
 
-  // ── Timer ────────────────────────────────────────────────────────────────────
+  // ── Timer ──────────────────────────────────────────────────────────────────
   useEffect(() => {
     if (phase.tag === 'results') return
     if (secondsLeft <= 0) { setTimedOut(true); setPhase({ tag: 'results' }); return }
@@ -358,7 +450,7 @@ export function SHSATExamTaker({ form }: Props) {
     return () => clearInterval(t)
   }, [phase.tag, secondsLeft])
 
-  // ── Scroll passage panel to top on passage change ─────────────────────────
+  // ── Scroll passage panel to top on passage change ──────────────────────────
   useEffect(() => {
     if (phase.tag !== 'question') return
     const fq = flatQuestions[phase.globalIdx]
@@ -369,7 +461,7 @@ export function SHSATExamTaker({ form }: Props) {
     }
   }, [phase, flatQuestions])
 
-  // ── Navigation ───────────────────────────────────────────────────────────────
+  // ── Navigation ─────────────────────────────────────────────────────────────
   const handleNext = useCallback(() => {
     if (phase.tag === 'transition') {
       setPhase({ tag: 'question', globalIdx: subsectionStarts[phase.subIdx] })
@@ -403,6 +495,8 @@ export function SHSATExamTaker({ form }: Props) {
   const handleRetake = useCallback(() => {
     setPhase({ tag: 'transition', subIdx: 0 })
     setAnswers({})
+    setMultiAnswers({})
+    setMatchAnswers({})
     setBookmarked(new Set())
     setSecondsLeft(form.timeLimitMinutes * 60)
     setTimedOut(false)
@@ -410,7 +504,6 @@ export function SHSATExamTaker({ form }: Props) {
   }, [form.timeLimitMinutes])
 
   const isWarning = secondsLeft <= 300
-
   const timerEl = (
     <span className={cn(
       'text-xs font-mono font-bold tabular-nums px-2 py-0.5 rounded',
@@ -420,20 +513,22 @@ export function SHSATExamTaker({ form }: Props) {
     </span>
   )
 
-  // ── Results ──────────────────────────────────────────────────────────────────
+  // ── Results ────────────────────────────────────────────────────────────────
   if (phase.tag === 'results') {
     return (
       <ResultsScreen
         form={form}
         flatQuestions={flatQuestions}
         answers={answers}
+        multiAnswers={multiAnswers}
+        matchAnswers={matchAnswers}
         timedOut={timedOut}
         onRetake={handleRetake}
       />
     )
   }
 
-  // ── Transition screen ────────────────────────────────────────────────────────
+  // ── Transition ─────────────────────────────────────────────────────────────
   if (phase.tag === 'transition') {
     return (
       <TransitionScreen
@@ -444,13 +539,15 @@ export function SHSATExamTaker({ form }: Props) {
     )
   }
 
-  // ── End / Review screen ──────────────────────────────────────────────────────
+  // ── End / Review ───────────────────────────────────────────────────────────
   if (phase.tag === 'end') {
     return (
       <EndScreen
         sectionNumber={form.sectionNumber}
         flatQuestions={flatQuestions}
         answers={answers}
+        multiAnswers={multiAnswers}
+        matchAnswers={matchAnswers}
         bookmarked={bookmarked}
         onGoTo={handleGoTo}
         onSubmit={() => setPhase({ tag: 'results' })}
@@ -459,26 +556,18 @@ export function SHSATExamTaker({ form }: Props) {
     )
   }
 
-  // ── Question screen ──────────────────────────────────────────────────────────
-  const fq      = flatQuestions[phase.globalIdx]
-  const subType = fq.subType
+  // ── Question screen ────────────────────────────────────────────────────────
+  const fq       = flatQuestions[phase.globalIdx]
+  const subType  = fq.subType
   const currentQ = fq.question
 
-  const isPassageLayout  = subType === 'reading_comprehension'
-  const isMathLayout     = subType === 'mathematics'
+  const isPassageLayout = subType === 'reading_comprehension'
+  const isMathLayout    = subType === 'mathematics'
+  const isBookmarked    = bookmarked.has(currentQ.id)
 
-  const currentAnswer = answers[currentQ.id] as AnswerKey | undefined
-  const isBookmarked  = bookmarked.has(currentQ.id)
-  const answeredCount = Object.keys(answers).filter(k => !!answers[k]).length
-
-  function toggleAnswer(choice: AnswerKey) {
-    setAnswers(prev => {
-      const next = { ...prev }
-      if (next[currentQ.id] === choice) delete next[currentQ.id]
-      else next[currentQ.id] = choice
-      return next
-    })
-  }
+  const answeredCount = flatQuestions.filter(f =>
+    isQuestionAnswered(f.question, answers, multiAnswers, matchAnswers)
+  ).length
 
   function toggleBookmark() {
     setBookmarked(prev => {
@@ -489,39 +578,167 @@ export function SHSATExamTaker({ form }: Props) {
     })
   }
 
-  // Shared answer choices (used in both layouts)
-  const choicesEl = (
-    <div className="space-y-2.5">
-      {currentQ.choices.map((choice) => {
-        const sel = currentAnswer === choice.id
-        return (
-          <button
-            key={choice.id}
-            type="button"
-            onClick={() => toggleAnswer(choice.id)}
-            className={cn(
-              'flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left text-[13px] transition-all cursor-pointer',
-              sel
-                ? 'border-[#1b3a5c] bg-[#eaf0f7]'
-                : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
-            )}
-          >
-            <span className={cn(
-              'flex h-5 w-5 shrink-0 mt-0.5 items-center justify-center rounded-full border-2 text-[11px] font-bold transition-colors',
-              sel ? 'border-[#1b3a5c] bg-[#1b3a5c] text-white' : 'border-slate-400 text-slate-500',
-            )}>
-              {choice.id}
-            </span>
-            <span className={cn('leading-relaxed', sel ? 'text-[#1b3a5c] font-medium' : 'text-slate-700')}>
-              {choice.text}
-            </span>
-          </button>
-        )
-      })}
-    </div>
-  )
+  // ── Per-type question content ──────────────────────────────────────────────
+  let questionContent: React.ReactNode = null
 
-  // Bottom nav (shared across layouts)
+  if (currentQ.type === 'mcq') {
+    const mcq = currentQ
+    const currentAnswer = answers[mcq.id] as AnswerKey | undefined
+    const toggleAnswer = (choice: AnswerKey) => {
+      setAnswers(prev => {
+        const next = { ...prev }
+        if (next[mcq.id] === choice) delete next[mcq.id]
+        else next[mcq.id] = choice
+        return next
+      })
+    }
+    questionContent = (
+      <div className="space-y-2.5">
+        {mcq.choices.map((choice) => {
+          const sel = currentAnswer === choice.id
+          return (
+            <button
+              key={choice.id}
+              type="button"
+              onClick={() => toggleAnswer(choice.id as AnswerKey)}
+              className={cn(
+                'flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left text-[13px] transition-all cursor-pointer',
+                sel
+                  ? 'border-[#1b3a5c] bg-[#eaf0f7]'
+                  : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
+              )}
+            >
+              <span className={cn(
+                'flex h-5 w-5 shrink-0 mt-0.5 items-center justify-center rounded-full border-2 text-[11px] font-bold transition-colors',
+                sel ? 'border-[#1b3a5c] bg-[#1b3a5c] text-white' : 'border-slate-400 text-slate-500',
+              )}>
+                {choice.id}
+              </span>
+              <span className={cn('leading-relaxed', sel ? 'text-[#1b3a5c] font-medium' : 'text-slate-700')}>
+                {choice.text}
+              </span>
+            </button>
+          )
+        })}
+      </div>
+    )
+
+  } else if (currentQ.type === 'multi_select') {
+    const msq = currentQ
+    const selected = multiAnswers[msq.id] ?? []
+    const toggleMulti = (choiceId: string) => {
+      setMultiAnswers(prev => {
+        const cur = prev[msq.id] ?? []
+        let next: string[]
+        if (cur.includes(choiceId)) {
+          next = cur.filter(c => c !== choiceId)
+        } else if (cur.length < msq.selectCount) {
+          next = [...cur, choiceId]
+        } else {
+          // swap out oldest selection when at limit
+          next = [...cur.slice(1), choiceId]
+        }
+        return { ...prev, [msq.id]: next }
+      })
+    }
+    questionContent = (
+      <div>
+        <p className="text-[12px] font-semibold text-[#1b3a5c] bg-[#eaf0f7] border border-[#b0cce0] rounded px-3 py-2 mb-4">
+          Select <strong>{msq.selectCount}</strong> correct answers.{' '}
+          {selected.length < msq.selectCount
+            ? `(${msq.selectCount - selected.length} more needed)`
+            : '✓ Selection complete'}
+        </p>
+        <div className="space-y-2.5">
+          {msq.choices.map((choice) => {
+            const sel = selected.includes(choice.id)
+            return (
+              <button
+                key={choice.id}
+                type="button"
+                onClick={() => toggleMulti(choice.id)}
+                className={cn(
+                  'flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left text-[13px] transition-all cursor-pointer',
+                  sel
+                    ? 'border-[#1b3a5c] bg-[#eaf0f7]'
+                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
+                )}
+              >
+                <span className={cn(
+                  'flex h-5 w-5 shrink-0 mt-0.5 items-center justify-center rounded border-2 text-[11px] font-bold transition-colors',
+                  sel ? 'border-[#1b3a5c] bg-[#1b3a5c] text-white' : 'border-slate-400 text-slate-500',
+                )}>
+                  {sel ? '✓' : choice.id}
+                </span>
+                <span className={cn('leading-relaxed', sel ? 'text-[#1b3a5c] font-medium' : 'text-slate-700')}>
+                  {choice.text}
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      </div>
+    )
+
+  } else if (currentQ.type === 'match') {
+    const mq = currentQ
+    const sel = matchAnswers[mq.id] ?? {}
+    const setMatch = (itemId: string, catId: string) => {
+      setMatchAnswers(prev => {
+        const cur = prev[mq.id] ?? {}
+        const next = { ...cur }
+        if (next[itemId] === catId) delete next[itemId]
+        else next[itemId] = catId
+        return { ...prev, [mq.id]: next }
+      })
+    }
+    const assignedCount = Object.keys(sel).length
+    questionContent = (
+      <div>
+        <p className="text-[12px] font-semibold text-[#1b3a5c] bg-[#eaf0f7] border border-[#b0cce0] rounded px-3 py-2 mb-4">
+          Assign each quotation to the correct category.{' '}
+          {assignedCount < mq.items.length
+            ? `(${mq.items.length - assignedCount} remaining)`
+            : '✓ All assigned'}
+        </p>
+        <div className="space-y-3">
+          {mq.items.map((item) => {
+            const assigned = sel[item.id]
+            return (
+              <div key={item.id} className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3">
+                <p className="text-[13px] text-slate-800 mb-2.5 leading-relaxed">
+                  <span className="font-semibold text-slate-500 mr-2">{item.id}.</span>
+                  {item.text}
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  {mq.categories.map((cat) => {
+                    const active = assigned === cat.id
+                    return (
+                      <button
+                        key={cat.id}
+                        type="button"
+                        onClick={() => setMatch(item.id, cat.id)}
+                        className={cn(
+                          'rounded px-3 py-1.5 text-[12px] font-semibold border transition-all',
+                          active
+                            ? 'bg-[#1b3a5c] text-white border-[#1b3a5c]'
+                            : 'bg-white text-slate-600 border-slate-300 hover:border-[#1b3a5c] hover:text-[#1b3a5c]',
+                        )}
+                      >
+                        {cat.label}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  // ── Shared bottom nav ──────────────────────────────────────────────────────
   const bottomNav = (
     <div className="shrink-0 flex items-center justify-between px-6 py-3 border-t border-slate-100 bg-white">
       <button
@@ -551,8 +768,6 @@ export function SHSATExamTaker({ form }: Props) {
 
       {/* ── TOP BAR ─────────────────────────────────────────────────────── */}
       <header className="shrink-0 flex items-center h-11 px-3 bg-[#1b3a5c] text-white select-none gap-2">
-
-        {/* Back / Forward arrows */}
         <div className="flex items-center gap-0.5">
           <button onClick={handleBack} disabled={phase.globalIdx === 0} title="Previous question"
             className="flex items-center justify-center h-8 w-8 rounded hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
@@ -568,7 +783,6 @@ export function SHSATExamTaker({ form }: Props) {
           </button>
         </div>
 
-        {/* Breadcrumb */}
         <div className="flex-1 text-center">
           <span className="text-[11px] font-semibold tracking-widest uppercase text-white/90">
             {form.title}
@@ -579,19 +793,14 @@ export function SHSATExamTaker({ form }: Props) {
           </span>
         </div>
 
-        {/* Right controls */}
         <div className="flex items-center gap-2 shrink-0">
           {timerEl}
-
-          {/* Review button */}
           <button
             onClick={() => setPhase({ tag: 'end' })}
             className="text-[11px] font-semibold px-2.5 py-1 rounded border border-white/30 text-white hover:bg-white/10 transition-colors"
           >
             Review
           </button>
-
-          {/* Bookmark toggle */}
           <button
             onClick={toggleBookmark}
             title={isBookmarked ? 'Remove bookmark' : 'Bookmark this question'}
@@ -604,7 +813,6 @@ export function SHSATExamTaker({ form }: Props) {
               <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
             </svg>
           </button>
-
           <span className="text-xs text-white/50 pr-1">Guest</span>
         </div>
       </header>
@@ -621,44 +829,45 @@ export function SHSATExamTaker({ form }: Props) {
 
       {/* ── MAIN ────────────────────────────────────────────────────────── */}
       {isPassageLayout ? (
-        /* Two-column: passage left, question right */
         <div className="flex-1 flex overflow-hidden">
+          {/* Left: passage */}
           <div ref={passagePanelRef}
             className="w-1/2 overflow-y-auto bg-[#f4f4ef] border-r border-slate-300 px-8 py-7">
             <p className="text-[11px] font-medium text-slate-500 italic mb-5">
               Questions {fq.passageQStart}–{fq.passageQEnd} refer to the following passage.
             </p>
-            <h2 className="text-sm font-bold text-slate-900 mb-3">{fq.passageTitle}</h2>
+            <h2 className="text-sm font-bold text-slate-900 mb-1">{fq.passageTitle}</h2>
             {fq.passageAuthor && (
-              <p className="text-xs text-slate-500 mb-4">by {fq.passageAuthor}</p>
+              <p className="text-xs text-slate-500 mb-5">by {fq.passageAuthor}</p>
             )}
-            <div className="space-y-4">
-              {(fq.passageContent ?? '').split('\n\n').filter(Boolean).map((p, i) => (
-                <p key={i} className="text-[13px] text-slate-800 leading-[1.75]">{p}</p>
-              ))}
-            </div>
+            {fq.passageContentType === 'poem' && fq.passageLines ? (
+              <PoemRenderer lines={fq.passageLines} />
+            ) : (
+              <div className="space-y-4">
+                {(fq.passageContent ?? '').split('\n\n').filter(Boolean).map((p, i) => (
+                  <p key={i} className="text-[13px] text-slate-800 leading-[1.75]">{p}</p>
+                ))}
+              </div>
+            )}
           </div>
 
+          {/* Right: question */}
           <div className="w-1/2 flex flex-col overflow-hidden bg-white">
             <div className="flex-1 overflow-y-auto px-8 py-7">
               <p className="text-[11px] font-bold tracking-widest uppercase text-slate-400 mb-4">
                 Question {fq.globalNumber}
               </p>
-              <p className="text-[14px] text-slate-900 leading-relaxed font-medium mb-7">
+              <p className="text-[14px] text-slate-900 leading-relaxed font-medium mb-7 whitespace-pre-line">
                 {currentQ.question}
               </p>
-              {choicesEl}
+              {questionContent}
             </div>
             {bottomNav}
           </div>
         </div>
       ) : (
-        /* Centered: editing or math */
         <div className="flex-1 flex flex-col overflow-hidden">
-          <div className={cn(
-            'flex-1 overflow-y-auto px-8 py-8',
-            isMathLayout ? 'bg-white' : 'bg-white',
-          )}>
+          <div className="flex-1 overflow-y-auto px-8 py-8 bg-white">
             <div className="mx-auto max-w-2xl">
               <p className="text-[11px] font-bold tracking-widest uppercase text-slate-400 mb-4">
                 Question {fq.globalNumber}
@@ -676,7 +885,7 @@ export function SHSATExamTaker({ form }: Props) {
               <p className="text-[14px] text-slate-900 leading-relaxed font-medium mb-7">
                 {currentQ.question}
               </p>
-              {choicesEl}
+              {questionContent}
             </div>
           </div>
           {bottomNav}
