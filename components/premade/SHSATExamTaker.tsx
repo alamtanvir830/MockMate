@@ -845,7 +845,12 @@ export function SHSATExamTaker({ form }: Props) {
             ) : (
               <div className="space-y-4">
                 {(fq.passageContent ?? '').split('\n\n').filter(Boolean).map((p, i) => (
-                  <p key={i} className="text-[13px] text-slate-800 leading-[1.75]">{p}</p>
+                  <div key={i} className="flex gap-3 items-start">
+                    <span className="shrink-0 w-4 text-right text-[11px] text-slate-400 font-mono select-none mt-0.5 leading-[1.75]">
+                      {i + 1}
+                    </span>
+                    <p className="text-[13px] text-slate-800 leading-[1.75] flex-1">{p}</p>
+                  </div>
                 ))}
               </div>
             )}
