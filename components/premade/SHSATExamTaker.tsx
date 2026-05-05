@@ -31,7 +31,7 @@ interface FlatQuestion {
   passageAuthor?: string
   passageQStart?: number
   passageQEnd?: number
-  passageContentType?: 'prose' | 'poem'
+  passageContentType?: 'prose' | 'poem' | 'numbered_sentences'
   passageLines?: SHSATPoemLine[]
   question: SHSATQuestion
 }
@@ -109,6 +109,24 @@ function formatTime(s: number): string {
   const sec = s % 60
   if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`
   return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`
+}
+
+// ─── Numbered-sentence renderer (Rev/Edit Part A) ─────────────────────────────
+// Content uses \n between sentences within a paragraph, \n\n between paragraphs.
+// Sentence numbers like (1), (2) are embedded in the text itself.
+function NumberedSentencePassage({ content }: { content: string }) {
+  const groups = content.split('\n\n').filter(Boolean)
+  return (
+    <div className="text-[13px] text-slate-800 leading-[1.85] space-y-5">
+      {groups.map((group, gi) => (
+        <div key={gi} className="space-y-1">
+          {group.split('\n').filter(Boolean).map((sentence, si) => (
+            <p key={si}>{sentence}</p>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
 }
 
 // ─── Poem renderer ─────────────────────────────────────────────────────────────
@@ -561,7 +579,9 @@ export function SHSATExamTaker({ form }: Props) {
   const subType  = fq.subType
   const currentQ = fq.question
 
-  const isPassageLayout = subType === 'reading_comprehension'
+  // Passage layout (left panel) whenever the question has an associated passage.
+  // This covers Reading Comprehension AND Revising/Editing Part A.
+  const isPassageLayout = !!fq.passageId
   const isMathLayout    = subType === 'mathematics'
   const isBookmarked    = bookmarked.has(currentQ.id)
 
@@ -833,6 +853,11 @@ export function SHSATExamTaker({ form }: Props) {
           {/* Left: passage */}
           <div ref={passagePanelRef}
             className="w-1/2 overflow-y-auto bg-[#f4f4ef] border-r border-slate-300 px-8 py-7">
+            {fq.subType === 'revising_editing_a' && (
+              <p className="text-[10px] font-bold tracking-widest uppercase text-violet-600 mb-2">
+                Revising / Editing — Part A
+              </p>
+            )}
             <p className="text-[11px] font-medium text-slate-500 italic mb-5">
               Questions {fq.passageQStart}–{fq.passageQEnd} refer to the following passage.
             </p>
@@ -842,6 +867,8 @@ export function SHSATExamTaker({ form }: Props) {
             )}
             {fq.passageContentType === 'poem' && fq.passageLines ? (
               <PoemRenderer lines={fq.passageLines} />
+            ) : fq.passageContentType === 'numbered_sentences' ? (
+              <NumberedSentencePassage content={fq.passageContent ?? ''} />
             ) : (
               <div className="space-y-4">
                 {(fq.passageContent ?? '').split('\n\n').filter(Boolean).map((p, i) => (
@@ -881,9 +908,9 @@ export function SHSATExamTaker({ form }: Props) {
                     Mathematics
                   </span>
                 )}
-                {!isMathLayout && (
+                {subType === 'revising_editing_b' && (
                   <span className="ml-2 text-[10px] normal-case font-medium text-violet-600 tracking-normal">
-                    Revising / Editing
+                    Revising / Editing — Part B
                   </span>
                 )}
               </p>

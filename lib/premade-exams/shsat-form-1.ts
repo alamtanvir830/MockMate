@@ -84,8 +84,8 @@ export interface SHSATPassage {
   id: string
   title: string
   author?: string
-  contentType?: 'prose' | 'poem'
-  content: string          // paragraphs separated by \n\n (unused for poems)
+  contentType?: 'prose' | 'poem' | 'numbered_sentences'
+  content: string          // paragraphs separated by \n\n; sentences by \n (unused for poems)
   lines?: SHSATPoemLine[]  // poem lines (used when contentType === 'poem')
   questions: SHSATQuestion[]
 }
@@ -97,8 +97,8 @@ export interface SHSATSubsection {
   title: string              // e.g. "READING COMPREHENSION"
   directions: string
   directionBullets?: string[] // Math "IMPORTANT NOTES" bullets
-  passages?: SHSATPassage[]   // Reading Comprehension only
-  questions?: SHSATQuestion[] // Revising/Editing + Math
+  passages?: SHSATPassage[]   // RC + Rev/Edit Part A (passage shown on left)
+  questions?: SHSATQuestion[] // Rev/Edit Part B + Math (centered layout)
 }
 
 export interface SHSATForm {
@@ -781,17 +781,94 @@ export const shsatForm1: SHSATForm = {
     }, // end Reading Comprehension
 
     // ── Revising/Editing Part A  Q49–Q53 ─────────────────────────────────────
+    // Uses passages[] so the left panel shows the numbered-sentence passage.
     {
       id: 'rev-edit-a',
       type: 'revising_editing_a',
       sectionLabel: 'English Language Arts',
       title: 'REVISING/EDITING PART A',
       directions:
-        'Read the text or texts that follow and answer the related questions. You will be asked to improve the writing quality of each text and to correct errors so that each text follows the conventions of standard written English. You should reread relevant parts of each text, while being mindful of time, before selecting the best answer for each question.',
-      questions: placeholderQuestions('re-a', 49, 5),
+        'Read the passage below and answer the questions that follow. You will be asked to improve the writing quality of the text and to correct errors so that the text follows the conventions of standard written English. You should reread relevant parts of the text, while being mindful of time, before selecting the best answer for each question.',
+      passages: [
+        {
+          id: 're-a-passage-1',
+          title: 'The Growth of Public Parks',
+          contentType: 'numbered_sentences',
+          content:
+            '(1) In the late nineteenth century, many cities became crowded and polluted as industries expanded and populations increased.\n' +
+            '(2) As a result, reformers began to argue that urban residents needed access to open green spaces.\n' +
+            '(3) These parks would provide fresh air, recreation, and a place to escape the crowded city streets.\n' +
+            '(4) One of the most influential supporters of public parks was Frederick Law Olmsted, a landscape architect.\n\n' +
+            '(5) Olmsted believed that parks should be carefully designed to appear natural rather than artificial.\n' +
+            '(6) For example, winding paths, open fields, and scattered trees were used to create the feeling of a peaceful countryside.\n' +
+            '(7) However, many city officials initially opposed the construction of large parks.\n' +
+            '(8) They argued that the land could be used for housing or businesses instead.\n\n' +
+            '(9) Over time, public opinion began to shift as people recognized the benefits of these spaces.\n' +
+            '(10) Parks became places where families gathered, children played, and individuals found relief from the demands of city life.\n' +
+            '(11) Today, many of the parks created during this period remain important parts of modern cities.',
+          questions: [
+            {
+              id: 're-a-q1', type: 'mcq',
+              question: 'Which sentence would be the BEST introduction to the passage?',
+              choices: [
+                { id: 'A', text: 'Cities are often filled with many different kinds of buildings.' },
+                { id: 'B', text: 'During the Industrial Revolution, urban life became increasingly difficult for many people.' },
+                { id: 'C', text: 'Public parks are popular places for people to relax today.' },
+                { id: 'D', text: 'Many people enjoy spending time outdoors in nature.' },
+              ],
+              correct_answer: 'B',
+            },
+            {
+              id: 're-a-q2', type: 'mcq',
+              question: 'Which sentence BEST shows a reason why reformers supported the creation of parks?',
+              choices: [
+                { id: 'A', text: 'Sentence 1' },
+                { id: 'B', text: 'Sentence 2' },
+                { id: 'C', text: 'Sentence 3' },
+                { id: 'D', text: 'Sentence 5' },
+              ],
+              correct_answer: 'C',
+            },
+            {
+              id: 're-a-q3', type: 'mcq',
+              question: 'Which transition would BEST replace "However" in sentence 7?',
+              choices: [
+                { id: 'A', text: 'For example' },
+                { id: 'B', text: 'In addition' },
+                { id: 'C', text: 'On the other hand' },
+                { id: 'D', text: 'Therefore' },
+              ],
+              correct_answer: 'C',
+            },
+            {
+              id: 're-a-q4', type: 'mcq',
+              question: 'Where would the following sentence BEST be placed?\n"These concerns delayed the development of many early parks."',
+              choices: [
+                { id: 'A', text: 'After sentence 6' },
+                { id: 'B', text: 'After sentence 7' },
+                { id: 'C', text: 'After sentence 8' },
+                { id: 'D', text: 'After sentence 9' },
+              ],
+              correct_answer: 'C',
+            },
+            {
+              id: 're-a-q5', type: 'mcq',
+              question: 'Which revision would BEST improve sentence 10?',
+              choices: [
+                { id: 'A', text: 'Parks became places where families gathered, and children played, and individuals found relief.' },
+                { id: 'B', text: 'Parks became places where families gathered, children played, and individuals found relief from city life.' },
+                { id: 'C', text: 'Parks became places where families gathered and played and relief.' },
+                { id: 'D', text: 'Parks became places, families gathered children played and individuals relief.' },
+              ],
+              correct_answer: 'B',
+            },
+          ],
+        },
+      ],
     },
 
     // ── Revising/Editing Part B  Q54–Q57 ─────────────────────────────────────
+    // Uses questions[] — centered layout; original sentence is embedded in question text.
     {
       id: 'rev-edit-b',
       type: 'revising_editing_b',
@@ -799,7 +876,52 @@ export const shsatForm1: SHSATForm = {
       title: 'REVISING/EDITING PART B',
       directions:
         'Read and answer the following questions. You will be asked to recognize and correct errors so that the sentences or short paragraphs follow the conventions of standard written English. As needed, you may use the notepad tool or write on the scrap paper given to you to take notes. You should reread relevant parts while being mindful of time.',
-      questions: placeholderQuestions('re-b', 54, 4),
+      questions: [
+        {
+          id: 're-b-q1', type: 'mcq',
+          question: 'Which sentence is written correctly?',
+          choices: [
+            { id: 'A', text: 'The students, who studied carefully passed the test.' },
+            { id: 'B', text: 'The students who studied carefully passed the test.' },
+            { id: 'C', text: 'The students who studied, carefully passed the test.' },
+            { id: 'D', text: 'The students who studied carefully, passed the test.' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 're-b-q2', type: 'mcq',
+          question: 'Which revision BEST improves this sentence?\n"The book was very interesting and it had a lot of details in it."',
+          choices: [
+            { id: 'A', text: 'The book was very interesting, and it had many details.' },
+            { id: 'B', text: 'The book was interesting and detailed.' },
+            { id: 'C', text: 'The book was very interesting and full of details in it.' },
+            { id: 'D', text: 'The book was interesting and had details in it.' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 're-b-q3', type: 'mcq',
+          question: 'Which sentence uses punctuation correctly?',
+          choices: [
+            { id: 'A', text: 'After the game we went out to eat, at a restaurant.' },
+            { id: 'B', text: 'After the game, we went out to eat at a restaurant.' },
+            { id: 'C', text: 'After the game we went out, to eat at a restaurant.' },
+            { id: 'D', text: 'After the game we went, out to eat at a restaurant.' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 're-b-q4', type: 'mcq',
+          question: 'Which revision BEST improves clarity?\n"Running quickly down the street, the backpack was dropped by Maria."',
+          choices: [
+            { id: 'A', text: 'Running quickly down the street, Maria dropped the backpack.' },
+            { id: 'B', text: 'The backpack was running quickly down the street.' },
+            { id: 'C', text: 'Maria, running quickly down the street the backpack dropped.' },
+            { id: 'D', text: 'Running quickly, the street dropped Maria\'s backpack.' },
+          ],
+          correct_answer: 'A',
+        },
+      ],
     },
 
     // ── Mathematics  Q58–Q114 ─────────────────────────────────────────────────
