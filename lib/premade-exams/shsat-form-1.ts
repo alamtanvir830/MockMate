@@ -75,10 +75,18 @@ export interface SHSATMatchQuestion {
   correct_matches: Record<string, string>  // itemId → categoryId
 }
 
+export interface SHSATGridInQuestion {
+  id: string
+  type: 'grid_in'
+  question: string
+  correct_answer: string  // numeric string, e.g. "56" or "1/5"
+}
+
 export type SHSATQuestion =
   | SHSATMCQQuestion
   | SHSATMultiSelectQuestion
   | SHSATMatchQuestion
+  | SHSATGridInQuestion
 
 export interface SHSATPassage {
   id: string
@@ -938,7 +946,483 @@ export const shsatForm1: SHSATForm = {
       ],
       directions:
         'Solve each problem. Select the answer from the choices given or enter your answer in the space provided.',
-      questions: placeholderQuestions('math', 58, 57),
+      questions: [
+
+        // ── Easy  Q58–Q70 ──────────────────────────────────────────────────
+        {
+          id: 'math-q1', type: 'mcq',
+          question: 'What is 36 ÷ 6 × 2?',
+          choices: [
+            { id: 'A', text: '3' },
+            { id: 'B', text: '6' },
+            { id: 'C', text: '12' },
+            { id: 'D', text: '18' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q2', type: 'mcq',
+          question: 'What is 3/4 + 1/2?',
+          choices: [
+            { id: 'A', text: '5/6' },
+            { id: 'B', text: '1' },
+            { id: 'C', text: '1 1/4' },
+            { id: 'D', text: '1 1/2' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q3', type: 'mcq',
+          question: 'What is 25% of 80?',
+          choices: [
+            { id: 'A', text: '10' },
+            { id: 'B', text: '15' },
+            { id: 'C', text: '20' },
+            { id: 'D', text: '25' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q4', type: 'mcq',
+          question: 'A number is increased by 8 to get 15. What is the number?',
+          choices: [
+            { id: 'A', text: '5' },
+            { id: 'B', text: '6' },
+            { id: 'C', text: '7' },
+            { id: 'D', text: '8' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q5', type: 'mcq',
+          question: 'What is the value of 5² − 9?',
+          choices: [
+            { id: 'A', text: '11' },
+            { id: 'B', text: '16' },
+            { id: 'C', text: '21' },
+            { id: 'D', text: '25' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 'math-q6', type: 'mcq',
+          question: 'Which is equivalent to 2(3 + 4)?',
+          choices: [
+            { id: 'A', text: '10' },
+            { id: 'B', text: '12' },
+            { id: 'C', text: '14' },
+            { id: 'D', text: '24' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q7', type: 'mcq',
+          question: 'What is the perimeter of a rectangle with length 6 and width 4?',
+          choices: [
+            { id: 'A', text: '10' },
+            { id: 'B', text: '20' },
+            { id: 'C', text: '24' },
+            { id: 'D', text: '48' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 'math-q8', type: 'mcq',
+          question: 'What is 1/3 of 27?',
+          choices: [
+            { id: 'A', text: '6' },
+            { id: 'B', text: '9' },
+            { id: 'C', text: '12' },
+            { id: 'D', text: '18' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 'math-q9', type: 'mcq',
+          question: 'A number line shows points at −3 and 5. What is the distance between them?',
+          choices: [
+            { id: 'A', text: '2' },
+            { id: 'B', text: '5' },
+            { id: 'C', text: '8' },
+            { id: 'D', text: '15' },
+          ],
+          correct_answer: 'C',
+        },
+        { id: 'math-q10', type: 'grid_in', question: 'What is 7 × 8?',   correct_answer: '56' },
+        { id: 'math-q11', type: 'grid_in', question: 'What is 144 ÷ 12?', correct_answer: '12' },
+        { id: 'math-q12', type: 'grid_in', question: 'What is 9²?',       correct_answer: '81' },
+        { id: 'math-q13', type: 'grid_in', question: 'What is 1/2 of 50?', correct_answer: '25' },
+
+        // ── Medium  Q71–Q90 ────────────────────────────────────────────────
+        {
+          id: 'math-q14', type: 'mcq',
+          question: 'A shirt costs $20 and is on sale for 25% off. What is the sale price?',
+          choices: [
+            { id: 'A', text: '$5' },
+            { id: 'B', text: '$10' },
+            { id: 'C', text: '$15' },
+            { id: 'D', text: '$18' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q15', type: 'mcq',
+          question: 'A ratio of boys to girls is 3:2. If there are 15 boys, how many girls are there?',
+          choices: [
+            { id: 'A', text: '8' },
+            { id: 'B', text: '10' },
+            { id: 'C', text: '12' },
+            { id: 'D', text: '15' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 'math-q16', type: 'mcq',
+          question: 'Solve: 2x + 5 = 17',
+          choices: [
+            { id: 'A', text: '5' },
+            { id: 'B', text: '6' },
+            { id: 'C', text: '7' },
+            { id: 'D', text: '8' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 'math-q17', type: 'mcq',
+          question: 'A train travels 60 miles in 2 hours. What is its speed in miles per hour?',
+          choices: [
+            { id: 'A', text: '20' },
+            { id: 'B', text: '30' },
+            { id: 'C', text: '40' },
+            { id: 'D', text: '60' },
+          ],
+          correct_answer: 'B',
+        },
+        { id: 'math-q18', type: 'grid_in', question: 'What is 40% of 90?',  correct_answer: '36' },
+        {
+          id: 'math-q19', type: 'mcq',
+          question: 'A rectangle has an area of 48 and a width of 6. What is its length?',
+          choices: [
+            { id: 'A', text: '6' },
+            { id: 'B', text: '8' },
+            { id: 'C', text: '10' },
+            { id: 'D', text: '12' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 'math-q20', type: 'mcq',
+          question: 'If x = 4, what is the value of 3x²?',
+          choices: [
+            { id: 'A', text: '24' },
+            { id: 'B', text: '36' },
+            { id: 'C', text: '48' },
+            { id: 'D', text: '64' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q21', type: 'mcq',
+          question: 'What is the mean of 4, 6, 8, and 10?',
+          choices: [
+            { id: 'A', text: '6' },
+            { id: 'B', text: '7' },
+            { id: 'C', text: '8' },
+            { id: 'D', text: '9' },
+          ],
+          correct_answer: 'B',
+        },
+        { id: 'math-q22', type: 'grid_in', question: 'What is 15% of 200?', correct_answer: '30' },
+        {
+          id: 'math-q23', type: 'mcq',
+          question: 'A number is decreased by 20% to become 80. What was the original number?',
+          choices: [
+            { id: 'A', text: '90' },
+            { id: 'B', text: '100' },
+            { id: 'C', text: '120' },
+            { id: 'D', text: '140' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 'math-q24', type: 'mcq',
+          question: 'A car travels at 45 miles per hour. How far does it travel in 4 hours?',
+          choices: [
+            { id: 'A', text: '160 miles' },
+            { id: 'B', text: '170 miles' },
+            { id: 'C', text: '180 miles' },
+            { id: 'D', text: '190 miles' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q25', type: 'mcq',
+          question: 'A jacket originally costs $80. After a 25% discount, what is the sale price?',
+          choices: [
+            { id: 'A', text: '$55' },
+            { id: 'B', text: '$60' },
+            { id: 'C', text: '$65' },
+            { id: 'D', text: '$70' },
+          ],
+          correct_answer: 'B',
+        },
+        { id: 'math-q26', type: 'grid_in',
+          question: 'A rectangle has a perimeter of 26. One side has a length of 8. What is the length of the other side?',
+          correct_answer: '5' },
+        {
+          id: 'math-q27', type: 'mcq',
+          question: 'If 3 workers can complete a job in 12 days, how many days would 4 workers take to complete the same job at the same rate?',
+          choices: [
+            { id: 'A', text: '7' },
+            { id: 'B', text: '8' },
+            { id: 'C', text: '9' },
+            { id: 'D', text: '10' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q28', type: 'mcq',
+          question: 'The average of 5 numbers is 10. Four of the numbers are 7, 9, 12, and 14. What is the fifth number?',
+          choices: [
+            { id: 'A', text: '6' },
+            { id: 'B', text: '7' },
+            { id: 'C', text: '8' },
+            { id: 'D', text: '9' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q29', type: 'mcq',
+          question: 'Which of the following fractions is the greatest?',
+          choices: [
+            { id: 'A', text: '5/8' },
+            { id: 'B', text: '3/5' },
+            { id: 'C', text: '7/12' },
+            { id: 'D', text: '2/3' },
+          ],
+          correct_answer: 'D',
+        },
+        { id: 'math-q30', type: 'grid_in', question: 'Solve for x: 2x − 3 = 7', correct_answer: '5' },
+        {
+          id: 'math-q31', type: 'mcq',
+          question: 'A store buys a shirt for $40 and marks it up 40%. What is the selling price?',
+          choices: [
+            { id: 'A', text: '$44' },
+            { id: 'B', text: '$52' },
+            { id: 'C', text: '$56' },
+            { id: 'D', text: '$64' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q32', type: 'mcq',
+          question: 'The sum of two numbers is 45 and their difference is 11. What is the larger number?',
+          choices: [
+            { id: 'A', text: '24' },
+            { id: 'B', text: '26' },
+            { id: 'C', text: '27' },
+            { id: 'D', text: '28' },
+          ],
+          correct_answer: 'D',
+        },
+        { id: 'math-q33', type: 'grid_in',
+          question: 'What is the sum of the interior angles of a triangle, in degrees?',
+          correct_answer: '180' },
+
+        // ── Hard  Q91–Q105 ─────────────────────────────────────────────────
+        {
+          id: 'math-q34', type: 'mcq',
+          question: 'What is the value of x in 3x − 7 = 2x + 5?',
+          choices: [
+            { id: 'A', text: '10' },
+            { id: 'B', text: '11' },
+            { id: 'C', text: '12' },
+            { id: 'D', text: '13' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q35', type: 'mcq',
+          question: 'The sum of three consecutive integers is 45. What is the largest of the three?',
+          choices: [
+            { id: 'A', text: '14' },
+            { id: 'B', text: '15' },
+            { id: 'C', text: '16' },
+            { id: 'D', text: '17' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q36', type: 'mcq',
+          question: 'A triangle has sides of length 5, 12, and 13. What type of triangle is it?',
+          choices: [
+            { id: 'A', text: 'Acute' },
+            { id: 'B', text: 'Obtuse' },
+            { id: 'C', text: 'Right' },
+            { id: 'D', text: 'Equilateral' },
+          ],
+          correct_answer: 'C',
+        },
+        { id: 'math-q37', type: 'grid_in', question: 'What is 7³?', correct_answer: '343' },
+        {
+          id: 'math-q38', type: 'mcq',
+          question: 'A bag has 3 red, 2 blue, and 5 green marbles. What is the probability of randomly selecting a blue marble?',
+          choices: [
+            { id: 'A', text: '1/10' },
+            { id: 'B', text: '1/5' },
+            { id: 'C', text: '2/5' },
+            { id: 'D', text: '3/10' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 'math-q39', type: 'mcq',
+          question: 'A number is increased by 50%, then the result is decreased by 50%. How does the final value compare to the original?',
+          choices: [
+            { id: 'A', text: 'It is the same.' },
+            { id: 'B', text: 'It is greater.' },
+            { id: 'C', text: 'It is smaller.' },
+            { id: 'D', text: 'It cannot be determined.' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q40', type: 'mcq',
+          question: 'Two angles of a triangle are 55° and 70°. What is the measure of the third angle?',
+          choices: [
+            { id: 'A', text: '45°' },
+            { id: 'B', text: '50°' },
+            { id: 'C', text: '55°' },
+            { id: 'D', text: '60°' },
+          ],
+          correct_answer: 'C',
+        },
+        { id: 'math-q41', type: 'grid_in',
+          question: 'What is the value of 3(x + 4) when x = 2?',
+          correct_answer: '18' },
+        {
+          id: 'math-q42', type: 'mcq',
+          question: 'A rectangle has a perimeter of 36 and a length of 10. What is its area?',
+          choices: [
+            { id: 'A', text: '60' },
+            { id: 'B', text: '70' },
+            { id: 'C', text: '80' },
+            { id: 'D', text: '90' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q43', type: 'mcq',
+          question: 'If a number is increased by 5 and the result is multiplied by 3, the answer is 30. What is the number?',
+          choices: [
+            { id: 'A', text: '4' },
+            { id: 'B', text: '5' },
+            { id: 'C', text: '7' },
+            { id: 'D', text: '10' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 'math-q44', type: 'mcq',
+          question: 'A jar contains 3 red and 7 white marbles. What is the probability of NOT drawing a red marble?',
+          choices: [
+            { id: 'A', text: '3/10' },
+            { id: 'B', text: '7/10' },
+            { id: 'C', text: '3/7' },
+            { id: 'D', text: '4/5' },
+          ],
+          correct_answer: 'B',
+        },
+        { id: 'math-q45', type: 'grid_in',
+          question: 'What is the value of |−15| + |−9|?',
+          correct_answer: '24' },
+        {
+          id: 'math-q46', type: 'mcq',
+          question: 'Angles A and B are supplementary. Angle A is three times angle B. What is the measure of angle A?',
+          choices: [
+            { id: 'A', text: '45°' },
+            { id: 'B', text: '90°' },
+            { id: 'C', text: '120°' },
+            { id: 'D', text: '135°' },
+          ],
+          correct_answer: 'D',
+        },
+        {
+          id: 'math-q47', type: 'mcq',
+          question: 'A store buys an item for $50 and marks it up 40%. What is the selling price?',
+          choices: [
+            { id: 'A', text: '$60' },
+            { id: 'B', text: '$65' },
+            { id: 'C', text: '$70' },
+            { id: 'D', text: '$75' },
+          ],
+          correct_answer: 'C',
+        },
+        { id: 'math-q48', type: 'grid_in',
+          question: 'What is the least common multiple (LCM) of 6 and 8?',
+          correct_answer: '24' },
+
+        // ── Very Hard  Q106–Q114 ───────────────────────────────────────────
+        {
+          id: 'math-q49', type: 'mcq',
+          question: 'A number is doubled, then 10 is added, resulting in 50. What is the number?',
+          choices: [
+            { id: 'A', text: '15' },
+            { id: 'B', text: '20' },
+            { id: 'C', text: '25' },
+            { id: 'D', text: '30' },
+          ],
+          correct_answer: 'B',
+        },
+        { id: 'math-q50', type: 'grid_in', question: 'Solve for x: 4x = 3x + 9', correct_answer: '9' },
+        {
+          id: 'math-q51', type: 'mcq',
+          question: 'A square has an area of 49. What is its perimeter?',
+          choices: [
+            { id: 'A', text: '14' },
+            { id: 'B', text: '21' },
+            { id: 'C', text: '28' },
+            { id: 'D', text: '49' },
+          ],
+          correct_answer: 'C',
+        },
+        {
+          id: 'math-q52', type: 'mcq',
+          question: 'If 3 pencils cost $1.50, how much do 10 pencils cost?',
+          choices: [
+            { id: 'A', text: '$4.00' },
+            { id: 'B', text: '$5.00' },
+            { id: 'C', text: '$6.00' },
+            { id: 'D', text: '$7.00' },
+          ],
+          correct_answer: 'B',
+        },
+        { id: 'math-q53', type: 'grid_in', question: 'What is 2³ × 3²?', correct_answer: '72' },
+        {
+          id: 'math-q54', type: 'mcq',
+          question: 'A number is 20% greater than 50. What is it?',
+          choices: [
+            { id: 'A', text: '55' },
+            { id: 'B', text: '60' },
+            { id: 'C', text: '65' },
+            { id: 'D', text: '70' },
+          ],
+          correct_answer: 'B',
+        },
+        {
+          id: 'math-q55', type: 'mcq',
+          question: 'A rectangle\'s length is twice its width. If its area is 72, what is the width?',
+          choices: [
+            { id: 'A', text: '4' },
+            { id: 'B', text: '6' },
+            { id: 'C', text: '8' },
+            { id: 'D', text: '12' },
+          ],
+          correct_answer: 'B',
+        },
+        { id: 'math-q56', type: 'grid_in', question: 'Solve for x: x/5 = 12', correct_answer: '60' },
+        { id: 'math-q57', type: 'grid_in', question: 'What is 100 − (3 × 7)?', correct_answer: '79' },
+      ],
     },
 
   ], // end subsections

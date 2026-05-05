@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { PremadeExamTaker } from '@/components/premade/PremadeExamTaker'
+import { SHSATExamTaker } from '@/components/premade/SHSATExamTaker'
 import { shsatForm2 } from '@/lib/premade-exams/shsat-form-2'
 
 const SESSION_KEY = 'shsat_unlocked'
@@ -21,5 +21,5 @@ export default function SHSATForm2Page() {
 
   if (!ready) return null
 
-  return <PremadeExamTaker form={shsatForm2} />
+  return <SHSATExamTaker form={shsatForm2} />
 }
