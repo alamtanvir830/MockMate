@@ -18,6 +18,7 @@ interface FeedbackInput {
     correct_answer: string
     user_answer: string
   }[]
+  language?: string
 }
 
 export async function generateFeedback(input: FeedbackInput): Promise<AIFeedback> {
@@ -40,7 +41,7 @@ export async function generateFeedback(input: FeedbackInput): Promise<AIFeedback
       },
       {
         role: 'user',
-        content: `A student just completed a practice exam.
+        content: `${input.language && input.language !== 'English' ? `Write all feedback in ${input.language}. Preserve technical terms when translation would make them inaccurate.\n\n` : ''}A student just completed a practice exam.
 
 Exam: ${input.examTitle}
 Subject: ${input.subject}

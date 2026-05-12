@@ -26,6 +26,7 @@ export interface IncorrectQuestion {
 export async function generateAnkiCards(
   questions: IncorrectQuestion[],
   subject: string,
+  language?: string,
 ): Promise<AnkiCard[]> {
   if (questions.length === 0) return []
 
@@ -66,7 +67,7 @@ Student chose: ${selectedLetter}. ${q.selected_answer ?? 'no answer'}`
     messages: [
       {
         role: 'system',
-        content: `You are a USMLE Step 1 Anki deck author. You write atomic, high-yield flashcards optimized for spaced repetition. Every card tests exactly ONE fact. Backs are one or two short sentences maximum — never paragraphs. Subject: ${subject}.`,
+        content: `You are a USMLE Step 1 Anki deck author. You write atomic, high-yield flashcards optimized for spaced repetition. Every card tests exactly ONE fact. Backs are one or two short sentences maximum — never paragraphs. Subject: ${subject}.${language && language !== 'English' ? ` Generate all card fronts and backs in ${language}. Preserve technical terms when translation would make them inaccurate.` : ''}`,
       },
       {
         role: 'user',

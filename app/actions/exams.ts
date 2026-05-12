@@ -44,6 +44,7 @@ export interface CreateExamInput {
   groupMessage?: string | null
   adaptiveMode?: boolean
   advancedCustomization?: AdvancedCustomization
+  language?: string
 }
 
 export async function createExam(
@@ -75,6 +76,7 @@ export async function createExam(
       ...(input.groupMessage ? { group_message: input.groupMessage } : {}),
       ...(input.adaptiveMode ? { adaptive_mode: true } : {}),
       ...(input.standardizedExam ? { standardized_exam: input.standardizedExam } : {}),
+      ...(input.language && input.language !== 'English' ? { language: input.language } : {}),
     })
     .select('id')
     .single()
@@ -100,6 +102,7 @@ export async function createExam(
       usmleStyles: input.usmleStyles,
       adaptiveMode: input.adaptiveMode,
       advancedCustomization: input.advancedCustomization,
+      language: input.language,
     })
   } catch (err) {
     // Clean up the exam row so the user isn't left with a broken draft

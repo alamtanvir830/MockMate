@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-  let body: { questions: IncorrectQuestion[]; subject: string }
+  let body: { questions: IncorrectQuestion[]; subject: string; language?: string }
   try {
     body = await request.json()
   } catch {
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const cards = await generateAnkiCards(body.questions, body.subject ?? 'General')
+    const cards = await generateAnkiCards(body.questions, body.subject ?? 'General', body.language)
     return NextResponse.json({ cards })
   } catch (e) {
     console.error('[anki] card generation failed:', e)

@@ -31,11 +31,12 @@ interface Props {
   incorrectQuestions: IncorrectQuestion[]
   subject: string
   examTitle: string
+  language?: string
 }
 
 type State = 'prompt' | 'loading' | 'preview' | 'declined' | 'error'
 
-export function AnkiSection({ incorrectQuestions, subject, examTitle }: Props) {
+export function AnkiSection({ incorrectQuestions, subject, examTitle, language }: Props) {
   const [state, setState] = useState<State>('prompt')
   const [cards, setCards] = useState<AnkiCard[]>([])
   // Set of indices that are currently selected; starts fully populated after generation
@@ -52,7 +53,7 @@ export function AnkiSection({ incorrectQuestions, subject, examTitle }: Props) {
       const res = await fetch('/api/anki', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ questions: incorrectQuestions, subject }),
+        body: JSON.stringify({ questions: incorrectQuestions, subject, language }),
       })
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))

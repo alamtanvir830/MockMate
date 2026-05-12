@@ -124,6 +124,10 @@ export function CreateExamForm() {
   ])
   const [shareChoiceError, setShareChoiceError] = useState('')
 
+  // Language
+  const [language, setLanguage] = useState('English')
+  const [customLanguage, setCustomLanguage] = useState('')
+
   // Advanced customization
   const [wantsAdvancedCustomization, setWantsAdvancedCustomization] = useState<boolean | null>(null)
   const [advCustomizationError, setAdvCustomizationError] = useState('')
@@ -424,6 +428,7 @@ export function CreateExamForm() {
       groupMessage: wantsToShare ? groupMessage.trim() || null : null,
       adaptiveMode: standardizedExam === 'shsat' ? isAdaptive : undefined,
       advancedCustomization: wantsAdvancedCustomization === true ? adv : undefined,
+      language: language === 'Other' ? (customLanguage.trim() || 'English') : language,
     })
 
     if (result?.error) {
@@ -725,6 +730,50 @@ export function CreateExamForm() {
               value={questionCount}
               onChange={(e) => setQuestionCount(e.target.value)}
             />
+
+            {/* ── Language selection ── */}
+            <div className="space-y-2">
+              <Select
+                label="What language should the exam be written in?"
+                options={[
+                  { value: 'English',    label: 'English' },
+                  { value: 'Spanish',    label: 'Spanish' },
+                  { value: 'French',     label: 'French' },
+                  { value: 'Arabic',     label: 'Arabic' },
+                  { value: 'Bengali',    label: 'Bengali' },
+                  { value: 'Urdu',       label: 'Urdu' },
+                  { value: 'Hindi',      label: 'Hindi' },
+                  { value: 'Chinese',    label: 'Chinese' },
+                  { value: 'Korean',     label: 'Korean' },
+                  { value: 'Japanese',   label: 'Japanese' },
+                  { value: 'Portuguese', label: 'Portuguese' },
+                  { value: 'Russian',    label: 'Russian' },
+                  { value: 'Turkish',    label: 'Turkish' },
+                  { value: 'Italian',    label: 'Italian' },
+                  { value: 'German',     label: 'German' },
+                  { value: 'Vietnamese', label: 'Vietnamese' },
+                  { value: 'Tagalog',    label: 'Tagalog' },
+                  { value: 'Indonesian', label: 'Indonesian' },
+                  { value: 'Persian/Farsi', label: 'Persian/Farsi' },
+                  { value: 'Hebrew',     label: 'Hebrew' },
+                  { value: 'Other',      label: 'Other' },
+                ]}
+                value={language}
+                onChange={(e) => {
+                  setLanguage(e.target.value)
+                  if (e.target.value !== 'Other') setCustomLanguage('')
+                }}
+              />
+              {language === 'Other' && (
+                <input
+                  type="text"
+                  placeholder="Enter language"
+                  value={customLanguage}
+                  onChange={(e) => setCustomLanguage(e.target.value)}
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                />
+              )}
+            </div>
 
             {/* ── Make your exam more accurate (required toggle) ── */}
             <div className="rounded-lg border border-slate-200 bg-slate-50 overflow-hidden">

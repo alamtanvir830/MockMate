@@ -18,7 +18,7 @@ export async function submitExam(input: {
   // Verify exam ownership — also fetch subject for email
   const { data: exam } = await supabase
     .from('exams')
-    .select('id, title, subject, unlock_date, status')
+    .select('id, title, subject, unlock_date, status, language')
     .eq('id', input.examId)
     .eq('user_id', user.id)
     .single()
@@ -127,6 +127,7 @@ export async function submitExam(input: {
       percentage,
       totalQuestions: questions.length,
       wrongQuestions,
+      language: (exam as { language?: string }).language ?? undefined,
     })
 
     await supabase

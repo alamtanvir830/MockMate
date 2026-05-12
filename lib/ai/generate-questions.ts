@@ -49,6 +49,7 @@ interface GenerateInput {
   usmleStyles?: string[]
   adaptiveMode?: boolean
   advancedCustomization?: AdvancedCustomization
+  language?: string
 }
 
 // ─── Step 1 style type labels (used in distribution instructions) ──────────────
@@ -513,7 +514,7 @@ General rules:
 - Questions should vary in difficulty
 - Do not number the questions or options
 
-Return a JSON object in this exact format:
+${input.language && input.language !== 'English' ? `Language instruction: Generate the entire exam in ${input.language}. This includes question stems, answer choices, explanations, and feedback. Preserve technical terms when translation would make them inaccurate. Do not translate proper nouns or required technical names unless commonly translated.\n` : ''}Return a JSON object in this exact format:
 {
   "questions": [
     {

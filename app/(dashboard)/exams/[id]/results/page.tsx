@@ -74,7 +74,7 @@ export default async function ResultsPage({
   // Verify exam ownership
   const { data: exam } = await supabase
     .from('exams')
-    .select('id, title, subject, exam_date, adaptive_mode')
+    .select('id, title, subject, exam_date, adaptive_mode, language')
     .eq('id', id)
     .eq('user_id', user!.id)
     .single()
@@ -338,6 +338,7 @@ export default async function ResultsPage({
         incorrectQuestions={incorrectQuestions}
         subject={exam.subject}
         examTitle={exam.title}
+        language={(exam as { language?: string }).language ?? undefined}
       />
 
       {/* Per-question review */}
