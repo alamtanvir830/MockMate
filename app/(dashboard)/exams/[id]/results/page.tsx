@@ -8,6 +8,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/ca
 import { cn, scoreColor } from '@/lib/utils'
 import { generateExplanations } from '@/lib/ai/generate-explanations'
 import { AnkiSection } from './AnkiSection'
+import { MindMapSection } from './MindMapSection'
 import { GroupPrivacyPrefs } from '../GroupPrivacyPrefs'
 
 export const metadata: Metadata = { title: 'Exam Results' }
@@ -332,6 +333,15 @@ export default async function ResultsPage({
           </div>
         </Card>
       )}
+
+      {/* AI Mind Map */}
+      <MindMapSection
+        attemptId={attempt.id}
+        incorrectQuestions={incorrectQuestions}
+        subject={exam.subject}
+        examTitle={exam.title}
+        language={(exam as { language?: string }).language ?? undefined}
+      />
 
       {/* Anki flashcard generation */}
       <AnkiSection

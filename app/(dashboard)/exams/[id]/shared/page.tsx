@@ -11,6 +11,7 @@ import { submitSharedExam } from '@/app/actions/shared-attempts'
 import { generateExplanations } from '@/lib/ai/generate-explanations'
 import { GroupPrivacyPrefs } from '../GroupPrivacyPrefs'
 import { AnkiSection } from '../results/AnkiSection'
+import { MindMapSection } from '../results/MindMapSection'
 
 export const metadata: Metadata = { title: 'Shared Exam' }
 
@@ -176,7 +177,7 @@ export default async function SharedExamPage({
   // Fetch exam info
   const { data: exam } = await admin
     .from('exams')
-    .select('id, title, subject, exam_date, time_limit_minutes, adaptive_mode, standardized_exam')
+    .select('id, title, subject, exam_date, time_limit_minutes, adaptive_mode, standardized_exam, language')
     .eq('id', id)
     .single()
 
@@ -378,11 +379,21 @@ export default async function SharedExamPage({
           </Card>
         )}
 
+        {/* AI Mind Map */}
+        <MindMapSection
+          attemptId={attempt.id}
+          incorrectQuestions={incorrectQuestions}
+          subject={exam.subject}
+          examTitle={exam.title}
+          language={(exam as { language?: string }).language ?? undefined}
+        />
+
         {/* Anki flashcard generation */}
         <AnkiSection
           incorrectQuestions={incorrectQuestions}
           subject={exam.subject}
           examTitle={exam.title}
+          language={(exam as { language?: string }).language ?? undefined}
         />
 
         {/* Question review */}
