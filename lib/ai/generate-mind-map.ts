@@ -55,21 +55,21 @@ export async function generateMindMap(
       },
       {
         role: 'user',
-        content: `${langInstruction}A student got the following questions wrong on a "${examTitle}" (${subject}) practice exam. Create a mind map to help them review the missed concepts.
+        content: `${langInstruction}A student got the following questions wrong on a "${examTitle}" (${subject}) practice exam. Create a concise mind map to help them review the missed concepts.
 
-STRICT RULES:
-- "title": the central topic (2–4 words max). Captures the main theme of what the student missed.
-- "nodes": exactly 5–7 main branches. Each is a concept category from the missed material.
+STRICT RULES — this map will be rendered left-to-right with fixed column widths, so labels MUST be short:
+- "title": 2–4 words. The central topic of what was missed. Used as the root node label.
+- "nodes": 5–8 main branches. Each represents one concept category from the missed material.
 - Each branch has:
-  - "label": 2–4 words max
-  - "children": 2–4 child items
+  - "label": 2–4 words max (fits ~18 characters)
+  - "children": 2–4 subtopics
 - Each child has:
-  - "label": 2–4 words max
-  - "children": 0–3 short strings (specific facts, 1–5 words each)
-- Keep ALL labels SHORT (≤5 words). Never use full sentences.
-- Focus on what was missed. Do not include concepts the student got correct.
+  - "label": 2–4 words max (fits ~20 characters)
+  - "children": 1–3 short fact strings, each 3–6 words max (fits ~30 characters)
+- Never use sentences. Never use punctuation inside labels. Use noun phrases only.
+- Focus only on what was missed. Do not pad with known concepts.
 
-Return ONLY this exact JSON structure — no extra keys:
+Return ONLY this exact JSON structure — no extra keys, no markdown:
 {
   "title": "...",
   "nodes": [
@@ -78,7 +78,7 @@ Return ONLY this exact JSON structure — no extra keys:
       "children": [
         {
           "label": "Subtopic",
-          "children": ["fact 1", "fact 2"]
+          "children": ["short fact", "short fact"]
         }
       ]
     }
