@@ -538,7 +538,7 @@ export default async function GroupDetailPage({
               <Button variant="outline" size="sm">View your results</Button>
             </Link>
           ) : (
-            <Link href={`/exams/${examId}/shared`}>
+            <Link href={`/exams/${examId}/results`}>
               <Button variant="outline" size="sm">View your results</Button>
             </Link>
           )}

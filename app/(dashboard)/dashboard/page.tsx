@@ -327,7 +327,7 @@ export default async function DashboardPage() {
                     <p className="text-sm text-slate-400 mt-0.5">{exam.subject}</p>
                   </div>
                   {isCompleted ? (
-                    <Link href={`/exams/${exam.id}/shared`} className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors shrink-0">
+                    <Link href={`/exams/${exam.id}/results`} className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors shrink-0">
                       View results
                     </Link>
                   ) : (

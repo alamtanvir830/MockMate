@@ -72,13 +72,25 @@ export default async function ResultsPage({
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Verify exam ownership
-  const { data: exam } = await supabase
+  // Try as owner first; fall back to admin fetch for shared/group recipients
+  const { data: ownedExam } = await supabase
     .from('exams')
     .select('id, title, subject, exam_date, adaptive_mode, language')
     .eq('id', id)
     .eq('user_id', user!.id)
-    .single()
+    .maybeSingle()
+
+  let exam = ownedExam
+
+  if (!exam) {
+    // Not the owner — could be a shared/group recipient; fetch without ownership filter
+    const { data: sharedExam } = await createAdminClient()
+      .from('exams')
+      .select('id, title, subject, exam_date, adaptive_mode, language')
+      .eq('id', id)
+      .maybeSingle()
+    exam = sharedExam
+  }
 
   if (!exam) notFound()
 
