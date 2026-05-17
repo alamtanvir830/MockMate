@@ -15,13 +15,21 @@ export async function submitExam(input: {
   } = await supabase.auth.getUser()
   if (!user) return { error: 'Not authenticated' }
 
-  // Verify exam ownership — also fetch subject for email
-  const { data: exam } = await supabase
+  // Verify exam ownership — use select('*') so adding new columns (e.g. language)
+  // never breaks this query when the DB migration hasn't run yet.
+  const { data: exam, error: examErr } = await supabase
     .from('exams')
-    .select('id, title, subject, unlock_date, status, language')
+    .select('*')
     .eq('id', input.examId)
     .eq('user_id', user.id)
     .single()
+
+  console.log('[submitExam] lookup', {
+    examId: input.examId,
+    userId: user.id,
+    found: !!exam,
+    dbError: examErr?.message ?? null,
+  })
 
   if (!exam) return { error: 'Exam not found' }
 

@@ -72,10 +72,12 @@ export default async function ResultsPage({
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Try as owner first; fall back to admin fetch for shared/group recipients
+  // Try as owner first; fall back to admin fetch for shared/group recipients.
+  // Use select('*') so adding new columns (e.g. language) never breaks the query
+  // when the DB migration hasn't run yet.
   const { data: ownedExam } = await supabase
     .from('exams')
-    .select('id, title, subject, exam_date, adaptive_mode, language')
+    .select('*')
     .eq('id', id)
     .eq('user_id', user!.id)
     .maybeSingle()
@@ -86,7 +88,7 @@ export default async function ResultsPage({
     // Not the owner — could be a shared/group recipient; fetch without ownership filter
     const { data: sharedExam } = await createAdminClient()
       .from('exams')
-      .select('id, title, subject, exam_date, adaptive_mode, language')
+      .select('*')
       .eq('id', id)
       .maybeSingle()
     exam = sharedExam
