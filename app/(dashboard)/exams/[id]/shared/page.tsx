@@ -283,6 +283,7 @@ export default async function SharedExamPage({
     const incorrectCount = reviewItems.length - correctCount
     const aiFeedback = attempt.ai_feedback as AIFeedback | null
 
+    // incorrectQuestions: wrong OR unanswered
     const incorrectQuestions = reviewItems
       .filter((q) => !q.is_correct)
       .map((q) => ({
@@ -293,6 +294,8 @@ export default async function SharedExamPage({
         explanation_correct: q.explanation_correct,
         explanation_incorrect: q.explanation_incorrect,
       }))
+
+    const allAnswered = reviewItems.every((q) => q.selected_answer !== null)
 
     return (
       <div className="max-w-3xl mx-auto space-y-8">
@@ -383,6 +386,8 @@ export default async function SharedExamPage({
         <MindMapSection
           attemptId={attempt.id}
           incorrectQuestions={incorrectQuestions}
+          totalQuestions={reviewItems.length}
+          allAnswered={allAnswered}
           subject={exam.subject}
           examTitle={exam.title}
           language={(exam as { language?: string }).language ?? undefined}

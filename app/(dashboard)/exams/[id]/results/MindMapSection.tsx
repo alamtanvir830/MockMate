@@ -328,6 +328,10 @@ interface Props {
     correct_answer: string
     explanation_correct: string | null
   }>
+  /** Total questions loaded for this attempt (0 if data failed to load) */
+  totalQuestions?: number
+  /** True only when every question has a recorded answer */
+  allAnswered?: boolean
   subject: string
   examTitle: string
   language?: string
@@ -336,6 +340,8 @@ interface Props {
 export function MindMapSection({
   attemptId,
   incorrectQuestions,
+  totalQuestions = 0,
+  allAnswered = false,
   subject,
   examTitle,
   language,
@@ -367,8 +373,9 @@ export function MindMapSection({
     </CardHeader>
   )
 
-  // Perfect score — nothing to map
-  if (incorrectQuestions.length === 0) {
+  // "No missed concepts" only when: all questions loaded AND all answered AND none wrong
+  const perfectScore = totalQuestions > 0 && allAnswered && incorrectQuestions.length === 0
+  if (perfectScore) {
     return (
       <Card>
         {sectionHeader}

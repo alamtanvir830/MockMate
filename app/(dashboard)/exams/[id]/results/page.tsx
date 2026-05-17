@@ -123,26 +123,43 @@ export default async function ResultsPage({
     )
   }
 
+  // Use admin client for questions and responses so RLS on those tables
+  // never silently empties the results (score would show but review would be blank).
+  const admin = createAdminClient()
+
   // Check if this is a group exam (has shared recipients)
-  const { data: sharedRecipients } = await supabase
+  const { data: sharedRecipients } = await admin
     .from('exam_shared_recipients')
     .select('id')
     .eq('exam_id', id)
     .limit(1)
   const isGroupExam = (sharedRecipients?.length ?? 0) > 0
 
-  // Get responses for this attempt
-  const { data: responses } = await supabase
+  // Get responses for this attempt — admin bypasses any RLS gap on exam_responses
+  const { data: responses, error: responsesErr } = await admin
     .from('exam_responses')
     .select('question_id, selected_answer, is_correct, marks_awarded')
     .eq('attempt_id', attempt.id)
 
+  console.log('[results] responses', {
+    attemptId: attempt.id,
+    count: responses?.length ?? 0,
+    dbError: responsesErr?.message ?? null,
+  })
+
   // ── Fetch questions — try with explanation columns first, fall back if not migrated ──
-  const { data: questionsWithExp, error: expQueryError } = await supabase
+  // Use admin client so RLS on questions never silently returns 0 rows.
+  const { data: questionsWithExp, error: expQueryError } = await admin
     .from('questions')
     .select('id, question_text, correct_answer, options, marks, "order", explanation_correct, explanation_incorrect')
     .eq('exam_id', id)
     .order('order', { ascending: true })
+
+  console.log('[results] questions', {
+    examId: id,
+    count: questionsWithExp?.length ?? 0,
+    dbError: expQueryError?.message ?? null,
+  })
 
   let rawQuestions: Array<{
     id: string
@@ -156,8 +173,8 @@ export default async function ResultsPage({
   }>
 
   if (expQueryError) {
-    // Explanation columns don't exist yet — fetch without them
-    const { data: basicQuestions } = await supabase
+    // Explanation columns don't exist yet — fetch without them (still via admin)
+    const { data: basicQuestions } = await admin
       .from('questions')
       .select('id, question_text, correct_answer, options, marks, "order"')
       .eq('exam_id', id)
@@ -177,7 +194,6 @@ export default async function ResultsPage({
     const missing = rawQuestions.filter((q) => !q.explanation_correct)
     if (missing.length > 0) {
       try {
-        const admin = createAdminClient()
         const generated = await generateExplanations(
           missing.map((q) => ({
             id: q.id,
@@ -229,10 +245,12 @@ export default async function ResultsPage({
     }
   })
 
+  // correctCount/incorrectCount from reviewItems (unanswered default to is_correct=false → wrong)
   const correctCount = reviewItems.filter((q) => q.is_correct).length
   const incorrectCount = reviewItems.length - correctCount
   const aiFeedback = attempt.ai_feedback as AIFeedback | null
 
+  // incorrectQuestions: wrong OR unanswered — used by MindMap and Anki
   const incorrectQuestions = reviewItems
     .filter((q) => !q.is_correct)
     .map((q) => ({
@@ -243,6 +261,9 @@ export default async function ResultsPage({
       explanation_correct: q.explanation_correct,
       explanation_incorrect: q.explanation_incorrect,
     }))
+
+  // allAnswered: true only when every question has a response (used by MindMap empty state)
+  const allAnswered = reviewItems.every((q) => q.selected_answer !== null)
 
   return (
     <div className="max-w-3xl mx-auto space-y-8">
@@ -352,6 +373,8 @@ export default async function ResultsPage({
       <MindMapSection
         attemptId={attempt.id}
         incorrectQuestions={incorrectQuestions}
+        totalQuestions={reviewItems.length}
+        allAnswered={allAnswered}
         subject={exam.subject}
         examTitle={exam.title}
         language={(exam as { language?: string }).language ?? undefined}
