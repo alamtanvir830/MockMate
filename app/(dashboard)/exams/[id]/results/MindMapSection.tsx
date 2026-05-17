@@ -39,7 +39,6 @@ const LF_X     = CH_CX + CH_W / 2 + 44                     // left edge of leaf 
 const LF_H     = 18   // line height for each leaf
 const LF_GAP   = 5    // gap between consecutive leaf lines
 
-const CH_INNER_GAP = 6  // gap between child rect bottom and leaf list top
 const CHILD_GAP    = 10 // gap between consecutive child blocks within a branch
 const BRANCH_GAP   = 28 // extra gap between branch blocks
 
@@ -71,7 +70,10 @@ function leafBlockH(n: number): number {
 
 function childBlockH(child: MindMapBranch['children'][0]): number {
   const n = child.children?.length ?? 0
-  return CH_H + (n > 0 ? CH_INNER_GAP + leafBlockH(n) : 0)
+  // Block must be tall enough to hold either the child rect or the leaf stack,
+  // whichever is larger — so that centering leaves around the child rect CY
+  // never causes them to bleed outside the allocated block.
+  return Math.max(CH_H, leafBlockH(n))
 }
 
 function branchBlockH(node: MindMapBranch): number {
@@ -113,13 +115,16 @@ function computeLayout(data: MindMapData): {
       let childY = curY + (bh - childrenTotalH) / 2
 
       node.children.forEach(child => {
-        const cbh    = childBlockH(child)
-        const childCY = childY + CH_H / 2  // child rect centre
+        const cbh     = childBlockH(child)
+        // Child rect is centred within its allocated block (not just at the top)
+        const childCY = childY + cbh / 2
 
         const n = child.children?.length ?? 0
         const leaves: LeafPos[] = []
         if (n > 0) {
-          const lfTop = childY + CH_H + CH_INNER_GAP
+          // Centre the entire leaf stack around the child rect's centre Y
+          const leafGroupH = leafBlockH(n)
+          const lfTop      = childCY - leafGroupH / 2
           for (let li = 0; li < n; li++) {
             leaves.push({ y: lfTop + li * (LF_H + LF_GAP) + LF_H / 2 })
           }
