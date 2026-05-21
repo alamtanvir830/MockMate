@@ -48,13 +48,13 @@ Correct: ${correctLetter}. ${q.correct_answer}`
     messages: [
       {
         role: 'system',
-        content: `You are an expert educator in ${subject}. Write concise, high-yield explanations for multiple-choice questions. Each explanation should be 1-2 sentences and tied to the specific concept or mechanism — never generic. Always return valid JSON.`,
+        content: `You are an expert educator in ${subject}. Write in-depth, high-yield explanations for multiple-choice questions. Explanations must be educational, specific to the question, and helpful for studying — never generic. Use **term** syntax to bold key concepts, mechanisms, diseases, anatomical structures, hormones, drug names, formulas, or other important terms (e.g. **corpus luteum**, **progesterone**, **glycolysis**). Always return valid JSON.`,
       },
       {
         role: 'user',
         content: `For each question below, provide:
-1. explanation_correct: 1-2 sentences explaining WHY the correct answer is right (mechanism, concept, or key fact — not just restating the answer)
-2. explanation_incorrect: for each WRONG option only, 1-2 sentences explaining why it is wrong or what misconception it represents
+1. explanation_correct: 2–4 sentences explaining WHY the correct answer is right. Cover the underlying mechanism, concept, or key fact — do not just restate the answer. Bold the most important terms using **term** syntax.
+2. explanation_incorrect: for each WRONG option only, 2–3 sentences explaining (a) why it is wrong, (b) what misconception it represents, and (c) what that choice WOULD indicate instead or how to distinguish it. Bold key distinguishing terms.
 
 Keys for explanation_incorrect correspond to options array positions: A=index 0, B=index 1, C=index 2, D=index 3.
 Omit the key for whichever letter is the correct answer.

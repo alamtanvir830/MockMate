@@ -12,6 +12,7 @@ import { generateExplanations } from '@/lib/ai/generate-explanations'
 import { GroupPrivacyPrefs } from '../GroupPrivacyPrefs'
 import { AnkiSection } from '../results/AnkiSection'
 import { MindMapSection } from '../results/MindMapSection'
+import { RichText } from '@/components/ui/rich-text'
 
 export const metadata: Metadata = { title: 'Shared Exam' }
 
@@ -76,12 +77,13 @@ function IncorrectExplanations({
       </p>
       <div className="space-y-1.5">
         {incorrectEntries.map(({ opt, letter }) => (
-          <p key={letter} className="text-xs text-slate-500 leading-relaxed">
-            <span className="font-medium text-slate-600">{letter}.</span>{' '}
-            <span className="text-slate-400">{opt}</span>
-            {' — '}
-            {explanations[letter]}
-          </p>
+          <div key={letter} className="text-xs text-slate-500 leading-relaxed">
+            <p className="mb-0.5">
+              <span className="font-medium text-slate-600">{letter}.</span>{' '}
+              <span className="text-slate-400">{opt}</span>
+            </p>
+            <p className="pl-4"><RichText text={explanations[letter]} /></p>
+          </div>
         ))}
       </div>
     </div>
@@ -121,7 +123,9 @@ function QuestionCard({ question: q, index: i }: { question: ReviewQuestion; ind
               {q.explanation_correct && (
                 <div>
                   <p className="text-xs font-semibold text-emerald-700 mb-1">Why this is correct</p>
-                  <p className="text-xs text-slate-700 leading-relaxed">{q.explanation_correct}</p>
+                  <p className="text-xs text-slate-700 leading-relaxed">
+                    <RichText text={q.explanation_correct} />
+                  </p>
                 </div>
               )}
               {q.explanation_incorrect && (

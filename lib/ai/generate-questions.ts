@@ -478,18 +478,15 @@ Every question must include a difficulty tag ("easy", "medium", or "hard"). Alwa
 
   const explanationRules = isUSMLE1
     ? `
-Notes for Step 1 explanations:
-- explanation_correct: Explain the MECHANISM or foundational concept — not just the answer name. \
-For pharmacology: explain the receptor/enzyme/pathway. For pathophysiology: explain the cellular/molecular process. \
-For diagnosis: explain the key discriminating finding or pathophysiologic chain. 1-2 sentences.
-- explanation_incorrect: For each wrong answer, explain WHY it is conceptually incorrect — not just "this is wrong." \
-Explain what that choice would be consistent with instead, or where the reasoning breaks down. 1-2 sentences per choice.
-- Keys B/C/D/E correspond to positions 1–4 in the options array (A=index 0). Omit the key for whichever position is correct.`
+Notes for Step 1 explanations (STRICTLY REQUIRED):
+- explanation_correct: 2–4 sentences explaining the MECHANISM or foundational concept — not just the answer name. For pharmacology: explain the receptor/enzyme/pathway and why it produces the described effect. For pathophysiology: walk through the cellular/molecular cascade. For diagnosis: explain the key discriminating findings and the pathophysiologic chain that leads to them. Bold the most important terms using **term** syntax — e.g. **ACh**, **nicotinic receptor**, **neuromuscular junction**, **depolarizing blockade**.
+- explanation_incorrect: For each wrong answer, 2–3 sentences explaining (a) WHY it is conceptually incorrect, (b) what that choice WOULD indicate instead (alternate disease, wrong mechanism, adjacent drug class, etc.), and (c) the key distinction a student should remember. Bold key distinguishing terms. Keys B/C/D/E correspond to positions 1–4 in the options array (A=index 0). Omit the key for whichever position is correct.
+- Explanations must be educational, specific to this vignette, and suitable for a medical student — never generic.`
     : `
-Notes for explanations:
-- explanation_correct: explain the mechanism or concept — do not just restate the answer
-- explanation_incorrect: include only the WRONG options. Keys A/B/C/D correspond to positions in the options array (A=index 0). Omit the key for whichever letter is the correct answer.
-- Keep each explanation 1-2 sentences, concise and high-yield`
+Notes for explanations (STRICTLY REQUIRED):
+- explanation_correct: 2–4 sentences explaining WHY the correct answer is right — cover the underlying mechanism, concept, or key fact. Do not just restate the answer. Bold the most important terms using **term** syntax — e.g. **insulin**, **beta cells**, **glycolysis**, **negative feedback**.
+- explanation_incorrect: For each WRONG option only, 2–3 sentences explaining (a) why it is wrong, (b) what misconception it represents, and (c) what that choice would indicate instead or how to distinguish it from the correct answer. Bold key distinguishing terms. Keys A/B/C/D correspond to positions in the options array (A=index 0). Omit the key for whichever letter is the correct answer.
+- Explanations must be educational, specific to this question, and genuinely helpful for studying — never generic filler.`
 
   const response = await openai.chat.completions.create({
     model,

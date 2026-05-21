@@ -109,7 +109,8 @@ STRICT RULES:
 - Vary the question angle (if original asked for diagnosis → ask for mechanism; if asked for cause → ask for consequence)
 - Every question must have exactly ${optionCount} distinct answer choices
 - correct_answer must be the EXACT string of one of the options
-- Include concise explanation_correct and explanation_incorrect
+- explanation_correct: 2–4 sentences explaining WHY the correct answer is right (mechanism, concept, key fact). Bold important terms using **term** syntax — e.g. **corpus luteum**, **progesterone**.
+- explanation_incorrect: for each wrong option, 2–3 sentences explaining why it is wrong, what misconception it represents, and what that choice would indicate instead. Bold key distinguishing terms.
 ${avoidBlock}
 
 MISSED CONCEPTS TO RETEST:
@@ -122,7 +123,7 @@ Return ONLY this JSON (no markdown, no extra keys):
       "question_text": "...",
       "options": ${exampleOptions},
       "correct_answer": "exact option text here",
-      "explanation_correct": "why the correct answer is right (1-2 sentences)",
+      "explanation_correct": "2-4 sentences on why the correct answer is right, with **bold** key terms",
       "explanation_incorrect": {
         ${exampleIncorrect}
       }

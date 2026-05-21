@@ -10,6 +10,7 @@ import {
   saveStudyRoundMindMap,
   endStudyRoundSession,
 } from '@/app/actions/study-rounds'
+import { RichText } from '@/components/ui/rich-text'
 import type {
   StudyRoundQuestion,
   StudyRoundResponse,
@@ -536,13 +537,17 @@ export function StudyRoundClient({ session, attempts, latestAttempt }: Props) {
                           {q.explanation_correct && (
                             <div>
                               <p className="text-xs font-semibold text-emerald-700 mb-1">Why this is correct</p>
-                              <p className="text-xs text-slate-700 leading-relaxed">{q.explanation_correct}</p>
+                              <p className="text-xs text-slate-700 leading-relaxed">
+                                <RichText text={q.explanation_correct} />
+                              </p>
                             </div>
                           )}
                           {whyWrong && (
                             <div>
                               <p className="text-xs font-semibold text-red-600 mb-1">Why your answer was wrong</p>
-                              <p className="text-xs text-slate-700 leading-relaxed">{whyWrong}</p>
+                              <p className="text-xs text-slate-700 leading-relaxed">
+                                <RichText text={whyWrong} />
+                              </p>
                             </div>
                           )}
                         </div>
