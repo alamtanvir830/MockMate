@@ -10,6 +10,7 @@ import { generateExplanations } from '@/lib/ai/generate-explanations'
 import { AnkiSection } from './AnkiSection'
 import { MindMapSection } from './MindMapSection'
 import { GroupPrivacyPrefs } from '../GroupPrivacyPrefs'
+import { StartStudyRoundButton } from './StartStudyRoundButton'
 
 export const metadata: Metadata = { title: 'Exam Results' }
 
@@ -320,6 +321,19 @@ export default async function ResultsPage({
           </div>
         </div>
       </Card>
+
+      {/* Study Round — only shown when there are missed questions */}
+      {incorrectCount > 0 && (
+        <StartStudyRoundButton
+          examId={id}
+          incorrectQuestions={incorrectQuestions}
+          subject={exam.subject}
+          examTitle={exam.title}
+          language={(exam as { language?: string }).language ?? undefined}
+          questionCount={reviewItems.length}
+          standardizedExam={(exam as { standardized_exam?: string }).standardized_exam ?? undefined}
+        />
+      )}
 
       {/* Group privacy preferences — only for group exams */}
       {isGroupExam && (
