@@ -9,6 +9,7 @@ import { cn, scoreColor } from '@/lib/utils'
 import { generateExplanations } from '@/lib/ai/generate-explanations'
 import { AnkiSection } from './AnkiSection'
 import { MindMapSection } from './MindMapSection'
+import { StudyGuideSection } from './StudyGuideSection'
 import { GroupPrivacyPrefs } from '../GroupPrivacyPrefs'
 import { StartStudyRoundButton } from './StartStudyRoundButton'
 import { RichText } from '@/components/ui/rich-text'
@@ -383,6 +384,17 @@ export default async function ResultsPage({
           </div>
         </Card>
       )}
+
+      {/* Condensed Study Guide */}
+      <StudyGuideSection
+        attemptId={attempt.id}
+        incorrectQuestions={incorrectQuestions}
+        totalQuestions={reviewItems.length}
+        allAnswered={allAnswered}
+        subject={exam.subject}
+        examTitle={exam.title}
+        language={(exam as { language?: string }).language ?? undefined}
+      />
 
       {/* AI Mind Map */}
       <MindMapSection
