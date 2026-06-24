@@ -31,10 +31,17 @@ interface ReviewQuestion {
   options: string[]
   marks: number
   order: number
+  question_type: string
   selected_answer: string | null
   is_correct: boolean
   explanation_correct: string | null
   explanation_incorrect: Record<string, string> | null
+  // short response grading fields (null if not migrated or MC exam)
+  score_out_of_10: number | null
+  grading_summary: string | null
+  missing_details: string[] | null
+  incorrect_or_unclear_points: string[] | null
+  what_to_improve: string | null
 }
 
 function ScoreRing({ percentage }: { percentage: number }) {
@@ -138,23 +145,32 @@ export default async function ResultsPage({
     .limit(1)
   const isGroupExam = (sharedRecipients?.length ?? 0) > 0
 
-  // Get responses for this attempt — admin bypasses any RLS gap on exam_responses
-  const { data: responses, error: responsesErr } = await admin
+  // Get responses — try with grading columns, fall back if not migrated
+  const { data: responsesWithGrading, error: gradingColErr } = await admin
     .from('exam_responses')
-    .select('question_id, selected_answer, is_correct, marks_awarded')
+    .select('question_id, selected_answer, is_correct, marks_awarded, score_out_of_10, grading_summary, missing_details, incorrect_or_unclear_points, what_to_improve')
     .eq('attempt_id', attempt.id)
+
+  const { data: responsesBasic } = gradingColErr
+    ? await admin
+        .from('exam_responses')
+        .select('question_id, selected_answer, is_correct, marks_awarded')
+        .eq('attempt_id', attempt.id)
+    : { data: null }
+
+  const responses = responsesBasic ?? responsesWithGrading
 
   console.log('[results] responses', {
     attemptId: attempt.id,
     count: responses?.length ?? 0,
-    dbError: responsesErr?.message ?? null,
+    gradingColsAvailable: !gradingColErr,
   })
 
   // ── Fetch questions — try with explanation columns first, fall back if not migrated ──
   // Use admin client so RLS on questions never silently returns 0 rows.
   const { data: questionsWithExp, error: expQueryError } = await admin
     .from('questions')
-    .select('id, question_text, correct_answer, options, marks, "order", explanation_correct, explanation_incorrect')
+    .select('id, question_text, correct_answer, options, marks, "order", question_type, explanation_correct, explanation_incorrect')
     .eq('exam_id', id)
     .order('order', { ascending: true })
 
@@ -171,6 +187,7 @@ export default async function ResultsPage({
     options: string[]
     marks: number
     order: number
+    question_type: string
     explanation_correct?: string | null
     explanation_incorrect?: Record<string, string> | null
   }>
@@ -179,22 +196,28 @@ export default async function ResultsPage({
     // Explanation columns don't exist yet — fetch without them (still via admin)
     const { data: basicQuestions } = await admin
       .from('questions')
-      .select('id, question_text, correct_answer, options, marks, "order"')
+      .select('id, question_text, correct_answer, options, marks, "order", question_type')
       .eq('exam_id', id)
       .order('order', { ascending: true })
     rawQuestions = (basicQuestions ?? []).map((q) => ({
       ...q,
+      question_type: (q as { question_type?: string }).question_type ?? 'multiple_choice',
       explanation_correct: null,
       explanation_incorrect: null,
     }))
   } else {
-    rawQuestions = questionsWithExp ?? []
+    rawQuestions = (questionsWithExp ?? []).map((q) => ({
+      ...q,
+      question_type: (q as { question_type?: string }).question_type ?? 'multiple_choice',
+    }))
   }
 
   // ── On-demand explanation generation for questions that are missing them ──
-  // Only runs when columns exist (no expQueryError) and some questions lack explanations.
+  // Only runs when columns exist (no expQueryError), only for MC questions.
   if (!expQueryError) {
-    const missing = rawQuestions.filter((q) => !q.explanation_correct)
+    const missing = rawQuestions.filter(
+      (q) => !q.explanation_correct && (q.question_type ?? 'multiple_choice') !== 'short_response',
+    )
     if (missing.length > 0) {
       try {
         const generated = await generateExplanations(
@@ -235,20 +258,30 @@ export default async function ResultsPage({
     }
   }
 
-  // Build review items
+  // Build review items — merge question data with per-response grading data
   const responseMap = new Map((responses ?? []).map((r) => [r.question_id, r]))
   const reviewItems: ReviewQuestion[] = rawQuestions.map((q) => {
     const r = responseMap.get(q.id)
+    const rAny = r as Record<string, unknown> | undefined
     return {
       ...q,
+      options: (q.options as string[]) ?? [],
+      question_type: q.question_type ?? 'multiple_choice',
       selected_answer: r?.selected_answer ?? null,
       is_correct: r?.is_correct ?? false,
       explanation_correct: q.explanation_correct ?? null,
       explanation_incorrect: (q.explanation_incorrect as Record<string, string> | null) ?? null,
+      score_out_of_10: typeof rAny?.score_out_of_10 === 'number' ? rAny.score_out_of_10 : null,
+      grading_summary: typeof rAny?.grading_summary === 'string' ? rAny.grading_summary : null,
+      missing_details: Array.isArray(rAny?.missing_details) ? (rAny.missing_details as string[]) : null,
+      incorrect_or_unclear_points: Array.isArray(rAny?.incorrect_or_unclear_points) ? (rAny.incorrect_or_unclear_points as string[]) : null,
+      what_to_improve: typeof rAny?.what_to_improve === 'string' ? rAny.what_to_improve : null,
     }
   })
 
-  // correctCount/incorrectCount from reviewItems (unanswered default to is_correct=false → wrong)
+  const isShortResponseExam = reviewItems.some((q) => q.question_type === 'short_response')
+
+  // For short response, treat score < 8 as "not correct"; for MC use is_correct directly
   const correctCount = reviewItems.filter((q) => q.is_correct).length
   const incorrectCount = reviewItems.length - correctCount
   const aiFeedback = attempt.ai_feedback as AIFeedback | null
@@ -305,12 +338,25 @@ export default async function ResultsPage({
                 : 'Keep going — review the questions below.'}
             </p>
             <div className="mt-4 flex flex-wrap gap-3 justify-center sm:justify-start text-sm">
-              <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-slate-200">
-                {correctCount} correct
-              </span>
-              <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-slate-200">
-                {incorrectCount} incorrect
-              </span>
+              {isShortResponseExam ? (
+                <>
+                  <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-slate-200">
+                    {correctCount} strong (≥8/10)
+                  </span>
+                  <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-slate-200">
+                    {incorrectCount} need review
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-slate-200">
+                    {correctCount} correct
+                  </span>
+                  <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-slate-200">
+                    {incorrectCount} incorrect
+                  </span>
+                </>
+              )}
               <span className="rounded-full bg-white/10 border border-white/20 px-3 py-1 text-slate-200">
                 {exam.subject}
               </span>
@@ -323,6 +369,14 @@ export default async function ResultsPage({
           </div>
         </div>
       </Card>
+
+      {/* Short response grading explanation */}
+      {isShortResponseExam && (
+        <div className="rounded-xl border border-blue-100 bg-blue-50 px-5 py-3.5 text-sm text-blue-800">
+          <span className="font-medium">How this was graded: </span>
+          Short response answers are compared to an optimal answer and rubric by AI. Each question is scored out of 10, then converted into a final percentage.
+        </div>
+      )}
 
       {/* Study Round — only shown when there are missed questions */}
       {incorrectCount > 0 && (
@@ -420,13 +474,19 @@ export default async function ResultsPage({
         <CardHeader>
           <CardTitle>Question Review</CardTitle>
           <CardDescription>
-            {correctCount} of {reviewItems.length} correct
+            {isShortResponseExam
+              ? `${attempt.score}/${attempt.total_marks} points · ${attempt.percentage ?? 0}%`
+              : `${correctCount} of ${reviewItems.length} correct`}
           </CardDescription>
         </CardHeader>
         <div className="space-y-3">
-          {reviewItems.map((q, i) => (
-            <QuestionCard key={q.id} question={q} index={i} />
-          ))}
+          {reviewItems.map((q, i) =>
+            q.question_type === 'short_response' ? (
+              <ShortResponseCard key={q.id} question={q} index={i} />
+            ) : (
+              <QuestionCard key={q.id} question={q} index={i} />
+            ),
+          )}
         </div>
       </Card>
 
@@ -449,6 +509,102 @@ export default async function ResultsPage({
       </div>
 
       <div className="pb-4" />
+    </div>
+  )
+}
+
+function ShortResponseCard({ question: q, index: i }: { question: ReviewQuestion; index: number }) {
+  const score = q.score_out_of_10 ?? (q.is_correct ? 10 : 0)
+  const scoreColor =
+    score >= 9 ? 'text-emerald-700' : score >= 7 ? 'text-amber-700' : 'text-red-700'
+  const bgColor =
+    score >= 9 ? 'bg-emerald-50 border-emerald-100' : score >= 7 ? 'bg-amber-50 border-amber-100' : 'bg-red-50 border-red-100'
+  const dividerColor =
+    score >= 9 ? 'border-emerald-200' : score >= 7 ? 'border-amber-200' : 'border-red-200'
+
+  return (
+    <div className={cn('rounded-xl border p-4', bgColor)}>
+      <div className="flex items-start gap-3">
+        <span className={cn('flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold mt-0.5 text-white',
+          score >= 9 ? 'bg-emerald-600' : score >= 7 ? 'bg-amber-500' : 'bg-red-500',
+        )}>
+          {i + 1}
+        </span>
+        <div className="flex-1 min-w-0 space-y-3">
+          {/* Question */}
+          <p className="text-sm font-medium text-slate-900 leading-relaxed">{q.question_text}</p>
+
+          {/* Score badge */}
+          <div className="flex items-center gap-2">
+            <span className={cn('text-sm font-bold', scoreColor)}>{score}/10</span>
+            <span className="text-xs text-slate-400">
+              {score >= 9 ? 'Excellent' : score >= 7 ? 'Good' : score >= 5 ? 'Partial' : 'Needs work'}
+            </span>
+          </div>
+
+          {/* User answer */}
+          <div className={cn('pt-3 border-t space-y-3', dividerColor)}>
+            <div>
+              <p className="text-xs font-semibold text-slate-500 mb-1">Your answer</p>
+              <p className="text-xs text-slate-700 leading-relaxed whitespace-pre-wrap">
+                {q.selected_answer?.trim() || <span className="italic text-slate-400">No answer provided</span>}
+              </p>
+            </div>
+
+            {/* Optimal answer */}
+            <div>
+              <p className="text-xs font-semibold text-emerald-700 mb-1">Optimal answer</p>
+              <p className="text-xs text-slate-700 leading-relaxed">{q.correct_answer}</p>
+            </div>
+
+            {/* Grading summary */}
+            {q.grading_summary && (
+              <div className="rounded-lg bg-white/70 border border-slate-200 px-3 py-2">
+                <p className="text-xs font-semibold text-slate-500 mb-0.5">Grading summary</p>
+                <p className="text-xs text-slate-700 leading-relaxed">{q.grading_summary}</p>
+              </div>
+            )}
+
+            {/* Missing details */}
+            {q.missing_details && q.missing_details.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold text-amber-700 mb-1">Missing details</p>
+                <ul className="space-y-0.5">
+                  {q.missing_details.map((d, di) => (
+                    <li key={di} className="flex items-start gap-1.5 text-xs text-slate-700">
+                      <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-amber-400" />
+                      {d}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Incorrect or unclear points */}
+            {q.incorrect_or_unclear_points && q.incorrect_or_unclear_points.length > 0 && (
+              <div>
+                <p className="text-xs font-semibold text-red-600 mb-1">Incorrect or unclear points</p>
+                <ul className="space-y-0.5">
+                  {q.incorrect_or_unclear_points.map((pt, pi) => (
+                    <li key={pi} className="flex items-start gap-1.5 text-xs text-slate-700">
+                      <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-red-400" />
+                      {pt}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* What to improve */}
+            {q.what_to_improve && (
+              <div className="rounded-lg bg-blue-50 border border-blue-100 px-3 py-2">
+                <p className="text-xs font-semibold text-blue-700 mb-0.5">What to improve</p>
+                <p className="text-xs text-blue-800 leading-relaxed">{q.what_to_improve}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

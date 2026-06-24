@@ -14,7 +14,7 @@ type SubmitAction = (input: {
 interface Question {
   id: string
   question_text: string
-  question_type: 'multiple_choice' | 'short_answer' | 'essay'
+  question_type: 'multiple_choice' | 'short_answer' | 'short_response' | 'essay'
   options: string[] | null
   correct_answer: string
   marks: number
@@ -527,15 +527,21 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
                 </div>
               )}
 
-              {current.question_type === 'short_answer' && (
-                <textarea
-                  value={answers[current.id] ?? ''}
-                  onChange={(e) => setAnswer(current.id, e.target.value)}
-                  placeholder="Write your answer here..."
-                  rows={8}
-                  className="w-full border border-gray-300 rounded px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 resize-none focus:outline-none focus:ring-2 focus:border-transparent"
-                  style={{ '--tw-ring-color': '#1b7a4a' } as React.CSSProperties}
-                />
+              {(current.question_type === 'short_answer' || current.question_type === 'short_response') && (
+                <div className="space-y-2">
+                  <textarea
+                    value={answers[current.id] ?? ''}
+                    onChange={(e) => setAnswer(current.id, e.target.value)}
+                    placeholder="Type your answer here..."
+                    rows={8}
+                    className="w-full border border-gray-300 rounded px-4 py-3 text-sm text-gray-900 placeholder:text-gray-400 resize-none focus:outline-none focus:ring-2 focus:border-transparent"
+                    style={{ '--tw-ring-color': '#1b7a4a' } as React.CSSProperties}
+                  />
+                  <p className="text-xs text-right" style={{ color: '#9ca3af' }}>
+                    {(answers[current.id] ?? '').trim().split(/\s+/).filter(Boolean).length} words
+                    {current.question_type === 'short_response' && ' · 10 points'}
+                  </p>
+                </div>
               )}
             </div>
           )}
@@ -867,7 +873,9 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
               {renderHighlightedText(current.question_text, highlights[current.id] ?? [])}
             </div>
             <p className="mt-1 text-xs text-slate-400">
-              {current.marks} mark{current.marks !== 1 ? 's' : ''}
+              {current.question_type === 'short_response'
+                ? `${current.marks} points`
+                : `${current.marks} mark${current.marks !== 1 ? 's' : ''}`}
             </p>
           </div>
         </div>
@@ -935,19 +943,25 @@ export function ExamTaker({ exam, questions, submitAction = submitExam }: ExamTa
           </div>
         )}
 
-        {current.question_type === 'short_answer' && (
-          <textarea
-            value={answers[current.id] ?? ''}
-            onChange={(e) => setAnswer(current.id, e.target.value)}
-            placeholder="Write your answer here..."
-            rows={8}
-            className={cn(
-              'w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900',
-              'placeholder:text-slate-400 resize-none',
-              'focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent',
-              'hover:border-slate-300 transition-colors',
-            )}
-          />
+        {(current.question_type === 'short_answer' || current.question_type === 'short_response') && (
+          <div className="space-y-2">
+            <textarea
+              value={answers[current.id] ?? ''}
+              onChange={(e) => setAnswer(current.id, e.target.value)}
+              placeholder="Type your answer here..."
+              rows={8}
+              className={cn(
+                'w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900',
+                'placeholder:text-slate-400 resize-none',
+                'focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent',
+                'hover:border-slate-300 transition-colors',
+              )}
+            />
+            <p className="text-xs text-right text-slate-400">
+              {(answers[current.id] ?? '').trim().split(/\s+/).filter(Boolean).length} words
+              {current.question_type === 'short_response' && ' · 10 points'}
+            </p>
+          </div>
         )}
       </Card>
 

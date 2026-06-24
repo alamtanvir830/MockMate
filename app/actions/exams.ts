@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { generateQuestions } from '@/lib/ai/generate-questions'
+import { generateShortResponseQuestions } from '@/lib/ai/generate-short-response-questions'
 import { sendGroupAddedEmails } from '@/lib/email/send-group-added'
 
 export interface AdvancedCustomization {
@@ -86,86 +87,89 @@ export async function createExam(
   }
 
   // 2. Generate questions via OpenAI
-  let questions
-  try {
-    questions = await generateQuestions({
-      title: input.title,
-      subject: input.subject,
-      topics: input.topics,
-      subtopics: input.subtopics,
-      lectureContent: input.lectureContent,
-      format: input.format,
-      pastPaperStyle: input.pastPaperStyle,
-      additionalNotes: input.additionalNotes,
-      questionCount: input.questionCount,
-      standardizedExam: input.standardizedExam,
-      usmleStyles: input.usmleStyles,
-      adaptiveMode: input.adaptiveMode,
-      advancedCustomization: input.advancedCustomization,
-      language: input.language,
-    })
-  } catch (err) {
-    // Clean up the exam row so the user isn't left with a broken draft
-    await supabase.from('exams').delete().eq('id', exam.id)
-    const message = err instanceof Error ? err.message : 'AI generation failed'
-    return { error: `Question generation failed: ${message}` }
-  }
+  const isShortResponse = input.format === 'short_answer'
 
-  // 3. Insert questions into the questions table
-  const rows = questions.map((q, i) => ({
-    exam_id: exam.id,
-    question_text: q.question_text,
-    question_type: 'multiple_choice' as const,
-    options: q.options,
-    correct_answer: q.correct_answer,
-    marks: 1,
-    order: i + 1,
-    // Include explanation + difficulty columns if present (requires SQL migrations;
-    // falls back gracefully if columns don't exist yet)
-    ...(q.explanation_correct !== undefined ? { explanation_correct: q.explanation_correct } : {}),
-    ...(q.explanation_incorrect !== undefined ? { explanation_incorrect: q.explanation_incorrect } : {}),
-    ...(q.difficulty !== undefined ? { difficulty: q.difficulty } : {}),
-  }))
+  let questionsError: { message: string } | null = null
 
-  let { error: questionsError } = await supabase.from('questions').insert(rows)
+  if (isShortResponse) {
+    // ── Short response path ──────────────────────────────────────────────────
+    let srQuestions
+    try {
+      srQuestions = await generateShortResponseQuestions({
+        title: input.title,
+        subject: input.subject,
+        topics: input.topics,
+        subtopics: input.subtopics,
+        lectureContent: input.lectureContent,
+        pastPaperStyle: input.pastPaperStyle,
+        additionalNotes: input.additionalNotes,
+        questionCount: input.questionCount,
+        language: input.language,
+      })
+    } catch (err) {
+      await supabase.from('exams').delete().eq('id', exam.id)
+      const message = err instanceof Error ? err.message : 'AI generation failed'
+      return { error: `Question generation failed: ${message}` }
+    }
 
-  // If the error mentions optional columns (migrations not yet run), retry with progressively
-  // fewer optional columns until the insert succeeds.
-  if (questionsError) {
-    const msg = questionsError.message ?? ''
-    const missingExplanations =
-      msg.includes('explanation_correct') || msg.includes('explanation_incorrect')
-    const missingDifficulty = msg.includes('difficulty')
+    // Try inserting with new optional columns (key_points, grading_rubric)
+    const srRows = srQuestions.map((q, i) => ({
+      exam_id: exam.id,
+      question_text: q.question_text,
+      question_type: 'short_response' as const,
+      options: [] as string[],
+      correct_answer: q.optimal_answer,
+      marks: 10,
+      order: i + 1,
+      key_points: q.key_points,
+      grading_rubric: q.grading_rubric,
+    }))
 
-    if (missingExplanations || missingDifficulty) {
-      const rowsReduced = questions.map((q, i) => ({
+    let { error: srErr } = await supabase.from('questions').insert(srRows)
+
+    // Fallback: new columns may not exist yet
+    if (srErr && (srErr.message?.includes('key_points') || srErr.message?.includes('grading_rubric'))) {
+      const srRowsBasic = srQuestions.map((q, i) => ({
         exam_id: exam.id,
         question_text: q.question_text,
-        question_type: 'multiple_choice' as const,
-        options: q.options,
-        correct_answer: q.correct_answer,
-        marks: 1,
+        question_type: 'short_response' as const,
+        options: [] as string[],
+        correct_answer: q.optimal_answer,
+        marks: 10,
         order: i + 1,
-        // Only include whichever columns are not causing the error
-        ...(!missingExplanations && q.explanation_correct !== undefined
-          ? { explanation_correct: q.explanation_correct }
-          : {}),
-        ...(!missingExplanations && q.explanation_incorrect !== undefined
-          ? { explanation_incorrect: q.explanation_incorrect }
-          : {}),
       }))
-      const { error: retryError } = await supabase.from('questions').insert(rowsReduced)
-      questionsError = retryError ?? null
+      const { error: retryErr } = await supabase.from('questions').insert(srRowsBasic)
+      srErr = retryErr ?? null
     }
-  }
 
-  // Legacy fallback: strip all optional columns
-  if (
-    questionsError &&
-    (questionsError.message?.includes('explanation_correct') ||
-      questionsError.message?.includes('explanation_incorrect'))
-  ) {
-    const rowsWithoutExplanations = questions.map((q, i) => ({
+    questionsError = srErr
+  } else {
+    // ── Multiple choice path (unchanged) ────────────────────────────────────
+    let questions
+    try {
+      questions = await generateQuestions({
+        title: input.title,
+        subject: input.subject,
+        topics: input.topics,
+        subtopics: input.subtopics,
+        lectureContent: input.lectureContent,
+        format: input.format,
+        pastPaperStyle: input.pastPaperStyle,
+        additionalNotes: input.additionalNotes,
+        questionCount: input.questionCount,
+        standardizedExam: input.standardizedExam,
+        usmleStyles: input.usmleStyles,
+        adaptiveMode: input.adaptiveMode,
+        advancedCustomization: input.advancedCustomization,
+        language: input.language,
+      })
+    } catch (err) {
+      await supabase.from('exams').delete().eq('id', exam.id)
+      const message = err instanceof Error ? err.message : 'AI generation failed'
+      return { error: `Question generation failed: ${message}` }
+    }
+
+    const rows = questions.map((q, i) => ({
       exam_id: exam.id,
       question_text: q.question_text,
       question_type: 'multiple_choice' as const,
@@ -173,11 +177,62 @@ export async function createExam(
       correct_answer: q.correct_answer,
       marks: 1,
       order: i + 1,
+      ...(q.explanation_correct !== undefined ? { explanation_correct: q.explanation_correct } : {}),
+      ...(q.explanation_incorrect !== undefined ? { explanation_incorrect: q.explanation_incorrect } : {}),
+      ...(q.difficulty !== undefined ? { difficulty: q.difficulty } : {}),
     }))
-    const { error: retryError } = await supabase.from('questions').insert(rowsWithoutExplanations)
-    questionsError = retryError ?? null
+
+    let { error: mcErr } = await supabase.from('questions').insert(rows)
+
+    if (mcErr) {
+      const msg = mcErr.message ?? ''
+      const missingExplanations =
+        msg.includes('explanation_correct') || msg.includes('explanation_incorrect')
+      const missingDifficulty = msg.includes('difficulty')
+
+      if (missingExplanations || missingDifficulty) {
+        const rowsReduced = questions.map((q, i) => ({
+          exam_id: exam.id,
+          question_text: q.question_text,
+          question_type: 'multiple_choice' as const,
+          options: q.options,
+          correct_answer: q.correct_answer,
+          marks: 1,
+          order: i + 1,
+          ...(!missingExplanations && q.explanation_correct !== undefined
+            ? { explanation_correct: q.explanation_correct }
+            : {}),
+          ...(!missingExplanations && q.explanation_incorrect !== undefined
+            ? { explanation_incorrect: q.explanation_incorrect }
+            : {}),
+        }))
+        const { error: retryError } = await supabase.from('questions').insert(rowsReduced)
+        mcErr = retryError ?? null
+      }
+    }
+
+    if (
+      mcErr &&
+      (mcErr.message?.includes('explanation_correct') ||
+        mcErr.message?.includes('explanation_incorrect'))
+    ) {
+      const rowsWithoutExplanations = questions.map((q, i) => ({
+        exam_id: exam.id,
+        question_text: q.question_text,
+        question_type: 'multiple_choice' as const,
+        options: q.options,
+        correct_answer: q.correct_answer,
+        marks: 1,
+        order: i + 1,
+      }))
+      const { error: retryError } = await supabase.from('questions').insert(rowsWithoutExplanations)
+      mcErr = retryError ?? null
+    }
+
+    questionsError = mcErr
   }
 
+  // 3. Handle question insert errors
   if (questionsError) {
     await supabase.from('exams').delete().eq('id', exam.id)
     return { error: `Failed to save questions: ${questionsError.message}` }

@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { generateFeedback } from '@/lib/ai/generate-feedback'
+import { gradeShortResponseAnswers } from '@/lib/ai/grade-short-response'
 import { sendResultsToFriends } from '@/lib/email/send-results'
 
 export async function submitExam(input: {
@@ -43,7 +44,7 @@ export async function submitExam(input: {
   // Fetch active questions only — removed questions are excluded from scoring
   const { data: questionsActive, error: qActiveErr } = await supabase
     .from('questions')
-    .select('id, question_text, correct_answer, marks, options, "order"')
+    .select('id, question_text, correct_answer, marks, options, question_type, "order"')
     .eq('exam_id', input.examId)
     .eq('is_active', true)
     .order('order', { ascending: true })
@@ -52,7 +53,7 @@ export async function submitExam(input: {
   const { data: questionsFallback, error: qFallbackErr } = qActiveErr?.message?.includes('is_active')
     ? await supabase
         .from('questions')
-        .select('id, question_text, correct_answer, marks, options, "order"')
+        .select('id, question_text, correct_answer, marks, options, question_type, "order"')
         .eq('exam_id', input.examId)
         .order('order', { ascending: true })
     : { data: null, error: null }
@@ -64,22 +65,74 @@ export async function submitExam(input: {
     return { error: 'Could not load questions' }
   }
 
-  // Score every question
+  const isShortResponse = questions.some((q) => (q as { question_type?: string }).question_type === 'short_response')
+
   const totalMarks = questions.reduce((sum, q) => sum + q.marks, 0)
   let score = 0
+  let responseRows: Array<{
+    question_id: string
+    selected_answer: string | null
+    is_correct: boolean
+    marks_awarded: number
+    score_out_of_10?: number
+    grading_summary?: string
+    missing_details?: string[]
+    incorrect_or_unclear_points?: string[]
+    what_to_improve?: string
+    optimal_answer?: string
+  }>
 
-  const responseRows = questions.map((q) => {
-    const selected = input.answers[q.id] ?? null
-    const isCorrect = selected !== null && selected === q.correct_answer
-    const marksAwarded = isCorrect ? q.marks : 0
-    score += marksAwarded
-    return {
+  if (isShortResponse) {
+    // ── AI grading for short response ─────────────────────────────────────
+    const gradeInputs = questions.map((q) => ({
       question_id: q.id,
-      selected_answer: selected,
-      is_correct: isCorrect,
-      marks_awarded: marksAwarded,
+      question_text: q.question_text,
+      optimal_answer: q.correct_answer,
+      user_answer: input.answers[q.id] ?? null,
+    }))
+
+    let grades
+    try {
+      grades = await gradeShortResponseAnswers(gradeInputs, exam.subject)
+    } catch (err) {
+      console.error('[submitExam] short response grading failed:', err)
+      return { error: 'Grading failed — please try submitting again.' }
     }
-  })
+
+    const gradeMap = new Map(grades.map((g) => [g.question_id, g]))
+
+    responseRows = questions.map((q) => {
+      const grade = gradeMap.get(q.id)
+      const scoreOut10 = grade?.score_out_of_10 ?? 0
+      score += scoreOut10
+      return {
+        question_id: q.id,
+        selected_answer: input.answers[q.id] ?? null,
+        is_correct: grade?.is_correct ?? false,
+        marks_awarded: scoreOut10,
+        score_out_of_10: scoreOut10,
+        grading_summary: grade?.grading_summary,
+        missing_details: grade?.missing_details,
+        incorrect_or_unclear_points: grade?.incorrect_or_unclear_points,
+        what_to_improve: grade?.what_to_improve,
+        optimal_answer: grade?.optimal_answer,
+      }
+    })
+  } else {
+    // ── String comparison for multiple choice ──────────────────────────────
+    responseRows = questions.map((q) => {
+      const selected = input.answers[q.id] ?? null
+      const isCorrect = selected !== null && selected === q.correct_answer
+      const marksAwarded = isCorrect ? q.marks : 0
+      score += marksAwarded
+      return {
+        question_id: q.id,
+        selected_answer: selected,
+        is_correct: isCorrect,
+        marks_awarded: marksAwarded,
+      }
+    })
+  }
 
   const percentage = totalMarks > 0 ? Math.round((score / totalMarks) * 100) : 0
 
@@ -102,13 +155,30 @@ export async function submitExam(input: {
     return { error: `Failed to save attempt: ${attemptErr?.message ?? 'unknown error'}` }
   }
 
-  // Save individual responses
-  const { error: respErr } = await supabase
-    .from('exam_responses')
-    .insert(responseRows.map((r) => ({ attempt_id: attempt.id, ...r })))
+  // Save individual responses — try with grading columns, fall back if not migrated
+  const fullResponseRows = responseRows.map((r) => ({ attempt_id: attempt.id, ...r }))
+  let { error: respErr } = await supabase.from('exam_responses').insert(fullResponseRows)
 
   if (respErr) {
-    // Clean up orphaned attempt
+    const msg = respErr.message ?? ''
+    const hasNewCols = ['score_out_of_10', 'grading_summary', 'missing_details',
+      'incorrect_or_unclear_points', 'what_to_improve', 'optimal_answer'].some((c) => msg.includes(c))
+
+    if (hasNewCols) {
+      // Retry with only the columns guaranteed to exist
+      const basicRows = responseRows.map((r) => ({
+        attempt_id: attempt.id,
+        question_id: r.question_id,
+        selected_answer: r.selected_answer,
+        is_correct: r.is_correct,
+        marks_awarded: r.marks_awarded,
+      }))
+      const { error: retryErr } = await supabase.from('exam_responses').insert(basicRows)
+      respErr = retryErr ?? null
+    }
+  }
+
+  if (respErr) {
     await supabase.from('exam_attempts').delete().eq('id', attempt.id)
     return { error: `Failed to save answers: ${respErr.message}` }
   }
