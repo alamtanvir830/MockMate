@@ -256,9 +256,6 @@ function WelcomeScreen({
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-xl bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="bg-[#1b3a5c] px-8 py-6">
-            <p className="text-[10px] font-bold tracking-widest uppercase text-white/50 mb-1">
-              NYC Department of Education
-            </p>
             <h1 className="text-[18px] font-bold text-white leading-tight">{form.title}</h1>
             <p className="text-[12px] text-white/60 mt-1">{form.description}</p>
           </div>
@@ -275,11 +272,14 @@ function WelcomeScreen({
                 </div>
                 <div>
                   <p className="text-[11px] text-slate-400">Total Questions</p>
-                  <p className="text-[13px] font-semibold text-slate-800">{totalQ} questions</p>
+                  <p className="text-[13px] font-semibold text-slate-800">100 questions</p>
                 </div>
                 <div>
                   <p className="text-[11px] text-slate-400">Sections</p>
-                  <p className="text-[13px] font-semibold text-slate-800">English Language Arts + Mathematics</p>
+                  <div className="mt-0.5 space-y-0.5">
+                    <p className="text-[13px] font-semibold text-slate-800">• English Language Arts (50)</p>
+                    <p className="text-[13px] font-semibold text-slate-800">• Mathematics (50)</p>
+                  </div>
                 </div>
                 <div>
                   <p className="text-[11px] text-slate-400">Format</p>
