@@ -8,7 +8,6 @@ import type {
   SATQuestion,
   MathMCQuestion,
   MathGridInQuestion,
-  RWQuestion,
   ChoiceLabel,
 } from '@/lib/premade-exams/sat/types'
 import {
@@ -80,7 +79,6 @@ function getWrongAnswerExplanations(q: SATQuestion): Partial<Record<ChoiceLabel,
 }
 
 function getExplanation(q: SATQuestion): string {
-  if (q.section === 'reading-writing') return q.explanation
   return (q as { explanation: string }).explanation
 }
 
@@ -91,17 +89,315 @@ function getChoices(q: SATQuestion) {
   return null
 }
 
+function getSkill(q: SATQuestion): string {
+  return q.section === 'reading-writing' ? q.skill : (q as { skill: string }).skill
+}
+
 function buildSkillBreakdown(modules: SATModule[], answers: Record<string, string>) {
   const breakdown: Record<string, { correct: number; total: number }> = {}
   for (const mod of modules) {
     for (const q of mod.questions) {
-      const skill = q.section === 'reading-writing' ? q.skill : (q as { skill: string }).skill
+      const skill = getSkill(q)
       if (!breakdown[skill]) breakdown[skill] = { correct: 0, total: 0 }
       breakdown[skill].total++
       if (isCorrect(q, answers)) breakdown[skill].correct++
     }
   }
   return breakdown
+}
+
+// ─── Practice Prompt Generation ───────────────────────────────────────────────
+interface WeakSkill {
+  skill: string
+  section: 'rw' | 'math'
+  missCount: number
+  totalCount: number
+}
+
+interface PracticePrompt {
+  title: string
+  description: string
+  skill: string
+  section: 'rw' | 'math'
+  prompt: string
+}
+
+type FlatQItem = {
+  q: SATQuestion
+  qi: number
+  modLabel: string
+  section: 'rw' | 'math'
+  answered: boolean
+  correct: boolean
+}
+
+function getDifficultyLabel(missCount: number, totalCount: number): string {
+  const ratio = totalCount > 0 ? missCount / totalCount : 0
+  if (ratio > 0.5 || missCount >= 4) return 'easy to medium'
+  if (missCount >= 2) return 'medium'
+  return 'medium to hard'
+}
+
+function getQuestionCount(missCount: number): number {
+  if (missCount >= 4) return 15
+  if (missCount >= 2) return 12
+  return 10
+}
+
+function buildWeakSkills(allFlat: FlatQItem[]): WeakSkill[] {
+  const map: Record<string, { miss: number; total: number; section: 'rw' | 'math' }> = {}
+  for (const { q, answered, correct, section } of allFlat) {
+    const skill = getSkill(q)
+    if (!map[skill]) map[skill] = { miss: 0, total: 0, section }
+    map[skill].total++
+    if (!answered || !correct) map[skill].miss++
+  }
+  return Object.entries(map)
+    .filter(([, v]) => v.miss > 0)
+    .map(([skill, v]) => ({ skill, section: v.section, missCount: v.miss, totalCount: v.total }))
+    .sort((a, b) => b.missCount - a.missCount)
+}
+
+function pickTopSkills(weak: WeakSkill[]): WeakSkill[] {
+  if (weak.length === 0) return []
+  if (weak.length <= 2) return weak
+  const rw = weak.filter(s => s.section === 'rw')
+  const math = weak.filter(s => s.section === 'math')
+  if (!rw.length || !math.length) return weak.slice(0, 5)
+  // Interleave RW and Math for balance, up to 5
+  const result: WeakSkill[] = []
+  let ri = 0, mi = 0
+  while (result.length < 5) {
+    if (ri < rw.length) result.push(rw[ri++])
+    if (result.length < 5 && mi < math.length) result.push(math[mi++])
+    if (ri >= rw.length && mi >= math.length) break
+  }
+  return result
+}
+
+function generateRWPrompt(skill: string, n: number, diff: string): string {
+  const base = `Create a SAT-style practice exam focused only on **${skill}** questions.\n\nMatch the current digital SAT Reading and Writing format:\n- Short passage stimulus (3–8 sentences) per question\n- One question per passage\n- Four answer choices (A, B, C, D)\n- One best answer\n\nCreate ${n} questions at ${diff} difficulty.\n`
+
+  const skMap: Record<string, string> = {
+    'Words in Context': `Use passages from science, history, literature, and social science.\nFocus on determining the meaning of a word or phrase based on context — not dictionary definitions.\nChoose words that have multiple plausible meanings; only one fits the passage.\nMake distractors real definitions of the word that do not fit the context.`,
+    'Text Structure and Purpose': `Use passages from science, humanities, and social science.\nAsk: "What is the main purpose of the text?" and "The underlined portion primarily serves to..."\nInclude questions about logical organization (e.g., problem-solution, compare-contrast, chronological).\nMake distractors too narrow, too broad, or describe the wrong rhetorical move.`,
+    'Cross-Text Connections': `Present two short passages (Text 1 and Text 2) on the same topic.\nAsk how the authors agree, disagree, or would respond to each other's claims.\nUse science, history, or social science topics.\nMake distractors misrepresent one or both authors' positions.`,
+    'Central Ideas and Details': `Use passages from science, history, and social science.\nInclude both "What is the main idea?" and "Which detail best supports the claim?" question types.\nMake distractors too broad, too narrow, or introduce a detail that is not in the passage.`,
+    'Command of Evidence': `Include both question types:\n  Type 1 — Textual: A claim is stated; choose the quotation that best supports it.\n  Type 2 — Quantitative: A simple table or graph is described; choose the statement best supported by the data.\nMake distractors select evidence that is irrelevant, contradictory, or only partially supportive.`,
+    'Inferences': `Use passages from science, social science, and literature.\nAsk what can be logically concluded or what the author implies — go beyond what is explicitly stated.\nRequire grounded reasoning, not outside knowledge.\nMake distractors too extreme, too literal, or unsupported by the passage.`,
+    'Rhetorical Synthesis': `Present 3–5 student notes (bullet points) about a topic from science, history, or social science.\nAsk the student to combine the information into one sentence that accomplishes a specific goal (e.g., "introduces the topic," "compares two items," "describes a finding").\nMake distractors use correct facts but fail the stated task, add unsupported claims, or have logical errors.`,
+    'Transitions': `Present a short passage with a blank where a transition word or phrase should go.\nCover: contrast (however, nevertheless), cause-effect (therefore, as a result), addition (furthermore, in addition), exemplification (for instance), and conclusion (ultimately).\nMake distractors signal the wrong logical relationship between the sentences.`,
+    'Boundaries': `Present a sentence or short paragraph with a punctuation blank.\nCover: comma splices, run-on sentences, fragments, semicolons, colons, dashes, and end punctuation.\nMake distractors create boundary errors (splice, fragment, or run-on).\nExplain the clause structure in the answer key.`,
+    'Form, Structure, and Sense': `Present sentences with a blank for a specific word form.\nCover: subject-verb agreement, pronoun-antecedent agreement, verb tense consistency, modifier placement, parallel structure, and possessive vs. plural nouns.\nMake distractors use plausible but grammatically incorrect forms.`,
+  }
+
+  const specific = skMap[skill] ?? `Focus specifically on ${skill}. Use authentic SAT-style content and question phrasing.`
+
+  return `${base}${specific}\n\nFor every question include:\n- Correct answer with explanation of why it is right based on the passage\n- Explanation of why each wrong answer choice (A, B, C, or D) is incorrect\n\nFormat: number each question, include the passage, the question, four labeled choices, then the answer key.`
+}
+
+function getMathPromptKey(skill: string): string {
+  const s = skill.toLowerCase()
+  if (s.includes('system')) return 'systems'
+  if (s.includes('linear') || s.includes('slope') || s.includes('intercept')) return 'linear'
+  if (s.includes('quadratic') || s.includes('polynomial') || s.includes('factoring') || s.includes('parabola')) return 'quadratic'
+  if (s.includes('exponential') || s.includes('growth') || s.includes('decay') || s.includes('half-life')) return 'exponential'
+  if (s.includes('function') || s.includes('domain') || s.includes('range') || s.includes('composition')) return 'functions'
+  if (s.includes('ratio') || s.includes('proportion') || s.includes('rate') || s.includes('percent') || s.includes('unit')) return 'ratios'
+  if (s.includes('statistic') || s.includes('data') || s.includes('inference') || s.includes('sample') || s.includes('probability') || s.includes('scatter') || s.includes('margin')) return 'data'
+  if (s.includes('trig') || s.includes('sine') || s.includes('cosine') || s.includes('right triangle')) return 'trig'
+  if (s.includes('geometry') || s.includes('area') || s.includes('volume') || s.includes('circle') || s.includes('angle') || s.includes('triangle') || s.includes('perimeter')) return 'geometry'
+  return 'math_general'
+}
+
+function generateMathPrompt(skill: string, n: number, diff: string): string {
+  const key = getMathPromptKey(skill)
+  const base = `Create a SAT-style practice exam focused on **${skill}**.\n\nMatch the current digital SAT Math format:\n- Mix of multiple choice (4 options, A–D) and grid-in (student-produced response) questions\n- Calculator permitted for all questions\n\nCreate ${n} questions at ${diff} difficulty.\n`
+
+  const topicMap: Record<string, string> = {
+    linear: `Cover: solving linear equations in one variable, writing equations from word problems, slope-intercept and point-slope form, interpreting slope and intercept in context, and direct/inverse variation.`,
+    systems: `Cover: solving systems by substitution and elimination, identifying systems with no solution (parallel lines) or infinite solutions, word problems modeled as systems of two equations, and interpreting the solution of a system in context.`,
+    quadratic: `Cover: factoring quadratics, the quadratic formula, vertex form and completing the square, finding roots and the axis of symmetry, discriminant and nature of roots, and interpreting parabolas from graphs.`,
+    exponential: `Cover: exponential growth and decay models, percent increase and decrease, initial value and growth rate, half-life problems, and comparing exponential vs. linear growth from tables and graphs.`,
+    functions: `Cover: function notation f(x), evaluating functions at given inputs, interpreting functions from graphs and tables, domain and range, composition of functions f(g(x)), and transformations (vertical/horizontal shifts, reflections, stretches).`,
+    ratios: `Cover: part-to-part and part-to-whole ratios, unit rates, percent increase and decrease, percent of a total, proportional relationships, and unit conversion. Include real-world word problems.`,
+    data: `Cover: mean, median, mode, range, interpreting standard deviation, line of best fit on scatterplots, two-way tables, conditional probability, margin of error, and drawing valid conclusions from sample data.`,
+    trig: `Cover: sine, cosine, and tangent in right triangles (SOH-CAH-TOA), the Pythagorean theorem, complementary angle identities (sin θ = cos(90°−θ)), radian and degree conversion, and applying trigonometry to real-world geometric problems.`,
+    geometry: `Cover: area and perimeter of triangles, rectangles, and circles; arc length and sector area; the Pythagorean theorem; similar and congruent triangles; properties of parallel lines and transversals; coordinate geometry (distance, midpoint); and volume of 3D shapes.`,
+    math_general: `Cover a mix of Algebra, Advanced Math, and Problem-Solving and Data Analysis topics relevant to the SAT. Include both computational and word-problem questions.`,
+  }
+
+  const specific = topicMap[key] ?? topicMap.math_general
+
+  return `${base}${specific}\n\nFor every question include:\n- Correct answer with step-by-step solution\n- For multiple choice: explanation of why each wrong choice (A, B, C, or D) is incorrect (name the likely error: sign flip, wrong formula, misread problem, etc.)\n\nFormat: number each question, show all answer choices clearly, then provide the answer key with full explanations.`
+}
+
+const GENERAL_MIXED_PROMPT: PracticePrompt = {
+  title: 'Practice Prompt: SAT Mixed Review',
+  description: 'A balanced review covering both Reading & Writing and Math in one practice set.',
+  skill: 'Mixed',
+  section: 'rw',
+  prompt: `Create a mixed SAT-style practice exam covering both Reading and Writing and Math.
+
+Include:
+- 8 Reading and Writing questions: Words in Context (2), Central Ideas (2), Command of Evidence (2), Transitions (1), Boundaries (1)
+- 7 Math questions: Algebra (3), Advanced Math (2), Data Analysis (2)
+- Mix of easy, medium, and hard difficulty
+
+Match the digital SAT format throughout:
+- Short passage stimuli for Reading and Writing questions
+- Multiple choice (4 options) and grid-in for Math questions
+
+For every question include:
+- Correct answer with clear explanation
+- Explanation of why each wrong answer choice is incorrect
+
+Format each question with the passage (if applicable), question text, labeled choices A–D, then a complete answer key.`,
+}
+
+const GENERAL_MAINTENANCE_PROMPT: PracticePrompt = {
+  title: 'Practice Prompt: SAT Mixed Maintenance',
+  description: 'Keep your skills sharp with a medium-to-hard mixed SAT practice set.',
+  skill: 'Mixed',
+  section: 'rw',
+  prompt: `Create a mixed SAT-style practice exam with Reading and Writing and Math questions.
+
+Focus on medium-to-hard difficulty to maintain and sharpen high-level skills.
+
+Include:
+- 8 Reading and Writing questions at medium-to-hard difficulty
+- 7 Math questions at medium-to-hard difficulty
+- Cover diverse skills across all SAT domains
+
+Match the official digital SAT format with short passage stimuli and four-choice multiple choice (A–D) for Reading and Writing, and multiple choice plus grid-in for Math.
+
+For every question include:
+- Correct answer with detailed explanation
+- Explanation of why each wrong answer choice is incorrect
+- A brief note on the skill or concept being tested
+
+End with a topic breakdown listing which skills were covered.`,
+}
+
+function buildPracticePrompts(allFlat: FlatQItem[]): PracticePrompt[] {
+  const weak = buildWeakSkills(allFlat)
+  if (weak.length === 0) return [GENERAL_MAINTENANCE_PROMPT]
+
+  const top = pickTopSkills(weak)
+  const prompts: PracticePrompt[] = top.map(w => {
+    const n = getQuestionCount(w.missCount)
+    const diff = getDifficultyLabel(w.missCount, w.totalCount)
+    const promptText = w.section === 'rw'
+      ? generateRWPrompt(w.skill, n, diff)
+      : generateMathPrompt(w.skill, n, diff)
+    return {
+      title: `Practice Prompt: SAT ${w.skill}`,
+      description: `${n} ${diff}-difficulty questions targeting ${w.skill} — you missed ${w.missCount} of ${w.totalCount}.`,
+      skill: w.skill,
+      section: w.section,
+      prompt: promptText,
+    }
+  })
+
+  // If only one weak skill, add a mixed review
+  if (top.length === 1) prompts.push(GENERAL_MIXED_PROMPT)
+
+  return prompts
+}
+
+// ─── Practice Prompts Section Component ───────────────────────────────────────
+function PracticePromptsSection({ prompts, hasMisses }: { prompts: PracticePrompt[]; hasMisses: boolean }) {
+  const [copiedIdx, setCopiedIdx] = useState<number | null>(null)
+
+  const handleCopy = async (text: string, idx: number) => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopiedIdx(idx)
+      setTimeout(() => setCopiedIdx(null), 2000)
+    } catch {
+      // clipboard unavailable — text is visible for manual selection
+      setCopiedIdx(idx)
+      setTimeout(() => setCopiedIdx(null), 2000)
+    }
+  }
+
+  return (
+    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      <div className="px-6 py-4 border-b border-slate-100">
+        <h2 className="text-[15px] font-bold text-slate-900">Create More Practice From Your Weak Areas</h2>
+        <p className="text-[12px] text-slate-500 mt-1">
+          Copy one of these prompts into MockMate to generate a focused practice exam based on the SAT skills you missed.
+        </p>
+      </div>
+
+      <div className="p-5 space-y-4">
+        {!hasMisses && (
+          <div className="bg-green-50 border border-green-100 rounded-lg p-4 text-[13px] text-green-800">
+            You did not have enough missed questions to generate a weak-area prompt. Here is a general maintenance prompt to keep your skills sharp.
+          </div>
+        )}
+
+        {prompts.map((p, i) => (
+          <div key={i} className="border border-slate-200 rounded-xl overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 bg-slate-50 border-b border-slate-200">
+              <div>
+                <p className="text-[13px] font-semibold text-slate-800">{p.title}</p>
+                <p className="text-[11px] text-slate-500 mt-0.5">{p.description}</p>
+              </div>
+              <div className="flex items-center gap-2 shrink-0 ml-4">
+                <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full',
+                  p.section === 'rw' ? 'bg-indigo-50 text-indigo-600' : 'bg-emerald-50 text-emerald-600'
+                )}>
+                  {p.section === 'rw' ? 'Reading & Writing' : 'Math'}
+                </span>
+                <button
+                  onClick={() => handleCopy(p.prompt, i)}
+                  className={cn(
+                    'flex items-center gap-1.5 text-[12px] font-semibold px-3 py-1.5 rounded-lg border transition-all',
+                    copiedIdx === i
+                      ? 'bg-green-50 border-green-200 text-green-700'
+                      : 'bg-white border-slate-200 text-slate-700 hover:border-[#1d4ed8] hover:text-[#1d4ed8]',
+                  )}
+                >
+                  {copiedIdx === i ? (
+                    <>
+                      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="h-3 w-3">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3 w-3">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                      </svg>
+                      Copy Prompt
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+            <div className="p-4">
+              <pre className="text-[11px] text-slate-600 whitespace-pre-wrap leading-relaxed font-sans bg-slate-50 border border-slate-100 rounded-lg p-3 max-h-40 overflow-y-auto select-all">
+                {p.prompt}
+              </pre>
+            </div>
+          </div>
+        ))}
+
+        {/* How to use */}
+        <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
+          <p className="text-[12px] font-semibold text-blue-800 mb-2">How to use this on MockMate</p>
+          <ol className="space-y-1.5 text-[12px] text-blue-900">
+            <li className="flex gap-2"><span className="shrink-0 font-bold text-blue-600">1.</span> Go to the side panel and click <strong>New Exam</strong>.</li>
+            <li className="flex gap-2"><span className="shrink-0 font-bold text-blue-600">2.</span> Paste one of the prompts above into the exam description or notes box.</li>
+            <li className="flex gap-2"><span className="shrink-0 font-bold text-blue-600">3.</span> Under standardized exam targeting, select <strong>SAT</strong>.</li>
+            <li className="flex gap-2"><span className="shrink-0 font-bold text-blue-600">4.</span> Generate the exam and practice the weak skill again.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 // ─── PDF generation ────────────────────────────────────────────────────────────
@@ -112,12 +408,16 @@ function generatePrintHTML(params: {
   rwM1Correct: number; rwM2Correct: number; rwTotal: number
   mathM1Correct: number; mathM2Correct: number; mathTotal: number
   aiFeedback: SATAIFeedback | null
+  practicePrompts: PracticePrompt[]
+  hasMisses: boolean
   missedModules: { label: string; mod: SATModule; section: 'rw' | 'math' }[]
   answers: Record<string, string>
 }) {
   const { rwScaled, mathScaled, totalScore, rwM2Type, mathM2Type,
           rwM1Correct, rwM2Correct, rwTotal, mathM1Correct, mathM2Correct, mathTotal,
-          aiFeedback, missedModules, answers } = params
+          aiFeedback, practicePrompts, hasMisses, missedModules, answers } = params
+
+  const FALLBACK_WRONG = 'This choice is incorrect — it does not match the evidence or reasoning required by the question.'
 
   const missedQsHTML = missedModules.map(({ label, mod, section }) => {
     const qs = mod.questions
@@ -134,17 +434,34 @@ function generatePrintHTML(params: {
       const userWrongExp = (wrongExp as Record<string, string>)[userAns]
       const choices = getChoices(q)
       const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
+      const skill = getSkill(q)
+
+      const choicesHTML = choices ? choices.map(c => {
+        const col = c.label === correctAns ? '#16a34a' : c.label === userAns ? '#dc2626' : '#64748b'
+        const icon = c.label === correctAns ? '✓' : c.label === userAns ? '✗' : '·'
+        return `<div style="font-size:12px;padding:4px 0;color:${col}">${icon} ${c.label}. ${c.text}</div>`
+      }).join('') : ''
+
+      const wrongChoicesHTML = choices ? choices.filter(c => c.label !== correctAns).map(c => {
+        const exp = (wrongExp as Record<string, string>)[c.label] || FALLBACK_WRONG
+        return `<div style="margin-top:6px;font-size:11px;color:#7f1d1d;padding:6px 10px;background:#fef2f2;border-radius:4px">
+          <strong>Choice ${c.label} incorrect:</strong> ${exp}
+        </div>`
+      }).join('') : ''
 
       return `<div style="margin-bottom:20px;padding:16px;border:1px solid #e2e8f0;border-radius:8px;page-break-inside:avoid">
-        <div style="font-size:11px;color:#64748b;margin-bottom:8px">${section === 'rw' ? 'Reading & Writing' : 'Math'} · ${mod.title} · Q${i + 1} · ${(q as {skill:string}).skill ?? ''} · ${q.difficulty}</div>
-        ${stimulus ? `<div style="font-size:12px;color:#334155;background:#f8fafc;padding:10px;border-radius:6px;margin-bottom:10px;white-space:pre-line">${stimulus.slice(0, 400)}${stimulus.length > 400 ? '…' : ''}</div>` : ''}
+        <div style="font-size:11px;color:#64748b;margin-bottom:8px">${section === 'rw' ? 'Reading &amp; Writing' : 'Math'} · ${mod.title} · Q${i + 1} · ${skill} · ${q.difficulty}</div>
+        ${stimulus ? `<div style="font-size:12px;color:#334155;background:#f8fafc;padding:10px;border-radius:6px;margin-bottom:10px;white-space:pre-line">${stimulus.slice(0, 500)}${stimulus.length > 500 ? '…' : ''}</div>` : ''}
         <div style="font-size:13px;font-weight:600;color:#0f172a;margin-bottom:10px">${q.question}</div>
-        ${choices ? choices.map(c => `<div style="font-size:12px;padding:4px 0;color:${c.label === correctAns ? '#16a34a' : c.label === userAns ? '#dc2626' : '#64748b'}">${c.label === correctAns ? '✓' : c.label === userAns ? '✗' : '·'} ${c.label}. ${c.text}</div>`).join('') : ''}
+        ${choicesHTML}
         <div style="margin-top:10px;font-size:12px">
           <strong>Your Answer:</strong> ${userAns} &nbsp;|&nbsp; <strong>Correct Answer:</strong> ${correctAns}
         </div>
-        <div style="margin-top:8px;font-size:12px;color:#374151"><strong>Explanation:</strong> ${explanation}</div>
+        <div style="margin-top:8px;font-size:12px;background:#f0fdf4;border:1px solid #bbf7d0;padding:8px;border-radius:4px">
+          <strong style="color:#15803d">Why ${correctAns} is correct:</strong> ${explanation}
+        </div>
         ${userWrongExp ? `<div style="margin-top:6px;font-size:12px;color:#dc2626"><strong>Why your answer was wrong:</strong> ${userWrongExp}</div>` : ''}
+        ${wrongChoicesHTML}
       </div>`
     }).join('')
 
@@ -155,15 +472,38 @@ function generatePrintHTML(params: {
   }).join('')
 
   const feedbackHTML = aiFeedback ? `
-    <div style="margin-bottom:24px">
-      <h2 style="font-size:16px;font-weight:700;color:#1b3a5c;margin-bottom:12px">AI Performance Feedback</h2>
+    <div style="margin-bottom:24px;padding:16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
+      <h2 style="font-size:16px;font-weight:700;color:#1b3a5c;margin-bottom:12px;border-bottom:2px solid #e2e8f0;padding-bottom:8px">AI Performance Feedback</h2>
       <p><strong>Overall:</strong> ${aiFeedback.overallAssessment}</p>
       <p style="margin-top:8px"><strong>What You Did Well:</strong> ${aiFeedback.whatWentWell}</p>
       ${aiFeedback.adaptivePathInsight ? `<p style="margin-top:8px"><strong>Adaptive Path Insight:</strong> ${aiFeedback.adaptivePathInsight}</p>` : ''}
       ${aiFeedback.rwWeaknesses?.length ? `<p style="margin-top:8px"><strong>RW Areas to Review:</strong> ${aiFeedback.rwWeaknesses.join('; ')}</p>` : ''}
       ${aiFeedback.mathWeaknesses?.length ? `<p style="margin-top:8px"><strong>Math Areas to Review:</strong> ${aiFeedback.mathWeaknesses.join('; ')}</p>` : ''}
+      ${aiFeedback.carelessErrors ? `<p style="margin-top:8px"><strong>Careless Error Pattern:</strong> ${aiFeedback.carelessErrors}</p>` : ''}
       ${aiFeedback.practiceRecommendations ? `<p style="margin-top:8px"><strong>Practice Plan:</strong> ${aiFeedback.practiceRecommendations}</p>` : ''}
       ${aiFeedback.mockMateNextSteps ? `<p style="margin-top:8px"><strong>MockMate Next Steps:</strong> ${aiFeedback.mockMateNextSteps}</p>` : ''}
+    </div>
+  ` : ''
+
+  const promptsHTML = practicePrompts.length > 0 ? `
+    <div style="margin-bottom:24px">
+      <h2 style="font-size:16px;font-weight:700;color:#1b3a5c;margin-bottom:8px;border-bottom:2px solid #e2e8f0;padding-bottom:8px">Practice Prompts to Improve Your Score</h2>
+      ${!hasMisses ? `<p style="font-size:12px;color:#64748b;font-style:italic;margin-bottom:12px">No missed questions detected. Here is a general maintenance prompt.</p>` : `<p style="font-size:12px;color:#64748b;margin-bottom:12px">Paste these prompts into MockMate's New Exam to practice your weak skills.</p>`}
+      ${practicePrompts.map((p, i) => `
+        <div style="margin-bottom:16px;page-break-inside:avoid">
+          <div style="font-size:12px;font-weight:700;color:#1b3a5c;margin-bottom:4px">${i + 1}. ${p.title}</div>
+          <div style="font-size:11px;color:#64748b;margin-bottom:6px">${p.description}</div>
+          <div style="font-size:11px;color:#475569;margin-bottom:4px;font-weight:600">Copy this prompt into MockMate:</div>
+          <div style="font-size:11px;color:#374151;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:12px;white-space:pre-wrap;font-family:monospace;line-height:1.6">${p.prompt.replace(/\*\*/g, '')}</div>
+        </div>
+      `).join('')}
+      <div style="font-size:11px;color:#1e40af;background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:12px;margin-top:12px">
+        <strong>How to use on MockMate:</strong><br>
+        1. Go to the side panel and click New Exam.<br>
+        2. Paste a prompt into the exam description or notes box.<br>
+        3. Under standardized exam targeting, select SAT.<br>
+        4. Generate and practice the weak skill again.
+      </div>
     </div>
   ` : ''
 
@@ -231,6 +571,8 @@ function generatePrintHTML(params: {
 <div class="disclaimer">This is a MockMate SAT-style estimated score report. It is not an official College Board score. Scores are approximations based on adaptive module performance.</div>
 
 ${feedbackHTML}
+
+${promptsHTML}
 
 <h2>Missed / Unanswered Questions</h2>
 ${missedQsHTML || '<p style="color:#64748b;font-style:italic">No missed questions — perfect score!</p>'}
@@ -305,6 +647,13 @@ function TimerDisplay({ secs }: { secs: number }) {
 
 // ─── Main component ────────────────────────────────────────────────────────────
 export default function SATExamTaker({ form }: { form: SATForm }) {
+  // ── Password gate ──────────────────────────────────────────────────────────
+  const [unlocked, setUnlocked] = useState(false)
+  const [passwordInput, setPasswordInput] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const [passwordChecking, setPasswordChecking] = useState(false)
+
+  // ── Exam state ─────────────────────────────────────────────────────────────
   const [phase, setPhase] = useState<SATPhase>({ tag: 'welcome' })
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [bookmarks, setBookmarks] = useState<Set<string>>(new Set())
@@ -332,13 +681,39 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
     return getM2Module(section, section === 'rw' ? rwM2Type : mathM2Type)
   }, [rwSection, mathSection, rwM2Type, mathM2Type, getM2Module])
 
+  // ── Password check ─────────────────────────────────────────────────────────
+  const handlePasswordSubmit = useCallback(async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!passwordInput.trim()) return
+    setPasswordChecking(true)
+    setPasswordError('')
+    try {
+      const res = await fetch('/api/sat-verify-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: passwordInput }),
+      })
+      const { valid } = await res.json() as { valid: boolean }
+      if (valid) {
+        setUnlocked(true)
+      } else {
+        setPasswordError('Incorrect password. Please try again.')
+        setPasswordInput('')
+      }
+    } catch {
+      setPasswordError('Something went wrong. Please try again.')
+    } finally {
+      setPasswordChecking(false)
+    }
+  }, [passwordInput])
+
   // ── Fullscreen API ─────────────────────────────────────────────────────────
   const enterFullscreen = useCallback(async () => {
     try {
       await document.documentElement.requestFullscreen()
       setIsFullscreen(true)
     } catch {
-      // blocked — the fixed overlay still covers the viewport
+      // blocked — fixed overlay still covers viewport
     }
   }, [])
 
@@ -369,12 +744,12 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
     return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [timerRunning])
 
-  // ── Routing helpers ────────────────────────────────────────────────────────
   const stopTimer = useCallback(() => {
     setTimerRunning(false)
     if (timerRef.current) clearInterval(timerRef.current)
   }, [])
 
+  // ── Routing ────────────────────────────────────────────────────────────────
   const handleRWM1Complete = useCallback(() => {
     const correct = countCorrect(rwSection.modules[0], answers)
     setRwM2Type(correct >= form.rwRoutingThreshold ? 'hard' : 'easy')
@@ -483,7 +858,7 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
         .map(q => ({
           section: q.section === 'reading-writing' ? 'Reading & Writing' : 'Math',
           module: q.moduleId,
-          skill: q.section === 'reading-writing' ? q.skill : (q as { skill: string }).skill,
+          skill: getSkill(q),
           domain: q.domain,
           difficulty: q.difficulty,
           question: q.question,
@@ -519,30 +894,6 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
     if (phase.tag === 'results') fetchAIFeedback()
   }, [phase.tag, fetchAIFeedback])
 
-  // ── PDF download ───────────────────────────────────────────────────────────
-  const handleDownloadPDF = useCallback(() => {
-    const missedModules = [
-      { label: 'Reading and Writing — Module 1', mod: rwM1Module, section: 'rw' as const },
-      { label: `Reading and Writing — Module 2 (${rwM2Type})`, mod: rwM2Module, section: 'rw' as const },
-      { label: 'Math — Module 1', mod: mathM1Module, section: 'math' as const },
-      { label: `Math — Module 2 (${mathM2Type})`, mod: mathM2Module, section: 'math' as const },
-    ]
-    const html = generatePrintHTML({
-      form, rwScaled, mathScaled, totalScore,
-      rwM2Type, mathM2Type,
-      rwM1Correct, rwM2Correct, rwTotal,
-      mathM1Correct, mathM2Correct, mathTotal,
-      aiFeedback, missedModules, answers,
-    })
-    const w = window.open('', '_blank')
-    if (!w) return
-    w.document.write(html)
-    w.document.close()
-    setTimeout(() => w.print(), 500)
-  }, [form, rwScaled, mathScaled, totalScore, rwM2Type, mathM2Type,
-      rwM1Correct, rwM2Correct, rwTotal, mathM1Correct, mathM2Correct, mathTotal,
-      aiFeedback, rwM1Module, rwM2Module, mathM1Module, mathM2Module, answers])
-
   // ── Retake ─────────────────────────────────────────────────────────────────
   const handleRetake = useCallback(() => {
     setPhase({ tag: 'welcome' })
@@ -551,11 +902,11 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
     setSecsLeft(0); setTimerRunning(false)
     setAiFeedback(null); setAiFeedbackLoading(false); setAiFeedbackError('')
     setAnswerFilter('all')
+    // unlocked stays true — no re-auth needed for retake
   }, [])
 
   // ─────────────────────────────────────────────────────────────────────────
-  // OVERLAY WRAPPER — all exam phases use fixed full-viewport overlay
-  // Results render in normal flow (sidebar visible)
+  // OVERLAY WRAPPER
   // ─────────────────────────────────────────────────────────────────────────
   const isExamPhase = phase.tag !== 'results'
 
@@ -567,6 +918,71 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
     ) : (
       <>{children}</>
     )
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // PASSWORD GATE (shown before welcome when !unlocked)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (!unlocked) {
+    return (
+      <div className="fixed inset-0 z-50 bg-[#eef0f4] flex flex-col overflow-hidden">
+        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
+          <span className="text-white text-[13px] font-semibold">MockMate</span>
+          <span className="text-white/30 text-[13px] mx-2">·</span>
+          <span className="text-white/70 text-[13px]">{form.title}</span>
+        </div>
+        <div className="flex-1 overflow-y-auto flex items-center justify-center p-6">
+          <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div className="bg-[#1b3a5c] px-6 py-5 text-center">
+              <div className="h-12 w-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6 text-white">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </svg>
+              </div>
+              <h1 className="text-[17px] font-bold text-white">{form.title}</h1>
+            </div>
+            <div className="px-6 py-6">
+              <p className="text-[13px] text-slate-600 text-center mb-5">
+                Enter the access password to begin SAT Practice Test 1.
+              </p>
+              <form onSubmit={handlePasswordSubmit} className="space-y-3">
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-1.5">
+                    Password
+                  </label>
+                  <input
+                    type="password"
+                    value={passwordInput}
+                    onChange={e => { setPasswordInput(e.target.value); setPasswordError('') }}
+                    placeholder="Enter password"
+                    autoFocus
+                    className="w-full border-2 border-slate-200 rounded-lg px-4 py-2.5 text-[14px] text-slate-900 focus:border-[#1d4ed8] focus:outline-none transition-colors"
+                  />
+                </div>
+                {passwordError && (
+                  <p className="text-[12px] text-red-600 font-medium">{passwordError}</p>
+                )}
+                <button
+                  type="submit"
+                  disabled={!passwordInput.trim() || passwordChecking}
+                  className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg text-[14px] transition-colors flex items-center justify-center gap-2"
+                >
+                  {passwordChecking ? (
+                    <>
+                      <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                      </svg>
+                      Checking…
+                    </>
+                  ) : 'Unlock Test'}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   // ─────────────────────────────────────────────────────────────────────────
   // PHASE: WELCOME
@@ -640,7 +1056,7 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // PHASE: DIRECTIONS / BREAK SCREENS
+  // DIRECTIONS / BREAK SCREENS
   // ─────────────────────────────────────────────────────────────────────────
   const DirectionsLayout = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <ExamWrapper>
@@ -775,12 +1191,10 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
     const qTotal = mod.questionCount
     const bookmarked = bookmarks.has(q.id)
     const currentAnswer = answers[q.id] ?? ''
-
     const isMC = q.section === 'reading-writing' || (q as MathMCQuestion | MathGridInQuestion).type === 'multiple_choice'
     const choices = isMC ? getChoices(q) : null
     const gridInQ = !isMC ? (q as MathGridInQuestion) : null
     const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
-
     const sectionLabel = phase.section === 'rw' ? 'Reading and Writing' : 'Math'
     const moduleLabel = `Module ${phase.slot === 'm1' ? '1' : '2'}`
     const centerLabel = `${sectionLabel} — ${moduleLabel} | Q ${qNum} of ${qTotal}`
@@ -803,18 +1217,16 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
 
           <div className="flex-1 overflow-y-auto">
             <div className="max-w-3xl mx-auto px-4 py-6">
-              {/* Stimulus */}
               {stimulus && (
                 <div className="bg-white rounded-xl border border-slate-200 p-5 mb-4 text-[13px] text-slate-800 leading-[1.85] whitespace-pre-line">
                   {stimulus}
                 </div>
               )}
 
-              {/* Question card */}
               <div className="bg-white rounded-xl border border-slate-200 p-5">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
-                    {q.domain} · {q.section === 'reading-writing' ? q.skill : (q as { skill: string }).skill}
+                    {q.domain} · {getSkill(q)}
                   </span>
                   {bookmarked && <span className="text-[10px] font-semibold text-amber-500 uppercase tracking-widest">Bookmarked</span>}
                 </div>
@@ -860,7 +1272,6 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
                 )}
               </div>
 
-              {/* Keyboard hint + last-question submit */}
               <div className="mt-3 flex items-center justify-between">
                 <p className="text-[10px] text-slate-400">Tip: Use ← → to move between questions</p>
                 {isLastInModule && (
@@ -946,10 +1357,9 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // PHASE: RESULTS (renders in normal dashboard layout — sidebar visible)
+  // PHASE: RESULTS
   // ─────────────────────────────────────────────────────────────────────────
   if (phase.tag === 'results') {
-    // Build flat list with metadata for filtering
     const allModulesFlat = [
       { label: 'Reading and Writing — Module 1', mod: rwM1Module, section: 'rw' as const },
       { label: `Reading and Writing — Module 2 (${rwM2Type})`, mod: rwM2Module, section: 'rw' as const },
@@ -957,18 +1367,16 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
       { label: `Math — Module 2 (${mathM2Type})`, mod: mathM2Module, section: 'math' as const },
     ]
 
-    type FlatQ = {
-      q: SATQuestion; qi: number; modLabel: string; section: 'rw' | 'math'
-      answered: boolean; correct: boolean
-    }
-
-    const allFlat: FlatQ[] = allModulesFlat.flatMap(({ label, mod, section }) =>
+    const allFlat: FlatQItem[] = allModulesFlat.flatMap(({ label, mod, section }) =>
       mod.questions.map((q, qi) => ({
         q, qi, modLabel: label, section,
         answered: isAnswered(q, answers),
         correct: isCorrect(q, answers),
       }))
     )
+
+    const hasMisses = allFlat.some(x => !x.answered || !x.correct)
+    const practicePrompts = buildPracticePrompts(allFlat)
 
     const filterTabs: { key: AnswerFilter; label: string }[] = [
       { key: 'all', label: 'All' },
@@ -990,31 +1398,41 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
 
     const FALLBACK_WRONG = 'This choice is incorrect — it does not match the evidence or reasoning required by the question.'
 
+    const downloadPDF = () => {
+      const missedModules = [
+        { label: 'Reading and Writing — Module 1', mod: rwM1Module, section: 'rw' as const },
+        { label: `Reading and Writing — Module 2 (${rwM2Type})`, mod: rwM2Module, section: 'rw' as const },
+        { label: 'Math — Module 1', mod: mathM1Module, section: 'math' as const },
+        { label: `Math — Module 2 (${mathM2Type})`, mod: mathM2Module, section: 'math' as const },
+      ]
+      const html = generatePrintHTML({
+        form, rwScaled, mathScaled, totalScore,
+        rwM2Type, mathM2Type,
+        rwM1Correct, rwM2Correct, rwTotal,
+        mathM1Correct, mathM2Correct, mathTotal,
+        aiFeedback, practicePrompts, hasMisses, missedModules, answers,
+      })
+      const w = window.open('', '_blank')
+      if (!w) return
+      w.document.write(html)
+      w.document.close()
+      setTimeout(() => w.print(), 500)
+    }
+
     return (
       <div className="space-y-6 pb-10">
-        {/* Header actions */}
+        {/* Header */}
         <div className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-slate-900">Results — {form.title}</h1>
-          <div className="flex gap-2">
-            <button
-              onClick={handleDownloadPDF}
-              className="flex items-center gap-2 bg-[#1b3a5c] hover:bg-[#152d48] text-white text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
-            >
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-              </svg>
-              Download PDF Score Report
-            </button>
-            <button
-              onClick={handleRetake}
-              className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
-            >
-              Retake Test
-            </button>
-          </div>
+          <button
+            onClick={handleRetake}
+            className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+          >
+            Retake Test
+          </button>
         </div>
 
-        {/* Score summary */}
+        {/* 1. Score summary */}
         <div className="bg-white rounded-xl border border-slate-200 p-6">
           <h2 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-4">Estimated Score</h2>
           <div className="flex items-center justify-between flex-wrap gap-4">
@@ -1036,6 +1454,8 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
               <p className="text-[11px] text-white/60">/ 1600</p>
             </div>
           </div>
+
+          {/* 2. Module performance */}
           <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-[12px]">
             {[
               { label: 'RW Module 1', val: `${rwM1Correct}/27` },
@@ -1052,7 +1472,7 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
           <p className="mt-3 text-[11px] text-slate-400">Scores are estimated. Not an official College Board result.</p>
         </div>
 
-        {/* AI Feedback */}
+        {/* 3. AI Feedback */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
             <h2 className="text-[15px] font-bold text-slate-900">AI Performance Feedback</h2>
@@ -1092,7 +1512,6 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
                   </div>
                 )}
                 <div className="grid sm:grid-cols-2 gap-4">
-                  {/* RW */}
                   <div className="bg-slate-50 rounded-lg p-4 space-y-2">
                     <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">Reading &amp; Writing</p>
                     {aiFeedback.rwStrengths?.length > 0 && (
@@ -1122,7 +1541,6 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
                       </div>
                     )}
                   </div>
-                  {/* Math */}
                   <div className="bg-slate-50 rounded-lg p-4 space-y-2">
                     <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">Math</p>
                     {aiFeedback.mathStrengths?.length > 0 && (
@@ -1179,7 +1597,23 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
           </div>
         </div>
 
-        {/* Answer Key with filters */}
+        {/* 4. Practice Prompts */}
+        <PracticePromptsSection prompts={practicePrompts} hasMisses={hasMisses} />
+
+        {/* 5. PDF download */}
+        <div className="flex justify-center">
+          <button
+            onClick={downloadPDF}
+            className="flex items-center gap-2 bg-[#1b3a5c] hover:bg-[#152d48] text-white text-[14px] font-semibold px-6 py-3 rounded-xl transition-colors shadow-sm"
+          >
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            Download PDF Score Report
+          </button>
+        </div>
+
+        {/* 6. Answer Key */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-5 py-4 border-b border-slate-200">
             <h2 className="text-[15px] font-bold text-slate-900 mb-3">Answer Key</h2>
@@ -1216,8 +1650,7 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
                 const choices = getChoices(q)
                 const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
                 const isGridIn = q.section === 'math' && (q as MathGridInQuestion).type === 'grid_in'
-                const skill = q.section === 'reading-writing' ? q.skill : (q as { skill: string }).skill
-
+                const skill = getSkill(q)
                 const statusIcon = !answered ? '?' : correct ? '✓' : '✗'
                 const statusColor = !answered ? 'bg-slate-100 text-slate-400' : correct ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
 
@@ -1253,14 +1686,12 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
                     </summary>
 
                     <div className="px-5 pb-5 pt-2 bg-slate-50 border-t border-slate-100 space-y-4 text-[13px]">
-                      {/* Stimulus */}
                       {stimulus && (
                         <div className="bg-white border border-slate-200 rounded-lg p-3 text-[12px] text-slate-700 leading-relaxed whitespace-pre-line">
                           {stimulus}
                         </div>
                       )}
 
-                      {/* Choices with correct/wrong highlights */}
                       {choices && (
                         <div className="space-y-1.5">
                           {choices.map(c => {
@@ -1282,7 +1713,6 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
                         </div>
                       )}
 
-                      {/* Grid-in answer display */}
                       {isGridIn && (
                         <div className="flex items-center gap-4 text-[12px]">
                           <span><span className="font-semibold text-slate-600">Your Answer:</span> <span className={answered && correct ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'}>{userAns}</span></span>
@@ -1290,14 +1720,12 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
                         </div>
                       )}
 
-                      {/* Correct answer explanation */}
                       <div className="space-y-2">
                         <div className="bg-green-50 border border-green-100 rounded-lg p-3">
                           <p className="text-[11px] font-semibold text-green-700 uppercase tracking-widest mb-1">Correct Answer: {correctAns}</p>
                           <p className="text-[12px] text-slate-700 leading-relaxed">{explanation}</p>
                         </div>
 
-                        {/* Wrong answer explanations */}
                         {choices && (
                           <div className="space-y-1.5">
                             <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Why the other choices are wrong</p>
@@ -1313,7 +1741,6 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
                           </div>
                         )}
 
-                        {/* Grid-in common mistake */}
                         {isGridIn && (q as MathGridInQuestion).scoringNotes && (
                           <div className="bg-amber-50 border border-amber-100 rounded-lg p-3">
                             <p className="text-[11px] font-semibold text-amber-700 uppercase tracking-widest mb-1">Scoring Notes</p>
