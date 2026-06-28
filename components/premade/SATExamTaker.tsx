@@ -8,12 +8,15 @@ import type {
   SATQuestion,
   MathMCQuestion,
   MathGridInQuestion,
+  RWQuestion,
+  ChoiceLabel,
 } from '@/lib/premade-exams/sat/types'
 import {
   convertRWScore,
   convertMathScore,
   roundSATScore,
 } from '@/lib/premade-exams/sat/sat-score-conversion'
+import type { SATAIFeedback } from '@/app/api/sat-feedback/route'
 
 // ─── Phase state machine ───────────────────────────────────────────────────────
 type SATPhase =
@@ -26,6 +29,8 @@ type SATPhase =
   | { tag: 'math_break' }
   | { tag: 'end' }
   | { tag: 'results' }
+
+type AnswerFilter = 'all' | 'incorrect' | 'unanswered' | 'rw' | 'math' | 'marked'
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function formatTime(secs: number): string {
@@ -60,6 +65,179 @@ function countCorrect(module: SATModule, answers: Record<string, string>): numbe
   return module.questions.filter(q => isCorrect(q, answers)).length
 }
 
+function getCorrectAnswer(q: SATQuestion): string {
+  if (q.section === 'reading-writing') return q.correctAnswer
+  const mq = q as MathMCQuestion | MathGridInQuestion
+  if (mq.type === 'multiple_choice') return (mq as MathMCQuestion).correctAnswer
+  return (mq as MathGridInQuestion).correctAnswer
+}
+
+function getWrongAnswerExplanations(q: SATQuestion): Partial<Record<ChoiceLabel, string>> {
+  if (q.section === 'reading-writing') return q.wrongAnswerExplanations
+  const mq = q as MathMCQuestion | MathGridInQuestion
+  if (mq.type === 'multiple_choice') return (mq as MathMCQuestion).wrongAnswerExplanations
+  return {}
+}
+
+function getExplanation(q: SATQuestion): string {
+  if (q.section === 'reading-writing') return q.explanation
+  return (q as { explanation: string }).explanation
+}
+
+function getChoices(q: SATQuestion) {
+  if (q.section === 'reading-writing') return q.choices
+  const mq = q as MathMCQuestion | MathGridInQuestion
+  if (mq.type === 'multiple_choice') return (mq as MathMCQuestion).choices
+  return null
+}
+
+function buildSkillBreakdown(modules: SATModule[], answers: Record<string, string>) {
+  const breakdown: Record<string, { correct: number; total: number }> = {}
+  for (const mod of modules) {
+    for (const q of mod.questions) {
+      const skill = q.section === 'reading-writing' ? q.skill : (q as { skill: string }).skill
+      if (!breakdown[skill]) breakdown[skill] = { correct: 0, total: 0 }
+      breakdown[skill].total++
+      if (isCorrect(q, answers)) breakdown[skill].correct++
+    }
+  }
+  return breakdown
+}
+
+// ─── PDF generation ────────────────────────────────────────────────────────────
+function generatePrintHTML(params: {
+  form: SATForm
+  rwScaled: number; mathScaled: number; totalScore: number
+  rwM2Type: 'easy' | 'hard'; mathM2Type: 'easy' | 'hard'
+  rwM1Correct: number; rwM2Correct: number; rwTotal: number
+  mathM1Correct: number; mathM2Correct: number; mathTotal: number
+  aiFeedback: SATAIFeedback | null
+  missedModules: { label: string; mod: SATModule; section: 'rw' | 'math' }[]
+  answers: Record<string, string>
+}) {
+  const { rwScaled, mathScaled, totalScore, rwM2Type, mathM2Type,
+          rwM1Correct, rwM2Correct, rwTotal, mathM1Correct, mathM2Correct, mathTotal,
+          aiFeedback, missedModules, answers } = params
+
+  const missedQsHTML = missedModules.map(({ label, mod, section }) => {
+    const qs = mod.questions
+      .map((q, i) => ({ q, i, answered: isAnswered(q, answers), correct: isCorrect(q, answers) }))
+      .filter(({ answered, correct }) => !answered || !correct)
+
+    if (!qs.length) return ''
+
+    const qCards = qs.map(({ q, i }) => {
+      const userAns = answers[q.id] || 'Not answered'
+      const correctAns = getCorrectAnswer(q)
+      const explanation = getExplanation(q)
+      const wrongExp = getWrongAnswerExplanations(q)
+      const userWrongExp = (wrongExp as Record<string, string>)[userAns]
+      const choices = getChoices(q)
+      const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
+
+      return `<div style="margin-bottom:20px;padding:16px;border:1px solid #e2e8f0;border-radius:8px;page-break-inside:avoid">
+        <div style="font-size:11px;color:#64748b;margin-bottom:8px">${section === 'rw' ? 'Reading & Writing' : 'Math'} · ${mod.title} · Q${i + 1} · ${(q as {skill:string}).skill ?? ''} · ${q.difficulty}</div>
+        ${stimulus ? `<div style="font-size:12px;color:#334155;background:#f8fafc;padding:10px;border-radius:6px;margin-bottom:10px;white-space:pre-line">${stimulus.slice(0, 400)}${stimulus.length > 400 ? '…' : ''}</div>` : ''}
+        <div style="font-size:13px;font-weight:600;color:#0f172a;margin-bottom:10px">${q.question}</div>
+        ${choices ? choices.map(c => `<div style="font-size:12px;padding:4px 0;color:${c.label === correctAns ? '#16a34a' : c.label === userAns ? '#dc2626' : '#64748b'}">${c.label === correctAns ? '✓' : c.label === userAns ? '✗' : '·'} ${c.label}. ${c.text}</div>`).join('') : ''}
+        <div style="margin-top:10px;font-size:12px">
+          <strong>Your Answer:</strong> ${userAns} &nbsp;|&nbsp; <strong>Correct Answer:</strong> ${correctAns}
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:#374151"><strong>Explanation:</strong> ${explanation}</div>
+        ${userWrongExp ? `<div style="margin-top:6px;font-size:12px;color:#dc2626"><strong>Why your answer was wrong:</strong> ${userWrongExp}</div>` : ''}
+      </div>`
+    }).join('')
+
+    return `<div style="margin-bottom:24px">
+      <h3 style="font-size:14px;font-weight:700;color:#1b3a5c;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #e2e8f0">${label}</h3>
+      ${qCards}
+    </div>`
+  }).join('')
+
+  const feedbackHTML = aiFeedback ? `
+    <div style="margin-bottom:24px">
+      <h2 style="font-size:16px;font-weight:700;color:#1b3a5c;margin-bottom:12px">AI Performance Feedback</h2>
+      <p><strong>Overall:</strong> ${aiFeedback.overallAssessment}</p>
+      <p style="margin-top:8px"><strong>What You Did Well:</strong> ${aiFeedback.whatWentWell}</p>
+      ${aiFeedback.adaptivePathInsight ? `<p style="margin-top:8px"><strong>Adaptive Path Insight:</strong> ${aiFeedback.adaptivePathInsight}</p>` : ''}
+      ${aiFeedback.rwWeaknesses?.length ? `<p style="margin-top:8px"><strong>RW Areas to Review:</strong> ${aiFeedback.rwWeaknesses.join('; ')}</p>` : ''}
+      ${aiFeedback.mathWeaknesses?.length ? `<p style="margin-top:8px"><strong>Math Areas to Review:</strong> ${aiFeedback.mathWeaknesses.join('; ')}</p>` : ''}
+      ${aiFeedback.practiceRecommendations ? `<p style="margin-top:8px"><strong>Practice Plan:</strong> ${aiFeedback.practiceRecommendations}</p>` : ''}
+      ${aiFeedback.mockMateNextSteps ? `<p style="margin-top:8px"><strong>MockMate Next Steps:</strong> ${aiFeedback.mockMateNextSteps}</p>` : ''}
+    </div>
+  ` : ''
+
+  return `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>MockMate SAT Practice Test 1 — Score Report</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1e293b; background: white; padding: 32px; max-width: 800px; margin: 0 auto; font-size: 13px; line-height: 1.6; }
+  h1 { font-size: 22px; font-weight: 800; color: #1b3a5c; margin-bottom: 4px; }
+  h2 { font-size: 16px; font-weight: 700; color: #1b3a5c; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #e2e8f0; }
+  .header { border-bottom: 3px solid #1b3a5c; padding-bottom: 16px; margin-bottom: 24px; }
+  .subtitle { font-size: 12px; color: #64748b; margin-top: 2px; }
+  .score-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  .score-card { padding: 16px; border: 1px solid #e2e8f0; border-radius: 8px; text-align: center; }
+  .score-card.total { background: #1b3a5c; color: white; }
+  .score-num { font-size: 32px; font-weight: 800; }
+  .score-label { font-size: 11px; color: #64748b; margin-bottom: 4px; }
+  .score-card.total .score-label { color: rgba(255,255,255,0.7); }
+  .score-card.total .score-num { color: white; }
+  .disclaimer { font-size: 11px; color: #94a3b8; background: #f8fafc; padding: 10px; border-radius: 6px; margin-bottom: 24px; border: 1px solid #e2e8f0; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 12px; }
+  th { background: #f1f5f9; color: #475569; font-weight: 600; text-align: left; padding: 8px 12px; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
+  @media print { body { padding: 16px; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>MockMate SAT Practice Test 1</h1>
+  <div class="subtitle">Score Report · Generated ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+</div>
+
+<h2>Score Summary</h2>
+<div class="score-grid">
+  <div class="score-card">
+    <div class="score-label">Reading &amp; Writing</div>
+    <div class="score-num">${rwScaled}</div>
+    <div style="font-size:11px;color:#64748b">${rwM1Correct + rwM2Correct}/${rwTotal} correct</div>
+  </div>
+  <div class="score-card">
+    <div class="score-label">Math</div>
+    <div class="score-num">${mathScaled}</div>
+    <div style="font-size:11px;color:#64748b">${mathM1Correct + mathM2Correct}/${mathTotal} correct</div>
+  </div>
+  <div class="score-card total">
+    <div class="score-label">Total Score</div>
+    <div class="score-num">${totalScore}</div>
+    <div style="font-size:11px;opacity:0.7">/ 1600</div>
+  </div>
+</div>
+
+<table>
+  <thead><tr><th>Section</th><th>Module</th><th>Raw Score</th><th>Path</th></tr></thead>
+  <tbody>
+    <tr><td>Reading &amp; Writing</td><td>Module 1</td><td>${rwM1Correct} / 27</td><td>Routing</td></tr>
+    <tr><td>Reading &amp; Writing</td><td>Module 2</td><td>${rwM2Correct} / 27</td><td>${rwM2Type.charAt(0).toUpperCase() + rwM2Type.slice(1)}</td></tr>
+    <tr><td>Math</td><td>Module 1</td><td>${mathM1Correct} / 22</td><td>Routing</td></tr>
+    <tr><td>Math</td><td>Module 2</td><td>${mathM2Correct} / 22</td><td>${mathM2Type.charAt(0).toUpperCase() + mathM2Type.slice(1)}</td></tr>
+  </tbody>
+</table>
+
+<div class="disclaimer">This is a MockMate SAT-style estimated score report. It is not an official College Board score. Scores are approximations based on adaptive module performance.</div>
+
+${feedbackHTML}
+
+<h2>Missed / Unanswered Questions</h2>
+${missedQsHTML || '<p style="color:#64748b;font-style:italic">No missed questions — perfect score!</p>'}
+</body>
+</html>`
+}
+
 // ─── NavBar ───────────────────────────────────────────────────────────────────
 function NavBar({
   onBack, onNext, canGoBack, centerLabel, timerEl, onReview, showReview,
@@ -74,7 +252,7 @@ function NavBar({
     <header className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-3 text-white select-none gap-2">
       <div className="flex items-center gap-0.5 shrink-0">
         <button
-          onClick={onBack} disabled={!canGoBack} title="Previous"
+          onClick={onBack} disabled={!canGoBack} title="Previous (←)"
           className="flex h-8 w-8 items-center justify-center rounded hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="h-4 w-4">
@@ -82,7 +260,7 @@ function NavBar({
           </svg>
         </button>
         <button
-          onClick={onNext} title="Next"
+          onClick={onNext} title="Next (→)"
           className="flex h-8 w-8 items-center justify-center rounded hover:bg-white/10 transition-colors"
         >
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="h-4 w-4">
@@ -116,7 +294,6 @@ function NavBar({
   )
 }
 
-// ─── Timer display ─────────────────────────────────────────────────────────────
 function TimerDisplay({ secs }: { secs: number }) {
   const urgent = secs <= 300
   return (
@@ -135,6 +312,11 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
   const [mathM2Type, setMathM2Type] = useState<'easy' | 'hard'>('easy')
   const [secsLeft, setSecsLeft] = useState(0)
   const [timerRunning, setTimerRunning] = useState(false)
+  const [aiFeedback, setAiFeedback] = useState<SATAIFeedback | null>(null)
+  const [aiFeedbackLoading, setAiFeedbackLoading] = useState(false)
+  const [aiFeedbackError, setAiFeedbackError] = useState('')
+  const [answerFilter, setAnswerFilter] = useState<AnswerFilter>('all')
+  const [isFullscreen, setIsFullscreen] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const rwSection = form.sections[0]
@@ -146,11 +328,28 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
   }, [rwSection, mathSection])
 
   const getActiveModule = useCallback((section: 'rw' | 'math', slot: 'm1' | 'm2'): SATModule => {
-    if (slot === 'm1') {
-      return section === 'rw' ? rwSection.modules[0] : mathSection.modules[0]
-    }
+    if (slot === 'm1') return section === 'rw' ? rwSection.modules[0] : mathSection.modules[0]
     return getM2Module(section, section === 'rw' ? rwM2Type : mathM2Type)
   }, [rwSection, mathSection, rwM2Type, mathM2Type, getM2Module])
+
+  // ── Fullscreen API ─────────────────────────────────────────────────────────
+  const enterFullscreen = useCallback(async () => {
+    try {
+      await document.documentElement.requestFullscreen()
+      setIsFullscreen(true)
+    } catch {
+      // blocked — the fixed overlay still covers the viewport
+    }
+  }, [])
+
+  useEffect(() => {
+    const onFSChange = () => setIsFullscreen(!!document.fullscreenElement)
+    document.addEventListener('fullscreenchange', onFSChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', onFSChange)
+      if (document.fullscreenElement) document.exitFullscreen().catch(() => {})
+    }
+  }, [])
 
   // ── Timer ──────────────────────────────────────────────────────────────────
   const startTimer = useCallback((minutes: number) => {
@@ -163,71 +362,50 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
     if (!timerRunning) return
     timerRef.current = setInterval(() => {
       setSecsLeft(s => {
-        if (s <= 1) {
-          clearInterval(timerRef.current!)
-          setTimerRunning(false)
-          return 0
-        }
+        if (s <= 1) { clearInterval(timerRef.current!); setTimerRunning(false); return 0 }
         return s - 1
       })
     }, 1000)
     return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [timerRunning])
 
-  // Auto-advance when timer expires
+  // ── Routing helpers ────────────────────────────────────────────────────────
+  const stopTimer = useCallback(() => {
+    setTimerRunning(false)
+    if (timerRef.current) clearInterval(timerRef.current)
+  }, [])
+
+  const handleRWM1Complete = useCallback(() => {
+    const correct = countCorrect(rwSection.modules[0], answers)
+    setRwM2Type(correct >= form.rwRoutingThreshold ? 'hard' : 'easy')
+    stopTimer()
+    setPhase({ tag: 'rw_break' })
+  }, [rwSection, answers, form.rwRoutingThreshold, stopTimer])
+
+  const handleMathM1Complete = useCallback(() => {
+    const correct = countCorrect(mathSection.modules[0], answers)
+    setMathM2Type(correct >= form.mathRoutingThreshold ? 'hard' : 'easy')
+    stopTimer()
+    setPhase({ tag: 'math_break' })
+  }, [mathSection, answers, form.mathRoutingThreshold, stopTimer])
+
+  // ── Auto-advance on timer expiry ───────────────────────────────────────────
   useEffect(() => {
-    if (timerRunning || secsLeft > 0) return
-    if (phase.tag !== 'question') return
+    if (timerRunning || secsLeft > 0 || phase.tag !== 'question') return
     if (phase.slot === 'm1') {
       if (phase.section === 'rw') handleRWM1Complete()
       else handleMathM1Complete()
     } else {
-      if (phase.section === 'rw') setPhase({ tag: 'section_break' })
-      else setPhase({ tag: 'end' })
+      if (phase.section === 'rw') { stopTimer(); setPhase({ tag: 'section_break' }) }
+      else { stopTimer(); setPhase({ tag: 'end' }) }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timerRunning, secsLeft])
 
-  // ── Routing decisions ──────────────────────────────────────────────────────
-  const handleRWM1Complete = useCallback(() => {
-    const m1 = rwSection.modules[0]
-    const correct = countCorrect(m1, answers)
-    const type = correct >= form.rwRoutingThreshold ? 'hard' : 'easy'
-    setRwM2Type(type)
-    setTimerRunning(false)
-    if (timerRef.current) clearInterval(timerRef.current)
-    setPhase({ tag: 'rw_break' })
-  }, [rwSection, answers, form.rwRoutingThreshold])
-
-  const handleMathM1Complete = useCallback(() => {
-    const m1 = mathSection.modules[0]
-    const correct = countCorrect(m1, answers)
-    const type = correct >= form.mathRoutingThreshold ? 'hard' : 'easy'
-    setMathM2Type(type)
-    setTimerRunning(false)
-    if (timerRef.current) clearInterval(timerRef.current)
-    setPhase({ tag: 'math_break' })
-  }, [mathSection, answers, form.mathRoutingThreshold])
-
-  // ── Answer handling ────────────────────────────────────────────────────────
-  const setAnswer = useCallback((qId: string, value: string) => {
-    setAnswers(prev => ({ ...prev, [qId]: value }))
-  }, [])
-
-  const toggleBookmark = useCallback((qId: string) => {
-    setBookmarks(prev => {
-      const n = new Set(prev)
-      n.has(qId) ? n.delete(qId) : n.add(qId)
-      return n
-    })
-  }, [])
-
-  // ── Navigation within a module ─────────────────────────────────────────────
+  // ── Navigation ─────────────────────────────────────────────────────────────
   const handleBack = useCallback(() => {
-    if (phase.tag !== 'question') return
-    if (phase.qIdx > 0) {
-      setPhase({ ...phase, qIdx: phase.qIdx - 1 })
-    }
+    if (phase.tag !== 'question' || phase.qIdx <= 0) return
+    setPhase({ ...phase, qIdx: phase.qIdx - 1 })
   }, [phase])
 
   const handleNext = useCallback(() => {
@@ -235,263 +413,361 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
     const mod = getActiveModule(phase.section, phase.slot)
     if (phase.qIdx < mod.questionCount - 1) {
       setPhase({ ...phase, qIdx: phase.qIdx + 1 })
-    } else {
-      // Last question in module
-      if (phase.slot === 'm1') {
-        if (phase.section === 'rw') handleRWM1Complete()
-        else handleMathM1Complete()
-      } else {
-        if (phase.section === 'rw') {
-          setTimerRunning(false)
-          if (timerRef.current) clearInterval(timerRef.current)
-          setPhase({ tag: 'section_break' })
-        } else {
-          setTimerRunning(false)
-          if (timerRef.current) clearInterval(timerRef.current)
-          setPhase({ tag: 'end' })
-        }
-      }
+      return
     }
-  }, [phase, getActiveModule, handleRWM1Complete, handleMathM1Complete])
+    if (phase.slot === 'm1') {
+      if (phase.section === 'rw') handleRWM1Complete()
+      else handleMathM1Complete()
+    } else {
+      stopTimer()
+      setPhase(phase.section === 'rw' ? { tag: 'section_break' } : { tag: 'end' })
+    }
+  }, [phase, getActiveModule, handleRWM1Complete, handleMathM1Complete, stopTimer])
+
+  // ── Keyboard navigation ────────────────────────────────────────────────────
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName?.toLowerCase()
+      if (['input', 'textarea', 'select'].includes(tag)) return
+      if ((e.target as HTMLElement)?.isContentEditable) return
+      if (phase.tag !== 'question') return
+      if (e.key === 'ArrowRight') { e.preventDefault(); handleNext() }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); handleBack() }
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [phase, handleNext, handleBack])
+
+  // ── Answers & bookmarks ────────────────────────────────────────────────────
+  const setAnswer = useCallback((qId: string, value: string) => {
+    setAnswers(prev => ({ ...prev, [qId]: value }))
+  }, [])
+
+  const toggleBookmark = useCallback((qId: string) => {
+    setBookmarks(prev => { const n = new Set(prev); n.has(qId) ? n.delete(qId) : n.add(qId); return n })
+  }, [])
 
   // ── Score computation ──────────────────────────────────────────────────────
-  const rwM1Correct = countCorrect(rwSection.modules[0], answers)
-  const rwM2Correct = countCorrect(getM2Module('rw', rwM2Type), answers)
-  const rwRaw = rwM1Correct + rwM2Correct
+  const rwM1Module = rwSection.modules[0]
+  const rwM2Module = getM2Module('rw', rwM2Type)
+  const mathM1Module = mathSection.modules[0]
+  const mathM2Module = getM2Module('math', mathM2Type)
 
-  const mathM1Correct = countCorrect(mathSection.modules[0], answers)
-  const mathM2Correct = countCorrect(getM2Module('math', mathM2Type), answers)
+  const rwM1Correct = countCorrect(rwM1Module, answers)
+  const rwM2Correct = countCorrect(rwM2Module, answers)
+  const rwRaw = rwM1Correct + rwM2Correct
+  const rwTotal = rwM1Module.questionCount + rwM2Module.questionCount
+
+  const mathM1Correct = countCorrect(mathM1Module, answers)
+  const mathM2Correct = countCorrect(mathM2Module, answers)
   const mathRaw = mathM1Correct + mathM2Correct
+  const mathTotal = mathM1Module.questionCount + mathM2Module.questionCount
 
   const rwScaled = roundSATScore(convertRWScore(rwRaw, rwM2Type === 'hard'))
   const mathScaled = roundSATScore(convertMathScore(mathRaw, mathM2Type === 'hard'))
   const totalScore = rwScaled + mathScaled
 
+  // ── AI Feedback ────────────────────────────────────────────────────────────
+  const fetchAIFeedback = useCallback(async () => {
+    if (aiFeedback || aiFeedbackLoading) return
+    setAiFeedbackLoading(true)
+    setAiFeedbackError('')
+    try {
+      const rwSkillBreakdown = buildSkillBreakdown([rwM1Module, rwM2Module], answers)
+      const mathSkillBreakdown = buildSkillBreakdown([mathM1Module, mathM2Module], answers)
+      const missedQuestions = [
+        ...rwM1Module.questions, ...rwM2Module.questions,
+        ...mathM1Module.questions, ...mathM2Module.questions,
+      ]
+        .filter(q => !isAnswered(q, answers) || !isCorrect(q, answers))
+        .map(q => ({
+          section: q.section === 'reading-writing' ? 'Reading & Writing' : 'Math',
+          module: q.moduleId,
+          skill: q.section === 'reading-writing' ? q.skill : (q as { skill: string }).skill,
+          domain: q.domain,
+          difficulty: q.difficulty,
+          question: q.question,
+          userAnswer: answers[q.id] || 'not answered',
+          correctAnswer: getCorrectAnswer(q),
+        }))
+
+      const res = await fetch('/api/sat-feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          rwM1Correct, rwM1Total: rwM1Module.questionCount,
+          rwM2Correct, rwM2Total: rwM2Module.questionCount, rwM2Type,
+          mathM1Correct, mathM1Total: mathM1Module.questionCount,
+          mathM2Correct, mathM2Total: mathM2Module.questionCount, mathM2Type,
+          rwScaled, mathScaled, totalScore,
+          rwSkillBreakdown, mathSkillBreakdown,
+          missedQuestions,
+        }),
+      })
+      if (!res.ok) throw new Error('API error')
+      setAiFeedback(await res.json())
+    } catch {
+      setAiFeedbackError('Could not generate AI feedback. Check your connection and try again.')
+    } finally {
+      setAiFeedbackLoading(false)
+    }
+  }, [aiFeedback, aiFeedbackLoading, rwM1Module, rwM2Module, mathM1Module, mathM2Module, answers,
+      rwM1Correct, rwM2Correct, rwM2Type, mathM1Correct, mathM2Correct, mathM2Type,
+      rwScaled, mathScaled, totalScore])
+
+  useEffect(() => {
+    if (phase.tag === 'results') fetchAIFeedback()
+  }, [phase.tag, fetchAIFeedback])
+
+  // ── PDF download ───────────────────────────────────────────────────────────
+  const handleDownloadPDF = useCallback(() => {
+    const missedModules = [
+      { label: 'Reading and Writing — Module 1', mod: rwM1Module, section: 'rw' as const },
+      { label: `Reading and Writing — Module 2 (${rwM2Type})`, mod: rwM2Module, section: 'rw' as const },
+      { label: 'Math — Module 1', mod: mathM1Module, section: 'math' as const },
+      { label: `Math — Module 2 (${mathM2Type})`, mod: mathM2Module, section: 'math' as const },
+    ]
+    const html = generatePrintHTML({
+      form, rwScaled, mathScaled, totalScore,
+      rwM2Type, mathM2Type,
+      rwM1Correct, rwM2Correct, rwTotal,
+      mathM1Correct, mathM2Correct, mathTotal,
+      aiFeedback, missedModules, answers,
+    })
+    const w = window.open('', '_blank')
+    if (!w) return
+    w.document.write(html)
+    w.document.close()
+    setTimeout(() => w.print(), 500)
+  }, [form, rwScaled, mathScaled, totalScore, rwM2Type, mathM2Type,
+      rwM1Correct, rwM2Correct, rwTotal, mathM1Correct, mathM2Correct, mathTotal,
+      aiFeedback, rwM1Module, rwM2Module, mathM1Module, mathM2Module, answers])
+
   // ── Retake ─────────────────────────────────────────────────────────────────
   const handleRetake = useCallback(() => {
     setPhase({ tag: 'welcome' })
-    setAnswers({})
-    setBookmarks(new Set())
-    setRwM2Type('easy')
-    setMathM2Type('easy')
-    setSecsLeft(0)
-    setTimerRunning(false)
+    setAnswers({}); setBookmarks(new Set())
+    setRwM2Type('easy'); setMathM2Type('easy')
+    setSecsLeft(0); setTimerRunning(false)
+    setAiFeedback(null); setAiFeedbackLoading(false); setAiFeedbackError('')
+    setAnswerFilter('all')
   }, [])
 
   // ─────────────────────────────────────────────────────────────────────────
-  // RENDER
+  // OVERLAY WRAPPER — all exam phases use fixed full-viewport overlay
+  // Results render in normal flow (sidebar visible)
   // ─────────────────────────────────────────────────────────────────────────
+  const isExamPhase = phase.tag !== 'results'
 
-  // ── Welcome ────────────────────────────────────────────────────────────────
+  const ExamWrapper = ({ children }: { children: React.ReactNode }) =>
+    isExamPhase ? (
+      <div className="fixed inset-0 z-50 bg-[#eef0f4] flex flex-col overflow-hidden">
+        {children}
+      </div>
+    ) : (
+      <>{children}</>
+    )
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // PHASE: WELCOME
+  // ─────────────────────────────────────────────────────────────────────────
   if (phase.tag === 'welcome') {
     return (
-      <div className="min-h-screen bg-[#eef0f4] flex flex-col">
-        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
-          <span className="text-white text-[13px] font-semibold tracking-wide">MockMate</span>
-        </div>
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="w-full max-w-2xl bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200">
-            <div className="bg-[#1b3a5c] px-8 py-6">
-              <h1 className="text-[18px] font-bold text-white leading-tight">{form.title}</h1>
-              <p className="text-[12px] text-white/60 mt-1">{form.description}</p>
+      <ExamWrapper>
+        <div className="flex flex-col h-full">
+          <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4 gap-3">
+            <span className="text-white text-[13px] font-semibold">MockMate</span>
+            <span className="text-white/30 text-[13px]">·</span>
+            <span className="text-white/70 text-[13px]">{form.title}</span>
+            <div className="ml-auto">
+              <button
+                onClick={enterFullscreen}
+                title="Enter Full Screen"
+                className="text-[11px] text-white/60 hover:text-white/90 flex items-center gap-1.5 transition-colors"
+              >
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+                </svg>
+                {isFullscreen ? 'Full Screen' : 'Enter Full Screen'}
+              </button>
             </div>
-            <div className="px-8 py-6 flex gap-8">
-              <div className="flex-1 space-y-4">
-                <h2 className="text-[12px] font-semibold text-slate-500 uppercase tracking-widest">Exam Details</h2>
-                <div className="space-y-3">
-                  {[
-                    { label: 'Format', value: 'Adaptive (MST)' },
-                    { label: 'Total Questions', value: '98 questions' },
-                    { label: 'Sections', value: 'Reading & Writing • Math' },
-                    { label: 'Total Time', value: '2 hr 14 min' },
-                    { label: 'Score Range', value: '400–1600' },
-                  ].map(({ label, value }) => (
-                    <div key={label}>
-                      <p className="text-[11px] text-slate-400">{label}</p>
-                      <p className="text-[13px] font-semibold text-slate-800">{value}</p>
-                    </div>
-                  ))}
-                </div>
-                <p className="text-[11px] text-slate-400 leading-relaxed mt-2">{form.disclaimer}</p>
+          </div>
+          <div className="flex-1 overflow-y-auto flex items-center justify-center p-6">
+            <div className="w-full max-w-2xl bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200">
+              <div className="bg-[#1b3a5c] px-8 py-6">
+                <h1 className="text-[18px] font-bold text-white leading-tight">{form.title}</h1>
+                <p className="text-[12px] text-white/60 mt-1">{form.description}</p>
               </div>
-              <div className="flex flex-col items-center justify-center gap-5 pl-8 border-l border-slate-100">
-                <div className="h-16 w-16 rounded-full bg-slate-100 flex items-center justify-center">
-                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-8 w-8 text-slate-400">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                  </svg>
+              <div className="px-8 py-6 flex gap-8">
+                <div className="flex-1 space-y-4">
+                  <h2 className="text-[12px] font-semibold text-slate-500 uppercase tracking-widest">Exam Details</h2>
+                  <div className="space-y-3">
+                    {[
+                      { label: 'Format', value: 'Adaptive (MST)' },
+                      { label: 'Total Questions', value: '98 questions' },
+                      { label: 'Sections', value: 'Reading & Writing · Math' },
+                      { label: 'Total Time', value: '2 hr 14 min' },
+                      { label: 'Score Range', value: '400–1600' },
+                    ].map(({ label, value }) => (
+                      <div key={label}>
+                        <p className="text-[11px] text-slate-400">{label}</p>
+                        <p className="text-[13px] font-semibold text-slate-800">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-relaxed">{form.disclaimer}</p>
                 </div>
-                <button
-                  onClick={() => setPhase({ tag: 'rw_directions' })}
-                  className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-[14px] font-semibold px-6 py-2.5 rounded-lg transition-colors"
-                >
-                  Start Test
-                </button>
+                <div className="flex flex-col items-center justify-center gap-5 pl-8 border-l border-slate-100">
+                  <div className="h-16 w-16 rounded-full bg-slate-100 flex items-center justify-center">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-8 w-8 text-slate-400">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                  </div>
+                  <button
+                    onClick={() => setPhase({ tag: 'rw_directions' })}
+                    className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-[14px] font-semibold px-6 py-2.5 rounded-lg transition-colors"
+                  >
+                    Start Test
+                  </button>
+                  <p className="text-[10px] text-slate-400 text-center">Tip: Use ← → to move<br/>between questions</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </ExamWrapper>
     )
   }
 
-  // ── RW Directions ──────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
+  // PHASE: DIRECTIONS / BREAK SCREENS
+  // ─────────────────────────────────────────────────────────────────────────
+  const DirectionsLayout = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    <ExamWrapper>
+      <div className="flex flex-col h-full">
+        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
+          <span className="text-white text-[13px] font-semibold">{title}</span>
+        </div>
+        <div className="flex-1 overflow-y-auto flex items-center justify-center p-6">
+          {children}
+        </div>
+      </div>
+    </ExamWrapper>
+  )
+
   if (phase.tag === 'rw_directions') {
     return (
-      <div className="min-h-screen bg-[#eef0f4] flex flex-col">
-        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
-          <span className="text-white text-[13px] font-semibold">Reading and Writing</span>
-        </div>
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="w-full max-w-xl bg-white rounded-xl shadow-sm border border-slate-200 p-8">
-            <h2 className="text-[18px] font-bold text-slate-900 mb-4">Reading and Writing</h2>
-            <div className="text-[13px] text-slate-700 space-y-3 leading-relaxed mb-6">
-              <p>This section contains <strong>two modules</strong> of 27 questions each. You will have <strong>32 minutes</strong> per module.</p>
-              <p>Questions draw on short passages from Literature, History/Social Studies, and Science. Each passage is followed by a single question.</p>
-              <p><strong>You may not return to a previous module</strong> once you advance. Within a module, you may move freely between questions.</p>
-              <p>Question types include: Words in Context, Text Structure and Purpose, Central Ideas and Details, Command of Evidence, Inferences, Cross-Text Connections, Rhetorical Synthesis, Transitions, Boundaries, and Form, Structure, and Sense.</p>
-            </div>
-            <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 text-[12px] text-blue-800 mb-6">
-              <p className="font-semibold mb-1">Scoring note</p>
-              <p>Your performance on Module 1 determines which Module 2 you receive. Both paths count toward your score. Scores range from 200–800.</p>
-            </div>
-            <button
-              onClick={() => {
-                startTimer(rwSection.modules[0].timeMinutes)
-                setPhase({ tag: 'question', section: 'rw', slot: 'm1', qIdx: 0 })
-              }}
-              className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors"
-            >
-              Begin Module 1
-            </button>
+      <DirectionsLayout title="Reading and Writing">
+        <div className="w-full max-w-xl bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+          <h2 className="text-[18px] font-bold text-slate-900 mb-4">Reading and Writing</h2>
+          <div className="text-[13px] text-slate-700 space-y-3 leading-relaxed mb-6">
+            <p>This section contains <strong>two modules</strong> of 27 questions each. You have <strong>32 minutes</strong> per module.</p>
+            <p>Questions draw on short passages from Literature, History/Social Studies, and Science. Each passage is followed by a single question.</p>
+            <p><strong>You may not return to a previous module</strong> once you advance. Within a module you may move freely between questions.</p>
+            <p>Skill areas: Words in Context · Text Structure and Purpose · Central Ideas and Details · Command of Evidence · Inferences · Cross-Text Connections · Rhetorical Synthesis · Transitions · Boundaries · Form, Structure, and Sense</p>
           </div>
+          <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 text-[12px] text-blue-800 mb-6">
+            <p className="font-semibold mb-1">Adaptive scoring</p>
+            <p>Your Module 1 score determines which Module 2 you receive. Both modules count toward your final score (200–800).</p>
+          </div>
+          <button
+            onClick={() => { startTimer(rwSection.modules[0].timeMinutes); setPhase({ tag: 'question', section: 'rw', slot: 'm1', qIdx: 0 }) }}
+            className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors"
+          >
+            Begin Module 1
+          </button>
         </div>
-      </div>
+      </DirectionsLayout>
     )
   }
 
-  // ── RW Break (between M1 and M2) ───────────────────────────────────────────
   if (phase.tag === 'rw_break') {
     return (
-      <div className="min-h-screen bg-[#eef0f4] flex flex-col">
-        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
-          <span className="text-white text-[13px] font-semibold">Reading and Writing</span>
-        </div>
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
-            <div className="h-12 w-12 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-6 w-6 text-green-600">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h2 className="text-[18px] font-bold text-slate-900 mb-2">Module 1 Complete</h2>
-            <p className="text-[13px] text-slate-500 mb-6">Module 2 will now begin. You have 32 minutes.</p>
-            <button
-              onClick={() => {
-                const m2 = getM2Module('rw', rwM2Type)
-                startTimer(m2.timeMinutes)
-                setPhase({ tag: 'question', section: 'rw', slot: 'm2', qIdx: 0 })
-              }}
-              className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors"
-            >
-              Begin Module 2
-            </button>
+      <DirectionsLayout title="Reading and Writing">
+        <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
+          <div className="h-12 w-12 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-6 w-6 text-green-600">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
           </div>
+          <h2 className="text-[18px] font-bold text-slate-900 mb-2">Module 1 Complete</h2>
+          <p className="text-[13px] text-slate-500 mb-6">Module 2 will now begin. You have 32 minutes.</p>
+          <button
+            onClick={() => { const m2 = getM2Module('rw', rwM2Type); startTimer(m2.timeMinutes); setPhase({ tag: 'question', section: 'rw', slot: 'm2', qIdx: 0 }) }}
+            className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors"
+          >
+            Begin Module 2
+          </button>
         </div>
-      </div>
+      </DirectionsLayout>
     )
   }
 
-  // ── Section Break (between RW and Math) ────────────────────────────────────
   if (phase.tag === 'section_break') {
     return (
-      <div className="min-h-screen bg-[#eef0f4] flex flex-col">
-        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
-          <span className="text-white text-[13px] font-semibold">Break</span>
+      <DirectionsLayout title="Break">
+        <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
+          <h2 className="text-[18px] font-bold text-slate-900 mb-2">Reading and Writing Complete</h2>
+          <p className="text-[13px] text-slate-500 mb-6">Take a short break. The Math section is next.</p>
+          <button onClick={() => setPhase({ tag: 'math_directions' })} className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors">
+            Continue to Math
+          </button>
         </div>
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
-            <h2 className="text-[18px] font-bold text-slate-900 mb-2">Reading and Writing Complete</h2>
-            <p className="text-[13px] text-slate-500 mb-6">Take a short break. The Math section comes next.</p>
-            <button
-              onClick={() => setPhase({ tag: 'math_directions' })}
-              className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors"
-            >
-              Continue to Math
-            </button>
-          </div>
-        </div>
-      </div>
+      </DirectionsLayout>
     )
   }
 
-  // ── Math Directions ────────────────────────────────────────────────────────
   if (phase.tag === 'math_directions') {
     return (
-      <div className="min-h-screen bg-[#eef0f4] flex flex-col">
-        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
-          <span className="text-white text-[13px] font-semibold">Math</span>
-        </div>
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="w-full max-w-xl bg-white rounded-xl shadow-sm border border-slate-200 p-8">
-            <h2 className="text-[18px] font-bold text-slate-900 mb-4">Math</h2>
-            <div className="text-[13px] text-slate-700 space-y-3 leading-relaxed mb-6">
-              <p>This section contains <strong>two modules</strong> of 22 questions each. You will have <strong>35 minutes</strong> per module.</p>
-              <p>Question types: multiple choice (4 options) and <strong>grid-in</strong> (enter your own answer). Grid-in answers can be integers, decimals, or fractions.</p>
-              <p><strong>Calculator permitted</strong> for all Math questions.</p>
-              <p>Domains covered: Algebra, Advanced Math, Problem-Solving and Data Analysis, and Geometry and Trigonometry.</p>
-            </div>
-            <div className="bg-amber-50 border border-amber-100 rounded-lg p-4 text-[12px] text-amber-800 mb-6">
-              <p className="font-semibold mb-1">Grid-in tips</p>
-              <p>Enter fractions as "3/4", decimals as ".75" or "0.75", and negative answers with a minus sign. You cannot enter mixed numbers — convert to improper fractions.</p>
-            </div>
-            <button
-              onClick={() => {
-                startTimer(mathSection.modules[0].timeMinutes)
-                setPhase({ tag: 'question', section: 'math', slot: 'm1', qIdx: 0 })
-              }}
-              className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors"
-            >
-              Begin Module 1
-            </button>
+      <DirectionsLayout title="Math">
+        <div className="w-full max-w-xl bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+          <h2 className="text-[18px] font-bold text-slate-900 mb-4">Math</h2>
+          <div className="text-[13px] text-slate-700 space-y-3 leading-relaxed mb-6">
+            <p>This section contains <strong>two modules</strong> of 22 questions each. You have <strong>35 minutes</strong> per module.</p>
+            <p>Question types: <strong>multiple choice</strong> (4 options) and <strong>grid-in</strong> (enter your own answer).</p>
+            <p><strong>Calculator permitted</strong> for all Math questions.</p>
+            <p>Domains: Algebra · Advanced Math · Problem-Solving and Data Analysis · Geometry and Trigonometry</p>
           </div>
+          <div className="bg-amber-50 border border-amber-100 rounded-lg p-4 text-[12px] text-amber-800 mb-6">
+            <p className="font-semibold mb-1">Grid-in answers</p>
+            <p>Enter fractions as "3/4", decimals as ".75" or "0.75". You cannot enter mixed numbers — convert to improper fractions.</p>
+          </div>
+          <button
+            onClick={() => { startTimer(mathSection.modules[0].timeMinutes); setPhase({ tag: 'question', section: 'math', slot: 'm1', qIdx: 0 }) }}
+            className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors"
+          >
+            Begin Module 1
+          </button>
         </div>
-      </div>
+      </DirectionsLayout>
     )
   }
 
-  // ── Math Break (between M1 and M2) ─────────────────────────────────────────
   if (phase.tag === 'math_break') {
     return (
-      <div className="min-h-screen bg-[#eef0f4] flex flex-col">
-        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
-          <span className="text-white text-[13px] font-semibold">Math</span>
-        </div>
-        <div className="flex-1 flex items-center justify-center p-6">
-          <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
-            <div className="h-12 w-12 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-6 w-6 text-green-600">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h2 className="text-[18px] font-bold text-slate-900 mb-2">Module 1 Complete</h2>
-            <p className="text-[13px] text-slate-500 mb-6">Module 2 will now begin. You have 35 minutes.</p>
-            <button
-              onClick={() => {
-                const m2 = getM2Module('math', mathM2Type)
-                startTimer(m2.timeMinutes)
-                setPhase({ tag: 'question', section: 'math', slot: 'm2', qIdx: 0 })
-              }}
-              className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors"
-            >
-              Begin Module 2
-            </button>
+      <DirectionsLayout title="Math">
+        <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
+          <div className="h-12 w-12 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-6 w-6 text-green-600">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
           </div>
+          <h2 className="text-[18px] font-bold text-slate-900 mb-2">Module 1 Complete</h2>
+          <p className="text-[13px] text-slate-500 mb-6">Module 2 will now begin. You have 35 minutes.</p>
+          <button
+            onClick={() => { const m2 = getM2Module('math', mathM2Type); startTimer(m2.timeMinutes); setPhase({ tag: 'question', section: 'math', slot: 'm2', qIdx: 0 }) }}
+            className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors"
+          >
+            Begin Module 2
+          </button>
         </div>
-      </div>
+      </DirectionsLayout>
     )
   }
 
-  // ── Question view ──────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
+  // PHASE: QUESTION
+  // ─────────────────────────────────────────────────────────────────────────
   if (phase.tag === 'question') {
     const mod = getActiveModule(phase.section, phase.slot)
     const q = mod.questions[phase.qIdx]
@@ -501,164 +777,141 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
     const currentAnswer = answers[q.id] ?? ''
 
     const isMC = q.section === 'reading-writing' || (q as MathMCQuestion | MathGridInQuestion).type === 'multiple_choice'
-    const choices = isMC
-      ? (q.section === 'reading-writing' ? q.choices : (q as MathMCQuestion).choices)
-      : null
+    const choices = isMC ? getChoices(q) : null
     const gridInQ = !isMC ? (q as MathGridInQuestion) : null
+    const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
 
     const sectionLabel = phase.section === 'rw' ? 'Reading and Writing' : 'Math'
     const moduleLabel = `Module ${phase.slot === 'm1' ? '1' : '2'}`
-    const centerLabel = `${sectionLabel} — ${moduleLabel} | Question ${qNum} of ${qTotal}`
-
+    const centerLabel = `${sectionLabel} — ${moduleLabel} | Q ${qNum} of ${qTotal}`
     const isLastInModule = phase.qIdx === qTotal - 1
-    const submitLabel = isLastInModule
-      ? (phase.slot === 'm1' ? 'Submit Module 1' : phase.section === 'rw' ? 'Submit RW Section' : 'Submit Math Section')
-      : undefined
-
-    const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
 
     return (
-      <div className="min-h-screen bg-[#eef0f4] flex flex-col">
-        <NavBar
-          canGoBack={phase.qIdx > 0}
-          onBack={handleBack}
-          onNext={handleNext}
-          centerLabel={centerLabel}
-          timerEl={<TimerDisplay secs={secsLeft} />}
-          showReview={true}
-          onReview={() => setPhase({ tag: 'end' })}
-          isBookmarked={bookmarked}
-          onBookmark={() => toggleBookmark(q.id)}
-        />
+      <ExamWrapper>
+        <div className="flex flex-col h-full">
+          <NavBar
+            canGoBack={phase.qIdx > 0}
+            onBack={handleBack}
+            onNext={handleNext}
+            centerLabel={centerLabel}
+            timerEl={<TimerDisplay secs={secsLeft} />}
+            showReview={true}
+            onReview={() => setPhase({ tag: 'end' })}
+            isBookmarked={bookmarked}
+            onBookmark={() => toggleBookmark(q.id)}
+          />
 
-        <div className="flex-1 overflow-y-auto">
-          <div className="max-w-3xl mx-auto px-4 py-6">
+          <div className="flex-1 overflow-y-auto">
+            <div className="max-w-3xl mx-auto px-4 py-6">
+              {/* Stimulus */}
+              {stimulus && (
+                <div className="bg-white rounded-xl border border-slate-200 p-5 mb-4 text-[13px] text-slate-800 leading-[1.85] whitespace-pre-line">
+                  {stimulus}
+                </div>
+              )}
 
-            {/* Stimulus / passage */}
-            {stimulus && (
-              <div className="bg-white rounded-xl border border-slate-200 p-5 mb-4 text-[13px] text-slate-800 leading-[1.85] whitespace-pre-line">
-                {stimulus}
-              </div>
-            )}
+              {/* Question card */}
+              <div className="bg-white rounded-xl border border-slate-200 p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
+                    {q.domain} · {q.section === 'reading-writing' ? q.skill : (q as { skill: string }).skill}
+                  </span>
+                  {bookmarked && <span className="text-[10px] font-semibold text-amber-500 uppercase tracking-widest">Bookmarked</span>}
+                </div>
+                <p className="text-[14px] text-slate-900 font-medium leading-snug mb-5">{q.question}</p>
 
-            {/* Question card */}
-            <div className="bg-white rounded-xl border border-slate-200 p-5">
-              {/* Domain chip */}
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
-                  {q.domain} · {q.section === 'reading-writing' ? q.skill : (q as { skill: string }).skill}
-                </span>
-                {bookmarked && (
-                  <span className="text-[10px] font-semibold text-amber-500 uppercase tracking-widest">Bookmarked</span>
+                {choices && (
+                  <div className="space-y-2">
+                    {choices.map(choice => {
+                      const selected = currentAnswer === choice.label
+                      return (
+                        <button
+                          key={choice.label}
+                          onClick={() => setAnswer(q.id, choice.label)}
+                          className={cn(
+                            'w-full text-left flex items-start gap-3 px-4 py-3 rounded-lg border text-[13px] transition-all',
+                            selected ? 'border-[#1d4ed8] bg-blue-50 text-[#1d4ed8]' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                          )}
+                        >
+                          <span className={cn('shrink-0 h-5 w-5 rounded-full border-2 flex items-center justify-center text-[10px] font-bold mt-0.5',
+                            selected ? 'border-[#1d4ed8] bg-[#1d4ed8] text-white' : 'border-slate-300 text-slate-500'
+                          )}>
+                            {choice.label}
+                          </span>
+                          <span className="leading-snug">{choice.text}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                )}
+
+                {gridInQ && (
+                  <div className="mt-2">
+                    <label className="block text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-2">Enter your answer</label>
+                    <input
+                      type="text"
+                      value={currentAnswer}
+                      onChange={e => setAnswer(q.id, e.target.value)}
+                      placeholder="e.g. 4, 3/4, .75"
+                      className="w-48 border-2 border-slate-200 rounded-lg px-4 py-2 text-[14px] font-mono text-slate-900 focus:border-[#1d4ed8] focus:outline-none transition-colors"
+                    />
+                    {gridInQ.scoringNotes && <p className="mt-2 text-[11px] text-slate-400">{gridInQ.scoringNotes}</p>}
+                  </div>
                 )}
               </div>
 
-              <p className="text-[14px] text-slate-900 font-medium leading-snug mb-5">{q.question}</p>
-
-              {/* Multiple choice */}
-              {choices && (
-                <div className="space-y-2">
-                  {choices.map(choice => {
-                    const selected = currentAnswer === choice.label
-                    return (
-                      <button
-                        key={choice.label}
-                        onClick={() => setAnswer(q.id, choice.label)}
-                        className={cn(
-                          'w-full text-left flex items-start gap-3 px-4 py-3 rounded-lg border text-[13px] transition-all',
-                          selected
-                            ? 'border-[#1d4ed8] bg-blue-50 text-[#1d4ed8]'
-                            : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
-                        )}
-                      >
-                        <span className={cn('shrink-0 h-5 w-5 rounded-full border-2 flex items-center justify-center text-[10px] font-bold mt-0.5',
-                          selected ? 'border-[#1d4ed8] bg-[#1d4ed8] text-white' : 'border-slate-300 text-slate-500'
-                        )}>
-                          {choice.label}
-                        </span>
-                        <span className="leading-snug">{choice.text}</span>
-                      </button>
-                    )
-                  })}
-                </div>
-              )}
-
-              {/* Grid-in */}
-              {gridInQ && (
-                <div className="mt-2">
-                  <label className="block text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-2">
-                    Enter your answer
-                  </label>
-                  <input
-                    type="text"
-                    value={currentAnswer}
-                    onChange={e => setAnswer(q.id, e.target.value)}
-                    placeholder="e.g. 4, 3/4, .75"
-                    className="w-48 border-2 border-slate-200 rounded-lg px-4 py-2 text-[14px] font-mono text-slate-900 focus:border-[#1d4ed8] focus:outline-none transition-colors"
-                  />
-                  {gridInQ.scoringNotes && (
-                    <p className="mt-2 text-[11px] text-slate-400">{gridInQ.scoringNotes}</p>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* Submit module button on last question */}
-            {submitLabel && (
-              <div className="mt-4 flex justify-end">
-                <button
-                  onClick={handleNext}
-                  className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-[13px] font-semibold px-5 py-2.5 rounded-lg transition-colors"
-                >
-                  {submitLabel} →
-                </button>
+              {/* Keyboard hint + last-question submit */}
+              <div className="mt-3 flex items-center justify-between">
+                <p className="text-[10px] text-slate-400">Tip: Use ← → to move between questions</p>
+                {isLastInModule && (
+                  <button
+                    onClick={handleNext}
+                    className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-[13px] font-semibold px-5 py-2.5 rounded-lg transition-colors"
+                  >
+                    {phase.slot === 'm1' ? 'Submit Module 1 →' : phase.section === 'rw' ? 'Submit RW Section →' : 'Submit Math Section →'}
+                  </button>
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
-      </div>
+      </ExamWrapper>
     )
   }
 
-  // ── End / Review ───────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
+  // PHASE: END (review)
+  // ─────────────────────────────────────────────────────────────────────────
   if (phase.tag === 'end') {
-    const m2Module = getM2Module('math', mathM2Type)
-    const rwM1Qs = rwSection.modules[0].questions
-    const rwM2Qs = getM2Module('rw', rwM2Type).questions
-    const mathM1Qs = mathSection.modules[0].questions
-    const mathM2Qs = m2Module.questions
-
     const groups = [
-      { label: 'Reading and Writing — Module 1', questions: rwM1Qs },
-      { label: 'Reading and Writing — Module 2', questions: rwM2Qs },
-      { label: 'Math — Module 1', questions: mathM1Qs },
-      { label: 'Math — Module 2', questions: mathM2Qs },
+      { label: 'Reading and Writing — Module 1', questions: rwM1Module.questions, section: 'rw' as const, slot: 'm1' as const },
+      { label: `Reading and Writing — Module 2 (${rwM2Type})`, questions: rwM2Module.questions, section: 'rw' as const, slot: 'm2' as const },
+      { label: 'Math — Module 1', questions: mathM1Module.questions, section: 'math' as const, slot: 'm1' as const },
+      { label: `Math — Module 2 (${mathM2Type})`, questions: mathM2Module.questions, section: 'math' as const, slot: 'm2' as const },
     ]
 
     return (
-      <div className="min-h-screen bg-[#eef0f4] flex flex-col">
-        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
-          <span className="text-white text-[13px] font-semibold">Review Answers</span>
-        </div>
-        <div className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-[18px] font-bold text-slate-900 mb-1">Review Your Answers</h2>
-            <p className="text-[13px] text-slate-500 mb-6">Check your responses before submitting. Click any question number to return to it.</p>
+      <ExamWrapper>
+        <div className="flex flex-col h-full">
+          <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
+            <span className="text-white text-[13px] font-semibold">Review Answers</span>
+          </div>
+          <div className="flex-1 overflow-y-auto p-6">
+            <div className="max-w-2xl mx-auto">
+              <h2 className="text-[18px] font-bold text-slate-900 mb-1">Review Your Answers</h2>
+              <p className="text-[13px] text-slate-500 mb-6">Click any number to return to that question.</p>
 
-            {groups.map((group, gi) => {
-              let sectionTag: 'rw' | 'math' = gi < 2 ? 'rw' : 'math'
-              let slot: 'm1' | 'm2' = gi % 2 === 0 ? 'm1' : 'm2'
-              return (
+              {groups.map((g, gi) => (
                 <div key={gi} className="mb-6">
-                  <h3 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-3">{group.label}</h3>
+                  <h3 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-3">{g.label}</h3>
                   <div className="flex flex-wrap gap-2">
-                    {group.questions.map((q, qi) => {
+                    {g.questions.map((q, qi) => {
                       const answered = isAnswered(q, answers)
                       const bm = bookmarks.has(q.id)
                       return (
                         <button
                           key={q.id}
-                          onClick={() => setPhase({ tag: 'question', section: sectionTag, slot, qIdx: qi })}
+                          onClick={() => setPhase({ tag: 'question', section: g.section, slot: g.slot, qIdx: qi })}
                           className={cn(
                             'h-8 w-8 rounded text-[12px] font-semibold border transition-all relative',
                             answered ? 'bg-[#1d4ed8] border-[#1d4ed8] text-white' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-400',
@@ -671,138 +924,409 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
                     })}
                   </div>
                 </div>
-              )
-            })}
+              ))}
 
-            <div className="flex items-center gap-4 text-[12px] text-slate-500 mb-6">
-              <div className="flex items-center gap-1.5"><span className="h-4 w-4 rounded bg-[#1d4ed8]" /> Answered</div>
-              <div className="flex items-center gap-1.5"><span className="h-4 w-4 rounded bg-white border border-slate-200" /> Unanswered</div>
-              <div className="flex items-center gap-1.5"><span className="h-4 w-4 rounded ring-2 ring-amber-400" /> Bookmarked</div>
+              <div className="flex items-center gap-4 text-[12px] text-slate-500 mb-6">
+                <div className="flex items-center gap-1.5"><span className="h-4 w-4 rounded bg-[#1d4ed8]" /> Answered</div>
+                <div className="flex items-center gap-1.5"><span className="h-4 w-4 rounded bg-white border border-slate-200" /> Unanswered</div>
+                <div className="flex items-center gap-1.5"><span className="h-4 w-4 rounded ring-2 ring-amber-400" /> Bookmarked</div>
+              </div>
+
+              <button
+                onClick={() => setPhase({ tag: 'results' })}
+                className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-3 rounded-lg text-[14px] transition-colors"
+              >
+                Submit and See Results
+              </button>
             </div>
-
-            <button
-              onClick={() => setPhase({ tag: 'results' })}
-              className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-3 rounded-lg text-[14px] transition-colors"
-            >
-              Submit and See Results
-            </button>
           </div>
         </div>
-      </div>
+      </ExamWrapper>
     )
   }
 
-  // ── Results ────────────────────────────────────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────────────
+  // PHASE: RESULTS (renders in normal dashboard layout — sidebar visible)
+  // ─────────────────────────────────────────────────────────────────────────
   if (phase.tag === 'results') {
-    const m2RWModule = getM2Module('rw', rwM2Type)
-    const m2MathModule = getM2Module('math', mathM2Type)
-
-    const allModules = [
-      { label: 'Reading and Writing — Module 1', mod: rwSection.modules[0] },
-      { label: `Reading and Writing — Module 2 (${rwM2Type})`, mod: m2RWModule },
-      { label: 'Math — Module 1', mod: mathSection.modules[0] },
-      { label: `Math — Module 2 (${mathM2Type})`, mod: m2MathModule },
+    // Build flat list with metadata for filtering
+    const allModulesFlat = [
+      { label: 'Reading and Writing — Module 1', mod: rwM1Module, section: 'rw' as const },
+      { label: `Reading and Writing — Module 2 (${rwM2Type})`, mod: rwM2Module, section: 'rw' as const },
+      { label: 'Math — Module 1', mod: mathM1Module, section: 'math' as const },
+      { label: `Math — Module 2 (${mathM2Type})`, mod: mathM2Module, section: 'math' as const },
     ]
 
-    const rwTotal = rwSection.modules[0].questionCount + m2RWModule.questionCount
-    const mathTotal = mathSection.modules[0].questionCount + m2MathModule.questionCount
+    type FlatQ = {
+      q: SATQuestion; qi: number; modLabel: string; section: 'rw' | 'math'
+      answered: boolean; correct: boolean
+    }
+
+    const allFlat: FlatQ[] = allModulesFlat.flatMap(({ label, mod, section }) =>
+      mod.questions.map((q, qi) => ({
+        q, qi, modLabel: label, section,
+        answered: isAnswered(q, answers),
+        correct: isCorrect(q, answers),
+      }))
+    )
+
+    const filterTabs: { key: AnswerFilter; label: string }[] = [
+      { key: 'all', label: 'All' },
+      { key: 'incorrect', label: 'Incorrect' },
+      { key: 'unanswered', label: 'Unanswered' },
+      { key: 'rw', label: 'Reading & Writing' },
+      { key: 'math', label: 'Math' },
+      { key: 'marked', label: 'Marked' },
+    ]
+
+    const filteredFlat = allFlat.filter(({ q, section, answered, correct }) => {
+      if (answerFilter === 'incorrect') return answered && !correct
+      if (answerFilter === 'unanswered') return !answered
+      if (answerFilter === 'rw') return section === 'rw'
+      if (answerFilter === 'math') return section === 'math'
+      if (answerFilter === 'marked') return bookmarks.has(q.id)
+      return true
+    })
+
+    const FALLBACK_WRONG = 'This choice is incorrect — it does not match the evidence or reasoning required by the question.'
 
     return (
-      <div className="min-h-screen bg-[#eef0f4]">
-        <div className="h-11 bg-[#1b3a5c] flex items-center px-4 gap-4">
-          <span className="text-white text-[13px] font-semibold">Results</span>
-          <button onClick={handleRetake} className="ml-auto text-[11px] font-semibold text-white/70 hover:text-white transition-colors">
-            Retake Test
-          </button>
+      <div className="space-y-6 pb-10">
+        {/* Header actions */}
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-slate-900">Results — {form.title}</h1>
+          <div className="flex gap-2">
+            <button
+              onClick={handleDownloadPDF}
+              className="flex items-center gap-2 bg-[#1b3a5c] hover:bg-[#152d48] text-white text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+            >
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              </svg>
+              Download PDF Score Report
+            </button>
+            <button
+              onClick={handleRetake}
+              className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+            >
+              Retake Test
+            </button>
+          </div>
         </div>
 
-        <div className="max-w-3xl mx-auto px-4 py-8 space-y-6">
-          {/* Score summary */}
-          <div className="bg-white rounded-xl border border-slate-200 p-6">
-            <h2 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-4">Estimated Score</h2>
-            <div className="flex items-center justify-between">
-              <div className="text-center">
-                <p className="text-[11px] text-slate-400 mb-1">Reading &amp; Writing</p>
-                <p className="text-[36px] font-bold text-slate-900">{rwScaled}</p>
-                <p className="text-[11px] text-slate-400">{rwM1Correct + rwM2Correct}/{rwTotal} correct</p>
-              </div>
-              <div className="text-[28px] text-slate-200 font-light">+</div>
-              <div className="text-center">
-                <p className="text-[11px] text-slate-400 mb-1">Math</p>
-                <p className="text-[36px] font-bold text-slate-900">{mathScaled}</p>
-                <p className="text-[11px] text-slate-400">{mathM1Correct + mathM2Correct}/{mathTotal} correct</p>
-              </div>
-              <div className="text-[28px] text-slate-200 font-light">=</div>
-              <div className="text-center bg-[#1b3a5c] text-white rounded-xl px-6 py-4">
-                <p className="text-[11px] text-white/60 mb-1">Total Score</p>
-                <p className="text-[42px] font-bold leading-none">{totalScore}</p>
-                <p className="text-[11px] text-white/60">/ 1600</p>
-              </div>
+        {/* Score summary */}
+        <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <h2 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-4">Estimated Score</h2>
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="text-center">
+              <p className="text-[11px] text-slate-400 mb-1">Reading &amp; Writing</p>
+              <p className="text-[36px] font-bold text-slate-900">{rwScaled}</p>
+              <p className="text-[11px] text-slate-400">{rwM1Correct + rwM2Correct}/{rwTotal} correct</p>
             </div>
-            <p className="mt-4 text-[11px] text-slate-400">* Scores are estimated. Adaptive routing: RW used {rwM2Type} Module 2; Math used {mathM2Type} Module 2.</p>
+            <div className="text-[28px] text-slate-200 font-light">+</div>
+            <div className="text-center">
+              <p className="text-[11px] text-slate-400 mb-1">Math</p>
+              <p className="text-[36px] font-bold text-slate-900">{mathScaled}</p>
+              <p className="text-[11px] text-slate-400">{mathM1Correct + mathM2Correct}/{mathTotal} correct</p>
+            </div>
+            <div className="text-[28px] text-slate-200 font-light">=</div>
+            <div className="text-center bg-[#1b3a5c] text-white rounded-xl px-6 py-4">
+              <p className="text-[11px] text-white/60 mb-1">Total Score</p>
+              <p className="text-[42px] font-bold leading-none">{totalScore}</p>
+              <p className="text-[11px] text-white/60">/ 1600</p>
+            </div>
+          </div>
+          <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-[12px]">
+            {[
+              { label: 'RW Module 1', val: `${rwM1Correct}/27` },
+              { label: `RW Module 2 (${rwM2Type})`, val: `${rwM2Correct}/27` },
+              { label: 'Math Module 1', val: `${mathM1Correct}/22` },
+              { label: `Math Module 2 (${mathM2Type})`, val: `${mathM2Correct}/22` },
+            ].map(({ label, val }) => (
+              <div key={label} className="bg-slate-50 rounded-lg px-3 py-2">
+                <p className="text-[10px] text-slate-400">{label}</p>
+                <p className="font-semibold text-slate-700">{val}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-3 text-[11px] text-slate-400">Scores are estimated. Not an official College Board result.</p>
+        </div>
+
+        {/* AI Feedback */}
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+            <h2 className="text-[15px] font-bold text-slate-900">AI Performance Feedback</h2>
+            {!aiFeedback && !aiFeedbackLoading && (
+              <button onClick={fetchAIFeedback} className="text-[12px] text-[#1d4ed8] hover:underline font-medium">Generate</button>
+            )}
+          </div>
+          <div className="p-6">
+            {aiFeedbackLoading && (
+              <div className="flex items-center gap-3 text-[13px] text-slate-500">
+                <svg className="animate-spin h-4 w-4 text-[#1d4ed8]" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                </svg>
+                Analyzing your performance…
+              </div>
+            )}
+            {aiFeedbackError && <p className="text-[13px] text-red-600">{aiFeedbackError}</p>}
+            {aiFeedback && (
+              <div className="space-y-5 text-[13px] text-slate-700 leading-relaxed">
+                {aiFeedback.overallAssessment && (
+                  <div>
+                    <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Overall Assessment</p>
+                    <p>{aiFeedback.overallAssessment}</p>
+                  </div>
+                )}
+                {aiFeedback.whatWentWell && (
+                  <div>
+                    <p className="text-[11px] font-semibold text-green-600 uppercase tracking-widest mb-1">What You Did Well</p>
+                    <p>{aiFeedback.whatWentWell}</p>
+                  </div>
+                )}
+                {aiFeedback.adaptivePathInsight && (
+                  <div>
+                    <p className="text-[11px] font-semibold text-blue-600 uppercase tracking-widest mb-1">Adaptive Path Insight</p>
+                    <p>{aiFeedback.adaptivePathInsight}</p>
+                  </div>
+                )}
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {/* RW */}
+                  <div className="bg-slate-50 rounded-lg p-4 space-y-2">
+                    <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">Reading &amp; Writing</p>
+                    {aiFeedback.rwStrengths?.length > 0 && (
+                      <div>
+                        <p className="text-[11px] font-semibold text-green-600 mb-1">Strengths</p>
+                        <ul className="list-disc list-inside space-y-0.5">
+                          {aiFeedback.rwStrengths.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                    {aiFeedback.rwWeaknesses?.length > 0 && (
+                      <div>
+                        <p className="text-[11px] font-semibold text-red-500 mb-1">To Improve</p>
+                        <ul className="list-disc list-inside space-y-0.5">
+                          {aiFeedback.rwWeaknesses.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                    {aiFeedback.rwReviewTopics?.length > 0 && (
+                      <div>
+                        <p className="text-[11px] font-semibold text-amber-600 mb-1">Skills to Review</p>
+                        <div className="flex flex-wrap gap-1">
+                          {aiFeedback.rwReviewTopics.map((t, i) => (
+                            <span key={i} className="text-[10px] bg-amber-50 border border-amber-200 text-amber-700 px-2 py-0.5 rounded-full">{t}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  {/* Math */}
+                  <div className="bg-slate-50 rounded-lg p-4 space-y-2">
+                    <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">Math</p>
+                    {aiFeedback.mathStrengths?.length > 0 && (
+                      <div>
+                        <p className="text-[11px] font-semibold text-green-600 mb-1">Strengths</p>
+                        <ul className="list-disc list-inside space-y-0.5">
+                          {aiFeedback.mathStrengths.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                    {aiFeedback.mathWeaknesses?.length > 0 && (
+                      <div>
+                        <p className="text-[11px] font-semibold text-red-500 mb-1">To Improve</p>
+                        <ul className="list-disc list-inside space-y-0.5">
+                          {aiFeedback.mathWeaknesses.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                        </ul>
+                      </div>
+                    )}
+                    {aiFeedback.mathReviewTopics?.length > 0 && (
+                      <div>
+                        <p className="text-[11px] font-semibold text-amber-600 mb-1">Skills to Review</p>
+                        <div className="flex flex-wrap gap-1">
+                          {aiFeedback.mathReviewTopics.map((t, i) => (
+                            <span key={i} className="text-[10px] bg-amber-50 border border-amber-200 text-amber-700 px-2 py-0.5 rounded-full">{t}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {aiFeedback.carelessErrors && (
+                  <div className="bg-orange-50 border border-orange-100 rounded-lg p-3">
+                    <p className="text-[11px] font-semibold text-orange-600 uppercase tracking-widest mb-1">Careless Error Pattern</p>
+                    <p className="text-[12px]">{aiFeedback.carelessErrors}</p>
+                  </div>
+                )}
+                {aiFeedback.practiceRecommendations && (
+                  <div>
+                    <p className="text-[11px] font-semibold text-[#1b3a5c] uppercase tracking-widest mb-1">Recommended Practice Plan</p>
+                    <p>{aiFeedback.practiceRecommendations}</p>
+                  </div>
+                )}
+                {aiFeedback.mockMateNextSteps && (
+                  <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
+                    <p className="text-[11px] font-semibold text-blue-700 uppercase tracking-widest mb-2">How to Use MockMate Next</p>
+                    <p className="text-[12px] text-blue-900">{aiFeedback.mockMateNextSteps}</p>
+                  </div>
+                )}
+              </div>
+            )}
+            {!aiFeedback && !aiFeedbackLoading && !aiFeedbackError && (
+              <p className="text-[13px] text-slate-400 italic">AI feedback will generate automatically.</p>
+            )}
+          </div>
+        </div>
+
+        {/* Answer Key with filters */}
+        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+          <div className="px-5 py-4 border-b border-slate-200">
+            <h2 className="text-[15px] font-bold text-slate-900 mb-3">Answer Key</h2>
+            <div className="flex flex-wrap gap-2">
+              {filterTabs.map(({ key, label }) => (
+                <button
+                  key={key}
+                  onClick={() => setAnswerFilter(key)}
+                  className={cn(
+                    'text-[12px] font-medium px-3 py-1 rounded-full border transition-all',
+                    answerFilter === key
+                      ? 'bg-[#1b3a5c] border-[#1b3a5c] text-white'
+                      : 'bg-white border-slate-200 text-slate-600 hover:border-slate-400',
+                  )}
+                >
+                  {label}
+                  {key === 'incorrect' && ` (${allFlat.filter(x => x.answered && !x.correct).length})`}
+                  {key === 'unanswered' && ` (${allFlat.filter(x => !x.answered).length})`}
+                  {key === 'marked' && ` (${allFlat.filter(x => bookmarks.has(x.q.id)).length})`}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Answer key by module */}
-          {allModules.map(({ label, mod }) => (
-            <div key={mod.id} className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-              <div className="bg-slate-50 px-5 py-3 border-b border-slate-200">
-                <h3 className="text-[12px] font-semibold text-slate-600">{label}</h3>
-                <p className="text-[11px] text-slate-400">
-                  {countCorrect(mod, answers)}/{mod.questionCount} correct
-                </p>
-              </div>
-              <div className="divide-y divide-slate-100">
-                {mod.questions.map((q, qi) => {
-                  const answered = isAnswered(q, answers)
-                  const correct = isCorrect(q, answers)
-                  const userAns = answers[q.id] ?? '—'
-                  const correctAns = q.section === 'reading-writing'
-                    ? q.correctAnswer
-                    : (q as MathMCQuestion).type === 'multiple_choice'
-                      ? (q as MathMCQuestion).correctAnswer
-                      : (q as MathGridInQuestion).correctAnswer
+          {filteredFlat.length === 0 ? (
+            <div className="p-6 text-[13px] text-slate-400 italic">No questions match this filter.</div>
+          ) : (
+            <div className="divide-y divide-slate-100">
+              {filteredFlat.map(({ q, qi, modLabel, answered, correct }) => {
+                const userAns = answers[q.id] || '—'
+                const correctAns = getCorrectAnswer(q)
+                const explanation = getExplanation(q)
+                const wrongExps = getWrongAnswerExplanations(q)
+                const choices = getChoices(q)
+                const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
+                const isGridIn = q.section === 'math' && (q as MathGridInQuestion).type === 'grid_in'
+                const skill = q.section === 'reading-writing' ? q.skill : (q as { skill: string }).skill
 
-                  return (
-                    <details key={q.id} className="group">
-                      <summary className="flex items-center gap-3 px-5 py-3 cursor-pointer hover:bg-slate-50 list-none transition-colors">
-                        <span className={cn('shrink-0 h-5 w-5 rounded-full flex items-center justify-center text-[10px] font-bold',
-                          !answered ? 'bg-slate-100 text-slate-400' :
-                          correct ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                        )}>
-                          {!answered ? '?' : correct ? '✓' : '✗'}
-                        </span>
-                        <span className="text-[12px] font-medium text-slate-700 shrink-0 w-6">{qi + 1}.</span>
-                        <span className="flex-1 text-[12px] text-slate-600 truncate">{q.question}</span>
-                        <span className="shrink-0 text-[11px] text-slate-400">
-                          {answered ? (correct ? '' : `Your: ${userAns} · Correct: ${correctAns}`) : 'Skipped'}
-                        </span>
-                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                          className="h-3.5 w-3.5 text-slate-300 shrink-0 group-open:rotate-180 transition-transform">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                        </svg>
-                      </summary>
-                      <div className="px-5 pb-4 pt-1 text-[12px] text-slate-600 leading-relaxed space-y-2 bg-slate-50 border-t border-slate-100">
-                        <p><span className="font-semibold text-slate-700">Correct answer:</span> {correctAns}</p>
-                        {q.section === 'reading-writing' && (
-                          <p><span className="font-semibold text-slate-700">Explanation:</span> {q.explanation}</p>
+                const statusIcon = !answered ? '?' : correct ? '✓' : '✗'
+                const statusColor = !answered ? 'bg-slate-100 text-slate-400' : correct ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+
+                return (
+                  <details key={q.id} className="group">
+                    <summary className="flex items-center gap-3 px-5 py-3.5 cursor-pointer hover:bg-slate-50 list-none transition-colors">
+                      <span className={cn('shrink-0 h-5 w-5 rounded-full flex items-center justify-center text-[10px] font-bold', statusColor)}>
+                        {statusIcon}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-[11px] font-semibold text-slate-500">{modLabel} · Q{qi + 1}</span>
+                          <span className="text-[10px] text-slate-400">{skill}</span>
+                          <span className={cn('text-[10px] font-medium px-1.5 py-0.5 rounded',
+                            q.difficulty === 'easy' ? 'bg-green-50 text-green-600' :
+                            q.difficulty === 'medium' ? 'bg-amber-50 text-amber-600' : 'bg-red-50 text-red-600'
+                          )}>
+                            {q.difficulty}
+                          </span>
+                          {bookmarks.has(q.id) && <span className="text-[10px] text-amber-500 font-semibold">★ Marked</span>}
+                        </div>
+                        <p className="text-[12px] text-slate-700 truncate mt-0.5">{q.question}</p>
+                      </div>
+                      <div className="shrink-0 text-right text-[11px] text-slate-400 hidden sm:block">
+                        {answered ? (
+                          correct ? <span className="text-green-600 font-semibold">Correct</span>
+                                  : <span>Your Answer: <strong>{userAns}</strong> · Correct: <strong>{correctAns}</strong></span>
+                        ) : <span className="text-slate-400">Skipped</span>}
+                      </div>
+                      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 text-slate-300 shrink-0 group-open:rotate-180 transition-transform">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                      </svg>
+                    </summary>
+
+                    <div className="px-5 pb-5 pt-2 bg-slate-50 border-t border-slate-100 space-y-4 text-[13px]">
+                      {/* Stimulus */}
+                      {stimulus && (
+                        <div className="bg-white border border-slate-200 rounded-lg p-3 text-[12px] text-slate-700 leading-relaxed whitespace-pre-line">
+                          {stimulus}
+                        </div>
+                      )}
+
+                      {/* Choices with correct/wrong highlights */}
+                      {choices && (
+                        <div className="space-y-1.5">
+                          {choices.map(c => {
+                            const isCorrectChoice = c.label === correctAns
+                            const isUserChoice = c.label === userAns
+                            return (
+                              <div key={c.label} className={cn('flex items-start gap-2 px-3 py-2 rounded-lg text-[12px]',
+                                isCorrectChoice ? 'bg-green-50 border border-green-200' :
+                                isUserChoice && !isCorrectChoice ? 'bg-red-50 border border-red-200' :
+                                'bg-white border border-slate-100'
+                              )}>
+                                <span className="shrink-0 font-bold">{c.label}.</span>
+                                <span className="flex-1">{c.text}</span>
+                                {isCorrectChoice && <span className="shrink-0 text-green-600 font-bold text-[10px]">✓ CORRECT</span>}
+                                {isUserChoice && !isCorrectChoice && <span className="shrink-0 text-red-600 font-bold text-[10px]">✗ YOUR ANSWER</span>}
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )}
+
+                      {/* Grid-in answer display */}
+                      {isGridIn && (
+                        <div className="flex items-center gap-4 text-[12px]">
+                          <span><span className="font-semibold text-slate-600">Your Answer:</span> <span className={answered && correct ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'}>{userAns}</span></span>
+                          <span><span className="font-semibold text-slate-600">Correct Answer:</span> <span className="text-green-600 font-semibold">{correctAns}</span></span>
+                        </div>
+                      )}
+
+                      {/* Correct answer explanation */}
+                      <div className="space-y-2">
+                        <div className="bg-green-50 border border-green-100 rounded-lg p-3">
+                          <p className="text-[11px] font-semibold text-green-700 uppercase tracking-widest mb-1">Correct Answer: {correctAns}</p>
+                          <p className="text-[12px] text-slate-700 leading-relaxed">{explanation}</p>
+                        </div>
+
+                        {/* Wrong answer explanations */}
+                        {choices && (
+                          <div className="space-y-1.5">
+                            <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Why the other choices are wrong</p>
+                            {choices.filter(c => c.label !== correctAns).map(c => {
+                              const exp = (wrongExps as Record<string, string>)[c.label] || FALLBACK_WRONG
+                              return (
+                                <div key={c.label} className="bg-white border border-slate-200 rounded-lg p-3">
+                                  <p className="text-[11px] font-semibold text-red-600 mb-1">Choice {c.label} is incorrect</p>
+                                  <p className="text-[12px] text-slate-600 leading-relaxed">{exp}</p>
+                                </div>
+                              )
+                            })}
+                          </div>
                         )}
-                        {q.section === 'math' && (
-                          <p><span className="font-semibold text-slate-700">Explanation:</span> {(q as { explanation: string }).explanation}</p>
+
+                        {/* Grid-in common mistake */}
+                        {isGridIn && (q as MathGridInQuestion).scoringNotes && (
+                          <div className="bg-amber-50 border border-amber-100 rounded-lg p-3">
+                            <p className="text-[11px] font-semibold text-amber-700 uppercase tracking-widest mb-1">Scoring Notes</p>
+                            <p className="text-[12px] text-slate-700">{(q as MathGridInQuestion).scoringNotes}</p>
+                          </div>
                         )}
                       </div>
-                    </details>
-                  )
-                })}
-              </div>
+                    </div>
+                  </details>
+                )
+              })}
             </div>
-          ))}
-
-          <button
-            onClick={handleRetake}
-            className="w-full border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold py-3 rounded-lg text-[14px] transition-colors"
-          >
-            Retake Test
-          </button>
+          )}
         </div>
       </div>
     )
