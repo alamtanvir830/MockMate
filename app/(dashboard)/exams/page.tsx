@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card'
 import { ExamStatusBadge } from '@/components/ui/badge'
 import { daysUntil, isExamLocked } from '@/lib/utils'
 import type { Exam } from '@/types'
+import { PremadeAttemptsSection } from '@/components/exams/PremadeAttemptsSection'
 
 export const metadata: Metadata = { title: 'My Exams' }
 
@@ -147,6 +148,9 @@ export default async function ExamsPage() {
           </div>
         )}
       </Card>
+
+      {/* Premade Exams */}
+      <PremadeAttemptsSection />
 
       {/* Shared with you */}
       {sharedExams.length > 0 && (

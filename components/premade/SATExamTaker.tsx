@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import type {
   SATForm,
@@ -10,6 +11,7 @@ import type {
   MathGridInQuestion,
   ChoiceLabel,
 } from '@/lib/premade-exams/sat/types'
+import { saveAttempt, updateAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
 import {
   convertRWScore,
   convertMathScore,
@@ -671,27 +673,31 @@ function TimerDisplay({ secs }: { secs: number }) {
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function SATExamTaker({ form }: { form: SATForm }) {
+export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; initialAttempt?: PremadeAttempt }) {
+  const isHistoryView = !!initialAttempt
+
   // ── Password gate ──────────────────────────────────────────────────────────
-  const [unlocked, setUnlocked] = useState(false)
+  const [unlocked, setUnlocked] = useState(isHistoryView)
   const [passwordInput, setPasswordInput] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [passwordChecking, setPasswordChecking] = useState(false)
 
   // ── Exam state ─────────────────────────────────────────────────────────────
-  const [phase, setPhase] = useState<SATPhase>({ tag: 'welcome' })
-  const [answers, setAnswers] = useState<Record<string, string>>({})
-  const [bookmarks, setBookmarks] = useState<Set<string>>(new Set())
-  const [rwM2Type, setRwM2Type] = useState<'easy' | 'hard'>('easy')
-  const [mathM2Type, setMathM2Type] = useState<'easy' | 'hard'>('easy')
+  const [phase, setPhase] = useState<SATPhase>(isHistoryView ? { tag: 'results' } : { tag: 'welcome' })
+  const [answers, setAnswers] = useState<Record<string, string>>(initialAttempt?.answers ?? {})
+  const [bookmarks, setBookmarks] = useState<Set<string>>(new Set(initialAttempt?.bookmarks ?? []))
+  const [rwM2Type, setRwM2Type] = useState<'easy' | 'hard'>(initialAttempt?.rwM2Type ?? 'easy')
+  const [mathM2Type, setMathM2Type] = useState<'easy' | 'hard'>(initialAttempt?.mathM2Type ?? 'easy')
   const [secsLeft, setSecsLeft] = useState(0)
   const [timerRunning, setTimerRunning] = useState(false)
-  const [aiFeedback, setAiFeedback] = useState<SATAIFeedback | null>(null)
+  const [aiFeedback, setAiFeedback] = useState<SATAIFeedback | null>(initialAttempt?.aiFeedback ?? null)
   const [aiFeedbackLoading, setAiFeedbackLoading] = useState(false)
   const [aiFeedbackError, setAiFeedbackError] = useState('')
   const [answerFilter, setAnswerFilter] = useState<AnswerFilter>('all')
   const [isFullscreen, setIsFullscreen] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const attemptIdRef = useRef<string>(initialAttempt?.id ?? '')
+  const completedAtRef = useRef<string>(initialAttempt?.completedAt ?? '')
 
   const rwSection = form.sections[0]
   const mathSection = form.sections[1]
@@ -916,8 +922,35 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
       rwScaled, mathScaled, totalScore])
 
   useEffect(() => {
-    if (phase.tag === 'results') fetchAIFeedback()
-  }, [phase.tag, fetchAIFeedback])
+    if (phase.tag === 'results' && !isHistoryView) fetchAIFeedback()
+  }, [phase.tag, fetchAIFeedback, isHistoryView])
+
+  // ── Save attempt to localStorage when entering results ─────────────────────
+  useEffect(() => {
+    if (phase.tag !== 'results' || isHistoryView || !attemptIdRef.current) return
+    const attempt: PremadeAttempt = {
+      id: attemptIdRef.current,
+      examId: 'sat-form-1',
+      examTitle: form.title,
+      completedAt: completedAtRef.current,
+      rwScaled, mathScaled, totalScore,
+      rwM1Correct, rwM2Correct, rwTotal,
+      mathM1Correct, mathM2Correct, mathTotal,
+      rwM2Type, mathM2Type,
+      answers,
+      bookmarks: [...bookmarks],
+      aiFeedback: null,
+    }
+    saveAttempt(attempt)
+  // only save once when entering results — intentionally omitting reactive deps
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase.tag])
+
+  // ── Update saved attempt when AI feedback loads (live and history view) ───
+  useEffect(() => {
+    if (!aiFeedback || !attemptIdRef.current) return
+    updateAttempt(attemptIdRef.current, { aiFeedback })
+  }, [aiFeedback])
 
   // ── Retake ─────────────────────────────────────────────────────────────────
   const handleRetake = useCallback(() => {
@@ -927,6 +960,8 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
     setSecsLeft(0); setTimerRunning(false)
     setAiFeedback(null); setAiFeedbackLoading(false); setAiFeedbackError('')
     setAnswerFilter('all')
+    attemptIdRef.current = ''
+    completedAtRef.current = ''
     // unlocked stays true — no re-auth needed for retake
   }, [])
 
@@ -1341,7 +1376,11 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
               </div>
 
               <button
-                onClick={() => setPhase({ tag: 'results' })}
+                onClick={() => {
+                  attemptIdRef.current = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+                  completedAtRef.current = new Date().toISOString()
+                  setPhase({ tag: 'results' })
+                }}
                 className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-3 rounded-lg text-[14px] transition-colors"
               >
                 Submit and See Results
@@ -1420,13 +1459,40 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
       <div className="space-y-6 pb-10">
         {/* Header */}
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-slate-900">Results — {form.title}</h1>
-          <button
-            onClick={handleRetake}
-            className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
-          >
-            Retake Test
-          </button>
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900">Results — {form.title}</h1>
+            {isHistoryView && initialAttempt?.completedAt && (
+              <p className="text-sm text-slate-400 mt-0.5">
+                Completed {new Date(initialAttempt.completedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}{' '}
+                at {new Date(initialAttempt.completedAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+              </p>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            {isHistoryView && (
+              <Link
+                href="/exams"
+                className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+              >
+                ← My Exams
+              </Link>
+            )}
+            {isHistoryView ? (
+              <Link
+                href="/premade/sat/form-1"
+                className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+              >
+                Take New Attempt
+              </Link>
+            ) : (
+              <button
+                onClick={handleRetake}
+                className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+              >
+                Retake Test
+              </button>
+            )}
+          </div>
         </div>
 
         {/* 1. Score summary */}
