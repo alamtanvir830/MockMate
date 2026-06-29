@@ -403,17 +403,69 @@ function PracticePromptsSection({ prompts, hasMisses }: { prompts: PracticePromp
 }
 
 // ─── PDF generation ────────────────────────────────────────────────────────────
-function compactPromptSummary(p: PracticePrompt): string {
+function promptCardBullets(p: PracticePrompt): string[] {
   const m = p.description.match(/^(\d+)\s+(.+?)-difficulty/)
   const n = m ? m[1] : '10'
   const diff = m ? m[2] : 'mixed'
+
   if (p.skill === 'Mixed') {
-    return `Create a mixed SAT practice set at ${diff} difficulty covering both Reading & Writing and Math. Include short passages, four answer choices (A–D) for RW, multiple choice and grid-in for Math, and full answer explanations.`
+    return [
+      `Create a mixed SAT practice set at ${diff} difficulty.`,
+      '8 Reading & Writing questions (varied skills)',
+      '7 Math questions (Algebra, Advanced Math, Data Analysis)',
+      'Short passage stimulus for each R&W question',
+      'Four answer choices (A–D) for R&W; multiple choice + grid-in for Math',
+      'Correct answer with explanation for every question',
+    ]
   }
+
+  const intro = p.section === 'rw'
+    ? `Create ${n} SAT Reading & Writing questions on ${p.skill} at ${diff} difficulty.`
+    : `Create ${n} SAT Math questions on ${p.skill} at ${diff} difficulty.`
+
+  const skillHints: Record<string, string> = {
+    'Words in Context':         'Words with multiple plausible meanings; only one fits the passage',
+    'Text Structure and Purpose':'Ask about the author\'s purpose and rhetorical organization',
+    'Cross-Text Connections':   'Use paired passages (Text 1 + Text 2) on the same topic',
+    'Central Ideas and Details':'Include "main idea" and "best supporting detail" question types',
+    'Command of Evidence':      'Include both textual and quantitative (chart/table) evidence types',
+    'Inferences':               'Ask what can be logically concluded — beyond what is stated',
+    'Rhetorical Synthesis':     'Use 3–5 student notes; student combines into one sentence',
+    'Transitions':              'Cover: contrast, cause-effect, addition, and exemplification',
+    'Boundaries':               'Cover: comma splices, run-ons, semicolons, colons, and dashes',
+    'Form, Structure, and Sense':'Cover: verb tense, subject-verb agreement, modifier placement',
+  }
+  const mathHints: [string, string][] = [
+    ['linear',      'Cover: slope-intercept, point-slope form, and word problems'],
+    ['system',      'Cover: substitution, elimination, no/infinite solution cases'],
+    ['quadratic',   'Cover: factoring, quadratic formula, vertex form, discriminant'],
+    ['exponential', 'Cover: growth/decay models, percent change, and half-life'],
+    ['function',    'Cover: f(x) notation, composition, transformations, domain/range'],
+    ['data',        'Cover: mean/median, scatterplots, two-way tables, margin of error'],
+    ['geometry',    'Cover: area, arc length, similar triangles, coordinate geometry'],
+    ['trig',        'Cover: SOH-CAH-TOA, complementary angles, radian/degree conversion'],
+    ['ratio',       'Cover: unit rates, percent increase/decrease, proportional relationships'],
+  ]
+
+  const hint = p.section === 'rw'
+    ? (skillHints[p.skill] ?? `Focus on ${p.skill} using authentic SAT-style passages`)
+    : (mathHints.find(([k]) => p.skill.toLowerCase().includes(k))?.[1] ?? `Focus on ${p.skill} in authentic SAT format`)
+
   if (p.section === 'rw') {
-    return `Create ${n} SAT Reading & Writing questions on ${p.skill} at ${diff} difficulty. Include a short passage per question, four answer choices (A–D), the correct answer with explanation, and why each wrong choice is incorrect.`
+    return [intro,
+      'Short passage stimulus per question (3–8 sentences)',
+      'Four answer choices (A, B, C, D)',
+      'Correct answer with full explanation',
+      'Brief explanation for each wrong answer choice',
+      hint,
+    ]
   }
-  return `Create ${n} SAT Math questions on ${p.skill} at ${diff} difficulty. Include multiple choice (A–D) and grid-in formats, step-by-step solutions, and brief explanations for each wrong answer choice.`
+  return [intro,
+    'Multiple choice (A–D) and grid-in formats',
+    'Step-by-step solution for each question',
+    'Brief explanation for each wrong answer choice',
+    hint,
+  ]
 }
 
 function generatePrintHTML(params: {
@@ -432,36 +484,33 @@ function generatePrintHTML(params: {
 
   const dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
   const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
-
-  // Truncate a string to a max length at a word boundary
   const trunc = (s: string, max: number) => s.length <= max ? s : s.slice(0, max).replace(/\s\S*$/, '') + '…'
 
   const feedbackHTML = aiFeedback ? `
 <div class="section">
   <div class="section-title">AI Performance Feedback</div>
   <div class="fb-grid">
-    ${aiFeedback.overallAssessment ? `<div class="fb-row"><span class="fb-label">Overall</span>${trunc(aiFeedback.overallAssessment, 220)}</div>` : ''}
-    ${aiFeedback.whatWentWell ? `<div class="fb-row"><span class="fb-label">Strengths</span>${trunc(aiFeedback.whatWentWell, 180)}</div>` : ''}
+    ${aiFeedback.overallAssessment ? `<div class="fb-row"><span class="fb-label">Overall</span>${trunc(aiFeedback.overallAssessment, 230)}</div>` : ''}
+    ${aiFeedback.whatWentWell ? `<div class="fb-row"><span class="fb-label">Strengths</span>${trunc(aiFeedback.whatWentWell, 190)}</div>` : ''}
     ${aiFeedback.rwWeaknesses?.length || aiFeedback.mathWeaknesses?.length ? `<div class="fb-row"><span class="fb-label">To Improve</span>${[...(aiFeedback.rwWeaknesses ?? []), ...(aiFeedback.mathWeaknesses ?? [])].slice(0, 4).join(' · ')}</div>` : ''}
-    ${aiFeedback.adaptivePathInsight ? `<div class="fb-row"><span class="fb-label">Adaptive Path</span>${trunc(aiFeedback.adaptivePathInsight, 180)}</div>` : ''}
+    ${aiFeedback.adaptivePathInsight ? `<div class="fb-row"><span class="fb-label">Adaptive Path</span>${trunc(aiFeedback.adaptivePathInsight, 190)}</div>` : ''}
   </div>
 </div>` : ''
 
-  const topPrompts = practicePrompts.slice(0, 3)
-  const promptsHTML = topPrompts.length > 0 ? `
-<div class="section">
-  <div class="section-title">Practice Prompts to Improve Your Score</div>
-  <div class="prompt-grid">
-    ${topPrompts.map(p => `
-    <div class="prompt-card">
+  const topPrompts = practicePrompts.slice(0, 4)
+  const promptCardsHTML = topPrompts.map(p => {
+    const bullets = promptCardBullets(p)
+    const [intro, ...items] = bullets
+    return `<div class="prompt-card">
       <div class="pc-header">
         <span class="pc-skill">${p.skill}</span>
         <span class="pc-badge ${p.section === 'rw' ? 'rw' : 'math'}">${p.section === 'rw' ? 'R&amp;W' : 'Math'}</span>
       </div>
-      <div class="pc-body">${compactPromptSummary(p)}</div>
-    </div>`).join('')}
-  </div>
-</div>` : ''
+      <div class="pc-intro">${intro}</div>
+      <div class="pc-include">Include:</div>
+      <ul class="pc-list">${items.map(item => `<li>${item}</li>`).join('')}</ul>
+    </div>`
+  }).join('')
 
   return `<!DOCTYPE html>
 <html>
@@ -471,7 +520,14 @@ function generatePrintHTML(params: {
 <style>
   @page { size: letter; margin: 0.35in; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1e293b; background: white; font-size: 9.5px; line-height: 1.3; page-break-inside: avoid; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #1e293b; background: white; font-size: 9.5px; line-height: 1.3;
+    display: flex; flex-direction: column;
+  }
+  .upper { flex-shrink: 0; }
+  .prompts-section { flex: 1; display: flex; flex-direction: column; min-height: 0; margin-bottom: 7px; }
   .header { border-bottom: 2px solid #1b3a5c; padding-bottom: 5px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:flex-end; }
   .header-title { font-size: 15px; font-weight: 800; color: #1b3a5c; }
   .header-sub { font-size: 8px; color: #64748b; margin-top: 1px; }
@@ -491,66 +547,98 @@ function generatePrintHTML(params: {
   .disclaimer { font-size:7.5px; color:#94a3b8; margin-bottom:7px; }
   .section { margin-bottom:7px; }
   .section-title { font-size:8.5px; font-weight:700; color:#1b3a5c; border-bottom:1px solid #e2e8f0; padding-bottom:3px; margin-bottom:5px; text-transform:uppercase; letter-spacing:.06em; }
-  .fb-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px 10px; }
+  .fb-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px 12px; }
   .fb-row { font-size:8.5px; color:#334155; line-height:1.35; }
   .fb-label { font-weight:700; color:#1b3a5c; display:block; font-size:7.5px; text-transform:uppercase; letter-spacing:.04em; margin-bottom:1px; }
-  .prompt-grid { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
-  .prompt-card { border:1px solid #e2e8f0; border-radius:4px; padding:5px 7px; background:#fafafa; }
-  .pc-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:3px; }
-  .pc-skill { font-size:8.5px; font-weight:700; color:#1b3a5c; }
+  .prompts-title { font-size:8.5px; font-weight:700; color:#1b3a5c; border-bottom:1px solid #e2e8f0; padding-bottom:3px; margin-bottom:6px; text-transform:uppercase; letter-spacing:.06em; flex-shrink:0; }
+  .prompt-grid {
+    flex: 1; min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
+    gap: 7px;
+  }
+  .prompt-card {
+    border: 1px solid #e2e8f0; border-radius: 5px; padding: 6px 8px;
+    background: #fafafa; display: flex; flex-direction: column;
+  }
+  .pc-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-shrink:0; }
+  .pc-skill { font-size:9px; font-weight:700; color:#1b3a5c; }
   .pc-badge { font-size:7px; font-weight:600; padding:1px 5px; border-radius:20px; }
   .pc-badge.rw { background:#ede9fe; color:#5b21b6; }
   .pc-badge.math { background:#d1fae5; color:#065f46; }
-  .pc-body { font-size:8px; color:#374151; line-height:1.4; }
-  .footer { margin-top:7px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:4px; padding:5px 9px; display:flex; align-items:center; gap:6px; }
-  .footer-label { font-size:8px; font-weight:700; color:#1e40af; white-space:nowrap; }
-  .footer-steps { font-size:8px; color:#1e3a8a; }
+  .pc-intro { font-size:8.5px; color:#374151; line-height:1.35; margin-bottom:4px; flex-shrink:0; }
+  .pc-include { font-size:8px; font-weight:600; color:#64748b; margin-bottom:2px; flex-shrink:0; }
+  .pc-list { flex:1; list-style:none; padding:0; }
+  .pc-list li { font-size:8px; color:#475569; line-height:1.4; padding-left:10px; position:relative; margin-bottom:2px; }
+  .pc-list li::before { content:"•"; position:absolute; left:2px; color:#94a3b8; }
+  .footer {
+    flex-shrink: 0;
+    background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 4px;
+    padding: 6px 10px;
+  }
+  .footer-label { font-size:8.5px; font-weight:700; color:#1e40af; margin-bottom:3px; }
+  .footer-list { list-style:none; padding:0; }
+  .footer-list li { font-size:8px; color:#1e3a8a; line-height:1.4; padding-left:14px; position:relative; margin-bottom:1px; }
+  .footer-list li::before { content:attr(data-n)"."; position:absolute; left:0; font-weight:600; color:#3b82f6; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div>
-    <div class="header-title">MockMate · SAT Practice Test 1</div>
-    <div class="header-sub">Score Report</div>
+<div class="upper">
+  <div class="header">
+    <div>
+      <div class="header-title">MockMate · SAT Practice Test 1</div>
+      <div class="header-sub">Score Report</div>
+    </div>
+    <div class="header-date">Generated ${dateStr}</div>
   </div>
-  <div class="header-date">Generated ${dateStr}</div>
+
+  <div class="score-row">
+    <div class="score-card">
+      <div class="score-label">Reading &amp; Writing</div>
+      <div class="score-num">${rwScaled}</div>
+      <div class="score-sub">${rwM1Correct + rwM2Correct} / ${rwTotal} correct</div>
+    </div>
+    <div class="score-card">
+      <div class="score-label">Math</div>
+      <div class="score-num">${mathScaled}</div>
+      <div class="score-sub">${mathM1Correct + mathM2Correct} / ${mathTotal} correct</div>
+    </div>
+    <div class="score-card total">
+      <div class="score-label">Total Score</div>
+      <div class="score-num">${totalScore}</div>
+      <div class="score-sub">/ 1600</div>
+    </div>
+  </div>
+
+  <div class="modules">
+    <div class="mod-pill"><strong>RW M1</strong>${rwM1Correct} / 27</div>
+    <div class="mod-pill"><strong>RW M2 (${cap(rwM2Type)})</strong>${rwM2Correct} / 27</div>
+    <div class="mod-pill"><strong>Math M1</strong>${mathM1Correct} / 22</div>
+    <div class="mod-pill"><strong>Math M2 (${cap(mathM2Type)})</strong>${mathM2Correct} / 22</div>
+  </div>
+
+  <div class="disclaimer">Scores are estimated and not official College Board results.</div>
+
+  ${feedbackHTML}
 </div>
 
-<div class="score-row">
-  <div class="score-card">
-    <div class="score-label">Reading &amp; Writing</div>
-    <div class="score-num">${rwScaled}</div>
-    <div class="score-sub">${rwM1Correct + rwM2Correct} / ${rwTotal} correct</div>
-  </div>
-  <div class="score-card">
-    <div class="score-label">Math</div>
-    <div class="score-num">${mathScaled}</div>
-    <div class="score-sub">${mathM1Correct + mathM2Correct} / ${mathTotal} correct</div>
-  </div>
-  <div class="score-card total">
-    <div class="score-label">Total Score</div>
-    <div class="score-num">${totalScore}</div>
-    <div class="score-sub">/ 1600</div>
+<div class="prompts-section">
+  <div class="prompts-title">Practice Prompts to Improve Your Score</div>
+  <div class="prompt-grid">
+    ${promptCardsHTML}
   </div>
 </div>
-
-<div class="modules">
-  <div class="mod-pill"><strong>RW M1</strong>${rwM1Correct} / 27</div>
-  <div class="mod-pill"><strong>RW M2 (${cap(rwM2Type)})</strong>${rwM2Correct} / 27</div>
-  <div class="mod-pill"><strong>Math M1</strong>${mathM1Correct} / 22</div>
-  <div class="mod-pill"><strong>Math M2 (${cap(mathM2Type)})</strong>${mathM2Correct} / 22</div>
-</div>
-
-<div class="disclaimer">Scores are estimated and not official College Board results.</div>
-
-${feedbackHTML}
-
-${promptsHTML}
 
 <div class="footer">
-  <span class="footer-label">How to use on MockMate:</span>
-  <span class="footer-steps">Go to <strong>New Exam</strong> → paste a prompt into the description → select <strong>SAT</strong> → generate and practice.</span>
+  <div class="footer-label">How to use on MockMate</div>
+  <ol class="footer-list">
+    <li data-n="1">Go to <strong>New Exam</strong> in the side panel.</li>
+    <li data-n="2">Paste one of the prompts above into the exam description box.</li>
+    <li data-n="3">Under standardized exam targeting, select <strong>SAT</strong>.</li>
+    <li data-n="4">Generate the exam and practice the weak skill again.</li>
+  </ol>
 </div>
 
 </body>
