@@ -403,6 +403,19 @@ function PracticePromptsSection({ prompts, hasMisses }: { prompts: PracticePromp
 }
 
 // ─── PDF generation ────────────────────────────────────────────────────────────
+function compactPromptSummary(p: PracticePrompt): string {
+  const m = p.description.match(/^(\d+)\s+(.+?)-difficulty/)
+  const n = m ? m[1] : '10'
+  const diff = m ? m[2] : 'mixed'
+  if (p.skill === 'Mixed') {
+    return `Create a mixed SAT practice set at ${diff} difficulty covering both Reading & Writing and Math. Include short passages, four answer choices (A–D) for RW, multiple choice and grid-in for Math, and full answer explanations.`
+  }
+  if (p.section === 'rw') {
+    return `Create ${n} SAT Reading & Writing questions on ${p.skill} at ${diff} difficulty. Include a short passage per question, four answer choices (A–D), the correct answer with explanation, and why each wrong choice is incorrect.`
+  }
+  return `Create ${n} SAT Math questions on ${p.skill} at ${diff} difficulty. Include multiple choice (A–D) and grid-in formats, step-by-step solutions, and brief explanations for each wrong answer choice.`
+}
+
 function generatePrintHTML(params: {
   form: SATForm
   rwScaled: number; mathScaled: number; totalScore: number
@@ -420,26 +433,34 @@ function generatePrintHTML(params: {
   const dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
   const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
+  // Truncate a string to a max length at a word boundary
+  const trunc = (s: string, max: number) => s.length <= max ? s : s.slice(0, max).replace(/\s\S*$/, '') + '…'
+
   const feedbackHTML = aiFeedback ? `
 <div class="section">
   <div class="section-title">AI Performance Feedback</div>
-  ${aiFeedback.overallAssessment ? `<div class="fb-row"><span class="fb-label">Overall:</span> ${aiFeedback.overallAssessment}</div>` : ''}
-  ${aiFeedback.whatWentWell ? `<div class="fb-row"><span class="fb-label">What You Did Well:</span> ${aiFeedback.whatWentWell}</div>` : ''}
-  ${aiFeedback.rwWeaknesses?.length || aiFeedback.mathWeaknesses?.length ? `<div class="fb-row"><span class="fb-label">Areas to Improve:</span> ${[...(aiFeedback.rwWeaknesses ?? []), ...(aiFeedback.mathWeaknesses ?? [])].join(' · ')}</div>` : ''}
-  ${aiFeedback.adaptivePathInsight ? `<div class="fb-row"><span class="fb-label">Adaptive Path:</span> ${aiFeedback.adaptivePathInsight}</div>` : ''}
+  <div class="fb-grid">
+    ${aiFeedback.overallAssessment ? `<div class="fb-row"><span class="fb-label">Overall</span>${trunc(aiFeedback.overallAssessment, 220)}</div>` : ''}
+    ${aiFeedback.whatWentWell ? `<div class="fb-row"><span class="fb-label">Strengths</span>${trunc(aiFeedback.whatWentWell, 180)}</div>` : ''}
+    ${aiFeedback.rwWeaknesses?.length || aiFeedback.mathWeaknesses?.length ? `<div class="fb-row"><span class="fb-label">To Improve</span>${[...(aiFeedback.rwWeaknesses ?? []), ...(aiFeedback.mathWeaknesses ?? [])].slice(0, 4).join(' · ')}</div>` : ''}
+    ${aiFeedback.adaptivePathInsight ? `<div class="fb-row"><span class="fb-label">Adaptive Path</span>${trunc(aiFeedback.adaptivePathInsight, 180)}</div>` : ''}
+  </div>
 </div>` : ''
 
-  const topPrompts = practicePrompts.slice(0, 2)
+  const topPrompts = practicePrompts.slice(0, 3)
   const promptsHTML = topPrompts.length > 0 ? `
 <div class="section">
   <div class="section-title">Practice Prompts to Improve Your Score</div>
-  <p style="font-size:9px;color:#64748b;margin-bottom:6px">Paste a prompt into MockMate → New Exam to generate a focused SAT practice set.</p>
-  ${topPrompts.map((p, i) => `
-  <div class="prompt-block">
-    <div class="prompt-title">${i + 1}. ${p.title}</div>
-    <div class="prompt-desc">${p.description}</div>
-    <div class="prompt-text">${p.prompt.replace(/\*\*/g, '')}</div>
-  </div>`).join('')}
+  <div class="prompt-grid">
+    ${topPrompts.map(p => `
+    <div class="prompt-card">
+      <div class="pc-header">
+        <span class="pc-skill">${p.skill}</span>
+        <span class="pc-badge ${p.section === 'rw' ? 'rw' : 'math'}">${p.section === 'rw' ? 'R&amp;W' : 'Math'}</span>
+      </div>
+      <div class="pc-body">${compactPromptSummary(p)}</div>
+    </div>`).join('')}
+  </div>
 </div>` : ''
 
   return `<!DOCTYPE html>
@@ -448,38 +469,42 @@ function generatePrintHTML(params: {
 <meta charset="UTF-8">
 <title>MockMate SAT Practice Test 1 — Score Report</title>
 <style>
-  @page { size: letter; margin: 13mm 14mm; }
+  @page { size: letter; margin: 0.35in; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1e293b; background: white; font-size: 10px; line-height: 1.45; }
-  .header { border-bottom: 2.5px solid #1b3a5c; padding-bottom: 7px; margin-bottom: 10px; display:flex; justify-content:space-between; align-items:flex-end; }
-  .header-title { font-size: 17px; font-weight: 800; color: #1b3a5c; }
-  .header-sub { font-size: 9px; color: #64748b; margin-top: 2px; }
-  .header-date { font-size: 9px; color: #94a3b8; text-align:right; }
-  .score-row { display:flex; gap:8px; margin-bottom:8px; }
-  .score-card { flex:1; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; text-align:center; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1e293b; background: white; font-size: 9.5px; line-height: 1.3; page-break-inside: avoid; }
+  .header { border-bottom: 2px solid #1b3a5c; padding-bottom: 5px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:flex-end; }
+  .header-title { font-size: 15px; font-weight: 800; color: #1b3a5c; }
+  .header-sub { font-size: 8px; color: #64748b; margin-top: 1px; }
+  .header-date { font-size: 8px; color: #94a3b8; }
+  .score-row { display:flex; gap:6px; margin-bottom:6px; }
+  .score-card { flex:1; border:1px solid #e2e8f0; border-radius:5px; padding:6px 8px; text-align:center; }
   .score-card.total { background:#1b3a5c; color:white; }
-  .score-num { font-size:26px; font-weight:800; line-height:1; }
-  .score-label { font-size:8px; color:#64748b; margin-bottom:3px; text-transform:uppercase; letter-spacing:.04em; }
+  .score-num { font-size:22px; font-weight:800; line-height:1; }
+  .score-label { font-size:7.5px; color:#64748b; margin-bottom:2px; text-transform:uppercase; letter-spacing:.04em; }
   .score-card.total .score-label { color:rgba(255,255,255,.65); }
   .score-card.total .score-num { color:white; }
-  .score-sub { font-size:8px; color:#94a3b8; margin-top:2px; }
+  .score-sub { font-size:7.5px; color:#94a3b8; margin-top:1px; }
   .score-card.total .score-sub { color:rgba(255,255,255,.5); }
-  .modules { display:flex; gap:6px; margin-bottom:8px; }
-  .mod-pill { flex:1; background:#f1f5f9; border-radius:5px; padding:4px 6px; font-size:8px; color:#475569; }
-  .mod-pill strong { display:block; font-size:9px; color:#1e293b; margin-bottom:1px; }
-  .disclaimer { font-size:8px; color:#94a3b8; background:#f8fafc; padding:5px 8px; border-radius:4px; border:1px solid #f1f5f9; margin-bottom:9px; }
-  .section { margin-bottom:9px; }
-  .section-title { font-size:10px; font-weight:700; color:#1b3a5c; border-bottom:1.5px solid #e2e8f0; padding-bottom:4px; margin-bottom:6px; text-transform:uppercase; letter-spacing:.05em; }
-  .fb-row { font-size:9px; color:#334155; margin-bottom:4px; line-height:1.4; }
-  .fb-label { font-weight:700; color:#1b3a5c; }
-  .prompt-block { border:1px solid #e2e8f0; border-radius:5px; overflow:hidden; margin-bottom:6px; }
-  .prompt-title { font-size:9px; font-weight:700; color:#1b3a5c; background:#f8fafc; padding:4px 8px; border-bottom:1px solid #e2e8f0; }
-  .prompt-desc { font-size:8px; color:#64748b; padding:3px 8px 2px; border-bottom:1px solid #f1f5f9; }
-  .prompt-text { font-size:8px; color:#374151; white-space:pre-wrap; font-family:monospace; padding:6px 8px; line-height:1.5; background:white; }
-  .how-to { background:#eff6ff; border:1px solid #bfdbfe; border-radius:5px; padding:7px 10px; }
-  .how-to-title { font-size:9px; font-weight:700; color:#1e40af; margin-bottom:5px; }
-  .how-to ol { padding-left:14px; }
-  .how-to li { font-size:9px; color:#1e3a8a; margin-bottom:2px; }
+  .modules { display:flex; gap:5px; margin-bottom:6px; }
+  .mod-pill { flex:1; background:#f1f5f9; border-radius:4px; padding:3px 5px; font-size:7.5px; color:#475569; }
+  .mod-pill strong { display:block; font-size:8px; color:#1e293b; }
+  .disclaimer { font-size:7.5px; color:#94a3b8; margin-bottom:7px; }
+  .section { margin-bottom:7px; }
+  .section-title { font-size:8.5px; font-weight:700; color:#1b3a5c; border-bottom:1px solid #e2e8f0; padding-bottom:3px; margin-bottom:5px; text-transform:uppercase; letter-spacing:.06em; }
+  .fb-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px 10px; }
+  .fb-row { font-size:8.5px; color:#334155; line-height:1.35; }
+  .fb-label { font-weight:700; color:#1b3a5c; display:block; font-size:7.5px; text-transform:uppercase; letter-spacing:.04em; margin-bottom:1px; }
+  .prompt-grid { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+  .prompt-card { border:1px solid #e2e8f0; border-radius:4px; padding:5px 7px; background:#fafafa; }
+  .pc-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:3px; }
+  .pc-skill { font-size:8.5px; font-weight:700; color:#1b3a5c; }
+  .pc-badge { font-size:7px; font-weight:600; padding:1px 5px; border-radius:20px; }
+  .pc-badge.rw { background:#ede9fe; color:#5b21b6; }
+  .pc-badge.math { background:#d1fae5; color:#065f46; }
+  .pc-body { font-size:8px; color:#374151; line-height:1.4; }
+  .footer { margin-top:7px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:4px; padding:5px 9px; display:flex; align-items:center; gap:6px; }
+  .footer-label { font-size:8px; font-weight:700; color:#1e40af; white-space:nowrap; }
+  .footer-steps { font-size:8px; color:#1e3a8a; }
 </style>
 </head>
 <body>
@@ -511,26 +536,21 @@ function generatePrintHTML(params: {
 </div>
 
 <div class="modules">
-  <div class="mod-pill"><strong>RW Module 1</strong>${rwM1Correct} / 27</div>
-  <div class="mod-pill"><strong>RW Module 2 (${cap(rwM2Type)})</strong>${rwM2Correct} / 27</div>
-  <div class="mod-pill"><strong>Math Module 1</strong>${mathM1Correct} / 22</div>
-  <div class="mod-pill"><strong>Math Module 2 (${cap(mathM2Type)})</strong>${mathM2Correct} / 22</div>
+  <div class="mod-pill"><strong>RW M1</strong>${rwM1Correct} / 27</div>
+  <div class="mod-pill"><strong>RW M2 (${cap(rwM2Type)})</strong>${rwM2Correct} / 27</div>
+  <div class="mod-pill"><strong>Math M1</strong>${mathM1Correct} / 22</div>
+  <div class="mod-pill"><strong>Math M2 (${cap(mathM2Type)})</strong>${mathM2Correct} / 22</div>
 </div>
 
-<div class="disclaimer">Scores are estimated and not official College Board results. Based on adaptive module performance.</div>
+<div class="disclaimer">Scores are estimated and not official College Board results.</div>
 
 ${feedbackHTML}
 
 ${promptsHTML}
 
-<div class="how-to">
-  <div class="how-to-title">How to Use This on MockMate</div>
-  <ol>
-    <li>Go to the side panel and click <strong>New Exam</strong>.</li>
-    <li>Paste one of the prompts above into the exam description box.</li>
-    <li>Under standardized exam targeting, select <strong>SAT</strong>.</li>
-    <li>Generate the exam and practice the weak skill again.</li>
-  </ol>
+<div class="footer">
+  <span class="footer-label">How to use on MockMate:</span>
+  <span class="footer-steps">Go to <strong>New Exam</strong> → paste a prompt into the description → select <strong>SAT</strong> → generate and practice.</span>
 </div>
 
 </body>
