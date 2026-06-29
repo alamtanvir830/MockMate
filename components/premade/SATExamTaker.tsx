@@ -412,102 +412,35 @@ function generatePrintHTML(params: {
   aiFeedback: SATAIFeedback | null
   practicePrompts: PracticePrompt[]
   hasMisses: boolean
-  missedModules: { label: string; mod: SATModule; section: 'rw' | 'math' }[]
-  answers: Record<string, string>
 }) {
   const { rwScaled, mathScaled, totalScore, rwM2Type, mathM2Type,
           rwM1Correct, rwM2Correct, rwTotal, mathM1Correct, mathM2Correct, mathTotal,
-          aiFeedback, practicePrompts, hasMisses, missedModules, answers } = params
+          aiFeedback, practicePrompts } = params
 
-  const FALLBACK_WRONG = 'This choice is incorrect — it does not match the evidence or reasoning required by the question.'
-
-  const missedQsHTML = missedModules.map(({ label, mod, section }) => {
-    const qs = mod.questions
-      .map((q, i) => ({ q, i, answered: isAnswered(q, answers), correct: isCorrect(q, answers) }))
-      .filter(({ answered, correct }) => !answered || !correct)
-
-    if (!qs.length) return ''
-
-    const qCards = qs.map(({ q, i }) => {
-      const userAns = answers[q.id] || 'Not answered'
-      const correctAns = getCorrectAnswer(q)
-      const explanation = getExplanation(q)
-      const wrongExp = getWrongAnswerExplanations(q)
-      const userWrongExp = (wrongExp as Record<string, string>)[userAns]
-      const choices = getChoices(q)
-      const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
-      const skill = getSkill(q)
-
-      const choicesHTML = choices ? choices.map(c => {
-        const col = c.label === correctAns ? '#16a34a' : c.label === userAns ? '#dc2626' : '#64748b'
-        const icon = c.label === correctAns ? '✓' : c.label === userAns ? '✗' : '·'
-        return `<div style="font-size:12px;padding:4px 0;color:${col}">${icon} ${c.label}. ${c.text}</div>`
-      }).join('') : ''
-
-      const wrongChoicesHTML = choices ? choices.filter(c => c.label !== correctAns).map(c => {
-        const exp = (wrongExp as Record<string, string>)[c.label] || FALLBACK_WRONG
-        return `<div style="margin-top:6px;font-size:11px;color:#7f1d1d;padding:6px 10px;background:#fef2f2;border-radius:4px">
-          <strong>Choice ${c.label} incorrect:</strong> ${exp}
-        </div>`
-      }).join('') : ''
-
-      return `<div style="margin-bottom:20px;padding:16px;border:1px solid #e2e8f0;border-radius:8px;page-break-inside:avoid">
-        <div style="font-size:11px;color:#64748b;margin-bottom:8px">${section === 'rw' ? 'Reading &amp; Writing' : 'Math'} · ${mod.title} · Q${i + 1} · ${skill} · ${q.difficulty}</div>
-        ${stimulus ? `<div style="font-size:12px;color:#334155;background:#f8fafc;padding:10px;border-radius:6px;margin-bottom:10px;white-space:pre-line">${stimulus.slice(0, 500)}${stimulus.length > 500 ? '…' : ''}</div>` : ''}
-        <div style="font-size:13px;font-weight:600;color:#0f172a;margin-bottom:10px">${q.question}</div>
-        ${choicesHTML}
-        <div style="margin-top:10px;font-size:12px">
-          <strong>Your Answer:</strong> ${userAns} &nbsp;|&nbsp; <strong>Correct Answer:</strong> ${correctAns}
-        </div>
-        <div style="margin-top:8px;font-size:12px;background:#f0fdf4;border:1px solid #bbf7d0;padding:8px;border-radius:4px">
-          <strong style="color:#15803d">Why ${correctAns} is correct:</strong> ${explanation}
-        </div>
-        ${userWrongExp ? `<div style="margin-top:6px;font-size:12px;color:#dc2626"><strong>Why your answer was wrong:</strong> ${userWrongExp}</div>` : ''}
-        ${wrongChoicesHTML}
-      </div>`
-    }).join('')
-
-    return `<div style="margin-bottom:24px">
-      <h3 style="font-size:14px;font-weight:700;color:#1b3a5c;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #e2e8f0">${label}</h3>
-      ${qCards}
-    </div>`
-  }).join('')
+  const dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
 
   const feedbackHTML = aiFeedback ? `
-    <div style="margin-bottom:24px;padding:16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px">
-      <h2 style="font-size:16px;font-weight:700;color:#1b3a5c;margin-bottom:12px;border-bottom:2px solid #e2e8f0;padding-bottom:8px">AI Performance Feedback</h2>
-      <p><strong>Overall:</strong> ${aiFeedback.overallAssessment}</p>
-      <p style="margin-top:8px"><strong>What You Did Well:</strong> ${aiFeedback.whatWentWell}</p>
-      ${aiFeedback.adaptivePathInsight ? `<p style="margin-top:8px"><strong>Adaptive Path Insight:</strong> ${aiFeedback.adaptivePathInsight}</p>` : ''}
-      ${aiFeedback.rwWeaknesses?.length ? `<p style="margin-top:8px"><strong>RW Areas to Review:</strong> ${aiFeedback.rwWeaknesses.join('; ')}</p>` : ''}
-      ${aiFeedback.mathWeaknesses?.length ? `<p style="margin-top:8px"><strong>Math Areas to Review:</strong> ${aiFeedback.mathWeaknesses.join('; ')}</p>` : ''}
-      ${aiFeedback.carelessErrors ? `<p style="margin-top:8px"><strong>Careless Error Pattern:</strong> ${aiFeedback.carelessErrors}</p>` : ''}
-      ${aiFeedback.practiceRecommendations ? `<p style="margin-top:8px"><strong>Practice Plan:</strong> ${aiFeedback.practiceRecommendations}</p>` : ''}
-      ${aiFeedback.mockMateNextSteps ? `<p style="margin-top:8px"><strong>MockMate Next Steps:</strong> ${aiFeedback.mockMateNextSteps}</p>` : ''}
-    </div>
-  ` : ''
+<div class="section">
+  <div class="section-title">AI Performance Feedback</div>
+  ${aiFeedback.overallAssessment ? `<div class="fb-row"><span class="fb-label">Overall:</span> ${aiFeedback.overallAssessment}</div>` : ''}
+  ${aiFeedback.whatWentWell ? `<div class="fb-row"><span class="fb-label">What You Did Well:</span> ${aiFeedback.whatWentWell}</div>` : ''}
+  ${aiFeedback.rwWeaknesses?.length || aiFeedback.mathWeaknesses?.length ? `<div class="fb-row"><span class="fb-label">Areas to Improve:</span> ${[...(aiFeedback.rwWeaknesses ?? []), ...(aiFeedback.mathWeaknesses ?? [])].join(' · ')}</div>` : ''}
+  ${aiFeedback.adaptivePathInsight ? `<div class="fb-row"><span class="fb-label">Adaptive Path:</span> ${aiFeedback.adaptivePathInsight}</div>` : ''}
+</div>` : ''
 
-  const promptsHTML = practicePrompts.length > 0 ? `
-    <div style="margin-bottom:24px">
-      <h2 style="font-size:16px;font-weight:700;color:#1b3a5c;margin-bottom:8px;border-bottom:2px solid #e2e8f0;padding-bottom:8px">Practice Prompts to Improve Your Score</h2>
-      ${!hasMisses ? `<p style="font-size:12px;color:#64748b;font-style:italic;margin-bottom:12px">No missed questions detected. Here is a general maintenance prompt.</p>` : `<p style="font-size:12px;color:#64748b;margin-bottom:12px">Paste these prompts into MockMate's New Exam to practice your weak skills.</p>`}
-      ${practicePrompts.map((p, i) => `
-        <div style="margin-bottom:16px;page-break-inside:avoid">
-          <div style="font-size:12px;font-weight:700;color:#1b3a5c;margin-bottom:4px">${i + 1}. ${p.title}</div>
-          <div style="font-size:11px;color:#64748b;margin-bottom:6px">${p.description}</div>
-          <div style="font-size:11px;color:#475569;margin-bottom:4px;font-weight:600">Copy this prompt into MockMate:</div>
-          <div style="font-size:11px;color:#374151;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:12px;white-space:pre-wrap;font-family:monospace;line-height:1.6">${p.prompt.replace(/\*\*/g, '')}</div>
-        </div>
-      `).join('')}
-      <div style="font-size:11px;color:#1e40af;background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:12px;margin-top:12px">
-        <strong>How to use on MockMate:</strong><br>
-        1. Go to the side panel and click New Exam.<br>
-        2. Paste a prompt into the exam description or notes box.<br>
-        3. Under standardized exam targeting, select SAT.<br>
-        4. Generate and practice the weak skill again.
-      </div>
-    </div>
-  ` : ''
+  const topPrompts = practicePrompts.slice(0, 2)
+  const promptsHTML = topPrompts.length > 0 ? `
+<div class="section">
+  <div class="section-title">Practice Prompts to Improve Your Score</div>
+  <p style="font-size:9px;color:#64748b;margin-bottom:6px">Paste a prompt into MockMate → New Exam to generate a focused SAT practice set.</p>
+  ${topPrompts.map((p, i) => `
+  <div class="prompt-block">
+    <div class="prompt-title">${i + 1}. ${p.title}</div>
+    <div class="prompt-desc">${p.description}</div>
+    <div class="prompt-text">${p.prompt.replace(/\*\*/g, '')}</div>
+  </div>`).join('')}
+</div>` : ''
 
   return `<!DOCTYPE html>
 <html>
@@ -515,69 +448,91 @@ function generatePrintHTML(params: {
 <meta charset="UTF-8">
 <title>MockMate SAT Practice Test 1 — Score Report</title>
 <style>
+  @page { size: letter; margin: 13mm 14mm; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1e293b; background: white; padding: 32px; max-width: 800px; margin: 0 auto; font-size: 13px; line-height: 1.6; }
-  h1 { font-size: 22px; font-weight: 800; color: #1b3a5c; margin-bottom: 4px; }
-  h2 { font-size: 16px; font-weight: 700; color: #1b3a5c; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #e2e8f0; }
-  .header { border-bottom: 3px solid #1b3a5c; padding-bottom: 16px; margin-bottom: 24px; }
-  .subtitle { font-size: 12px; color: #64748b; margin-top: 2px; }
-  .score-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-  .score-card { padding: 16px; border: 1px solid #e2e8f0; border-radius: 8px; text-align: center; }
-  .score-card.total { background: #1b3a5c; color: white; }
-  .score-num { font-size: 32px; font-weight: 800; }
-  .score-label { font-size: 11px; color: #64748b; margin-bottom: 4px; }
-  .score-card.total .score-label { color: rgba(255,255,255,0.7); }
-  .score-card.total .score-num { color: white; }
-  .disclaimer { font-size: 11px; color: #94a3b8; background: #f8fafc; padding: 10px; border-radius: 6px; margin-bottom: 24px; border: 1px solid #e2e8f0; }
-  table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 12px; }
-  th { background: #f1f5f9; color: #475569; font-weight: 600; text-align: left; padding: 8px 12px; }
-  td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; }
-  @media print { body { padding: 16px; } }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1e293b; background: white; font-size: 10px; line-height: 1.45; }
+  .header { border-bottom: 2.5px solid #1b3a5c; padding-bottom: 7px; margin-bottom: 10px; display:flex; justify-content:space-between; align-items:flex-end; }
+  .header-title { font-size: 17px; font-weight: 800; color: #1b3a5c; }
+  .header-sub { font-size: 9px; color: #64748b; margin-top: 2px; }
+  .header-date { font-size: 9px; color: #94a3b8; text-align:right; }
+  .score-row { display:flex; gap:8px; margin-bottom:8px; }
+  .score-card { flex:1; border:1px solid #e2e8f0; border-radius:6px; padding:8px 10px; text-align:center; }
+  .score-card.total { background:#1b3a5c; color:white; }
+  .score-num { font-size:26px; font-weight:800; line-height:1; }
+  .score-label { font-size:8px; color:#64748b; margin-bottom:3px; text-transform:uppercase; letter-spacing:.04em; }
+  .score-card.total .score-label { color:rgba(255,255,255,.65); }
+  .score-card.total .score-num { color:white; }
+  .score-sub { font-size:8px; color:#94a3b8; margin-top:2px; }
+  .score-card.total .score-sub { color:rgba(255,255,255,.5); }
+  .modules { display:flex; gap:6px; margin-bottom:8px; }
+  .mod-pill { flex:1; background:#f1f5f9; border-radius:5px; padding:4px 6px; font-size:8px; color:#475569; }
+  .mod-pill strong { display:block; font-size:9px; color:#1e293b; margin-bottom:1px; }
+  .disclaimer { font-size:8px; color:#94a3b8; background:#f8fafc; padding:5px 8px; border-radius:4px; border:1px solid #f1f5f9; margin-bottom:9px; }
+  .section { margin-bottom:9px; }
+  .section-title { font-size:10px; font-weight:700; color:#1b3a5c; border-bottom:1.5px solid #e2e8f0; padding-bottom:4px; margin-bottom:6px; text-transform:uppercase; letter-spacing:.05em; }
+  .fb-row { font-size:9px; color:#334155; margin-bottom:4px; line-height:1.4; }
+  .fb-label { font-weight:700; color:#1b3a5c; }
+  .prompt-block { border:1px solid #e2e8f0; border-radius:5px; overflow:hidden; margin-bottom:6px; }
+  .prompt-title { font-size:9px; font-weight:700; color:#1b3a5c; background:#f8fafc; padding:4px 8px; border-bottom:1px solid #e2e8f0; }
+  .prompt-desc { font-size:8px; color:#64748b; padding:3px 8px 2px; border-bottom:1px solid #f1f5f9; }
+  .prompt-text { font-size:8px; color:#374151; white-space:pre-wrap; font-family:monospace; padding:6px 8px; line-height:1.5; background:white; }
+  .how-to { background:#eff6ff; border:1px solid #bfdbfe; border-radius:5px; padding:7px 10px; }
+  .how-to-title { font-size:9px; font-weight:700; color:#1e40af; margin-bottom:5px; }
+  .how-to ol { padding-left:14px; }
+  .how-to li { font-size:9px; color:#1e3a8a; margin-bottom:2px; }
 </style>
 </head>
 <body>
+
 <div class="header">
-  <h1>MockMate SAT Practice Test 1</h1>
-  <div class="subtitle">Score Report · Generated ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+  <div>
+    <div class="header-title">MockMate · SAT Practice Test 1</div>
+    <div class="header-sub">Score Report</div>
+  </div>
+  <div class="header-date">Generated ${dateStr}</div>
 </div>
 
-<h2>Score Summary</h2>
-<div class="score-grid">
+<div class="score-row">
   <div class="score-card">
     <div class="score-label">Reading &amp; Writing</div>
     <div class="score-num">${rwScaled}</div>
-    <div style="font-size:11px;color:#64748b">${rwM1Correct + rwM2Correct}/${rwTotal} correct</div>
+    <div class="score-sub">${rwM1Correct + rwM2Correct} / ${rwTotal} correct</div>
   </div>
   <div class="score-card">
     <div class="score-label">Math</div>
     <div class="score-num">${mathScaled}</div>
-    <div style="font-size:11px;color:#64748b">${mathM1Correct + mathM2Correct}/${mathTotal} correct</div>
+    <div class="score-sub">${mathM1Correct + mathM2Correct} / ${mathTotal} correct</div>
   </div>
   <div class="score-card total">
     <div class="score-label">Total Score</div>
     <div class="score-num">${totalScore}</div>
-    <div style="font-size:11px;opacity:0.7">/ 1600</div>
+    <div class="score-sub">/ 1600</div>
   </div>
 </div>
 
-<table>
-  <thead><tr><th>Section</th><th>Module</th><th>Raw Score</th><th>Path</th></tr></thead>
-  <tbody>
-    <tr><td>Reading &amp; Writing</td><td>Module 1</td><td>${rwM1Correct} / 27</td><td>Routing</td></tr>
-    <tr><td>Reading &amp; Writing</td><td>Module 2</td><td>${rwM2Correct} / 27</td><td>${rwM2Type.charAt(0).toUpperCase() + rwM2Type.slice(1)}</td></tr>
-    <tr><td>Math</td><td>Module 1</td><td>${mathM1Correct} / 22</td><td>Routing</td></tr>
-    <tr><td>Math</td><td>Module 2</td><td>${mathM2Correct} / 22</td><td>${mathM2Type.charAt(0).toUpperCase() + mathM2Type.slice(1)}</td></tr>
-  </tbody>
-</table>
+<div class="modules">
+  <div class="mod-pill"><strong>RW Module 1</strong>${rwM1Correct} / 27</div>
+  <div class="mod-pill"><strong>RW Module 2 (${cap(rwM2Type)})</strong>${rwM2Correct} / 27</div>
+  <div class="mod-pill"><strong>Math Module 1</strong>${mathM1Correct} / 22</div>
+  <div class="mod-pill"><strong>Math Module 2 (${cap(mathM2Type)})</strong>${mathM2Correct} / 22</div>
+</div>
 
-<div class="disclaimer">This is a MockMate SAT-style estimated score report. It is not an official College Board score. Scores are approximations based on adaptive module performance.</div>
+<div class="disclaimer">Scores are estimated and not official College Board results. Based on adaptive module performance.</div>
 
 ${feedbackHTML}
 
 ${promptsHTML}
 
-<h2>Missed / Unanswered Questions</h2>
-${missedQsHTML || '<p style="color:#64748b;font-style:italic">No missed questions — perfect score!</p>'}
+<div class="how-to">
+  <div class="how-to-title">How to Use This on MockMate</div>
+  <ol>
+    <li>Go to the side panel and click <strong>New Exam</strong>.</li>
+    <li>Paste one of the prompts above into the exam description box.</li>
+    <li>Under standardized exam targeting, select <strong>SAT</strong>.</li>
+    <li>Generate the exam and practice the weak skill again.</li>
+  </ol>
+</div>
+
 </body>
 </html>`
 }
@@ -1435,18 +1390,12 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
     const FALLBACK_WRONG = 'This choice is incorrect — it does not match the evidence or reasoning required by the question.'
 
     const downloadPDF = () => {
-      const missedModules = [
-        { label: 'Reading and Writing — Module 1', mod: rwM1Module, section: 'rw' as const },
-        { label: `Reading and Writing — Module 2 (${rwM2Type})`, mod: rwM2Module, section: 'rw' as const },
-        { label: 'Math — Module 1', mod: mathM1Module, section: 'math' as const },
-        { label: `Math — Module 2 (${mathM2Type})`, mod: mathM2Module, section: 'math' as const },
-      ]
       const html = generatePrintHTML({
         form, rwScaled, mathScaled, totalScore,
         rwM2Type, mathM2Type,
         rwM1Correct, rwM2Correct, rwTotal,
         mathM1Correct, mathM2Correct, mathTotal,
-        aiFeedback, practicePrompts, hasMisses, missedModules, answers,
+        aiFeedback, practicePrompts, hasMisses,
       })
       const w = window.open('', '_blank')
       if (!w) return
