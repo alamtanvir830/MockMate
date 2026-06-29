@@ -580,6 +580,31 @@ ${missedQsHTML || '<p style="color:#64748b;font-style:italic">No missed question
 </html>`
 }
 
+// ─── Stable overlay wrappers (defined outside main component so React never
+//     remounts them on timer ticks or other state changes) ────────────────────
+function ExamWrapper({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="fixed inset-0 z-50 bg-[#eef0f4] flex flex-col overflow-hidden">
+      {children}
+    </div>
+  )
+}
+
+function DirectionsLayout({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <ExamWrapper>
+      <div className="flex flex-col h-full">
+        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
+          <span className="text-white text-[13px] font-semibold">{title}</span>
+        </div>
+        <div className="flex-1 overflow-y-auto flex items-center justify-center p-6">
+          {children}
+        </div>
+      </div>
+    </ExamWrapper>
+  )
+}
+
 // ─── NavBar ───────────────────────────────────────────────────────────────────
 function NavBar({
   onBack, onNext, canGoBack, centerLabel, timerEl, onReview, showReview,
@@ -906,20 +931,6 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
   }, [])
 
   // ─────────────────────────────────────────────────────────────────────────
-  // OVERLAY WRAPPER
-  // ─────────────────────────────────────────────────────────────────────────
-  const isExamPhase = phase.tag !== 'results'
-
-  const ExamWrapper = ({ children }: { children: React.ReactNode }) =>
-    isExamPhase ? (
-      <div className="fixed inset-0 z-50 bg-[#eef0f4] flex flex-col overflow-hidden">
-        {children}
-      </div>
-    ) : (
-      <>{children}</>
-    )
-
-  // ─────────────────────────────────────────────────────────────────────────
   // PASSWORD GATE (shown before welcome when !unlocked)
   // ─────────────────────────────────────────────────────────────────────────
   if (!unlocked) {
@@ -1058,19 +1069,6 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
   // ─────────────────────────────────────────────────────────────────────────
   // DIRECTIONS / BREAK SCREENS
   // ─────────────────────────────────────────────────────────────────────────
-  const DirectionsLayout = ({ title, children }: { title: string; children: React.ReactNode }) => (
-    <ExamWrapper>
-      <div className="flex flex-col h-full">
-        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
-          <span className="text-white text-[13px] font-semibold">{title}</span>
-        </div>
-        <div className="flex-1 overflow-y-auto flex items-center justify-center p-6">
-          {children}
-        </div>
-      </div>
-    </ExamWrapper>
-  )
-
   if (phase.tag === 'rw_directions') {
     return (
       <DirectionsLayout title="Reading and Writing">
