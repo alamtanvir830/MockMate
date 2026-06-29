@@ -1469,6 +1469,19 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
           <p className="mt-3 text-[11px] text-slate-400">Scores are estimated. Not an official College Board result.</p>
         </div>
 
+        {/* PDF download */}
+        <div className="flex justify-center mt-6 mb-8">
+          <button
+            onClick={downloadPDF}
+            className="flex items-center gap-2 bg-[#1b3a5c] hover:bg-[#152d48] text-white text-[14px] font-semibold px-6 py-3 rounded-xl transition-colors shadow-sm"
+          >
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+            </svg>
+            Download PDF Score Report
+          </button>
+        </div>
+
         {/* 3. AI Feedback */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
@@ -1597,20 +1610,7 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
         {/* 4. Practice Prompts */}
         <PracticePromptsSection prompts={practicePrompts} hasMisses={hasMisses} />
 
-        {/* 5. PDF download */}
-        <div className="flex justify-center">
-          <button
-            onClick={downloadPDF}
-            className="flex items-center gap-2 bg-[#1b3a5c] hover:bg-[#152d48] text-white text-[14px] font-semibold px-6 py-3 rounded-xl transition-colors shadow-sm"
-          >
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
-            Download PDF Score Report
-          </button>
-        </div>
-
-        {/* 6. Answer Key */}
+        {/* 5. Answer Key */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-5 py-4 border-b border-slate-200">
             <h2 className="text-[15px] font-bold text-slate-900 mb-3">Answer Key</h2>
