@@ -1267,7 +1267,6 @@ export default function SATExamTaker({ form }: { form: SATForm }) {
                       placeholder="e.g. 4, 3/4, .75"
                       className="w-48 border-2 border-slate-200 rounded-lg px-4 py-2 text-[14px] font-mono text-slate-900 focus:border-[#1d4ed8] focus:outline-none transition-colors"
                     />
-                    {gridInQ.scoringNotes && <p className="mt-2 text-[11px] text-slate-400">{gridInQ.scoringNotes}</p>}
                   </div>
                 )}
               </div>
