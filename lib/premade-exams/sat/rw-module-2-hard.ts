@@ -160,6 +160,7 @@ export const rwModule2HardQuestions: RWQuestion[] = [
     skill: 'Text Structure and Purpose',
     difficulty: 'hard',
     stimulus: `The philosopher Charles Taylor distinguishes between "weak" and "strong" evaluations of desire. A weak evaluation simply ranks preferences by how much one wants them. A strong evaluation assesses desires according to qualitative distinctions about worth — ranking some desires as higher, nobler, or more authentically expressive of who one wants to be than others. Taylor argues that the capacity for strong evaluation is constitutive of what it means to be a moral agent: it is what allows human beings to reflect on and potentially transform their motivational structures rather than simply acting on whichever desire happens to be strongest at a given moment.`,
+    underlineTargets: ['whichever desire happens to be strongest at a given moment'],
     question: `The underlined phrase "whichever desire happens to be strongest at a given moment" primarily serves to`,
     choices: [
       { label: 'A', text: 'describe the behavior of agents capable of strong evaluation' },

@@ -1,5 +1,63 @@
 // ─── SAT Practice Test Types ──────────────────────────────────────────────────
 
+// ─── Graph Data Types ─────────────────────────────────────────────────────────
+
+export interface CoordinatePlaneData {
+  type: 'coordinate_plane'
+  xMin: number
+  xMax: number
+  yMin: number
+  yMax: number
+  gridStep?: number
+  xLabel?: string
+  yLabel?: string
+  lines?: Array<{
+    label?: string
+    points: [number, number][]
+    color?: string
+    dashed?: boolean
+  }>
+  points?: Array<{
+    x: number
+    y: number
+    label?: string
+    filled?: boolean
+  }>
+}
+
+export interface ScatterPlotData {
+  type: 'scatter'
+  xLabel?: string
+  yLabel?: string
+  title?: string
+  xMin?: number
+  xMax?: number
+  yMin?: number
+  yMax?: number
+  points: [number, number][]
+  trendLine?: { slope: number; intercept: number; color?: string }
+}
+
+export interface BarChartData {
+  type: 'bar'
+  title?: string
+  xLabel?: string
+  yLabel?: string
+  labels: string[]
+  values: number[]
+}
+
+export interface TableGraphData {
+  type: 'table'
+  title?: string
+  headers: string[]
+  rows: string[][]
+}
+
+export type SATGraphData = CoordinatePlaneData | ScatterPlotData | BarChartData | TableGraphData
+
+// ─── Domain / Skill / Difficulty ─────────────────────────────────────────────
+
 export type RWDomain =
   | 'Craft and Structure'
   | 'Information and Ideas'
@@ -41,6 +99,8 @@ export interface RWQuestion {
   skill: RWSkill
   difficulty: Difficulty
   stimulus: string
+  /** Exact phrases in the stimulus that the question refers to as "underlined" */
+  underlineTargets?: string[]
   question: string
   choices: Choice[]
   correctAnswer: ChoiceLabel
@@ -57,6 +117,7 @@ export interface MathMCQuestion {
   difficulty: Difficulty
   type: 'multiple_choice'
   stimulus?: string
+  graphData?: SATGraphData
   question: string
   choices: Choice[]
   correctAnswer: ChoiceLabel
@@ -73,6 +134,7 @@ export interface MathGridInQuestion {
   difficulty: Difficulty
   type: 'grid_in'
   stimulus?: string
+  graphData?: SATGraphData
   question: string
   correctAnswer: string
   acceptableAnswers: string[]

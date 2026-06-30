@@ -160,6 +160,7 @@ export const rwModule2EasyQuestions: RWQuestion[] = [
     skill: 'Text Structure and Purpose',
     difficulty: 'easy',
     stimulus: `Permafrost — ground that remains frozen for at least two consecutive years — covers approximately 15% of the Northern Hemisphere's land surface. In recent decades, rising temperatures in the Arctic have caused widespread permafrost thaw, destabilizing infrastructure such as roads and buildings constructed on what was once solid frozen ground. The thaw also releases carbon dioxide and methane that had been locked in frozen organic matter for millennia, creating a feedback loop in which warming causes thaw, which releases greenhouse gases, which causes further warming.`,
+    underlineTargets: ['feedback loop'],
     question: `The underlined phrase "feedback loop" primarily serves to`,
     choices: [
       { label: 'A', text: 'suggest that permafrost thaw can be reversed through climate intervention' },

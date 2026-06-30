@@ -3,13 +3,17 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { StimulusRenderer } from '@/components/exam/StimulusRenderer'
+import { SATGraph } from '@/components/exam/SATGraph'
 import type {
   SATForm,
   SATModule,
   SATQuestion,
+  RWQuestion,
   MathMCQuestion,
   MathGridInQuestion,
   ChoiceLabel,
+  SATGraphData,
 } from '@/lib/premade-exams/sat/types'
 import { saveAttempt, updateAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
 import {
@@ -1527,6 +1531,8 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
     const choices = isMC ? getChoices(q) : null
     const gridInQ = !isMC ? (q as MathGridInQuestion) : null
     const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
+    const underlineTargets = q.section === 'reading-writing' ? (q as RWQuestion).underlineTargets : undefined
+    const graphData = q.section === 'math' ? (q as MathMCQuestion | MathGridInQuestion).graphData as SATGraphData | undefined : undefined
     const sectionLabel = phase.section === 'rw' ? 'Reading and Writing' : 'Math'
     const moduleLabel = `Module ${phase.slot === 'm1' ? '1' : '2'}`
     const centerLabel = `${sectionLabel} — ${moduleLabel} | Q ${qNum} of ${qTotal}`
@@ -1555,8 +1561,13 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
           <div className="flex-1 overflow-y-auto">
             <div className="max-w-3xl mx-auto px-4 py-6">
               {stimulus && (
-                <div className="bg-white rounded-xl border border-slate-200 p-5 mb-4 text-[13px] text-slate-800 leading-[1.85] whitespace-pre-line">
-                  {stimulus}
+                <div className="bg-white rounded-xl border border-slate-200 p-5 mb-4 text-[13px] text-slate-800 leading-[1.85]">
+                  <StimulusRenderer text={stimulus} underlineTargets={underlineTargets} />
+                </div>
+              )}
+              {graphData && (
+                <div className="mb-4">
+                  <SATGraph data={graphData} />
                 </div>
               )}
 
@@ -2118,6 +2129,8 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                 const wrongExps = getWrongAnswerExplanations(q)
                 const choices = getChoices(q)
                 const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
+                const qUnderlineTargets = q.section === 'reading-writing' ? (q as RWQuestion).underlineTargets : undefined
+                const qGraphData = q.section === 'math' ? (q as MathMCQuestion | MathGridInQuestion).graphData as SATGraphData | undefined : undefined
                 const isGridIn = q.section === 'math' && (q as MathGridInQuestion).type === 'grid_in'
                 const skill = getSkill(q)
                 const statusIcon = !answered ? '?' : correct ? '✓' : '✗'
@@ -2156,10 +2169,11 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
 
                     <div className="px-5 pb-5 pt-2 bg-slate-50 border-t border-slate-100 space-y-4 text-[13px]">
                       {stimulus && (
-                        <div className="bg-white border border-slate-200 rounded-lg p-3 text-[12px] text-slate-700 leading-relaxed whitespace-pre-line">
-                          {stimulus}
+                        <div className="bg-white border border-slate-200 rounded-lg p-3 text-[12px] text-slate-700 leading-relaxed">
+                          <StimulusRenderer text={stimulus} underlineTargets={qUnderlineTargets} />
                         </div>
                       )}
+                      {qGraphData && <SATGraph data={qGraphData} className="bg-white border border-slate-200 rounded-lg p-3" />}
 
                       {choices && (
                         <div className="space-y-1.5">

@@ -4,6 +4,8 @@ import { useEffect, useState, useCallback, useRef } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { StimulusRenderer } from '@/components/exam/StimulusRenderer'
+import { SATGraph } from '@/components/exam/SATGraph'
 import { rwQuestions } from '@/lib/question-bank/sat/rw-questions'
 import { mathQuestions } from '@/lib/question-bank/sat/math-questions'
 import type { QBQuestion, QBDomain, QBDifficulty, QBSection } from '@/lib/question-bank/types'
@@ -215,34 +217,16 @@ export default function PracticePage() {
         {/* Stimulus */}
         {currentQ.stimulus && (
           <div className="px-5 pt-4 pb-3 bg-slate-50 border-b border-slate-100">
-            <p className="text-[13px] text-slate-700 leading-relaxed whitespace-pre-line">{currentQ.stimulus}</p>
+            <p className="text-[13px] text-slate-700 leading-relaxed">
+              <StimulusRenderer text={currentQ.stimulus} underlineTargets={currentQ.underlineTargets} />
+            </p>
           </div>
         )}
 
-        {/* Graph data table */}
-        {currentQ.graphData?.type === 'table' && currentQ.graphData.headers && (
-          <div className="px-5 pt-4 pb-3 bg-slate-50 border-b border-slate-100 overflow-x-auto">
-            <table className="text-[12px] border-collapse w-full">
-              <thead>
-                <tr className="border-b border-slate-300">
-                  {currentQ.graphData.headers.map((h, i) => (
-                    <th key={i} className="text-left py-1.5 px-2 font-semibold text-slate-600">{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {currentQ.graphData.rows?.map((row, ri) => (
-                  <tr key={ri} className="border-b border-slate-100">
-                    {row.map((cell, ci) => (
-                      <td key={ci} className="py-1.5 px-2 text-slate-700">{cell}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {currentQ.graphData.title && (
-              <p className="text-[11px] text-slate-400 mt-2 text-center">{currentQ.graphData.title}</p>
-            )}
+        {/* Graph */}
+        {currentQ.graphData && (
+          <div className="px-5 pt-4 pb-3 bg-slate-50 border-b border-slate-100">
+            <SATGraph data={currentQ.graphData} className="" />
           </div>
         )}
 

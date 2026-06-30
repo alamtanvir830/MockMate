@@ -25,12 +25,34 @@ export interface QBChoice {
 }
 
 export interface QBGraphData {
-  type: 'bar' | 'line' | 'scatter' | 'table'
+  type: 'bar' | 'line' | 'scatter' | 'table' | 'coordinate_plane'
   title?: string
+  // Table
+  headers?: string[]
+  rows?: string[][]
+  // Bar / line
   labels?: string[]
   datasets?: { label: string; values: number[] }[]
-  rows?: string[][]
-  headers?: string[]
+  // Scatter / coordinate_plane axes
+  xLabel?: string
+  yLabel?: string
+  xMin?: number
+  xMax?: number
+  yMin?: number
+  yMax?: number
+  gridStep?: number
+  // Scatter data points
+  points?: [number, number][]
+  trendLine?: { slope: number; intercept: number; color?: string }
+  // Coordinate plane lines
+  lines?: Array<{
+    label?: string
+    points: [number, number][]
+    color?: string
+    dashed?: boolean
+  }>
+  namedPoints?: Array<{ x: number; y: number; label?: string; filled?: boolean }>
+  // Legacy
   svgContent?: string
 }
 
@@ -46,6 +68,8 @@ export interface QBQuestion {
   mistakeType: QBMistakeType
   questionType: QBQuestionType
   stimulus?: string
+  /** Exact phrases in the stimulus to render with an underline */
+  underlineTargets?: string[]
   graphData?: QBGraphData
   question: string
   choices?: QBChoice[]

@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { StimulusRenderer } from '@/components/exam/StimulusRenderer'
+import { SATGraph } from '@/components/exam/SATGraph'
 import { loadQBResult } from '@/lib/question-bank/sat/question-selector'
 import { rwQuestions } from '@/lib/question-bank/sat/rw-questions'
 import { mathQuestions } from '@/lib/question-bank/sat/math-questions'
@@ -198,7 +200,14 @@ export default function QBResultsPage() {
                           <span className="text-[10px] font-semibold text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">{q.skill}</span>
                         </div>
                         {q.stimulus && (
-                          <p className="text-[11px] text-slate-500 bg-slate-50 border border-slate-100 rounded p-2 mb-2 leading-relaxed line-clamp-3">{q.stimulus}</p>
+                          <div className="text-[11px] text-slate-500 bg-slate-50 border border-slate-100 rounded p-2 mb-2 leading-relaxed">
+                            <StimulusRenderer text={q.stimulus} underlineTargets={q.underlineTargets} />
+                          </div>
+                        )}
+                        {q.graphData && (
+                          <div className="mb-2">
+                            <SATGraph data={q.graphData} className="border border-slate-100 rounded p-2 bg-slate-50" />
+                          </div>
                         )}
                         <p className="text-[12px] font-medium text-slate-800 mb-2">{q.question}</p>
                         <div className="flex items-center gap-4 text-[11px]">

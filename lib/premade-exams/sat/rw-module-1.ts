@@ -160,6 +160,7 @@ export const rwModule1Questions: RWQuestion[] = [
     skill: 'Text Structure and Purpose',
     difficulty: 'medium',
     stimulus: `Early theories of memory treated the brain as a kind of warehouse in which experiences were stored as stable, discrete units. This model began to collapse in the 1970s and 1980s as psychologists demonstrated that memories are not passively retrieved but actively reconstructed each time they are recalled. The psychologist Elizabeth Loftus showed in a series of influential studies that introducing misleading information after an event could alter subjects' memories of what had occurred — a finding with profound implications for the reliability of eyewitness testimony.`,
+    underlineTargets: ['began to collapse'],
     question: `The underlined phrase "began to collapse" primarily serves to`,
     choices: [
       { label: 'A', text: 'introduce a contrast between an earlier view and subsequent evidence' },
