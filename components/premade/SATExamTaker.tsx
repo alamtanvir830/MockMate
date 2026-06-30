@@ -2090,10 +2090,34 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
           </div>
         </div>
 
-        {/* 4. Practice Prompts */}
+        {/* 4. Personalized Practice Path card */}
+        {attemptIdRef.current && (
+          <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-xl p-5 flex items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4 text-indigo-200">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                </svg>
+                <span className="text-[10px] font-bold text-indigo-200 uppercase tracking-widest">Question Bank</span>
+              </div>
+              <p className="text-white font-bold text-[15px] mb-0.5">Go to Personalized Practice Path</p>
+              <p className="text-indigo-200 text-[12px]">
+                4 targeted sets built from your weakest domains in this exam.
+              </p>
+            </div>
+            <Link
+              href={`/question-bank/sat/personalized/${attemptIdRef.current}`}
+              className="shrink-0 bg-white text-indigo-700 font-semibold text-[13px] px-4 py-2.5 rounded-lg hover:bg-indigo-50 transition-colors whitespace-nowrap"
+            >
+              Start practicing →
+            </Link>
+          </div>
+        )}
+
+        {/* 5. Practice Prompts */}
         <PracticePromptsSection prompts={practicePrompts} hasMisses={hasMisses} />
 
-        {/* 5. Answer Key */}
+        {/* 6. Answer Key */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-5 py-4 border-b border-slate-200">
             <h2 className="text-[15px] font-bold text-slate-900 mb-3">Answer Key</h2>

@@ -48,14 +48,24 @@ export default function PracticePage() {
 
     let config: QBPracticeSetConfig
 
-    if (mode === 'personalized') {
+    if (mode === 'personalized' && domainsParam) {
+      // Personalized set launched from /question-bank/sat/personalized/[attemptId]
+      config = {
+        section: sectionParam ?? undefined,
+        domains: domainsParam.split(',') as QBDomain[],
+        difficulties: diffsParam ? diffsParam.split(',') as QBDifficulty[] : undefined,
+        count: Math.min(Math.max(countParam, 3), 50),
+        mode: 'personalized',
+        sourceAttemptId: searchParams.get('sourceAttemptId') ?? undefined,
+      }
+    } else if (mode === 'personalized') {
+      // Legacy: personalized config stored in localStorage
       try {
         const stored = localStorage.getItem('mockmate_qb_personalized_config')
         if (stored) {
           config = JSON.parse(stored)
           config.mode = 'personalized'
         } else {
-          // Demo personalized — mixed from all domains, medium/hard
           config = {
             difficulties: ['medium', 'hard'],
             count: Math.min(countParam, 20),

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { loadAllQBResults } from '@/lib/question-bank/sat/question-selector'
+import { loadAllAttempts, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
 
 const RW_DOMAINS = [
   'Craft and Structure',
@@ -45,16 +46,13 @@ export default function SATQuestionBankPage() {
   const [count, setCount] = useState(10)
   const [customCount, setCustomCount] = useState('')
   const [recentSets, setRecentSets] = useState(0)
-  const [hasPersonalized, setHasPersonalized] = useState(false)
+  const [satAttempts, setSatAttempts] = useState<PremadeAttempt[]>([])
 
   useEffect(() => {
     const results = loadAllQBResults()
     setRecentSets(results.length)
-    // Check if there's a SAT attempt with weak skills stored
-    try {
-      const stored = localStorage.getItem('mockmate_qb_personalized_config')
-      setHasPersonalized(!!stored)
-    } catch { /* ok */ }
+    const attempts = loadAllAttempts().filter(a => a.examId.startsWith('sat-'))
+    setSatAttempts(attempts)
   }, [])
 
   const domains = section === 'reading-writing' ? RW_DOMAINS : section === 'math' ? MATH_DOMAINS : []
@@ -93,11 +91,6 @@ export default function SATQuestionBankPage() {
     router.push(`/question-bank/sat/practice?${params.toString()}`)
   }
 
-  function handlePersonalized() {
-    const params = new URLSearchParams({ mode: 'personalized', count: '20' })
-    router.push(`/question-bank/sat/practice?${params.toString()}`)
-  }
-
   const canStart = true // allow browsing even without filters (will show all)
 
   return (
@@ -115,35 +108,62 @@ export default function SATQuestionBankPage() {
 
       {/* Smart Practice Path */}
       <div className="bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-xl p-6 text-white">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-2">
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5 text-indigo-200">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-              </svg>
-              <span className="text-[11px] font-bold text-indigo-200 uppercase tracking-widest">Smart Practice Path</span>
-            </div>
-            <h2 className="text-lg font-bold mb-1">Personalized Practice Path</h2>
-            <p className="text-indigo-200 text-[13px]">
-              {hasPersonalized
-                ? 'Your weak skills from your latest SAT exam are ready. Start a personalized set now.'
-                : 'Complete a full SAT practice test to automatically build a practice set from your weakest skills.'}
-            </p>
-          </div>
-          <button
-            onClick={handlePersonalized}
-            className="shrink-0 bg-white text-indigo-700 font-semibold text-[13px] px-4 py-2.5 rounded-lg hover:bg-indigo-50 transition-colors whitespace-nowrap"
-          >
-            {hasPersonalized ? 'Start personalized practice' : 'Try demo set'}
-          </button>
+        <div className="flex items-center gap-2 mb-3">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5 text-indigo-200">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+          </svg>
+          <span className="text-[11px] font-bold text-indigo-200 uppercase tracking-widest">Smart Practice Path</span>
         </div>
-        {!hasPersonalized && (
-          <div className="mt-3 text-[12px] text-indigo-300 flex items-center gap-1.5">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
-            </svg>
-            Take SAT Practice Test 1 under Pre-made Exams to unlock your personalized path.
-          </div>
+        <h2 className="text-lg font-bold mb-1">Personalized Practice Path</h2>
+
+        {satAttempts.length === 0 ? (
+          <>
+            <p className="text-indigo-200 text-[13px] mb-4">
+              Complete a full SAT practice test to automatically build 4 practice sets targeting your weakest domains.
+            </p>
+            <div className="text-[12px] text-indigo-300 flex items-center gap-1.5">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 shrink-0">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+              </svg>
+              Take SAT Practice Test 1 under Pre-made Exams to unlock your personalized path.
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="text-indigo-200 text-[13px] mb-4">
+              {satAttempts.length === 1
+                ? '1 completed SAT exam found. View your personalized practice sets below.'
+                : `${satAttempts.length} completed SAT exams found. Choose one to start targeted practice.`}
+            </p>
+            <div className="space-y-2">
+              {satAttempts.map((attempt, i) => {
+                const date = new Date(attempt.completedAt).toLocaleDateString('en-US', {
+                  month: 'short', day: 'numeric', year: 'numeric',
+                })
+                return (
+                  <div
+                    key={attempt.id}
+                    className="flex items-center justify-between bg-white/10 rounded-lg px-4 py-3 gap-4"
+                  >
+                    <div>
+                      <p className="text-[13px] font-semibold text-white">
+                        SAT Attempt {satAttempts.length - i} — {date}
+                      </p>
+                      <p className="text-[11px] text-indigo-200">
+                        {attempt.totalScore} total · {attempt.rwScaled} R&amp;W · {attempt.mathScaled} Math
+                      </p>
+                    </div>
+                    <Link
+                      href={`/question-bank/sat/personalized/${attempt.id}`}
+                      className="shrink-0 bg-white text-indigo-700 font-semibold text-[12px] px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors whitespace-nowrap"
+                    >
+                      View practice sets
+                    </Link>
+                  </div>
+                )
+              })}
+            </div>
+          </>
         )}
       </div>
 
