@@ -18,6 +18,7 @@ export interface PremadeAttempt {
   mathM2Type: 'easy' | 'hard'
   answers: Record<string, string>
   bookmarks: string[]
+  strikeouts?: Record<string, string[]>
   aiFeedback: SATAIFeedback | null
 }
 

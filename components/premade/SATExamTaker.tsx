@@ -28,7 +28,7 @@ type SATPhase =
   | { tag: 'section_break' }
   | { tag: 'math_directions' }
   | { tag: 'math_break' }
-  | { tag: 'end' }
+  | { tag: 'module_review'; section: 'rw' | 'math'; slot: 'm1' | 'm2' }
   | { tag: 'results' }
 
 type AnswerFilter = 'all' | 'incorrect' | 'unanswered' | 'rw' | 'math' | 'marked'
@@ -645,6 +645,177 @@ function generatePrintHTML(params: {
 </html>`
 }
 
+// ─── Calculator ───────────────────────────────────────────────────────────────
+function CalculatorModal({ onClose }: { onClose: () => void }) {
+  const [expr, setExpr] = useState('')
+  const [result, setResult] = useState('')
+
+  const press = (val: string) => {
+    if (val === 'C') { setExpr(''); setResult(''); return }
+    if (val === '←') { setExpr(p => p.slice(0, -1)); return }
+    if (val === '=') {
+      try {
+        // sanitize: only allow digits, operators, parens, dot, spaces
+        const safe = expr.replace(/[^0-9+\-*/().% ]/g, '')
+        // eslint-disable-next-line no-new-func
+        const val = new Function('return ' + safe)()
+        setResult(String(val))
+      } catch {
+        setResult('Error')
+      }
+      return
+    }
+    setExpr(p => p + val)
+  }
+
+  const rows = [
+    ['C', '(', ')', '÷'],
+    ['7', '8', '9', '×'],
+    ['4', '5', '6', '−'],
+    ['1', '2', '3', '+'],
+    ['0', '.', '←', '='],
+  ]
+  const opMap: Record<string, string> = { '÷': '/', '×': '*', '−': '-' }
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 w-64 overflow-hidden" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-4 py-3 bg-[#1b3a5c]">
+          <span className="text-white text-[13px] font-semibold">Calculator</span>
+          <button onClick={onClose} className="text-white/70 hover:text-white transition-colors">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div className="px-4 py-3 bg-slate-50 border-b border-slate-200 min-h-[56px]">
+          <p className="text-[11px] text-slate-400 font-mono min-h-[14px] truncate">{expr || ' '}</p>
+          <p className="text-[20px] font-bold text-slate-900 font-mono text-right truncate">{result || '0'}</p>
+        </div>
+        <div className="p-2 grid grid-cols-4 gap-1.5">
+          {rows.flat().map((k, i) => {
+            const isOp = ['÷', '×', '−', '+', '='].includes(k)
+            const isClear = k === 'C'
+            return (
+              <button
+                key={i}
+                onClick={() => press(opMap[k] ?? k)}
+                className={cn(
+                  'h-12 rounded-xl text-[14px] font-semibold transition-colors active:scale-95',
+                  isOp ? 'bg-[#1d4ed8] text-white hover:bg-[#1e40af]' :
+                  isClear ? 'bg-red-50 text-red-600 hover:bg-red-100 border border-red-200' :
+                  'bg-slate-100 text-slate-800 hover:bg-slate-200'
+                )}
+              >
+                {k}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Reference sheet ──────────────────────────────────────────────────────────
+function ReferenceModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/30" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-lg max-h-[85vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-5 py-3 bg-[#1b3a5c] sticky top-0">
+          <span className="text-white text-[13px] font-semibold">Math Reference</span>
+          <button onClick={onClose} className="text-white/70 hover:text-white transition-colors">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div className="p-5 space-y-5 text-[12px] text-slate-700">
+          <section>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Area &amp; Perimeter</p>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                ['Triangle', 'A = ½bh'],
+                ['Rectangle', 'A = ℓw'],
+                ['Circle', 'A = πr²'],
+                ['Trapezoid', 'A = ½(b₁ + b₂)h'],
+                ['Circumference', 'C = 2πr'],
+              ].map(([label, formula]) => (
+                <div key={label} className="bg-slate-50 rounded-lg px-3 py-2">
+                  <p className="text-[10px] text-slate-400">{label}</p>
+                  <p className="font-mono font-semibold text-slate-800">{formula}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+          <section>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Volume</p>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                ['Rectangular Prism', 'V = ℓwh'],
+                ['Cylinder', 'V = πr²h'],
+                ['Cone', 'V = ⅓πr²h'],
+                ['Sphere', 'V = ⁴⁄₃πr³'],
+                ['Pyramid', 'V = ⅓Bh'],
+              ].map(([label, formula]) => (
+                <div key={label} className="bg-slate-50 rounded-lg px-3 py-2">
+                  <p className="text-[10px] text-slate-400">{label}</p>
+                  <p className="font-mono font-semibold text-slate-800">{formula}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+          <section>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Right Triangle</p>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="bg-slate-50 rounded-lg px-3 py-2 col-span-2">
+                <p className="text-[10px] text-slate-400">Pythagorean Theorem</p>
+                <p className="font-mono font-semibold text-slate-800">a² + b² = c²</p>
+              </div>
+              <div className="bg-amber-50 rounded-lg px-3 py-2 border border-amber-100">
+                <p className="text-[10px] text-amber-600">30°–60°–90° sides</p>
+                <p className="font-mono font-semibold text-slate-800">1 : √3 : 2</p>
+              </div>
+              <div className="bg-amber-50 rounded-lg px-3 py-2 border border-amber-100">
+                <p className="text-[10px] text-amber-600">45°–45°–90° sides</p>
+                <p className="font-mono font-semibold text-slate-800">1 : 1 : √2</p>
+              </div>
+            </div>
+          </section>
+          <section>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Trigonometry (right triangle)</p>
+            <div className="grid grid-cols-3 gap-2">
+              {[
+                ['sin θ', 'opp / hyp'],
+                ['cos θ', 'adj / hyp'],
+                ['tan θ', 'opp / adj'],
+              ].map(([ratio, def]) => (
+                <div key={ratio} className="bg-slate-50 rounded-lg px-3 py-2 text-center">
+                  <p className="font-mono font-bold text-[#1d4ed8] text-[13px]">{ratio}</p>
+                  <p className="text-slate-500 text-[10px] mt-0.5">{def}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+          <section>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Key Facts</p>
+            <div className="space-y-1">
+              {[
+                'A circle contains 360°',
+                'A circle contains 2π radians',
+                'The sum of angles in a triangle is 180°',
+                'The number of degrees of arc in a circle is 360°',
+              ].map((fact) => (
+                <p key={fact} className="text-[11px] text-slate-600 bg-slate-50 rounded px-3 py-1.5">• {fact}</p>
+              ))}
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ─── Stable overlay wrappers (defined outside main component so React never
 //     remounts them on timer ticks or other state changes) ────────────────────
 function ExamWrapper({ children }: { children: React.ReactNode }) {
@@ -673,12 +844,13 @@ function DirectionsLayout({ title, children }: { title: string; children: React.
 // ─── NavBar ───────────────────────────────────────────────────────────────────
 function NavBar({
   onBack, onNext, canGoBack, centerLabel, timerEl, onReview, showReview,
-  isBookmarked, onBookmark,
+  isBookmarked, onBookmark, showMathTools, onCalc, onRef,
 }: {
   onBack: () => void; onNext: () => void; canGoBack: boolean
   centerLabel: React.ReactNode; timerEl?: React.ReactNode
   onReview?: () => void; showReview?: boolean
   isBookmarked?: boolean; onBookmark?: () => void
+  showMathTools?: boolean; onCalc?: () => void; onRef?: () => void
 }) {
   return (
     <header className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-3 text-white select-none gap-2">
@@ -703,8 +875,21 @@ function NavBar({
       <div className="flex-1 text-center min-w-0 px-2 text-[12px] font-medium text-white/90 truncate">
         {centerLabel}
       </div>
-      <div className="flex items-center gap-2 shrink-0">
+      <div className="flex items-center gap-1.5 shrink-0">
         {timerEl}
+        {showMathTools && onCalc && (
+          <button onClick={onCalc} title="Calculator" className="text-[11px] font-semibold px-2 py-1 rounded border border-white/30 hover:bg-white/10 transition-colors flex items-center gap-1">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-3.5 w-3.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008zm0 2.25h.008v.008H8.25V13.5zm0 2.25h.008v.008H8.25v-.008zm0 2.25h.008v.008H8.25V18zm2.498-6.75h.007v.008h-.007v-.008zm0 2.25h.007v.008h-.007V13.5zm0 2.25h.007v.008h-.007v-.008zm0 2.25h.007v.008h-.007V18zm2.504-6.75h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V13.5zm0 2.25h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V18zm2.498-6.75h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V13.5zM8.25 6h7.5v2.25h-7.5V6zM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 002.25 2.25h10.5a2.25 2.25 0 002.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0012 2.25z" />
+            </svg>
+            Calc
+          </button>
+        )}
+        {showMathTools && onRef && (
+          <button onClick={onRef} title="Reference sheet" className="text-[11px] font-semibold px-2 py-1 rounded border border-white/30 hover:bg-white/10 transition-colors">
+            Ref
+          </button>
+        )}
         {showReview && onReview && (
           <button onClick={onReview} className="text-[11px] font-semibold px-2.5 py-1 rounded border border-white/30 hover:bg-white/10 transition-colors">
             Review
@@ -713,7 +898,7 @@ function NavBar({
         {onBookmark && (
           <button
             onClick={onBookmark}
-            title={isBookmarked ? 'Remove bookmark' : 'Bookmark'}
+            title={isBookmarked ? 'Remove bookmark' : 'Mark for review'}
             className={cn('flex h-7 w-7 items-center justify-center rounded transition-colors', isBookmarked ? 'text-amber-400' : 'text-white/50 hover:text-white/80')}
           >
             <svg fill={isBookmarked ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
@@ -757,6 +942,11 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
   const [aiFeedbackLoading, setAiFeedbackLoading] = useState(false)
   const [aiFeedbackError, setAiFeedbackError] = useState('')
   const [answerFilter, setAnswerFilter] = useState<AnswerFilter>('all')
+  const [strikeouts, setStrikeouts] = useState<Record<string, ChoiceLabel[]>>(
+    (initialAttempt?.strikeouts as Record<string, ChoiceLabel[]>) ?? {}
+  )
+  const [calcOpen, setCalcOpen] = useState(false)
+  const [refOpen, setRefOpen] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const attemptIdRef = useRef<string>(initialAttempt?.id ?? '')
@@ -848,25 +1038,38 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
     const correct = countCorrect(rwSection.modules[0], answers)
     setRwM2Type(correct >= form.rwRoutingThreshold ? 'hard' : 'easy')
     stopTimer()
-    setPhase({ tag: 'rw_break' })
+    setPhase({ tag: 'module_review', section: 'rw', slot: 'm1' })
   }, [rwSection, answers, form.rwRoutingThreshold, stopTimer])
 
   const handleMathM1Complete = useCallback(() => {
     const correct = countCorrect(mathSection.modules[0], answers)
     setMathM2Type(correct >= form.mathRoutingThreshold ? 'hard' : 'easy')
     stopTimer()
-    setPhase({ tag: 'math_break' })
+    setPhase({ tag: 'module_review', section: 'math', slot: 'm1' })
   }, [mathSection, answers, form.mathRoutingThreshold, stopTimer])
+
+  // ── Start 10-min break countdown when entering section_break ──────────────
+  useEffect(() => {
+    if (phase.tag !== 'section_break') return
+    startTimer(10)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase.tag])
 
   // ── Auto-advance on timer expiry ───────────────────────────────────────────
   useEffect(() => {
-    if (timerRunning || secsLeft > 0 || phase.tag !== 'question') return
-    if (phase.slot === 'm1') {
-      if (phase.section === 'rw') handleRWM1Complete()
-      else handleMathM1Complete()
-    } else {
-      if (phase.section === 'rw') { stopTimer(); setPhase({ tag: 'section_break' }) }
-      else { stopTimer(); setPhase({ tag: 'end' }) }
+    if (timerRunning || secsLeft > 0) return
+    if (phase.tag === 'question') {
+      if (phase.slot === 'm1') {
+        if (phase.section === 'rw') handleRWM1Complete()
+        else handleMathM1Complete()
+      } else {
+        stopTimer()
+        setPhase(phase.section === 'rw'
+          ? { tag: 'module_review', section: 'rw', slot: 'm2' }
+          : { tag: 'module_review', section: 'math', slot: 'm2' })
+      }
+    } else if (phase.tag === 'section_break') {
+      setPhase({ tag: 'math_directions' })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timerRunning, secsLeft])
@@ -889,7 +1092,9 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
       else handleMathM1Complete()
     } else {
       stopTimer()
-      setPhase(phase.section === 'rw' ? { tag: 'section_break' } : { tag: 'end' })
+      setPhase(phase.section === 'rw'
+        ? { tag: 'module_review', section: 'rw', slot: 'm2' }
+        : { tag: 'module_review', section: 'math', slot: 'm2' })
     }
   }, [phase, getActiveModule, handleRWM1Complete, handleMathM1Complete, stopTimer])
 
@@ -900,12 +1105,14 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
       if (['input', 'textarea', 'select'].includes(tag)) return
       if ((e.target as HTMLElement)?.isContentEditable) return
       if (phase.tag !== 'question') return
+      if (calcOpen || refOpen) return
       if (e.key === 'ArrowRight') { e.preventDefault(); handleNext() }
       if (e.key === 'ArrowLeft') { e.preventDefault(); handleBack() }
+      if (e.key === 'Escape') { setCalcOpen(false); setRefOpen(false) }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
-  }, [phase, handleNext, handleBack])
+  }, [phase, handleNext, handleBack, calcOpen, refOpen])
 
   // ── Answers & bookmarks ────────────────────────────────────────────────────
   const setAnswer = useCallback((qId: string, value: string) => {
@@ -914,6 +1121,16 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
 
   const toggleBookmark = useCallback((qId: string) => {
     setBookmarks(prev => { const n = new Set(prev); n.has(qId) ? n.delete(qId) : n.add(qId); return n })
+  }, [])
+
+  const toggleStrikeout = useCallback((qId: string, label: ChoiceLabel) => {
+    setStrikeouts(prev => {
+      const current = prev[qId] ?? []
+      const next = current.includes(label)
+        ? current.filter(l => l !== label)
+        : [...current, label]
+      return { ...prev, [qId]: next }
+    })
   }, [])
 
   // ── Score computation ──────────────────────────────────────────────────────
@@ -1002,6 +1219,7 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
       rwM2Type, mathM2Type,
       answers,
       bookmarks: [...bookmarks],
+      strikeouts: Object.fromEntries(Object.entries(strikeouts).map(([k, v]) => [k, [...v]])),
       aiFeedback: null,
     }
     saveAttempt(attempt)
@@ -1018,11 +1236,12 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
   // ── Retake ─────────────────────────────────────────────────────────────────
   const handleRetake = useCallback(() => {
     setPhase({ tag: 'welcome' })
-    setAnswers({}); setBookmarks(new Set())
+    setAnswers({}); setBookmarks(new Set()); setStrikeouts({})
     setRwM2Type('easy'); setMathM2Type('easy')
     setSecsLeft(0); setTimerRunning(false)
     setAiFeedback(null); setAiFeedbackLoading(false); setAiFeedbackError('')
     setAnswerFilter('all')
+    setCalcOpen(false); setRefOpen(false)
     attemptIdRef.current = ''
     completedAtRef.current = ''
     // unlocked stays true — no re-auth needed for retake
@@ -1216,13 +1435,30 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
   }
 
   if (phase.tag === 'section_break') {
+    const breakMins = Math.floor(secsLeft / 60)
+    const breakSecs = secsLeft % 60
+    const breakTimeStr = `${String(breakMins).padStart(2, '0')}:${String(breakSecs).padStart(2, '0')}`
     return (
       <DirectionsLayout title="Break">
         <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
-          <h2 className="text-[18px] font-bold text-slate-900 mb-2">Reading and Writing Complete</h2>
-          <p className="text-[13px] text-slate-500 mb-6">Take a short break. The Math section is next.</p>
-          <button onClick={() => setPhase({ tag: 'math_directions' })} className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors">
-            Continue to Math
+          <div className="h-14 w-14 rounded-full bg-green-50 border-2 border-green-200 flex items-center justify-center mx-auto mb-5">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-7 w-7 text-green-600">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h2 className="text-[20px] font-bold text-slate-900 mb-2">Reading and Writing Complete</h2>
+          <p className="text-[13px] text-slate-500 mb-5">Take a 10-minute break. The Math section begins when the timer reaches 0 or you click Resume.</p>
+          <div className="bg-slate-50 border border-slate-200 rounded-xl py-5 mb-6">
+            <p className="text-[11px] text-slate-400 uppercase tracking-widest mb-1">Break time remaining</p>
+            <p className={cn('text-[42px] font-bold font-mono', secsLeft <= 60 ? 'text-red-500' : 'text-slate-900')}>
+              {breakTimeStr}
+            </p>
+          </div>
+          <button
+            onClick={() => { stopTimer(); setPhase({ tag: 'math_directions' }) }}
+            className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-2.5 rounded-lg transition-colors"
+          >
+            Resume Testing
           </button>
         </div>
       </DirectionsLayout>
@@ -1298,6 +1534,8 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
 
     return (
       <ExamWrapper>
+        {calcOpen && <CalculatorModal onClose={() => setCalcOpen(false)} />}
+        {refOpen && <ReferenceModal onClose={() => setRefOpen(false)} />}
         <div className="flex flex-col h-full">
           <NavBar
             canGoBack={phase.qIdx > 0}
@@ -1306,9 +1544,12 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
             centerLabel={centerLabel}
             timerEl={<TimerDisplay secs={secsLeft} />}
             showReview={true}
-            onReview={() => setPhase({ tag: 'end' })}
+            onReview={() => setPhase({ tag: 'module_review', section: phase.section, slot: phase.slot })}
             isBookmarked={bookmarked}
             onBookmark={() => toggleBookmark(q.id)}
+            showMathTools={phase.section === 'math'}
+            onCalc={() => setCalcOpen(true)}
+            onRef={() => setRefOpen(true)}
           />
 
           <div className="flex-1 overflow-y-auto">
@@ -1324,7 +1565,14 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                   <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
                     {q.domain} · {getSkill(q)}
                   </span>
-                  {bookmarked && <span className="text-[10px] font-semibold text-amber-500 uppercase tracking-widest">Bookmarked</span>}
+                  {bookmarked && (
+                    <span className="text-[10px] font-semibold text-amber-500 uppercase tracking-widest flex items-center gap-1">
+                      <svg fill="currentColor" viewBox="0 0 24 24" className="h-3 w-3">
+                        <path d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+                      </svg>
+                      Marked for Review
+                    </span>
+                  )}
                 </div>
                 <p className="text-[14px] text-slate-900 font-medium leading-snug mb-5">{q.question}</p>
 
@@ -1332,22 +1580,37 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                   <div className="space-y-2">
                     {choices.map(choice => {
                       const selected = currentAnswer === choice.label
+                      const struckOut = (strikeouts[q.id] ?? []).includes(choice.label)
                       return (
-                        <button
-                          key={choice.label}
-                          onClick={() => setAnswer(q.id, choice.label)}
-                          className={cn(
-                            'w-full text-left flex items-start gap-3 px-4 py-3 rounded-lg border text-[13px] transition-all',
-                            selected ? 'border-[#1d4ed8] bg-blue-50 text-[#1d4ed8]' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
-                          )}
-                        >
-                          <span className={cn('shrink-0 h-5 w-5 rounded-full border-2 flex items-center justify-center text-[10px] font-bold mt-0.5',
-                            selected ? 'border-[#1d4ed8] bg-[#1d4ed8] text-white' : 'border-slate-300 text-slate-500'
-                          )}>
-                            {choice.label}
-                          </span>
-                          <span className="leading-snug">{choice.text}</span>
-                        </button>
+                        <div key={choice.label} className="flex items-stretch gap-1.5">
+                          <button
+                            onClick={() => toggleStrikeout(q.id, choice.label)}
+                            title={struckOut ? 'Remove cross-out' : 'Cross out this choice'}
+                            className={cn(
+                              'shrink-0 w-7 flex items-center justify-center rounded-lg border transition-colors text-[9px] font-mono font-bold',
+                              struckOut
+                                ? 'border-red-300 bg-red-50 text-red-500 hover:bg-red-100'
+                                : 'border-slate-200 bg-white text-slate-300 hover:border-slate-300 hover:text-slate-500'
+                            )}
+                          >
+                            {struckOut ? '↺' : 'A̶B̶C̶'}
+                          </button>
+                          <button
+                            onClick={() => setAnswer(q.id, choice.label)}
+                            className={cn(
+                              'flex-1 text-left flex items-start gap-3 px-4 py-3 rounded-lg border text-[13px] transition-all',
+                              selected ? 'border-[#1d4ed8] bg-blue-50 text-[#1d4ed8]' : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                              struckOut && 'opacity-40'
+                            )}
+                          >
+                            <span className={cn('shrink-0 h-5 w-5 rounded-full border-2 flex items-center justify-center text-[10px] font-bold mt-0.5',
+                              selected ? 'border-[#1d4ed8] bg-[#1d4ed8] text-white' : 'border-slate-300 text-slate-500'
+                            )}>
+                              {choice.label}
+                            </span>
+                            <span className={cn('leading-snug', struckOut && 'line-through')}>{choice.text}</span>
+                          </button>
+                        </div>
                       )
                     })}
                   </div>
@@ -1363,6 +1626,9 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                       placeholder="e.g. 4, 3/4, .75"
                       className="w-48 border-2 border-slate-200 rounded-lg px-4 py-2 text-[14px] font-mono text-slate-900 focus:border-[#1d4ed8] focus:outline-none transition-colors"
                     />
+                    <p className="text-[11px] text-slate-400 mt-2">
+                      Answer preview: <span className="font-semibold text-slate-700">{currentAnswer || '—'}</span>
+                    </p>
                   </div>
                 )}
               </div>
@@ -1374,10 +1640,38 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                     onClick={handleNext}
                     className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-[13px] font-semibold px-5 py-2.5 rounded-lg transition-colors"
                   >
-                    {phase.slot === 'm1' ? 'Submit Module 1 →' : phase.section === 'rw' ? 'Submit RW Section →' : 'Submit Math Section →'}
+                    {phase.slot === 'm1' ? 'Go to Review →' : phase.section === 'rw' ? 'Go to Review →' : 'Go to Review →'}
                   </button>
                 )}
               </div>
+            </div>
+          </div>
+
+          {/* Question navigator */}
+          <div className="shrink-0 bg-white border-t border-slate-200 px-3 py-2 overflow-x-auto">
+            <div className="flex items-center gap-1 min-w-max">
+              {mod.questions.map((nq, ni) => {
+                const isAns = !!answers[nq.id]?.trim()
+                const isBm = bookmarks.has(nq.id)
+                const isCur = ni === phase.qIdx
+                return (
+                  <button
+                    key={nq.id}
+                    onClick={() => setPhase({ ...phase, qIdx: ni })}
+                    className={cn(
+                      'h-7 w-7 rounded text-[11px] font-semibold border transition-all shrink-0',
+                      isCur
+                        ? 'border-[#1d4ed8] bg-[#1d4ed8] text-white ring-2 ring-[#1d4ed8] ring-offset-1'
+                        : isAns
+                        ? 'bg-[#1d4ed8] border-[#1d4ed8] text-white'
+                        : 'bg-white border-slate-200 text-slate-500 hover:border-slate-400',
+                      isBm && !isCur && 'ring-2 ring-amber-400 ring-offset-1'
+                    )}
+                  >
+                    {ni + 1}
+                  </button>
+                )
+              })}
             </div>
           </div>
         </div>
@@ -1386,68 +1680,123 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // PHASE: END (review)
+  // PHASE: MODULE REVIEW
   // ─────────────────────────────────────────────────────────────────────────
-  if (phase.tag === 'end') {
-    const groups = [
-      { label: 'Reading and Writing — Module 1', questions: rwM1Module.questions, section: 'rw' as const, slot: 'm1' as const },
-      { label: `Reading and Writing — Module 2 (${rwM2Type})`, questions: rwM2Module.questions, section: 'rw' as const, slot: 'm2' as const },
-      { label: 'Math — Module 1', questions: mathM1Module.questions, section: 'math' as const, slot: 'm1' as const },
-      { label: `Math — Module 2 (${mathM2Type})`, questions: mathM2Module.questions, section: 'math' as const, slot: 'm2' as const },
-    ]
+  if (phase.tag === 'module_review') {
+    const reviewMod = getActiveModule(phase.section, phase.slot)
+    const reviewQuestions = reviewMod.questions
+    const answeredCount = reviewQuestions.filter(q => isAnswered(q, answers)).length
+    const unansweredCount = reviewQuestions.length - answeredCount
+    const bookmarkedCount = reviewQuestions.filter(q => bookmarks.has(q.id)).length
+
+    const sectionName = phase.section === 'rw' ? 'Reading and Writing' : 'Math'
+    const modNum = phase.slot === 'm1' ? '1' : '2'
+    const headerLabel = `${sectionName} — Module ${modNum} Review`
+
+    const isFinal = phase.section === 'math' && phase.slot === 'm2'
+
+    const handleContinue = () => {
+      if (isFinal) {
+        attemptIdRef.current = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+        completedAtRef.current = new Date().toISOString()
+        setPhase({ tag: 'results' })
+      } else if (phase.section === 'rw' && phase.slot === 'm1') {
+        setPhase({ tag: 'rw_break' })
+      } else if (phase.section === 'rw' && phase.slot === 'm2') {
+        setPhase({ tag: 'section_break' })
+      } else {
+        setPhase({ tag: 'math_break' })
+      }
+    }
+
+    const continueLabel = isFinal
+      ? 'Submit Test and See Results'
+      : phase.section === 'rw' && phase.slot === 'm1'
+      ? 'Continue to Module 2 →'
+      : phase.section === 'rw' && phase.slot === 'm2'
+      ? 'Continue to 10-Minute Break →'
+      : 'Continue to Module 2 →'
 
     return (
       <ExamWrapper>
         <div className="flex flex-col h-full">
-          <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
-            <span className="text-white text-[13px] font-semibold">Review Answers</span>
+          <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4 gap-3">
+            <button
+              onClick={() => setPhase({ tag: 'question', section: phase.section, slot: phase.slot, qIdx: reviewQuestions.length - 1 })}
+              className="text-white/70 hover:text-white text-[12px] font-medium transition-colors flex items-center gap-1"
+            >
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+              Back
+            </button>
+            <span className="text-white text-[13px] font-semibold">{headerLabel}</span>
           </div>
           <div className="flex-1 overflow-y-auto p-6">
             <div className="max-w-2xl mx-auto">
-              <h2 className="text-[18px] font-bold text-slate-900 mb-1">Review Your Answers</h2>
-              <p className="text-[13px] text-slate-500 mb-6">Click any number to return to that question.</p>
-
-              {groups.map((g, gi) => (
-                <div key={gi} className="mb-6">
-                  <h3 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-3">{g.label}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {g.questions.map((q, qi) => {
-                      const answered = isAnswered(q, answers)
-                      const bm = bookmarks.has(q.id)
-                      return (
-                        <button
-                          key={q.id}
-                          onClick={() => setPhase({ tag: 'question', section: g.section, slot: g.slot, qIdx: qi })}
-                          className={cn(
-                            'h-8 w-8 rounded text-[12px] font-semibold border transition-all relative',
-                            answered ? 'bg-[#1d4ed8] border-[#1d4ed8] text-white' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-400',
-                            bm && 'ring-2 ring-amber-400 ring-offset-1',
-                          )}
-                        >
-                          {qi + 1}
-                        </button>
-                      )
-                    })}
-                  </div>
+              <div className="flex items-start justify-between mb-5">
+                <div>
+                  <h2 className="text-[18px] font-bold text-slate-900">Review Your Answers</h2>
+                  <p className="text-[13px] text-slate-500 mt-1">Click any number to return to that question.</p>
                 </div>
-              ))}
+                <div className="flex items-center gap-3 text-[12px] text-slate-500 shrink-0">
+                  <span className="flex items-center gap-1"><span className="h-3 w-3 rounded bg-[#1d4ed8] shrink-0" /> {answeredCount} answered</span>
+                  {unansweredCount > 0 && <span className="flex items-center gap-1 text-amber-600"><span className="h-3 w-3 rounded bg-white border border-slate-300 shrink-0" /> {unansweredCount} unanswered</span>}
+                  {bookmarkedCount > 0 && <span className="flex items-center gap-1 text-amber-600"><span className="h-3 w-3 rounded ring-2 ring-amber-400 shrink-0" /> {bookmarkedCount} marked</span>}
+                </div>
+              </div>
 
-              <div className="flex items-center gap-4 text-[12px] text-slate-500 mb-6">
+              {unansweredCount > 0 && (
+                <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 mb-5 text-[12px] text-amber-800 flex items-start gap-2">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4 shrink-0 mt-0.5 text-amber-500">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                  </svg>
+                  <span>You have <strong>{unansweredCount} unanswered question{unansweredCount > 1 ? 's' : ''}</strong>. You can still go back and answer them before continuing.</span>
+                </div>
+              )}
+
+              <div className="flex flex-wrap gap-2 mb-6">
+                {reviewQuestions.map((q, qi) => {
+                  const answered = isAnswered(q, answers)
+                  const bm = bookmarks.has(q.id)
+                  return (
+                    <button
+                      key={q.id}
+                      onClick={() => setPhase({ tag: 'question', section: phase.section, slot: phase.slot, qIdx: qi })}
+                      className={cn(
+                        'h-9 w-9 rounded text-[12px] font-semibold border transition-all relative',
+                        answered ? 'bg-[#1d4ed8] border-[#1d4ed8] text-white' : 'bg-white border-slate-200 text-slate-500 hover:border-slate-400',
+                        bm && 'ring-2 ring-amber-400 ring-offset-1',
+                      )}
+                    >
+                      {qi + 1}
+                    </button>
+                  )
+                })}
+              </div>
+
+              <div className="flex items-center gap-4 text-[12px] text-slate-400 mb-8">
                 <div className="flex items-center gap-1.5"><span className="h-4 w-4 rounded bg-[#1d4ed8]" /> Answered</div>
                 <div className="flex items-center gap-1.5"><span className="h-4 w-4 rounded bg-white border border-slate-200" /> Unanswered</div>
-                <div className="flex items-center gap-1.5"><span className="h-4 w-4 rounded ring-2 ring-amber-400" /> Bookmarked</div>
+                <div className="flex items-center gap-1.5"><span className="h-4 w-4 rounded ring-2 ring-amber-400" /> Marked for review</div>
               </div>
 
               <button
-                onClick={() => {
-                  attemptIdRef.current = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
-                  completedAtRef.current = new Date().toISOString()
-                  setPhase({ tag: 'results' })
-                }}
-                className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white font-semibold py-3 rounded-lg text-[14px] transition-colors"
+                onClick={handleContinue}
+                className={cn(
+                  'w-full font-semibold py-3 rounded-lg text-[14px] transition-colors',
+                  isFinal
+                    ? 'bg-green-600 hover:bg-green-700 text-white'
+                    : 'bg-[#1d4ed8] hover:bg-[#1e40af] text-white'
+                )}
               >
-                Submit and See Results
+                {continueLabel}
               </button>
+              {!isFinal && (
+                <p className="text-[11px] text-slate-400 text-center mt-2">
+                  Once you continue, you cannot return to this module.
+                </p>
+              )}
             </div>
           </div>
         </div>

@@ -1,25 +1,21 @@
 import type { MathQuestion } from './types'
 
-// Math Module 2 Hard — 22 questions (higher-scoring second module)
-// 17 multiple choice + 5 grid-in
+// Math Module 2 Hard — 22 questions (0 easy, ~10 medium, ~12 hard)
+// 17 multiple choice (q01–q17) + 5 grid-in (q18–q22)
 
 export const mathModule2HardQuestions: MathQuestion[] = [
 
-  // ── Algebra (7) ──────────────────────────────────────────────────────────────
+  // ── Algebra (5 MC + 2 grid-in) ───────────────────────────────────────────────
 
   {
     id: 'm2h-01',
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Algebra',
-    skill: 'Systems of linear equations',
+    skill: 'Systems of two linear equations in two variables',
     difficulty: 'hard',
     type: 'multiple_choice',
-    // Verified: 3x−4y=8 and 9x−12y=18 → 3x−4y=6. Parallel (same slope 3/4) but different RHS (8 vs 6). No solution. ✓
-    question: `The system below has no solution. What is the value of k?
-
-3x − ky = 8
-9x − 12y = 18`,
+    question: 'The system below has no solution. What is the value of k?\n3x − ky = 8\n9x − 12y = 18',
     choices: [
       { label: 'A', text: '3' },
       { label: 'B', text: '4' },
@@ -27,11 +23,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: '9' },
     ],
     correctAnswer: 'B',
-    explanation: `Divide the second equation by 3: 3x − 4y = 6. For no solution the lines must be parallel: same slopes, different y-intercepts. The first equation 3x − ky = 8 has slope 3/k; the simplified second has slope 3/4. Setting 3/k = 3/4 gives k = 4. With k = 4 the lines are 3x − 4y = 8 and 3x − 4y = 6 — parallel with different constants, confirming no solution.`,
+    explanation: 'Divide the second equation by 3: 3x − 4y = 6. For no solution, the lines must be parallel (same slope, different constants). The first line 3x − ky = 8 has slope 3/k; the second has slope 3/4. Setting 3/k = 3/4 gives k = 4. With k = 4: the equations are 3x − 4y = 8 and 3x − 4y = 6 — parallel with different constants, confirming no solution.',
     wrongAnswerExplanations: {
-      A: `If k = 3, the first line has slope 1 and the second has slope 3/4. Different slopes means the lines intersect (one solution, not no solution).`,
-      C: `If k = 6, the first line has slope 1/2 and the second has slope 3/4. Again, different slopes means one solution.`,
-      D: `If k = 9, the slope ratio is 3/9 = 1/3, not 3/4. One solution.`,
+      A: 'If k = 3, slope of first line = 1 ≠ 3/4 — the lines intersect (one solution).',
+      C: 'If k = 6, slope of first line = 1/2 ≠ 3/4 — the lines intersect.',
+      D: 'If k = 9, slope = 3/9 = 1/3 ≠ 3/4 — the lines intersect.',
     },
   },
 
@@ -43,8 +39,7 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     skill: 'Linear functions',
     difficulty: 'hard',
     type: 'multiple_choice',
-    // Verified: slope of given line = 1/3; perp slope = −3. Through (−2, 7): 7 = −3(−2) + b = 6 + b → b = 1. y = −3x + 1 ✓
-    question: `Line p passes through (−2, 7) and is perpendicular to the line y = (1/3)x + 4. What is the equation of line p?`,
+    question: 'Line p passes through the point (−2, 7) and is perpendicular to the line y = (1/3)x + 4. What is the equation of line p?',
     choices: [
       { label: 'A', text: 'y = 3x + 13' },
       { label: 'B', text: 'y = −3x + 1' },
@@ -52,11 +47,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: 'y = −3x − 1' },
     ],
     correctAnswer: 'B',
-    explanation: `The slope of y = (1/3)x + 4 is 1/3. A perpendicular line has slope = −1/(1/3) = −3. Using point–slope form with (−2, 7): y − 7 = −3(x − (−2)) → y − 7 = −3x − 6 → y = −3x + 1.`,
+    explanation: 'The slope of y = (1/3)x + 4 is 1/3. A perpendicular slope is −1/(1/3) = −3. Using point (−2, 7): y − 7 = −3(x + 2) → y = −3x − 6 + 7 → y = −3x + 1.',
     wrongAnswerExplanations: {
-      A: `Choice A uses slope +3 (the reciprocal without flipping the sign). Plugging in (−2,7): 7 = 3(−2)+b → b = 13. This line is not perpendicular.`,
-      C: `Choice C uses the same slope as the original line (parallel, not perpendicular).`,
-      D: `Choice D uses the correct slope −3 but computes b = −1. Check: y = −3(−2)−1 = 6−1 = 5 ≠ 7.`,
+      A: 'Slope +3 is the reciprocal without flipping the sign — this line is not perpendicular.',
+      C: 'Same slope as the original — this is the parallel line through (−2, 7), not perpendicular.',
+      D: 'Correct slope −3, but wrong y-intercept: at x = −2, y = −3(−2) − 1 = 5 ≠ 7.',
     },
   },
 
@@ -66,14 +61,22 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     moduleId: 'math-module-2-hard',
     domain: 'Algebra',
     skill: 'Linear equations in one variable',
-    difficulty: 'hard',
-    type: 'grid_in',
-    // Verified: multiply by 4 → (3a+2) − 2(a−1) = 12 → 3a+2−2a+2 = 12 → a+4 = 12 → a = 8 ✓
-    question: `If (3a + 2)/4 − (a − 1)/2 = 3, what is the value of a?`,
-    correctAnswer: '8',
-    acceptableAnswers: ['8'],
-    explanation: `Multiply every term by 4 to clear fractions: (3a + 2) − 2(a − 1) = 12. Distribute: 3a + 2 − 2a + 2 = 12. Combine: a + 4 = 12 → a = 8.`,
-    scoringNotes: `Only 8 is acceptable.`,
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'A company produces and sells widgets. The cost to produce n widgets is C = 0.08n + 12 (in dollars) and the revenue from selling n widgets is R = 0.12n. How many widgets must be sold to break even?',
+    choices: [
+      { label: 'A', text: '150' },
+      { label: 'B', text: '200' },
+      { label: 'C', text: '300' },
+      { label: 'D', text: '400' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Set R = C: 0.12n = 0.08n + 12 → 0.04n = 12 → n = 300.',
+    wrongAnswerExplanations: {
+      A: 'At n = 150: R = 18, C = 12 + 12 = 24. Revenue < Cost — still losing money.',
+      B: 'At n = 200: R = 24, C = 16 + 12 = 28. Still not break-even.',
+      D: 'At n = 400: R = 48, C = 32 + 12 = 44. Already profitable — break-even passed.',
+    },
   },
 
   {
@@ -81,11 +84,10 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Algebra',
-    skill: 'Systems of linear equations',
+    skill: 'Systems of two linear equations in two variables',
     difficulty: 'hard',
     type: 'multiple_choice',
-    // Verified: a=14, c=6. 5(14)+3(6)=70+18=88 ✓; 2(14)+6(6)=28+36=64 ✓
-    question: `The total cost of 5 adult tickets and 3 child tickets is $88. The total cost of 2 adult tickets and 6 child tickets is $64. What is the cost of one adult ticket?`,
+    question: 'The total cost of 5 adult tickets and 3 child tickets is $88. The total cost of 2 adult tickets and 6 child tickets is $64. What is the cost, in dollars, of one adult ticket?',
     choices: [
       { label: 'A', text: '$10' },
       { label: 'B', text: '$12' },
@@ -93,11 +95,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: '$16' },
     ],
     correctAnswer: 'C',
-    explanation: `Let a = adult price, c = child price. System: 5a + 3c = 88 and 2a + 6c = 64. Divide the second equation by 2: a + 3c = 32. Subtract from the first: (5a + 3c) − (a + 3c) = 88 − 32 → 4a = 56 → a = 14. Check: 3c = 32 − 14 = 18 → c = 6. Verify: 5(14) + 3(6) = 88 ✓ and 2(14) + 6(6) = 64 ✓.`,
+    explanation: 'Let a = adult price, c = child price. Equations: 5a + 3c = 88 and 2a + 6c = 64. Divide the second by 2: a + 3c = 32. Subtract from the first: 4a = 56 → a = 14. Verify: c = (32 − 14)/3 = 6; check: 5(14) + 3(6) = 88 ✓ and 2(14) + 6(6) = 64 ✓.',
     wrongAnswerExplanations: {
-      A: `If a = 10, then from a + 3c = 32: c = (32−10)/3 ≈ 7.33. Then 5(10)+3(7.33) ≈ 72 ≠ 88.`,
-      B: `If a = 12, then c = (32−12)/3 ≈ 6.67. Then 5(12)+3(6.67) ≈ 80 ≠ 88.`,
-      D: `If a = 16, then c = (32−16)/3 ≈ 5.33. Then 5(16)+3(5.33) ≈ 96 ≠ 88.`,
+      A: 'If a = 10, then 3c = 22 — not an integer child price.',
+      B: 'If a = 12, then 3c = 20 — not an integer child price.',
+      D: 'If a = 16, then 3c = 16 — not an integer child price.',
     },
   },
 
@@ -106,23 +108,22 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Algebra',
-    skill: 'Interpreting linear models',
+    skill: 'Linear inequalities in one or two variables',
     difficulty: 'hard',
     type: 'multiple_choice',
-    // Verified: C = 0.08n + 12. Revenue model: profit = revenue − cost. If profit = 0 → 0.12n = 0.08n + 12 → 0.04n = 12 → n = 300.
-    question: `A company produces and sells widgets. The cost to produce n widgets is C = 0.08n + 12 (in dollars), and the revenue from selling n widgets is R = 0.12n. How many widgets must the company sell to break even (revenue equals cost)?`,
+    question: 'Which of the following represents all values of x satisfying |2x − 1| ≤ 7?',
     choices: [
-      { label: 'A', text: '150' },
-      { label: 'B', text: '200' },
-      { label: 'C', text: '300' },
-      { label: 'D', text: '400' },
+      { label: 'A', text: 'x ≤ 4' },
+      { label: 'B', text: '−3 ≤ x ≤ 4' },
+      { label: 'C', text: 'x ≥ −3' },
+      { label: 'D', text: '−4 ≤ x ≤ 3' },
     ],
-    correctAnswer: 'C',
-    explanation: `Set R = C: 0.12n = 0.08n + 12. Subtract 0.08n: 0.04n = 12. Divide: n = 300.`,
+    correctAnswer: 'B',
+    explanation: '|2x − 1| ≤ 7 means −7 ≤ 2x − 1 ≤ 7. Add 1: −6 ≤ 2x ≤ 8. Divide by 2: −3 ≤ x ≤ 4.',
     wrongAnswerExplanations: {
-      A: `n = 150: Revenue = 0.12(150) = 18; Cost = 0.08(150)+12 = 12+12 = 24. Revenue < Cost — still losing money.`,
-      B: `n = 200: Revenue = 24; Cost = 16+12 = 28. Still not break-even.`,
-      D: `n = 400: Revenue = 48; Cost = 32+12 = 44. Revenue > Cost — already profitable.`,
+      A: 'This gives only the right boundary, missing the left constraint x ≥ −3.',
+      C: 'This gives only the left boundary, missing the right constraint x ≤ 4.',
+      D: 'This results from applying a sign error to the inner expression (treating it as −2x + 1 instead of 2x − 1).',
     },
   },
 
@@ -131,24 +132,13 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Algebra',
-    skill: 'Linear inequalities',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    // Verified: |2x − 1| ≤ 7 → −7 ≤ 2x−1 ≤ 7 → −6 ≤ 2x ≤ 8 → −3 ≤ x ≤ 4
-    question: `Which of the following represents all values of x that satisfy |2x − 1| ≤ 7?`,
-    choices: [
-      { label: 'A', text: 'x ≤ 4' },
-      { label: 'B', text: '−3 ≤ x ≤ 4' },
-      { label: 'C', text: 'x ≥ −3' },
-      { label: 'D', text: '−4 ≤ x ≤ 3' },
-    ],
-    correctAnswer: 'B',
-    explanation: `|2x − 1| ≤ 7 means −7 ≤ 2x − 1 ≤ 7. Add 1 to all parts: −6 ≤ 2x ≤ 8. Divide by 2: −3 ≤ x ≤ 4.`,
-    wrongAnswerExplanations: {
-      A: `Choice A gives only the right boundary, missing the left constraint.`,
-      C: `Choice C gives only the left boundary, missing the right constraint.`,
-      D: `Choice D results from using +1 before dividing: (−7+1)/2 = −3 and (7+1)/2 = 4, which is correct — wait, that matches B. Choice D must be from a sign error: treating the inner expression as −2x+1 rather than 2x−1.`,
-    },
+    skill: 'Linear functions',
+    difficulty: 'medium',
+    type: 'grid_in',
+    question: 'A linear function f satisfies f(1) = 5 and f(4) = 14. What is the value of f(7)?',
+    correctAnswer: '23',
+    acceptableAnswers: ['23'],
+    explanation: 'Slope = (14 − 5)/(4 − 1) = 9/3 = 3. Using f(1) = 5: b = 5 − 3(1) = 2. So f(x) = 3x + 2. Then f(7) = 3(7) + 2 = 23.',
   },
 
   {
@@ -156,29 +146,27 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Algebra',
-    skill: 'Linear functions',
-    difficulty: 'hard',
+    skill: 'Linear equations in one variable',
+    difficulty: 'medium',
     type: 'grid_in',
-    // Verified: f(x) = mx + b passes through (1, 5) and (4, 14). m = (14−5)/(4−1) = 9/3 = 3. b = 5 − 3(1) = 2. f(7) = 3(7)+2 = 23. ✓
-    question: `A linear function f satisfies f(1) = 5 and f(4) = 14. What is f(7)?`,
-    correctAnswer: '23',
-    acceptableAnswers: ['23'],
-    explanation: `Slope m = (14 − 5)/(4 − 1) = 9/3 = 3. Using f(1) = 5: b = 5 − 3(1) = 2. So f(x) = 3x + 2. Then f(7) = 3(7) + 2 = 23.`,
-    scoringNotes: `Only 23 is acceptable.`,
+    question: 'If (3a + 2)/4 − (a − 1)/2 = 3, what is the value of a?',
+    correctAnswer: '8',
+    acceptableAnswers: ['8'],
+    explanation: 'Multiply every term by 4: (3a + 2) − 2(a − 1) = 12. Distribute: 3a + 2 − 2a + 2 = 12. Combine: a + 4 = 12 → a = 8.',
+    scoringNotes: 'Only 8 is acceptable.',
   },
 
-  // ── Advanced Math (7) ────────────────────────────────────────────────────────
+  // ── Advanced Math (5 MC + 2 grid-in) ─────────────────────────────────────────
 
   {
     id: 'm2h-08',
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Advanced Math',
-    skill: 'Quadratic equations',
+    skill: 'Nonlinear equations in one variable',
     difficulty: 'hard',
     type: 'multiple_choice',
-    // Verified: 2x²+5x−3=0. Discriminant = 25+24 = 49. x = (−5±7)/4. x = 2/4 = 1/2 or x = −12/4 = −3. ✓
-    question: `What are the solutions to 2x² + 5x − 3 = 0?`,
+    question: 'What are the solutions to 2x² + 5x − 3 = 0?',
     choices: [
       { label: 'A', text: 'x = 1/2 and x = −3' },
       { label: 'B', text: 'x = −1/2 and x = 3' },
@@ -186,11 +174,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: 'x = 3 and x = −1/2' },
     ],
     correctAnswer: 'A',
-    explanation: `Using the quadratic formula with a=2, b=5, c=−3: x = (−5 ± √(25+24))/4 = (−5 ± 7)/4. So x = 2/4 = 1/2 or x = −12/4 = −3. Alternatively, factor: (2x − 1)(x + 3) = 0 → x = 1/2 or x = −3.`,
+    explanation: 'Factor: (2x − 1)(x + 3) = 0 → x = 1/2 or x = −3. Alternatively, quadratic formula: x = (−5 ± √(25 + 24))/4 = (−5 ± 7)/4, giving x = 2/4 = 1/2 or x = −12/4 = −3.',
     wrongAnswerExplanations: {
-      B: `Choice B negates both roots; (2(−1/2) − 1)(−1/2 + 3) ≠ 0 in the original.`,
-      C: `These roots don't satisfy the equation: 2(1)²+5(1)−3 = 4 ≠ 0.`,
-      D: `These are just B's values reordered — neither satisfies the equation.`,
+      B: 'These are the negatives of the correct roots; check: 2(−1/2)² + 5(−1/2) − 3 = 1/2 − 5/2 − 3 = −5 ≠ 0.',
+      C: '2(1)² + 5(1) − 3 = 4 ≠ 0.',
+      D: 'Same roots as B reordered — neither satisfies the equation.',
     },
   },
 
@@ -202,8 +190,7 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     skill: 'Nonlinear functions',
     difficulty: 'hard',
     type: 'multiple_choice',
-    // Verified: f(x) = −2(x−3)²+8. Vertex = (3,8). Opens downward (a=−2<0). Max value = 8 at x=3. ✓
-    question: `The function f(x) = −2(x − 3)² + 8 has a maximum value. What is the maximum value?`,
+    question: 'The function f(x) = −2(x − 3)² + 8 has a maximum value. What is the maximum value?',
     choices: [
       { label: 'A', text: '−2' },
       { label: 'B', text: '3' },
@@ -211,11 +198,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: '14' },
     ],
     correctAnswer: 'C',
-    explanation: `The function is in vertex form f(x) = a(x − h)² + k with a = −2, h = 3, k = 8. Since a < 0, the parabola opens downward and the vertex (3, 8) is the maximum. The maximum value is 8.`,
+    explanation: 'In vertex form f(x) = a(x − h)² + k, the vertex is (h, k) = (3, 8). Since a = −2 < 0, the parabola opens downward and the vertex is the maximum. Maximum value = 8.',
     wrongAnswerExplanations: {
-      A: `Choice A is the coefficient a, not the maximum value.`,
-      B: `Choice B is the x-coordinate of the vertex (h), not the maximum value.`,
-      D: `Choice D may result from computing −2(−3)² + 8 = −18 + 8 + 8 = −2, or from an error like −2(3)² + 8 = −18 + 8 + 8 = not 14. It might come from expanding incorrectly.`,
+      A: '−2 is the coefficient a, which tells the direction of opening, not the maximum value.',
+      B: '3 is the x-coordinate of the vertex, not the maximum y-value.',
+      D: 'A common error: evaluating f(3) incorrectly or confusing the formula gives 14.',
     },
   },
 
@@ -224,11 +211,10 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Advanced Math',
-    skill: 'Polynomial operations',
+    skill: 'Equivalent expressions',
     difficulty: 'hard',
     type: 'multiple_choice',
-    // Verified: (x²+3x−4)/(x−1). Factor numerator: (x+4)(x−1). Cancel (x−1): x+4 for x≠1. ✓
-    question: `For x ≠ 1, which expression is equivalent to (x² + 3x − 4)/(x − 1)?`,
+    question: 'For x ≠ 1, which expression is equivalent to (x² + 3x − 4)/(x − 1)?',
     choices: [
       { label: 'A', text: 'x − 4' },
       { label: 'B', text: 'x + 4' },
@@ -236,11 +222,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: 'x² + 4' },
     ],
     correctAnswer: 'B',
-    explanation: `Factor the numerator: x² + 3x − 4 = (x + 4)(x − 1). Cancel the common factor (x − 1): the expression simplifies to x + 4 for x ≠ 1.`,
+    explanation: 'Factor the numerator: x² + 3x − 4 = (x + 4)(x − 1). Cancel the common factor (x − 1): result is x + 4 for x ≠ 1.',
     wrongAnswerExplanations: {
-      A: `Choice A uses the wrong sign; (x−4)(x−1) = x²−5x+4 ≠ x²+3x−4.`,
-      C: `Choice C: (x+3)(x−1) = x²+2x−3 ≠ x²+3x−4.`,
-      D: `Choice D is a quadratic, but dividing a quadratic by a linear factor yields another linear factor, not a quadratic.`,
+      A: '(x − 4)(x − 1) = x² − 5x + 4 ≠ x² + 3x − 4.',
+      C: '(x + 3)(x − 1) = x² + 2x − 3 ≠ x² + 3x − 4.',
+      D: 'Dividing a degree-2 polynomial by a degree-1 polynomial yields a degree-1 result, not degree-2.',
     },
   },
 
@@ -250,10 +236,9 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     moduleId: 'math-module-2-hard',
     domain: 'Advanced Math',
     skill: 'Equivalent expressions',
-    difficulty: 'hard',
+    difficulty: 'medium',
     type: 'multiple_choice',
-    // Verified: (2x³y²)(3x²y) = 6x⁵y³ ✓
-    question: `Which of the following is equivalent to (2x³y²)(3x²y)?`,
+    question: 'Which of the following is equivalent to (2x³y²)(3x²y)?',
     choices: [
       { label: 'A', text: '5x⁵y³' },
       { label: 'B', text: '6x⁵y³' },
@@ -261,11 +246,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: '6x⁵y²' },
     ],
     correctAnswer: 'B',
-    explanation: `Multiply coefficients: 2 × 3 = 6. Add exponents for x: x³ · x² = x⁵. Add exponents for y: y² · y = y³. Result: 6x⁵y³.`,
+    explanation: 'Multiply coefficients: 2 × 3 = 6. Add exponents: x³ · x² = x⁵; y² · y¹ = y³. Result: 6x⁵y³.',
     wrongAnswerExplanations: {
-      A: `Choice A adds the coefficients (2+3=5) instead of multiplying them.`,
-      C: `Choice C multiplies the x-exponents (3×2=6) instead of adding them.`,
-      D: `Choice D correctly multiplies x-exponents by adding (x⁵) but uses y² instead of y³, forgetting to add 1 for the y exponent.`,
+      A: 'This adds the coefficients (2 + 3 = 5) instead of multiplying.',
+      C: 'This multiplies the x-exponents (3 × 2 = 6) instead of adding.',
+      D: 'Correct x-exponent but wrong y-exponent: y² · y = y³, not y².',
     },
   },
 
@@ -274,15 +259,23 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Advanced Math',
-    skill: 'Quadratic equations',
-    difficulty: 'hard',
-    type: 'grid_in',
-    // Verified: x²−6x+k=0 has one solution → discriminant = 0 → 36−4k=0 → k=9. ✓
-    question: `The equation x² − 6x + k = 0 has exactly one real solution. What is the value of k?`,
-    correctAnswer: '9',
-    acceptableAnswers: ['9'],
-    explanation: `For exactly one real solution, the discriminant must equal zero: b² − 4ac = 0. Here a=1, b=−6, c=k. So (−6)² − 4(1)(k) = 0 → 36 − 4k = 0 → k = 9.`,
-    scoringNotes: `Only 9 is acceptable.`,
+    skill: 'Equivalent expressions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'Which expression is equivalent to √(x − 2) when x = 27?',
+    choices: [
+      { label: 'A', text: '√7' },
+      { label: 'B', text: '5' },
+      { label: 'C', text: '√23' },
+      { label: 'D', text: '√29' },
+    ],
+    correctAnswer: 'B',
+    explanation: '√(27 − 2) = √25 = 5.',
+    wrongAnswerExplanations: {
+      A: '√7 results from computing √(x) − √2 = √27 − √2, incorrectly distributing the radical.',
+      C: '√23 results from computing √27 − 2 (subtracting inside is correct, but √25 = 5, not √23).',
+      D: '√29 results from computing √(27 + 2) = √29, adding instead of subtracting.',
+    },
   },
 
   {
@@ -290,24 +283,14 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Advanced Math',
-    skill: 'Rational and radical expressions',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    // Verified: √(x−2) = 5 → x−2 = 25 → x = 27. Check: √(27−2)=√25=5 ✓
-    question: `If √(x − 2) = 5, what is the value of x?`,
-    choices: [
-      { label: 'A', text: '7' },
-      { label: 'B', text: '23' },
-      { label: 'C', text: '27' },
-      { label: 'D', text: '29' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Square both sides: x − 2 = 25. Add 2: x = 27. Check: √(27−2) = √25 = 5 ✓.`,
-    wrongAnswerExplanations: {
-      A: `Choice A computes x = 5 + 2 = 7, taking the square root first then adding 2 instead of squaring.`,
-      B: `Choice B subtracts 2 from 25: 25−2 = 23, forgetting that x−2=25 means x=27.`,
-      D: `Choice D adds 2+2=4 to 25 = 29, double-adding the 2.`,
-    },
+    skill: 'Nonlinear equations in one variable',
+    difficulty: 'medium',
+    type: 'grid_in',
+    question: 'The equation x² − 6x + k = 0 has exactly one real solution. What is the value of k?',
+    correctAnswer: '9',
+    acceptableAnswers: ['9'],
+    explanation: 'For exactly one real solution, the discriminant = 0: b² − 4ac = (−6)² − 4(1)(k) = 36 − 4k = 0 → k = 9.',
+    scoringNotes: 'Only 9 is acceptable.',
   },
 
   {
@@ -318,26 +301,24 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     skill: 'Nonlinear functions',
     difficulty: 'hard',
     type: 'grid_in',
-    // Verified: f(x)=3^x. f(0)=1, f(2)=9. f(2)/f(0) = 9/1 = 9. ✓
-    question: `If f(x) = 3^x, what is the value of f(2)/f(0)?`,
-    correctAnswer: '9',
-    acceptableAnswers: ['9'],
-    explanation: `f(2) = 3² = 9. f(0) = 3⁰ = 1. f(2)/f(0) = 9/1 = 9.`,
-    scoringNotes: `Only 9 is acceptable.`,
+    question: 'If 4^x = 8, what is the value of x? Enter your answer as a fraction.',
+    correctAnswer: '3/2',
+    acceptableAnswers: ['3/2', '1.5'],
+    explanation: 'Express both sides as powers of 2: (2²)^x = 2³ → 2^(2x) = 2³ → 2x = 3 → x = 3/2.',
+    scoringNotes: '3/2 or 1.5 are both acceptable.',
   },
 
-  // ── Problem-Solving and Data Analysis (4) ────────────────────────────────────
+  // ── Problem-Solving and Data Analysis (4 MC) ─────────────────────────────────
 
   {
     id: 'm2h-15',
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Problem-Solving and Data Analysis',
-    skill: 'Ratios, rates, and proportional reasoning',
-    difficulty: 'hard',
+    skill: 'Ratios, rates, proportional relationships, and units',
+    difficulty: 'medium',
     type: 'multiple_choice',
-    // Verified: 60 mph × 5/3 hours = 100 miles. 5/3 hours = 100 minutes. ✓
-    question: `A train travels at a constant speed of 60 miles per hour. How many miles does it travel in 100 minutes?`,
+    question: 'A train travels at a constant speed of 60 miles per hour. How many miles does it travel in 100 minutes?',
     choices: [
       { label: 'A', text: '80' },
       { label: 'B', text: '90' },
@@ -345,11 +326,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: '120' },
     ],
     correctAnswer: 'C',
-    explanation: `Convert 100 minutes to hours: 100/60 = 5/3 hours. Distance = 60 × 5/3 = 100 miles.`,
+    explanation: 'Convert: 100 minutes = 100/60 = 5/3 hours. Distance = 60 × 5/3 = 100 miles.',
     wrongAnswerExplanations: {
-      A: `Choice A computes 60 × (80/60) = 80, treating minutes as if they were 80 minutes.`,
-      B: `Choice B results from multiplying 60 × 1.5 = 90, using 90 minutes instead of 100.`,
-      D: `Choice D multiplies 60 × 2 = 120, using 2 hours instead of 100 minutes (1 hour 40 minutes).`,
+      A: '80 does not follow from 60 mph × 100 minutes with proper unit conversion.',
+      B: '90 = 60 × 1.5 hours — using 90 minutes rather than 100.',
+      D: '120 = 60 × 2 hours — using 2 hours (120 min) instead of 100 minutes.',
     },
   },
 
@@ -358,11 +339,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Problem-Solving and Data Analysis',
-    skill: 'Statistics and data interpretation',
+    skill: 'One-variable data: distributions and measures of center and spread',
     difficulty: 'hard',
     type: 'multiple_choice',
-    stimulus: `A class of 20 students took a test. The mean score was 78. After reviewing the results, the teacher discovered that one student's score of 58 had been recorded as 85. `,
-    question: `What is the correct mean score after fixing the error?`,
+    stimulus: 'A class of 20 students took a test with a mean score of 78. The teacher then discovered that one student\'s score of 58 had been incorrectly recorded as 85.',
+    question: 'What is the correct mean score after fixing the error?',
     choices: [
       { label: 'A', text: '75.65' },
       { label: 'B', text: '76.65' },
@@ -370,11 +351,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: '78.35' },
     ],
     correctAnswer: 'B',
-    explanation: `Original total = 78 × 20 = 1560. The recorded score of 85 should be 58, so the sum decreases by 85 − 58 = 27. Correct total = 1560 − 27 = 1533. Correct mean = 1533 ÷ 20 = 76.65.`,
+    explanation: 'Original total = 78 × 20 = 1,560. The recorded score (85) should be 58, so the sum decreases by 85 − 58 = 27. Correct total = 1,560 − 27 = 1,533. Correct mean = 1,533 ÷ 20 = 76.65.',
     wrongAnswerExplanations: {
-      A: `Choice A subtracts 85+58 = 143/2 from the mean, an incorrect approach.`,
-      C: `Choice C subtracts only part of the difference from the mean.`,
-      D: `Choice D adds the difference to the mean instead of subtracting.`,
+      A: 'Incorrectly reduces the mean by (85 + 58)/2 ÷ 20 rather than 27/20.',
+      C: 'Uses the wrong difference — perhaps subtracting only part of the error.',
+      D: 'Adds the error rather than subtracting it from the total.',
     },
   },
 
@@ -386,8 +367,7 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     skill: 'Probability',
     difficulty: 'hard',
     type: 'multiple_choice',
-    // Verified: P(both red) = (6/15)×(5/14) = 30/210 = 1/7 ✓
-    question: `A bag contains 6 red marbles, 5 blue marbles, and 4 green marbles. Two marbles are drawn at random without replacement. What is the probability that both marbles are red?`,
+    question: 'A bag contains 6 red marbles, 5 blue marbles, and 4 green marbles. Two marbles are drawn without replacement. What is the probability that both marbles are red?',
     choices: [
       { label: 'A', text: '1/7' },
       { label: 'B', text: '4/25' },
@@ -395,11 +375,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: '6/15' },
     ],
     correctAnswer: 'A',
-    explanation: `Total marbles = 15. P(first red) = 6/15 = 2/5. P(second red | first red) = 5/14. P(both red) = (6/15)(5/14) = 30/210 = 1/7.`,
+    explanation: 'Total marbles = 15. P(1st red) = 6/15. P(2nd red | 1st red) = 5/14. P(both red) = (6/15)(5/14) = 30/210 = 1/7.',
     wrongAnswerExplanations: {
-      B: `Choice B computes (6/15)² = 36/225 = 4/25, incorrectly assuming replacement.`,
-      C: `Choice C is the probability that the first marble is red (6/15 = 2/5), not both.`,
-      D: `Choice D is the probability that the first marble is red as an unreduced fraction (6/15), not both.`,
+      B: '4/25 = (6/15)² — this incorrectly assumes replacement.',
+      C: '2/5 = 6/15 — the probability the first marble is red, not both.',
+      D: '6/15 is the unreduced probability of the first draw only.',
     },
   },
 
@@ -408,27 +388,27 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Problem-Solving and Data Analysis',
-    skill: 'Two-variable data and scatter plots',
-    difficulty: 'hard',
+    skill: 'Two-variable data: models and scatterplots',
+    difficulty: 'medium',
     type: 'multiple_choice',
-    stimulus: `A study found that the relationship between hours of sunlight (x) and plant height in cm (y) can be modeled by the equation y = 2.4x + 3. `,
-    question: `According to this model, what does the value 3 represent?`,
+    stimulus: 'A study models the relationship between hours of sunlight (x) and plant height in cm (y) using the equation y = 2.4x + 3.',
+    question: 'According to this model, what does the value 3 represent?',
     choices: [
-      { label: 'A', text: 'The height of the plant when it receives no sunlight' },
-      { label: 'B', text: 'The number of hours of sunlight required for the plant to grow' },
+      { label: 'A', text: 'The predicted height of the plant when it receives no sunlight' },
+      { label: 'B', text: 'The number of hours of sunlight needed for the plant to start growing' },
       { label: 'C', text: 'The rate at which the plant grows per hour of sunlight' },
       { label: 'D', text: 'The maximum height the plant can reach' },
     ],
     correctAnswer: 'A',
-    explanation: `In the linear model y = 2.4x + 3, the constant 3 is the y-intercept. It represents the predicted plant height when x = 0 — that is, when the plant receives zero hours of sunlight. The slope 2.4 represents the rate of height increase per hour of sunlight.`,
+    explanation: 'In y = 2.4x + 3, the value 3 is the y-intercept — the predicted height when x = 0 (no sunlight). The slope 2.4 is the rate of height increase per hour of sunlight.',
     wrongAnswerExplanations: {
-      B: `Choice B describes a condition for growth, which is not what the y-intercept of a linear model represents.`,
-      C: `Choice C describes the slope (2.4), not the y-intercept (3).`,
-      D: `Choice D would be indicated by a maximum in a nonlinear model; a linear model has no maximum.`,
+      B: 'The y-intercept does not represent a required condition — it is the value of y when x = 0.',
+      C: 'The rate of growth is the slope, 2.4, not the y-intercept 3.',
+      D: 'A linear model has no maximum; a horizontal asymptote would indicate a maximum.',
     },
   },
 
-  // ── Geometry and Trigonometry (4) ────────────────────────────────────────────
+  // ── Geometry and Trigonometry (3 MC + 1 grid-in) ─────────────────────────────
 
   {
     id: 'm2h-19',
@@ -436,10 +416,9 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     moduleId: 'math-module-2-hard',
     domain: 'Geometry and Trigonometry',
     skill: 'Area and volume',
-    difficulty: 'hard',
+    difficulty: 'medium',
     type: 'multiple_choice',
-    // Verified: cylinder V = πr²h = π(3²)(8) = 72π ✓
-    question: `A cylinder has a radius of 3 cm and a height of 8 cm. What is the volume of the cylinder in terms of π?`,
+    question: 'A cylinder has a radius of 3 cm and a height of 8 cm. What is the volume of the cylinder, in terms of π?',
     choices: [
       { label: 'A', text: '24π cm³' },
       { label: 'B', text: '48π cm³' },
@@ -447,11 +426,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: '144π cm³' },
     ],
     correctAnswer: 'C',
-    explanation: `Volume of a cylinder = πr²h = π(3)²(8) = 9π(8) = 72π cm³.`,
+    explanation: 'Volume = πr²h = π(3)²(8) = 9π(8) = 72π cm³.',
     wrongAnswerExplanations: {
-      A: `Choice A uses V = πr·h instead of πr²h: π(3)(8) = 24π.`,
-      B: `Choice B uses diameter instead of radius: π(6)(8)/π — various errors produce 48π.`,
-      D: `Choice D doubles the correct answer, possibly from using diameter (6)² = 36 instead of radius² = 9.`,
+      A: '24π = π(3)(8) uses r instead of r².',
+      B: '48π results from using diameter (6) as if it were the radius, then halving: π(6)²(8)/6 — or other errors.',
+      D: '144π = 2 × 72π — doubling the correct answer.',
     },
   },
 
@@ -460,11 +439,10 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Geometry and Trigonometry',
-    skill: 'Pythagorean theorem and special right triangles',
+    skill: 'Lines, angles, and triangles',
     difficulty: 'hard',
     type: 'multiple_choice',
-    // Verified: 30-60-90 triangle. Short leg = 5. Long leg = 5√3. Hypotenuse = 10. ✓
-    question: `In a 30-60-90 triangle, the shorter leg has length 5. What is the length of the hypotenuse?`,
+    question: 'In a 30-60-90 triangle, the shorter leg has length 5. What is the length of the hypotenuse?',
     choices: [
       { label: 'A', text: '5√2' },
       { label: 'B', text: '5√3' },
@@ -472,11 +450,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: '10√3' },
     ],
     correctAnswer: 'C',
-    explanation: `In a 30-60-90 triangle, the sides are in the ratio 1 : √3 : 2. The shorter leg (opposite 30°) = 5. The hypotenuse = 2 × 5 = 10.`,
+    explanation: 'In a 30-60-90 triangle, sides are in ratio 1 : √3 : 2. The shorter leg (opposite 30°) = 5, so the hypotenuse = 2 × 5 = 10.',
     wrongAnswerExplanations: {
-      A: `Choice A applies the 45-45-90 ratio (1:1:√2): hypotenuse = 5√2. This is for a different special triangle.`,
-      B: `Choice B is the length of the longer leg (5√3), not the hypotenuse.`,
-      D: `Choice D doubles the longer leg instead of the shorter leg.`,
+      A: '5√2 applies the 45-45-90 ratio (1:1:√2), not 30-60-90.',
+      B: '5√3 is the length of the longer leg, not the hypotenuse.',
+      D: '10√3 doubles the longer leg instead of the shorter leg.',
     },
   },
 
@@ -485,11 +463,10 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Geometry and Trigonometry',
-    skill: 'Trigonometric ratios',
+    skill: 'Trigonometric ratios and equations',
     difficulty: 'hard',
     type: 'multiple_choice',
-    // Verified: In a right triangle, sin A = opposite/hyp. If sin A = 3/5, then cos A = 4/5 (3-4-5 triple). tan A = 3/4. ✓
-    question: `In right triangle ABC with the right angle at C, sin A = 3/5. What is tan A?`,
+    question: 'In right triangle ABC with the right angle at C, sin A = 3/5. What is the value of tan A?',
     choices: [
       { label: 'A', text: '3/4' },
       { label: 'B', text: '4/3' },
@@ -497,11 +474,11 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: '5/3' },
     ],
     correctAnswer: 'A',
-    explanation: `sin A = opposite/hypotenuse = 3/5. Using the Pythagorean theorem: adjacent = √(5² − 3²) = √(25−9) = √16 = 4. Therefore tan A = opposite/adjacent = 3/4.`,
+    explanation: 'sin A = opposite/hypotenuse = 3/5. The adjacent side = √(5² − 3²) = √16 = 4. tan A = opposite/adjacent = 3/4.',
     wrongAnswerExplanations: {
-      B: `Choice B is the reciprocal of tan A, giving adjacent/opposite = 4/3.`,
-      C: `Choice C is cos A = adjacent/hypotenuse = 4/5, not tan A.`,
-      D: `Choice D is csc A (1/sin A) = 5/3.`,
+      B: '4/3 = adjacent/opposite — this is cot A, not tan A.',
+      C: '4/5 = adjacent/hypotenuse — this is cos A.',
+      D: '5/3 = hypotenuse/opposite — this is csc A.',
     },
   },
 
@@ -510,14 +487,13 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Geometry and Trigonometry',
-    skill: 'Circles',
+    skill: 'Lines, angles, and triangles',
     difficulty: 'hard',
     type: 'grid_in',
-    // Verified: Arc length = (θ/360) × 2πr = (60/360) × 2π(12) = (1/6)(24π) = 4π ✓
-    question: `A circle has a radius of 12. What is the length of an arc that subtends a central angle of 60°? Enter your answer in terms of π (enter the coefficient only, e.g., enter 4 for 4π).`,
-    correctAnswer: '4',
-    acceptableAnswers: ['4'],
-    explanation: `Arc length = (central angle/360°) × circumference = (60/360) × 2π(12) = (1/6)(24π) = 4π. The coefficient is 4.`,
-    scoringNotes: `Enter 4 (representing 4π). If the student enters 4π as text, accept 4.`,
+    question: 'A ladder 25 feet long leans against a vertical wall. The base of the ladder is 7 feet from the base of the wall. How high up the wall does the top of the ladder reach, in feet?',
+    correctAnswer: '24',
+    acceptableAnswers: ['24'],
+    explanation: 'The ladder, wall, and ground form a right triangle with hypotenuse 25 and one leg 7. By the Pythagorean theorem: h² + 7² = 25² → h² = 625 − 49 = 576 → h = 24. (7-24-25 is a Pythagorean triple.)',
+    scoringNotes: 'Answer must be 24.',
   },
 ]
