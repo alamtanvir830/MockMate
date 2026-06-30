@@ -5,6 +5,12 @@ import { rwModule2HardQuestions } from '@/lib/premade-exams/sat/rw-module-2-hard
 import { mathModule1Questions } from '@/lib/premade-exams/sat/math-module-1'
 import { mathModule2EasyQuestions } from '@/lib/premade-exams/sat/math-module-2-easy'
 import { mathModule2HardQuestions } from '@/lib/premade-exams/sat/math-module-2-hard'
+import { f2RwModule1Questions } from '@/lib/premade-exams/sat/form-2-rw-module-1'
+import { f2RwModule2EasyQuestions } from '@/lib/premade-exams/sat/form-2-rw-module-2-easy'
+import { f2RwModule2HardQuestions } from '@/lib/premade-exams/sat/form-2-rw-module-2-hard'
+import { f2MathModule1Questions } from '@/lib/premade-exams/sat/form-2-math-module-1'
+import { f2MathModule2EasyQuestions } from '@/lib/premade-exams/sat/form-2-math-module-2-easy'
+import { f2MathModule2HardQuestions } from '@/lib/premade-exams/sat/form-2-math-module-2-hard'
 import type { SATQuestion } from '@/lib/premade-exams/sat/types'
 import type { QBDifficulty, QBDomain, QBSection } from '@/lib/question-bank/types'
 
@@ -55,13 +61,27 @@ export interface PersonalizedSetCard {
 }
 
 export function buildPersonalizedSets(attempt: PremadeAttempt): PersonalizedSetCard[] {
-  const rwM2 = attempt.rwM2Type === 'easy' ? rwModule2EasyQuestions : rwModule2HardQuestions
-  const mathM2 = attempt.mathM2Type === 'easy' ? mathModule2EasyQuestions : mathModule2HardQuestions
+  let rwM1: SATQuestion[]
+  let rwM2: SATQuestion[]
+  let mathM1: SATQuestion[]
+  let mathM2: SATQuestion[]
+
+  if (attempt.examId === 'sat-form-2') {
+    rwM1 = f2RwModule1Questions
+    rwM2 = attempt.rwM2Type === 'easy' ? f2RwModule2EasyQuestions : f2RwModule2HardQuestions
+    mathM1 = f2MathModule1Questions
+    mathM2 = attempt.mathM2Type === 'easy' ? f2MathModule2EasyQuestions : f2MathModule2HardQuestions
+  } else {
+    rwM1 = rwModule1Questions
+    rwM2 = attempt.rwM2Type === 'easy' ? rwModule2EasyQuestions : rwModule2HardQuestions
+    mathM1 = mathModule1Questions
+    mathM2 = attempt.mathM2Type === 'easy' ? mathModule2EasyQuestions : mathModule2HardQuestions
+  }
 
   const allSeen: SATQuestion[] = [
-    ...rwModule1Questions,
+    ...rwM1,
     ...rwM2,
-    ...mathModule1Questions,
+    ...mathM1,
     ...mathM2,
   ]
 

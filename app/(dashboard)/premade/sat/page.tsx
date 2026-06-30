@@ -27,17 +27,19 @@ export default function SATPremadePage() {
           <p className="text-xs text-slate-500">RW + Math · 2 hr 14 min · 400–1600</p>
         </Link>
 
-        {/* Form 2 — coming soon */}
-        <div className="relative rounded-xl border border-slate-200 bg-white p-6 opacity-60 cursor-not-allowed select-none">
-          <span className="absolute top-3 right-3 text-xs font-medium bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">
-            Soon
-          </span>
-          <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center mb-4">
-            <span className="text-sm font-bold text-slate-400">2</span>
+        {/* Form 2 — active */}
+        <Link
+          href="/premade/sat/form-2"
+          className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group"
+        >
+          <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center mb-4">
+            <span className="text-sm font-bold text-indigo-600">2</span>
           </div>
-          <h2 className="font-semibold text-slate-500 mb-1">Form 2</h2>
-          <p className="text-xs text-slate-400">Coming soon</p>
-        </div>
+          <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-1">
+            Form 2
+          </h2>
+          <p className="text-xs text-slate-500">RW + Math · 2 hr 14 min · 400–1600</p>
+        </Link>
 
         {/* Form 3 — coming soon */}
         <div className="relative rounded-xl border border-slate-200 bg-white p-6 opacity-60 cursor-not-allowed select-none">

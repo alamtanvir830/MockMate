@@ -216,7 +216,7 @@ export default function PersonalizedPracticePage() {
         </div>
         <div className="flex-1" />
         <Link
-          href={`/premade/sat/form-1/results/${attempt.id}`}
+          href={`/premade/sat/${attempt.examId.replace('sat-', '')}/results/${attempt.id}`}
           className="text-[12px] font-medium text-indigo-600 hover:underline whitespace-nowrap"
         >
           View full results →
