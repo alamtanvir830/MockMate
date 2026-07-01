@@ -9,10 +9,23 @@ export default function SATPremadePage() {
         <span className="text-slate-900 font-medium">SAT</span>
       </div>
 
-      <h1 className="text-2xl font-bold text-slate-900 mb-2">SAT Practice Forms</h1>
-      <p className="text-slate-500 text-sm leading-relaxed mb-8 max-w-2xl">
-        Each full-length adaptive SAT-style exam includes 98 questions across Reading and Writing and Math, with 2 hours and 14 minutes of timed practice. After you finish, MockMate instantly generates your estimated score report, AI feedback, weak-area breakdown, and targeted practice sets from the Question Bank.
-      </p>
+      <h1 className="text-2xl font-bold text-slate-900 mb-1">SAT Practice Forms</h1>
+      <p className="text-sm text-slate-500 mb-3">Full-length adaptive SAT-style practice built to feel closer to the real test.</p>
+      <ul className="grid grid-cols-2 gap-x-6 gap-y-1 mb-8">
+        {[
+          '98 questions',
+          'instant estimated score report',
+          '2 hours 14 minutes',
+          'AI feedback + weak-area breakdown',
+          'Reading & Writing + Math',
+          'personalized practice sets from Q-Bank',
+        ].map((item) => (
+          <li key={item} className="flex items-center gap-2 text-sm text-slate-500">
+            <span className="h-1 w-1 rounded-full bg-slate-300 shrink-0" />
+            {item}
+          </li>
+        ))}
+      </ul>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Form 1 — active */}
