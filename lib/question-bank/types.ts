@@ -94,6 +94,7 @@ export interface QBPracticeSetConfig {
   count: number
   mode: 'browse' | 'personalized'
   sourceAttemptId?: string
+  storedSetId?: string
 }
 
 export interface QBPracticeSetResult {

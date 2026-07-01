@@ -163,6 +163,7 @@ export default function PracticePage() {
         count: questions.length,
         mode: (searchParams.get('mode') ?? 'browse') as 'browse' | 'personalized',
         sourceAttemptId: searchParams.get('sourceAttemptId') ?? undefined,
+        storedSetId: searchParams.get('storedSetId') ?? undefined,
       },
       questionIds: questions.map(q => q.id),
       answers,

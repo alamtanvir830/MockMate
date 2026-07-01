@@ -7,8 +7,12 @@ import { cn } from '@/lib/utils'
 import { loadAttempt } from '@/lib/premade-exams/sat/attempt-store'
 import { loadAllQBResults } from '@/lib/question-bank/sat/question-selector'
 import { buildPersonalizedSets, type PersonalizedSetCard } from '@/lib/question-bank/sat/personalized-sets'
+import { rwQuestions } from '@/lib/question-bank/sat/rw-questions'
+import { mathQuestions } from '@/lib/question-bank/sat/math-questions'
 import type { PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
-import type { QBPracticeSetResult } from '@/lib/question-bank/types'
+import type { QBPracticeSetResult, QBQuestion } from '@/lib/question-bank/types'
+
+const allQBQuestions: QBQuestion[] = [...rwQuestions, ...mathQuestions]
 
 const DIFFICULTY_LABEL: Record<string, string> = {
   easy: 'Easy',
@@ -21,64 +25,74 @@ const SECTION_COLOR: Record<string, string> = {
   'math': 'text-blue-700 bg-blue-50 border-blue-200',
 }
 
-function AccuracyRing({ pct }: { pct: number }) {
-  const r = 22
-  const circ = 2 * Math.PI * r
-  const dash = (pct / 100) * circ
-  const color = pct >= 80 ? '#10b981' : pct >= 60 ? '#f59e0b' : '#ef4444'
-  return (
-    <svg width="56" height="56" viewBox="0 0 56 56" className="shrink-0">
-      <circle cx="28" cy="28" r={r} fill="none" stroke="#e2e8f0" strokeWidth="5" />
-      <circle
-        cx="28" cy="28" r={r}
-        fill="none"
-        stroke={color}
-        strokeWidth="5"
-        strokeDasharray={`${dash} ${circ}`}
-        strokeLinecap="round"
-        transform="rotate(-90 28 28)"
-      />
-      <text x="28" y="32" textAnchor="middle" fontSize="12" fontWeight="700" fill={color}>{pct}%</text>
-    </svg>
-  )
+// ── Score calculation ─────────────────────────────────────────────────────────
+
+function calcScore(result: QBPracticeSetResult) {
+  const questions = result.questionIds
+    .map(id => allQBQuestions.find(q => q.id === id))
+    .filter((q): q is QBQuestion => q != null)
+  const correct = questions.filter(q => {
+    const ans = result.answers[q.id] ?? ''
+    if (q.questionType === 'grid_in') {
+      return (q.acceptableAnswers ?? [q.correctAnswer]).some(
+        a => a.replace(/\s/g, '').toLowerCase() === ans.replace(/\s/g, '').toLowerCase()
+      )
+    }
+    return ans === q.correctAnswer
+  })
+  const total = questions.length
+  return {
+    correct: correct.length,
+    total,
+    pct: total > 0 ? Math.round((correct.length / total) * 100) : 0,
+  }
 }
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+
+// ── SetCard ───────────────────────────────────────────────────────────────────
 
 function SetCard({
   card,
-  completedResult,
+  attempts,
+  examTitle,
   onBegin,
 }: {
   card: PersonalizedSetCard
-  completedResult: QBPracticeSetResult | undefined
+  attempts: QBPracticeSetResult[]   // all attempts for this card, newest first
+  examTitle: string
   onBegin: (url: string) => void
 }) {
-  const isCompleted = !!completedResult
+  const latestAttempt = attempts[0]
+  const isCompleted = attempts.length > 0
+
+  const latestScore = latestAttempt ? calcScore(latestAttempt) : null
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-5 flex flex-col gap-4">
-      <div className="flex items-start gap-4">
-        <AccuracyRing pct={card.accuracyPct} />
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap mb-1">
-            <span className={cn(
-              'text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded border',
-              SECTION_COLOR[card.section]
-            )}>
-              {card.sectionLabel}
-            </span>
-            {isCompleted && (
-              <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded border text-emerald-700 bg-emerald-50 border-emerald-200">
-                Completed
-              </span>
-            )}
-          </div>
-          <h3 className="text-[15px] font-bold text-slate-900">{card.domain}</h3>
-          <p className="text-[12px] text-slate-500 mt-0.5">Focus: {card.weakestSkill}</p>
+      {/* Header: section + domain + focus */}
+      <div>
+        <div className="flex items-center gap-2 flex-wrap mb-1.5">
+          <span className={cn(
+            'text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded border',
+            SECTION_COLOR[card.section]
+          )}>
+            {card.sectionLabel}
+          </span>
         </div>
+        <h3 className="text-[15px] font-bold text-slate-900">{card.domain}</h3>
+        <p className="text-[12px] text-slate-500 mt-0.5">Focus: {card.weakestSkill}</p>
       </div>
 
-      <p className="text-[12px] text-slate-600 leading-relaxed">{card.focusDescription}</p>
+      {/* SAT exam weakness context — small, gray, clearly sourced */}
+      <p className="text-[11px] text-slate-400 leading-relaxed">
+        Based on <span className="font-medium text-slate-500">{examTitle}</span>: you scored{' '}
+        <span className="font-medium">{card.accuracyPct}%</span> on {card.weakestSkill} questions, so this set targets that weakness.
+      </p>
 
+      {/* Meta: count + difficulties */}
       <div className="flex items-center gap-3 flex-wrap text-[11px] text-slate-500">
         <span className="flex items-center gap-1">
           <svg fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth={1.5} className="h-3.5 w-3.5">
@@ -93,15 +107,9 @@ function SetCard({
           </svg>
           {card.difficulties.map(d => DIFFICULTY_LABEL[d]).join(' · ')}
         </span>
-        {isCompleted && completedResult && (
-          <span className="text-emerald-600 font-medium">
-            {completedResult.questionIds.filter(id =>
-              completedResult.answers[id] !== undefined
-            ).length}/{completedResult.questionIds.length} answered last time
-          </span>
-        )}
       </div>
 
+      {/* Buttons */}
       <div className="flex gap-2">
         <button
           onClick={() => onBegin(card.practiceUrl)}
@@ -109,25 +117,64 @@ function SetCard({
         >
           {isCompleted ? 'Retake' : 'Begin'}
         </button>
-        {isCompleted && (
+        {latestAttempt && (
           <Link
-            href={`/question-bank/sat/results?setId=${completedResult!.id}`}
+            href={`/question-bank/sat/results?setId=${latestAttempt.id}`}
             className="flex-1 text-center border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-[13px] py-2.5 rounded-lg transition-colors"
           >
-            Review results
+            Review Set
           </Link>
         )}
       </div>
+
+      {/* Status / score history */}
+      {!isCompleted ? (
+        <div className="flex items-center gap-2 pt-1 border-t border-slate-100">
+          <span className="h-2 w-2 rounded-full bg-slate-300" />
+          <span className="text-[11px] text-slate-400">Not started</span>
+        </div>
+      ) : (
+        <div className="pt-1 border-t border-slate-100 space-y-1.5">
+          <div className="flex items-center gap-1.5 mb-1">
+            <svg fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth={2.5} className="h-3.5 w-3.5 text-emerald-500 shrink-0">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 8.5l3.5 3.5 6.5-7" />
+            </svg>
+            <span className="text-[11px] font-semibold text-emerald-700">Completed</span>
+            {latestScore && (
+              <span className={cn(
+                'text-[11px] font-semibold ml-1',
+                latestScore.pct >= 80 ? 'text-emerald-600' : latestScore.pct >= 60 ? 'text-amber-600' : 'text-red-500'
+              )}>
+                · Latest: {latestScore.correct}/{latestScore.total} · {latestScore.pct}%
+              </span>
+            )}
+          </div>
+          {attempts.map((attempt, i) => {
+            const score = calcScore(attempt)
+            const attemptNum = attempts.length - i
+            return (
+              <div key={attempt.id} className="flex items-center justify-between text-[11px] text-slate-500">
+                <span>
+                  Attempt {attemptNum}: {score.correct}/{score.total} · {score.pct}%
+                </span>
+                <span className="text-slate-400">{formatDate(attempt.completedAt)}</span>
+              </div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
+
+// ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function PersonalizedPracticePage() {
   const { attemptId } = useParams<{ attemptId: string }>()
   const router = useRouter()
   const [attempt, setAttempt] = useState<PremadeAttempt | null>(null)
   const [cards, setCards] = useState<PersonalizedSetCard[]>([])
-  const [completedResults, setCompletedResults] = useState<QBPracticeSetResult[]>([])
+  const [allResults, setAllResults] = useState<QBPracticeSetResult[]>([])
   const [loading, setLoading] = useState(true)
   const [notFound, setNotFound] = useState(false)
 
@@ -140,15 +187,23 @@ export default function PersonalizedPracticePage() {
     }
     setAttempt(a)
     setCards(buildPersonalizedSets(a))
+    // Load all QB results that belong to this exam attempt
     const results = loadAllQBResults().filter(
       r => r.config.sourceAttemptId === attemptId && r.config.mode === 'personalized'
     )
-    setCompletedResults(results)
+    setAllResults(results)
     setLoading(false)
   }, [attemptId])
 
-  function findCompleted(card: PersonalizedSetCard): QBPracticeSetResult | undefined {
-    return completedResults.find(r => r.config.domains?.includes(card.domain))
+  // Return all attempts for a card, newest first
+  function findAttempts(card: PersonalizedSetCard): QBPracticeSetResult[] {
+    return allResults
+      .filter(r =>
+        // Prefer stable storedSetId match; fall back to domain match for old data
+        r.config.storedSetId === card.key ||
+        (!r.config.storedSetId && r.config.domains?.includes(card.domain))
+      )
+      .sort((a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime())
   }
 
   if (loading) {
@@ -239,7 +294,8 @@ export default function PersonalizedPracticePage() {
           <SetCard
             key={card.key}
             card={card}
-            completedResult={findCompleted(card)}
+            attempts={findAttempts(card)}
+            examTitle={attempt.examTitle}
             onBegin={url => router.push(url)}
           />
         ))}
