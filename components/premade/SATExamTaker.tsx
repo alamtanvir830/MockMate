@@ -15,7 +15,8 @@ import type {
   ChoiceLabel,
   SATGraphData,
 } from '@/lib/premade-exams/sat/types'
-import { saveAttempt, updateAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
+import { saveAttempt, updateAttempt, loadAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
+import { buildPersonalizedSets, type PersonalizedSetCard } from '@/lib/question-bank/sat/personalized-sets'
 import {
   convertRWScore,
   convertMathScore,
@@ -525,12 +526,11 @@ function generatePrintHTML(params: {
   rwM1Correct: number; rwM2Correct: number; rwTotal: number
   mathM1Correct: number; mathM2Correct: number; mathTotal: number
   aiFeedback: SATAIFeedback | null
-  practicePrompts: PracticePrompt[]
-  hasMisses: boolean
+  personalizedSets: PersonalizedSetCard[]
 }) {
-  const { rwScaled, mathScaled, totalScore, rwM2Type, mathM2Type,
+  const { form, rwScaled, mathScaled, totalScore, rwM2Type, mathM2Type,
           rwM1Correct, rwM2Correct, rwTotal, mathM1Correct, mathM2Correct, mathTotal,
-          aiFeedback, practicePrompts } = params
+          aiFeedback, personalizedSets } = params
 
   const dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
   const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
@@ -547,37 +547,30 @@ function generatePrintHTML(params: {
   </div>
 </div>` : ''
 
-  const topPrompts = practicePrompts.slice(0, 4)
-  const promptCardsHTML = topPrompts.map(p => {
-    const bullets = promptCardBullets(p)
-    const [intro, ...items] = bullets
-    return `<div class="prompt-card">
-      <div class="pc-header">
-        <span class="pc-skill">${p.skill}</span>
-        <span class="pc-badge ${p.section === 'rw' ? 'rw' : 'math'}">${p.section === 'rw' ? 'R&amp;W' : 'Math'}</span>
-      </div>
-      <div class="pc-intro">${intro}</div>
-      <div class="pc-include">Include:</div>
-      <ul class="pc-list">${items.map(item => `<li>${item}</li>`).join('')}</ul>
-    </div>`
-  }).join('')
+  const diffLabel = (ds: string[]) => ds.map(d => cap(d)).join(' / ')
+
+  const setsListHTML = personalizedSets.length > 0
+    ? personalizedSets.map(s => `<li>
+        <span class="set-domain">${s.domain}</span>
+        <span class="set-sep">—</span>${s.weakestSkill}
+        <span class="set-sep">—</span><span class="set-section">${s.sectionLabel}</span>
+        <span class="set-sep">—</span>${s.count} questions
+        <span class="set-sep">—</span>${diffLabel(s.difficulties)}
+      </li>`).join('')
+    : `<li class="set-fallback">Your Personalized Practice Path will appear on the results page with targeted sets from your weakest areas.</li>`
 
   return `<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>MockMate SAT Practice Test 1 — Score Report</title>
+<title>MockMate ${form.title} — Score Report</title>
 <style>
   @page { size: letter; margin: 0.35in; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: #1e293b; background: white; font-size: 9.5px; line-height: 1.3;
-    display: flex; flex-direction: column;
+    color: #1e293b; background: white; font-size: 9.5px; line-height: 1.35;
   }
-  .upper { flex-shrink: 0; }
-  .prompts-section { flex: 1; display: flex; flex-direction: column; min-height: 0; margin-bottom: 7px; }
   .header { border-bottom: 2px solid #1b3a5c; padding-bottom: 5px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:flex-end; }
   .header-title { font-size: 15px; font-weight: 800; color: #1b3a5c; }
   .header-sub { font-size: 8px; color: #64748b; margin-top: 1px; }
@@ -594,51 +587,34 @@ function generatePrintHTML(params: {
   .modules { display:flex; gap:5px; margin-bottom:6px; }
   .mod-pill { flex:1; background:#f1f5f9; border-radius:4px; padding:3px 5px; font-size:7.5px; color:#475569; }
   .mod-pill strong { display:block; font-size:8px; color:#1e293b; }
-  .disclaimer { font-size:7.5px; color:#94a3b8; margin-bottom:7px; }
+  .disclaimer { font-size:7px; color:#94a3b8; margin-bottom:7px; }
   .section { margin-bottom:7px; }
   .section-title { font-size:8.5px; font-weight:700; color:#1b3a5c; border-bottom:1px solid #e2e8f0; padding-bottom:3px; margin-bottom:5px; text-transform:uppercase; letter-spacing:.06em; }
   .fb-grid { display:grid; grid-template-columns:1fr 1fr; gap:3px 12px; }
   .fb-row { font-size:8.5px; color:#334155; line-height:1.35; }
   .fb-label { font-weight:700; color:#1b3a5c; display:block; font-size:7.5px; text-transform:uppercase; letter-spacing:.04em; margin-bottom:1px; }
-  .prompts-title { font-size:8.5px; font-weight:700; color:#1b3a5c; border-bottom:1px solid #e2e8f0; padding-bottom:3px; margin-bottom:6px; text-transform:uppercase; letter-spacing:.06em; flex-shrink:0; }
-  .prompt-grid {
-    flex: 1; min-height: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 1fr;
-    gap: 7px;
-  }
-  .prompt-card {
-    border: 1px solid #e2e8f0; border-radius: 5px; padding: 6px 8px;
-    background: #fafafa; display: flex; flex-direction: column;
-  }
-  .pc-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-shrink:0; }
-  .pc-skill { font-size:9px; font-weight:700; color:#1b3a5c; }
-  .pc-badge { font-size:7px; font-weight:600; padding:1px 5px; border-radius:20px; }
-  .pc-badge.rw { background:#ede9fe; color:#5b21b6; }
-  .pc-badge.math { background:#d1fae5; color:#065f46; }
-  .pc-intro { font-size:8.5px; color:#374151; line-height:1.35; margin-bottom:4px; flex-shrink:0; }
-  .pc-include { font-size:8px; font-weight:600; color:#64748b; margin-bottom:2px; flex-shrink:0; }
-  .pc-list { flex:1; list-style:none; padding:0; }
-  .pc-list li { font-size:8px; color:#475569; line-height:1.4; padding-left:10px; position:relative; margin-bottom:2px; }
-  .pc-list li::before { content:"•"; position:absolute; left:2px; color:#94a3b8; }
-  .footer {
-    flex-shrink: 0;
-    background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 4px;
-    padding: 6px 10px;
-  }
-  .footer-label { font-size:8.5px; font-weight:700; color:#1e40af; margin-bottom:3px; }
-  .footer-list { list-style:none; padding:0; }
-  .footer-list li { font-size:8px; color:#1e3a8a; line-height:1.4; padding-left:14px; position:relative; margin-bottom:1px; }
-  .footer-list li::before { content:attr(data-n)"."; position:absolute; left:0; font-weight:600; color:#3b82f6; }
+  /* Next steps */
+  .ns-sub { font-size:8px; font-weight:700; color:#1b3a5c; margin: 5px 0 2px; }
+  .ns-text { font-size:8px; color:#374151; line-height:1.4; margin-bottom:3px; }
+  .ns-sets { list-style:none; padding:0; margin:0; }
+  .ns-sets li { font-size:8px; color:#334155; line-height:1.5; padding-left:10px; position:relative; }
+  .ns-sets li::before { content:"•"; position:absolute; left:2px; color:#6366f1; }
+  .set-domain { font-weight:700; color:#1b3a5c; }
+  .set-section { color:#6366f1; }
+  .set-sep { color:#cbd5e1; margin:0 2px; }
+  .set-fallback { color:#94a3b8; font-style:italic; }
+  .ns-steps { list-style:none; padding:0; margin:0; }
+  .ns-steps li { font-size:8px; color:#334155; line-height:1.5; padding-left:12px; position:relative; }
+  .ns-steps li::before { content:attr(data-n)"."; position:absolute; left:0; font-weight:700; color:#1b3a5c; }
+  /* Footer disclaimer */
+  .footer-disc { font-size:7px; color:#94a3b8; margin-top:8px; padding-top:5px; border-top:1px solid #e2e8f0; }
 </style>
 </head>
 <body>
 
-<div class="upper">
   <div class="header">
     <div>
-      <div class="header-title">MockMate · SAT Practice Test 1</div>
+      <div class="header-title">MockMate · ${form.title}</div>
       <div class="header-sub">Score Report</div>
     </div>
     <div class="header-date">Generated ${dateStr}</div>
@@ -672,24 +648,31 @@ function generatePrintHTML(params: {
   <div class="disclaimer">MockMate is not affiliated with, endorsed by, or sponsored by College Board. SAT is a trademark of College Board. Scores shown are estimates for practice purposes only and are not official SAT scores. AI-assisted feedback may contain errors.</div>
 
   ${feedbackHTML}
-</div>
 
-<div class="prompts-section">
-  <div class="prompts-title">Practice Prompts to Improve Your Score</div>
-  <div class="prompt-grid">
-    ${promptCardsHTML}
+  <div class="section">
+    <div class="section-title">Next Steps to Improve</div>
+
+    <div class="ns-sub">1. Start with your Personalized Practice Path</div>
+    <div class="ns-text">MockMate created targeted practice sets from your weakest areas on this exam. Start with these sets first — they are based on the exact skills you missed.</div>
+    <ul class="ns-sets">
+      ${setsListHTML}
+    </ul>
+
+    <div class="ns-sub" style="margin-top:6px;">2. Use the Question Bank for extra practice</div>
+    <div class="ns-text">After your Personalized Practice Path, continue in the Question Bank. MockMate deprioritizes questions you have already seen so you get fresher practice on weak skills. Repeat weak areas until your scores improve.</div>
+
+    <div class="ns-sub" style="margin-top:6px;">3. Generate more practice with New Exam</div>
+    <div class="ns-text">For even more focused practice, create a custom exam from one weak skill:</div>
+    <ol class="ns-steps">
+      <li data-n="1">Go to <strong>New Exam</strong> in the sidebar.</li>
+      <li data-n="2">Choose <strong>SAT</strong> as the exam type.</li>
+      <li data-n="3">Type or paste a prompt for one weak skill.</li>
+      <li data-n="4">Generate your focused practice exam.</li>
+      <li data-n="5">Review mistakes and repeat.</li>
+    </ol>
   </div>
-</div>
 
-<div class="footer">
-  <div class="footer-label">How to use on MockMate</div>
-  <ol class="footer-list">
-    <li data-n="1">Go to <strong>New Exam</strong> in the side panel.</li>
-    <li data-n="2">Paste one of the prompts above into the exam description box.</li>
-    <li data-n="3">Under standardized exam targeting, select <strong>SAT</strong>.</li>
-    <li data-n="4">Generate the exam and practice the weak skill again.</li>
-  </ol>
-</div>
+  <div class="footer-disc">MockMate is not affiliated with, endorsed by, or sponsored by College Board. SAT is a trademark of College Board. Scores shown are estimates for practice purposes only and are not official SAT scores. AI-assisted feedback may contain errors.</div>
 
 </body>
 </html>`
@@ -1937,12 +1920,14 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
     const FALLBACK_WRONG = 'This choice is incorrect — it does not match the evidence or reasoning required by the question.'
 
     const downloadPDF = () => {
+      const savedAttempt = attemptIdRef.current ? loadAttempt(attemptIdRef.current) : null
+      const personalizedSets = savedAttempt ? buildPersonalizedSets(savedAttempt) : []
       const html = generatePrintHTML({
         form, rwScaled, mathScaled, totalScore,
         rwM2Type, mathM2Type,
         rwM1Correct, rwM2Correct, rwTotal,
         mathM1Correct, mathM2Correct, mathTotal,
-        aiFeedback, practicePrompts, hasMisses,
+        aiFeedback, personalizedSets,
       })
       const w = window.open('', '_blank')
       if (!w) return
