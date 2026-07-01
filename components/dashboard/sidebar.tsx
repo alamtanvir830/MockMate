@@ -153,6 +153,14 @@ export function Sidebar({ userEmail, userFullName, subscriptionTier = 'free' }: 
         })}
       </nav>
 
+      {/* Legal links */}
+      <div className="px-4 pb-2 flex flex-wrap gap-x-3 gap-y-1">
+        <Link href="/terms" className="text-[10px] text-slate-400 hover:text-slate-600 transition-colors">Terms</Link>
+        <Link href="/privacy" className="text-[10px] text-slate-400 hover:text-slate-600 transition-colors">Privacy</Link>
+        <Link href="/ai-disclosure" className="text-[10px] text-slate-400 hover:text-slate-600 transition-colors">AI Disclosure</Link>
+        <Link href="/sat-disclaimer" className="text-[10px] text-slate-400 hover:text-slate-600 transition-colors">SAT Disclaimer</Link>
+      </div>
+
       {/* User area */}
       <div className="border-t border-slate-100 p-3 space-y-0.5">
         <div className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-600">

@@ -40,15 +40,13 @@ export default function SignupPage() {
           </p>
         </div>
 
-        <p className="mt-6 text-center text-xs text-slate-400">
+        <p className="mt-6 text-center text-xs text-slate-400 leading-relaxed">
           By signing up you agree to our{' '}
-          <a href="#" className="underline hover:text-slate-600">
-            Terms
-          </a>{' '}
-          and{' '}
-          <a href="#" className="underline hover:text-slate-600">
-            Privacy Policy
-          </a>
+          <Link href="/terms" className="underline hover:text-slate-600">Terms of Service</Link>,{' '}
+          <Link href="/privacy" className="underline hover:text-slate-600">Privacy Policy</Link>,{' '}
+          <Link href="/ai-disclosure" className="underline hover:text-slate-600">AI Disclosure</Link>, and{' '}
+          <Link href="/sat-disclaimer" className="underline hover:text-slate-600">SAT Disclaimer</Link>.
+          You must be at least 13 years old to use MockMate.
         </p>
       </div>
     </div>

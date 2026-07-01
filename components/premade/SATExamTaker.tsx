@@ -623,7 +623,7 @@ function generatePrintHTML(params: {
     <div class="mod-pill"><strong>Math M2 (${cap(mathM2Type)})</strong>${mathM2Correct} / 22</div>
   </div>
 
-  <div class="disclaimer">Scores are estimated and not official College Board results.</div>
+  <div class="disclaimer">MockMate is not affiliated with, endorsed by, or sponsored by College Board. SAT is a trademark of College Board. Scores shown are estimates for practice purposes only and are not official SAT scores. AI-assisted feedback may contain errors.</div>
 
   ${feedbackHTML}
 </div>
@@ -945,6 +945,8 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
   const [aiFeedback, setAiFeedback] = useState<SATAIFeedback | null>(initialAttempt?.aiFeedback ?? null)
   const [aiFeedbackLoading, setAiFeedbackLoading] = useState(false)
   const [aiFeedbackError, setAiFeedbackError] = useState('')
+  const [consentTerms, setConsentTerms] = useState(false)
+  const [consentAge, setConsentAge] = useState(false)
   const [answerFilter, setAnswerFilter] = useState<AnswerFilter>('all')
   const [strikeouts, setStrikeouts] = useState<Record<string, ChoiceLabel[]>>(
     (initialAttempt?.strikeouts as Record<string, ChoiceLabel[]>) ?? {}
@@ -1365,19 +1367,50 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                   </div>
                   <p className="text-[11px] text-slate-400 leading-relaxed">{form.disclaimer}</p>
                 </div>
-                <div className="flex flex-col items-center justify-center gap-5 pl-8 border-l border-slate-100">
+                <div className="flex flex-col items-center justify-center gap-4 pl-8 border-l border-slate-100">
                   <div className="h-16 w-16 rounded-full bg-slate-100 flex items-center justify-center">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-8 w-8 text-slate-400">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                     </svg>
                   </div>
+                </div>
+              </div>
+              <div className="px-8 pb-6 space-y-3 border-t border-slate-100 pt-5">
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={consentTerms}
+                    onChange={e => setConsentTerms(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-[#1d4ed8]"
+                  />
+                  <span className="text-[12px] text-slate-700 leading-relaxed">
+                    I agree to MockMate&apos;s{' '}
+                    <Link href="/terms" target="_blank" className="text-[#1d4ed8] hover:underline">Terms of Service</Link>,{' '}
+                    <Link href="/privacy" target="_blank" className="text-[#1d4ed8] hover:underline">Privacy Policy</Link>,{' '}
+                    <Link href="/ai-disclosure" target="_blank" className="text-[#1d4ed8] hover:underline">AI Disclosure</Link>, and{' '}
+                    <Link href="/sat-disclaimer" target="_blank" className="text-[#1d4ed8] hover:underline">SAT Disclaimer</Link>.
+                  </span>
+                </label>
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={consentAge}
+                    onChange={e => setConsentAge(e.target.checked)}
+                    className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-[#1d4ed8]"
+                  />
+                  <span className="text-[12px] text-slate-700 leading-relaxed">
+                    I understand that MockMate provides SAT-style practice only, not official College Board exams or official SAT scores. I am at least 13 years old, or I have permission from my parent or guardian to use MockMate.
+                  </span>
+                </label>
+                <div className="flex items-center justify-between pt-2">
+                  <p className="text-[10px] text-slate-400">Tip: Use ← → to move between questions</p>
                   <button
                     onClick={() => setPhase({ tag: 'rw_directions' })}
-                    className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-[14px] font-semibold px-6 py-2.5 rounded-lg transition-colors"
+                    disabled={!consentTerms || !consentAge}
+                    className="bg-[#1d4ed8] hover:bg-[#1e40af] disabled:opacity-40 disabled:cursor-not-allowed text-white text-[14px] font-semibold px-6 py-2.5 rounded-lg transition-colors"
                   >
                     Start Test
                   </button>
-                  <p className="text-[10px] text-slate-400 text-center">Tip: Use ← → to move<br/>between questions</p>
                 </div>
               </div>
             </div>
@@ -1949,7 +1982,7 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
               </div>
             ))}
           </div>
-          <p className="mt-3 text-[11px] text-slate-400">Scores are estimated. Not an official College Board result.</p>
+          <p className="mt-3 text-[11px] text-slate-400">Scores are estimated for practice purposes only. This is not an official College Board result.</p>
         </div>
 
         {/* PDF download */}
@@ -2087,6 +2120,7 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
             {!aiFeedback && !aiFeedbackLoading && !aiFeedbackError && (
               <p className="text-[13px] text-slate-400 italic">AI feedback will generate automatically.</p>
             )}
+            <p className="mt-4 text-[11px] text-slate-400 italic">AI-assisted feedback may be incomplete or inaccurate. Use it as a study aid, not as a final authority.</p>
           </div>
         </div>
 
