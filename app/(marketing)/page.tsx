@@ -49,7 +49,7 @@ export default function LandingPage() {
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-700 mb-8">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              digital SAT-style practice
+              digital SAT-style practice + custom mock exams
             </div>
 
             <h1 className="mx-auto max-w-3xl text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 leading-[1.08]">
@@ -63,10 +63,17 @@ export default function LandingPage() {
             </h1>
 
             <p className="mx-auto mt-8 max-w-2xl text-base sm:text-lg text-slate-500 leading-relaxed">
-              MockMate offers standardized testing practice for the SAT college admissions exam — including 3 digital SAT-style practice forms, a 300+ question bank, instant AI feedback, score reports, and personalized weak-area question sets.
+              Build realistic mock exams from your own lectures, notes, syllabus, or previous exam format. Now also offering digital SAT-style prep with 3 practice forms, a 300+ question bank, instant AI feedback, score reports, and personalized weak-area question sets.
             </p>
 
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <p className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-medium text-emerald-700">
+              <svg fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 shrink-0">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM8 5v3.5l2 2" />
+              </svg>
+              Now offering SAT prep for the college admissions exam.
+            </p>
+
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/signup">
                 <Button
                   size="lg"
@@ -78,15 +85,15 @@ export default function LandingPage() {
                   </svg>
                 </Button>
               </Link>
-              <Link href="/premade/sat">
+              <Link href="/signup">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                  explore SAT practice
+                  build your own mock exam
                 </Button>
               </Link>
             </div>
 
             <p className="mt-4 text-xs text-slate-400">
-              Free Form 1 available · Forms 2–3 + 300+ Q-Bank available for $9.99
+              Free SAT Form 1 available · Custom mock exams available · Forms 2–3 + 300+ Q-Bank available for $9.99
             </p>
           </div>
 
