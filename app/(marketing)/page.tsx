@@ -92,9 +92,6 @@ export default function LandingPage() {
               </Link>
             </div>
 
-            <p className="mt-4 text-xs text-slate-400">
-              Free SAT Form 1 available · Custom mock exams available · Forms 2–3 + 300+ Q-Bank available for $9.99
-            </p>
           </div>
 
           {/* Flow diagram */}
