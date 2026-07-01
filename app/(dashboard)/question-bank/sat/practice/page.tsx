@@ -17,6 +17,7 @@ import {
   loadAllQBResults,
   buildPersonalizedConfig,
 } from '@/lib/question-bank/sat/question-selector'
+import { loadPersonalizedSet } from '@/lib/question-bank/sat/personalized-sets'
 import type { QBPracticeSetConfig, QBPracticeSetResult } from '@/lib/question-bank/types'
 
 const allQuestions = [...rwQuestions, ...mathQuestions]
@@ -45,6 +46,25 @@ export default function PracticePage() {
     const skillsParam = searchParams.get('skills')
     const diffsParam = searchParams.get('difficulties')
     const countParam = parseInt(searchParams.get('count') ?? '10')
+    const storedSetId = searchParams.get('storedSetId')
+
+    // Personalized sets: load pre-selected question IDs from localStorage for stability
+    if (storedSetId) {
+      const storedIds = loadPersonalizedSet(storedSetId)
+      if (storedIds && storedIds.length > 0) {
+        const idSet = new Set(storedIds)
+        // Preserve the stored order
+        const ordered = storedIds
+          .map(id => allQuestions.find(q => q.id === id))
+          .filter((q): q is QBQuestion => q != null)
+        if (ordered.length > 0) {
+          setQuestions(ordered)
+          setPhase('question')
+          startTimeRef.current = Date.now()
+          return
+        }
+      }
+    }
 
     let config: QBPracticeSetConfig
 
@@ -134,12 +154,15 @@ export default function PracticePage() {
 
   function finishSet() {
     markSeen(questions.map(q => q.id))
+    const domainsParam = searchParams.get('domains')
     const result: QBPracticeSetResult = {
       id: setIdRef.current,
       config: {
         section: searchParams.get('section') as QBSection | undefined,
+        domains: domainsParam ? domainsParam.split(',') as QBDomain[] : undefined,
         count: questions.length,
         mode: (searchParams.get('mode') ?? 'browse') as 'browse' | 'personalized',
+        sourceAttemptId: searchParams.get('sourceAttemptId') ?? undefined,
       },
       questionIds: questions.map(q => q.id),
       answers,
