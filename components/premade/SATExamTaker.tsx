@@ -2060,6 +2060,7 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                   </div>
                 )}
                 <div className="space-y-3">
+                  <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">Recommended Next Steps</p>
                   <p className="text-[13px] text-slate-700 leading-relaxed">
                     <span className="font-semibold">First,</span> scroll down to the answer key and explanations. Look closely at the questions you missed, read why the correct answer is right, and make sure you understand the mistake before practicing more.
                   </p>
@@ -2069,10 +2070,13 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                   <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-2">
                     <p className="text-[11px] font-semibold text-indigo-700 uppercase tracking-widest">What is the Personalized Practice Path?</p>
                     <p className="text-[12px] text-indigo-900 leading-relaxed">
-                      Your Personalized Practice Path is a set of targeted question sets generated from your exam performance. MockMate looks at the skills you missed, then creates practice sets from the Question Bank so you can focus on the exact areas that need the most work.
+                      Your Personalized Practice Path is made of targeted question sets picked from MockMate&apos;s 300+ SAT-style Question Bank. These sets are chosen based on the skills you missed on this exam, so you can practice the areas that need the most work.
+                    </p>
+                    <p className="text-[12px] text-indigo-900 leading-relaxed">
+                      MockMate creates 4 targeted sets: 2 focused on Reading &amp; Writing weaknesses and 2 focused on Math weaknesses when both sections need review.
                     </p>
                     <p className="text-[12px] text-indigo-800 font-semibold">
-                      Click below to start. MockMate will generate 4 targeted practice sets based on your performance.
+                      Click below to start your 4 personalized practice sets.
                     </p>
                   </div>
                 </div>
