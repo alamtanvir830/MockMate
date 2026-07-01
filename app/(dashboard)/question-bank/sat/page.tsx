@@ -6,6 +6,10 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { loadAllQBResults } from '@/lib/question-bank/sat/question-selector'
 import { loadAllAttempts, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
+import { useEntitlements } from '@/hooks/use-entitlements'
+import { UpgradeGate } from '@/components/shared/upgrade-gate'
+
+const FREE_QB_LIMIT = 3
 
 const RW_DOMAINS = [
   'Craft and Structure',
@@ -39,6 +43,7 @@ const QUESTION_COUNTS = [5, 10, 15, 20]
 
 export default function SATQuestionBankPage() {
   const router = useRouter()
+  const { satUpgradeUnlocked, loading: entitlementLoading } = useEntitlements()
   const [section, setSection] = useState<'reading-writing' | 'math' | ''>('')
   const [selectedDomains, setSelectedDomains] = useState<string[]>([])
   const [selectedSkills, setSelectedSkills] = useState<string[]>([])
@@ -46,11 +51,13 @@ export default function SATQuestionBankPage() {
   const [count, setCount] = useState(10)
   const [customCount, setCustomCount] = useState('')
   const [recentSets, setRecentSets] = useState(0)
+  const [browseSets, setBrowseSets] = useState(0)
   const [satAttempts, setSatAttempts] = useState<PremadeAttempt[]>([])
 
   useEffect(() => {
     const results = loadAllQBResults()
     setRecentSets(results.length)
+    setBrowseSets(results.filter(r => r.config.mode === 'browse').length)
     const attempts = loadAllAttempts().filter(a => a.examId.startsWith('sat-'))
     setSatAttempts(attempts)
   }, [])
@@ -168,10 +175,30 @@ export default function SATQuestionBankPage() {
       </div>
 
       {/* Browse */}
+      {!entitlementLoading && !satUpgradeUnlocked && browseSets >= FREE_QB_LIMIT ? (
+        <UpgradeGate
+          title="Unlock Unlimited Question Bank Practice"
+          description={`You've used your ${FREE_QB_LIMIT} free practice sets. Upgrade to practice as much as you need.`}
+          features={[
+            'Unlimited Question Bank practice sets',
+            'SAT Practice Test Form 2 (full adaptive exam)',
+            'Full question-by-question review for Form 1',
+          ]}
+          compact
+        />
+      ) : (
       <div className="bg-white rounded-xl border border-slate-200 divide-y divide-slate-100">
         <div className="p-5">
           <h2 className="text-[15px] font-semibold text-slate-900 mb-0.5">Browse Question Bank</h2>
           <p className="text-[13px] text-slate-500">Choose your own SAT section, skill, difficulty, and question count.</p>
+          {!entitlementLoading && !satUpgradeUnlocked && browseSets > 0 && (
+            <p className="text-[11px] text-amber-600 mt-1.5">
+              {FREE_QB_LIMIT - browseSets} free {FREE_QB_LIMIT - browseSets === 1 ? 'set' : 'sets'} remaining.{' '}
+              <Link href="/pricing" className="underline hover:no-underline">
+                Upgrade for unlimited access.
+              </Link>
+            </p>
+          )}
         </div>
 
         {/* Section */}
@@ -313,6 +340,7 @@ export default function SATQuestionBankPage() {
           </button>
         </div>
       </div>
+      )}
 
       {/* Recent results */}
       {recentSets > 0 && (

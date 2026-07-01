@@ -1,27 +1,63 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Card } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
+import { getEntitlements } from '@/lib/entitlements'
+import { UpgradeGate } from '@/components/shared/upgrade-gate'
 
 export const metadata: Metadata = { title: 'Billing' }
 
-export default function BillingPage() {
+export default async function BillingPage() {
+  const { satUpgradeUnlocked, satUpgradeUnlockedAt, stripeCustomerId } = await getEntitlements()
+
+  if (satUpgradeUnlocked) {
+    const unlockedDate = satUpgradeUnlockedAt
+      ? new Date(satUpgradeUnlockedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+      : null
+
+    return (
+      <div className="max-w-xl mx-auto mt-12 space-y-5">
+        <div className="bg-white rounded-2xl border border-emerald-200 p-8 text-center">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-7 w-7 text-emerald-500">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+          </div>
+          <h1 className="text-xl font-bold text-slate-900">MockMate SAT Upgrade — Active</h1>
+          {unlockedDate && (
+            <p className="text-[12px] text-slate-400 mt-1">Unlocked on {unlockedDate}</p>
+          )}
+          <p className="mt-3 text-[13px] text-slate-500 max-w-xs mx-auto leading-relaxed">
+            You have access to SAT Form 2, unlimited Question Bank practice, and full Form 1 review.
+          </p>
+          <div className="mt-6 space-y-2.5">
+            <Link
+              href="/premade/sat/form-2"
+              className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
+            >
+              Go to SAT Form 2
+            </Link>
+            <Link
+              href="/question-bank/sat"
+              className="block w-full border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
+            >
+              Question Bank
+            </Link>
+          </div>
+          {stripeCustomerId && (
+            <p className="mt-6 text-[11px] text-slate-400">
+              Questions?{' '}
+              <Link href="mailto:support@mockmate.app" className="text-indigo-600 hover:underline">
+                support@mockmate.app
+              </Link>
+            </p>
+          )}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-xl mx-auto mt-12">
-      <Card className="text-center py-12">
-        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-indigo-50">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-7 w-7 text-indigo-500">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
-          </svg>
-        </div>
-        <h1 className="text-xl font-bold text-slate-900">Billing coming soon</h1>
-        <p className="mt-2 text-sm text-slate-500 max-w-xs mx-auto">
-          Paid plans are on the way. For now everything is free — no limits.
-        </p>
-        <Link href="/dashboard" className="inline-block mt-6">
-          <Button variant="outline" size="sm">Back to dashboard</Button>
-        </Link>
-      </Card>
+      <UpgradeGate />
     </div>
   )
 }
