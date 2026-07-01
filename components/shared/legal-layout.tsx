@@ -51,7 +51,7 @@ export function LegalLayout({
                 {label}
               </Link>
             ))}
-            <a href="mailto:support@mockmate.app" className="hover:text-slate-800 transition-colors">
+            <a href="mailto:ranvi.contact@gmail.com" className="hover:text-slate-800 transition-colors">
               Contact
             </a>
           </div>

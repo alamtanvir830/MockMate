@@ -89,7 +89,7 @@ export default function PrivacyPage() {
       <LegalSection title="8. Children's Privacy">
         <LegalP>
           MockMate is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected information from a child under 13, please contact us immediately at{' '}
-          <a href="mailto:support@mockmate.app" className="text-indigo-600 hover:underline">support@mockmate.app</a>{' '}
+          <a href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">ranvi.contact@gmail.com</a>{' '}
           and we will delete it promptly.
         </LegalP>
         <LegalP>
@@ -109,7 +109,7 @@ export default function PrivacyPage() {
         ]} />
         <LegalP>
           To exercise any of these rights, contact us at{' '}
-          <a href="mailto:support@mockmate.app" className="text-indigo-600 hover:underline">support@mockmate.app</a>.
+          <a href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">ranvi.contact@gmail.com</a>.
         </LegalP>
       </LegalSection>
 
@@ -118,7 +118,7 @@ export default function PrivacyPage() {
           You can request deletion of your MockMate account and associated personal data at any time. To request deletion:
         </LegalP>
         <LegalList items={[
-          'Email support@mockmate.app with the subject line "Data Deletion Request"',
+          'Email ranvi.contact@gmail.com with the subject line "Data Deletion Request"',
           'Include the email address associated with your account',
           'We will process your request within 30 days and confirm deletion by email',
         ]} />
@@ -136,8 +136,8 @@ export default function PrivacyPage() {
       <LegalSection title="Contact Us">
         <LegalP>
           For privacy-related questions or concerns, contact us at{' '}
-          <a href="mailto:support@mockmate.app" className="text-indigo-600 hover:underline">
-            support@mockmate.app
+          <a href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">
+            ranvi.contact@gmail.com
           </a>.
         </LegalP>
       </LegalSection>

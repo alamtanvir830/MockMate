@@ -213,7 +213,7 @@ export default function LandingPage() {
               <Link href="/ai-disclosure" className="hover:text-slate-300 transition-colors">AI Disclosure</Link>
               <Link href="/sat-disclaimer" className="hover:text-slate-300 transition-colors">SAT Disclaimer</Link>
               <Link href="/refund-policy" className="hover:text-slate-300 transition-colors">Refund Policy</Link>
-              <a href="mailto:support@mockmate.app" className="hover:text-slate-300 transition-colors">Contact</a>
+              <a href="mailto:ranvi.contact@gmail.com" className="hover:text-slate-300 transition-colors">Contact</a>
             </div>
           </div>
           <p className="text-xs text-slate-600 leading-relaxed text-center max-w-4xl mx-auto">

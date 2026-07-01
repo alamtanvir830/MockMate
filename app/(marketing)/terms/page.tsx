@@ -151,8 +151,8 @@ export default function TermsPage() {
       <LegalSection title="Contact">
         <LegalP>
           For questions about these Terms, contact us at{' '}
-          <a href="mailto:support@mockmate.app" className="text-indigo-600 hover:underline">
-            support@mockmate.app
+          <a href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">
+            ranvi.contact@gmail.com
           </a>.
         </LegalP>
       </LegalSection>

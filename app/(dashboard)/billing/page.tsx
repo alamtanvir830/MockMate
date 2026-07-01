@@ -51,8 +51,8 @@ export default async function BillingPage() {
           {stripeCustomerId && (
             <p className="mt-6 text-[11px] text-slate-400">
               Questions?{' '}
-              <Link href="mailto:support@mockmate.app" className="text-indigo-600 hover:underline">
-                support@mockmate.app
+              <Link href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">
+                ranvi.contact@gmail.com
               </Link>
             </p>
           )}

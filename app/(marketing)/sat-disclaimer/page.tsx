@@ -71,8 +71,8 @@ export default function SATDisclaimerPage() {
       <LegalSection title="Contact">
         <LegalP>
           Questions about our SAT practice content? Contact us at{' '}
-          <a href="mailto:support@mockmate.app" className="text-indigo-600 hover:underline">
-            support@mockmate.app
+          <a href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">
+            ranvi.contact@gmail.com
           </a>.
         </LegalP>
       </LegalSection>

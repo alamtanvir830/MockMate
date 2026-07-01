@@ -117,8 +117,8 @@ export function UpgradeGate({
           </p>
           <p className="text-center text-[11px] text-slate-400">
             Have questions?{' '}
-            <Link href="mailto:support@mockmate.app" className="text-indigo-600 hover:underline">
-              support@mockmate.app
+            <Link href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">
+              ranvi.contact@gmail.com
             </Link>
           </p>
         </div>
