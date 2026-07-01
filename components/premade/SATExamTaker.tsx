@@ -1230,12 +1230,12 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
     if (phase.tag === 'results' && !isHistoryView) fetchAIFeedback()
   }, [phase.tag, fetchAIFeedback, isHistoryView])
 
-  // ── Save attempt to localStorage when entering results ─────────────────────
+  // ── Save attempt to localStorage + Supabase when entering results ──────────
   useEffect(() => {
     if (phase.tag !== 'results' || isHistoryView || !attemptIdRef.current) return
     const attempt: PremadeAttempt = {
       id: attemptIdRef.current,
-      examId: 'sat-form-1',
+      examId: form.id,
       examTitle: form.title,
       completedAt: completedAtRef.current,
       rwScaled, mathScaled, totalScore,
@@ -1248,14 +1248,76 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
       aiFeedback: null,
     }
     saveAttempt(attempt)
+
+    // Fire-and-forget: persist to Supabase (non-blocking, failures are silent)
+    const formNumber = parseInt(form.id.replace('sat-form-', ''), 10)
+    const rwSkillBreakdown = buildSkillBreakdown([rwM1Module, rwM2Module], answers)
+    const mathSkillBreakdown = buildSkillBreakdown([mathM1Module, mathM2Module], answers)
+    const weakSkills = [
+      ...Object.entries(rwSkillBreakdown)
+        .filter(([, v]) => v.correct < v.total)
+        .map(([skill, v]) => ({ section: 'rw', skill, correct: v.correct, total: v.total })),
+      ...Object.entries(mathSkillBreakdown)
+        .filter(([, v]) => v.correct < v.total)
+        .map(([skill, v]) => ({ section: 'math', skill, correct: v.correct, total: v.total })),
+    ]
+    const allModules = [
+      { mod: rwM1Module, name: 'Reading & Writing Module 1' },
+      { mod: rwM2Module, name: `Reading & Writing Module 2 (${rwM2Type})` },
+      { mod: mathM1Module, name: 'Math Module 1' },
+      { mod: mathM2Module, name: `Math Module 2 (${mathM2Type})` },
+    ]
+    const responses = allModules.flatMap(({ mod, name }) =>
+      mod.questions.map((q, idx) => ({
+        questionId:     q.id,
+        questionNumber: idx + 1,
+        moduleId:       mod.id,
+        moduleName:     name,
+        domain:         q.domain ?? '',
+        skill:          getSkill(q),
+        difficulty:     q.difficulty ?? '',
+        selectedAnswer: answers[q.id] ?? null,
+        correctAnswer:  getCorrectAnswer(q),
+        isCorrect:      isCorrect(q, answers),
+      }))
+    )
+    fetch('/api/premade/save-attempt', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        localAttemptId:  attemptIdRef.current,
+        examType:        'SAT',
+        formNumber,
+        examTitle:       form.title,
+        totalScore, rwScore: rwScaled, mathScore: mathScaled,
+        rwCorrect: rwM1Correct + rwM2Correct, rwTotal,
+        mathCorrect: mathM1Correct + mathM2Correct, mathTotal,
+        rwM2Type, mathM2Type,
+        moduleBreakdown: {
+          rw_m1_correct: rwM1Correct, rw_m1_total: rwM1Module.questionCount,
+          rw_m2_correct: rwM2Correct, rw_m2_total: rwM2Module.questionCount, rw_m2_type: rwM2Type,
+          math_m1_correct: mathM1Correct, math_m1_total: mathM1Module.questionCount,
+          math_m2_correct: mathM2Correct, math_m2_total: mathM2Module.questionCount, math_m2_type: mathM2Type,
+        },
+        weakSkills,
+        submittedAnswers: answers,
+        completedAt: completedAtRef.current,
+        responses,
+      }),
+    }).catch(() => { /* silent — localStorage is the source of truth */ })
   // only save once when entering results — intentionally omitting reactive deps
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase.tag])
 
-  // ── Update saved attempt when AI feedback loads (live and history view) ───
+  // ── Update saved attempt when AI feedback loads (localStorage + Supabase) ──
   useEffect(() => {
     if (!aiFeedback || !attemptIdRef.current) return
     updateAttempt(attemptIdRef.current, { aiFeedback })
+    fetch('/api/premade/save-attempt', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ localAttemptId: attemptIdRef.current, aiFeedback }),
+    }).catch(() => { /* silent */ })
   }, [aiFeedback])
 
   // ── Retake ─────────────────────────────────────────────────────────────────
