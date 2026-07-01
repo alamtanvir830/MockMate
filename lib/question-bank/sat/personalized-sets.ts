@@ -11,6 +11,12 @@ import { f2RwModule2HardQuestions } from '@/lib/premade-exams/sat/form-2-rw-modu
 import { f2MathModule1Questions } from '@/lib/premade-exams/sat/form-2-math-module-1'
 import { f2MathModule2EasyQuestions } from '@/lib/premade-exams/sat/form-2-math-module-2-easy'
 import { f2MathModule2HardQuestions } from '@/lib/premade-exams/sat/form-2-math-module-2-hard'
+import { f3RwModule1Questions } from '@/lib/premade-exams/sat/form-3-rw-module-1'
+import { f3RwModule2EasyQuestions } from '@/lib/premade-exams/sat/form-3-rw-module-2-easy'
+import { f3RwModule2HardQuestions } from '@/lib/premade-exams/sat/form-3-rw-module-2-hard'
+import { f3MathModule1Questions } from '@/lib/premade-exams/sat/form-3-math-module-1'
+import { f3MathModule2EasyQuestions } from '@/lib/premade-exams/sat/form-3-math-module-2-easy'
+import { f3MathModule2HardQuestions } from '@/lib/premade-exams/sat/form-3-math-module-2-hard'
 import { rwQuestions } from '@/lib/question-bank/sat/rw-questions'
 import { mathQuestions } from '@/lib/question-bank/sat/math-questions'
 import { getSeenIds } from '@/lib/question-bank/sat/question-selector'
@@ -186,6 +192,11 @@ export function buildPersonalizedSets(attempt: PremadeAttempt): PersonalizedSetC
     rwM2 = attempt.rwM2Type === 'easy' ? f2RwModule2EasyQuestions : f2RwModule2HardQuestions
     mathM1 = f2MathModule1Questions
     mathM2 = attempt.mathM2Type === 'easy' ? f2MathModule2EasyQuestions : f2MathModule2HardQuestions
+  } else if (attempt.examId === 'sat-form-3') {
+    rwM1 = f3RwModule1Questions
+    rwM2 = attempt.rwM2Type === 'easy' ? f3RwModule2EasyQuestions : f3RwModule2HardQuestions
+    mathM1 = f3MathModule1Questions
+    mathM2 = attempt.mathM2Type === 'easy' ? f3MathModule2EasyQuestions : f3MathModule2HardQuestions
   } else {
     rwM1 = rwModule1Questions
     rwM2 = attempt.rwM2Type === 'easy' ? rwModule2EasyQuestions : rwModule2HardQuestions
