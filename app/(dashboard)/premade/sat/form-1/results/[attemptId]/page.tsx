@@ -36,7 +36,7 @@ export default function SATResultsHistoryPage() {
         <p className="text-slate-600 font-medium">Attempt not found.</p>
         <p className="text-sm text-slate-400">This result may have been cleared from your browser storage.</p>
         <Link href="/exams" className="text-sm font-medium text-[#1d4ed8] hover:underline">
-          ← Back to My Exams
+          ← Back to Exam History
         </Link>
       </div>
     )

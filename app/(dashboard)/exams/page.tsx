@@ -9,7 +9,7 @@ import { daysUntil, isExamLocked } from '@/lib/utils'
 import type { Exam } from '@/types'
 import { PremadeAttemptsSection } from '@/components/exams/PremadeAttemptsSection'
 
-export const metadata: Metadata = { title: 'My Exams' }
+export const metadata: Metadata = { title: 'Exam History' }
 
 export default async function ExamsPage() {
   const supabase = await createClient()
@@ -58,7 +58,7 @@ export default async function ExamsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">My Exams</h1>
+          <h1 className="text-2xl font-bold text-slate-900">Exam History</h1>
           <p className="mt-1 text-sm text-slate-500">
             {allExams.length} exam{allExams.length !== 1 ? 's' : ''} total
           </p>

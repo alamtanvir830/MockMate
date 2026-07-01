@@ -39,7 +39,7 @@ export default function SATForm2ResultsHistoryPage() {
           href="/exams"
           className="text-sm font-medium text-[#1d4ed8] hover:underline"
         >
-          ← Back to My Exams
+          ← Back to Exam History
         </Link>
       </div>
     )
