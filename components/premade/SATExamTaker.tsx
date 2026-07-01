@@ -954,14 +954,8 @@ function TimerDisplay({ secs }: { secs: number }) {
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function SATExamTaker({ form, initialAttempt, skipPasswordGate }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean }) {
+export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean }) {
   const isHistoryView = !!initialAttempt
-
-  // ── Password gate ──────────────────────────────────────────────────────────
-  const [unlocked, setUnlocked] = useState(isHistoryView || !!skipPasswordGate)
-  const [passwordInput, setPasswordInput] = useState('')
-  const [passwordError, setPasswordError] = useState('')
-  const [passwordChecking, setPasswordChecking] = useState(false)
 
   // ── Exam state ─────────────────────────────────────────────────────────────
   const [phase, setPhase] = useState<SATPhase>(isHistoryView ? { tag: 'results' } : { tag: 'welcome' })
@@ -999,32 +993,6 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate }:
     if (slot === 'm1') return section === 'rw' ? rwSection.modules[0] : mathSection.modules[0]
     return getM2Module(section, section === 'rw' ? rwM2Type : mathM2Type)
   }, [rwSection, mathSection, rwM2Type, mathM2Type, getM2Module])
-
-  // ── Password check ─────────────────────────────────────────────────────────
-  const handlePasswordSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!passwordInput.trim()) return
-    setPasswordChecking(true)
-    setPasswordError('')
-    try {
-      const res = await fetch('/api/sat-verify-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: passwordInput }),
-      })
-      const { valid } = await res.json() as { valid: boolean }
-      if (valid) {
-        setUnlocked(true)
-      } else {
-        setPasswordError('Incorrect password. Please try again.')
-        setPasswordInput('')
-      }
-    } catch {
-      setPasswordError('Something went wrong. Please try again.')
-    } finally {
-      setPasswordChecking(false)
-    }
-  }, [passwordInput])
 
   // ── Fullscreen API ─────────────────────────────────────────────────────────
   const enterFullscreen = useCallback(async () => {
@@ -1279,73 +1247,8 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate }:
     setCalcOpen(false); setRefOpen(false)
     attemptIdRef.current = ''
     completedAtRef.current = ''
-    // unlocked stays true — no re-auth needed for retake
   }, [])
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // PASSWORD GATE (shown before welcome when !unlocked)
-  // ─────────────────────────────────────────────────────────────────────────
-  if (!unlocked) {
-    return (
-      <div className="fixed inset-0 z-50 bg-[#eef0f4] flex flex-col overflow-hidden">
-        <div className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-4">
-          <span className="text-white text-[13px] font-semibold">MockMate</span>
-          <span className="text-white/30 text-[13px] mx-2">·</span>
-          <span className="text-white/70 text-[13px]">{form.title}</span>
-        </div>
-        <div className="flex-1 overflow-y-auto flex items-center justify-center p-6">
-          <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="bg-[#1b3a5c] px-6 py-5 text-center">
-              <div className="h-12 w-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6 text-white">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                </svg>
-              </div>
-              <h1 className="text-[17px] font-bold text-white">{form.title}</h1>
-            </div>
-            <div className="px-6 py-6">
-              <p className="text-[13px] text-slate-600 text-center mb-5">
-                Enter the access password to begin SAT Practice Test 1.
-              </p>
-              <form onSubmit={handlePasswordSubmit} className="space-y-3">
-                <div>
-                  <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-1.5">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    value={passwordInput}
-                    onChange={e => { setPasswordInput(e.target.value); setPasswordError('') }}
-                    placeholder="Enter password"
-                    autoFocus
-                    className="w-full border-2 border-slate-200 rounded-lg px-4 py-2.5 text-[14px] text-slate-900 focus:border-[#1d4ed8] focus:outline-none transition-colors"
-                  />
-                </div>
-                {passwordError && (
-                  <p className="text-[12px] text-red-600 font-medium">{passwordError}</p>
-                )}
-                <button
-                  type="submit"
-                  disabled={!passwordInput.trim() || passwordChecking}
-                  className="w-full bg-[#1d4ed8] hover:bg-[#1e40af] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg text-[14px] transition-colors flex items-center justify-center gap-2"
-                >
-                  {passwordChecking ? (
-                    <>
-                      <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                      </svg>
-                      Checking…
-                    </>
-                  ) : 'Unlock Test'}
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
 
   // ─────────────────────────────────────────────────────────────────────────
   // PHASE: WELCOME
