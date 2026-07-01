@@ -10,22 +10,40 @@ export default function SATPremadePage() {
       </div>
 
       <h1 className="text-2xl font-bold text-slate-900 mb-1">SAT Practice Forms</h1>
-      <p className="text-sm text-slate-500 mb-3">Full-length adaptive SAT-style practice built to feel closer to the real test.</p>
-      <ul className="grid grid-cols-2 gap-x-6 gap-y-1 mb-8">
-        {[
-          '98 questions',
-          'instant estimated score report',
-          '2 hours 14 minutes',
-          'AI feedback + weak-area breakdown',
-          'Reading & Writing + Math',
-          'personalized practice sets from Q-Bank',
-        ].map((item) => (
-          <li key={item} className="flex items-center gap-2 text-sm text-slate-500">
-            <span className="h-1 w-1 rounded-full bg-slate-300 shrink-0" />
-            {item}
-          </li>
-        ))}
-      </ul>
+      <p className="text-sm text-slate-500 mb-4">Full-length adaptive SAT-style practice built to feel closer to the real test.</p>
+
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+        {/* Left: exam specs */}
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-400 mb-2">Each exam includes</p>
+          <ul className="space-y-1">
+            {['98 questions', '2 hours 14 minutes', 'Reading & Writing + Math'].map((item) => (
+              <li key={item} className="flex items-center gap-2 text-sm text-slate-500">
+                <span className="h-1 w-1 rounded-full bg-slate-300 shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Arrow */}
+        <div className="flex sm:flex-col items-center gap-1 text-slate-300 sm:px-2">
+          <span className="text-[11px] text-slate-400 whitespace-nowrap">followed by</span>
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4 rotate-90 sm:rotate-0 shrink-0">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </div>
+
+        {/* Right: output features */}
+        <ul className="space-y-1">
+          {['instant estimated score report', 'AI feedback + weak-area breakdown', 'personalized practice sets from Q-Bank'].map((item) => (
+            <li key={item} className="flex items-center gap-2 text-sm text-slate-500">
+              <span className="h-1 w-1 rounded-full bg-slate-300 shrink-0" />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Form 1 — active */}
