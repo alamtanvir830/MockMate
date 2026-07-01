@@ -954,11 +954,11 @@ function TimerDisplay({ secs }: { secs: number }) {
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; initialAttempt?: PremadeAttempt }) {
+export default function SATExamTaker({ form, initialAttempt, skipPasswordGate }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean }) {
   const isHistoryView = !!initialAttempt
 
   // ── Password gate ──────────────────────────────────────────────────────────
-  const [unlocked, setUnlocked] = useState(isHistoryView)
+  const [unlocked, setUnlocked] = useState(isHistoryView || !!skipPasswordGate)
   const [passwordInput, setPasswordInput] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [passwordChecking, setPasswordChecking] = useState(false)
