@@ -2059,27 +2059,23 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                     <p className="text-[12px]">{aiFeedback.carelessErrors}</p>
                   </div>
                 )}
-                {aiFeedback.practiceRecommendations && (
-                  <div>
-                    <p className="text-[11px] font-semibold text-[#1b3a5c] uppercase tracking-widest mb-2">Recommended Practice Plan</p>
-                    <NumberedList text={aiFeedback.practiceRecommendations} className="text-[13px] text-slate-700" />
-                    <div className="mt-4 bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-2">
-                      <p className="text-[11px] font-semibold text-indigo-700 uppercase tracking-widest">What is the Personalized Practice Path?</p>
-                      <p className="text-[12px] text-indigo-900 leading-relaxed">
-                        Your Personalized Practice Path is a set of targeted question sets generated from your exam performance. MockMate looks at the skills you missed, then creates practice sets from the Question Bank so you can focus on the exact areas that need the most work.
-                      </p>
-                      <p className="text-[12px] text-indigo-700 font-medium">
-                        Click below to start. MockMate will generate 4 targeted practice sets based on your performance.
-                      </p>
-                    </div>
+                <div className="space-y-3">
+                  <p className="text-[13px] text-slate-700 leading-relaxed">
+                    <span className="font-semibold">First,</span> scroll down to the answer key and explanations. Look closely at the questions you missed, read why the correct answer is right, and make sure you understand the mistake before practicing more.
+                  </p>
+                  <p className="text-[13px] text-slate-700 leading-relaxed">
+                    After reviewing your mistakes, use your <span className="font-semibold">Personalized Practice Path</span> to practice the exact weak areas from this exam.
+                  </p>
+                  <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-2">
+                    <p className="text-[11px] font-semibold text-indigo-700 uppercase tracking-widest">What is the Personalized Practice Path?</p>
+                    <p className="text-[12px] text-indigo-900 leading-relaxed">
+                      Your Personalized Practice Path is a set of targeted question sets generated from your exam performance. MockMate looks at the skills you missed, then creates practice sets from the Question Bank so you can focus on the exact areas that need the most work.
+                    </p>
+                    <p className="text-[12px] text-indigo-800 font-semibold">
+                      Click below to start. MockMate will generate 4 targeted practice sets based on your performance.
+                    </p>
                   </div>
-                )}
-                {aiFeedback.mockMateNextSteps && (
-                  <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
-                    <p className="text-[11px] font-semibold text-blue-700 uppercase tracking-widest mb-3">How to Use MockMate Next</p>
-                    <NumberedList text={aiFeedback.mockMateNextSteps} className="text-[12px] text-blue-900" />
-                  </div>
-                )}
+                </div>
               </div>
             )}
             {!aiFeedback && !aiFeedbackLoading && !aiFeedbackError && (
