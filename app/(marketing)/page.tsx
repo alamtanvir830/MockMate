@@ -49,23 +49,21 @@ export default function LandingPage() {
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-700 mb-8">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              practice under real pressure
+              digital SAT-style practice
             </div>
 
             <h1 className="mx-auto max-w-3xl text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 leading-[1.08]">
-              stop wishing for{' '}
+              take the exam{' '}
               <span
                 className="bg-clip-text text-transparent"
                 style={{ backgroundImage: 'linear-gradient(135deg, #10b981, #059669)' }}
               >
-                one more day
+                before the exam
               </span>
             </h1>
 
-            <p className="mx-auto mt-8 max-w-2xl text-lg sm:text-xl text-slate-500 leading-relaxed">
-              your real exam is coming. don&apos;t let the first full test be the real one.
-              <br className="hidden sm:block" />
-              build a realistic mock exam from your actual materials, get scored instantly, and know exactly what to fix before test day.
+            <p className="mx-auto mt-8 max-w-2xl text-base sm:text-lg text-slate-500 leading-relaxed">
+              MockMate offers standardized testing practice for the SAT college admissions exam — including 3 digital SAT-style practice forms, a 300+ question bank, instant AI feedback, score reports, and personalized weak-area question sets.
             </p>
 
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -74,21 +72,21 @@ export default function LandingPage() {
                   size="lg"
                   className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700"
                 >
-                  take your first mock exam
+                  take free SAT form 1
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                   </svg>
                 </Button>
               </Link>
-              <a href="#how-it-works">
+              <Link href="/premade/sat">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                  see how it works
+                  explore SAT practice
                 </Button>
-              </a>
+              </Link>
             </div>
 
             <p className="mt-4 text-xs text-slate-400">
-              No credit card required · Cancel anytime
+              Free Form 1 available · Forms 2–3 + 300+ Q-Bank available for $9.99
             </p>
           </div>
 
@@ -108,9 +106,7 @@ export default function LandingPage() {
         <section style={{ backgroundColor: '#F5FBF8' }} className="border-y border-emerald-100 py-12">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-              You tell us exactly what style of exam you are preparing for, upload your
-              lectures, notes, and old exam formats, and MockMate creates a realistic
-              practice exam that matches what you are actually likely to see.
+              Practice with full SAT-style exams, review your score report, then drill your weakest areas with personalized question sets from the Q-Bank.
             </p>
           </div>
         </section>
@@ -181,18 +177,17 @@ export default function LandingPage() {
         <section className="bg-slate-900 py-20">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-snug">
-              your real exam is coming.{' '}
+              your SAT test day is coming.{' '}
               <span style={{ color: '#34d399' }}>
                 don&apos;t let the first full test be the real one.
               </span>
             </h2>
             <p className="mt-4 text-lg text-slate-400">
-              build a realistic mock exam from your actual materials, get scored
-              instantly, and know exactly what to fix before test day.
+              Practice with 3 full-length SAT-style forms, get instant score feedback, and drill your weak areas with personalized question sets — all before test day.
             </p>
             <Link href="/signup" className="inline-block mt-8">
               <Button size="lg" className="bg-emerald-600 hover:bg-emerald-500">
-                take your first mock exam
+                take free SAT form 1
               </Button>
             </Link>
           </div>
