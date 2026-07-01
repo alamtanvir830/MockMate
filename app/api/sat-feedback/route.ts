@@ -85,11 +85,11 @@ Provide honest, specific, actionable SAT coaching. Return valid JSON only:
   "mathStrengths": ["skill name", "skill name"],
   "mathWeaknesses": ["skill name: one-line reason", "..."],
   "carelessErrors": "If you see a careless-error pattern (wrong operation, misread question), name it — else null",
-  "adaptivePathInsight": "What routing to ${input.rwM2Type} RW M2 and ${input.mathM2Type} Math M2 means for this student's level",
+  "adaptivePathInsight": "What the student's second-module difficulty (${input.rwM2Type} for Reading & Writing, ${input.mathM2Type} for Math) suggests about their current skill level and what to focus on next. Use plain student-friendly language. Do NOT use the word 'routing'. Instead say things like 'Because your second module was easier/harder, this means...' or 'Your results suggest...'.",
   "rwReviewTopics": ["specific topic", "specific topic", "specific topic"],
   "mathReviewTopics": ["specific topic", "specific topic", "specific topic"],
-  "practiceRecommendations": "3–4 specific, concrete next-step practice recommendations",
-  "mockMateNextSteps": "Specific guidance on using MockMate features: focused practice exams, Study Round on weak skills, Anki cards for vocabulary/grammar/formulas, mind map for weak domains"
+  "practiceRecommendations": "4–5 specific, concrete next-step practice recommendations. Format as a numbered list: 1. Start with your Personalized Practice Path. 2. [R&W weak areas]. 3. [Math weak areas]. 4. [Review strategy]. 5. [Retake/progress tip].",
+  "mockMateNextSteps": "5 specific steps for using MockMate next. Format as a numbered list: 1. Click Personalized Practice Path below. 2. [Practice sets step]. 3. [Review explanations step]. 4. [Question Bank step]. 5. [Retake step when ready]."
 }`
 
     const response = await openai.chat.completions.create({

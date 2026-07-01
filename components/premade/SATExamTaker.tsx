@@ -953,6 +953,28 @@ function TimerDisplay({ secs }: { secs: number }) {
   )
 }
 
+// ─── Numbered list renderer ────────────────────────────────────────────────────
+function NumberedList({ text, className }: { text: string; className?: string }) {
+  const items = text
+    .split(/\n/)
+    .map(l => l.trim())
+    .filter(l => /^\d+\./.test(l))
+    .map(l => l.replace(/^\d+\.\s*/, ''))
+  if (items.length >= 2) {
+    return (
+      <ol className={`space-y-1.5 list-none ${className ?? ''}`}>
+        {items.map((item, i) => (
+          <li key={i} className="flex gap-2">
+            <span className="shrink-0 font-semibold">{i + 1}.</span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ol>
+    )
+  }
+  return <p className={className}>{text}</p>
+}
+
 // ─── Main component ────────────────────────────────────────────────────────────
 export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean }) {
   const isHistoryView = !!initialAttempt
@@ -1967,7 +1989,7 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                 )}
                 {aiFeedback.adaptivePathInsight && (
                   <div>
-                    <p className="text-[11px] font-semibold text-blue-600 uppercase tracking-widest mb-1">Adaptive Path Insight</p>
+                    <p className="text-[11px] font-semibold text-blue-600 uppercase tracking-widest mb-1">What Your Module Difficulty Means</p>
                     <p>{aiFeedback.adaptivePathInsight}</p>
                   </div>
                 )}
@@ -2039,14 +2061,23 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                 )}
                 {aiFeedback.practiceRecommendations && (
                   <div>
-                    <p className="text-[11px] font-semibold text-[#1b3a5c] uppercase tracking-widest mb-1">Recommended Practice Plan</p>
-                    <p>{aiFeedback.practiceRecommendations}</p>
+                    <p className="text-[11px] font-semibold text-[#1b3a5c] uppercase tracking-widest mb-2">Recommended Practice Plan</p>
+                    <NumberedList text={aiFeedback.practiceRecommendations} className="text-[13px] text-slate-700" />
+                    <div className="mt-4 bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-2">
+                      <p className="text-[11px] font-semibold text-indigo-700 uppercase tracking-widest">What is the Personalized Practice Path?</p>
+                      <p className="text-[12px] text-indigo-900 leading-relaxed">
+                        Your Personalized Practice Path is a set of targeted question sets generated from your exam performance. MockMate looks at the skills you missed, then creates practice sets from the Question Bank so you can focus on the exact areas that need the most work.
+                      </p>
+                      <p className="text-[12px] text-indigo-700 font-medium">
+                        Click below to start. MockMate will generate 4 targeted practice sets based on your performance.
+                      </p>
+                    </div>
                   </div>
                 )}
                 {aiFeedback.mockMateNextSteps && (
                   <div className="bg-blue-50 border border-blue-100 rounded-lg p-4">
-                    <p className="text-[11px] font-semibold text-blue-700 uppercase tracking-widest mb-2">How to Use MockMate Next</p>
-                    <p className="text-[12px] text-blue-900">{aiFeedback.mockMateNextSteps}</p>
+                    <p className="text-[11px] font-semibold text-blue-700 uppercase tracking-widest mb-3">How to Use MockMate Next</p>
+                    <NumberedList text={aiFeedback.mockMateNextSteps} className="text-[12px] text-blue-900" />
                   </div>
                 )}
               </div>
