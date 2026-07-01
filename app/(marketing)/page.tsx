@@ -47,11 +47,6 @@ export default function LandingPage() {
           </div>
 
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-medium text-emerald-700 mb-8">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              digital SAT-style practice + custom mock exams
-            </div>
-
             <h1 className="mx-auto max-w-3xl text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 leading-[1.08]">
               take the exam{' '}
               <span
