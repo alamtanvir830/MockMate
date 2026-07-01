@@ -126,6 +126,8 @@ interface PracticePrompt {
   skill: string
   section: 'rw' | 'math'
   prompt: string
+  missCount: number
+  totalCount: number
 }
 
 type FlatQItem = {
@@ -243,6 +245,8 @@ const GENERAL_MIXED_PROMPT: PracticePrompt = {
   description: 'A balanced review covering both Reading & Writing and Math in one practice set.',
   skill: 'Mixed',
   section: 'rw',
+  missCount: 0,
+  totalCount: 0,
   prompt: `Create a mixed SAT-style practice exam covering both Reading and Writing and Math.
 
 Include:
@@ -266,6 +270,8 @@ const GENERAL_MAINTENANCE_PROMPT: PracticePrompt = {
   description: 'Keep your skills sharp with a medium-to-hard mixed SAT practice set.',
   skill: 'Mixed',
   section: 'rw',
+  missCount: 0,
+  totalCount: 0,
   prompt: `Create a mixed SAT-style practice exam with Reading and Writing and Math questions.
 
 Focus on medium-to-hard difficulty to maintain and sharpen high-level skills.
@@ -302,6 +308,8 @@ function buildPracticePrompts(allFlat: FlatQItem[]): PracticePrompt[] {
       skill: w.skill,
       section: w.section,
       prompt: promptText,
+      missCount: w.missCount,
+      totalCount: w.totalCount,
     }
   })
 
@@ -313,94 +321,132 @@ function buildPracticePrompts(allFlat: FlatQItem[]): PracticePrompt[] {
 
 // ─── Practice Prompts Section Component ───────────────────────────────────────
 function PracticePromptsSection({ prompts, hasMisses }: { prompts: PracticePrompt[]; hasMisses: boolean }) {
+  const [expandedIdx, setExpandedIdx] = useState<number | null>(null)
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null)
 
   const handleCopy = async (text: string, idx: number) => {
     try {
       await navigator.clipboard.writeText(text)
-      setCopiedIdx(idx)
-      setTimeout(() => setCopiedIdx(null), 2000)
-    } catch {
-      // clipboard unavailable — text is visible for manual selection
-      setCopiedIdx(idx)
-      setTimeout(() => setCopiedIdx(null), 2000)
-    }
+    } catch { /* clipboard unavailable */ }
+    setCopiedIdx(idx)
+    setTimeout(() => setCopiedIdx(null), 2000)
+  }
+
+  const toggleExpand = (idx: number) => {
+    setExpandedIdx(prev => (prev === idx ? null : idx))
   }
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
+      {/* Header */}
       <div className="px-6 py-4 border-b border-slate-100">
-        <h2 className="text-[15px] font-bold text-slate-900">Create More Practice From Your Weak Areas</h2>
-        <p className="text-[12px] text-slate-500 mt-1">
-          Copy one of these prompts into MockMate to generate a focused practice exam based on the SAT skills you missed.
+        <h2 className="text-[14px] font-bold text-slate-900">Need More Practice?</h2>
+        <p className="text-[12px] text-slate-500 mt-1 leading-relaxed">
+          Your Personalized Practice Path above gives you targeted question sets first. If you want even more practice, generate a prompt for one of your weak areas, then paste it into <strong>New Exam</strong>.
         </p>
       </div>
 
-      <div className="p-5 space-y-4">
+      {/* How-to instructions */}
+      <div className="px-6 py-3 bg-slate-50 border-b border-slate-100">
+        <p className="text-[11px] font-semibold text-slate-600 mb-1.5">How to use these prompts:</p>
+        <ol className="space-y-0.5 text-[11px] text-slate-500">
+          {[
+            'Click "Generate Prompt" for a weak area.',
+            'Copy the prompt.',
+            'Go to New Exam in the sidebar.',
+            'Paste it into the exam description box.',
+            'Select SAT as the exam type and generate your practice exam.',
+          ].map((step, i) => (
+            <li key={i} className="flex gap-2">
+              <span className="shrink-0 font-bold text-slate-400">{i + 1}.</span>
+              {step}
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* Compact skill cards */}
+      <div className="p-4 space-y-2">
         {!hasMisses && (
-          <div className="bg-green-50 border border-green-100 rounded-lg p-4 text-[13px] text-green-800">
-            You did not have enough missed questions to generate a weak-area prompt. Here is a general maintenance prompt to keep your skills sharp.
-          </div>
+          <p className="text-[12px] text-slate-500 italic px-1 pb-1">
+            No significant weak areas detected — great work! Here&apos;s a maintenance prompt to keep skills sharp.
+          </p>
         )}
 
-        {prompts.map((p, i) => (
-          <div key={i} className="border border-slate-200 rounded-xl overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 bg-slate-50 border-b border-slate-200">
-              <div>
-                <p className="text-[13px] font-semibold text-slate-800">{p.title}</p>
-                <p className="text-[11px] text-slate-500 mt-0.5">{p.description}</p>
-              </div>
-              <div className="flex items-center gap-2 shrink-0 ml-4">
-                <span className={cn('text-[10px] font-semibold px-2 py-0.5 rounded-full',
-                  p.section === 'rw' ? 'bg-indigo-50 text-indigo-600' : 'bg-emerald-50 text-emerald-600'
-                )}>
-                  {p.section === 'rw' ? 'Reading & Writing' : 'Math'}
-                </span>
+        {prompts.map((p, i) => {
+          const isExpanded = expandedIdx === i
+          const isCopied = copiedIdx === i
+
+          return (
+            <div key={i} className="border border-slate-200 rounded-lg overflow-hidden">
+              {/* Compact header row */}
+              <div className="flex items-center gap-3 px-4 py-3">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap mb-0.5">
+                    <span className={cn(
+                      'text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0',
+                      p.section === 'rw' ? 'bg-indigo-50 text-indigo-600' : 'bg-emerald-50 text-emerald-700'
+                    )}>
+                      {p.section === 'rw' ? 'R&W' : 'Math'}
+                    </span>
+                    <span className="text-[13px] font-semibold text-slate-800 truncate">{p.skill}</span>
+                    {p.missCount > 0 && (
+                      <span className="text-[11px] text-slate-400 shrink-0">
+                        · Missed {p.missCount}/{p.totalCount}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-slate-500">Generate extra practice for {p.skill}.</p>
+                </div>
                 <button
-                  onClick={() => handleCopy(p.prompt, i)}
+                  onClick={() => toggleExpand(i)}
                   className={cn(
-                    'flex items-center gap-1.5 text-[12px] font-semibold px-3 py-1.5 rounded-lg border transition-all',
-                    copiedIdx === i
-                      ? 'bg-green-50 border-green-200 text-green-700'
-                      : 'bg-white border-slate-200 text-slate-700 hover:border-[#1d4ed8] hover:text-[#1d4ed8]',
+                    'shrink-0 text-[12px] font-semibold px-3 py-1.5 rounded-lg border transition-all whitespace-nowrap',
+                    isExpanded
+                      ? 'bg-slate-100 border-slate-200 text-slate-600'
+                      : 'bg-white border-slate-200 text-slate-700 hover:border-[#1d4ed8] hover:text-[#1d4ed8]'
                   )}
                 >
-                  {copiedIdx === i ? (
-                    <>
-                      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="h-3 w-3">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                      Copied!
-                    </>
-                  ) : (
-                    <>
-                      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3 w-3">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
-                      </svg>
-                      Copy Prompt
-                    </>
-                  )}
+                  {isExpanded ? 'Hide Prompt' : 'Generate Prompt'}
                 </button>
               </div>
-            </div>
-            <div className="p-4">
-              <pre className="text-[11px] text-slate-600 whitespace-pre-wrap leading-relaxed font-sans bg-slate-50 border border-slate-100 rounded-lg p-3 max-h-40 overflow-y-auto select-all">
-                {p.prompt}
-              </pre>
-            </div>
-          </div>
-        ))}
 
-        {/* How to use */}
-        <div className="bg-blue-50 border border-blue-100 rounded-xl p-4">
-          <p className="text-[12px] font-semibold text-blue-800 mb-2">How to use this on MockMate</p>
-          <ol className="space-y-1.5 text-[12px] text-blue-900">
-            <li className="flex gap-2"><span className="shrink-0 font-bold text-blue-600">1.</span> Go to the side panel and click <strong>New Exam</strong>.</li>
-            <li className="flex gap-2"><span className="shrink-0 font-bold text-blue-600">2.</span> Paste one of the prompts above into the exam description or notes box.</li>
-            <li className="flex gap-2"><span className="shrink-0 font-bold text-blue-600">3.</span> Under standardized exam targeting, select <strong>SAT</strong>.</li>
-            <li className="flex gap-2"><span className="shrink-0 font-bold text-blue-600">4.</span> Generate the exam and practice the weak skill again.</li>
-          </ol>
-        </div>
+              {/* Expanded prompt box — only visible after clicking Generate */}
+              {isExpanded && (
+                <div className="px-4 pb-4 border-t border-slate-100 pt-3 bg-slate-50">
+                  <pre className="text-[11px] text-slate-600 whitespace-pre-wrap leading-relaxed font-sans bg-white border border-slate-200 rounded-lg p-3 max-h-48 overflow-y-auto select-all mb-3">
+                    {p.prompt}
+                  </pre>
+                  <button
+                    onClick={() => handleCopy(p.prompt, i)}
+                    className={cn(
+                      'flex items-center gap-1.5 text-[12px] font-semibold px-3 py-1.5 rounded-lg border transition-all',
+                      isCopied
+                        ? 'bg-green-50 border-green-200 text-green-700'
+                        : 'bg-white border-slate-200 text-slate-700 hover:border-[#1d4ed8] hover:text-[#1d4ed8]'
+                    )}
+                  >
+                    {isCopied ? (
+                      <>
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="h-3 w-3">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Copied!
+                      </>
+                    ) : (
+                      <>
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3 w-3">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                        </svg>
+                        Copy Prompt
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
+            </div>
+          )
+        })}
       </div>
     </div>
   )
