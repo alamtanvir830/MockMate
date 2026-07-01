@@ -3,21 +3,28 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
+interface FeatureItem {
+  label: string
+  subtext?: string
+}
+
 interface UpgradeGateProps {
   title?: string
   description?: string
-  features?: string[]
+  features?: (string | FeatureItem)[]
   compact?: boolean
 }
 
+const DEFAULT_FEATURES: FeatureItem[] = [
+  { label: 'SAT Practice Test Form 2', subtext: 'Score feedback + personalized weak-area sets' },
+  { label: 'SAT Practice Test Form 3', subtext: 'Score feedback + personalized weak-area sets' },
+  { label: '300+ Question Bank questions', subtext: 'Extra targeted practice from your weak areas' },
+]
+
 export function UpgradeGate({
   title = 'Unlock the MockMate SAT Upgrade',
-  description = 'Get SAT Practice Test Form 2, SAT Practice Test Form 3, and unlimited Question Bank practice.',
-  features = [
-    'SAT Practice Test Form 2 (full adaptive exam)',
-    'SAT Practice Test Form 3 (full adaptive exam)',
-    'Unlimited Question Bank practice sets',
-  ],
+  description = 'Unlock Form 2, Form 3, and 300+ Question Bank practice questions for a one-time payment.',
+  features = DEFAULT_FEATURES,
   compact = false,
 }: UpgradeGateProps) {
   const [loading, setLoading] = useState(false)
@@ -81,15 +88,22 @@ export function UpgradeGate({
 
         {/* Features */}
         <div className="px-6 py-5">
-          <ul className="space-y-3">
-            {features.map((f, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <svg fill="none" viewBox="0 0 20 20" stroke="currentColor" strokeWidth={2.5} className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5l4 4 7.5-8" />
-                </svg>
-                <span className="text-[13px] text-slate-700">{f}</span>
-              </li>
-            ))}
+          <ul className="space-y-4">
+            {features.map((f, i) => {
+              const label = typeof f === 'string' ? f : f.label
+              const subtext = typeof f === 'string' ? undefined : f.subtext
+              return (
+                <li key={i} className="flex items-start gap-3">
+                  <svg fill="none" viewBox="0 0 20 20" stroke="currentColor" strokeWidth={2.5} className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5l4 4 7.5-8" />
+                  </svg>
+                  <div>
+                    <p className="text-[13px] font-medium text-slate-800">{label}</p>
+                    {subtext && <p className="text-[11px] text-slate-400 mt-0.5">{subtext}</p>}
+                  </div>
+                </li>
+              )
+            })}
           </ul>
         </div>
 

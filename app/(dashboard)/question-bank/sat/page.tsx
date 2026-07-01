@@ -177,12 +177,12 @@ export default function SATQuestionBankPage() {
       {/* Browse */}
       {!entitlementLoading && !satUpgradeUnlocked && browseSets >= FREE_QB_LIMIT ? (
         <UpgradeGate
-          title="Unlock Unlimited Question Bank Practice"
-          description={`You've used your ${FREE_QB_LIMIT} free practice sets. Upgrade to practice as much as you need.`}
+          title="Unlock 300+ Question Bank Practice Questions"
+          description={`You've used your ${FREE_QB_LIMIT} free practice sets. Upgrade to access all 300+ questions.`}
           features={[
-            'Unlimited Question Bank practice sets',
-            'SAT Practice Test Form 2 (full adaptive exam)',
-            'SAT Practice Test Form 3 (full adaptive exam)',
+            { label: '300+ Question Bank questions', subtext: 'Extra targeted practice from your weak areas' },
+            { label: 'SAT Practice Test Form 2', subtext: 'Score feedback + personalized weak-area sets' },
+            { label: 'SAT Practice Test Form 3', subtext: 'Score feedback + personalized weak-area sets' },
           ]}
           compact
         />

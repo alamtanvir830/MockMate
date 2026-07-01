@@ -26,7 +26,7 @@ export default async function BillingPage() {
             <p className="text-[12px] text-slate-400 mt-1">Unlocked on {unlockedDate}</p>
           )}
           <p className="mt-3 text-[13px] text-slate-500 max-w-xs mx-auto leading-relaxed">
-            You have access to SAT Form 2, SAT Form 3, and unlimited Question Bank practice.
+            You have access to SAT Form 2, SAT Form 3, and 300+ Question Bank practice questions.
           </p>
           <div className="mt-6 space-y-2.5">
             <Link
