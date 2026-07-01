@@ -180,9 +180,9 @@ export default function SATQuestionBankPage() {
           title="Unlock 300+ Question Bank Practice Questions"
           description={`You've used your ${FREE_QB_LIMIT} free practice sets. Upgrade to access all 300+ questions.`}
           features={[
-            { label: '300+ Question Bank questions', subtext: 'Extra targeted practice from your weak areas' },
-            { label: 'SAT Practice Test Form 2', subtext: 'Score feedback + personalized weak-area sets' },
-            { label: 'SAT Practice Test Form 3', subtext: 'Score feedback + personalized weak-area sets' },
+            { label: '300+ Question Bank questions', subtext: 'Extra targeted practice built from your weak areas' },
+            { label: 'SAT Practice Test Form 2', subtext: 'Score feedback + personalized weak-area question sets from Q-Bank' },
+            { label: 'SAT Practice Test Form 3', subtext: 'Score feedback + personalized weak-area question sets from Q-Bank' },
           ]}
           compact
         />

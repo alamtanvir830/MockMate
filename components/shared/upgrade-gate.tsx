@@ -16,9 +16,9 @@ interface UpgradeGateProps {
 }
 
 const DEFAULT_FEATURES: FeatureItem[] = [
-  { label: 'SAT Practice Test Form 2', subtext: 'Score feedback + personalized weak-area sets' },
-  { label: 'SAT Practice Test Form 3', subtext: 'Score feedback + personalized weak-area sets' },
-  { label: '300+ Question Bank questions', subtext: 'Extra targeted practice from your weak areas' },
+  { label: 'SAT Practice Test Form 2', subtext: 'Score feedback + personalized weak-area question sets from Q-Bank' },
+  { label: 'SAT Practice Test Form 3', subtext: 'Score feedback + personalized weak-area question sets from Q-Bank' },
+  { label: '300+ Question Bank questions', subtext: 'Extra targeted practice built from your weak areas' },
 ]
 
 export function UpgradeGate({
