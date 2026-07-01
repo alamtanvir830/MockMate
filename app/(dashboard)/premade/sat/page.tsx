@@ -9,8 +9,10 @@ export default function SATPremadePage() {
         <span className="text-slate-900 font-medium">SAT</span>
       </div>
 
-      <h1 className="text-2xl font-bold text-slate-900 mb-1">SAT Practice Forms</h1>
-      <p className="text-slate-500 mb-8">Full-length adaptive practice tests — two RW modules + two Math modules.</p>
+      <h1 className="text-2xl font-bold text-slate-900 mb-2">SAT Practice Forms</h1>
+      <p className="text-slate-500 text-sm leading-relaxed mb-8 max-w-2xl">
+        Each full-length adaptive SAT-style exam includes 98 questions across Reading and Writing and Math, with 2 hours and 14 minutes of timed practice. After you finish, MockMate instantly generates your estimated score report, AI feedback, weak-area breakdown, and targeted practice sets from the Question Bank.
+      </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Form 1 — active */}
@@ -24,7 +26,7 @@ export default function SATPremadePage() {
           <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-1">
             Form 1
           </h2>
-          <p className="text-xs text-slate-500">RW + Math · 2 hr 14 min · 400–1600</p>
+          <p className="text-xs text-slate-500">Reading &amp; Writing + Math · 98 questions · 2 hr 14 min · 400–1600</p>
         </Link>
 
         {/* Form 2 — active */}
@@ -38,7 +40,7 @@ export default function SATPremadePage() {
           <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-1">
             Form 2
           </h2>
-          <p className="text-xs text-slate-500">RW + Math · 2 hr 14 min · 400–1600</p>
+          <p className="text-xs text-slate-500">Reading &amp; Writing + Math · 98 questions · 2 hr 14 min · 400–1600</p>
         </Link>
 
         {/* Form 3 — active */}
@@ -52,7 +54,7 @@ export default function SATPremadePage() {
           <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-1">
             Form 3
           </h2>
-          <p className="text-xs text-slate-500">RW + Math · 2 hr 14 min · 400–1600</p>
+          <p className="text-xs text-slate-500">Reading &amp; Writing + Math · 98 questions · 2 hr 14 min · 400–1600</p>
         </Link>
       </div>
     </div>
