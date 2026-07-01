@@ -182,7 +182,7 @@ export default function SATQuestionBankPage() {
           features={[
             'Unlimited Question Bank practice sets',
             'SAT Practice Test Form 2 (full adaptive exam)',
-            'Full question-by-question review for Form 1',
+            'SAT Practice Test Form 3 (full adaptive exam)',
           ]}
           compact
         />

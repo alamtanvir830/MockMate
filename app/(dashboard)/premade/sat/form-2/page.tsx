@@ -9,11 +9,11 @@ export default async function SATForm2Page() {
     return (
       <UpgradeGate
         title="SAT Practice Test Form 2 — Locked"
-        description="Unlock Form 2, unlimited Question Bank practice, and full Form 1 review for a one-time payment."
+        description="Unlock Form 2, Form 3, and unlimited Question Bank practice for a one-time payment."
         features={[
           'SAT Practice Test Form 2 (full adaptive exam)',
+          'SAT Practice Test Form 3 (full adaptive exam)',
           'Unlimited Question Bank practice sets',
-          'Full question-by-question review for Form 1',
         ]}
       />
     )

@@ -26,7 +26,7 @@ export default async function BillingPage() {
             <p className="text-[12px] text-slate-400 mt-1">Unlocked on {unlockedDate}</p>
           )}
           <p className="mt-3 text-[13px] text-slate-500 max-w-xs mx-auto leading-relaxed">
-            You have access to SAT Form 2, unlimited Question Bank practice, and full Form 1 review.
+            You have access to SAT Form 2, SAT Form 3, and unlimited Question Bank practice.
           </p>
           <div className="mt-6 space-y-2.5">
             <Link
@@ -34,6 +34,12 @@ export default async function BillingPage() {
               className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
             >
               Go to SAT Form 2
+            </Link>
+            <Link
+              href="/premade/sat/form-3"
+              className="block w-full border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
+            >
+              Go to SAT Form 3
             </Link>
             <Link
               href="/question-bank/sat"

@@ -12,11 +12,11 @@ interface UpgradeGateProps {
 
 export function UpgradeGate({
   title = 'Unlock the MockMate SAT Upgrade',
-  description = 'Get SAT Practice Test Form 2, unlimited Question Bank practice, and full Form 1 review access.',
+  description = 'Get SAT Practice Test Form 2, SAT Practice Test Form 3, and unlimited Question Bank practice.',
   features = [
     'SAT Practice Test Form 2 (full adaptive exam)',
+    'SAT Practice Test Form 3 (full adaptive exam)',
     'Unlimited Question Bank practice sets',
-    'Full question-by-question review for Form 1',
   ],
   compact = false,
 }: UpgradeGateProps) {
