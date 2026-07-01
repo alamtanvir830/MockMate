@@ -143,32 +143,48 @@ export default function SATQuestionBankPage() {
                 : `${satAttempts.length} completed SAT exams found. Choose one to start targeted practice.`}
             </p>
             <div className="space-y-2">
-              {satAttempts.map((attempt, i) => {
-                const date = new Date(attempt.completedAt).toLocaleDateString('en-US', {
-                  month: 'short', day: 'numeric', year: 'numeric',
-                })
-                return (
-                  <div
-                    key={attempt.id}
-                    className="flex items-center justify-between bg-white/10 rounded-lg px-4 py-3 gap-4"
-                  >
-                    <div>
-                      <p className="text-[13px] font-semibold text-white">
-                        SAT Attempt {satAttempts.length - i} — {date}
-                      </p>
-                      <p className="text-[11px] text-indigo-200">
-                        {attempt.totalScore} total · {attempt.rwScaled} R&amp;W · {attempt.mathScaled} Math
-                      </p>
-                    </div>
-                    <Link
-                      href={`/question-bank/sat/personalized/${attempt.id}`}
-                      className="shrink-0 bg-white text-indigo-700 font-semibold text-[12px] px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors whitespace-nowrap"
+              {(() => {
+                const formTotals = satAttempts.reduce<Record<string, number>>((acc, a) => {
+                  acc[a.examId] = (acc[a.examId] ?? 0) + 1
+                  return acc
+                }, {})
+                const formCountSeen: Record<string, number> = {}
+                return satAttempts.map((attempt) => {
+                  formCountSeen[attempt.examId] = (formCountSeen[attempt.examId] ?? 0) + 1
+                  const attemptNum = formTotals[attempt.examId] - formCountSeen[attempt.examId] + 1
+                  const formNum =
+                    attempt.examId === 'sat-form-1' ? '1' :
+                    attempt.examId === 'sat-form-2' ? '2' :
+                    attempt.examId === 'sat-form-3' ? '3' : ''
+                  const label = formNum
+                    ? `SAT Form ${formNum} Attempt ${attemptNum}`
+                    : `SAT Attempt ${attemptNum}`
+                  const date = new Date(attempt.completedAt).toLocaleDateString('en-US', {
+                    month: 'short', day: 'numeric', year: 'numeric',
+                  })
+                  return (
+                    <div
+                      key={attempt.id}
+                      className="flex items-center justify-between bg-white/10 rounded-lg px-4 py-3 gap-4"
                     >
-                      View practice sets
-                    </Link>
-                  </div>
-                )
-              })}
+                      <div>
+                        <p className="text-[13px] font-semibold text-white">
+                          {label} — {date}
+                        </p>
+                        <p className="text-[11px] text-indigo-200">
+                          {attempt.totalScore} total · {attempt.rwScaled} R&amp;W · {attempt.mathScaled} Math
+                        </p>
+                      </div>
+                      <Link
+                        href={`/question-bank/sat/personalized/${attempt.id}`}
+                        className="shrink-0 bg-white text-indigo-700 font-semibold text-[12px] px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors whitespace-nowrap"
+                      >
+                        View practice sets
+                      </Link>
+                    </div>
+                  )
+                })
+              })()}
             </div>
           </>
         )}
