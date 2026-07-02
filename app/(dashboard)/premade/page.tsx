@@ -38,6 +38,19 @@ export default function PremadeExamsPage() {
             Specialized High Schools Admissions Test practice forms.
           </p>
         </Link>
+        {/* MCAT — active */}
+        <Link
+          href="/premade/mcat"
+          className="relative rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group"
+        >
+          <div className="h-10 w-10 rounded-lg bg-indigo-50 flex items-center justify-center mb-4">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 text-indigo-500">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15m-8.05 0a2.25 2.25 0 01.659 1.591v4.155M19.8 15a2.25 2.25 0 01.659-1.591l-5.108-5.108A2.25 2.25 0 0014.25 7.5m5.55 7.5a2.25 2.25 0 01-.659 1.591v4.155m-9.141 0H9a2.25 2.25 0 01-2.25-2.25V15m0 0a2.25 2.25 0 00-.659-1.591L2.2 9.1" />
+            </svg>
+          </div>
+          <h2 className="text-lg font-semibold text-slate-900 mb-1 group-hover:text-indigo-700 transition-colors">MCAT</h2>
+          <p className="text-sm text-slate-500">Full-length practice forms · 472–528 score estimate.</p>
+        </Link>
       </div>
     </div>
   )
