@@ -115,7 +115,7 @@ export default function MCATPage() {
           </div>
           <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-3">Form 1</h2>
           <ul className="space-y-1.5 mt-auto">
-            {['4 sections', '230 questions (Phase 1: 80)', '6 hr 15 min', '472–528 score range'].map(d => (
+            {['4 sections', '230 questions', '6 hr 15 min', '472–528 score range'].map(d => (
               <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
                 <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />
                 {d}

@@ -636,14 +636,6 @@ function WelcomeScreen({ form, flatSections, onStart }: {
             })}
           </div>
 
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
-            <p className="text-xs font-semibold text-amber-700 uppercase tracking-widest mb-1">Phase 1 Notice</p>
-            <p className="text-sm text-amber-800">
-              This exam currently contains <strong>{totalSeeded} seeded questions</strong> (of {form.totalQuestions} in the full exam).
-              Full 230-question content will be added in Phase 2. Timers reflect full exam duration.
-            </p>
-          </div>
-
           <div className="space-y-2 mb-6">
             {form.sections.map((sec, i) => (
               <div key={sec.id} className="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
