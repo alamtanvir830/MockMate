@@ -161,16 +161,16 @@ export const f2MathModule2HardQuestions: MathQuestion[] = [
     question: 'Which expression is equivalent to (x² − 9)/(x + 3) for x ≠ −3?',
     choices: [
       { label: 'A', text: 'x + 3' },
-      { label: 'B', text: 'x − 3' },
+      { label: 'B', text: '(x − 3)/3' },
       { label: 'C', text: 'x² − 3' },
-      { label: 'D', text: '(x − 3)/3' },
+      { label: 'D', text: 'x − 3' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation: 'Factor the numerator: x² − 9 = (x + 3)(x − 3). Cancel the common factor (x + 3): (x + 3)(x − 3)/(x + 3) = x − 3.',
     wrongAnswerExplanations: {
       A: 'x + 3 would be the result of canceling (x − 3) from a different expression.',
       C: 'x² − 3 cannot be obtained by canceling a factor from (x² − 9)/(x + 3).',
-      D: '(x − 3)/3 would only result if the denominator were 3, not (x + 3).',
+      B: '(x − 3)/3 would only result if the denominator were 3, not (x + 3).',
     },
   },
   {
@@ -185,15 +185,15 @@ export const f2MathModule2HardQuestions: MathQuestion[] = [
     choices: [
       { label: 'A', text: '52,000' },
       { label: 'B', text: '54,000' },
-      { label: 'C', text: '56,243' },
-      { label: 'D', text: '62,000' },
+      { label: 'C', text: '62,000' },
+      { label: 'D', text: '56,243' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'D',
     explanation: 'P(3) = 50,000 × (1.04)³ = 50,000 × 1.124864 ≈ 56,243.',
     wrongAnswerExplanations: {
       A: '52,000 ≈ 50,000 × 1.04 uses only one year of growth instead of three.',
       B: '54,000 ≈ 50,000 × 1.08 uses simple interest instead of compound growth.',
-      D: '62,000 would require (1.04)^t ≈ 1.24, which corresponds to t ≈ 5.5 years.',
+      C: '62,000 would require (1.04)^t ≈ 1.24, which corresponds to t ≈ 5.5 years.',
     },
   },
   {
@@ -289,15 +289,15 @@ export const f2MathModule2HardQuestions: MathQuestion[] = [
     choices: [
       { label: 'A', text: '6' },
       { label: 'B', text: '7' },
-      { label: 'C', text: '9' },
-      { label: 'D', text: '16' },
+      { label: 'C', text: '16' },
+      { label: 'D', text: '9' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'D',
     explanation: 'The data has 7 values. Median = 8 (4th value). Lower half: {2, 5, 7} → Q1 = 5. Upper half: {11, 14, 18} → Q3 = 14. IQR = Q3 − Q1 = 14 − 5 = 9.',
     wrongAnswerExplanations: {
       A: '14 − 8 = 6 uses the median instead of Q1 as the lower quartile.',
       B: '7 is the third value in the data set, not the IQR.',
-      D: '18 − 2 = 16 is the full range of the data, not the interquartile range.',
+      C: '18 − 2 = 16 is the full range of the data, not the interquartile range.',
     },
   },
   {
@@ -357,16 +357,16 @@ export const f2MathModule2HardQuestions: MathQuestion[] = [
     question: 'The graph shows two lines in the xy-plane. What is the sum of the x-coordinate and y-coordinate of the point where the two lines intersect?',
     choices: [
       { label: 'A', text: '5' },
-      { label: 'B', text: '7' },
+      { label: 'B', text: '10' },
       { label: 'C', text: '9' },
-      { label: 'D', text: '10' },
+      { label: 'D', text: '7' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation: 'Set equal: 2x + 1 = −x + 7 → 3x = 6 → x = 2. Then y = 2(2) + 1 = 5. Intersection is (2, 5). Sum = 2 + 5 = 7.',
     wrongAnswerExplanations: {
       A: '5 is the y-coordinate of the intersection, not the sum.',
       C: '9 would require the intersection at (4, 5) or similar, but 2x + 1 at x = 4 is 9, not 5.',
-      D: '10 would require the x + y = 10, e.g. (3, 7), but the lines intersect at (2, 5).',
+      B: '10 would require the x + y = 10, e.g. (3, 7), but the lines intersect at (2, 5).',
     },
   },
   {

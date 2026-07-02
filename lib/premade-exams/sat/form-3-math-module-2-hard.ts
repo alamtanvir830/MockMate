@@ -267,17 +267,17 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
     type: 'multiple_choice',
     question: 'A population of bacteria doubles every 3 hours. If there are initially 500 bacteria, which function gives the number of bacteria N after t hours?',
     choices: [
-      { label: 'A', text: 'N = 500 · 2^(t/3)' },
+      { label: 'A', text: 'N = 500 + 2t/3' },
       { label: 'B', text: 'N = 500 · 2^(3t)' },
       { label: 'C', text: 'N = 500 · 3^(t/2)' },
-      { label: 'D', text: 'N = 500 + 2t/3' },
+      { label: 'D', text: 'N = 500 · 2^(t/3)' },
     ],
-    correctAnswer: 'A',
+    correctAnswer: 'D',
     explanation: 'After every 3 hours, the count doubles. After t hours, there are t/3 doubling periods. So N = 500 · 2^(t/3). Check: at t = 3, N = 500 · 2¹ = 1000 ✓.',
     wrongAnswerExplanations: {
       B: 'N = 500 · 2^(3t) would double 3 times per hour, not once per 3 hours.',
       C: 'Using base 3 instead of 2 contradicts "doubles."',
-      D: 'This is a linear model, not exponential; populations multiplying cannot be modeled linearly.',
+      A: 'This is a linear model, not exponential; populations multiplying cannot be modeled linearly.',
     },
   },
   {
@@ -292,15 +292,15 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
     choices: [
       { label: 'A', text: 'Zero' },
       { label: 'B', text: 'One' },
-      { label: 'C', text: 'Two' },
-      { label: 'D', text: 'Three' },
+      { label: 'C', text: 'Three' },
+      { label: 'D', text: 'Two' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'D',
     explanation: 'Substitute y = 2x + 1 into x² + y = 10: x² + 2x + 1 = 10 → x² + 2x − 9 = 0. Discriminant = 4 + 36 = 40 > 0, so there are two real solutions.',
     wrongAnswerExplanations: {
       A: 'Zero solutions would require a negative discriminant; here Δ = 40 > 0.',
       B: 'One solution would require Δ = 0; here Δ = 40.',
-      D: 'A quadratic can have at most two real solutions.',
+      C: 'A quadratic can have at most two real solutions.',
     },
   },
   {
@@ -315,15 +315,15 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
     choices: [
       { label: 'A', text: '2x²/y²' },
       { label: 'B', text: '2x²y⁻²' },
-      { label: 'C', text: '2x⁴/y²' },
-      { label: 'D', text: '8x⁴/y²' },
+      { label: 'C', text: '8x⁴/y²' },
+      { label: 'D', text: '2x⁴/y²' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'D',
     explanation: '(4x³y²)/(2x⁻¹y⁴) = (4/2) · x^(3−(−1)) · y^(2−4) = 2 · x⁴ · y⁻² = 2x⁴/y².',
     wrongAnswerExplanations: {
       A: 'x exponent: 3 − (−1) = 4, not 2.',
       B: '2x²y⁻² = 2x²/y²; the x exponent is wrong (should be 4, not 2).',
-      D: '4/2 = 2, not 8.',
+      C: '4/2 = 2, not 8.',
     },
   },
 
@@ -363,15 +363,15 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
     choices: [
       { label: 'A', text: '1/5' },
       { label: 'B', text: '1/3' },
-      { label: 'C', text: '1/2' },
-      { label: 'D', text: '2/3' },
+      { label: 'C', text: '2/3' },
+      { label: 'D', text: '1/2' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'D',
     explanation: 'P(sport | instrument) = P(sport AND instrument) / P(instrument) = (40/200) / (80/200) = 40/80 = 1/2.',
     wrongAnswerExplanations: {
       A: '40/200 = 1/5 is P(both), not the conditional probability.',
       B: '1/3 is not derived from correct conditional probability formula here.',
-      D: '2/3 would be obtained by dividing incorrectly: 40/60 — but 60 is not a relevant quantity.',
+      C: '2/3 would be obtained by dividing incorrectly: 40/60 — but 60 is not a relevant quantity.',
     },
   },
   {
@@ -386,15 +386,15 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
     choices: [
       { label: 'A', text: 'It is certain that the majority of all registered voters support the measure' },
       { label: 'B', text: 'The true population support is definitely between 54% and 62%' },
-      { label: 'C', text: 'There is 95% confidence that the true population support is between 54% and 62%' },
-      { label: 'D', text: 'Exactly 58% of all registered voters support the measure' },
+      { label: 'C', text: 'Exactly 58% of all registered voters support the measure' },
+      { label: 'D', text: 'There is 95% confidence that the true population support is between 54% and 62%' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'D',
     explanation: 'A 95% confidence interval means that if many samples were drawn, 95% of the resulting confidence intervals would contain the true population value. The interval 54%–62% represents this range, not a certainty.',
     wrongAnswerExplanations: {
       A: '"Certain" overstates the conclusion; statistics provide confidence levels, not certainties.',
       B: '"Definitely" overstates statistical inference; confidence intervals provide probabilistic, not guaranteed, ranges.',
-      D: 'The sample result is 58%; the true population parameter is unknown and is being estimated, not confirmed.',
+      C: 'The sample result is 58%; the true population parameter is unknown and is being estimated, not confirmed.',
     },
   },
   {

@@ -151,16 +151,16 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     question: 'Based on the two texts, which of the following best characterizes the relationship between rational choice theory (Text 1) and behavioral economics (Text 2)?',
     choices: [
       { label: 'A', text: 'Text 2 confirms the predictions of rational choice theory using experimental methods that Text 1 lacked' },
-      { label: 'B', text: 'Text 2 presents empirical evidence that human decision-making regularly violates the assumptions of Text 1\'s framework' },
+      { label: 'B', text: 'Text 2 applies rational choice theory to criminal behavior, extending the argument Text 1 begins' },
       { label: 'C', text: 'Text 2 agrees with Text 1 that incentive structures shape behavior but disputes the method of calculating expected utility' },
-      { label: 'D', text: 'Text 2 applies rational choice theory to criminal behavior, extending the argument Text 1 begins' },
+      { label: 'D', text: 'Text 2 presents empirical evidence that human decision-making regularly violates the assumptions of Text 1\'s framework' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation: 'Text 2 explicitly states that human decision-making "systematically deviates from the predictions of rational choice theory" — directly challenging the foundational assumptions described in Text 1.',
     wrongAnswerExplanations: {
       A: 'Text 2 refutes rational choice theory; it does not confirm it.',
       C: 'Text 2 does not simply dispute the calculation method — it challenges the core assumption that people maximize utility at all.',
-      D: 'Text 2 does not apply rational choice theory; it challenges it with contradicting evidence about behavior.',
+      B: 'Text 2 does not apply rational choice theory; it challenges it with contradicting evidence about behavior.',
     },
   },
   {
@@ -197,16 +197,16 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     question: 'What is the most accurate summary of the passage?',
     choices: [
       { label: 'A', text: 'The Younger Dryas was a prehistoric warming event that caused the extinction of large mammals' },
-      { label: 'B', text: 'The Younger Dryas was a rapid cooling period roughly 12,000 years ago, linked to oceanic circulation disruption, whose effects included societal collapse and megafaunal extinction' },
+      { label: 'B', text: 'Scientists are uncertain about the cause of the Younger Dryas and have proposed many competing theories without reaching consensus' },
       { label: 'C', text: 'Modern climate change is occurring at a faster rate than the Younger Dryas and poses greater risks to human civilization' },
-      { label: 'D', text: 'Scientists are uncertain about the cause of the Younger Dryas and have proposed many competing theories without reaching consensus' },
+      { label: 'D', text: 'The Younger Dryas was a rapid cooling period roughly 12,000 years ago, linked to oceanic circulation disruption, whose effects included societal collapse and megafaunal extinction' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation: 'The passage describes the Younger Dryas as a rapid cooling period (not warming), identifies its cause as disrupted thermohaline circulation, and links it to civilizational collapse and megafaunal extinction. Choice B accurately synthesizes all these elements.',
     wrongAnswerExplanations: {
       A: 'The passage describes a cooling event, not a warming event.',
       C: 'The passage makes no comparison between the Younger Dryas and modern climate change.',
-      D: 'The passage explicitly states the "most widely accepted explanation," indicating scientific consensus, not uncertainty.',
+      B: 'The passage explicitly states the "most widely accepted explanation," indicating scientific consensus, not uncertainty.',
     },
   },
   {
@@ -358,16 +358,16 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     question: 'What can be most reasonably inferred from Oreskes\' analysis about why paradigm-challenging ideas are sometimes delayed in gaining acceptance?',
     choices: [
       { label: 'A', text: 'Scientists who propose new ideas often lack the intellectual capacity to defend them against criticism' },
-      { label: 'B', text: 'The acceptance of scientific ideas depends not only on the quality of evidence but also on social and institutional factors that can slow or accelerate recognition' },
+      { label: 'B', text: 'Accurate scientific ideas always eventually gain acceptance once sufficient evidence accumulates, regardless of institutional context' },
       { label: 'C', text: 'Scientific journals are primarily responsible for preventing new ideas from gaining acceptance' },
-      { label: 'D', text: 'Accurate scientific ideas always eventually gain acceptance once sufficient evidence accumulates, regardless of institutional context' },
+      { label: 'D', text: 'The acceptance of scientific ideas depends not only on the quality of evidence but also on social and institutional factors that can slow or accelerate recognition' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation: 'Oreskes\' argument is that scientific consensus is a social phenomenon shaped by institutions, funding, and ideology — not just evidence. The inference is that social and institutional factors, beyond evidence quality, determine whether ideas gain acceptance and how quickly.',
     wrongAnswerExplanations: {
       A: 'Oreskes attributes delays to institutional barriers, not to scientists\' intellectual limitations.',
       C: 'Oreskes mentions journals as one factor among several — prestige, funding, and institutional support are equally cited.',
-      D: 'Oreskes\' analysis implies that institutional support is necessary, suggesting that evidence alone is insufficient — contradicting this claim.',
+      B: 'Oreskes\' analysis implies that institutional support is necessary, suggesting that evidence alone is insufficient — contradicting this claim.',
     },
   },
   {

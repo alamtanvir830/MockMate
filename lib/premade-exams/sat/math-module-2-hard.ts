@@ -42,16 +42,16 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     question: 'Line p passes through the point (−2, 7) and is perpendicular to the line y = (1/3)x + 4. What is the equation of line p?',
     choices: [
       { label: 'A', text: 'y = 3x + 13' },
-      { label: 'B', text: 'y = −3x + 1' },
+      { label: 'B', text: 'y = −3x − 1' },
       { label: 'C', text: 'y = (1/3)x + 23/3' },
-      { label: 'D', text: 'y = −3x − 1' },
+      { label: 'D', text: 'y = −3x + 1' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation: 'The slope of y = (1/3)x + 4 is 1/3. A perpendicular slope is −1/(1/3) = −3. Using point (−2, 7): y − 7 = −3(x + 2) → y = −3x − 6 + 7 → y = −3x + 1.',
     wrongAnswerExplanations: {
       A: 'Slope +3 is the reciprocal without flipping the sign — this line is not perpendicular.',
       C: 'Same slope as the original — this is the parallel line through (−2, 7), not perpendicular.',
-      D: 'Correct slope −3, but wrong y-intercept: at x = −2, y = −3(−2) − 1 = 5 ≠ 7.',
+      B: 'Correct slope −3, but wrong y-intercept: at x = −2, y = −3(−2) − 1 = 5 ≠ 7.',
     },
   },
 
@@ -67,15 +67,15 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     choices: [
       { label: 'A', text: '150' },
       { label: 'B', text: '200' },
-      { label: 'C', text: '300' },
-      { label: 'D', text: '400' },
+      { label: 'C', text: '400' },
+      { label: 'D', text: '300' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'D',
     explanation: 'Set R = C: 0.12n = 0.08n + 12 → 0.04n = 12 → n = 300.',
     wrongAnswerExplanations: {
       A: 'At n = 150: R = 18, C = 12 + 12 = 24. Revenue < Cost — still losing money.',
       B: 'At n = 200: R = 24, C = 16 + 12 = 28. Still not break-even.',
-      D: 'At n = 400: R = 48, C = 32 + 12 = 44. Already profitable — break-even passed.',
+      C: 'At n = 400: R = 48, C = 32 + 12 = 44. Already profitable — break-even passed.',
     },
   },
 
@@ -241,16 +241,16 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     question: 'Which of the following is equivalent to (2x³y²)(3x²y)?',
     choices: [
       { label: 'A', text: '5x⁵y³' },
-      { label: 'B', text: '6x⁵y³' },
+      { label: 'B', text: '6x⁵y²' },
       { label: 'C', text: '6x⁶y²' },
-      { label: 'D', text: '6x⁵y²' },
+      { label: 'D', text: '6x⁵y³' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation: 'Multiply coefficients: 2 × 3 = 6. Add exponents: x³ · x² = x⁵; y² · y¹ = y³. Result: 6x⁵y³.',
     wrongAnswerExplanations: {
       A: 'This adds the coefficients (2 + 3 = 5) instead of multiplying.',
       C: 'This multiplies the x-exponents (3 × 2 = 6) instead of adding.',
-      D: 'Correct x-exponent but wrong y-exponent: y² · y = y³, not y².',
+      B: 'Correct x-exponent but wrong y-exponent: y² · y = y³, not y².',
     },
   },
 
@@ -346,16 +346,16 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     question: 'What is the correct mean score after fixing the error?',
     choices: [
       { label: 'A', text: '75.65' },
-      { label: 'B', text: '76.65' },
+      { label: 'B', text: '78.35' },
       { label: 'C', text: '77.65' },
-      { label: 'D', text: '78.35' },
+      { label: 'D', text: '76.65' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation: 'Original total = 78 × 20 = 1,560. The recorded score (85) should be 58, so the sum decreases by 85 − 58 = 27. Correct total = 1,560 − 27 = 1,533. Correct mean = 1,533 ÷ 20 = 76.65.',
     wrongAnswerExplanations: {
       A: 'Incorrectly reduces the mean by (85 + 58)/2 ÷ 20 rather than 27/20.',
       C: 'Uses the wrong difference — perhaps subtracting only part of the error.',
-      D: 'Adds the error rather than subtracting it from the total.',
+      B: 'Adds the error rather than subtracting it from the total.',
     },
   },
 
