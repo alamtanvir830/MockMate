@@ -821,11 +821,19 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
           )}
         </div>
 
-        {/* PPP placeholder */}
-        <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-5 mb-6">
-          <p className="text-xs font-semibold text-indigo-700 uppercase tracking-widest mb-2">Personalized MCAT Practice Path</p>
-          <p className="text-sm text-slate-700 mb-2">Your score report identifies the MCAT content areas and reasoning skills you missed most. MockMate can use these to build targeted practice sets.</p>
-          <p className="text-sm text-indigo-600 font-medium">MCAT Question Bank — coming soon.</p>
+        {/* MCAT Question Bank link */}
+        <div className="bg-teal-50 border border-teal-100 rounded-xl p-5 mb-6">
+          <p className="text-xs font-semibold text-teal-700 uppercase tracking-widest mb-2">MCAT Question Bank</p>
+          <p className="text-sm text-slate-700 mb-3">Practice targeted MCAT questions based on the sections, content categories, and scientific reasoning skills you missed most.</p>
+          <a
+            href="/question-bank/mcat"
+            className="inline-flex items-center gap-1.5 bg-teal-600 hover:bg-teal-700 text-white font-semibold text-[13px] px-4 py-2 rounded-lg transition-colors"
+          >
+            Start MCAT Practice
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
         </div>
 
         {/* Section tabs for answer key */}

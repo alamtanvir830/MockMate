@@ -46,19 +46,28 @@ export default function QuestionBankPage() {
           <p className="text-sm text-slate-400">SHSAT practice questions across all scrambled paragraphs, logical reasoning, and math skills.</p>
         </div>
 
-        {/* MCAT — coming soon */}
-        <div className="relative rounded-xl border border-slate-200 bg-slate-50 p-6 opacity-70">
-          <div className="h-10 w-10 rounded-lg bg-slate-100 flex items-center justify-center mb-4">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 text-slate-400">
+        {/* MCAT — active */}
+        <Link
+          href="/question-bank/mcat"
+          className="relative rounded-xl border border-teal-200 bg-white p-6 hover:border-teal-400 hover:shadow-sm transition-all group"
+        >
+          <div className="h-10 w-10 rounded-lg bg-teal-50 flex items-center justify-center mb-4">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 text-teal-500">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
             </svg>
           </div>
           <div className="flex items-start justify-between mb-1">
-            <h2 className="text-lg font-semibold text-slate-600">MCAT</h2>
-            <span className="text-[11px] font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">Coming soon</span>
+            <h2 className="text-lg font-semibold text-slate-900 group-hover:text-teal-700 transition-colors">MCAT</h2>
+            <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">Available</span>
           </div>
-          <p className="text-sm text-slate-400">MCAT question bank covering biochemistry, psychology, critical analysis, and more.</p>
-        </div>
+          <p className="text-sm text-slate-500 mb-4">Practice targeted MCAT questions by section, discipline, content area, and reasoning skill.</p>
+          <span className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-teal-600 group-hover:text-teal-700">
+            Open MCAT Question Bank
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </span>
+        </Link>
       </div>
 
       {/* Info footer */}
