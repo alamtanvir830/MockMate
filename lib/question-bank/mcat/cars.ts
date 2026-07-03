@@ -780,4 +780,358 @@ Defenders of scientific rationality were quick to object. Karl Popper had argued
     teachingPoint: 'Main idea summaries for multi-position passages should capture all major views discussed and characterize the author\'s overall stance. If the author presents multiple positions without resolving them, the main idea is "surveying an open debate," not "endorsing one position." Watch for choices that overstate the author\'s commitment to any single view.',
     relatedTopics: ['Main idea', 'Summary questions', 'Multi-position passages', 'Philosophy of science'],
   },
+
+  // ── Passage 5: Ethics and Obligations to Future Generations (Q023–Q027) ─────
+  {
+    id: 'mcat-qb-cars-023',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics',
+    contentCategory: '9A: Social structures',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The most familiar moral obligations are those between contemporaries. We owe things to our neighbors, our colleagues, our fellow citizens — people who exist alongside us in time and whose interests can be advanced or harmed by our choices. But recent philosophical work has pressed the question of whether we also bear obligations to people who do not yet exist: the billions who will inhabit the Earth in coming centuries.
+
+The practical stakes are substantial. Climate policy, infrastructure investment, and the management of long-lived nuclear waste all require decisions whose most significant consequences will be felt by future generations. Yet the philosophical foundations for our obligations to those generations are surprisingly contested.
+
+The central difficulty is what the philosopher Derek Parfit called the non-identity problem. Suppose a government chooses between two energy policies: Policy A, which is cheap but releases long-term environmental pollutants, and Policy B, which is expensive but clean. If Policy A is adopted, a particular sequence of social and economic events follows — certain people meet, marry, and have children — and the specific individuals who will eventually suffer Policy A's environmental costs would not have existed had Policy B been adopted instead. How, then, can those future individuals have been wronged by Policy A? The alternative for them was not a better life under Policy B but non-existence. It is difficult to maintain that someone has been harmed when the only alternative to their degraded life is never having lived at all.
+
+Some philosophers find this argument paralyzing. If accepted, it appears to dissolve much of the moral basis for long-term environmental protection: provided a harmful policy still permits lives worth living, the future people affected cannot coherently claim to have been made worse off. Others resist this conclusion by shifting from person-affecting principles — which require that an action harm a specific identifiable individual to count as wrong — to impersonal principles that assess outcomes by their total or average quality of life across all people who will ever live, regardless of which specific individuals exist.
+
+A third group argues that even if the non-identity problem creates difficulties for harm-based frameworks, it does not dissolve all obligations. Rights-based theorists hold that future persons — whatever the causal history of their existence — will possess human dignity and entitlements that bind present-day actors. These rights arise not from a comparison between actual and counterfactual lives but from what it means to be a human person.`,
+    question: 'Which of the following best captures the main argument of the passage?',
+    choices: [
+      { label: 'A', text: 'The non-identity problem demonstrates that future generations cannot be harmed by current environmental policy and therefore have no moral standing.' },
+      { label: 'B', text: 'Rights-based frameworks are the most philosophically defensible approach to intergenerational obligations because they bypass the difficulties of harm-based accounts.' },
+      { label: 'C', text: 'The passage explores how the non-identity problem challenges standard harm-based accounts of obligations to future people, and surveys philosophical responses including impersonal welfare and rights-based approaches.' },
+      { label: 'D', text: 'Practical environmental decisions require abandoning philosophical analysis and relying solely on cost-benefit calculations.' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The passage opens with the practical importance of the question, introduces Parfit\'s non-identity problem as the central difficulty, presents two philosophical responses (impersonal welfare and rights-based), and does not resolve the debate — it surveys the intellectual landscape. Choice C captures this structure accurately: a philosophical challenge is presented, and multiple responses to it are reviewed.',
+    wrongAnswerExplanations: {
+      A: 'The passage presents the non-identity argument as generating a troubling consequence — but then immediately offers two frameworks that resist it. The passage does not endorse the conclusion that future generations have no moral standing.',
+      B: 'The passage mentions rights-based approaches as one of three positions but does not argue they are superior. The author presents all three positions without adjudicating among them.',
+      D: 'The passage is engaged with philosophical analysis throughout. It does not suggest abandoning philosophy, and cost-benefit calculation is never proposed as a substitute.',
+    },
+    teachingPoint: 'Main idea questions require identifying the overall scope and structure of the passage. A passage surveying multiple competing views without resolving them should be summarized as "exploring the debate," not as "endorsing one view." Watch for choices that accurately describe structure (survey/explore) vs. choices that claim the author argues for a particular conclusion.',
+    relatedTopics: ['Main idea', 'Passage structure', 'Non-identity problem', 'Intergenerational ethics', 'Philosophy'],
+  },
+  {
+    id: 'mcat-qb-cars-024',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics',
+    contentCategory: '9A: Social structures',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `The most familiar moral obligations are those between contemporaries. We owe things to our neighbors, our colleagues, our fellow citizens — people who exist alongside us in time and whose interests can be advanced or harmed by our choices. But recent philosophical work has pressed the question of whether we also bear obligations to people who do not yet exist: the billions who will inhabit the Earth in coming centuries.
+
+The practical stakes are substantial. Climate policy, infrastructure investment, and the management of long-lived nuclear waste all require decisions whose most significant consequences will be felt by future generations. Yet the philosophical foundations for our obligations to those generations are surprisingly contested.
+
+The central difficulty is what the philosopher Derek Parfit called the non-identity problem. Suppose a government chooses between two energy policies: Policy A, which is cheap but releases long-term environmental pollutants, and Policy B, which is expensive but clean. If Policy A is adopted, a particular sequence of social and economic events follows — certain people meet, marry, and have children — and the specific individuals who will eventually suffer Policy A's environmental costs would not have existed had Policy B been adopted instead. How, then, can those future individuals have been wronged by Policy A? The alternative for them was not a better life under Policy B but non-existence. It is difficult to maintain that someone has been harmed when the only alternative to their degraded life is never having lived at all.
+
+Some philosophers find this argument paralyzing. If accepted, it appears to dissolve much of the moral basis for long-term environmental protection: provided a harmful policy still permits lives worth living, the future people affected cannot coherently claim to have been made worse off. Others resist this conclusion by shifting from person-affecting principles — which require that an action harm a specific identifiable individual to count as wrong — to impersonal principles that assess outcomes by their total or average quality of life across all people who will ever live, regardless of which specific individuals exist.
+
+A third group argues that even if the non-identity problem creates difficulties for harm-based frameworks, it does not dissolve all obligations. Rights-based theorists hold that future persons — whatever the causal history of their existence — will possess human dignity and entitlements that bind present-day actors. These rights arise not from a comparison between actual and counterfactual lives but from what it means to be a human person.`,
+    question: 'The author\'s tone toward the non-identity problem is best described as:',
+    choices: [
+      { label: 'A', text: 'Dismissive — the author implies it is a philosophical trick with no genuine practical implications' },
+      { label: 'B', text: 'Engaged and balanced — the author presents the problem as genuinely challenging, then gives equal space to philosophical responses that resist its most troubling implications' },
+      { label: 'C', text: 'Alarmed — the author argues the non-identity problem has already destroyed the philosophical basis for environmental policy' },
+      { label: 'D', text: 'Enthusiastic — the author clearly endorses impersonal welfare theory as the definitive solution' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The author describes the non-identity problem as generating "central difficulty" and a potentially "paralyzing" conclusion — language indicating the author takes it seriously, not dismissively. But the author then gives substantive space to both impersonal and rights-based responses, presenting the debate as ongoing and unresolved. This balanced, engaged tone is characteristic of the passage throughout.',
+    wrongAnswerExplanations: {
+      A: 'The author calls the non-identity problem "the central difficulty" and describes its consequences as potentially paralyzing for environmental ethics — the opposite of dismissiveness.',
+      C: 'The author does not claim the problem has already destroyed the philosophical basis for environmental policy; rather, the passage explores the difficulty and the responses available. The tone is exploratory, not alarmed.',
+      D: 'The passage presents impersonal welfare theory as one of three responses without endorsing it. The author does not argue this is "definitive" — the passage ends with the rights-based view as an equal alternative.',
+    },
+    teachingPoint: 'Author tone questions: look for the overall balance of the passage and how the author frames disagreement. "Engaged and balanced" describes a passage that presents a problem seriously, then gives fair treatment to multiple responses. Avoid choosing extreme tones (alarmed, enthusiastic, dismissive) unless language in the passage clearly supports them.',
+    relatedTopics: ['Author tone', 'Passage analysis', 'Balanced presentation', 'CARS strategy'],
+  },
+  {
+    id: 'mcat-qb-cars-025',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics',
+    contentCategory: '9A: Social structures',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `The most familiar moral obligations are those between contemporaries. We owe things to our neighbors, our colleagues, our fellow citizens — people who exist alongside us in time and whose interests can be advanced or harmed by our choices. But recent philosophical work has pressed the question of whether we also bear obligations to people who do not yet exist: the billions who will inhabit the Earth in coming centuries.
+
+The practical stakes are substantial. Climate policy, infrastructure investment, and the management of long-lived nuclear waste all require decisions whose most significant consequences will be felt by future generations. Yet the philosophical foundations for our obligations to those generations are surprisingly contested.
+
+The central difficulty is what the philosopher Derek Parfit called the non-identity problem. Suppose a government chooses between two energy policies: Policy A, which is cheap but releases long-term environmental pollutants, and Policy B, which is expensive but clean. If Policy A is adopted, a particular sequence of social and economic events follows — certain people meet, marry, and have children — and the specific individuals who will eventually suffer Policy A's environmental costs would not have existed had Policy B been adopted instead. How, then, can those future individuals have been wronged by Policy A? The alternative for them was not a better life under Policy B but non-existence. It is difficult to maintain that someone has been harmed when the only alternative to their degraded life is never having lived at all.
+
+Some philosophers find this argument paralyzing. If accepted, it appears to dissolve much of the moral basis for long-term environmental protection: provided a harmful policy still permits lives worth living, the future people affected cannot coherently claim to have been made worse off. Others resist this conclusion by shifting from person-affecting principles — which require that an action harm a specific identifiable individual to count as wrong — to impersonal principles that assess outcomes by their total or average quality of life across all people who will ever live, regardless of which specific individuals exist.
+
+A third group argues that even if the non-identity problem creates difficulties for harm-based frameworks, it does not dissolve all obligations. Rights-based theorists hold that future persons — whatever the causal history of their existence — will possess human dignity and entitlements that bind present-day actors. These rights arise not from a comparison between actual and counterfactual lives but from what it means to be a human person.`,
+    question: 'Based on the passage, a defender of the impersonal welfare view would most likely endorse which type of environmental policy?',
+    choices: [
+      { label: 'A', text: 'A policy that protects the rights and dignity of future persons regardless of its effects on aggregate welfare across generations' },
+      { label: 'B', text: 'A policy that maximizes total or average quality of life across all generations, even if no specific future individual can be identified as better or worse off compared to an alternative' },
+      { label: 'C', text: 'A policy that benefits current people maximally, because future individuals who cannot yet claim harm have no standing under the impersonal view' },
+      { label: 'D', text: 'A policy determined by surveying future populations directly, since impersonal views require actual representatives to quantify welfare' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The passage defines the impersonal view as assessing outcomes by their "total or average quality of life across all people who will ever live, regardless of which specific individuals exist." A defender of this view would therefore favor a policy that maximizes this aggregate welfare measure, even when the non-identity problem prevents identifying specific harmed individuals. Choice B accurately describes this criterion.',
+    wrongAnswerExplanations: {
+      A: 'Protecting rights and dignity regardless of aggregate welfare consequences describes the rights-based approach — the third position in the passage — not the impersonal welfare view.',
+      C: 'The impersonal view is motivated precisely by the goal of protecting future generations, not dismissing them. It rejects person-affecting principles in order to retain obligations to the future, not to abandon them.',
+      D: 'The impersonal view assesses outcomes by welfare outcomes, not by surveying future populations. Future people cannot be surveyed; the impersonal view uses outcomes (quality of life) rather than procedural representation.',
+    },
+    teachingPoint: 'Inference questions require applying the passage\'s definition of a view to a new case. The impersonal welfare view: evaluates outcomes by total/average welfare across all who will live, not by whether specific identifiable individuals are harmed. This directly bypasses the non-identity problem because it does not require identifying a harmed individual.',
+    relatedTopics: ['Inference questions', 'Impersonal welfare view', 'Application of views', 'Non-identity problem', 'CARS reasoning'],
+  },
+  {
+    id: 'mcat-qb-cars-026',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics',
+    contentCategory: '9A: Social structures',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The most familiar moral obligations are those between contemporaries. We owe things to our neighbors, our colleagues, our fellow citizens — people who exist alongside us in time and whose interests can be advanced or harmed by our choices. But recent philosophical work has pressed the question of whether we also bear obligations to people who do not yet exist: the billions who will inhabit the Earth in coming centuries.
+
+The practical stakes are substantial. Climate policy, infrastructure investment, and the management of long-lived nuclear waste all require decisions whose most significant consequences will be felt by future generations. Yet the philosophical foundations for our obligations to those generations are surprisingly contested.
+
+The central difficulty is what the philosopher Derek Parfit called the non-identity problem. Suppose a government chooses between two energy policies: Policy A, which is cheap but releases long-term environmental pollutants, and Policy B, which is expensive but clean. If Policy A is adopted, a particular sequence of social and economic events follows — certain people meet, marry, and have children — and the specific individuals who will eventually suffer Policy A's environmental costs would not have existed had Policy B been adopted instead. How, then, can those future individuals have been wronged by Policy A? The alternative for them was not a better life under Policy B but non-existence. It is difficult to maintain that someone has been harmed when the only alternative to their degraded life is never having lived at all.
+
+Some philosophers find this argument paralyzing. If accepted, it appears to dissolve much of the moral basis for long-term environmental protection: provided a harmful policy still permits lives worth living, the future people affected cannot coherently claim to have been made worse off. Others resist this conclusion by shifting from person-affecting principles — which require that an action harm a specific identifiable individual to count as wrong — to impersonal principles that assess outcomes by their total or average quality of life across all people who will ever live, regardless of which specific individuals exist.
+
+A third group argues that even if the non-identity problem creates difficulties for harm-based frameworks, it does not dissolve all obligations. Rights-based theorists hold that future persons — whatever the causal history of their existence — will possess human dignity and entitlements that bind present-day actors. These rights arise not from a comparison between actual and counterfactual lives but from what it means to be a human person.`,
+    question: 'In the context of the passage as a whole, the third paragraph (beginning "The central difficulty...") primarily serves to:',
+    choices: [
+      { label: 'A', text: 'Present the author\'s preferred resolution to the problem of obligations to future generations' },
+      { label: 'B', text: 'Introduce the philosophical puzzle that challenges person-affecting frameworks for thinking about obligations to future people' },
+      { label: 'C', text: 'Provide empirical data about the costs of environmental policy for future generations' },
+      { label: 'D', text: 'Argue that rights-based approaches are superior to impersonal welfare approaches' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The third paragraph introduces Parfit\'s non-identity problem — the conceptual difficulty that the specific future people harmed by Policy A would not have existed under Policy B, making it hard to say they were harmed. This establishes the central philosophical puzzle that the rest of the passage responds to. It is not the author\'s preferred resolution (the author presents no preferred view) and contains no empirical data.',
+    wrongAnswerExplanations: {
+      A: 'The passage presents no resolution — neither in the third paragraph nor anywhere else. The third paragraph introduces the problem; the fourth and fifth paragraphs present responses. The author does not endorse any of them.',
+      C: 'The paragraph uses a hypothetical scenario (Policy A vs. Policy B) to illustrate a philosophical argument, not empirical data. No statistics, studies, or measured outcomes are presented.',
+      D: 'Rights-based approaches are not mentioned until the fifth paragraph (and are not argued to be superior). The third paragraph introduces the non-identity problem, which complicates harm-based frameworks — it does not adjudicate between impersonal welfare and rights-based responses.',
+    },
+    teachingPoint: 'Paragraph function questions: identify what role the paragraph plays in the overall argument structure. A paragraph that introduces a difficulty or puzzle is doing structural setup work, not resolution. Ask: "What would be lost if this paragraph were removed?" — the answer reveals its function.',
+    relatedTopics: ['Paragraph function', 'Passage structure', 'Non-identity problem', 'CARS strategy'],
+  },
+  {
+    id: 'mcat-qb-cars-027',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics',
+    contentCategory: '9A: Social structures',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The most familiar moral obligations are those between contemporaries. We owe things to our neighbors, our colleagues, our fellow citizens — people who exist alongside us in time and whose interests can be advanced or harmed by our choices. But recent philosophical work has pressed the question of whether we also bear obligations to people who do not yet exist: the billions who will inhabit the Earth in coming centuries.
+
+The practical stakes are substantial. Climate policy, infrastructure investment, and the management of long-lived nuclear waste all require decisions whose most significant consequences will be felt by future generations. Yet the philosophical foundations for our obligations to those generations are surprisingly contested.
+
+The central difficulty is what the philosopher Derek Parfit called the non-identity problem. Suppose a government chooses between two energy policies: Policy A, which is cheap but releases long-term environmental pollutants, and Policy B, which is expensive but clean. If Policy A is adopted, a particular sequence of social and economic events follows — certain people meet, marry, and have children — and the specific individuals who will eventually suffer Policy A's environmental costs would not have existed had Policy B been adopted instead. How, then, can those future individuals have been wronged by Policy A? The alternative for them was not a better life under Policy B but non-existence. It is difficult to maintain that someone has been harmed when the only alternative to their degraded life is never having lived at all.
+
+Some philosophers find this argument paralyzing. If accepted, it appears to dissolve much of the moral basis for long-term environmental protection: provided a harmful policy still permits lives worth living, the future people affected cannot coherently claim to have been made worse off. Others resist this conclusion by shifting from person-affecting principles — which require that an action harm a specific identifiable individual to count as wrong — to impersonal principles that assess outcomes by their total or average quality of life across all people who will ever live, regardless of which specific individuals exist.
+
+A third group argues that even if the non-identity problem creates difficulties for harm-based frameworks, it does not dissolve all obligations. Rights-based theorists hold that future persons — whatever the causal history of their existence — will possess human dignity and entitlements that bind present-day actors. These rights arise not from a comparison between actual and counterfactual lives but from what it means to be a human person.`,
+    question: 'A chemical company\'s cheaper manufacturing process will contaminate a region\'s groundwater for 200 years. The specific people who will inhabit the region during that period would not exist had the company used the cleaner process. Based on the passage\'s account of the non-identity problem, which challenge does this scenario pose for a person-affecting legal claim that the company harmed the future residents?',
+    choices: [
+      { label: 'A', text: 'The future residents cannot bring a legal claim because they are not yet born and courts only recognize claims from living plaintiffs.' },
+      { label: 'B', text: 'The company cannot be held liable because groundwater contamination is impossible to causally attribute to a single source.' },
+      { label: 'C', text: 'The future residents who suffer the contamination owe their very existence to the company\'s cheaper process; the alternative for them was not a cleaner life but non-existence, making it difficult to establish that they were made worse off.' },
+      { label: 'D', text: 'The non-identity problem only applies to government policy choices, not to private corporate decisions, so it is irrelevant to this scenario.' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The passage explains the non-identity problem precisely through this type of scenario: if the polluting decision was part of the causal chain that produced the specific future individuals, then those individuals cannot coherently claim to be worse off because the alternative for them was non-existence. Choice C directly applies the passage\'s account to this new case.',
+    wrongAnswerExplanations: {
+      A: 'The passage discusses philosophical difficulties with person-affecting harm frameworks, not procedural legal standing rules. The challenge identified is conceptual (harm requires a comparison with a better alternative life), not procedural (courts\' rules about standing).',
+      B: 'Causal attribution difficulties are a practical evidentiary challenge, not the philosophical difficulty described by the non-identity problem. The passage\'s non-identity argument is about whether the future people were "made worse off," not about who causally produced the contamination.',
+      D: 'The passage does not restrict the non-identity problem to government decisions. The argument is a general logical point about the structure of harm claims, applicable to any causal chain — corporate or governmental — that determines which individuals come to exist.',
+    },
+    teachingPoint: 'Application questions ask you to apply the passage\'s explicit argument to a new scenario. Identify which key claim in the passage maps onto the new scenario: here, the non-identity problem = the specific harmed people exist because of the very choice that harmed them → they cannot claim to be worse off (alternative was non-existence). Apply directly.',
+    relatedTopics: ['Application questions', 'Non-identity problem', 'Person-affecting harm', 'CARS reasoning', 'Ethics'],
+  },
+
+  // ── Passage 6: Authenticity and Cultural Borrowing (Q028–Q032) ───────────────
+  {
+    id: 'mcat-qb-cars-028',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Arts and Humanities',
+    contentCategory: '9B: Cultural identity',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `There is a recurring controversy in the arts over the practice of cultural borrowing: the adoption by writers, musicians, or visual artists of forms, symbols, and aesthetics from cultural traditions not their own. The debate has grown more visible as questions of representation and cultural ownership have gained prominence in public discourse.
+
+Critics of cross-cultural borrowing invoke the concept of authenticity, though this concept does different work in different hands. In its most common deployment, authenticity means something like cultural provenance: a work is authentic when it emerges from lived participation in the tradition it represents. A memoir about rural poverty is most authentic when written by someone who has inhabited that poverty, not observed it. A novel set within a religious community achieves authenticity when the novelist has grown up within that faith, absorbing its textures, contradictions, and emotional registers over a lifetime. An outsider, however well-intentioned and carefully researched, works inevitably from the outside — gathering, observing, and translating rather than inhabiting.
+
+Defenders of cross-cultural creativity contest this notion on two principal grounds. First, they argue that cultures are not bounded, static objects with clear owners. All cultural forms have developed through contact, exchange, and the incorporation of outside influences; to demand cultural purity in artistic production is to impose a false essentialism that cultures have never in reality possessed. Second, they observe that the standard of lived experience proves unworkably strict even within a single culture: a novelist who writes about the experience of addiction, war, or imprisonment she has not personally undergone is equally, by this standard, working from the outside.
+
+A third position refuses both the complete freedom of the universalist and the strict policing of cultural property. It argues that the meaningful distinction is not between insiders and outsiders but between kinds of attention. A work that treats another culture's practices as exotic spectacle for an uninformed audience — deploying sacred symbols as ornament, reducing a people's history to colorful backdrop — is aesthetically and ethically thin regardless of the author's cultural origin. A work that engages a culture with close, sustained, historically informed attention, treating its people as fully human rather than as picturesque objects, can achieve genuine seriousness and moral integrity whatever the author's background.`,
+    question: 'According to the third view described in the passage, which of the following works would most likely be judged as both ethically and aesthetically successful?',
+    choices: [
+      { label: 'A', text: 'A novel by an outsider that depicts a minority community\'s sacred ceremonies primarily as visually spectacular and exotic scenes designed to surprise readers unfamiliar with the tradition' },
+      { label: 'B', text: 'A documentary by an outsider that records the internal political debates, historical grievances, and moral disagreements of a minority community, presenting its members as complex agents navigating competing loyalties rather than as representatives of a unified picturesque tradition' },
+      { label: 'C', text: 'A memoir by an insider about her own community, praised for its emotional honesty but criticized for not engaging with any outside cultural material' },
+      { label: 'D', text: 'A poem by an outsider who borrows mythological figures from a culture she has never studied, using them as loose metaphors for romantic experience without attention to their original context or significance' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The third view holds that what distinguishes ethically and aesthetically serious cross-cultural work is the quality of attention — close, sustained, historically informed — and the treatment of the other culture\'s people as fully human rather than as spectacle. Choice B describes exactly this: an outsider\'s work that presents community members as complex agents, engages with genuine internal debate and history, and refuses to reduce the community to a picturesque unified image.',
+    wrongAnswerExplanations: {
+      A: 'The passage explicitly defines work that treats another culture as "exotic spectacle for an uninformed audience" and deploys "sacred symbols as ornament" as "aesthetically and ethically thin." Choice A exactly matches this description.',
+      C: 'This choice does not test cross-cultural borrowing at all — it describes an insider writing about her own community. The third position concerns outsider engagement with other cultures, so this scenario falls outside the framework the question is testing.',
+      D: 'The passage contrasts sustained, historically informed attention with superficial use of cultural material. Borrowing symbols "without attention to their original context or significance" is precisely what the third view identifies as aesthetically and ethically problematic.',
+    },
+    teachingPoint: 'Inference questions from the passage\'s third view: the criterion is quality of attention and treatment of cultural subjects as fully human — not insider/outsider status. Use the passage\'s own language ("exotic spectacle," "close sustained attention," "fully human") to evaluate each answer choice against the criterion defined in the fourth paragraph.',
+    relatedTopics: ['Inference questions', 'Third position', 'Cultural authenticity', 'Quality of attention', 'CARS application'],
+  },
+  {
+    id: 'mcat-qb-cars-029',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Arts and Humanities',
+    contentCategory: '9B: Cultural identity',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `There is a recurring controversy in the arts over the practice of cultural borrowing: the adoption by writers, musicians, or visual artists of forms, symbols, and aesthetics from cultural traditions not their own. The debate has grown more visible as questions of representation and cultural ownership have gained prominence in public discourse.
+
+Critics of cross-cultural borrowing invoke the concept of authenticity, though this concept does different work in different hands. In its most common deployment, authenticity means something like cultural provenance: a work is authentic when it emerges from lived participation in the tradition it represents. A memoir about rural poverty is most authentic when written by someone who has inhabited that poverty, not observed it. A novel set within a religious community achieves authenticity when the novelist has grown up within that faith, absorbing its textures, contradictions, and emotional registers over a lifetime. An outsider, however well-intentioned and carefully researched, works inevitably from the outside — gathering, observing, and translating rather than inhabiting.
+
+Defenders of cross-cultural creativity contest this notion on two principal grounds. First, they argue that cultures are not bounded, static objects with clear owners. All cultural forms have developed through contact, exchange, and the incorporation of outside influences; to demand cultural purity in artistic production is to impose a false essentialism that cultures have never in reality possessed. Second, they observe that the standard of lived experience proves unworkably strict even within a single culture: a novelist who writes about the experience of addiction, war, or imprisonment she has not personally undergone is equally, by this standard, working from the outside.
+
+A third position refuses both the complete freedom of the universalist and the strict policing of cultural property. It argues that the meaningful distinction is not between insiders and outsiders but between kinds of attention. A work that treats another culture's practices as exotic spectacle for an uninformed audience — deploying sacred symbols as ornament, reducing a people's history to colorful backdrop — is aesthetically and ethically thin regardless of the author's cultural origin. A work that engages a culture with close, sustained, historically informed attention, treating its people as fully human rather than as picturesque objects, can achieve genuine seriousness and moral integrity whatever the author's background.`,
+    question: 'The second paragraph (beginning "Critics of cross-cultural borrowing...") primarily serves to:',
+    choices: [
+      { label: 'A', text: 'Define and explain one understanding of cultural authenticity — as cultural provenance based on lived participation — and lay out the reasoning behind this position' },
+      { label: 'B', text: 'Argue that the concept of authenticity is philosophically incoherent and should be abandoned in discussions of art' },
+      { label: 'C', text: 'Present the third view\'s criterion of "quality of attention" as an alternative to the provenance-based criterion' },
+      { label: 'D', text: 'Provide empirical evidence that works by cultural insiders consistently outperform works by outsiders in critical reception' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. The second paragraph focuses entirely on the critics\' view: it defines what they mean by authenticity (cultural provenance, lived experience), gives examples (rural poverty memoir, religious community novel), and explains why outsiders are disadvantaged ("gathering, observing, translating rather than inhabiting"). The paragraph presents and explains one position in the debate; it does not argue for abandoning authenticity, introduce the third view, or provide empirical data.',
+    wrongAnswerExplanations: {
+      B: 'The passage does not argue that authenticity is incoherent — it presents different parties using authenticity in different ways. The defenders of cross-cultural creativity challenge the provenance-based criterion, but the passage as a whole takes the concept seriously.',
+      C: 'The "quality of attention" criterion is introduced in the fourth paragraph (the third view), not the second. The second paragraph is devoted to the critics\' provenance-based understanding of authenticity.',
+      D: 'No empirical data — studies, statistics, critical reception records — appear anywhere in the passage. The passage is entirely conceptual and argumentative.',
+    },
+    teachingPoint: 'Paragraph function: identify what position the paragraph presents and what work it does in the overall argument. A paragraph that defines a view, provides examples, and explains its internal logic is "presenting and explaining a position." It is not yet the author\'s own view, a response to the view, or the view\'s refutation.',
+    relatedTopics: ['Paragraph function', 'Passage structure', 'Cultural authenticity', 'CARS strategy'],
+  },
+  {
+    id: 'mcat-qb-cars-030',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Arts and Humanities',
+    contentCategory: '9B: Cultural identity',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `There is a recurring controversy in the arts over the practice of cultural borrowing: the adoption by writers, musicians, or visual artists of forms, symbols, and aesthetics from cultural traditions not their own. The debate has grown more visible as questions of representation and cultural ownership have gained prominence in public discourse.
+
+Critics of cross-cultural borrowing invoke the concept of authenticity, though this concept does different work in different hands. In its most common deployment, authenticity means something like cultural provenance: a work is authentic when it emerges from lived participation in the tradition it represents. A memoir about rural poverty is most authentic when written by someone who has inhabited that poverty, not observed it. A novel set within a religious community achieves authenticity when the novelist has grown up within that faith, absorbing its textures, contradictions, and emotional registers over a lifetime. An outsider, however well-intentioned and carefully researched, works inevitably from the outside — gathering, observing, and translating rather than inhabiting.
+
+Defenders of cross-cultural creativity contest this notion on two principal grounds. First, they argue that cultures are not bounded, static objects with clear owners. All cultural forms have developed through contact, exchange, and the incorporation of outside influences; to demand cultural purity in artistic production is to impose a false essentialism that cultures have never in reality possessed. Second, they observe that the standard of lived experience proves unworkably strict even within a single culture: a novelist who writes about the experience of addiction, war, or imprisonment she has not personally undergone is equally, by this standard, working from the outside.
+
+A third position refuses both the complete freedom of the universalist and the strict policing of cultural property. It argues that the meaningful distinction is not between insiders and outsiders but between kinds of attention. A work that treats another culture's practices as exotic spectacle for an uninformed audience — deploying sacred symbols as ornament, reducing a people's history to colorful backdrop — is aesthetically and ethically thin regardless of the author's cultural origin. A work that engages a culture with close, sustained, historically informed attention, treating its people as fully human rather than as picturesque objects, can achieve genuine seriousness and moral integrity whatever the author's background.`,
+    question: 'The author\'s presentation of the three views on cultural borrowing is best characterized as:',
+    choices: [
+      { label: 'A', text: 'Partisan — the author clearly argues that critics of cultural borrowing are wrong and that universalism is correct' },
+      { label: 'B', text: 'Even-handed but leading — the author presents all three views fairly, with the passage structure implicitly favoring the third view as a nuanced synthesis' },
+      { label: 'C', text: 'Dismissive — the author implies all three views fail to engage with the real economic dimensions of cultural appropriation' },
+      { label: 'D', text: 'Alarmist — the author suggests cross-cultural borrowing will cause irreparable harm to minority artistic traditions' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The author presents all three views in order — critics, defenders, third position — giving each genuine space and strongest-case treatment. Yet the passage devotes its final paragraph to the third view and describes it with the most positive language ("genuine seriousness," "moral integrity"), implying it as a resolution of the preceding debate. This structure — balanced presentation that nonetheless concludes with one view described most favorably — is "even-handed but leading."',
+    wrongAnswerExplanations: {
+      A: 'The passage does not argue against the critics; it presents their position in detail and on its own terms before presenting responses. The author does not characterize the universalist position as correct — the third view is presented as refusing the "complete freedom of the universalist," implying reservations about it.',
+      C: 'The passage does not mention economic dimensions of cultural appropriation anywhere. Dismissiveness would require the author to explicitly downgrade the debate; instead the author takes it seriously throughout.',
+      D: 'The passage does not predict or warn of irreparable harm to artistic traditions. It presents a conceptual debate about authenticity and attention, not a social alarm about cultural survival.',
+    },
+    teachingPoint: 'Author presentation questions: the structure of a three-view passage often signals the author\'s lean by where the passage ends and what language surrounds the final view. Positive evaluative language in the final position ("genuine seriousness," "moral integrity") suggests implicit endorsement, even if the author never explicitly says "I believe." "Even-handed but leading" captures this common CARS passage structure.',
+    relatedTopics: ['Author characterization', 'Passage structure', 'Three-view passages', 'Implicit endorsement', 'CARS strategy'],
+  },
+  {
+    id: 'mcat-qb-cars-031',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Arts and Humanities',
+    contentCategory: '9B: Cultural identity',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `There is a recurring controversy in the arts over the practice of cultural borrowing: the adoption by writers, musicians, or visual artists of forms, symbols, and aesthetics from cultural traditions not their own. The debate has grown more visible as questions of representation and cultural ownership have gained prominence in public discourse.
+
+Critics of cross-cultural borrowing invoke the concept of authenticity, though this concept does different work in different hands. In its most common deployment, authenticity means something like cultural provenance: a work is authentic when it emerges from lived participation in the tradition it represents. A memoir about rural poverty is most authentic when written by someone who has inhabited that poverty, not observed it. A novel set within a religious community achieves authenticity when the novelist has grown up within that faith, absorbing its textures, contradictions, and emotional registers over a lifetime. An outsider, however well-intentioned and carefully researched, works inevitably from the outside — gathering, observing, and translating rather than inhabiting.
+
+Defenders of cross-cultural creativity contest this notion on two principal grounds. First, they argue that cultures are not bounded, static objects with clear owners. All cultural forms have developed through contact, exchange, and the incorporation of outside influences; to demand cultural purity in artistic production is to impose a false essentialism that cultures have never in reality possessed. Second, they observe that the standard of lived experience proves unworkably strict even within a single culture: a novelist who writes about the experience of addiction, war, or imprisonment she has not personally undergone is equally, by this standard, working from the outside.
+
+A third position refuses both the complete freedom of the universalist and the strict policing of cultural property. It argues that the meaningful distinction is not between insiders and outsiders but between kinds of attention. A work that treats another culture's practices as exotic spectacle for an uninformed audience — deploying sacred symbols as ornament, reducing a people's history to colorful backdrop — is aesthetically and ethically thin regardless of the author's cultural origin. A work that engages a culture with close, sustained, historically informed attention, treating its people as fully human rather than as picturesque objects, can achieve genuine seriousness and moral integrity whatever the author's background.`,
+    question: 'As used in the second paragraph, the word "provenance" most nearly means:',
+    choices: [
+      { label: 'A', text: 'Technical artistic skill or mastery of craft' },
+      { label: 'B', text: 'Cultural origin or lineage — the tradition from which a work or its creator derives' },
+      { label: 'C', text: 'Legal copyright ownership of cultural material' },
+      { label: 'D', text: 'Emotional sincerity or the depth of personal feeling invested in a work' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. In the second paragraph, "provenance" is used to define what critics mean by authenticity: "a work is authentic when it emerges from lived participation in the tradition it represents." The examples that follow (the memoir writer who inhabited poverty, the novelist who grew up in the faith community) all illustrate origin and lineage — where the work and artist come from culturally. "Provenance" in this context means cultural origin or lineage.',
+    wrongAnswerExplanations: {
+      A: 'The paragraph makes no mention of technical skill or craft. The critic\'s criterion is about where the artist comes from, not how technically accomplished they are. A skilled outsider is still an outsider by this standard.',
+      C: 'Legal copyright is a separate domain entirely. The passage discusses a philosophical criterion for authenticity, not a legal property framework. "Provenance" here refers to cultural origin, not legal title.',
+      D: 'Emotional sincerity is related to but distinct from cultural provenance. The critics\' argument is specifically about lived experience within a cultural tradition, not the intensity of emotional feeling. A highly sincere outsider would still be working "from the outside" by their standard.',
+    },
+    teachingPoint: 'Vocabulary-in-context questions: identify the concept the word is serving in its sentence, then match to the answer that best describes that concept in plain language. "Provenance" in the fine arts traditionally means the documented history of ownership and origin of an artwork. Here the author borrows this word to describe where a work culturally originates — its cultural lineage.',
+    relatedTopics: ['Vocabulary in context', 'Cultural provenance', 'CARS strategy', 'Textual evidence'],
+  },
+  {
+    id: 'mcat-qb-cars-032',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Arts and Humanities',
+    contentCategory: '9B: Cultural identity',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `There is a recurring controversy in the arts over the practice of cultural borrowing: the adoption by writers, musicians, or visual artists of forms, symbols, and aesthetics from cultural traditions not their own. The debate has grown more visible as questions of representation and cultural ownership have gained prominence in public discourse.
+
+Critics of cross-cultural borrowing invoke the concept of authenticity, though this concept does different work in different hands. In its most common deployment, authenticity means something like cultural provenance: a work is authentic when it emerges from lived participation in the tradition it represents. A memoir about rural poverty is most authentic when written by someone who has inhabited that poverty, not observed it. A novel set within a religious community achieves authenticity when the novelist has grown up within that faith, absorbing its textures, contradictions, and emotional registers over a lifetime. An outsider, however well-intentioned and carefully researched, works inevitably from the outside — gathering, observing, and translating rather than inhabiting.
+
+Defenders of cross-cultural creativity contest this notion on two principal grounds. First, they argue that cultures are not bounded, static objects with clear owners. All cultural forms have developed through contact, exchange, and the incorporation of outside influences; to demand cultural purity in artistic production is to impose a false essentialism that cultures have never in reality possessed. Second, they observe that the standard of lived experience proves unworkably strict even within a single culture: a novelist who writes about the experience of addiction, war, or imprisonment she has not personally undergone is equally, by this standard, working from the outside.
+
+A third position refuses both the complete freedom of the universalist and the strict policing of cultural property. It argues that the meaningful distinction is not between insiders and outsiders but between kinds of attention. A work that treats another culture's practices as exotic spectacle for an uninformed audience — deploying sacred symbols as ornament, reducing a people's history to colorful backdrop — is aesthetically and ethically thin regardless of the author's cultural origin. A work that engages a culture with close, sustained, historically informed attention, treating its people as fully human rather than as picturesque objects, can achieve genuine seriousness and moral integrity whatever the author's background.`,
+    question: 'A literary critic argues: "Cross-cultural works inevitably reduce the borrowed culture to a stereotype, because the artist, lacking deep contextual knowledge, can only represent surface features." Which claim in the passage most directly challenges this argument?',
+    choices: [
+      { label: 'A', text: 'Cultures have always developed through contact and exchange, meaning no culture is bounded or static.' },
+      { label: 'B', text: 'The lived-experience standard is unworkably strict even within a single cultural tradition.' },
+      { label: 'C', text: 'The meaningful distinction is between kinds of attention, not insider vs. outsider status — close, sustained, historically informed attention can produce genuine seriousness and moral integrity in cross-cultural work, implying that stereotyping is not an inevitable outcome.' },
+      { label: 'D', text: 'Critics of cultural borrowing deploy authenticity to mean cultural provenance — a work\'s emergence from lived participation in the tradition it represents.' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The critic\'s argument is that cross-cultural work inevitably stereotypes. The third view in the passage directly rebuts an "inevitability" claim: it argues that with sufficient quality of attention — close, sustained, historically informed — an outsider can produce work of genuine seriousness. This means stereotyping is not inevitable; it is the result of insufficient attention, which is avoidable. Choice C captures this direct challenge.',
+    wrongAnswerExplanations: {
+      A: 'The claim about cultural dynamism and exchange challenges the idea of cultural purity and bounded ownership, not the claim that outsiders inevitably produce stereotypes. These are different arguments addressing different parts of the debate.',
+      B: 'The lived-experience standard challenge argues that the insider/outsider criterion is too strict to apply consistently — but it does not directly address whether cross-cultural works inevitably produce stereotypes. It challenges who counts as an insider, not whether outsiders necessarily stereotype.',
+      D: 'This is a descriptive statement about what critics mean by authenticity — it defines the opposing view\'s term. It does not challenge the claim that cross-cultural works inevitably reduce cultures to stereotypes.',
+    },
+    teachingPoint: 'Strengthen/weaken questions: identify the exact claim being challenged or supported, then find the answer that engages most directly with that specific claim. The critic\'s claim is about INEVITABILITY of stereotyping by outsiders. The third view challenges inevitability by showing a pathway (quality of attention) that avoids it. Choices A and B address related but different issues.',
+    relatedTopics: ['Strengthen/weaken', 'Argument analysis', 'Third view', 'CARS strategy', 'Inevitability claims'],
+  },
 ]
