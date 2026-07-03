@@ -436,4 +436,348 @@ The persistence of the attribution premium — the dramatic increase in market a
     teachingPoint: 'Metaphor questions require extracting the analogical relationship. What do archaeologists do? Excavate buried things. What does the author compare to archaeology? Criticism as excavating intentions. The passage even provides an explicit parenthetical gloss that confirms the intended meaning — always check if the author explains their own metaphors.',
     relatedTopics: ['Figurative language', 'Author\'s word choice', 'Metaphor and analogy', 'Close reading'],
   },
+
+  // ── Passage 3: Industrialization and Labor (Q013–Q017) ───────────────────────
+  {
+    id: 'mcat-qb-cars-013',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Social Sciences',
+    contentCategory: 'History and sociology',
+    foundationalConcept: 'CARS: Critical analysis and reasoning',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The transformation of labor during the industrial era was not merely a change in the mode of production; it was a thoroughgoing reorganization of human time, self-conception, and social life. Before industrialization, most people in agricultural and artisanal economies worked according to what historians have called task-oriented time. The blacksmith worked until the shoe was made; the farmer planted until the field was seeded. The completion of a recognizable task — a product, a harvest, a service rendered — structured the workday. Work and life were not separated into distinct spheres; they interpenetrated, governed by the rhythms of seasons, weather, and biological necessity.
+
+The factory system shattered this relationship. Workers were now required to subordinate their rhythms to the clock, arriving at a fixed hour, working until a fixed hour, and repeating this schedule with a regularity that was itself a new form of discipline. The historian E. P. Thompson famously described this as the shift from task-orientation to time-discipline: workers had to learn not just new skills but a new relationship to time itself, one in which time was a commodity owned by the employer and exchanged for wages. This internalization of clock-time as a moral and social norm — a value in itself, not merely an instrument — is what Thompson called the transformation of "work-sense."
+
+Factory work also transformed the nature of skill and the worker's relationship to the product of labor. In the artisanal economy, a skilled craftsman possessed mastery over an entire production process, from raw material to finished object. The finished product bore the mark of the craftsman's identity and judgment. In the factory, work was subdivided into narrow, repetitive tasks, each requiring only a fraction of the craftsman's range. Workers produced not products but fragments of products, with no individual relationship to the finished object. Karl Marx, observing this transformation, called the result alienation: the worker's estrangement from the product of labor, from the act of production itself, from fellow workers, and ultimately from their own human potential.
+
+Critics of the alienation thesis have argued that this portrait is unduly nostalgic and that craft labor was itself often brutal, exhausting, and socially constrained — that the "freedom" of the artisan was frequently overstated by comparison to the genuine miseries of peasant agriculture. Moreover, they point out that industrial workers rapidly developed new forms of solidarity, identity, and culture — trade unions, working-class neighborhoods, popular amusements — that were not merely pale substitutes for pre-industrial community but genuinely new social formations suited to the new conditions.`,
+    question: 'The primary purpose of the second paragraph is to:',
+    choices: [
+      { label: 'A', text: 'provide a counterargument to Thompson\'s thesis about time-discipline' },
+      { label: 'B', text: 'explain Thompson\'s concept of the shift from task-orientation to time-discipline and its implications for workers\' self-conception' },
+      { label: 'C', text: 'argue that the factory system was more humane than pre-industrial agriculture' },
+      { label: 'D', text: 'describe how workers resisted the imposition of clock-time through collective action' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The second paragraph introduces and elaborates Thompson\'s thesis: the shift from task-oriented time to time-discipline, the employer\'s ownership of time as a commodity, and the internalization of clock-time as a moral norm ("work-sense"). The paragraph\'s purpose is explanatory — it develops and explains Thompson\'s historical argument about how industrial work changed workers\' relationship to time and self-conception. No counterargument, moral evaluation, or account of resistance appears in this paragraph.',
+    wrongAnswerExplanations: {
+      A: 'The counterargument appears in the fourth paragraph (critics who argue the artisan\'s freedom was overstated). The second paragraph only presents Thompson\'s thesis without any rebuttal.',
+      C: 'The passage makes no comparative moral evaluation of factory work versus agriculture in the second paragraph. The question of whether factory work was more or less humane does not appear until the fourth paragraph, and even there it is attributed to critics, not endorsed by the author.',
+      D: 'Worker resistance (trade unions, new cultural forms) is not mentioned until the final paragraph. The second paragraph focuses entirely on the imposition of clock-time and its cognitive/moral internalization by workers, not their resistance to it.',
+    },
+    teachingPoint: 'Paragraph function questions: identify what argumentative role the paragraph plays — does it introduce a claim, provide evidence, offer a counterargument, or draw a conclusion? Read the paragraph\'s opening and closing sentences to anchor its function, then verify against the specific content.',
+    relatedTopics: ['Paragraph function', 'Social history passage', 'Thompson\'s time-discipline', 'Industrial labor'],
+  },
+  {
+    id: 'mcat-qb-cars-014',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Social Sciences',
+    contentCategory: 'History and sociology',
+    foundationalConcept: 'CARS: Critical analysis and reasoning',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `The transformation of labor during the industrial era was not merely a change in the mode of production; it was a thoroughgoing reorganization of human time, self-conception, and social life. Before industrialization, most people in agricultural and artisanal economies worked according to what historians have called task-oriented time. The blacksmith worked until the shoe was made; the farmer planted until the field was seeded. The completion of a recognizable task — a product, a harvest, a service rendered — structured the workday. Work and life were not separated into distinct spheres; they interpenetrated, governed by the rhythms of seasons, weather, and biological necessity.
+
+The factory system shattered this relationship. Workers were now required to subordinate their rhythms to the clock, arriving at a fixed hour, working until a fixed hour, and repeating this schedule with a regularity that was itself a new form of discipline. The historian E. P. Thompson famously described this as the shift from task-orientation to time-discipline: workers had to learn not just new skills but a new relationship to time itself, one in which time was a commodity owned by the employer and exchanged for wages. This internalization of clock-time as a moral and social norm — a value in itself, not merely an instrument — is what Thompson called the transformation of "work-sense."
+
+Factory work also transformed the nature of skill and the worker's relationship to the product of labor. In the artisanal economy, a skilled craftsman possessed mastery over an entire production process, from raw material to finished object. The finished product bore the mark of the craftsman's identity and judgment. In the factory, work was subdivided into narrow, repetitive tasks, each requiring only a fraction of the craftsman's range. Workers produced not products but fragments of products, with no individual relationship to the finished object. Karl Marx, observing this transformation, called the result alienation: the worker's estrangement from the product of labor, from the act of production itself, from fellow workers, and ultimately from their own human potential.
+
+Critics of the alienation thesis have argued that this portrait is unduly nostalgic and that craft labor was itself often brutal, exhausting, and socially constrained — that the "freedom" of the artisan was frequently overstated by comparison to the genuine miseries of peasant agriculture. Moreover, they point out that industrial workers rapidly developed new forms of solidarity, identity, and culture — trade unions, working-class neighborhoods, popular amusements — that were not merely pale substitutes for pre-industrial community but genuinely new social formations suited to the new conditions.`,
+    question: 'Which of the following best describes the relationship between the third and fourth paragraphs?',
+    choices: [
+      { label: 'A', text: 'The fourth paragraph provides historical evidence that supports Marx\'s alienation thesis developed in the third' },
+      { label: 'B', text: 'The third paragraph advances a claim (Marx\'s alienation thesis) that the fourth paragraph challenges with counterarguments and a more positive reinterpretation of industrial labor' },
+      { label: 'C', text: 'Both paragraphs argue that factory labor produced fundamentally inferior social relationships compared to pre-industrial craft work' },
+      { label: 'D', text: 'The fourth paragraph extends Marx\'s alienation concept by showing how estrangement from labor inevitably leads to estrangement from community' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The third paragraph introduces and develops Marx\'s alienation thesis: factory workers are estranged from their product, labor process, coworkers, and human potential. The fourth paragraph opens with "Critics of the alienation thesis have argued..." — explicitly introducing a rebuttal. It challenges the thesis on two grounds: (1) craft labor was idealized — it was also brutal; (2) industrial workers created genuinely new and valid cultural forms. The fourth paragraph is a counterargument to the third.',
+    wrongAnswerExplanations: {
+      A: 'The fourth paragraph explicitly introduces critics who challenge the alienation thesis, not evidence that supports it. The signal phrase "Critics of the alienation thesis have argued" is a clear adversative opening.',
+      C: 'The fourth paragraph argues against the view that industrial labor produced inferior social relationships. It claims industrial workers developed "genuinely new social formations" — rejecting the premise that their cultural life was merely a "pale substitute." This is the opposite of agreeing that industrial relationships were inferior.',
+      D: 'The fourth paragraph does not extend or elaborate Marx\'s theory; it challenges and qualifies it. The relationship between the paragraphs is adversarial (thesis/antithesis), not developmental.',
+    },
+    teachingPoint: 'Identifying paragraph relationships: look for signal words at the start of the second paragraph. "Critics...have argued," "However," "On the other hand," signal opposition. "Moreover," "Additionally," "Furthermore" signal elaboration. "Therefore," "Thus" signal conclusion. Here "Critics of the alienation thesis have argued" clearly marks the fourth paragraph as a counterargument to the third.',
+    relatedTopics: ['Argument structure', 'Thesis and counterargument', 'Paragraph relationships', 'Social history passage'],
+  },
+  {
+    id: 'mcat-qb-cars-015',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Social Sciences',
+    contentCategory: 'History and sociology',
+    foundationalConcept: 'CARS: Critical analysis and reasoning',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The transformation of labor during the industrial era was not merely a change in the mode of production; it was a thoroughgoing reorganization of human time, self-conception, and social life. Before industrialization, most people in agricultural and artisanal economies worked according to what historians have called task-oriented time. The blacksmith worked until the shoe was made; the farmer planted until the field was seeded. The completion of a recognizable task — a product, a harvest, a service rendered — structured the workday. Work and life were not separated into distinct spheres; they interpenetrated, governed by the rhythms of seasons, weather, and biological necessity.
+
+The factory system shattered this relationship. Workers were now required to subordinate their rhythms to the clock, arriving at a fixed hour, working until a fixed hour, and repeating this schedule with a regularity that was itself a new form of discipline. The historian E. P. Thompson famously described this as the shift from task-orientation to time-discipline: workers had to learn not just new skills but a new relationship to time itself, one in which time was a commodity owned by the employer and exchanged for wages. This internalization of clock-time as a moral and social norm — a value in itself, not merely an instrument — is what Thompson called the transformation of "work-sense."
+
+Factory work also transformed the nature of skill and the worker's relationship to the product of labor. In the artisanal economy, a skilled craftsman possessed mastery over an entire production process, from raw material to finished object. The finished product bore the mark of the craftsman's identity and judgment. In the factory, work was subdivided into narrow, repetitive tasks, each requiring only a fraction of the craftsman's range. Workers produced not products but fragments of products, with no individual relationship to the finished object. Karl Marx, observing this transformation, called the result alienation: the worker's estrangement from the product of labor, from the act of production itself, from fellow workers, and ultimately from their own human potential.
+
+Critics of the alienation thesis have argued that this portrait is unduly nostalgic and that craft labor was itself often brutal, exhausting, and socially constrained — that the "freedom" of the artisan was frequently overstated by comparison to the genuine miseries of peasant agriculture. Moreover, they point out that industrial workers rapidly developed new forms of solidarity, identity, and culture — trade unions, working-class neighborhoods, popular amusements — that were not merely pale substitutes for pre-industrial community but genuinely new social formations suited to the new conditions.`,
+    question: 'According to the passage, which of the following best characterizes "task-oriented time" as opposed to "time-discipline"?',
+    choices: [
+      { label: 'A', text: 'Task-oriented time is governed by mechanical clocks and factory schedules' },
+      { label: 'B', text: 'Task-oriented time treats time as a commodity owned by the worker, while time-discipline treats it as a commodity owned by the employer' },
+      { label: 'C', text: 'Task-oriented time required artisans to work fewer total hours than factory workers' },
+      { label: 'D', text: 'Task-oriented time is structured by the completion of a natural or recognizable task rather than by clock schedules, and work and life interpenetrate' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. The first paragraph explicitly describes task-oriented time: "The completion of a recognizable task — a product, a harvest, a service rendered — structured the workday. Work and life were not separated into distinct spheres; they interpenetrated, governed by the rhythms of seasons, weather, and biological necessity." This directly supports choice D. The contrast is that time-discipline (paragraph two) imposes fixed clock schedules and separates work from life.',
+    wrongAnswerExplanations: {
+      A: 'Mechanical clocks and factory schedules characterize time-discipline, not task-oriented time. Task-oriented time precedes the factory system and is structured by tasks, not clocks.',
+      B: 'The passage describes time-discipline as time "owned by the employer and exchanged for wages" but does not characterize task-oriented time as time "owned by the worker" in the same commodity sense. Task-oriented time is simply governed by biological and seasonal rhythms, not conceptualized as a commodity at all.',
+      C: 'The passage makes no comparison of total hours worked between task-oriented and time-discipline systems. Claiming fewer hours is an inference not supported by the text.',
+    },
+    teachingPoint: 'Detail questions require finding the specific textual description. Locate the term in the passage, read the surrounding sentences carefully, and match them to an answer choice. Do not bring in outside knowledge. Here, "task-oriented time" is explicitly defined in paragraph one with multiple examples.',
+    relatedTopics: ['Detail comprehension', 'Textual evidence', 'Labor history', 'Time and work'],
+  },
+  {
+    id: 'mcat-qb-cars-016',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Social Sciences',
+    contentCategory: 'History and sociology',
+    foundationalConcept: 'CARS: Critical analysis and reasoning',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The transformation of labor during the industrial era was not merely a change in the mode of production; it was a thoroughgoing reorganization of human time, self-conception, and social life. Before industrialization, most people in agricultural and artisanal economies worked according to what historians have called task-oriented time. The blacksmith worked until the shoe was made; the farmer planted until the field was seeded. The completion of a recognizable task — a product, a harvest, a service rendered — structured the workday. Work and life were not separated into distinct spheres; they interpenetrated, governed by the rhythms of seasons, weather, and biological necessity.
+
+The factory system shattered this relationship. Workers were now required to subordinate their rhythms to the clock, arriving at a fixed hour, working until a fixed hour, and repeating this schedule with a regularity that was itself a new form of discipline. The historian E. P. Thompson famously described this as the shift from task-orientation to time-discipline: workers had to learn not just new skills but a new relationship to time itself, one in which time was a commodity owned by the employer and exchanged for wages. This internalization of clock-time as a moral and social norm — a value in itself, not merely an instrument — is what Thompson called the transformation of "work-sense."
+
+Factory work also transformed the nature of skill and the worker's relationship to the product of labor. In the artisanal economy, a skilled craftsman possessed mastery over an entire production process, from raw material to finished object. The finished product bore the mark of the craftsman's identity and judgment. In the factory, work was subdivided into narrow, repetitive tasks, each requiring only a fraction of the craftsman's range. Workers produced not products but fragments of products, with no individual relationship to the finished object. Karl Marx, observing this transformation, called the result alienation: the worker's estrangement from the product of labor, from the act of production itself, from fellow workers, and ultimately from their own human potential.
+
+Critics of the alienation thesis have argued that this portrait is unduly nostalgic and that craft labor was itself often brutal, exhausting, and socially constrained — that the "freedom" of the artisan was frequently overstated by comparison to the genuine miseries of peasant agriculture. Moreover, they point out that industrial workers rapidly developed new forms of solidarity, identity, and culture — trade unions, working-class neighborhoods, popular amusements — that were not merely pale substitutes for pre-industrial community but genuinely new social formations suited to the new conditions.`,
+    question: 'A sociologist studies remote tech workers who complete self-directed projects on their own schedule with no fixed hours, meeting deadlines only for completed deliverables. Based on the passage\'s framework, how would their work experience most resemble?',
+    choices: [
+      { label: 'A', text: 'Time-discipline, because they are still employed by a company and exchange time for wages' },
+      { label: 'B', text: 'Factory alienation, because they produce digital products rather than physical objects they can hold' },
+      { label: 'C', text: 'Task-oriented time, because their work is structured by deliverable completion rather than fixed clock schedules' },
+      { label: 'D', text: 'Neither framework applies, because neither Thompson nor Marx analyzed remote work or technology' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The passage defines task-oriented time as work structured by "the completion of a recognizable task — a product, a harvest, a service rendered" rather than by fixed clock schedules, with work and life interpenetrating. Remote tech workers completing self-directed projects on their own schedule, with no fixed hours and deadlines tied to deliverables, map precisely onto this definition. The key is that their schedule is structured by task completion, not by clocked attendance.',
+    wrongAnswerExplanations: {
+      A: 'Time-discipline is characterized by fixed clock-based schedules (arriving/leaving at fixed hours), with time as the commodity exchanged. The scenario describes workers with no fixed hours — eliminating the defining feature of time-discipline. Employment by a company and wage exchange alone are not sufficient to define time-discipline.',
+      B: 'Alienation, as described, involves subdivision of tasks into narrow repetitive fragments with no relationship to the finished object, and estrangement from fellow workers. The scenario describes self-directed, complete project work — the opposite of fragmented factory assembly. Digital vs physical form is not the basis of the passage\'s alienation framework.',
+      D: 'Applying conceptual frameworks to new scenarios is a valid interpretive task; the frameworks can extend beyond their original historical contexts. The question asks which framework best fits, and task-oriented time is explicitly applicable by definition.',
+    },
+    teachingPoint: 'Application questions require: (1) extract the defining features of the concept from the passage; (2) check which features are present/absent in the new scenario. Do not refuse to apply frameworks to new contexts — that is precisely what CARS application questions test.',
+    relatedTopics: ['Application of concepts', 'Task-oriented time', 'Work sociology', 'Extending historical frameworks'],
+  },
+  {
+    id: 'mcat-qb-cars-017',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Social Sciences',
+    contentCategory: 'History and sociology',
+    foundationalConcept: 'CARS: Critical analysis and reasoning',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `The transformation of labor during the industrial era was not merely a change in the mode of production; it was a thoroughgoing reorganization of human time, self-conception, and social life. Before industrialization, most people in agricultural and artisanal economies worked according to what historians have called task-oriented time. The blacksmith worked until the shoe was made; the farmer planted until the field was seeded. The completion of a recognizable task — a product, a harvest, a service rendered — structured the workday. Work and life were not separated into distinct spheres; they interpenetrated, governed by the rhythms of seasons, weather, and biological necessity.
+
+The factory system shattered this relationship. Workers were now required to subordinate their rhythms to the clock, arriving at a fixed hour, working until a fixed hour, and repeating this schedule with a regularity that was itself a new form of discipline. The historian E. P. Thompson famously described this as the shift from task-orientation to time-discipline: workers had to learn not just new skills but a new relationship to time itself, one in which time was a commodity owned by the employer and exchanged for wages. This internalization of clock-time as a moral and social norm — a value in itself, not merely an instrument — is what Thompson called the transformation of "work-sense."
+
+Factory work also transformed the nature of skill and the worker's relationship to the product of labor. In the artisanal economy, a skilled craftsman possessed mastery over an entire production process, from raw material to finished object. The finished product bore the mark of the craftsman's identity and judgment. In the factory, work was subdivided into narrow, repetitive tasks, each requiring only a fraction of the craftsman's range. Workers produced not products but fragments of products, with no individual relationship to the finished object. Karl Marx, observing this transformation, called the result alienation: the worker's estrangement from the product of labor, from the act of production itself, from fellow workers, and ultimately from their own human potential.
+
+Critics of the alienation thesis have argued that this portrait is unduly nostalgic and that craft labor was itself often brutal, exhausting, and socially constrained — that the "freedom" of the artisan was frequently overstated by comparison to the genuine miseries of peasant agriculture. Moreover, they point out that industrial workers rapidly developed new forms of solidarity, identity, and culture — trade unions, working-class neighborhoods, popular amusements — that were not merely pale substitutes for pre-industrial community but genuinely new social formations suited to the new conditions.`,
+    question: 'Which of the following, if true, would most strengthen the critics\' position described in the final paragraph?',
+    choices: [
+      { label: 'A', text: 'Historical records show that pre-industrial craftsmen worked an average of 14 hours per day, six days a week, under masters who controlled their tools and housing' },
+      { label: 'B', text: 'Surveys of early factory workers found that most reported feeling estranged from the products they assembled' },
+      { label: 'C', text: 'Karl Marx wrote extensively about the alienation he personally experienced as a journalist' },
+      { label: 'D', text: 'Trade unions in the nineteenth century focused primarily on restoring artisanal production methods rather than improving factory conditions' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. The critics\' position has two components: (1) craft labor was idealized — it was "brutal, exhausting, and socially constrained"; (2) industrial workers created genuinely new cultural forms. Evidence that pre-industrial craftsmen worked 14-hour days under controlling masters directly supports the critics\' first claim that the "freedom" of the artisan was overstated. This weakens the alienation thesis by undermining its implicit premise that pre-industrial work was more humane.',
+    wrongAnswerExplanations: {
+      B: 'Evidence that factory workers felt alienated would support the Marx/Thompson position (the thesis), not the critics\' position. The critics challenge the alienation thesis, so supporting evidence for alienation weakens the critics\' case.',
+      C: 'Marx\'s personal journalism experience is irrelevant to whether the alienation thesis accurately describes factory workers\' experiences. Personal biographical details about theorists do not validate or invalidate their social theories.',
+      D: 'If trade unions focused on restoring artisanal methods rather than improving factory conditions, this would suggest that workers themselves valued pre-industrial methods — weakening the critics\' claim that industrial workers developed positive new cultural identities suited to their conditions. This strengthens the alienation thesis, not the critics\' position.',
+    },
+    teachingPoint: 'Strengthen questions: identify the exact claim to be strengthened, then find evidence that directly supports a key premise. The critics\' argument hinges on pre-industrial labor being harsh (not idealized). Evidence of harsh pre-industrial conditions supports this. Always verify that the strengthening evidence actually supports the specific claim, not its opposite.',
+    relatedTopics: ['Strengthen/weaken reasoning', 'Critical evidence evaluation', 'Labor history arguments', 'CARS argument structure'],
+  },
+
+  // ── Passage 4: Philosophy of Science (Q018–Q022) ─────────────────────────────
+  {
+    id: 'mcat-qb-cars-018',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy',
+    contentCategory: 'Philosophy of science',
+    foundationalConcept: 'CARS: Critical analysis and reasoning',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The classical image of scientific progress depicts it as a cumulative enterprise: each generation of scientists builds on the secure foundations laid by the last, adding new knowledge to a steadily growing edifice. On this view, the history of science is a story of gradual enlightenment, with errors and superstitions progressively corrected as better evidence accumulates. This picture is comforting and not without merit — it captures something real about the way scientific knowledge grows in relatively stable periods.
+
+But this image was radically disrupted by Thomas Kuhn's account of scientific revolutions. For Kuhn, normal science — the routine work of puzzle-solving within a shared framework of assumptions, methods, and standards he called a "paradigm" — is periodically interrupted by crises. Anomalies accumulate: observations that resist explanation within the existing paradigm. When these anomalies become sufficiently numerous and troubling, the scientific community enters a period of crisis in which the foundations of the field are reopened to question. A scientific revolution occurs when one paradigm is replaced by another — not through gradual accumulation but through a transformation of the conceptual landscape so thorough that Kuhn described scientists working within different paradigms as living in "different worlds."
+
+The most controversial element of Kuhn's argument was the claim that paradigm choice cannot be fully determined by logic and evidence alone. Since competing paradigms often differ not just in their empirical claims but in their standards of evaluation — what counts as a good explanation, which problems are worth solving, what evidence is relevant — a scientist cannot step outside all paradigms to adjudicate between them from a neutral standpoint. This is what Kuhn called the incommensurability of paradigms. It implies that scientific revolutions have an irreducibly social and psychological dimension: allegiance to a new paradigm spreads partly through conversion experiences and generational replacement, not solely through rational deliberation over evidence.
+
+Defenders of scientific rationality were quick to object. Karl Popper had argued that the mark of scientific theories is their falsifiability — the possibility of their being proven wrong by evidence. For Popper, science advances through the bold conjecture of theories and their rigorous testing; when a theory is falsified, it is rejected, and the process of conjecture and refutation continues. On this view, the growth of knowledge is rational even if not cumulative in the simple additive sense — it advances through the active elimination of falsehoods. Critics of Kuhn argue that his incommensurability thesis, pushed to an extreme, dissolves the distinction between scientific revolutions and mere changes in cultural fashion, and that scientists do in fact share sufficient rational standards to evaluate competing theories across paradigm shifts.`,
+    question: 'Which of the following best describes the author\'s attitude toward the "classical image of scientific progress" described in the first paragraph?',
+    choices: [
+      { label: 'A', text: 'The author endorses it fully as an accurate account of how scientific knowledge grows' },
+      { label: 'B', text: 'The author dismisses it entirely as a naive myth with no basis in the history of science' },
+      { label: 'C', text: 'The author is neutral and presents it solely as background before discussing Kuhn' },
+      { label: 'D', text: 'The author acknowledges that it captures something real but treats it as incomplete, subsequently presenting Kuhn\'s challenge' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. The author writes that the classical image "is comforting and not without merit — it captures something real about the way scientific knowledge grows in relatively stable periods." This is a measured, partial endorsement — not full endorsement and not dismissal. The phrase "but this image was radically disrupted" signals that the author views it as incomplete, paving the way for Kuhn\'s alternative account. The author\'s balanced characterization acknowledges merit while signaling its inadequacy.',
+    wrongAnswerExplanations: {
+      A: 'The author does not endorse the classical image fully. The word "but" in paragraph two directly introduces Kuhn as a challenge, and the author describes the image as capturing only "something real" (partial) rather than the full picture.',
+      B: 'The author does not dismiss the classical image entirely. The phrase "not without merit — it captures something real" indicates the author finds partial validity in the classical view, even while presenting Kuhn\'s challenge.',
+      C: 'The author takes a position: partial endorsement combined with recognition of inadequacy. Neutral presentation would not include evaluative language ("comforting," "not without merit," "captures something real") — these are the author\'s own assessments.',
+    },
+    teachingPoint: 'Author attitude questions require attention to hedging and qualification. "Not without merit" is a litotes (understatement via double negative) that affirms merit. "Captures something real" affirms partial accuracy. "But this image was radically disrupted" signals inadequacy. Together these establish a measured, mixed assessment, not full endorsement or dismissal.',
+    relatedTopics: ['Author attitude', 'Hedging language', 'Philosophy of science', 'Nuanced positions'],
+  },
+  {
+    id: 'mcat-qb-cars-019',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy',
+    contentCategory: 'Philosophy of science',
+    foundationalConcept: 'CARS: Critical analysis and reasoning',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `The classical image of scientific progress depicts it as a cumulative enterprise: each generation of scientists builds on the secure foundations laid by the last, adding new knowledge to a steadily growing edifice. On this view, the history of science is a story of gradual enlightenment, with errors and superstitions progressively corrected as better evidence accumulates. This picture is comforting and not without merit — it captures something real about the way scientific knowledge grows in relatively stable periods.
+
+But this image was radically disrupted by Thomas Kuhn's account of scientific revolutions. For Kuhn, normal science — the routine work of puzzle-solving within a shared framework of assumptions, methods, and standards he called a "paradigm" — is periodically interrupted by crises. Anomalies accumulate: observations that resist explanation within the existing paradigm. When these anomalies become sufficiently numerous and troubling, the scientific community enters a period of crisis in which the foundations of the field are reopened to question. A scientific revolution occurs when one paradigm is replaced by another — not through gradual accumulation but through a transformation of the conceptual landscape so thorough that Kuhn described scientists working within different paradigms as living in "different worlds."
+
+The most controversial element of Kuhn's argument was the claim that paradigm choice cannot be fully determined by logic and evidence alone. Since competing paradigms often differ not just in their empirical claims but in their standards of evaluation — what counts as a good explanation, which problems are worth solving, what evidence is relevant — a scientist cannot step outside all paradigms to adjudicate between them from a neutral standpoint. This is what Kuhn called the incommensurability of paradigms. It implies that scientific revolutions have an irreducibly social and psychological dimension: allegiance to a new paradigm spreads partly through conversion experiences and generational replacement, not solely through rational deliberation over evidence.
+
+Defenders of scientific rationality were quick to object. Karl Popper had argued that the mark of scientific theories is their falsifiability — the possibility of their being proven wrong by evidence. For Popper, science advances through the bold conjecture of theories and their rigorous testing; when a theory is falsified, it is rejected, and the process of conjecture and refutation continues. On this view, the growth of knowledge is rational even if not cumulative in the simple additive sense — it advances through the active elimination of falsehoods. Critics of Kuhn argue that his incommensurability thesis, pushed to an extreme, dissolves the distinction between scientific revolutions and mere changes in cultural fashion, and that scientists do in fact share sufficient rational standards to evaluate competing theories across paradigm shifts.`,
+    question: 'A historian of science finds that when the heliocentric model replaced the geocentric model, most astronomers who converted to heliocentrism cited specific quantitative predictions (planetary position data) that the new model handled more accurately than the old. This finding would most directly:',
+    choices: [
+      { label: 'A', text: 'Support Kuhn\'s claim that paradigm change is driven primarily by conversion experiences rather than rational deliberation over evidence' },
+      { label: 'B', text: 'Weaken Kuhn\'s incommensurability thesis by suggesting that shared standards (quantitative predictive accuracy) enabled rational evaluation across the paradigm shift' },
+      { label: 'C', text: 'Support Popper\'s falsificationism by showing that the geocentric model was falsified and therefore rationally rejected' },
+      { label: 'D', text: 'Demonstrate that paradigm choice is determined by sociological factors such as the prestige of heliocentric proponents' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. Kuhn\'s incommensurability thesis holds that paradigm choice "cannot be fully determined by logic and evidence alone" because competing paradigms differ in their standards of evaluation, making neutral adjudication impossible. If astronomers across the paradigm shift used a shared standard — quantitative predictive accuracy of planetary positions — to evaluate and choose heliocentrism, this suggests that sufficient common standards existed for rational cross-paradigm evaluation. This directly challenges the incommensurability claim. Note also that this evidence is consistent with Popper but the question asks what is most directly addressed, and incommensurability is the passage\'s specific claim tested here.',
+    wrongAnswerExplanations: {
+      A: 'The finding shows rational deliberation over evidence (quantitative predictions), not conversion experiences. This is the opposite of what Kuhn\'s conversion-experience claim would predict, so the finding contradicts rather than supports Kuhn\'s emphasis on non-rational mechanisms.',
+      C: 'Popper\'s falsificationism would be supported if the geocentric model was specifically falsified by a decisive test. The finding describes astronomers citing superior predictive accuracy for heliocentrism, but the passage\'s context most directly positions this against Kuhn\'s incommensurability. While consistent with Popper, the most direct relevance is to Kuhn\'s incommensurability thesis, which the passage identifies as the most controversial claim.',
+      D: 'The finding specifically identifies quantitative predictive accuracy as the criterion for conversion — a rational, evidence-based criterion, not a sociological one. A sociological explanation would require evidence that prestige, authority, or social pressure (not evidence quality) drove the conversion.',
+    },
+    teachingPoint: 'When applying new evidence to philosophical claims, identify precisely which claim in the passage the evidence most directly tests. Kuhn\'s incommensurability says paradigm choice can\'t be determined by shared rational standards. Evidence that astronomers used shared quantitative standards to choose directly contradicts this specific claim.',
+    relatedTopics: ['Philosophy of science', 'Kuhn\'s paradigms', 'Incommensurability', 'Evidence and theory choice', 'CARS inference'],
+  },
+  {
+    id: 'mcat-qb-cars-020',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy',
+    contentCategory: 'Philosophy of science',
+    foundationalConcept: 'CARS: Critical analysis and reasoning',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The classical image of scientific progress depicts it as a cumulative enterprise: each generation of scientists builds on the secure foundations laid by the last, adding new knowledge to a steadily growing edifice. On this view, the history of science is a story of gradual enlightenment, with errors and superstitions progressively corrected as better evidence accumulates. This picture is comforting and not without merit — it captures something real about the way scientific knowledge grows in relatively stable periods.
+
+But this image was radically disrupted by Thomas Kuhn's account of scientific revolutions. For Kuhn, normal science — the routine work of puzzle-solving within a shared framework of assumptions, methods, and standards he called a "paradigm" — is periodically interrupted by crises. Anomalies accumulate: observations that resist explanation within the existing paradigm. When these anomalies become sufficiently numerous and troubling, the scientific community enters a period of crisis in which the foundations of the field are reopened to question. A scientific revolution occurs when one paradigm is replaced by another — not through gradual accumulation but through a transformation of the conceptual landscape so thorough that Kuhn described scientists working within different paradigms as living in "different worlds."
+
+The most controversial element of Kuhn's argument was the claim that paradigm choice cannot be fully determined by logic and evidence alone. Since competing paradigms often differ not just in their empirical claims but in their standards of evaluation — what counts as a good explanation, which problems are worth solving, what evidence is relevant — a scientist cannot step outside all paradigms to adjudicate between them from a neutral standpoint. This is what Kuhn called the incommensurability of paradigms. It implies that scientific revolutions have an irreducibly social and psychological dimension: allegiance to a new paradigm spreads partly through conversion experiences and generational replacement, not solely through rational deliberation over evidence.
+
+Defenders of scientific rationality were quick to object. Karl Popper had argued that the mark of scientific theories is their falsifiability — the possibility of their being proven wrong by evidence. For Popper, science advances through the bold conjecture of theories and their rigorous testing; when a theory is falsified, it is rejected, and the process of conjecture and refutation continues. On this view, the growth of knowledge is rational even if not cumulative in the simple additive sense — it advances through the active elimination of falsehoods. Critics of Kuhn argue that his incommensurability thesis, pushed to an extreme, dissolves the distinction between scientific revolutions and mere changes in cultural fashion, and that scientists do in fact share sufficient rational standards to evaluate competing theories across paradigm shifts.`,
+    question: 'The passage implies that Kuhn and Popper would agree on which of the following?',
+    choices: [
+      { label: 'A', text: 'Scientific progress is straightforwardly cumulative, with each generation building on the last' },
+      { label: 'B', text: 'Scientific growth involves the replacement of theories, not merely their supplementation, and is therefore not simply additive' },
+      { label: 'C', text: 'Paradigm choice is determined primarily by social and psychological factors rather than evidence' },
+      { label: 'D', text: 'A theory is scientific only if it has been confirmed by numerous independent experiments' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. Both Kuhn and Popper reject simple additive accumulation. Kuhn describes scientific revolutions as wholesale paradigm replacements, not cumulative additions. Popper states that "the growth of knowledge is rational even if not cumulative in the simple additive sense — it advances through the active elimination of falsehoods." Both therefore agree that scientific progress involves replacement of ideas (old theories/paradigms displaced), not mere addition. This is the common ground implied by the passage.',
+    wrongAnswerExplanations: {
+      A: 'The passage explicitly presents Kuhn as disrupting the classical cumulative image and Popper as saying growth is "not cumulative in the simple additive sense." Neither endorses simple cumulative progress.',
+      C: 'This is Kuhn\'s position (social and psychological dimension of paradigm change), not Popper\'s. Popper is presented as a defender of scientific rationality through conjecture and refutation — a rational, evidence-based process. The passage explicitly contrasts them on this point.',
+      D: 'Popper\'s criterion for scientific theories is falsifiability (the possibility of being proven wrong), not confirmation by experiments. Requiring experimental confirmation would be a verificationist, not falsificationist, criterion. Kuhn also does not endorse this criterion.',
+    },
+    teachingPoint: 'Comparison questions require careful reading of what each position explicitly states. Find the exact claim attributed to each theorist and identify overlap. Here, Kuhn emphasizes paradigm replacement; Popper explicitly says growth is "not cumulative in the simple additive sense." The overlap is: both reject simple additive accumulation in favor of replacement/refutation dynamics.',
+    relatedTopics: ['Comparing theorists', 'Kuhn vs Popper', 'Scientific progress models', 'Inference questions'],
+  },
+  {
+    id: 'mcat-qb-cars-021',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy',
+    contentCategory: 'Philosophy of science',
+    foundationalConcept: 'CARS: Critical analysis and reasoning',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The classical image of scientific progress depicts it as a cumulative enterprise: each generation of scientists builds on the secure foundations laid by the last, adding new knowledge to a steadily growing edifice. On this view, the history of science is a story of gradual enlightenment, with errors and superstitions progressively corrected as better evidence accumulates. This picture is comforting and not without merit — it captures something real about the way scientific knowledge grows in relatively stable periods.
+
+But this image was radically disrupted by Thomas Kuhn's account of scientific revolutions. For Kuhn, normal science — the routine work of puzzle-solving within a shared framework of assumptions, methods, and standards he called a "paradigm" — is periodically interrupted by crises. Anomalies accumulate: observations that resist explanation within the existing paradigm. When these anomalies become sufficiently numerous and troubling, the scientific community enters a period of crisis in which the foundations of the field are reopened to question. A scientific revolution occurs when one paradigm is replaced by another — not through gradual accumulation but through a transformation of the conceptual landscape so thorough that Kuhn described scientists working within different paradigms as living in "different worlds."
+
+The most controversial element of Kuhn's argument was the claim that paradigm choice cannot be fully determined by logic and evidence alone. Since competing paradigms often differ not just in their empirical claims but in their standards of evaluation — what counts as a good explanation, which problems are worth solving, what evidence is relevant — a scientist cannot step outside all paradigms to adjudicate between them from a neutral standpoint. This is what Kuhn called the incommensurability of paradigms. It implies that scientific revolutions have an irreducibly social and psychological dimension: allegiance to a new paradigm spreads partly through conversion experiences and generational replacement, not solely through rational deliberation over evidence.
+
+Defenders of scientific rationality were quick to object. Karl Popper had argued that the mark of scientific theories is their falsifiability — the possibility of their being proven wrong by evidence. For Popper, science advances through the bold conjecture of theories and their rigorous testing; when a theory is falsified, it is rejected, and the process of conjecture and refutation continues. On this view, the growth of knowledge is rational even if not cumulative in the simple additive sense — it advances through the active elimination of falsehoods. Critics of Kuhn argue that his incommensurability thesis, pushed to an extreme, dissolves the distinction between scientific revolutions and mere changes in cultural fashion, and that scientists do in fact share sufficient rational standards to evaluate competing theories across paradigm shifts.`,
+    question: 'The author uses the phrase "living in different worlds" in the second paragraph most likely to convey that:',
+    choices: [
+      { label: 'A', text: 'scientists in different paradigms have fundamentally different conceptual frameworks that make their approaches mutually unintelligible in important ways' },
+      { label: 'B', text: 'scientists in different countries cannot communicate because of language barriers' },
+      { label: 'C', text: 'different scientific disciplines study literally different natural worlds and therefore cannot compare findings' },
+      { label: 'D', text: 'scientists in competing paradigms experience hostility and cannot collaborate professionally' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. The passage uses "different worlds" in the context of Kuhn\'s paradigm theory, specifically describing how thoroughgoing the conceptual transformation of a scientific revolution is. The phrase is metaphorical (indicated by Kuhn "described" them this way), conveying that the conceptual landscape — assumptions, methods, standards, what counts as evidence — differs so deeply between paradigms that scientists cannot straightforwardly translate between their perspectives. This connects directly to the incommensurability claim in paragraph three.',
+    wrongAnswerExplanations: {
+      B: 'Language barriers between countries are not discussed anywhere in the passage. The "different worlds" metaphor is about conceptual and paradigmatic differences within a scientific field, not geographic or linguistic differences.',
+      C: 'Different disciplines studying different phenomena would be a literal interpretation of "different worlds." But the passage is about scientists within the same field (e.g., physics) across a paradigm shift — they study the same natural world but interpret it through incompatible conceptual frameworks. The passage describes this as a metaphor, not literal world separation.',
+      D: 'Professional hostility and collaboration difficulties are not what the passage attributes to this phrase. The passage is describing conceptual and epistemic differences — the framework through which observations are interpreted — not social or interpersonal dynamics.',
+    },
+    teachingPoint: 'Figurative language in CARS: when an author attributes a phrase like "living in different worlds" to a theorist, it is almost always metaphorical. Always read the surrounding context to determine what the metaphor describes — here it describes the depth of conceptual transformation in a paradigm shift, tied directly to Kuhn\'s incommensurability thesis.',
+    relatedTopics: ['Figurative language in philosophy', 'Kuhn\'s paradigm', 'Author\'s meaning', 'Metaphor interpretation'],
+  },
+  {
+    id: 'mcat-qb-cars-022',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy',
+    contentCategory: 'Philosophy of science',
+    foundationalConcept: 'CARS: Critical analysis and reasoning',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `The classical image of scientific progress depicts it as a cumulative enterprise: each generation of scientists builds on the secure foundations laid by the last, adding new knowledge to a steadily growing edifice. On this view, the history of science is a story of gradual enlightenment, with errors and superstitions progressively corrected as better evidence accumulates. This picture is comforting and not without merit — it captures something real about the way scientific knowledge grows in relatively stable periods.
+
+But this image was radically disrupted by Thomas Kuhn's account of scientific revolutions. For Kuhn, normal science — the routine work of puzzle-solving within a shared framework of assumptions, methods, and standards he called a "paradigm" — is periodically interrupted by crises. Anomalies accumulate: observations that resist explanation within the existing paradigm. When these anomalies become sufficiently numerous and troubling, the scientific community enters a period of crisis in which the foundations of the field are reopened to question. A scientific revolution occurs when one paradigm is replaced by another — not through gradual accumulation but through a transformation of the conceptual landscape so thorough that Kuhn described scientists working within different paradigms as living in "different worlds."
+
+The most controversial element of Kuhn's argument was the claim that paradigm choice cannot be fully determined by logic and evidence alone. Since competing paradigms often differ not just in their empirical claims but in their standards of evaluation — what counts as a good explanation, which problems are worth solving, what evidence is relevant — a scientist cannot step outside all paradigms to adjudicate between them from a neutral standpoint. This is what Kuhn called the incommensurability of paradigms. It implies that scientific revolutions have an irreducibly social and psychological dimension: allegiance to a new paradigm spreads partly through conversion experiences and generational replacement, not solely through rational deliberation over evidence.
+
+Defenders of scientific rationality were quick to object. Karl Popper had argued that the mark of scientific theories is their falsifiability — the possibility of their being proven wrong by evidence. For Popper, science advances through the bold conjecture of theories and their rigorous testing; when a theory is falsified, it is rejected, and the process of conjecture and refutation continues. On this view, the growth of knowledge is rational even if not cumulative in the simple additive sense — it advances through the active elimination of falsehoods. Critics of Kuhn argue that his incommensurability thesis, pushed to an extreme, dissolves the distinction between scientific revolutions and mere changes in cultural fashion, and that scientists do in fact share sufficient rational standards to evaluate competing theories across paradigm shifts.`,
+    question: 'Which of the following is the most accurate summary of the passage as a whole?',
+    choices: [
+      { label: 'A', text: 'Kuhn\'s account of scientific revolutions is the definitive description of how science progresses, and Popper\'s alternative should be rejected' },
+      { label: 'B', text: 'The classical cumulative view of scientific progress is entirely adequate and Kuhn\'s challenge is based on misunderstanding normal science' },
+      { label: 'C', text: 'The MCAT passage contrasts Kuhn and Popper and concludes that a synthesis of the two is needed' },
+      { label: 'D', text: 'The passage surveys three accounts of scientific progress — cumulative growth, Kuhn\'s paradigm revolutions, and Popper\'s falsificationism — presenting each with its strengths and challenges without conclusively endorsing one' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. The passage covers (1) the classical cumulative image (paragraph 1, presented with partial merit); (2) Kuhn\'s paradigm revolution model (paragraphs 2–3, presented in detail but followed by objections); (3) Popper\'s falsificationism (paragraph 4, presented as a response to Kuhn, with critics of Kuhn endorsing its rationalist spirit). The author presents each view and its challenges without resolving which is correct. The overall structure is a balanced survey of positions in an ongoing philosophical debate.',
+    wrongAnswerExplanations: {
+      A: 'The author does not endorse Kuhn as definitive. The fourth paragraph presents critics who challenge Kuhn\'s incommensurability thesis, and the author does not rebut these critics. Declaring Kuhn definitive goes beyond what the passage supports.',
+      B: 'The passage explicitly states the classical view "was radically disrupted" by Kuhn and presents substantial challenges to it. The classical view is acknowledged to have merit only for stable periods, not as fully adequate.',
+      C: 'The passage does not call for or suggest a synthesis. It presents three positions and leaves the debate open. Calling for synthesis would require the author to explicitly propose integration of Kuhn and Popper — which the passage does not do.',
+    },
+    teachingPoint: 'Main idea summaries for multi-position passages should capture all major views discussed and characterize the author\'s overall stance. If the author presents multiple positions without resolving them, the main idea is "surveying an open debate," not "endorsing one position." Watch for choices that overstate the author\'s commitment to any single view.',
+    relatedTopics: ['Main idea', 'Summary questions', 'Multi-position passages', 'Philosophy of science'],
+  },
 ]
