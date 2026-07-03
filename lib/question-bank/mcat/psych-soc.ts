@@ -2377,4 +2377,323 @@ Researchers studying mammography screening trained radiologists to read mammogra
     teachingPoint: 'Role strain vs. role conflict: CRITICAL MCAT distinction. Role strain = tension from INCOMPATIBLE DEMANDS WITHIN ONE ROLE. Examples: physician who must be compassionate AND efficient; judge who applies the law AND considers mercy; nurse who must respect autonomy AND prevent harm (within the nursing role). Role conflict = tension between OBLIGATIONS OF DIFFERENT ROLES. Examples: working parent (work role vs. parent role), student-athlete (academic role vs. athlete role). Test: Is there ONE role or TWO? ONE = role strain. TWO = role conflict. Role exit = process of leaving a central role (marriage → divorce, physician → retirement).',
     relatedTopics: ['Role strain definition', 'Role strain vs role conflict', 'Role conflict', 'Social roles in medicine', 'Role exit Ebaugh'],
   },
+
+  // ── Passage 10: Medicalization and Social Control (Q073–Q077) ──
+  {
+    id: 'mcat-qb-ps-073',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '10A',
+    foundationalConcept: '10',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Medicalization describes the process by which nonmedical problems become defined and treated as medical problems, typically in terms of illnesses or disorders. Sociologist Peter Conrad has documented how behaviors and conditions ranging from alcoholism to childbirth to hyperactivity in children were progressively brought under medical jurisdiction throughout the twentieth century — that is, reconceptualized as conditions requiring professional diagnosis, treatment, and management rather than as moral failures, lifestyle choices, or social problems.
+
+On one account, medicalization has produced important humanitarian gains. Defining alcoholism as a disease rather than a moral failing reduced stigma and opened access to treatment for individuals who might otherwise have been criminalized or moralistically condemned. Pathologizing childhood hyperactivity provided a framework for educational accommodations and pharmaceutical interventions that many families report as transformative. These benefits are real and should not be dismissed.
+
+But critics have identified a less benign dimension of medicalization: its capacity to function as a mechanism of social control. When deviant or non-normative behaviors are classified as symptoms of disorders, the implicit effect is to shift responsibility from social structures to individual bodies. Poverty-related stress becomes an anxiety disorder requiring medication; occupational alienation becomes burnout requiring counseling; structural racism is translated into health disparities attributed to individual "lifestyle factors." In each case, the framing of suffering as medical depoliticizes what could otherwise be understood as evidence of systemic failure requiring structural policy responses. The patient becomes the site of intervention, not the social system.
+
+Additionally, medicalization extends professional and institutional jurisdiction over new domains of life. Pharmaceutical companies, insurance systems, and medical licensing bodies acquire oversight of behaviors previously managed through informal social sanctions, religious guidance, or personal choice. This expansion of medical authority is not simply neutral expertise — it reorganizes who has legitimate power to define normalcy and abnormality, and who profits from those definitions.
+
+The sociological analysis of medicalization thus offers a dual framework: it is neither simply a story of progressive liberation from stigma nor simply a story of insidious social control. Rather, medicalization reflects the complex, often contradictory ways in which medical knowledge and institutions function as both humanitarian resources and instruments of normalization and power.`,
+    question: 'Which of the following best describes the main idea of the passage?',
+    choices: [
+      { label: 'A', text: 'Medicalization is an unambiguously positive development because redefining behaviors as medical conditions reduces stigma and opens access to treatment for vulnerable populations' },
+      { label: 'B', text: 'Medicalization has produced genuine humanitarian benefits, but also functions as a mechanism of social control by depoliticizing structural causes of suffering and extending professional jurisdiction over new domains of life' },
+      { label: 'C', text: 'Peter Conrad\'s sociological framework proves that medicalization is primarily driven by pharmaceutical companies seeking to expand their markets, rather than by genuine medical need' },
+      { label: 'D', text: 'Medicalization should be abolished because the social control functions of medical institutions outweigh the humanitarian benefits of redefining deviant behaviors as illnesses' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The passage presents a dual framework (explicitly stated in paragraph 5): medicalization has produced real humanitarian gains (paragraph 2) AND functions as a mechanism of social control (paragraphs 3-4). The main idea captures both dimensions — the benefits AND the critical concerns about depoliticization and extension of professional jurisdiction. Choice B accurately summarizes this balanced analytical stance without distorting either side.',
+    wrongAnswerExplanations: {
+      A: 'The passage explicitly rejects "unambiguously positive" framing. Paragraphs 3 and 4 identify serious critical concerns (social control, depoliticization, extension of medical authority). The author\'s own final paragraph says medicalization is "neither simply a story of progressive liberation" — directly contradicting choice A\'s claim of unambiguous positivity.',
+      C: 'The passage does not argue that pharmaceutical companies are the PRIMARY driver of medicalization, nor does it "prove" this claim. Pharmaceutical companies are mentioned in paragraph 4 as one beneficiary of medicalization\'s expansion of jurisdiction, but Conrad\'s framework as described in the passage focuses on the broader social process — not exclusively or primarily on pharmaceutical industry motivations.',
+      D: 'The author does NOT recommend abolishing medicalization. The passage adopts an analytical stance ("sociological analysis...offers a dual framework") rather than a policy recommendation. The final paragraph explicitly says medicalization is "neither simply...liberation nor simply...social control" — a refusal of the simplistic abolition-or-endorsement frame.',
+    },
+    teachingPoint: 'MCAT passage main idea: look for the author\'s own framing statement, often in the final paragraph. Here: "medicalization reflects the complex, often contradictory ways in which medical knowledge and institutions function as both humanitarian resources and instruments of normalization and power." Main idea = both/and, not either/or. Eliminate: (A) too positive; (C) too narrow/specific claim; (D) recommendation not in passage. The correct answer is nuanced: benefits AND social control concerns.',
+    relatedTopics: ['Medicalization sociology', 'Conrad medicalization framework', 'Social control and medicine', 'Depoliticization of structural causes', 'Medical jurisdiction expansion'],
+  },
+  {
+    id: 'mcat-qb-ps-074',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '10A',
+    foundationalConcept: '10',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Medicalization describes the process by which nonmedical problems become defined and treated as medical problems, typically in terms of illnesses or disorders. Sociologist Peter Conrad has documented how behaviors and conditions ranging from alcoholism to childbirth to hyperactivity in children were progressively brought under medical jurisdiction throughout the twentieth century — that is, reconceptualized as conditions requiring professional diagnosis, treatment, and management rather than as moral failures, lifestyle choices, or social problems.
+
+On one account, medicalization has produced important humanitarian gains. Defining alcoholism as a disease rather than a moral failing reduced stigma and opened access to treatment for individuals who might otherwise have been criminalized or moralistically condemned. Pathologizing childhood hyperactivity provided a framework for educational accommodations and pharmaceutical interventions that many families report as transformative. These benefits are real and should not be dismissed.
+
+But critics have identified a less benign dimension of medicalization: its capacity to function as a mechanism of social control. When deviant or non-normative behaviors are classified as symptoms of disorders, the implicit effect is to shift responsibility from social structures to individual bodies. Poverty-related stress becomes an anxiety disorder requiring medication; occupational alienation becomes burnout requiring counseling; structural racism is translated into health disparities attributed to individual "lifestyle factors." In each case, the framing of suffering as medical depoliticizes what could otherwise be understood as evidence of systemic failure requiring structural policy responses. The patient becomes the site of intervention, not the social system.
+
+Additionally, medicalization extends professional and institutional jurisdiction over new domains of life. Pharmaceutical companies, insurance systems, and medical licensing bodies acquire oversight of behaviors previously managed through informal social sanctions, religious guidance, or personal choice. This expansion of medical authority is not simply neutral expertise — it reorganizes who has legitimate power to define normalcy and abnormality, and who profits from those definitions.
+
+The sociological analysis of medicalization thus offers a dual framework: it is neither simply a story of progressive liberation from stigma nor simply a story of insidious social control. Rather, medicalization reflects the complex, often contradictory ways in which medical knowledge and institutions function as both humanitarian resources and instruments of normalization and power.`,
+    question: 'The author\'s critique of medicalization in paragraph 3 rests on which of the following unstated assumptions?',
+    choices: [
+      { label: 'A', text: 'Medical treatments are always less effective than structural policy interventions for conditions that have social causes' },
+      { label: 'B', text: 'All psychological conditions are ultimately caused by social structures, with no biological component' },
+      { label: 'C', text: 'All medical diagnoses are deliberately constructed by pharmaceutical companies to increase profit margins' },
+      { label: 'D', text: 'When a condition is framed as medical (individual pathology), this framing makes structural explanations and policy responses less cognitively or politically salient, reducing the likelihood that the structural causes will be addressed' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. The critique in paragraph 3 is specifically that medicalization "depoliticizes what could otherwise be understood as evidence of systemic failure requiring structural policy responses." For this depoliticization argument to hold, it must be true that defining a problem as medical (individual pathology) renders structural explanations and policy responses less visible or politically viable. The author doesn\'t state this assumption explicitly — it is the underlying premise that connects "medical framing" to "structural causes go unaddressed." Without this assumed causal link between framing and policy salience, the depoliticization argument would not follow.',
+    wrongAnswerExplanations: {
+      A: 'The author does NOT claim that structural policy interventions are always more effective than medical treatments. The passage acknowledges real benefits of medical interventions (paragraph 2). The critique is about the FRAMING and its political effects — not about comparative treatment effectiveness.',
+      B: 'The author does not claim all psychological conditions are purely social in origin with no biological component. The passage is sociologically focused and does not make biological claims about disease causation. The critique is about what FRAMING does politically, not about the ultimate etiology of conditions.',
+      C: 'Pharmaceutical company profit is mentioned in paragraph 4 as one example of who benefits from expanding medical jurisdiction, but the author does not claim all diagnoses are deliberately constructed for profit. This is an overstatement that goes beyond the passage\'s actual argument. The author presents medicalization as a complex social process with multiple drivers.',
+    },
+    teachingPoint: 'MCAT implicit assumption questions: find the premise that must be true for the argument to work. Depoliticization argument structure: Medical framing → [ASSUMED: reduces salience of structural causes] → structural policy responses less likely. The assumed link between framing and political/cognitive salience is the unstated premise. Without it, there is no reason to think medical framing CAUSES structural solutions to be neglected. Choice D captures this: "framing as medical makes structural explanations less salient."',
+    relatedTopics: ['Medicalization and depoliticization', 'MCAT implicit assumption', 'Framing effects in medicine', 'Structural vs individual explanations', 'Sociological critique of medicine'],
+  },
+  {
+    id: 'mcat-qb-ps-075',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '10A',
+    foundationalConcept: '10',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Medicalization describes the process by which nonmedical problems become defined and treated as medical problems, typically in terms of illnesses or disorders. Sociologist Peter Conrad has documented how behaviors and conditions ranging from alcoholism to childbirth to hyperactivity in children were progressively brought under medical jurisdiction throughout the twentieth century — that is, reconceptualized as conditions requiring professional diagnosis, treatment, and management rather than as moral failures, lifestyle choices, or social problems.
+
+On one account, medicalization has produced important humanitarian gains. Defining alcoholism as a disease rather than a moral failing reduced stigma and opened access to treatment for individuals who might otherwise have been criminalized or moralistically condemned. Pathologizing childhood hyperactivity provided a framework for educational accommodations and pharmaceutical interventions that many families report as transformative. These benefits are real and should not be dismissed.
+
+But critics have identified a less benign dimension of medicalization: its capacity to function as a mechanism of social control. When deviant or non-normative behaviors are classified as symptoms of disorders, the implicit effect is to shift responsibility from social structures to individual bodies. Poverty-related stress becomes an anxiety disorder requiring medication; occupational alienation becomes burnout requiring counseling; structural racism is translated into health disparities attributed to individual "lifestyle factors." In each case, the framing of suffering as medical depoliticizes what could otherwise be understood as evidence of systemic failure requiring structural policy responses. The patient becomes the site of intervention, not the social system.
+
+Additionally, medicalization extends professional and institutional jurisdiction over new domains of life. Pharmaceutical companies, insurance systems, and medical licensing bodies acquire oversight of behaviors previously managed through informal social sanctions, religious guidance, or personal choice. This expansion of medical authority is not simply neutral expertise — it reorganizes who has legitimate power to define normalcy and abnormality, and who profits from those definitions.
+
+The sociological analysis of medicalization thus offers a dual framework: it is neither simply a story of progressive liberation from stigma nor simply a story of insidious social control. Rather, medicalization reflects the complex, often contradictory ways in which medical knowledge and institutions function as both humanitarian resources and instruments of normalization and power.`,
+    question: 'Which of the following findings, if true, would most directly strengthen the author\'s depoliticization concern articulated in paragraph 3?',
+    choices: [
+      { label: 'A', text: 'Evidence that in countries where poverty-related mental health conditions were framed primarily as medical disorders requiring treatment, government spending on social safety net programs (housing, income support, food security) decreased significantly compared to countries where the same conditions were framed as social problems requiring policy responses' },
+      { label: 'B', text: 'Survey data showing that the majority of physicians believe social determinants of health are more important than genetics in causing mental health conditions' },
+      { label: 'C', text: 'Data showing that antidepressant prescriptions are more effective than CBT for treating depression in low-income populations, confirming the utility of medical interventions for socially-embedded conditions' },
+      { label: 'D', text: 'A historical analysis showing that the medicalization of alcoholism occurred primarily in response to lobbying by the alcohol industry seeking to deflect moral blame and regulatory intervention' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. The depoliticization concern in paragraph 3 is that framing conditions as medical (individual pathology) reduces the likelihood of structural policy responses to structural causes. Choice A directly tests this claim: if countries that frame poverty-related mental health conditions as medical disorders show less spending on social safety net programs, this provides empirical evidence that medical framing is associated with reduced structural policy action — exactly what the depoliticization concern predicts.',
+    wrongAnswerExplanations: {
+      B: 'Physician beliefs about social determinants do not directly address whether medicalization REDUCES structural policy responses. Physicians can believe in social determinants and still use medical frameworks in practice. Physician beliefs are not the mechanism described in paragraph 3 (which is about political/policy salience, not physician cognition).',
+      C: 'Evidence that medical treatments are effective for socially-embedded conditions would support medical interventions but does NOT address whether structural policy responses are also needed or whether medicalization REDUCES the likelihood of structural responses. Treatment effectiveness is orthogonal to the depoliticization concern.',
+      D: 'Industry lobbying as a driver of alcoholism medicalization would provide information about the CAUSES of medicalization (who drives it) but does not directly address the EFFECTS of medicalization on structural policy responses. The depoliticization concern is about what medical framing DOES, not about who caused the framing.',
+    },
+    teachingPoint: 'MCAT strengthen question: match the evidence directly to the SPECIFIC claim being tested. Depoliticization claim: medical framing reduces structural policy responses. Direct evidence: countries with medical framing show LESS social policy spending (choice A). Weak or orthogonal: physician beliefs (B), treatment effectiveness (C), causes of medicalization (D). The strongest evidence directly shows the causal link claimed: medical framing → reduced structural policy.',
+    relatedTopics: ['Depoliticization evidence', 'Medicalization policy effects', 'MCAT strengthen argument', 'Social determinants and policy', 'Framing and political response'],
+  },
+  {
+    id: 'mcat-qb-ps-076',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '10A',
+    foundationalConcept: '10',
+    scientificSkill: 'Skill 1',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Medicalization describes the process by which nonmedical problems become defined and treated as medical problems, typically in terms of illnesses or disorders. Sociologist Peter Conrad has documented how behaviors and conditions ranging from alcoholism to childbirth to hyperactivity in children were progressively brought under medical jurisdiction throughout the twentieth century — that is, reconceptualized as conditions requiring professional diagnosis, treatment, and management rather than as moral failures, lifestyle choices, or social problems.
+
+On one account, medicalization has produced important humanitarian gains. Defining alcoholism as a disease rather than a moral failing reduced stigma and opened access to treatment for individuals who might otherwise have been criminalized or moralistically condemned. Pathologizing childhood hyperactivity provided a framework for educational accommodations and pharmaceutical interventions that many families report as transformative. These benefits are real and should not be dismissed.
+
+But critics have identified a less benign dimension of medicalization: its capacity to function as a mechanism of social control. When deviant or non-normative behaviors are classified as symptoms of disorders, the implicit effect is to shift responsibility from social structures to individual bodies. Poverty-related stress becomes an anxiety disorder requiring medication; occupational alienation becomes burnout requiring counseling; structural racism is translated into health disparities attributed to individual "lifestyle factors." In each case, the framing of suffering as medical depoliticizes what could otherwise be understood as evidence of systemic failure requiring structural policy responses. The patient becomes the site of intervention, not the social system.
+
+Additionally, medicalization extends professional and institutional jurisdiction over new domains of life. Pharmaceutical companies, insurance systems, and medical licensing bodies acquire oversight of behaviors previously managed through informal social sanctions, religious guidance, or personal choice. This expansion of medical authority is not simply neutral expertise — it reorganizes who has legitimate power to define normalcy and abnormality, and who profits from those definitions.
+
+The sociological analysis of medicalization thus offers a dual framework: it is neither simply a story of progressive liberation from stigma nor simply a story of insidious social control. Rather, medicalization reflects the complex, often contradictory ways in which medical knowledge and institutions function as both humanitarian resources and instruments of normalization and power.`,
+    question: 'What is the primary function of paragraph 3 in the structure of the passage?',
+    choices: [
+      { label: 'A', text: 'To present empirical evidence proving that medicalization always causes more harm than good, countering the examples of humanitarian benefit in paragraph 2' },
+      { label: 'B', text: 'To introduce the humanitarian benefits of medicalization as a prelude to the main argument in paragraph 4' },
+      { label: 'C', text: 'To identify the critical dimension of medicalization as social control — specifically, the depoliticization of structural causes of suffering by shifting responsibility to individual bodies and reducing the pressure for systemic policy responses' },
+      { label: 'D', text: 'To summarize the passage\'s final conclusion that medicalization is best understood as a neutral technical process rather than a politically-loaded institutional transformation' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. Paragraph 3 opens "But critics have identified a less benign dimension of medicalization: its capacity to function as a mechanism of social control." This signals a pivot from the humanitarian benefits discussed in paragraph 2 to the critical analysis. The paragraph then elaborates the specific mechanism: classifying non-normative behaviors as medical symptoms shifts responsibility from social structures to individual bodies, depoliticizing structural causes. Choice C accurately describes this function — introducing the social control dimension with its specific mechanism of depoliticization.',
+    wrongAnswerExplanations: {
+      A: 'Paragraph 3 does NOT present empirical evidence proving medicalization always causes more harm than good. The author presents a conceptual critique (how medicalization can function as social control) but does not claim it ALWAYS causes more harm. The passage explicitly rejects such absolutism in paragraph 5 ("neither simply...liberation nor simply...social control").',
+      B: 'Paragraph 2 (not paragraph 3) discusses humanitarian benefits. Paragraph 3 pivots from humanitarian benefits to social control concerns. The role of paragraph 3 is to introduce the critical counter-narrative, not to set up paragraph 4.',
+      D: 'Paragraph 3 does the OPPOSITE of presenting medicalization as neutral. It specifically critiques medicalization as a politically-loaded process of social control that reorganizes power and depoliticizes structural causes. The neutrality framing is precisely what paragraph 3 challenges.',
+    },
+    teachingPoint: 'MCAT paragraph function questions: identify the role of each paragraph in the argumentative arc. Paragraph 2: humanitarian benefits. Paragraph 3: "But" pivot — social control critique, depoliticization mechanism. Paragraph 4: extension of critique to professional jurisdiction and power. Paragraph 5: synthesis, dual framework. Signaling language for paragraph function: "But critics have identified" = introduces counter-argument/critique. "Additionally" = extends the same critical thread. "Thus" = synthesis/conclusion.',
+    relatedTopics: ['Medicalization social control', 'MCAT paragraph function', 'Depoliticization mechanism', 'Passage structure analysis', 'Structural vs individual framing'],
+  },
+  {
+    id: 'mcat-qb-ps-077',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '10A',
+    foundationalConcept: '10',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `Medicalization describes the process by which nonmedical problems become defined and treated as medical problems, typically in terms of illnesses or disorders. Sociologist Peter Conrad has documented how behaviors and conditions ranging from alcoholism to childbirth to hyperactivity in children were progressively brought under medical jurisdiction throughout the twentieth century — that is, reconceptualized as conditions requiring professional diagnosis, treatment, and management rather than as moral failures, lifestyle choices, or social problems.
+
+On one account, medicalization has produced important humanitarian gains. Defining alcoholism as a disease rather than a moral failing reduced stigma and opened access to treatment for individuals who might otherwise have been criminalized or moralistically condemned. Pathologizing childhood hyperactivity provided a framework for educational accommodations and pharmaceutical interventions that many families report as transformative. These benefits are real and should not be dismissed.
+
+But critics have identified a less benign dimension of medicalization: its capacity to function as a mechanism of social control. When deviant or non-normative behaviors are classified as symptoms of disorders, the implicit effect is to shift responsibility from social structures to individual bodies. Poverty-related stress becomes an anxiety disorder requiring medication; occupational alienation becomes burnout requiring counseling; structural racism is translated into health disparities attributed to individual "lifestyle factors." In each case, the framing of suffering as medical depoliticizes what could otherwise be understood as evidence of systemic failure requiring structural policy responses. The patient becomes the site of intervention, not the social system.
+
+Additionally, medicalization extends professional and institutional jurisdiction over new domains of life. Pharmaceutical companies, insurance systems, and medical licensing bodies acquire oversight of behaviors previously managed through informal social sanctions, religious guidance, or personal choice. This expansion of medical authority is not simply neutral expertise — it reorganizes who has legitimate power to define normalcy and abnormality, and who profits from those definitions.
+
+The sociological analysis of medicalization thus offers a dual framework: it is neither simply a story of progressive liberation from stigma nor simply a story of insidious social control. Rather, medicalization reflects the complex, often contradictory ways in which medical knowledge and institutions function as both humanitarian resources and instruments of normalization and power.`,
+    question: 'In the context of paragraph 1 and 4, what does the term "medical jurisdiction" most nearly mean as used in this passage?',
+    choices: [
+      { label: 'A', text: 'The legal authority of medical licensing boards to prosecute practitioners who practice without a license' },
+      { label: 'B', text: 'The scope of professional authority and institutional power that medicine and allied medical institutions (physicians, pharmaceutical companies, insurance systems) exercise over defining, diagnosing, treating, and managing behaviors and conditions' },
+      { label: 'C', text: 'The geographic territory within which a hospital system has authority to provide services and bill for treatments' },
+      { label: 'D', text: 'The technical capacity of physicians to accurately diagnose and treat conditions, based on medical education and training standards' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. In paragraph 1, "medical jurisdiction" is introduced to describe the domain of behaviors and conditions brought under medical authority — "reconceptualized as conditions requiring professional diagnosis, treatment, and management." Paragraph 4 extends this: medicalization "extends professional and institutional jurisdiction over new domains of life," with pharmaceutical companies, insurance systems, and licensing bodies acquiring oversight. The context makes clear that "jurisdiction" refers to SCOPE OF PROFESSIONAL AND INSTITUTIONAL AUTHORITY — who has legitimate power to define, diagnose, and manage behaviors. Choice B captures this institutional and professional sense.',
+    wrongAnswerExplanations: {
+      A: 'Legal licensing authority is a narrow legal concept, not what the passage means by "medical jurisdiction." The passage uses "jurisdiction" in a sociological sense — the domain of social life that an institution governs — not in a legal licensing enforcement sense.',
+      C: 'Geographic territory is a common legal meaning of "jurisdiction" but is not relevant here. The passage is describing which BEHAVIORS and CONDITIONS fall under medical authority, not which geographic territories hospitals serve.',
+      D: 'Technical diagnostic capacity describes physician competence, not institutional authority. "Medical jurisdiction" in this passage refers to power over defining normalcy/abnormality, not to the technical quality of diagnosis. The passage is sociological (about power and authority), not technical (about diagnostic accuracy).',
+    },
+    teachingPoint: 'MCAT vocabulary in context: sociological uses of familiar terms often differ from everyday or legal meanings. "Jurisdiction" in sociology (and in Conrad\'s medicalization framework) = the domain of social life over which a profession or institution exercises legitimate authority. Medical jurisdiction = conditions and behaviors that medicine claims authority to define, diagnose, treat, manage. Expanding medical jurisdiction = more behaviors/conditions become subject to medical oversight. This is distinct from legal jurisdiction (courts), geographic jurisdiction (territories), or technical competence.',
+    relatedTopics: ['Medical jurisdiction definition', 'Medicalization vocabulary', 'Professional authority in medicine', 'Sociological analysis of medicine', 'Conrad medicalization'],
+  },
+
+  // ── Discrete Q078–Q082 ──────────────────────────────────────────────────────
+  {
+    id: 'mcat-qb-ps-078',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '7C',
+    foundationalConcept: '7',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'discrete',
+    question: 'A participant in a working memory study is asked to silently repeat a list of unrelated words over a 10-second delay period to prevent forgetting, while simultaneously performing a spatial tracking task with their eyes. The silent repetition helps the participant retain the word list but does not interfere with the spatial tracking. According to Baddeley\'s multicomponent model of working memory, which subsystem is performing the silent repetition function?',
+    choices: [
+      { label: 'A', text: 'Visuospatial sketchpad — it stores both the verbal word list and the spatial tracking information simultaneously' },
+      { label: 'B', text: 'Central executive — it coordinates all working memory operations, including verbal rehearsal and spatial tracking, through a unified attentional system' },
+      { label: 'C', text: 'Episodic buffer — it integrates verbal and spatial information from the phonological loop and visuospatial sketchpad into a single coherent representation' },
+      { label: 'D', text: 'Phonological loop — it maintains verbal/phonological information through articulatory rehearsal (subvocal speech or "inner voice"), specifically designed for language-based information; the visuospatial sketchpad independently handles the spatial tracking task, explaining why both can occur simultaneously without mutual interference' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. Baddeley\'s multicomponent model identifies the phonological loop as the subsystem specialized for verbal/phonological information. It has two components: (1) the phonological store (holds verbal information for ~2 seconds, subject to decay) and (2) the articulatory rehearsal process (subvocal inner speech that refreshes the phonological store by mentally repeating items). Silent repetition is exactly this articulatory rehearsal — the "inner voice" cycling through the word list. The critical feature of Baddeley\'s model is that the phonological loop and visuospatial sketchpad are functionally independent: they operate in parallel without mutual interference. This is why verbal rehearsal (phonological loop) does not disrupt spatial tracking (visuospatial sketchpad), and vice versa.',
+    wrongAnswerExplanations: {
+      A: 'The visuospatial sketchpad handles visual and spatial information (e.g., mental images, spatial layouts), NOT verbal word lists. Storing verbal information (words) in the visuospatial sketchpad would be a category error in Baddeley\'s model. The visuospatial sketchpad handles the SPATIAL TRACKING task in this scenario, not the word list.',
+      B: 'The central executive is the attention-controlling component of Baddeley\'s model — it coordinates the other subsystems and manages divided attention. It does not itself perform rehearsal functions. The central executive allocates resources between the phonological loop and visuospatial sketchpad; it is not the system doing the silent repetition.',
+      C: 'The episodic buffer is a third storage component (added by Baddeley in 2000) that integrates information from multiple subsystems and from long-term memory into coherent episodes. It holds multimodal representations but is not the active rehearsal system. The episodic buffer does not perform articulatory rehearsal of verbal information.',
+    },
+    teachingPoint: 'Baddeley\'s working memory model: (1) Phonological loop = verbal/phonological rehearsal; two parts: phonological STORE (passive decay ~2s) and articulatory rehearsal loop (active "inner voice" refreshing the store). (2) Visuospatial sketchpad = visual and spatial information processing. (3) Central executive = attentional controller, allocates resources, divides attention. (4) Episodic buffer = multimodal integration, links to long-term memory. Key MCAT point: phonological loop and visuospatial sketchpad are INDEPENDENT → dual-task studies: verbal + spatial = little interference; verbal + verbal = high interference.',
+    relatedTopics: ['Baddeley working memory model', 'Phonological loop', 'Articulatory rehearsal', 'Visuospatial sketchpad', 'Working memory subsystems'],
+  },
+  {
+    id: 'mcat-qb-ps-079',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '7D',
+    foundationalConcept: '7',
+    scientificSkill: 'Skill 3',
+    difficulty: 'hard',
+    questionType: 'discrete',
+    question: 'A physician reviewing a chart notes that a patient has a 45-year smoking history. The patient presents with chest tightness and elevated troponin. When interpreting an ambiguous ECG finding that could represent either early myocardial ischemia or a normal variant, the physician immediately interprets it as ischemia. Which cognitive bias most directly explains this judgment, and why is it difficult to detect through introspection?',
+    choices: [
+      { label: 'A', text: 'Anchoring bias: the prominent smoking history functions as the initial anchor that disproportionately influences subsequent interpretation of ambiguous findings, biasing the physician toward a cardiac diagnosis; it is difficult to detect because anchoring operates pre-consciously, and the physician\'s final interpretation feels like rational inference from the full clinical picture rather than distortion by an arbitrary starting point' },
+      { label: 'B', text: 'Availability heuristic: the physician recently treated a patient with a similar presentation who was diagnosed with MI, making myocardial ischemia more cognitively accessible; this availability leads the physician to overestimate the likelihood of MI in the current patient' },
+      { label: 'C', text: 'Representativeness heuristic: the patient\'s presentation matches the prototype of a myocardial infarction patient (smoker, chest tightness, elevated troponin), leading the physician to classify the ambiguous ECG as ischemic based on similarity to the prototype without adequately weighing base rates' },
+      { label: 'D', text: 'Dunning-Kruger effect: the physician lacks sufficient ECG expertise to recognize the normal variant and therefore overestimates their interpretation ability, producing a confident but incorrect ischemia diagnosis' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. Anchoring bias involves over-reliance on the FIRST piece of information encountered (the anchor) when making subsequent judgments. In this scenario, the 45-year smoking history appears at the top of the chart review — it is the initial, prominent information. When the physician then encounters an ambiguous ECG finding, the prior anchor (smoking → cardiac risk) disproportionately pulls the interpretation toward ischemia. The reason it is difficult to detect: anchoring operates below conscious awareness. The physician experiences their conclusion as "I weighed all the evidence and concluded ischemia," not as "I was biased by the first thing I read." The information feels integrated, not distorted by a starting point.',
+    wrongAnswerExplanations: {
+      B: 'The availability heuristic is plausible but the question does not specify that the physician recently treated a similar MI patient. Without this contextual trigger for availability, the heuristic is not the most direct explanation. The scenario specifically emphasizes that the physician first NOTED the smoking history — making anchoring a more specific and precise fit than availability, which would require a different triggering event (recent exposure to similar cases).',
+      C: 'The representativeness heuristic is also plausible — the patient does match the prototype of an MI patient. However, representativeness involves judging probability by similarity to a prototype category, not specifically by the influence of an initial anchor on subsequent judgment. If the question asked why the physician diagnosed MI based on the combination of findings WITHOUT emphasizing the sequence (smoking noted first, then ambiguous ECG), representativeness would be a stronger choice. The scenario specifically highlights the SEQUENCE (smoking noted first, then ambiguous ECG interpreted through that lens), pointing to anchoring.',
+      D: 'The Dunning-Kruger effect describes a metacognitive bias in which individuals with low competence in a domain overestimate their competence. The scenario does not suggest the physician lacks ECG expertise — it describes a judgment about an ambiguous finding (which could be ambiguous for any competent reader) that is distorted by prior information. Dunning-Kruger would predict that a LOW-COMPETENCE physician fails to recognize the limits of their knowledge; the bias described here is not about competence level but about how prior anchoring information distorts interpretation.',
+    },
+    teachingPoint: 'Anchoring bias in clinical reasoning: initial information (anchor) disproportionately influences subsequent judgment. Classic medical example: chief complaint, first test result, or prominent history item as anchor → biased interpretation of ambiguous subsequent findings. Why hard to detect: anchoring is unconscious; final judgment feels like rational inference. Compare: availability = overweighting easily recalled events; representativeness = judging by prototype similarity; anchoring = initial information distorting subsequent assessment. Debiasing: explicitly generate alternative diagnoses before committing; seek information that contradicts the anchor.',
+    relatedTopics: ['Anchoring bias', 'Clinical cognitive bias', 'Heuristics and bias', 'Anchoring vs availability vs representativeness', 'Medical decision making'],
+  },
+  {
+    id: 'mcat-qb-ps-080',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '7B',
+    foundationalConcept: '7',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'discrete',
+    question: 'A student with high test anxiety joins a study group. After attending the study group, the student\'s anxiety about upcoming exams decreases significantly. As a result, the student attends the study group more frequently. Which operant conditioning principle most directly accounts for the increased study group attendance?',
+    choices: [
+      { label: 'A', text: 'Positive reinforcement — the study group sessions are pleasurable social experiences that reward attendance by adding a positive stimulus, increasing the frequency of attendance' },
+      { label: 'B', text: 'Punishment — the reduction in anxiety represents a removal of a positive stimulus (the anxiety was motivating the student to study), and its reduction constitutes a punishment that paradoxically increases behavior' },
+      { label: 'C', text: 'Negative reinforcement — the study group removes or reduces the aversive stimulus (test anxiety), and the removal of this aversive state increases the probability of future study group attendance; behavior that terminates or avoids an aversive stimulus is strengthened' },
+      { label: 'D', text: 'Negative punishment — the study group removes the anxiety, which is an unwanted positive stimulus, decreasing future anxiety-related behavior' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. Negative reinforcement: removal or reduction of an AVERSIVE stimulus increases the probability of the behavior that caused the removal. Key components: (1) Behavior: attending study group; (2) Consequence: anxiety (aversive stimulus) is REDUCED/REMOVED; (3) Effect: frequency of study group attendance INCREASES. This is negative reinforcement because the aversive stimulus (anxiety) is removed, and this removal strengthens the behavior. The "negative" in negative reinforcement refers to REMOVAL of a stimulus, not to anything bad or unpleasant about the process — the outcome is that behavior increases (reinforced). "Negative" = subtraction. "Reinforcement" = behavior frequency increases.',
+    wrongAnswerExplanations: {
+      A: 'Positive reinforcement involves ADDING a pleasant/desired stimulus (positive stimulus) to increase behavior frequency. The scenario describes REMOVAL of an aversive stimulus (anxiety), not addition of a pleasant stimulus. If the study group also provided enjoyable social interaction that increased attendance independently, that would be positive reinforcement — but the question specifically attributes the increased attendance to the decreased anxiety.',
+      B: 'Punishment (positive or negative) DECREASES behavior frequency, not increases it. The scenario explicitly states that study group attendance INCREASES. No form of punishment can account for increased behavior frequency. Additionally, anxiety is an aversive stimulus, not a positive stimulus, so calling its removal a "removal of a positive stimulus" is incorrect.',
+      D: 'Negative punishment = REMOVING a desired/positive stimulus to DECREASE behavior. Two errors: (1) Anxiety is an aversive stimulus, not a positive/desired stimulus; (2) Attendance INCREASES, not decreases. Negative punishment would predict behavior frequency decreasing (since a desirable stimulus is removed). The scenario shows behavior frequency increasing.',
+    },
+    teachingPoint: 'Operant conditioning — 4 quadrants: Positive reinforcement: Add pleasant stimulus → behavior increases. Negative reinforcement: Remove aversive stimulus → behavior increases. Positive punishment: Add aversive stimulus → behavior decreases. Negative punishment: Remove pleasant stimulus → behavior decreases. Negative reinforcement common confusions: (1) "negative" ≠ bad — it means subtraction; (2) escape and avoidance learning are both negative reinforcement; (3) removing anxiety = negative reinforcement, behavior frequency increases. Medical relevance: patients who avoid anxiety-provoking situations experience negative reinforcement → avoidance behavior strengthens.',
+    relatedTopics: ['Negative reinforcement', 'Operant conditioning quadrants', 'Anxiety and avoidance learning', 'Positive vs negative reinforcement', 'Operant conditioning in health behavior'],
+  },
+  {
+    id: 'mcat-qb-ps-081',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '10A',
+    foundationalConcept: '10',
+    scientificSkill: 'Skill 3',
+    difficulty: 'medium',
+    questionType: 'discrete',
+    question: 'Research consistently shows that Black patients in the United States receive less pain medication than white patients with equivalent pain severity scores. Studies measuring explicit racial bias (via survey questionnaires) among healthcare providers find little to no difference in stated attitudes toward Black vs. white patients. Which sociological and psychological explanation is MOST consistent with this pattern of findings?',
+    choices: [
+      { label: 'A', text: 'The racial disparities in pain management are explained primarily by socioeconomic differences: Black patients are more likely to be uninsured and to receive care at underfunded facilities, so controlling for insurance status would eliminate the disparity' },
+      { label: 'B', text: 'The racial disparities are most directly explained by implicit racial bias — unconscious, automatic associations between race and characteristics like pain tolerance or drug-seeking behavior that influence clinical judgment without the provider\'s awareness; these biases would not be captured by explicit bias measures, explaining the dissociation between survey findings and observed behavior' },
+      { label: 'C', text: 'The racial disparities are best explained by patient-level factors: Black patients are statistically less likely to report high pain scores to providers, so the apparent disparity reflects differences in patient communication rather than differential provider treatment' },
+      { label: 'D', text: 'The finding that explicit bias measures show no differences proves that provider bias is not a meaningful factor, and the disparity therefore must be entirely attributable to biological or genetic differences in pain processing between racial groups' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The key feature of the scenario is the DISSOCIATION between explicit bias measures (no difference) and observed behavior (treatment disparity). This pattern is the classic signature of IMPLICIT BIAS: unconscious automatic associations that influence behavior independently of conscious attitudes. Implicit racial bias in medical contexts has been documented via Implicit Association Tests (IAT) and includes stereotypes about pain tolerance, drug-seeking behavior, and treatment compliance. Because implicit biases operate below conscious awareness, they would not be captured by explicit survey measures — precisely explaining the apparent contradiction between "no stated bias" and "disparate treatment."',
+    wrongAnswerExplanations: {
+      A: 'While socioeconomic factors contribute to healthcare disparities, the question states that the disparity is found with "equivalent pain severity scores" — suggesting some control for clinical presentation. More importantly, the specific dissociation between explicit bias (no difference) and behavior (disparity) is not explained by socioeconomic factors alone. Explicit bias measures would presumably capture socioeconomically-motivated prejudice as well. The implicit bias explanation specifically accounts for why SURVEY measures show no bias while disparate BEHAVIOR is observed.',
+      C: 'The scenario specifies "equivalent pain severity scores," which suggests some measurement of pain was equated across groups. If patient-reported pain scores were systematically lower in Black patients, the design described would have controlled for this. The question asks about a specific dissociation (no explicit bias, observed disparity), which is the hallmark of implicit rather than explicit bias or patient-level factors.',
+      D: 'The absence of explicit bias does NOT prove provider bias is absent — it only proves EXPLICIT, CONSCIOUSLY-HELD bias is not detected by self-report. Implicit biases are definitionally distinct from explicit biases and are not captured by standard surveys. Additionally, attributing racial health disparities to biological/genetic differences is scientifically unsupported and conflates race (a social construct) with genetics. Race does not predict meaningful genetic differences in pain physiology.',
+    },
+    teachingPoint: 'Implicit vs. explicit bias in healthcare: Explicit bias = consciously held attitudes, measured by surveys/questionnaires. Implicit bias = unconscious automatic associations, measured by IAT or observed in behavior. Dissociation (no explicit bias + behavioral disparity) → implicit bias most likely. Healthcare implicit bias examples: under-treatment of Black patients for pain (documented), lower likelihood of cardiac catheterization referral for Black/female patients, lower empathy responses. Racialized medical myths (e.g., "Black patients have higher pain tolerance") are documented examples of stereotype-based implicit bias with no biological basis.',
+    relatedTopics: ['Implicit bias in healthcare', 'Explicit vs implicit racial bias', 'Healthcare disparities', 'Pain management disparities', 'Racialized medical stereotypes'],
+  },
+  {
+    id: 'mcat-qb-ps-082',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '7D',
+    foundationalConcept: '7',
+    scientificSkill: 'Skill 3',
+    difficulty: 'hard',
+    questionType: 'discrete',
+    question: 'A research team develops a psychological test to assess "risk tolerance" in surgical patients, claiming the scores will predict post-operative decision-making behavior. The test is administered twice to the same patients one month apart, yielding a test-retest correlation of r = 0.92. However, when test scores are used to predict actual post-operative decision-making outcomes, the correlation is only r = 0.18. Which of the following conclusions about this measure is most appropriate?',
+    choices: [
+      { label: 'A', text: 'The measure has both high reliability and high validity, because r = 0.92 is excellent for both test-retest reliability and predictive validity' },
+      { label: 'B', text: 'The measure has high reliability but inadequate validity: the test consistently measures something (r = 0.92 test-retest), but that something is NOT what the researchers intended to predict (post-operative decision-making behavior); high reliability is necessary but not sufficient for validity' },
+      { label: 'C', text: 'The measure has low reliability and high validity: the low correlation between test scores and outcomes (r = 0.18) indicates that the test is measuring multiple different constructs simultaneously, reducing reliability' },
+      { label: 'D', text: 'The measure has high validity but unknown reliability, because the predictive correlation (r = 0.18) establishes that the test does predict post-operative behavior, confirming criterion validity' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Wait — Choice D cannot be correct. r = 0.18 is a very weak correlation (explained variance = 0.18² = 0.032 = only 3.2% of variance accounted for), indicating POOR predictive validity. The correct answer is B. Test-retest reliability of r = 0.92 indicates the test consistently produces the same scores over time (high reliability). Predictive validity correlation of r = 0.18 indicates the test poorly predicts the outcome it claims to predict (low/inadequate validity). This is the classic pattern illustrating that reliability is NECESSARY but NOT SUFFICIENT for validity — a test can be highly reliable (consistently measuring something) yet invalid (measuring the wrong thing or something irrelevant to the intended criterion).',
+    wrongAnswerExplanations: {
+      A: 'r = 0.18 is NOT excellent predictive validity. To evaluate predictive validity, the r value of 0.18 means the test explains only 18² = 3.24% of the variance in post-operative decision-making. This is very weak predictive validity. High reliability (r = 0.92) alone does not ensure high validity — a test can reliably measure the wrong construct.',
+      C: 'This inverts the psychometric properties. r = 0.92 test-retest INDICATES high reliability (not low). r = 0.18 with the criterion INDICATES low predictive validity (not high validity). Reliability and validity are assessed by DIFFERENT correlations. The test-retest r = 0.92 clearly indicates high reliability.',
+      D: 'r = 0.18 indicates poor predictive validity (not confirmed criterion validity). A valid predictive measure should explain a meaningful portion of variance in the criterion. r = 0.18 accounts for only ~3% of variance — this does not constitute adequate predictive validity. Additionally, reliability is not "unknown" — the test-retest correlation of r = 0.92 directly measures reliability.',
+    },
+    teachingPoint: 'Reliability vs. validity distinction: Reliability = consistency; measured by test-retest (same measure twice, high r = high reliability). Validity = measures what it claims; measured by correlation with criterion/outcome. Key principle: high reliability is NECESSARY but NOT SUFFICIENT for high validity. A test can be: HIGH reliability + HIGH validity (good test); HIGH reliability + LOW validity (consistently measuring the wrong thing — this scenario); LOW reliability + LOW validity (random noise); LOW reliability + HIGH validity (logically impossible — unreliable test cannot consistently predict).',
+    relatedTopics: ['Test-retest reliability', 'Predictive validity', 'Reliability vs validity', 'Psychometric properties', 'Criterion validity'],
+  },
 ]

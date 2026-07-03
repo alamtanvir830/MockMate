@@ -2530,4 +2530,368 @@ The author concludes that a rigorous study of symbolic meaning must therefore re
     teachingPoint: 'CARS strengthen questions: identify the most specific and central claim to strengthen. Author\'s core claim: symbolic meaning is contested through POWER (not just rational discourse); naturalization serves dominant groups. C strengthens this by showing: (1) changing symbolic meaning requires POLITICAL POWER; (2) without political mobilization, dominant meanings resist change — proving they are backed by power, not just convention. The most direct strengthener addresses the author\'s MOST DISTINCTIVE claim (power dimension), not just the general claim (social construction).',
     relatedTopics: ['CARS strengthen argument', 'Symbolic reclamation and power', 'Political contestation of meaning', 'Social construction and power', 'Naturalization evidence'],
   },
+
+  // ── Passage 15: Sociology of Expertise and Democratic Governance (Q073–Q077) ──
+  {
+    id: 'mcat-qb-cars-073',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Social Sciences',
+    contentCategory: '9',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The relationship between scientific expertise and democratic governance has become one of the defining tensions of contemporary liberal societies. On one account, democratic legitimacy requires that citizens be genuinely capable of evaluating the claims that govern their lives. Yet the accelerating specialization of scientific knowledge seems to undermine this requirement: the gap between expert and lay understanding widens with each new discipline, leaving citizens increasingly dependent on authorities they cannot directly assess.
+
+Some theorists have responded by proposing what they call the "deficit model" of public understanding — the view that public skepticism toward scientific consensus reflects an informational gap that education and communication can close. If only citizens possessed the relevant facts and understood the relevant methods, the argument goes, their views would converge toward those of the expert community. This deficit model has been extensively criticized. Empirical research consistently shows that informational provision alone neither reliably increases agreement with scientific consensus nor improves citizens' ability to evaluate expert claims. In some cases, providing more scientific information to already politically motivated individuals deepens rather than diminishes disagreement, a phenomenon sometimes described as "motivated reasoning."
+
+A more promising alternative is to aim not at certainty transmission but at calibration — helping citizens develop accurate estimates of what scientists do and do not know, including the normal presence of uncertainty, controversy, and revision within science itself. On this view, the appropriate epistemic goal is not that citizens believe what scientists believe, but that they have roughly accurate beliefs about the structure of scientific knowledge and the degree of consensus or uncertainty around specific claims. Calibrated citizens would neither dismiss scientific expertise altogether nor treat scientific findings as equivalent to mathematical certainties immune from further revision.
+
+This proposal faces a significant complication: it assumes that distinguishing genuine scientific uncertainty from manufactured uncertainty is itself a tractable task for lay citizens. Sociologists of science have documented cases in which powerful commercial or ideological interests have deliberately produced the appearance of scientific controversy where the scientific community has in fact reached consensus — a strategy deployed in debates over tobacco and health, fossil fuels and climate change, and pharmaceutical regulation. If lay citizens cannot reliably distinguish genuine scientific debate from strategic campaigns designed to mimic it, calibration may leave them more vulnerable to manipulation, not less.
+
+The resolution of this dilemma ultimately depends on prior judgments about epistemic agency that democratic theory has not yet fully worked out. What is clear is that the naive deficit model — the idea that ignorance is the primary obstacle to public understanding of science — cannot be the endpoint of this inquiry.`,
+    question: 'Which of the following best describes the main argument of the passage?',
+    choices: [
+      { label: 'A', text: 'The deficit model of public understanding is superior to the calibration model because informational provision is more practically achievable than epistemic calibration' },
+      { label: 'B', text: 'Calibration, rather than certainty transmission, is the more defensible goal for public engagement with science, though this goal faces a serious complication regarding citizens\' ability to distinguish genuine from manufactured uncertainty' },
+      { label: 'C', text: 'Democratic governance is incompatible with the existence of scientific expertise because citizens can never develop adequate understanding of complex technical claims' },
+      { label: 'D', text: 'Manufactured uncertainty is the primary cause of public skepticism toward scientific consensus, and commercial interests are therefore the main obstacle to democratic deliberation about science' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The passage progresses from critique of the deficit model (paragraphs 1-2) to proposal of calibration as an alternative (paragraph 3) to a significant complication for calibration (paragraph 4: distinguishing genuine vs. manufactured uncertainty) to a guarded conclusion (paragraph 5). The main argument is that calibration is the more defensible goal, but the author honestly acknowledges a serious complication in paragraph 4. Choice B captures both the endorsement of calibration and the complication, matching the passage\'s full arc.',
+    wrongAnswerExplanations: {
+      A: 'The passage argues the OPPOSITE: the deficit model is extensively criticized and shown to be inadequate (paragraph 2). The calibration model is presented as "more promising." The passage does not evaluate practical implementation difficulty as a criterion.',
+      C: 'The author does not argue this extreme conclusion. The author seeks a workable reconciliation (calibration), not a declaration of incompatibility between expertise and democracy. The passage concludes with an open inquiry, not a declaration of impossibility.',
+      D: 'Manufactured uncertainty is discussed as a complication (paragraph 4), not as the main argument. The passage is broadly concerned with the structural tension between expertise and democratic legitimacy — manufactured uncertainty is one obstacle among several, not the identified primary cause of skepticism.',
+    },
+    teachingPoint: 'CARS main argument: look for the passage\'s overall structure. Here: (1) problem introduced; (2) inadequate solution critiqued; (3) better solution proposed; (4) complication to better solution identified; (5) modest conclusion. The "main argument" must encompass all major moves, especially the complication. Passages that present complications to their own proposals are common CARS structures that test whether students read to the end.',
+    relatedTopics: ['CARS main argument', 'Deficit model of science', 'Calibration epistemic goal', 'Manufactured uncertainty', 'Science and democracy'],
+  },
+  {
+    id: 'mcat-qb-cars-074',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Social Sciences',
+    contentCategory: '9',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `The relationship between scientific expertise and democratic governance has become one of the defining tensions of contemporary liberal societies. On one account, democratic legitimacy requires that citizens be genuinely capable of evaluating the claims that govern their lives. Yet the accelerating specialization of scientific knowledge seems to undermine this requirement: the gap between expert and lay understanding widens with each new discipline, leaving citizens increasingly dependent on authorities they cannot directly assess.
+
+Some theorists have responded by proposing what they call the "deficit model" of public understanding — the view that public skepticism toward scientific consensus reflects an informational gap that education and communication can close. If only citizens possessed the relevant facts and understood the relevant methods, the argument goes, their views would converge toward those of the expert community. This deficit model has been extensively criticized. Empirical research consistently shows that informational provision alone neither reliably increases agreement with scientific consensus nor improves citizens' ability to evaluate expert claims. In some cases, providing more scientific information to already politically motivated individuals deepens rather than diminishes disagreement, a phenomenon sometimes described as "motivated reasoning."
+
+A more promising alternative is to aim not at certainty transmission but at calibration — helping citizens develop accurate estimates of what scientists do and do not know, including the normal presence of uncertainty, controversy, and revision within science itself. On this view, the appropriate epistemic goal is not that citizens believe what scientists believe, but that they have roughly accurate beliefs about the structure of scientific knowledge and the degree of consensus or uncertainty around specific claims. Calibrated citizens would neither dismiss scientific expertise altogether nor treat scientific findings as equivalent to mathematical certainties immune from further revision.
+
+This proposal faces a significant complication: it assumes that distinguishing genuine scientific uncertainty from manufactured uncertainty is itself a tractable task for lay citizens. Sociologists of science have documented cases in which powerful commercial or ideological interests have deliberately produced the appearance of scientific controversy where the scientific community has in fact reached consensus — a strategy deployed in debates over tobacco and health, fossil fuels and climate change, and pharmaceutical regulation. If lay citizens cannot reliably distinguish genuine scientific debate from strategic campaigns designed to mimic it, calibration may leave them more vulnerable to manipulation, not less.
+
+The resolution of this dilemma ultimately depends on prior judgments about epistemic agency that democratic theory has not yet fully worked out. What is clear is that the naive deficit model — the idea that ignorance is the primary obstacle to public understanding of science — cannot be the endpoint of this inquiry.`,
+    question: 'The author\'s calibration proposal rests on which of the following unstated assumptions?',
+    choices: [
+      { label: 'A', text: 'All scientific claims are equally uncertain and should therefore be treated with equal skepticism by lay citizens' },
+      { label: 'B', text: 'Citizens who understand the deficit model will automatically adopt the calibration approach without institutional support' },
+      { label: 'C', text: 'Expert consensus is always the product of genuine inquiry rather than commercial or institutional interest' },
+      { label: 'D', text: 'Citizens are capable of developing sufficiently accurate meta-level knowledge about the structure of scientific knowledge and the distribution of expert agreement, even without mastery of the underlying technical details' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. The calibration proposal requires that citizens develop "accurate beliefs about the structure of scientific knowledge and the degree of consensus or uncertainty around specific claims" (paragraph 3) without necessarily understanding the technical details themselves. For the proposal to succeed, citizens must be capable of this meta-level assessment. The passage does not explicitly state this assumption but identifies a related complication in paragraph 4 (distinguishing genuine from manufactured uncertainty), which reveals that this very capacity is what is assumed — and is precisely what is at risk.',
+    wrongAnswerExplanations: {
+      A: 'The calibration model explicitly does NOT assume equal uncertainty for all claims. Calibration means having "accurate estimates" — which requires distinguishing HIGH-consensus claims from genuinely contested ones. Treating all claims with equal skepticism would be the opposite of calibrated reasoning.',
+      B: 'The passage does not describe a mechanism by which understanding the deficit model automatically produces calibrated citizens. These are independent proposals evaluated on their merits.',
+      C: 'The author explicitly does NOT assume this — paragraph 4 acknowledges that manufactured uncertainty is a real phenomenon in which commercial interests have produced the appearance of controversy. This would actually undermine the author\'s concern about manufactured uncertainty if assumed.',
+    },
+    teachingPoint: 'CARS implicit assumption questions: identify what MUST be true for the argument to hold. For calibration to work, citizens need accurate meta-level knowledge about scientific consensus. The author implicitly assumes they can develop this. The paragraph 4 complication challenges precisely this assumption — if citizens can\'t distinguish genuine from manufactured uncertainty, the meta-level knowledge is corrupted.',
+    relatedTopics: ['CARS implicit assumptions', 'Epistemic calibration', 'Meta-level knowledge', 'Scientific literacy', 'CARS argument structure'],
+  },
+  {
+    id: 'mcat-qb-cars-075',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Social Sciences',
+    contentCategory: '9',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The relationship between scientific expertise and democratic governance has become one of the defining tensions of contemporary liberal societies. On one account, democratic legitimacy requires that citizens be genuinely capable of evaluating the claims that govern their lives. Yet the accelerating specialization of scientific knowledge seems to undermine this requirement: the gap between expert and lay understanding widens with each new discipline, leaving citizens increasingly dependent on authorities they cannot directly assess.
+
+Some theorists have responded by proposing what they call the "deficit model" of public understanding — the view that public skepticism toward scientific consensus reflects an informational gap that education and communication can close. If only citizens possessed the relevant facts and understood the relevant methods, the argument goes, their views would converge toward those of the expert community. This deficit model has been extensively criticized. Empirical research consistently shows that informational provision alone neither reliably increases agreement with scientific consensus nor improves citizens' ability to evaluate expert claims. In some cases, providing more scientific information to already politically motivated individuals deepens rather than diminishes disagreement, a phenomenon sometimes described as "motivated reasoning."
+
+A more promising alternative is to aim not at certainty transmission but at calibration — helping citizens develop accurate estimates of what scientists do and do not know, including the normal presence of uncertainty, controversy, and revision within science itself. On this view, the appropriate epistemic goal is not that citizens believe what scientists believe, but that they have roughly accurate beliefs about the structure of scientific knowledge and the degree of consensus or uncertainty around specific claims. Calibrated citizens would neither dismiss scientific expertise altogether nor treat scientific findings as equivalent to mathematical certainties immune from further revision.
+
+This proposal faces a significant complication: it assumes that distinguishing genuine scientific uncertainty from manufactured uncertainty is itself a tractable task for lay citizens. Sociologists of science have documented cases in which powerful commercial or ideological interests have deliberately produced the appearance of scientific controversy where the scientific community has in fact reached consensus — a strategy deployed in debates over tobacco and health, fossil fuels and climate change, and pharmaceutical regulation. If lay citizens cannot reliably distinguish genuine scientific debate from strategic campaigns designed to mimic it, calibration may leave them more vulnerable to manipulation, not less.
+
+The resolution of this dilemma ultimately depends on prior judgments about epistemic agency that democratic theory has not yet fully worked out. What is clear is that the naive deficit model — the idea that ignorance is the primary obstacle to public understanding of science — cannot be the endpoint of this inquiry.`,
+    question: 'Which of the following findings, if true, would most directly challenge the author\'s calibration proposal?',
+    choices: [
+      { label: 'A', text: 'Research showing that citizens who received calibration-focused science education were LESS able to distinguish high-consensus from genuinely contested scientific claims than those who received traditional deficit-model instruction' },
+      { label: 'B', text: 'Evidence that expert scientific communities occasionally disagree about whether a given claim constitutes a scientific consensus' },
+      { label: 'C', text: 'Data demonstrating that manufactured uncertainty campaigns are now less common than they were in the tobacco era' },
+      { label: 'D', text: 'A study finding that citizens\' political party affiliation predicts their science-related policy preferences even when they have accurate factual knowledge about scientific consensus' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. The calibration proposal requires that citizens develop accurate estimates of consensus vs. uncertainty. If calibration-focused education produces citizens LESS able to distinguish high-consensus from genuinely contested claims, the proposed method actively fails at its core goal. This is a direct challenge: the mechanism by which the author proposes to achieve calibration is counterproductive.',
+    wrongAnswerExplanations: {
+      B: 'If experts sometimes disagree about consensus thresholds, this would be a complication the proposal must navigate, but it does not challenge the proposal itself — the calibration model already acknowledges genuine uncertainty and controversy as normal features of science. This is weaker than choice A.',
+      C: 'If manufactured uncertainty campaigns are less common, this would actually SUPPORT the calibration proposal by reducing the complication identified in paragraph 4. This evidence strengthens, not challenges, the proposal.',
+      D: 'This relates to the deficit model critique (motivated reasoning). It shows factual knowledge doesn\'t determine policy preferences — but does not directly challenge calibration, which aims for accurate beliefs about the STRUCTURE of scientific knowledge, not at changing policy preferences.',
+    },
+    teachingPoint: 'CARS "most challenges" questions: find evidence that attacks the proposal\'s core mechanism. Calibration mechanism: citizens develop accurate meta-level knowledge through calibration-focused education. Choice A shows this mechanism produces the OPPOSITE effect. Compare: choice B identifies complications (weaker); choice C removes a complication (strengthens); choice D attacks the rival deficit model.',
+    relatedTopics: ['CARS weaken argument', 'Calibration and science education', 'Scientific literacy challenge', 'CARS experimental evidence', 'CARS argument structure'],
+  },
+  {
+    id: 'mcat-qb-cars-076',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Social Sciences',
+    contentCategory: '9',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `The relationship between scientific expertise and democratic governance has become one of the defining tensions of contemporary liberal societies. On one account, democratic legitimacy requires that citizens be genuinely capable of evaluating the claims that govern their lives. Yet the accelerating specialization of scientific knowledge seems to undermine this requirement: the gap between expert and lay understanding widens with each new discipline, leaving citizens increasingly dependent on authorities they cannot directly assess.
+
+Some theorists have responded by proposing what they call the "deficit model" of public understanding — the view that public skepticism toward scientific consensus reflects an informational gap that education and communication can close. If only citizens possessed the relevant facts and understood the relevant methods, the argument goes, their views would converge toward those of the expert community. This deficit model has been extensively criticized. Empirical research consistently shows that informational provision alone neither reliably increases agreement with scientific consensus nor improves citizens' ability to evaluate expert claims. In some cases, providing more scientific information to already politically motivated individuals deepens rather than diminishes disagreement, a phenomenon sometimes described as "motivated reasoning."
+
+A more promising alternative is to aim not at certainty transmission but at calibration — helping citizens develop accurate estimates of what scientists do and do not know, including the normal presence of uncertainty, controversy, and revision within science itself. On this view, the appropriate epistemic goal is not that citizens believe what scientists believe, but that they have roughly accurate beliefs about the structure of scientific knowledge and the degree of consensus or uncertainty around specific claims. Calibrated citizens would neither dismiss scientific expertise altogether nor treat scientific findings as equivalent to mathematical certainties immune from further revision.
+
+This proposal faces a significant complication: it assumes that distinguishing genuine scientific uncertainty from manufactured uncertainty is itself a tractable task for lay citizens. Sociologists of science have documented cases in which powerful commercial or ideological interests have deliberately produced the appearance of scientific controversy where the scientific community has in fact reached consensus — a strategy deployed in debates over tobacco and health, fossil fuels and climate change, and pharmaceutical regulation. If lay citizens cannot reliably distinguish genuine scientific debate from strategic campaigns designed to mimic it, calibration may leave them more vulnerable to manipulation, not less.
+
+The resolution of this dilemma ultimately depends on prior judgments about epistemic agency that democratic theory has not yet fully worked out. What is clear is that the naive deficit model — the idea that ignorance is the primary obstacle to public understanding of science — cannot be the endpoint of this inquiry.`,
+    question: 'What is the primary function of paragraph 4 in the structure of the passage?',
+    choices: [
+      { label: 'A', text: 'To introduce empirical evidence that confirms the failure of the deficit model and supports the calibration alternative' },
+      { label: 'B', text: 'To summarize the passage\'s overall argument and draw the main conclusion' },
+      { label: 'C', text: 'To identify a serious complication that the author\'s own preferred proposal must address, by showing that the capacity calibration presupposes may not be reliably achievable' },
+      { label: 'D', text: 'To provide historical examples of manufactured uncertainty in order to establish that commercial interests are the primary cause of democratic dysfunction' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. After presenting calibration as "more promising" in paragraph 3, paragraph 4 begins "This proposal faces a significant complication" — explicitly signaling that the author is identifying a problem with their own preferred position. The complication: calibration requires citizens to distinguish genuine from manufactured uncertainty, but powerful commercial interests have specifically exploited this difficulty. The paragraph does not abandon calibration (that comes in paragraph 5\'s measured conclusion) but honestly acknowledges the most serious obstacle to it.',
+    wrongAnswerExplanations: {
+      A: 'Paragraph 4 does not introduce evidence confirming the failure of the deficit model — that was done in paragraph 2. Paragraph 4 addresses the calibration model (the author\'s preferred alternative). The manufactured uncertainty examples are relevant to calibration\'s complication, not the deficit model.',
+      B: 'The summary and conclusion function belongs to paragraph 5 ("What is clear is that the naive deficit model…cannot be the endpoint"). Paragraph 4 introduces new argumentative content (a complication), not a summary.',
+      D: 'While paragraph 4 references historical examples of manufactured uncertainty, the purpose is to illustrate WHY the complication for calibration is serious. The passage\'s thesis is about epistemic challenges in democratic governance, not about establishing that commercial interests are the "primary cause of democratic dysfunction."',
+    },
+    teachingPoint: 'CARS paragraph function questions: identify the role each paragraph plays in the argumentative arc. Classic structure: (1) problem; (2) inadequate solution; (3) better solution; (4) complication for better solution; (5) modest conclusion. Paragraph 4 = "challenge to own position" — signaled by "This proposal faces a significant complication." Authors who acknowledge complications to their own proposals make intellectually honest arguments.',
+    relatedTopics: ['CARS paragraph function', 'Passage structure analysis', 'Complication paragraph', 'Argumentative prose structure', 'CARS author self-critique'],
+  },
+  {
+    id: 'mcat-qb-cars-077',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Social Sciences',
+    contentCategory: '9',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `The relationship between scientific expertise and democratic governance has become one of the defining tensions of contemporary liberal societies. On one account, democratic legitimacy requires that citizens be genuinely capable of evaluating the claims that govern their lives. Yet the accelerating specialization of scientific knowledge seems to undermine this requirement: the gap between expert and lay understanding widens with each new discipline, leaving citizens increasingly dependent on authorities they cannot directly assess.
+
+Some theorists have responded by proposing what they call the "deficit model" of public understanding — the view that public skepticism toward scientific consensus reflects an informational gap that education and communication can close. If only citizens possessed the relevant facts and understood the relevant methods, the argument goes, their views would converge toward those of the expert community. This deficit model has been extensively criticized. Empirical research consistently shows that informational provision alone neither reliably increases agreement with scientific consensus nor improves citizens' ability to evaluate expert claims. In some cases, providing more scientific information to already politically motivated individuals deepens rather than diminishes disagreement, a phenomenon sometimes described as "motivated reasoning."
+
+A more promising alternative is to aim not at certainty transmission but at calibration — helping citizens develop accurate estimates of what scientists do and do not know, including the normal presence of uncertainty, controversy, and revision within science itself. On this view, the appropriate epistemic goal is not that citizens believe what scientists believe, but that they have roughly accurate beliefs about the structure of scientific knowledge and the degree of consensus or uncertainty around specific claims. Calibrated citizens would neither dismiss scientific expertise altogether nor treat scientific findings as equivalent to mathematical certainties immune from further revision.
+
+This proposal faces a significant complication: it assumes that distinguishing genuine scientific uncertainty from manufactured uncertainty is itself a tractable task for lay citizens. Sociologists of science have documented cases in which powerful commercial or ideological interests have deliberately produced the appearance of scientific controversy where the scientific community has in fact reached consensus — a strategy deployed in debates over tobacco and health, fossil fuels and climate change, and pharmaceutical regulation. If lay citizens cannot reliably distinguish genuine scientific debate from strategic campaigns designed to mimic it, calibration may leave them more vulnerable to manipulation, not less.
+
+The resolution of this dilemma ultimately depends on prior judgments about epistemic agency that democratic theory has not yet fully worked out. What is clear is that the naive deficit model — the idea that ignorance is the primary obstacle to public understanding of science — cannot be the endpoint of this inquiry.`,
+    question: 'In the context of paragraph 3, what does the term "calibrated" most nearly mean?',
+    choices: [
+      { label: 'A', text: 'Trained to accept all expert claims as true without independent evaluation' },
+      { label: 'B', text: 'Having well-adjusted epistemic judgments — neither dismissing expertise altogether nor treating scientific findings as beyond revision — based on an accurate sense of what is settled versus uncertain in science' },
+      { label: 'C', text: 'Equipped with sufficient technical knowledge to independently verify expert scientific claims' },
+      { label: 'D', text: 'Predisposed toward agreement with the scientific community through information exposure and educational intervention' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. Paragraph 3 explicitly defines calibration: "helping citizens develop accurate estimates of what scientists do and do not know, including the normal presence of uncertainty, controversy, and revision within science itself." The passage further specifies that calibrated citizens "would neither dismiss scientific expertise altogether nor treat scientific findings as equivalent to mathematical certainties immune from further revision." This maps directly to choice B.',
+    wrongAnswerExplanations: {
+      A: 'The passage explicitly says calibrated citizens do NOT simply accept all expert claims as true: they treat science as subject to "uncertainty, controversy, and revision," not as equivalent to "mathematical certainties." Blind acceptance is the deficit model\'s implicit goal, not calibration.',
+      C: 'The author explicitly distinguishes calibration from technical mastery: "the appropriate epistemic goal is not that citizens believe what scientists believe" (technical content), but rather "accurate beliefs about the structure of scientific knowledge." Calibrated citizens have meta-level knowledge, not independent technical expertise.',
+      D: 'This describes the deficit model goal (citizens converge toward expert views through information exposure), which the author criticizes in paragraph 2. Calibration is the ALTERNATIVE to the deficit model.',
+    },
+    teachingPoint: 'CARS vocabulary-in-context: (1) find the passage\'s explicit definition; (2) match the answer that best paraphrases it. Calibration = accurate meta-level knowledge about science\'s epistemic structure; neither dismissal nor uncritical acceptance; acknowledges uncertainty/revision as normal. Contrast: deficit model = get citizens to have MORE information to agree with experts.',
+    relatedTopics: ['CARS vocabulary in context', 'Calibration epistemic concept', 'Scientific literacy', 'Science communication', 'CARS passage definition questions'],
+  },
+
+  // ── Passage 16: Moral Philosophy and Moral Progress (Q078–Q082) ──
+  {
+    id: 'mcat-qb-cars-078',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Humanities',
+    contentCategory: '6',
+    foundationalConcept: '6',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Moral progress is one of the most contested concepts in ethical theory. We routinely speak as though slavery's abolition, the extension of civil rights, and the decline of openly sanctioned violence represent improvements — real gains in moral understanding that put our era ahead of its predecessors. Yet this confidence raises a philosophical puzzle: by what standard do we judge our moral past? If we use our current values as the measure, we seem to be doing little more than declaring our current values better than those that disagree with them — which is circular. And if the relevant standard is external to both past and present, it is unclear what grounds it or how we could access it.
+
+The most common response to this puzzle is what we might call the "retrospective endorsement" account: moral progress occurred whenever past social arrangements are judged, from the vantage point of the present, as falling short of our current norms. But this view collapses progress into preference change. It does not explain why our contemporary norms are themselves progressive rather than merely different; it provides no non-circular basis for preferring the present to the past. Moral skeptics exploit precisely this difficulty: if the only criterion for moral progress is conformity to current values, then "progress" is indistinguishable from "change."
+
+A more robust account requires identifying something that evolving moral systems track — some internal logic that distinguishes genuine progress from mere change. The most defensible candidate is moral consistency: genuine moral progress occurs when a society applies its own stated moral principles more consistently, extending protections and recognition to groups previously excluded despite the absence of any morally relevant difference between included and excluded groups. The abolition of slavery, for example, can be characterized as progress not merely because we currently believe it was right, but because nineteenth-century slaveholders already endorsed principles — human dignity, the impermissibility of treating persons merely as means — that they failed to extend to enslaved people without morally relevant justification.
+
+The consistency account avoids the circularity problem by grounding moral progress in a society's own commitments rather than in external standards or current preferences. It also provides a diagnostic tool: when excluded groups argue for inclusion, they can appeal to the internal logic of the society's stated moral principles rather than demanding wholesale adoption of foreign values. This has practical implications for activist strategy — the most effective moral arguments may be those that reveal the inconsistency between a society's stated principles and its practices.
+
+Moral progress on the consistency account is nevertheless real, not merely apparent. But it is also neither linear nor guaranteed. Historical regression is documented — periods in which rights previously recognized are withdrawn, protections eliminated, and exclusions reinstated. The consistency account therefore offers no grounds for complacency. That moral progress has occurred in some domains over some periods is compatible with moral regression in others, and with the ever-present possibility of catastrophic reversal.`,
+    question: 'Which of the following best states the main idea of the passage?',
+    choices: [
+      { label: 'A', text: 'Moral progress cannot be distinguished from mere change because any judgment of improvement relies on current moral values, which are themselves subject to future revision' },
+      { label: 'B', text: 'The abolition of slavery provides a uniquely clear case of moral progress because it achieved universal agreement across cultures, establishing an external standard for evaluating historical change' },
+      { label: 'C', text: 'Moral progress is real and can be defined as expansion of consistency in applying a society\'s stated moral principles, but it is non-linear and not guaranteed, offering no grounds for complacency' },
+      { label: 'D', text: 'Activist strategy is the central concern of moral philosophy, and the consistency account is primarily valuable as a practical tool for social movements rather than a theoretical account of moral progress' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The passage moves from critique of the "retrospective endorsement" account (paragraphs 1-2) to proposal of the "consistency account" (paragraph 3) to its practical advantages (paragraph 4) to the crucial caveat: progress is real but non-linear, not guaranteed, and permits no complacency (paragraph 5). Choice C captures both the positive claim (moral progress is real as consistency expansion) and the important qualification (non-linear, not guaranteed).',
+    wrongAnswerExplanations: {
+      A: 'This describes the "moral skeptic" position that the author explicitly criticizes and ultimately rejects with the consistency account. Attributing the skeptic\'s view to the author misrepresents the passage\'s argumentative direction.',
+      B: 'The passage does not claim abolition achieved "universal agreement across cultures" or "established an external standard." The author uses abolition to illustrate the consistency account — the argument is that abolition constitutes progress because slaveholders already endorsed principles that logically required it.',
+      D: 'While paragraph 4 notes practical implications for activist strategy, this is a secondary point. The passage\'s central concern is theoretical: providing a non-circular, philosophically defensible account of moral progress.',
+    },
+    teachingPoint: 'CARS main idea: synthesize all paragraphs, including qualifications. This passage has five components: (1) philosophical puzzle; (2) inadequate existing account; (3) new account proposed; (4) advantages of new account; (5) non-linear caveat. The main idea must capture BOTH the positive claim AND the qualification. Answers that capture only the proposal without the non-linear caveat are incomplete.',
+    relatedTopics: ['CARS main idea', 'Moral progress philosophy', 'Consistency account', 'Retrospective endorsement critique', 'CARS argument arc'],
+  },
+  {
+    id: 'mcat-qb-cars-079',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Humanities',
+    contentCategory: '6',
+    foundationalConcept: '6',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Moral progress is one of the most contested concepts in ethical theory. We routinely speak as though slavery's abolition, the extension of civil rights, and the decline of openly sanctioned violence represent improvements — real gains in moral understanding that put our era ahead of its predecessors. Yet this confidence raises a philosophical puzzle: by what standard do we judge our moral past? If we use our current values as the measure, we seem to be doing little more than declaring our current values better than those that disagree with them — which is circular. And if the relevant standard is external to both past and present, it is unclear what grounds it or how we could access it.
+
+The most common response to this puzzle is what we might call the "retrospective endorsement" account: moral progress occurred whenever past social arrangements are judged, from the vantage point of the present, as falling short of our current norms. But this view collapses progress into preference change. It does not explain why our contemporary norms are themselves progressive rather than merely different; it provides no non-circular basis for preferring the present to the past. Moral skeptics exploit precisely this difficulty: if the only criterion for moral progress is conformity to current values, then "progress" is indistinguishable from "change."
+
+A more robust account requires identifying something that evolving moral systems track — some internal logic that distinguishes genuine progress from mere change. The most defensible candidate is moral consistency: genuine moral progress occurs when a society applies its own stated moral principles more consistently, extending protections and recognition to groups previously excluded despite the absence of any morally relevant difference between included and excluded groups. The abolition of slavery, for example, can be characterized as progress not merely because we currently believe it was right, but because nineteenth-century slaveholders already endorsed principles — human dignity, the impermissibility of treating persons merely as means — that they failed to extend to enslaved people without morally relevant justification.
+
+The consistency account avoids the circularity problem by grounding moral progress in a society's own commitments rather than in external standards or current preferences. It also provides a diagnostic tool: when excluded groups argue for inclusion, they can appeal to the internal logic of the society's stated moral principles rather than demanding wholesale adoption of foreign values. This has practical implications for activist strategy — the most effective moral arguments may be those that reveal the inconsistency between a society's stated principles and its practices.
+
+Moral progress on the consistency account is nevertheless real, not merely apparent. But it is also neither linear nor guaranteed. Historical regression is documented — periods in which rights previously recognized are withdrawn, protections eliminated, and exclusions reinstated. The consistency account therefore offers no grounds for complacency. That moral progress has occurred in some domains over some periods is compatible with moral regression in others, and with the ever-present possibility of catastrophic reversal.`,
+    question: 'Which of the following would most directly support the author\'s consistency account of moral progress?',
+    choices: [
+      { label: 'A', text: 'Historical documentation showing that nineteenth-century abolitionists justified the end of slavery primarily by invoking principles of human dignity and personhood that slaveholding societies had already formally endorsed, rather than by introducing wholly new moral concepts' },
+      { label: 'B', text: 'Survey data showing that contemporary people in multiple countries rate the abolition of slavery as one of the most important moral achievements in human history' },
+      { label: 'C', text: 'A philosophical analysis concluding that external moral standards exist and can be accessed through rational reflection, independent of a society\'s existing commitments' },
+      { label: 'D', text: 'Evidence that moral regression always precedes subsequent moral progress, establishing a necessary cyclical pattern of advance through regress' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. The consistency account holds that moral progress occurs when a society more consistently applies its OWN already-stated principles to groups previously excluded without morally relevant justification. For abolition to qualify under this account, the key evidence is that abolitionists succeeded by appealing to principles the slaveholding society already endorsed — not by introducing foreign concepts. Choice A provides exactly this: documentation that abolitionist arguments invoked already-endorsed principles of human dignity.',
+    wrongAnswerExplanations: {
+      B: 'Contemporary survey data would support the RETROSPECTIVE ENDORSEMENT account (progress = what we currently judge to be better). This is precisely the account the author criticizes in paragraph 2 for its circularity. It does not support the consistency account; it supports the rival account.',
+      C: 'Evidence for external moral standards would support an alternative account of moral progress. The consistency account EXPLICITLY avoids external standards in order to avoid the circularity problem (paragraph 4: "grounding moral progress in a society\'s own commitments rather than in external standards").',
+      D: 'The author does not claim regression is a necessary precondition for progress. Paragraph 5 states progress is "neither linear nor guaranteed" and that regression is possible, but no necessary cyclical pattern is claimed or supported by the consistency account.',
+    },
+    teachingPoint: 'CARS strengthen argument: match evidence to the account\'s specific claims. Consistency account core: progress = applying already-held principles more consistently. Best evidence: abolitionist arguments invoked the slaveholding society\'s own principles. Contrast: survey data supports RIVAL account (retrospective endorsement); external standards support yet another rival.',
+    relatedTopics: ['CARS strengthen argument', 'Consistency account evidence', 'Abolitionism and moral philosophy', 'CARS argument support', 'Historical moral progress'],
+  },
+  {
+    id: 'mcat-qb-cars-080',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Humanities',
+    contentCategory: '6',
+    foundationalConcept: '6',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Moral progress is one of the most contested concepts in ethical theory. We routinely speak as though slavery's abolition, the extension of civil rights, and the decline of openly sanctioned violence represent improvements — real gains in moral understanding that put our era ahead of its predecessors. Yet this confidence raises a philosophical puzzle: by what standard do we judge our moral past? If we use our current values as the measure, we seem to be doing little more than declaring our current values better than those that disagree with them — which is circular. And if the relevant standard is external to both past and present, it is unclear what grounds it or how we could access it.
+
+The most common response to this puzzle is what we might call the "retrospective endorsement" account: moral progress occurred whenever past social arrangements are judged, from the vantage point of the present, as falling short of our current norms. But this view collapses progress into preference change. It does not explain why our contemporary norms are themselves progressive rather than merely different; it provides no non-circular basis for preferring the present to the past. Moral skeptics exploit precisely this difficulty: if the only criterion for moral progress is conformity to current values, then "progress" is indistinguishable from "change."
+
+A more robust account requires identifying something that evolving moral systems track — some internal logic that distinguishes genuine progress from mere change. The most defensible candidate is moral consistency: genuine moral progress occurs when a society applies its own stated moral principles more consistently, extending protections and recognition to groups previously excluded despite the absence of any morally relevant difference between included and excluded groups. The abolition of slavery, for example, can be characterized as progress not merely because we currently believe it was right, but because nineteenth-century slaveholders already endorsed principles — human dignity, the impermissibility of treating persons merely as means — that they failed to extend to enslaved people without morally relevant justification.
+
+The consistency account avoids the circularity problem by grounding moral progress in a society's own commitments rather than in external standards or current preferences. It also provides a diagnostic tool: when excluded groups argue for inclusion, they can appeal to the internal logic of the society's stated moral principles rather than demanding wholesale adoption of foreign values. This has practical implications for activist strategy — the most effective moral arguments may be those that reveal the inconsistency between a society's stated principles and its practices.
+
+Moral progress on the consistency account is nevertheless real, not merely apparent. But it is also neither linear nor guaranteed. Historical regression is documented — periods in which rights previously recognized are withdrawn, protections eliminated, and exclusions reinstated. The consistency account therefore offers no grounds for complacency. That moral progress has occurred in some domains over some periods is compatible with moral regression in others, and with the ever-present possibility of catastrophic reversal.`,
+    question: 'Based on paragraphs 1 and 2, how would a moral skeptic characterize the claim that the abolition of slavery represents moral progress?',
+    choices: [
+      { label: 'A', text: 'As a clear case of genuine progress because abolition was endorsed by multiple independent cultures, establishing a cross-cultural standard for moral evaluation' },
+      { label: 'B', text: 'As a case of moral regression because slavery was economically productive, and economic criteria provide the most reliable external standard for moral evaluation' },
+      { label: 'C', text: 'As a statement of preference — specifically, that our current preference for a world without slavery is being labeled "progress" when it is in fact only a change from past preferences, with no non-circular basis for privileging the present arrangement as morally superior' },
+      { label: 'D', text: 'As evidence supporting the consistency account, because abolitionists appealed to principles already endorsed by slaveholding societies' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The moral skeptic\'s position is described in paragraph 2: "if the only criterion for moral progress is conformity to current values, then \'progress\' is indistinguishable from \'change.\'" The skeptic would say abolition is called "progress" only because we currently value a world without slavery — this is a circular preference statement, not a non-circular judgment of genuine improvement. Choice C captures this: the label "progress" is merely our current preference for the post-abolition arrangement.',
+    wrongAnswerExplanations: {
+      A: 'The moral skeptic described in paragraphs 1-2 would not appeal to cross-cultural consensus as a non-circular standard. The skeptic\'s challenge is specifically about the circularity of current-value standards; cross-cultural agreement would itself be subject to the same circularity if it merely reflects convergent preferences.',
+      B: 'The passage does not introduce economic criteria as the moral skeptic\'s alternative. The skeptic challenges the circularity of ALL value-based standards, not by substituting economic for moral criteria.',
+      D: 'This describes the AUTHOR\'S own consistency account (paragraph 3), not the moral skeptic\'s position. The moral skeptic appears in paragraph 2 and argues that "progress" is indistinguishable from "change" — the skeptic challenges the retrospective endorsement account, while the consistency account is the author\'s response to the skeptic.',
+    },
+    teachingPoint: 'CARS character-perspective questions: locate the specific viewpoint in the specified paragraphs. Moral skeptic (paragraph 2): progress = conformity to current values → indistinguishable from change → abolition is "progress" only by circular current-values standard. Distinguish: (1) author\'s consistency account; (2) retrospective endorsement account; (3) moral skeptic\'s critique. Each is a different position.',
+    relatedTopics: ['CARS character perspective', 'Moral skepticism', 'Retrospective endorsement', 'CARS viewpoint identification', 'Circularity in moral reasoning'],
+  },
+  {
+    id: 'mcat-qb-cars-081',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Humanities',
+    contentCategory: '6',
+    foundationalConcept: '6',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Moral progress is one of the most contested concepts in ethical theory. We routinely speak as though slavery's abolition, the extension of civil rights, and the decline of openly sanctioned violence represent improvements — real gains in moral understanding that put our era ahead of its predecessors. Yet this confidence raises a philosophical puzzle: by what standard do we judge our moral past? If we use our current values as the measure, we seem to be doing little more than declaring our current values better than those that disagree with them — which is circular. And if the relevant standard is external to both past and present, it is unclear what grounds it or how we could access it.
+
+The most common response to this puzzle is what we might call the "retrospective endorsement" account: moral progress occurred whenever past social arrangements are judged, from the vantage point of the present, as falling short of our current norms. But this view collapses progress into preference change. It does not explain why our contemporary norms are themselves progressive rather than merely different; it provides no non-circular basis for preferring the present to the past. Moral skeptics exploit precisely this difficulty: if the only criterion for moral progress is conformity to current values, then "progress" is indistinguishable from "change."
+
+A more robust account requires identifying something that evolving moral systems track — some internal logic that distinguishes genuine progress from mere change. The most defensible candidate is moral consistency: genuine moral progress occurs when a society applies its own stated moral principles more consistently, extending protections and recognition to groups previously excluded despite the absence of any morally relevant difference between included and excluded groups. The abolition of slavery, for example, can be characterized as progress not merely because we currently believe it was right, but because nineteenth-century slaveholders already endorsed principles — human dignity, the impermissibility of treating persons merely as means — that they failed to extend to enslaved people without morally relevant justification.
+
+The consistency account avoids the circularity problem by grounding moral progress in a society's own commitments rather than in external standards or current preferences. It also provides a diagnostic tool: when excluded groups argue for inclusion, they can appeal to the internal logic of the society's stated moral principles rather than demanding wholesale adoption of foreign values. This has practical implications for activist strategy — the most effective moral arguments may be those that reveal the inconsistency between a society's stated principles and its practices.
+
+Moral progress on the consistency account is nevertheless real, not merely apparent. But it is also neither linear nor guaranteed. Historical regression is documented — periods in which rights previously recognized are withdrawn, protections eliminated, and exclusions reinstated. The consistency account therefore offers no grounds for complacency. That moral progress has occurred in some domains over some periods is compatible with moral regression in others, and with the ever-present possibility of catastrophic reversal.`,
+    question: 'Based on the passage, which of the following best characterizes the author\'s attitude toward optimism about moral progress?',
+    choices: [
+      { label: 'A', text: 'Fully endorsing — the author argues that the historical record demonstrates consistent progress across all domains and justifies confidence in continued improvement' },
+      { label: 'B', text: 'Qualified skepticism — the author affirms that moral progress is real and has occurred, but argues that its non-linearity and the possibility of regression make optimism a potential source of dangerous complacency' },
+      { label: 'C', text: 'Complete rejection — the author maintains that what appears to be moral progress is always reducible to mere preference change and therefore no grounds for optimism exist' },
+      { label: 'D', text: 'Indifference — the author treats optimism and pessimism as equally valid responses to the historical moral record and declines to evaluate either' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The author explicitly affirms moral progress is real ("Moral progress on the consistency account is nevertheless real, not merely apparent" — paragraph 5). But immediately qualifies this: progress is "neither linear nor guaranteed," historical regression is documented, and "the consistency account therefore offers no grounds for complacency." The author\'s attitude is affirmation tempered by a warning against complacency rooted in documented regression and catastrophic reversal possibilities.',
+    wrongAnswerExplanations: {
+      A: 'The author explicitly says progress is "neither linear nor guaranteed" and that regression is "documented" — directly contradicting "consistent progress across all domains." Full endorsement of optimism would omit the author\'s essential qualification.',
+      C: 'Complete rejection is the moral skeptic\'s position (paragraph 2), which the author critiques and directly contradicts in paragraph 5 ("moral progress is real, not merely apparent"). The author\'s entire project is to establish that moral progress is genuinely distinguishable from mere change.',
+      D: 'The author takes a clear position: real progress exists under the consistency account, but optimism must be tempered by awareness of non-linearity and regression. This is an evaluative stance, not neutrality.',
+    },
+    teachingPoint: 'CARS author attitude: look for explicit statements and qualifications together. Pattern: "X is real, BUT also non-linear and not guaranteed." Author affirms moral progress is real (anti-skeptic), but warns against complacency (anti-naive-optimist). The balanced/qualified position is most defensible — look for it when the author both endorses something AND warns against overconfidence in it.',
+    relatedTopics: ['CARS author attitude', 'Moral progress optimism', 'Qualified endorsement', 'Non-linear moral progress', 'CARS tone questions'],
+  },
+  {
+    id: 'mcat-qb-cars-082',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Humanities',
+    contentCategory: '6',
+    foundationalConcept: '6',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Moral progress is one of the most contested concepts in ethical theory. We routinely speak as though slavery's abolition, the extension of civil rights, and the decline of openly sanctioned violence represent improvements — real gains in moral understanding that put our era ahead of its predecessors. Yet this confidence raises a philosophical puzzle: by what standard do we judge our moral past? If we use our current values as the measure, we seem to be doing little more than declaring our current values better than those that disagree with them — which is circular. And if the relevant standard is external to both past and present, it is unclear what grounds it or how we could access it.
+
+The most common response to this puzzle is what we might call the "retrospective endorsement" account: moral progress occurred whenever past social arrangements are judged, from the vantage point of the present, as falling short of our current norms. But this view collapses progress into preference change. It does not explain why our contemporary norms are themselves progressive rather than merely different; it provides no non-circular basis for preferring the present to the past. Moral skeptics exploit precisely this difficulty: if the only criterion for moral progress is conformity to current values, then "progress" is indistinguishable from "change."
+
+A more robust account requires identifying something that evolving moral systems track — some internal logic that distinguishes genuine progress from mere change. The most defensible candidate is moral consistency: genuine moral progress occurs when a society applies its own stated moral principles more consistently, extending protections and recognition to groups previously excluded despite the absence of any morally relevant difference between included and excluded groups. The abolition of slavery, for example, can be characterized as progress not merely because we currently believe it was right, but because nineteenth-century slaveholders already endorsed principles — human dignity, the impermissibility of treating persons merely as means — that they failed to extend to enslaved people without morally relevant justification.
+
+The consistency account avoids the circularity problem by grounding moral progress in a society's own commitments rather than in external standards or current preferences. It also provides a diagnostic tool: when excluded groups argue for inclusion, they can appeal to the internal logic of the society's stated moral principles rather than demanding wholesale adoption of foreign values. This has practical implications for activist strategy — the most effective moral arguments may be those that reveal the inconsistency between a society's stated principles and its practices.
+
+Moral progress on the consistency account is nevertheless real, not merely apparent. But it is also neither linear nor guaranteed. Historical regression is documented — periods in which rights previously recognized are withdrawn, protections eliminated, and exclusions reinstated. The consistency account therefore offers no grounds for complacency. That moral progress has occurred in some domains over some periods is compatible with moral regression in others, and with the ever-present possibility of catastrophic reversal.`,
+    question: 'Which of the following would best illustrate the author\'s consistency account of moral progress?',
+    choices: [
+      { label: 'A', text: 'A society adopts a completely new moral framework imported from an external culture, discontinuing all previous moral commitments and replacing them with values the society did not previously endorse' },
+      { label: 'B', text: 'A society introduces mandatory voting on purely practical grounds, arguing that compulsory participation improves governance outcomes regardless of any prior commitment to political rights' },
+      { label: 'C', text: 'A society that has long endorsed equal civil rights for all persons meeting an objective qualification criterion grants those rights to a group previously denied them, when no morally relevant difference distinguishes the newly included group from those already receiving the rights' },
+      { label: 'D', text: 'A society acknowledges that its current values may be wrong in ways it cannot yet perceive, and therefore withholds judgment on whether any historical changes constitute genuine moral progress' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The consistency account holds that moral progress occurs when a society extends protections to previously excluded groups "despite the absence of any morally relevant difference between included and excluded groups" — applying its own already-stated principles more consistently. Choice C describes precisely this: a society that already endorsed equal civil rights for all qualified persons now applies that principle consistently to a previously excluded group. The progress is internal to the society\'s own stated commitments — no new external standard is invoked.',
+    wrongAnswerExplanations: {
+      A: 'Adopting a completely new framework from an external culture is the OPPOSITE of the consistency account. The consistency account grounds progress in a society\'s OWN EXISTING commitments. Wholesale replacement with foreign values is explicitly contrasted in paragraph 4 ("rather than demanding wholesale adoption of foreign values").',
+      B: 'Introducing mandatory voting on purely practical grounds (improving governance outcomes) does not apply existing MORAL principles more consistently — it is a pragmatic rather than principled extension. The consistency account requires that extension arise from the internal logic of already-endorsed moral principles.',
+      D: 'Withholding judgment on whether historical changes constitute progress is the moral skeptic\'s response, not the consistency account. The author\'s project is to provide a non-circular account that DOES allow us to identify genuine progress.',
+    },
+    teachingPoint: 'CARS application/illustration questions: identify the core definition, then match to the scenario. Consistency account definition: society extends protections to previously excluded group using ITS OWN EXISTING MORAL PRINCIPLES, when no morally relevant difference justifies exclusion. Eliminate: (A) new/foreign principles; (B) practical not principled grounds; (D) withholds judgment = skeptic position.',
+    relatedTopics: ['CARS application question', 'Consistency account illustration', 'Moral progress examples', 'Extension of rights', 'Moral principles and excluded groups'],
+  },
 ]

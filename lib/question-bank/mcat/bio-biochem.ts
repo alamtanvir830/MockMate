@@ -2450,4 +2450,388 @@ Supplementary experiments confirmed that Bcl-2 overexpression in Cell Line D did
     teachingPoint: 'Countercurrent multiplier: KEY asymmetry: Descending limb = water permeable (AQP1), solute impermeable → water exits, tubular fluid concentrates. Ascending limb (thick) = water impermeable, active NKCC2 cotransporter → solute exits without water → interstitium becomes hypertonic. Self-reinforcing cycle: interstitium hypertonic → draws water from descending limb → descending fluid concentrated → provides concentrated fluid to ascending limb → ascending pumps more solute into already-hypertonic interstitium. Loop diuretics (furosemide) block NKCC2 → abolish gradient → diuresis.',
     relatedTopics: ['Loop of Henle', 'Countercurrent multiplier', 'NKCC2 cotransporter', 'Medullary osmotic gradient', 'Loop diuretics furosemide'],
   },
+
+  // ── Passage 9: ETC Inhibitors and Mitochondrial Bioenergetics (Q074–Q078) ──
+  {
+    id: 'mcat-qb-bb-074',
+    test: 'MCAT',
+    section: 'bio-biochem',
+    discipline: 'Biochemistry',
+    contentCategory: '2A',
+    foundationalConcept: '2',
+    scientificSkill: 'Skill 3',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Mitochondrial oxidative phosphorylation couples electron transport to ATP synthesis via the proton-motive force (Δp). Electrons donated by NADH (at Complex I) or FADH₂ (at Complex II) flow through the inner mitochondrial membrane protein complexes, pumping protons (H⁺) from the matrix into the intermembrane space (IMS). This generates both a proton concentration gradient (ΔpH) and an electrical gradient (ΔΨm, membrane potential, approximately −180 mV under physiological conditions in energized mitochondria), together constituting the proton-motive force. Protons return to the matrix through ATP synthase (Complex V), driving rotation of the F₀ subunit and synthesis of ATP from ADP and Pᵢ.
+
+To dissect the contributions of individual components, researchers treated isolated liver mitochondria with specific pharmacological inhibitors targeting different sites of oxidative phosphorylation. Oxygen consumption rate (OCR, a proxy for electron transport chain activity) and mitochondrial membrane potential (ΔΨm) were measured under each condition. ATP synthesis rate was also estimated by luminescence-based ADP/ATP assay. Table 1 summarizes the results.
+
+Key inhibitors and their mechanisms:
+• Oligomycin: blocks the F₀ subunit of ATP synthase (Complex V), preventing proton re-entry through ATP synthase
+• FCCP: a protonophore that collapses ΔΨm by carrying protons across the inner membrane independent of ATP synthase (uncoupler)
+• Rotenone: inhibits Complex I (NADH ubiquinone oxidoreductase)
+• Antimycin A: inhibits Complex III (ubiquinol:cytochrome c oxidoreductase)
+• Succinate: substrate for Complex II (FADH₂ donor), bypassing Complex I`,
+    tableData: {
+      headers: ['Condition', 'OCR (nmol O₂/min/mg protein)', 'Mitochondrial Membrane Potential (ΔΨm)', 'Relative ATP Synthesis Rate'],
+      rows: [
+        ['Control (substrate only)', '50', 'High (−180 mV)', 'High'],
+        ['+ Oligomycin (2 μg/mL)', '12', 'Very high (−200 mV)', 'Negligible'],
+        ['+ FCCP (1 μM)', '180', 'Collapsed (−15 mV)', 'Very low'],
+        ['+ Rotenone alone (500 nM)', '22', 'Moderate (−90 mV)', 'Very low'],
+        ['+ Antimycin A alone (2 μg/mL)', '8', 'Low (−35 mV)', 'Very low'],
+        ['+ Succinate + Rotenone', '42', 'High (−172 mV)', 'High'],
+      ],
+      caption: 'Table 1. Mitochondrial oxygen consumption rate (OCR) and membrane potential under pharmacological inhibitor conditions (isolated liver mitochondria with pyruvate/malate or succinate as substrate)',
+    },
+    question: 'Based on Table 1, which of the following BEST explains why oligomycin treatment simultaneously increases ΔΨm (from −180 to −200 mV) while decreasing OCR (from 50 to 12 nmol O₂/min/mg)?',
+    choices: [
+      { label: 'A', text: 'Oligomycin blocks Complex I directly, reducing NADH oxidation and electron flow, which also prevents ATP synthase activation and forces protons to accumulate' },
+      { label: 'B', text: 'Oligomycin activates the ETC complexes, causing them to pump protons faster than the uncoupled leak rate, hyperpolarizing the membrane while consuming less oxygen because ATP demand has decreased' },
+      { label: 'C', text: 'Oligomycin blocks Complex III, causing electrons to back up from ubiquinol and reducing both the rate of O₂ consumption and the proton-pumping capacity, while forcing ΔΨm to rise due to residual Complex I pumping' },
+      { label: 'D', text: 'Oligomycin blocks ATP synthase, preventing protons from returning to the matrix through Complex V; protons continue to be pumped by Complexes I, III, and IV (driven by continued but reduced electron flow), but they cannot re-enter via ATP synthase, causing proton accumulation in the IMS and hyperpolarization; the elevated ΔΨm creates back-pressure that opposes further proton pumping, slowing electron transport and OCR' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. Oligomycin specifically blocks ATP synthase (F₀ subunit). Consequences: (1) Protons pumped into the IMS by Complexes I, III, and IV cannot return through ATP synthase → proton accumulation → ΔΨm becomes MORE NEGATIVE (hyperpolarization from −180 to −200 mV). (2) The elevated ΔΨm (backpressure) opposes further proton pumping, because the work required to pump protons against an already-large gradient increases. This slows electron transport and reduces OCR from 50 to 12 nmol O₂/min/mg. The residual OCR (12 nmol/min/mg) represents proton leak through the inner membrane via pathways other than ATP synthase. (3) ATP synthesis becomes negligible because protons cannot traverse ATP synthase.',
+    wrongAnswerExplanations: {
+      A: 'Oligomycin does NOT block Complex I. Oligomycin specifically targets the F₀ subunit of ATP synthase (Complex V). Complex I inhibition is achieved by rotenone (shown in Table 1: rotenone reduces OCR to 22 and decreases ΔΨm to −90 mV, a different pattern from oligomycin). Confusing oligomycin with rotenone is a common error.',
+      B: 'Oligomycin does NOT activate ETC complexes — it inhibits proton return through ATP synthase. The ETC complexes (I, III, IV) are not directly stimulated; rather, the backpressure from accumulated protons SLOWS them. ATP demand decreasing does not explain the mechanism — the correct mechanism involves backpressure from hyperpolarization, not reduced ATP demand per se.',
+      C: 'Oligomycin does NOT block Complex III. Antimycin A blocks Complex III (shown in Table 1: OCR decreases to 8, ΔΨm falls to −35 mV — note: blocking Complex III actually REDUCES ΔΨm because electron flow and proton pumping by Complexes I and III are impaired). The different pattern confirms that oligomycin and antimycin A have distinct mechanisms.',
+    },
+    teachingPoint: 'Oligomycin effect on mitochondria: blocks F₀ of ATP synthase → no proton re-entry via Complex V → proton accumulation → ΔΨm increases (hyperpolarization) → backpressure slows ETC → OCR decreases. Key concept: coupling between proton-motive force and ATP synthesis means blocking either entry (FCCP: collapses ΔΨm, maximizes OCR) or exit pathway (oligomycin: maximizes ΔΨm, minimizes OCR) produces distinct physiological signatures. ATP-linked OCR = Control OCR − Oligomycin OCR = 50 − 12 = 38 nmol/min/mg.',
+    relatedTopics: ['Oligomycin mechanism', 'ATP synthase inhibition', 'Proton-motive force backpressure', 'Mitochondrial membrane potential', 'ETC inhibitors'],
+  },
+  {
+    id: 'mcat-qb-bb-075',
+    test: 'MCAT',
+    section: 'bio-biochem',
+    discipline: 'Biochemistry',
+    contentCategory: '2A',
+    foundationalConcept: '2',
+    scientificSkill: 'Skill 3',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Mitochondrial oxidative phosphorylation couples electron transport to ATP synthesis via the proton-motive force (Δp). Electrons donated by NADH (at Complex I) or FADH₂ (at Complex II) flow through the inner mitochondrial membrane protein complexes, pumping protons (H⁺) from the matrix into the intermembrane space (IMS). This generates both a proton concentration gradient (ΔpH) and an electrical gradient (ΔΨm, membrane potential, approximately −180 mV under physiological conditions in energized mitochondria), together constituting the proton-motive force. Protons return to the matrix through ATP synthase (Complex V), driving rotation of the F₀ subunit and synthesis of ATP from ADP and Pᵢ.
+
+To dissect the contributions of individual components, researchers treated isolated liver mitochondria with specific pharmacological inhibitors targeting different sites of oxidative phosphorylation. Oxygen consumption rate (OCR, a proxy for electron transport chain activity) and mitochondrial membrane potential (ΔΨm) were measured under each condition. ATP synthesis rate was also estimated by luminescence-based ADP/ATP assay. Table 1 summarizes the results.
+
+Key inhibitors and their mechanisms:
+• Oligomycin: blocks the F₀ subunit of ATP synthase (Complex V), preventing proton re-entry through ATP synthase
+• FCCP: a protonophore that collapses ΔΨm by carrying protons across the inner membrane independent of ATP synthase (uncoupler)
+• Rotenone: inhibits Complex I (NADH ubiquinone oxidoreductase)
+• Antimycin A: inhibits Complex III (ubiquinol:cytochrome c oxidoreductase)
+• Succinate: substrate for Complex II (FADH₂ donor), bypassing Complex I`,
+    tableData: {
+      headers: ['Condition', 'OCR (nmol O₂/min/mg protein)', 'Mitochondrial Membrane Potential (ΔΨm)', 'Relative ATP Synthesis Rate'],
+      rows: [
+        ['Control (substrate only)', '50', 'High (−180 mV)', 'High'],
+        ['+ Oligomycin (2 μg/mL)', '12', 'Very high (−200 mV)', 'Negligible'],
+        ['+ FCCP (1 μM)', '180', 'Collapsed (−15 mV)', 'Very low'],
+        ['+ Rotenone alone (500 nM)', '22', 'Moderate (−90 mV)', 'Very low'],
+        ['+ Antimycin A alone (2 μg/mL)', '8', 'Low (−35 mV)', 'Very low'],
+        ['+ Succinate + Rotenone', '42', 'High (−172 mV)', 'High'],
+      ],
+      caption: 'Table 1. Mitochondrial oxygen consumption rate (OCR) and membrane potential under pharmacological inhibitor conditions (isolated liver mitochondria with pyruvate/malate or succinate as substrate)',
+    },
+    question: 'Table 1 shows that FCCP treatment dramatically increases OCR (to 180 nmol O₂/min/mg) while collapsing ΔΨm (to −15 mV) and reducing ATP synthesis to very low levels. Which of the following conclusions does this pattern BEST support?',
+    choices: [
+      { label: 'A', text: 'The maximum electron transport capacity of the ETC is far greater than what is typically used under coupled conditions, and proton-motive force drives both the rate-limiting step of electron transport AND is required for ATP synthesis' },
+      { label: 'B', text: 'FCCP activates Complexes I, III, and IV by direct allosteric binding, maximizing electron transport while simultaneously preventing ATP synthase from using the protons, demonstrating that electron transport and ATP synthesis are regulated independently' },
+      { label: 'C', text: 'FCCP demonstrates that O₂ is not the limiting factor in oxidative phosphorylation under normal conditions, and that proton leak accounts for the majority of baseline OCR' },
+      { label: 'D', text: 'Proton-motive force is not required for electron transport; rather, it is only required for ATP synthesis, and electron transport can proceed at maximum capacity even in the complete absence of a proton gradient' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. FCCP is a protonophore that collapses ΔΨm by shuttling protons across the inner membrane independently of ATP synthase. Consequences: (1) Protons are continuously dissipated → ΔΨm cannot build up (collapses to −15 mV) → backpressure on ETC is removed → ETC runs at maximum uncoupled rate → OCR jumps to 180. This reveals the TRUE MAXIMUM ETC CAPACITY — approximately 3.6× the coupled rate (180 vs. 50). (2) Despite maximum electron transport, ATP synthesis is very low because ΔΨm is collapsed: ATP synthase requires proton-motive force. This demonstrates that (a) under coupled conditions, ETC operates well below its maximum capacity (limited by backpressure from accumulated ΔΨm), and (b) a proton-motive force is obligatorily required for ATP synthesis.',
+    wrongAnswerExplanations: {
+      B: 'FCCP does NOT directly activate ETC complexes by allosteric binding. FCCP is a lipophilic weak acid that acts as a proton carrier (shuttles H⁺ across the membrane) — it has no known binding site on ETC complexes. The increased OCR results from removal of backpressure, not direct enzyme activation.',
+      C: 'FCCP data does not primarily demonstrate that O₂ is non-limiting or that proton leak accounts for most baseline OCR. The correct interpretation is about ETC capacity versus coupled rate. Additionally, proton leak at baseline is represented by the oligomycin-insensitive OCR (12 nmol/min/mg), which is a minority of baseline OCR (50 nmol/min/mg), not the majority.',
+      D: 'This misinterprets the data. The statement that proton-motive force is NOT required for electron transport is misleading — while FCCP shows that a large ΔΨm backpressure inhibits ETC, a minimal proton-motive force is still required to drive thermodynamically favorable electron transport. More critically, FCCP shows that ΔΨm is NOT required for electron transport to proceed rapidly (it runs at 180 without it), but this doesn\'t mean proton-motive force is categorically unnecessary — the data shows it is unnecessary for the OCR itself but IS required for ATP synthesis.',
+    },
+    teachingPoint: 'FCCP (uncoupler) reveals: (1) maximum ETC capacity >> coupled OCR (180 vs. 50 = 3.6×); (2) ΔΨm is a backpressure that rate-limits electron transport under coupled conditions; (3) proton-motive force is REQUIRED for ATP synthesis. Comparison table: Oligomycin = high ΔΨm, low OCR, no ATP. FCCP = low ΔΨm, max OCR, no ATP. Both decouple ATP synthesis from electron transport, but by opposite mechanisms. Basal OCR = 50; OCR with oligomycin = 12 (proton leak); OCR with FCCP = 180 (maximum ETC).',
+    relatedTopics: ['FCCP uncoupler mechanism', 'Proton-motive force and ETC', 'Maximum mitochondrial respiratory capacity', 'ETC backpressure', 'Uncoupling proteins'],
+  },
+  {
+    id: 'mcat-qb-bb-076',
+    test: 'MCAT',
+    section: 'bio-biochem',
+    discipline: 'Biochemistry',
+    contentCategory: '2A',
+    foundationalConcept: '2',
+    scientificSkill: 'Skill 3',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Mitochondrial oxidative phosphorylation couples electron transport to ATP synthesis via the proton-motive force (Δp). Electrons donated by NADH (at Complex I) or FADH₂ (at Complex II) flow through the inner mitochondrial membrane protein complexes, pumping protons (H⁺) from the matrix into the intermembrane space (IMS). This generates both a proton concentration gradient (ΔpH) and an electrical gradient (ΔΨm, membrane potential, approximately −180 mV under physiological conditions in energized mitochondria), together constituting the proton-motive force. Protons return to the matrix through ATP synthase (Complex V), driving rotation of the F₀ subunit and synthesis of ATP from ADP and Pᵢ.
+
+To dissect the contributions of individual components, researchers treated isolated liver mitochondria with specific pharmacological inhibitors targeting different sites of oxidative phosphorylation. Oxygen consumption rate (OCR, a proxy for electron transport chain activity) and mitochondrial membrane potential (ΔΨm) were measured under each condition. ATP synthesis rate was also estimated by luminescence-based ADP/ATP assay. Table 1 summarizes the results.
+
+Key inhibitors and their mechanisms:
+• Oligomycin: blocks the F₀ subunit of ATP synthase (Complex V), preventing proton re-entry through ATP synthase
+• FCCP: a protonophore that collapses ΔΨm by carrying protons across the inner membrane independent of ATP synthase (uncoupler)
+• Rotenone: inhibits Complex I (NADH ubiquinone oxidoreductase)
+• Antimycin A: inhibits Complex III (ubiquinol:cytochrome c oxidoreductase)
+• Succinate: substrate for Complex II (FADH₂ donor), bypassing Complex I`,
+    tableData: {
+      headers: ['Condition', 'OCR (nmol O₂/min/mg protein)', 'Mitochondrial Membrane Potential (ΔΨm)', 'Relative ATP Synthesis Rate'],
+      rows: [
+        ['Control (substrate only)', '50', 'High (−180 mV)', 'High'],
+        ['+ Oligomycin (2 μg/mL)', '12', 'Very high (−200 mV)', 'Negligible'],
+        ['+ FCCP (1 μM)', '180', 'Collapsed (−15 mV)', 'Very low'],
+        ['+ Rotenone alone (500 nM)', '22', 'Moderate (−90 mV)', 'Very low'],
+        ['+ Antimycin A alone (2 μg/mL)', '8', 'Low (−35 mV)', 'Very low'],
+        ['+ Succinate + Rotenone', '42', 'High (−172 mV)', 'High'],
+      ],
+      caption: 'Table 1. Mitochondrial oxygen consumption rate (OCR) and membrane potential under pharmacological inhibitor conditions (isolated liver mitochondria with pyruvate/malate or succinate as substrate)',
+    },
+    question: 'The "Succinate + Rotenone" condition shows an OCR of 42 and ΔΨm of −172 mV with high ATP synthesis. Which of the following mechanistic conclusions is BEST supported by this finding compared to the Rotenone alone condition?',
+    choices: [
+      { label: 'A', text: 'Adding succinate reverses rotenone inhibition of Complex I by competing with NADH for the ubiquinone binding site, restoring normal electron flow through the entire ETC' },
+      { label: 'B', text: 'Rotenone inhibits only Complex II, so adding succinate restores NADH oxidation at Complex I, bypassing the block' },
+      { label: 'C', text: 'Succinate donates electrons to Complex II (as FADH₂), which feeds electrons into ubiquinone and then to Complexes III and IV, bypassing the rotenone-blocked Complex I; Complexes III and IV continue to pump protons, restoring ΔΨm and ATP synthesis' },
+      { label: 'D', text: 'Succinate directly activates ATP synthase by binding to the F₁ subunit, explaining the high ATP synthesis rate independent of electron transport' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. Rotenone alone (Table 1): OCR = 22, ΔΨm = −90 mV, very low ATP. Succinate + Rotenone: OCR = 42, ΔΨm = −172 mV, high ATP. The key difference: adding succinate (which enters at Complex II as FADH₂) dramatically restores OCR and ΔΨm. Mechanism: Rotenone blocks Complex I but does NOT block Complex II. Succinate is oxidized by succinate dehydrogenase (Complex II) → FADH₂ → electrons donated to ubiquinone → ubiquinol passes electrons to Complex III → Complex IV → O₂. Complexes III and IV pump protons, rebuilding ΔΨm. Since Complex I is blocked by rotenone but Complex II is not, electrons can bypass the block via the Complex II entry point. ATP synthesis is restored because ΔΨm is rebuilt.',
+    wrongAnswerExplanations: {
+      A: 'Succinate does NOT reverse or compete with rotenone at Complex I. Rotenone is a competitive inhibitor of Complex I that blocks the ubiquinone binding site — but succinate does not enter at Complex I. Succinate is metabolized by Complex II (succinate dehydrogenase), a completely separate enzyme from Complex I. The bypass occurs at the ubiquinone pool level.',
+      B: 'Rotenone inhibits Complex I, NOT Complex II. Succinate is the substrate for Complex II (succinate dehydrogenase), so it enters the ETC at Complex II, bypassing Complex I entirely. Succinate does not "restore NADH oxidation at Complex I" — rotenone remains bound and Complex I remains blocked.',
+      D: 'Succinate does NOT directly activate ATP synthase. Succinate is a tricarboxylic acid cycle intermediate and substrate for Complex II — it has no known direct interaction with the F₁ subunit of ATP synthase. ATP synthesis in this condition is restored because the proton-motive force is rebuilt by Complexes III and IV (driven by succinate → Complex II electron entry), not through any direct succinate-ATP synthase interaction.',
+    },
+    teachingPoint: 'Entry points to the ETC: NADH → Complex I → ubiquinone; FADH₂/Succinate → Complex II → ubiquinone; both converge at ubiquinone pool. Rotenone blocks Complex I → blocks NADH-derived electrons. Succinate bypasses Complex I entirely → enters at Complex II → ubiquinol → Complex III → IV → O₂. Proton pumping continues via Complexes III and IV → ΔΨm rebuilt → ATP synthesis restored. Clinical relevance: this is also why Complex II mutations cause disease — no entry point for FADH₂, and no backup for Complex I-derived ATP.',
+    relatedTopics: ['Complex II substrate entry', 'Rotenone and Complex I', 'Succinate dehydrogenase', 'ETC bypass at ubiquinone', 'FADH2 vs NADH entry points'],
+  },
+  {
+    id: 'mcat-qb-bb-077',
+    test: 'MCAT',
+    section: 'bio-biochem',
+    discipline: 'Biochemistry',
+    contentCategory: '2A',
+    foundationalConcept: '2',
+    scientificSkill: 'Skill 4',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Mitochondrial oxidative phosphorylation couples electron transport to ATP synthesis via the proton-motive force (Δp). Electrons donated by NADH (at Complex I) or FADH₂ (at Complex II) flow through the inner mitochondrial membrane protein complexes, pumping protons (H⁺) from the matrix into the intermembrane space (IMS). This generates both a proton concentration gradient (ΔpH) and an electrical gradient (ΔΨm, membrane potential, approximately −180 mV under physiological conditions in energized mitochondria), together constituting the proton-motive force. Protons return to the matrix through ATP synthase (Complex V), driving rotation of the F₀ subunit and synthesis of ATP from ADP and Pᵢ.
+
+To dissect the contributions of individual components, researchers treated isolated liver mitochondria with specific pharmacological inhibitors targeting different sites of oxidative phosphorylation. Oxygen consumption rate (OCR, a proxy for electron transport chain activity) and mitochondrial membrane potential (ΔΨm) were measured under each condition. ATP synthesis rate was also estimated by luminescence-based ADP/ATP assay. Table 1 summarizes the results.
+
+Key inhibitors and their mechanisms:
+• Oligomycin: blocks the F₀ subunit of ATP synthase (Complex V), preventing proton re-entry through ATP synthase
+• FCCP: a protonophore that collapses ΔΨm by carrying protons across the inner membrane independent of ATP synthase (uncoupler)
+• Rotenone: inhibits Complex I (NADH ubiquinone oxidoreductase)
+• Antimycin A: inhibits Complex III (ubiquinol:cytochrome c oxidoreductase)
+• Succinate: substrate for Complex II (FADH₂ donor), bypassing Complex I`,
+    tableData: {
+      headers: ['Condition', 'OCR (nmol O₂/min/mg protein)', 'Mitochondrial Membrane Potential (ΔΨm)', 'Relative ATP Synthesis Rate'],
+      rows: [
+        ['Control (substrate only)', '50', 'High (−180 mV)', 'High'],
+        ['+ Oligomycin (2 μg/mL)', '12', 'Very high (−200 mV)', 'Negligible'],
+        ['+ FCCP (1 μM)', '180', 'Collapsed (−15 mV)', 'Very low'],
+        ['+ Rotenone alone (500 nM)', '22', 'Moderate (−90 mV)', 'Very low'],
+        ['+ Antimycin A alone (2 μg/mL)', '8', 'Low (−35 mV)', 'Very low'],
+        ['+ Succinate + Rotenone', '42', 'High (−172 mV)', 'High'],
+      ],
+      caption: 'Table 1. Mitochondrial oxygen consumption rate (OCR) and membrane potential under pharmacological inhibitor conditions (isolated liver mitochondria with pyruvate/malate or succinate as substrate)',
+    },
+    question: 'A researcher wishes to calculate the proportion of total OCR that is specifically linked to ATP synthesis (ATP-linked respiration) using data from Table 1. Which calculation and interpretation are correct?',
+    choices: [
+      { label: 'A', text: 'ATP-linked OCR = Control OCR − Oligomycin OCR = 50 − 12 = 38 nmol O₂/min/mg; this represents the fraction of oxygen consumption devoted to driving proton flux through ATP synthase, because oligomycin specifically blocks ATP synthase while leaving other proton-return pathways (e.g., proton leak) intact' },
+      { label: 'B', text: 'ATP-linked OCR = FCCP OCR − Control OCR = 180 − 50 = 130 nmol O₂/min/mg; this represents the capacity held in reserve beyond the ATP-linked fraction' },
+      { label: 'C', text: 'ATP-linked OCR = Rotenone OCR / Control OCR × 100% = 22/50 × 100% = 44%; this percentage represents the fraction of respiration attributable to NADH-linked electron transport' },
+      { label: 'D', text: 'ATP-linked OCR = Control OCR − FCCP OCR = 50 − 180 = −130 nmol O₂/min/mg; the negative value indicates that ATP synthesis consumes oxygen rather than generating it' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. Under control conditions, OCR = 50 nmol O₂/min/mg. This OCR supports both (a) ATP synthesis (proton flux through ATP synthase driving rotation and phosphorylation) and (b) proton leak (protons returning to the matrix through inner membrane independently of ATP synthase). Oligomycin blocks ATP synthase specifically, leaving proton leak pathways intact. OCR with oligomycin = 12 nmol O₂/min/mg → this 12 represents the non-ATP-linked OCR (proton leak + any non-mitochondrial respiration). ATP-linked OCR = 50 − 12 = 38 nmol O₂/min/mg. This represents the portion of electron transport specifically coupled to ATP production. This is the standard "Seahorse assay" calculation used in cellular bioenergetics research.',
+    wrongAnswerExplanations: {
+      B: 'FCCP OCR − Control OCR = 130 nmol O₂/min/mg represents "spare respiratory capacity" (the additional ETC capacity beyond what is currently used for ATP synthesis) — NOT ATP-linked OCR. Spare respiratory capacity represents the maximum additional output available under extreme demand. This is a different metric entirely from ATP-linked respiration.',
+      C: 'Rotenone OCR / Control OCR does not calculate ATP-linked OCR. Rotenone blocks Complex I, reducing NADH-linked respiration — this ratio would estimate the fraction of respiration driven by Complex I. But this is not ATP-linked OCR; some Complex I-derived electron transport could be devoted to proton leak rather than ATP synthesis.',
+      D: 'FCCP OCR is higher than Control OCR because FCCP uncouples (maximizes electron transport). Subtracting the larger number yields a negative value, which has no meaningful biological interpretation in this context. The ATP-linked OCR cannot be negative. FCCP reveals maximum capacity, not the ATP-linked fraction.',
+    },
+    teachingPoint: 'Seahorse bioenergetics assay measurements: (1) Basal OCR = total coupled + uncoupled respiration. (2) Proton leak OCR = oligomycin-insensitive OCR (residual after ATP synthase block). (3) ATP-linked OCR = basal − oligomycin OCR = 50 − 12 = 38. (4) Maximal OCR = FCCP OCR = 180. (5) Spare respiratory capacity = FCCP − basal = 180 − 50 = 130. Oligomycin is the specific tool to parse ATP-linked from leak respiration because it selectively inhibits ATP synthase without blocking electron transport complexes.',
+    relatedTopics: ['ATP-linked respiration calculation', 'Seahorse assay bioenergetics', 'Proton leak vs ATP synthesis', 'Oligomycin and spare capacity', 'Mitochondrial OCR analysis'],
+  },
+  {
+    id: 'mcat-qb-bb-078',
+    test: 'MCAT',
+    section: 'bio-biochem',
+    discipline: 'Biochemistry',
+    contentCategory: '2A',
+    foundationalConcept: '2',
+    scientificSkill: 'Skill 3',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Mitochondrial oxidative phosphorylation couples electron transport to ATP synthesis via the proton-motive force (Δp). Electrons donated by NADH (at Complex I) or FADH₂ (at Complex II) flow through the inner mitochondrial membrane protein complexes, pumping protons (H⁺) from the matrix into the intermembrane space (IMS). This generates both a proton concentration gradient (ΔpH) and an electrical gradient (ΔΨm, membrane potential, approximately −180 mV under physiological conditions in energized mitochondria), together constituting the proton-motive force. Protons return to the matrix through ATP synthase (Complex V), driving rotation of the F₀ subunit and synthesis of ATP from ADP and Pᵢ.
+
+To dissect the contributions of individual components, researchers treated isolated liver mitochondria with specific pharmacological inhibitors targeting different sites of oxidative phosphorylation. Oxygen consumption rate (OCR, a proxy for electron transport chain activity) and mitochondrial membrane potential (ΔΨm) were measured under each condition. ATP synthesis rate was also estimated by luminescence-based ADP/ATP assay. Table 1 summarizes the results.
+
+Key inhibitors and their mechanisms:
+• Oligomycin: blocks the F₀ subunit of ATP synthase (Complex V), preventing proton re-entry through ATP synthase
+• FCCP: a protonophore that collapses ΔΨm by carrying protons across the inner membrane independent of ATP synthase (uncoupler)
+• Rotenone: inhibits Complex I (NADH ubiquinone oxidoreductase)
+• Antimycin A: inhibits Complex III (ubiquinol:cytochrome c oxidoreductase)
+• Succinate: substrate for Complex II (FADH₂ donor), bypassing Complex I`,
+    tableData: {
+      headers: ['Condition', 'OCR (nmol O₂/min/mg protein)', 'Mitochondrial Membrane Potential (ΔΨm)', 'Relative ATP Synthesis Rate'],
+      rows: [
+        ['Control (substrate only)', '50', 'High (−180 mV)', 'High'],
+        ['+ Oligomycin (2 μg/mL)', '12', 'Very high (−200 mV)', 'Negligible'],
+        ['+ FCCP (1 μM)', '180', 'Collapsed (−15 mV)', 'Very low'],
+        ['+ Rotenone alone (500 nM)', '22', 'Moderate (−90 mV)', 'Very low'],
+        ['+ Antimycin A alone (2 μg/mL)', '8', 'Low (−35 mV)', 'Very low'],
+        ['+ Succinate + Rotenone', '42', 'High (−172 mV)', 'High'],
+      ],
+      caption: 'Table 1. Mitochondrial oxygen consumption rate (OCR) and membrane potential under pharmacological inhibitor conditions (isolated liver mitochondria with pyruvate/malate or succinate as substrate)',
+    },
+    question: 'Comparing the "Antimycin A alone" and "Succinate + Rotenone" conditions in Table 1, which conclusion about electron flow through the ETC is most strongly supported?',
+    choices: [
+      { label: 'A', text: 'Antimycin A and Rotenone have additive inhibitory effects, and together they would completely abolish OCR and ΔΨm, demonstrating that Complexes I and III are the only proton-pumping complexes' },
+      { label: 'B', text: 'Antimycin A and Rotenone target different sites, but both conditions reduce OCR; the near-complete suppression by antimycin A (OCR = 8) compared to rotenone alone (OCR = 22) indicates that Complex III is a more critical bottleneck in the ETC than Complex I' },
+      { label: 'C', text: 'Succinate + Rotenone maintains high OCR (42) and ΔΨm by feeding electrons into the ETC at Complex II (bypassing blocked Complex I), while Antimycin A blocks Complex III — which is DOWNSTREAM of Complex II — abolishing electron flow to O₂ regardless of substrate entry point, and therefore collapsing ΔΨm even when Complex II is functional' },
+      { label: 'D', text: 'The ΔΨm of −172 mV with Succinate + Rotenone and −35 mV with Antimycin A shows that Complex III contributes more to ΔΨm than Complex II does, suggesting Complex III pumps more protons per electron pair than Complex II' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. Succinate + Rotenone: electrons enter at Complex II (bypassing rotenone-blocked Complex I) → flow through Complex III → Complex IV → O₂. OCR = 42, ΔΨm = −172 mV, high ATP. Antimycin A: blocks Complex III, which is downstream of BOTH Complex I entry (NADH) and Complex II entry (FADH₂/succinate). When Complex III is blocked, electron flow from EITHER entry point cannot reach Complex IV and O₂. This explains why Antimycin A produces very low OCR (8) and low ΔΨm (−35 mV) despite Complex I and II being functional. The comparison demonstrates that electrons from Complex II must pass through Complex III — bypassing Complex I (via succinate/rotenone) does not bypass Complex III.',
+    wrongAnswerExplanations: {
+      A: 'The conclusion about additive effects is not directly supported by comparing only the two conditions listed. More importantly, the claim that "Complexes I and III are the only proton-pumping complexes" is incorrect — Complex IV (cytochrome c oxidase) also pumps protons. Three complexes pump protons: I (4H⁺/NADH), III (4H⁺/electron pair), and IV (2H⁺/electron pair).',
+      B: 'While the comparison of OCR values is factually accurate (antimycin A = 8 vs. rotenone alone = 22), the conclusion that "Complex III is a more critical bottleneck than Complex I" is not the strongest conclusion this data supports. The difference could reflect remaining electron flow through Complex II even with rotenone (Succinate can still donate via Complex II when rotenone is present), not the inherent importance of Complex III. The more direct conclusion is about linear electron flow being blocked at Complex III.',
+      D: 'Comparing ΔΨm between Succinate + Rotenone (−172 mV) and Antimycin A (−35 mV) does not directly tell us about the proton stoichiometry of Complex III vs. Complex II. The ΔΨm difference reflects that Succinate + Rotenone has a FUNCTIONING electron transport chain (Complexes II, III, IV active) while Antimycin A has a BLOCKED chain (no electron flow from ubiquinol to cytochrome c). The comparison reflects functional activity, not per-proton stoichiometry.',
+    },
+    teachingPoint: 'ETC topology is linear from ubiquinol pool: NADH/FADH₂ → ubiquinone → Complex III → cytochrome c → Complex IV → O₂. Bypassing Complex I (via succinate → Complex II) still requires Complexes III and IV. Blocking Complex III (antimycin A) stops electron flow regardless of whether electrons entered at Complex I or Complex II. This explains why antimycin A is a more global inhibitor than rotenone: it blocks all electron flow to O₂, while rotenone only blocks the NADH-derived electrons (FADH₂ can still bypass it).',
+    relatedTopics: ['ETC linear electron flow', 'Antimycin A mechanism', 'Complex III bottleneck', 'Ubiquinol and electron flow', 'ETC inhibitor comparison'],
+  },
+
+  // ── Discrete Q079–Q083 ──────────────────────────────────────────────────────
+  {
+    id: 'mcat-qb-bb-079',
+    test: 'MCAT',
+    section: 'bio-biochem',
+    discipline: 'Biochemistry',
+    contentCategory: '1C',
+    foundationalConcept: '1',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'discrete',
+    question: 'A newly synthesized secretory protein contains a cleavable N-terminal signal sequence. Which of the following correctly describes the sequence of events immediately after translation begins on a cytoplasmic ribosome?',
+    choices: [
+      { label: 'A', text: 'The ribosome completes full translation in the cytoplasm, then the finished protein is post-translationally imported into the ER lumen by a signal peptidase complex' },
+      { label: 'B', text: 'The signal sequence is recognized by the Signal Recognition Particle (SRP) as it emerges from the ribosome; SRP stalls translation and directs the ribosome to the ER membrane; GTP hydrolysis releases the SRP; translation resumes and the growing polypeptide is co-translationally threaded into the ER lumen through the Sec61 translocon; signal peptidase cleaves the signal sequence in the ER lumen' },
+      { label: 'C', text: 'The signal sequence directs the protein to the outer mitochondrial membrane, where it is recognized by the TOM complex and imported co-translationally into the mitochondrial matrix' },
+      { label: 'D', text: 'The ribosome docks directly onto the ER membrane before any translation occurs; the signal sequence is then synthesized first and guides the entire ribosome-mRNA complex into the ER lumen for translation' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Wait — Choice C describes mitochondrial targeting (TOM complex, mitochondrial matrix), which applies to proteins with a mitochondrial targeting sequence, NOT a cleavable N-terminal signal sequence for the ER. The correct answer should be B. Let me reconsider the choices: the N-terminal signal sequence (also called the signal peptide) targets proteins to the ER via SRP. Choice B correctly describes the full SRP pathway: SRP recognition → translation stalling → ribosome docking at ER (SRP receptor) → GTP hydrolysis → translation resumption → co-translational insertion via Sec61 → signal peptidase cleaves in ER lumen. Choice B is correct.',
+    wrongAnswerExplanations: {
+      A: 'Post-translational import into the ER does NOT occur for proteins with N-terminal signal sequences. Post-translational translocation occurs in yeast (via Sec62/63) and for some specific substrates, but mammalian secretory proteins with signal sequences undergo CO-TRANSLATIONAL insertion via the SRP pathway. The signal sequence is recognized as it emerges from the ribosome, before translation is complete.',
+      C: 'The TOM (Translocase of the Outer Membrane) complex is specific to mitochondrial targeting sequences (N-terminal amphipathic helices with positive charges), NOT ER signal sequences. ER signal sequences are hydrophobic stretches recognized by SRP. Mitochondrial targeting sequences are recognized by cytoplasmic chaperones and the TOM/TIM complexes. Co-translational import does NOT occur for mitochondrial proteins.',
+      D: 'The ribosome does NOT dock on the ER membrane before any translation occurs. The process begins on a free cytoplasmic ribosome. Only after the signal sequence emerges from the ribosome (typically after ~70 amino acids are translated, enough to emerge from the ribosome exit tunnel) is SRP recruited. Ribosomes associate with the ER membrane only AFTER SRP recognizes the signal sequence and directs the complex to the SRP receptor.',
+    },
+    teachingPoint: 'SRP (Signal Recognition Particle) pathway for secretory/membrane proteins: (1) Ribosome begins translation in cytoplasm; (2) Signal sequence emerges from ribosome exit tunnel (~70 aa synthesized); (3) SRP binds signal sequence → stalls translation; (4) SRP-ribosome-mRNA docks at SRP receptor on ER membrane; (5) GTP hydrolysis → SRP released; (6) Translation resumes; growing polypeptide enters ER lumen via Sec61 translocon; (7) Signal peptidase in ER lumen cleaves signal sequence. Final protein: ER lumen → Golgi → secretion.',
+    relatedTopics: ['SRP pathway', 'N-terminal signal sequence', 'Sec61 translocon', 'Co-translational translocation', 'Signal peptidase'],
+  },
+  {
+    id: 'mcat-qb-bb-080',
+    test: 'MCAT',
+    section: 'bio-biochem',
+    discipline: 'Biology',
+    contentCategory: '3B',
+    foundationalConcept: '3',
+    scientificSkill: 'Skill 1',
+    difficulty: 'hard',
+    questionType: 'discrete',
+    question: 'During skeletal muscle contraction, Ca²⁺ is released from the sarcoplasmic reticulum following motor neuron stimulation. Which of the following correctly describes the sequence of molecular events from Ca²⁺ binding to myosin-actin interaction?',
+    choices: [
+      { label: 'A', text: 'Ca²⁺ binds troponin C (TnC) → TnC undergoes conformational change → troponin I (TnI) releases its inhibitory interaction with actin → tropomyosin shifts from a blocking position over the myosin-binding sites on F-actin → myosin heads (in the cocked, ADP-Pᵢ state) bind to the newly exposed actin binding sites → Pᵢ released → power stroke → ADP released → rigor complex → ATP binds → myosin detaches' },
+      { label: 'B', text: 'Ca²⁺ binds myosin regulatory light chain (RLC) → RLC phosphorylation → myosin head extends → myosin head binds actin → power stroke; this pathway (also used in smooth muscle) is the primary mechanism in skeletal muscle' },
+      { label: 'C', text: 'Ca²⁺ binds calmodulin → calmodulin-Ca²⁺ complex binds myosin light chain kinase (MLCK) → MLCK phosphorylates tropomyosin → phospho-tropomyosin shifts off actin → myosin binds; this is the mechanism used in both skeletal and smooth muscle' },
+      { label: 'D', text: 'Ca²⁺ binds troponin C → troponin C conformational change → troponin T directly contacts actin to expose myosin binding sites → myosin binds actin without any tropomyosin movement' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. Skeletal muscle contraction is regulated by troponin-tropomyosin. At rest: tropomyosin blocks myosin-binding sites on actin; troponin I holds tropomyosin in the OFF position. Upon Ca²⁺ release: (1) Ca²⁺ binds troponin C (TnC) — the Ca²⁺-binding subunit of the troponin complex; (2) TnC undergoes conformational change, capturing troponin I (TnI); (3) TnI is released from its inhibitory contact with actin; (4) The troponin complex repositions tropomyosin, moving it from blocking to open conformation over F-actin; (5) Myosin heads (pre-charged with ADP-Pᵢ from previous ATP hydrolysis) bind to now-exposed actin; (6) Pᵢ release → power stroke; (7) ADP release → rigor complex; (8) ATP binding → myosin detaches.',
+    wrongAnswerExplanations: {
+      B: 'The myosin regulatory light chain (RLC) phosphorylation pathway is the primary regulation mechanism in SMOOTH muscle (via Ca²⁺-calmodulin-MLCK), NOT skeletal muscle. In skeletal muscle, myosin heads are regulated differently — regulation occurs on the actin filament via troponin-tropomyosin, not on the myosin head itself. Confusing smooth and skeletal muscle regulation is a high-yield MCAT distinction.',
+      C: 'Ca²⁺-calmodulin-MLCK pathway is for SMOOTH MUSCLE only. In skeletal muscle, calmodulin is not the primary Ca²⁺ sensor for contraction (troponin C is). MLCK does NOT phosphorylate tropomyosin — in smooth muscle, MLCK phosphorylates myosin RLC. Tropomyosin regulation in skeletal muscle occurs through the troponin complex, not phosphorylation.',
+      D: 'Troponin T (TnT) is the tropomyosin-binding subunit of the troponin complex — it anchors the troponin complex to tropomyosin. TnT does NOT directly contact actin to expose myosin binding sites. The mechanism involves Ca²⁺ binding to TnC → conformational change → repositioning of TnI (inhibitory subunit) → tropomyosin shift away from blocking position. It is tropomyosin movement (not TnT-actin contact) that exposes the myosin binding sites.',
+    },
+    teachingPoint: 'Skeletal muscle contraction regulation — troponin subunits: TnC (Ca²⁺ binding), TnI (inhibitory, contacts actin), TnT (tropomyosin binding). Ca²⁺ sequence: Ca²⁺ → TnC → TnI releases → tropomyosin shifts → myosin binding sites exposed → crossbridge cycle. Compare smooth muscle: Ca²⁺ → calmodulin → MLCK → myosin RLC phosphorylation → contraction (regulation is on MYOSIN, not actin). Skeletal = thin filament regulation. Smooth = thick filament regulation. Cardiac muscle: same troponin mechanism as skeletal, but TnI phosphorylation by PKA modulates calcium sensitivity (β-adrenergic regulation).',
+    relatedTopics: ['Troponin complex', 'Muscle contraction molecular mechanism', 'Tropomyosin shift', 'TnC TnI TnT function', 'Skeletal vs smooth muscle regulation'],
+  },
+  {
+    id: 'mcat-qb-bb-081',
+    test: 'MCAT',
+    section: 'bio-biochem',
+    discipline: 'Biology',
+    contentCategory: '2C',
+    foundationalConcept: '2',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'discrete',
+    question: 'Bivalent chromatin domains in pluripotent stem cells are characterized by simultaneous presence of two opposing histone modifications at the same genomic locus. Which of the following correctly identifies these modifications and explains their functional significance?',
+    choices: [
+      { label: 'A', text: 'H3K4me3 (active mark) and H3K27me3 (repressive mark) are simultaneously present at developmental gene promoters, keeping these genes poised for rapid activation or silencing upon differentiation; this bivalency allows pluripotent cells to maintain developmental genes in a "ready but silent" state' },
+      { label: 'B', text: 'H3K9me3 (active mark) and H3K36me3 (repressive mark) are simultaneously present, forming heterochromatin domains that permanently silence developmental gene loci in pluripotent cells' },
+      { label: 'C', text: 'H3K27ac (repressive mark) and H3K4me1 (active mark) are simultaneously present at enhancers, converting them from inactive to constitutively active enhancers in pluripotent cells' },
+      { label: 'D', text: 'DNA methylation and histone acetylation together constitute bivalent chromatin, with CpG island methylation silencing and H3K9ac activating the same gene simultaneously in stem cells' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. Bivalent chromatin domains (described by Bernstein et al., 2006) are characterized by the co-occurrence of H3K4me3 (trimethylation of histone H3 at lysine 4, associated with active transcription) and H3K27me3 (trimethylation of histone H3 at lysine 27, associated with Polycomb-mediated silencing). These opposing marks are found together at promoters of key developmental transcription factor genes (e.g., HOX genes, PAX genes) in embryonic stem cells. The functional significance: genes are kept in a "poised" state — not actively expressed, but capable of rapid activation or permanent silencing upon differentiation cues. Upon lineage commitment, one mark is removed: H3K27me3 is removed (gene activated), or H3K4me3 is removed (gene permanently silenced).',
+    wrongAnswerExplanations: {
+      B: 'H3K9me3 is a REPRESSIVE mark associated with constitutive heterochromatin (pericentromeric regions), NOT an active mark. H3K36me3 is associated with active transcription in gene bodies (not repression). H3K9me3 and H3K36me3 do not constitute classical bivalent chromatin. H3K9me3-marked heterochromatin is generally stably silenced, not poised for activation.',
+      C: 'H3K27ac is an ACTIVE mark (associated with active enhancers and promoters), not a repressive mark. H3K4me1 is associated with enhancers (both poised and active). Together they mark ACTIVE enhancers. Bivalent chromatin specifically refers to the co-occurrence of H3K4me3 and H3K27me3 — a truly opposing combination of active and repressive marks.',
+      D: 'CpG island methylation + histone acetylation is not the standard definition of bivalent chromatin, and it is not the combination described in the developmental biology literature. CpG island methylation is typically mutually exclusive with active gene expression — genes with methylated CpG islands are silenced. Bivalent chromatin specifically refers to the H3K4me3/H3K27me3 combination in developmental gene promoters.',
+    },
+    teachingPoint: 'Bivalent chromatin: H3K4me3 (active) + H3K27me3 (repressive) at same locus. Found at developmental gene promoters in embryonic stem cells. Interpretation: "poised" state — ready to be either activated or silenced upon differentiation. Deposited by: H3K4me3 → MLL/COMPASS complex (Trithorax group); H3K27me3 → PRC2 (Polycomb group, EZH2). Upon differentiation: resolution of bivalency → H3K27me3 removed (activation) or H3K4me3 removed (silencing). Clinical: EZH2 mutations found in many cancers, disrupting developmental gene silencing.',
+    relatedTopics: ['Bivalent chromatin domains', 'H3K4me3 active mark', 'H3K27me3 repressive mark', 'Pluripotent stem cell epigenetics', 'Polycomb and Trithorax'],
+  },
+  {
+    id: 'mcat-qb-bb-082',
+    test: 'MCAT',
+    section: 'bio-biochem',
+    discipline: 'Biology',
+    contentCategory: '3B',
+    foundationalConcept: '3',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'discrete',
+    question: 'A naïve T cell encounters an antigen-presenting cell (APC) displaying a peptide-MHC class II complex. The T cell receives TCR engagement (signal 1) but the APC lacks expression of B7 co-stimulatory molecules. Which outcome is most likely?',
+    choices: [
+      { label: 'A', text: 'The T cell differentiates into an effector Th1 cell and secretes IFN-γ, because TCR engagement alone is sufficient to drive CD4+ T cell activation' },
+      { label: 'B', text: 'The T cell differentiates into a memory T cell rather than an effector cell, because the absence of B7 signals an established immune response already in progress' },
+      { label: 'C', text: 'The T cell becomes anergic — rendered functionally unresponsive — because full activation requires both signal 1 (TCR-pMHC) and signal 2 (CD28-B7 co-stimulation); signal 1 alone, without signal 2, induces a state of unresponsiveness to future stimulation by the same antigen' },
+      { label: 'D', text: 'The T cell undergoes apoptosis immediately upon TCR engagement without co-stimulation, because the absence of B7 activates the intrinsic apoptosis pathway via Bax/Bak' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. T cell activation requires two signals: Signal 1: TCR (T cell receptor) recognition of peptide-MHC complex; Signal 2: CD28 (co-stimulatory receptor on T cell) binding to B7 (CD80/CD86) on APC. Without signal 2 (co-stimulation), TCR engagement alone induces T cell anergy — a state of functional unresponsiveness. Anergic T cells fail to proliferate and produce IL-2 upon subsequent antigen encounter. Mechanistically, anergy involves failure to activate PI3K and NF-κB pathways, leading to decreased IL-2 production and increased expression of E3 ubiquitin ligases (Cbl-b, GRAIL) that degrade TCR signaling components. This mechanism prevents inappropriate T cell activation against self-antigens presented on MHC but without inflammatory co-stimulation.',
+    wrongAnswerExplanations: {
+      A: 'TCR engagement alone is NOT sufficient to drive T cell activation to an effector phenotype. Signal 1 without Signal 2 leads to anergy, not differentiation into Th1 cells. Th1 differentiation additionally requires IL-12 from APCs (signal 3/cytokine context) in addition to both signal 1 and signal 2. Full activation with IL-2 production requires the CD28-B7 co-stimulation.',
+      B: 'Absence of B7 does NOT signal an established immune response or direct memory cell formation. Memory T cells form after full activation followed by contraction of the effector response. Signal 1 alone without Signal 2 induces anergy, not memory formation.',
+      D: 'T cell anergy is not immediate apoptosis. Anergy involves functional unresponsiveness to future stimulation, not immediate cell death. Some activated T cells undergo apoptosis via AICD (activation-induced cell death), but this occurs after FULL activation and re-stimulation, not when co-stimulation is absent. Absence of B7 does not trigger the intrinsic apoptosis pathway directly.',
+    },
+    teachingPoint: 'T cell two-signal model: Signal 1 = TCR + peptide-MHC (antigen recognition); Signal 2 = CD28 + B7/CD80/CD86 (co-stimulation). Both required for full activation → IL-2 production → proliferation → differentiation. Signal 1 ALONE → anergy (not apoptosis, not memory, not effector). Signal 2 ALONE → no activation (no TCR engagement). Peripheral tolerance mechanism: APCs in normal tissues lack B7 → self-reactive T cells that escape thymus become anergic. Immunological synapse: central supramolecular activation cluster (cSMAC) forms between T cell and APC at the TCR-pMHC contact.',
+    relatedTopics: ['T cell two-signal model', 'CD28-B7 co-stimulation', 'T cell anergy', 'Signal 1 and Signal 2', 'Peripheral tolerance'],
+  },
+  {
+    id: 'mcat-qb-bb-083',
+    test: 'MCAT',
+    section: 'bio-biochem',
+    discipline: 'Biochemistry',
+    contentCategory: '3B',
+    foundationalConcept: '3',
+    scientificSkill: 'Skill 1',
+    difficulty: 'hard',
+    questionType: 'discrete',
+    question: 'Glucagon is released from pancreatic alpha cells during fasting. In hepatocytes, glucagon binds its GPCR, activating Gαs. Which of the following correctly describes the complete downstream signaling cascade leading to BOTH increased glycogenolysis AND decreased glycogen synthesis?',
+    choices: [
+      { label: 'A', text: 'Gαs → activates phospholipase C → IP₃ + DAG → Ca²⁺ release → PKC → phosphorylates glycogen phosphorylase (activating) and glycogen synthase (inactivating)' },
+      { label: 'B', text: 'Gαs → activates Gβγ subunit → PI3K → PIP3 → Akt → Akt phosphorylates glycogen phosphorylase (activating) and glycogen synthase (inactivating)' },
+      { label: 'C', text: 'Gαs → inhibits adenylyl cyclase → ↓ cAMP → inhibits PKA → reduced phosphorylation of glycogen phosphorylase kinase → decreased glycogenolysis; reduced GSK3 inhibition → glycogen synthase activated → increased glycogen synthesis' },
+      { label: 'D', text: 'Gαs → activates adenylyl cyclase → ↑ cAMP → activates PKA → PKA phosphorylates and activates glycogen phosphorylase kinase → phosphorylase kinase activates glycogen phosphorylase (glycogenolysis ↑); PKA also phosphorylates and inactivates glycogen synthase (glycogen synthesis ↓)' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. Glucagon → GPCR → Gαs subunit dissociates → Gαs ACTIVATES adenylyl cyclase → adenylyl cyclase converts ATP to cAMP → cAMP accumulates → cAMP binds regulatory subunits of PKA → PKA catalytic subunits released and active. PKA then phosphorylates two key targets: (1) Phosphorylase kinase (inactive → active) → phosphorylase kinase phosphorylates glycogen phosphorylase b → glycogen phosphorylase a (active) → glycogenolysis increases, releasing glucose-1-phosphate. (2) Glycogen synthase (active → inactive) → glycogen synthesis decreases. Net effect: glucose is mobilized from glycogen, raised blood glucose. This cascade constitutes hormonal amplification of the glucagon signal through cAMP-PKA.',
+    wrongAnswerExplanations: {
+      A: 'Phospholipase C activation, IP₃, DAG, and PKC are components of the Gαq signaling pathway (e.g., used by angiotensin II, muscarinic M1/M3 receptors), NOT the Gαs pathway. Glucagon signals through Gαs → adenylyl cyclase → cAMP → PKA. PKC does phosphorylate glycogen-related enzymes in some contexts, but this is not the primary glucagon pathway.',
+      B: 'PI3K → PIP3 → Akt is the INSULIN signaling pathway through the insulin receptor tyrosine kinase (not a GPCR). Gβγ subunits can activate some PI3K isoforms, but the primary glucagon signal goes through Gαs → adenylyl cyclase → cAMP → PKA, not through PI3K/Akt. Akt phosphorylates and INHIBITS GSK3, which would ACTIVATE glycogen synthase — the opposite of what glucagon does.',
+      C: 'Gαs ACTIVATES adenylyl cyclase (not inhibits). This is a fundamental error. Gαs (stimulatory G protein alpha subunit) is named for its stimulatory effect on adenylyl cyclase. Gαi (inhibitory) inhibits adenylyl cyclase. Choice C describes the Gαi signaling result, which would decrease cAMP, decrease PKA activity, decrease glycogenolysis, and increase glycogen synthesis — the opposite of glucagon\'s effect.',
+    },
+    teachingPoint: 'Glucagon → Gαs → ↑ adenylyl cyclase → ↑ cAMP → ↑ PKA. PKA targets in hepatocytes: (1) Phosphorylase kinase (activated) → glycogen phosphorylase a (activated) → glycogenolysis ↑. (2) Glycogen synthase (inactivated) → glycogen synthesis ↓. (3) Gluconeogenic gene expression ↑ (CREB phosphorylation). Compare: Insulin → IR tyrosine kinase → PI3K → Akt → Akt inhibits GSK3 → glycogen synthase ACTIVE → glycogen synthesis ↑; Akt activates phosphodiesterase → ↓ cAMP → ↓ PKA → glycogenolysis ↓. Glucagon and insulin have opposing effects on cAMP and glycogen metabolism.',
+    relatedTopics: ['Glucagon signaling cascade', 'Gαs and adenylyl cyclase', 'cAMP-PKA pathway', 'Glycogen phosphorylase activation', 'Glycogen synthase inactivation'],
+  },
 ]
