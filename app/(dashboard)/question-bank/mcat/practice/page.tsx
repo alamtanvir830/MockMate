@@ -29,11 +29,33 @@ export default function MCATQBPracticePage() {
   const setIdRef = useRef(`mcat-qb-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`)
 
   useEffect(() => {
+    const modeParam = searchParams.get('mode')
+    const countParam = parseInt(searchParams.get('count') ?? '10')
+
+    if (modeParam === 'custom') {
+      try {
+        const raw = sessionStorage.getItem('mockmate_mcat_custom_session')
+        if (raw) {
+          const questionIds: string[] = JSON.parse(raw)
+          const idSet = new Set(questionIds)
+          const orderMap = new Map(questionIds.map((id, i) => [id, i]))
+          const qs = allMCATQBQuestions
+            .filter(q => idSet.has(q.id))
+            .sort((a, b) => (orderMap.get(a.id) ?? 0) - (orderMap.get(b.id) ?? 0))
+          if (qs.length > 0) {
+            setQuestions(qs)
+            setPhase('question')
+            startTimeRef.current = Date.now()
+            return
+          }
+        }
+      } catch { /* fall through to normal selection */ }
+    }
+
     const sectionParam = searchParams.get('section') as MCATQBSection | null
     const disciplinesParam = searchParams.get('disciplines')
     const diffsParam = searchParams.get('difficulties')
     const skillsParam = searchParams.get('skills')
-    const countParam = parseInt(searchParams.get('count') ?? '10')
 
     const config = {
       section: sectionParam ?? undefined,
