@@ -1356,4 +1356,312 @@ The investigators argue that the pattern is consistent with implicit bias in cli
     teachingPoint: 'Validity types: Face validity = "looks valid" to casual inspection (weakest). Content validity = items comprehensively represent the construct domain (expert judgment). Criterion-related = scores correlate with an external criterion: Concurrent (same time) or Predictive (future outcome). Construct validity = overall evidence that the test measures the intended theoretical construct (subsumes convergent, discriminant, criterion validity). MCAT key: predictive correlations with real-world outcomes = criterion-related validity; expert systematic item coverage evaluation = content validity.',
     relatedTopics: ['Content validity', 'Criterion-related validity', 'Predictive validity', 'Face validity', 'Construct validity'],
   },
+
+  // ── Passage 7: Social Identity and Stereotype Threat (Q043–Q047) ────────────
+  {
+    id: 'mcat-qb-ps-043',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '8A',
+    foundationalConcept: '8',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Stereotype threat — the situational predicament in which individuals are at risk of confirming, as self-characteristic, a negative stereotype about their social group — was first documented by Steele and Aronson (1995). In their studies, Black college students performed significantly worse than White students on a verbal test when the task was described as "diagnostic of intellectual ability," but not when the same test was framed as a "laboratory problem-solving task." The authors proposed that invoking a stigmatized identity created cognitive load: participants devoted working memory resources to monitoring and managing threat, leaving fewer resources available for the task itself.
+
+Subsequent research extended these findings across many group identities. Women underperformed on mathematics tests in conditions of gender-identity salience; elderly individuals performed worse on memory tasks when age-related stereotypes were activated; first-generation college students showed greater academic anxiety in identity-threatening contexts. Investigators observed that stereotype threat effects were strongest in highly identified individuals — those for whom the domain was important to their self-concept — and in individuals with strong implicit awareness of group stereotypes.
+
+A critical line of research examined the physiological and cognitive mediating pathways. Anxiety (both self-reported and physiological, as measured by skin conductance and cortisol) was elevated under threat conditions. Additionally, working memory capacity, as assessed by reading span tasks, was significantly reduced under threat. When working memory load was experimentally increased (e.g., by requiring participants to maintain a digit string while completing the primary task), performance decrements matching those of stereotype threat appeared even in non-threatened controls, suggesting that the mechanism was specifically a reduction in available cognitive resources.
+
+To replicate and extend these findings, researchers designed a study in which participants completed a math test under one of three conditions: (1) a control condition (no mention of gender or performance differences), (2) a threat condition (explicit reminder that women have historically performed worse on this test), and (3) a reappraisal condition (participants were taught to attribute their anxiety to environmental sources — specifically, the testing situation itself — rather than to personal ability). The reappraisal condition was predicted to reduce the self-referential interpretation of arousal and thereby reduce threat-driven performance decrements.`,
+    question: 'In the study described in the passage, why was the reappraisal condition predicted to improve performance relative to the threat condition?',
+    choices: [
+      { label: 'A', text: 'The reappraisal condition eliminated all anxiety, removing the physiological arousal that would otherwise impair cognitive performance' },
+      { label: 'B', text: 'By attributing anxiety to the testing situation rather than to personal ability, reappraisal reduced the self-referential component of threat, freeing working memory resources that would otherwise be consumed by self-monitoring' },
+      { label: 'C', text: 'The reappraisal condition increased dopamine release in the prefrontal cortex, directly enhancing working memory capacity beyond baseline levels' },
+      { label: 'D', text: 'Reappraisal improved performance by activating System 2 deliberate processing, which suppresses the emotional System 1 responses responsible for stereotype threat' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The passage explains the mechanism of stereotype threat as cognitive load: when individuals monitor and manage the threat of confirming a stereotype, working memory resources are consumed and fewer are available for the task. The reappraisal condition works by changing how participants interpret their anxiety — attributing it to the external testing situation rather than to their own ability (a self-referential threat). By reducing the self-referential component of arousal, participants no longer need to devote working memory to managing identity threat. The freed cognitive resources are then available for the math task, predicting improved performance.',
+    wrongAnswerExplanations: {
+      A: 'The reappraisal condition does not eliminate anxiety — it changes the attribution of anxiety. The passage describes reappraisal as teaching participants to attribute arousal to environmental sources, not as eliminating physiological arousal. Research on emotion regulation distinguishes between reducing arousal (suppression) and reinterpreting its source (reappraisal/reattribution).',
+      C: 'The passage makes no claims about dopamine or neurochemical mechanisms of reappraisal. The mechanistic explanation in the passage is cognitive (working memory) and social-psychological (identity threat), not neurochemical.',
+      D: 'The passage does not invoke dual-process (System 1/System 2) theory to explain stereotype threat. The proposed mechanism is working memory resource allocation, not the suppression of an emotional system by a deliberate one.',
+    },
+    teachingPoint: 'Stereotype threat mechanism: identity salience → self-monitoring/management → working memory consumed → fewer resources for task → performance decrements. Reappraisal (reattribution of arousal): changes the MEANING of anxiety (external, not self-relevant) → reduces self-monitoring need → frees working memory → performance improves. Key distinction: reappraisal changes interpretation of arousal, not arousal itself. This is a test of whether you can trace the mechanism through the passage logic.',
+    relatedTopics: ['Stereotype threat', 'Working memory and anxiety', 'Emotion reappraisal', 'Social identity salience', 'Cognitive load'],
+  },
+  {
+    id: 'mcat-qb-ps-044',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '8A',
+    foundationalConcept: '8',
+    scientificSkill: 'Skill 3',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Stereotype threat — the situational predicament in which individuals are at risk of confirming, as self-characteristic, a negative stereotype about their social group — was first documented by Steele and Aronson (1995). In their studies, Black college students performed significantly worse than White students on a verbal test when the task was described as "diagnostic of intellectual ability," but not when the same test was framed as a "laboratory problem-solving task." The authors proposed that invoking a stigmatized identity created cognitive load: participants devoted working memory resources to monitoring and managing threat, leaving fewer resources available for the task itself.
+
+Subsequent research extended these findings across many group identities. Women underperformed on mathematics tests in conditions of gender-identity salience; elderly individuals performed worse on memory tasks when age-related stereotypes were activated; first-generation college students showed greater academic anxiety in identity-threatening contexts. Investigators observed that stereotype threat effects were strongest in highly identified individuals — those for whom the domain was important to their self-concept — and in individuals with strong implicit awareness of group stereotypes.
+
+A critical line of research examined the physiological and cognitive mediating pathways. Anxiety (both self-reported and physiological, as measured by skin conductance and cortisol) was elevated under threat conditions. Additionally, working memory capacity, as assessed by reading span tasks, was significantly reduced under threat. When working memory load was experimentally increased (e.g., by requiring participants to maintain a digit string while completing the primary task), performance decrements matching those of stereotype threat appeared even in non-threatened controls, suggesting that the mechanism was specifically a reduction in available cognitive resources.
+
+To replicate and extend these findings, researchers designed a study in which participants completed a math test under one of three conditions: (1) a control condition (no mention of gender or performance differences), (2) a threat condition (explicit reminder that women have historically performed worse on this test), and (3) a reappraisal condition (participants were taught to attribute their anxiety to environmental sources — specifically, the testing situation itself — rather than to personal ability). The reappraisal condition was predicted to reduce the self-referential interpretation of arousal and thereby reduce threat-driven performance decrements.`,
+    question: 'A follow-up study found that stereotype threat effects were larger when participants completed the math test in a room containing a majority-male experimenter panel than in an identical room with a gender-balanced panel. Which theoretical framework from the passage BEST accounts for this finding?',
+    choices: [
+      { label: 'A', text: 'The increased threat magnitude in the majority-male environment increased cortisol levels, which directly impaired hippocampal memory consolidation during the test' },
+      { label: 'B', text: 'The majority-male panel served as a situational cue that increased the salience of the female gender identity and its associated negative stereotype in the math domain, elevating working memory-depleting self-monitoring' },
+      { label: 'C', text: 'The majority-male environment activated System 1 automatic biases that prevented participants from accessing their mathematical knowledge stored in long-term memory' },
+      { label: 'D', text: 'Participants in the majority-male condition experienced higher test anxiety than controls, and test anxiety always produces performance decrements due to its distraction effects' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The passage states that stereotype threat effects are strongest when stigmatized identity is made salient. A majority-male experimenter panel is a situational cue that increases gender identity salience — it reinforces the relevance of the gender stereotypes associated with math performance. Heightened identity salience → more self-monitoring → more working memory consumed → larger performance decrements. This is a direct application of the passage\'s framework: situational cues (the panel composition) modulate identity salience, which determines threat magnitude.',
+    wrongAnswerExplanations: {
+      A: 'While the passage mentions cortisol as a physiological correlate of stereotype threat, it does not state that cortisol impairs hippocampal memory consolidation during the test. The passage\'s mechanistic explanation centers on working memory depletion during test performance, not on memory consolidation failure. Additionally, this choice does not address WHY the majority-male panel specifically elevated threat.',
+      C: 'The passage does not invoke dual-process theory or System 1/System 2 distinctions. The proposed mechanism involves working memory (a System 2, deliberate processing resource), not System 1 automatic biases blocking memory access.',
+      D: 'This choice conflates stereotype threat with general test anxiety. The passage\'s key claim is that stereotype threat is specifically a function of identity salience in domains where negative group stereotypes exist — not that all anxiety causes performance decrements. The fact that the SAME level of test anxiety produced different decrements based on panel composition is explained by identity salience, not by anxiety magnitude alone.',
+    },
+    teachingPoint: 'Applying framework to new evidence: the passage framework is: situational cues → identity salience → self-monitoring → working memory depletion → performance decrements. Apply this to any new cue. Majority-male panel = situational cue for gender identity salience in math context = higher threat magnitude via the same mechanism. Wrong answers often invoke mechanisms (hippocampus, System 1) not in the passage or overgeneralize ("all anxiety = decrements").',
+    relatedTopics: ['Stereotype threat situational cues', 'Identity salience', 'Environmental triggers', 'Working memory depletion', 'Gender stereotype in STEM'],
+  },
+  {
+    id: 'mcat-qb-ps-045',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '8A',
+    foundationalConcept: '8',
+    scientificSkill: 'Skill 4',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Stereotype threat — the situational predicament in which individuals are at risk of confirming, as self-characteristic, a negative stereotype about their social group — was first documented by Steele and Aronson (1995). In their studies, Black college students performed significantly worse than White students on a verbal test when the task was described as "diagnostic of intellectual ability," but not when the same test was framed as a "laboratory problem-solving task." The authors proposed that invoking a stigmatized identity created cognitive load: participants devoted working memory resources to monitoring and managing threat, leaving fewer resources available for the task itself.
+
+Subsequent research extended these findings across many group identities. Women underperformed on mathematics tests in conditions of gender-identity salience; elderly individuals performed worse on memory tasks when age-related stereotypes were activated; first-generation college students showed greater academic anxiety in identity-threatening contexts. Investigators observed that stereotype threat effects were strongest in highly identified individuals — those for whom the domain was important to their self-concept — and in individuals with strong implicit awareness of group stereotypes.
+
+A critical line of research examined the physiological and cognitive mediating pathways. Anxiety (both self-reported and physiological, as measured by skin conductance and cortisol) was elevated under threat conditions. Additionally, working memory capacity, as assessed by reading span tasks, was significantly reduced under threat. When working memory load was experimentally increased (e.g., by requiring participants to maintain a digit string while completing the primary task), performance decrements matching those of stereotype threat appeared even in non-threatened controls, suggesting that the mechanism was specifically a reduction in available cognitive resources.
+
+To replicate and extend these findings, researchers designed a study in which participants completed a math test under one of three conditions: (1) a control condition (no mention of gender or performance differences), (2) a threat condition (explicit reminder that women have historically performed worse on this test), and (3) a reappraisal condition (participants were taught to attribute their anxiety to environmental sources — specifically, the testing situation itself — rather than to personal ability). The reappraisal condition was predicted to reduce the self-referential interpretation of arousal and thereby reduce threat-driven performance decrements.`,
+    question: 'In the study described in the final paragraph, researchers want to determine whether reappraisal reduces stereotype threat by reducing anxiety OR by changing the relationship between anxiety and performance. Which experimental design would BEST distinguish these two mechanisms?',
+    choices: [
+      { label: 'A', text: 'Compare average math test scores across the three conditions (control, threat, reappraisal) without measuring anxiety' },
+      { label: 'B', text: 'Measure physiological arousal (e.g., skin conductance) in all three conditions and compare arousal levels; if reappraisal produces lower arousal than the threat condition, it works by reducing anxiety' },
+      { label: 'C', text: 'Measure both physiological arousal and math performance in all three conditions, then use mediation analysis to determine whether reappraisal\'s effect on performance is mediated by reduced arousal or operates independently of arousal level' },
+      { label: 'D', text: 'Run two separate experiments: one comparing control vs. threat, and one comparing control vs. reappraisal, using independent samples in each study' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. To distinguish between two mechanistic pathways — (1) reappraisal reduces anxiety, which then improves performance (anxiety-mediated pathway), versus (2) reappraisal changes the relationship between anxiety and performance without reducing arousal (reinterpretation pathway) — you need to measure both arousal AND performance and examine the statistical relationship between them. A mediation analysis tests whether the effect of condition (reappraisal vs. threat) on performance is accounted for by differences in arousal. If reappraisal reduces arousal AND that reduced arousal predicts better performance, pathway 1 is supported. If reappraisal improves performance without reducing arousal (or reduces performance anxiety without reducing physiological arousal), pathway 2 is supported.',
+    wrongAnswerExplanations: {
+      A: 'Without measuring anxiety, you cannot determine WHICH mechanism is responsible for any performance difference. Comparing scores across conditions only tells you whether reappraisal affects performance, not how.',
+      B: 'Comparing arousal levels alone tells you whether reappraisal reduces anxiety but cannot tell you whether this anxiety reduction is what drives performance improvement. You would also need to measure performance and examine the relationship between anxiety changes and performance changes to establish the mechanism.',
+      D: 'Running separate experiments with independent samples prevents direct comparison of how anxiety and performance co-vary within individuals across conditions. Mediation analysis requires measuring all relevant variables within the same study to estimate the pathway from condition → anxiety → performance.',
+    },
+    teachingPoint: 'Mechanistic discrimination in psychology experiments: when two mechanisms predict the same behavioral outcome but through different pathways, you need to measure the proposed mediator AND the outcome, then test whether the mediator accounts for the effect (mediation analysis). Pattern: "does X affect Y because of Z (mediation) or directly?" → measure X, Y, AND Z in the same study and use mediation analysis. This is a core experimental design concept tested on the MCAT.',
+    relatedTopics: ['Mediation analysis', 'Experimental design', 'Mechanism distinction', 'Arousal and performance', 'Research methods in psychology'],
+  },
+  {
+    id: 'mcat-qb-ps-046',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '7C',
+    foundationalConcept: '7',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `Stereotype threat — the situational predicament in which individuals are at risk of confirming, as self-characteristic, a negative stereotype about their social group — was first documented by Steele and Aronson (1995). In their studies, Black college students performed significantly worse than White students on a verbal test when the task was described as "diagnostic of intellectual ability," but not when the same test was framed as a "laboratory problem-solving task." The authors proposed that invoking a stigmatized identity created cognitive load: participants devoted working memory resources to monitoring and managing threat, leaving fewer resources available for the task itself.
+
+Subsequent research extended these findings across many group identities. Women underperformed on mathematics tests in conditions of gender-identity salience; elderly individuals performed worse on memory tasks when age-related stereotypes were activated; first-generation college students showed greater academic anxiety in identity-threatening contexts. Investigators observed that stereotype threat effects were strongest in highly identified individuals — those for whom the domain was important to their self-concept — and in individuals with strong implicit awareness of group stereotypes.
+
+A critical line of research examined the physiological and cognitive mediating pathways. Anxiety (both self-reported and physiological, as measured by skin conductance and cortisol) was elevated under threat conditions. Additionally, working memory capacity, as assessed by reading span tasks, was significantly reduced under threat. When working memory load was experimentally increased (e.g., by requiring participants to maintain a digit string while completing the primary task), performance decrements matching those of stereotype threat appeared even in non-threatened controls, suggesting that the mechanism was specifically a reduction in available cognitive resources.
+
+To replicate and extend these findings, researchers designed a study in which participants completed a math test under one of three conditions: (1) a control condition (no mention of gender or performance differences), (2) a threat condition (explicit reminder that women have historically performed worse on this test), and (3) a reappraisal condition (participants were taught to attribute their anxiety to environmental sources — specifically, the testing situation itself — rather than to personal ability). The reappraisal condition was predicted to reduce the self-referential interpretation of arousal and thereby reduce threat-driven performance decrements.`,
+    question: 'According to the passage, stereotype threat effects are strongest in which type of individual?',
+    choices: [
+      { label: 'A', text: 'Individuals who are members of low-status social groups, regardless of whether they personally care about performance in the threatened domain' },
+      { label: 'B', text: 'Highly identified individuals — those for whom the domain is important to their self-concept — and those with strong implicit awareness of group stereotypes' },
+      { label: 'C', text: 'Individuals who have previously experienced academic failure, because prior failure sensitizes them to identity-based performance cues' },
+      { label: 'D', text: 'Individuals with low working memory capacity, because they have fewer cognitive resources available before any threat-related depletion occurs' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The passage explicitly states in the second paragraph: "stereotype threat effects were strongest in highly identified individuals — those for whom the domain was important to their self-concept — and in individuals with strong implicit awareness of group stereotypes." This is a direct retrieval question from the passage.',
+    wrongAnswerExplanations: {
+      A: 'The passage does not say effects are strongest in all members of low-status groups regardless of domain identification. Domain identification is a key moderator — someone who does not care about math performance would not be as affected by a math-domain stereotype threat as someone highly identified with academic performance in that domain.',
+      C: 'Prior academic failure is not mentioned in the passage as a moderator of stereotype threat effects. The moderators identified are domain identification and implicit stereotype awareness.',
+      D: 'While working memory capacity is mentioned as a mechanism (threat reduces working memory), the passage does not state that individuals with low baseline working memory are more susceptible to stereotype threat. The moderators are domain identification and stereotype awareness, not baseline working memory.',
+    },
+    teachingPoint: 'Direct retrieval questions: locate the exact passage text. Paragraph 2: "stereotype threat effects were strongest in highly identified individuals — those for whom the domain was important to their self-concept — and in individuals with strong implicit awareness of group stereotypes." Two moderators: (1) domain identification; (2) implicit stereotype awareness. Do not confuse mechanism (working memory) with moderator (who is most affected).',
+    relatedTopics: ['Stereotype threat moderators', 'Domain identification', 'Self-concept', 'Implicit stereotype awareness', 'Social identity'],
+  },
+  {
+    id: 'mcat-qb-ps-047',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '10A',
+    foundationalConcept: '10',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Stereotype threat — the situational predicament in which individuals are at risk of confirming, as self-characteristic, a negative stereotype about their social group — was first documented by Steele and Aronson (1995). In their studies, Black college students performed significantly worse than White students on a verbal test when the task was described as "diagnostic of intellectual ability," but not when the same test was framed as a "laboratory problem-solving task." The authors proposed that invoking a stigmatized identity created cognitive load: participants devoted working memory resources to monitoring and managing threat, leaving fewer resources available for the task itself.
+
+Subsequent research extended these findings across many group identities. Women underperformed on mathematics tests in conditions of gender-identity salience; elderly individuals performed worse on memory tasks when age-related stereotypes were activated; first-generation college students showed greater academic anxiety in identity-threatening contexts. Investigators observed that stereotype threat effects were strongest in highly identified individuals — those for whom the domain was important to their self-concept — and in individuals with strong implicit awareness of group stereotypes.
+
+A critical line of research examined the physiological and cognitive mediating pathways. Anxiety (both self-reported and physiological, as measured by skin conductance and cortisol) was elevated under threat conditions. Additionally, working memory capacity, as assessed by reading span tasks, was significantly reduced under threat. When working memory load was experimentally increased (e.g., by requiring participants to maintain a digit string while completing the primary task), performance decrements matching those of stereotype threat appeared even in non-threatened controls, suggesting that the mechanism was specifically a reduction in available cognitive resources.
+
+To replicate and extend these findings, researchers designed a study in which participants completed a math test under one of three conditions: (1) a control condition (no mention of gender or performance differences), (2) a threat condition (explicit reminder that women have historically performed worse on this test), and (3) a reappraisal condition (participants were taught to attribute their anxiety to environmental sources — specifically, the testing situation itself — rather than to personal ability). The reappraisal condition was predicted to reduce the self-referential interpretation of arousal and thereby reduce threat-driven performance decrements.`,
+    question: 'The original Steele and Aronson finding — that Black students underperformed only when the test was framed as "diagnostic of intellectual ability" but not when framed as a "laboratory problem-solving task" — is best understood as an example of which social-psychological concept?',
+    choices: [
+      { label: 'A', text: 'Fundamental attribution error: the researchers incorrectly attributed performance differences to individual ability rather than to situational factors' },
+      { label: 'B', text: 'Implicit bias: evaluators unconsciously rated Black students\' performance lower due to in-group favoritism' },
+      { label: 'C', text: 'The power of situational framing: identical task performance is differentially affected by the social meaning attributed to the task, demonstrating that behavior is shaped by perceived situational demands rather than fixed ability alone' },
+      { label: 'D', text: 'Self-fulfilling prophecy: Black students believed they would perform worse and therefore studied less, which caused the actual performance difference' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The key finding is that the SAME individuals performed differently based only on how the test was framed — not because the test itself or their ability changed. The framing ("diagnostic of intellectual ability" vs. "laboratory problem-solving task") changed the social meaning of the task, which activated or deactivated identity threat. This is a demonstration that situational framing (a social-contextual factor) shapes behavior powerfully, even when the objective task is identical. This is the central lesson of the classic situationist social psychology tradition.',
+    wrongAnswerExplanations: {
+      A: 'Fundamental attribution error refers to the tendency of OBSERVERS to attribute others\' behavior to internal dispositions rather than situational factors. It is a bias in social perception, not a mechanism explaining participant performance differences. The Steele and Aronson finding is about how the SITUATION affects PARTICIPANTS\' performance, not about how observers attribute those performance differences.',
+      B: 'The finding does not involve evaluator bias or implicit bias in rating. The performance differences were objective test score differences, not subjective evaluations of identical performance. Implicit bias would involve a rater unconsciously downgrading identical work from Black students.',
+      D: 'A self-fulfilling prophecy requires that participants\' beliefs lead to behaviors (e.g., reduced effort, less studying) that cause the predicted outcome. The passage does not describe a study-effort pathway. Stereotype threat operates through in-the-moment cognitive resource depletion during the test, not through prior behavior changes based on beliefs.',
+    },
+    teachingPoint: 'Situationism vs. dispositionism: the Steele and Aronson finding is a classic demonstration of situationism — the same people perform differently based on situational framing. This contrasts with the dispositionist view that performance reflects fixed internal ability. In social psychology, this is related to Lewin\'s field theory (B = f(P, E)): behavior is a function of person AND environment. Stereotype threat = how social environment (framing) creates conditions that impair performance through cognitive load, not through fixed ability differences.',
+    relatedTopics: ['Situational framing', 'Situationism vs dispositionism', 'Social context and behavior', 'Stereotype threat framing', 'Attribution theory'],
+  },
+
+  // ── Discrete Q048–Q052 ──────────────────────────────────────────────────────
+  {
+    id: 'mcat-qb-ps-048',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '7A',
+    foundationalConcept: '7',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'discrete',
+    question: 'A researcher observes that children raised in environments with high caregiver responsiveness develop a secure attachment style, characterized by comfort with intimacy and minimal separation anxiety. A child who experienced inconsistent caregiver responses — sometimes warm and attentive, sometimes unavailable — develops anxious-preoccupied attachment. According to Bowlby\'s attachment theory, what is the primary function of the internal working model, and how does early caregiver inconsistency lead to anxious attachment?',
+    choices: [
+      { label: 'A', text: 'The internal working model is a conscious decision-making schema for adult romantic relationships; inconsistent caregiving creates confusion about romantic partner selection in adolescence' },
+      { label: 'B', text: 'The internal working model is a cognitive-affective representation of self, others, and relationships developed from early attachment experiences; inconsistent caregiving creates an internal model in which others are available only unpredictably, leading to hypervigilance to attachment cues and difficulty self-regulating' },
+      { label: 'C', text: 'The internal working model determines the child\'s IQ; inconsistent caregiving reduces cortisol clearance and directly impairs hippocampal neurogenesis, causing cognitive deficits that manifest as attachment anxiety' },
+      { label: 'D', text: 'The internal working model is equivalent to Piaget\'s schema concept; caregiver inconsistency prevents accommodation from occurring, permanently fixing preoperational thinking patterns' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. According to Bowlby, children develop internal working models (IWMs) — mental representations of themselves as worthy of care and others as reliable sources of comfort — based on their early attachment experiences. When caregivers are consistently responsive, children develop an IWM of others as dependable and of themselves as deserving care → secure attachment. When caregivers are inconsistent (sometimes responsive, sometimes not), children develop an IWM of others as unpredictably available, leading to hyperactivation of the attachment system: they must remain hypervigilant, anxious, and clingy to maximize the chance of receiving care when it is sporadically available → anxious-preoccupied attachment.',
+    wrongAnswerExplanations: {
+      A: 'Internal working models are not restricted to romantic relationships and are not described as conscious decision-making schemas. They are implicit mental representations formed in early childhood that influence all close relationships across the lifespan, not specifically romantic partner selection in adolescence.',
+      C: 'The IWM is a psychological construct (cognitive-affective representation), not a determinant of IQ. While chronic stress from inconsistent caregiving can affect cortisol and brain development, the passage asks about Bowlby\'s attachment theory concept and its mechanism for anxious attachment, not neurobiological pathways to cognitive deficits.',
+      D: 'Internal working models are not equivalent to Piagetian schemas. Piaget\'s schemas concern cognitive representations of objects and physical events; IWMs specifically represent the self, attachment figures, and the nature of relationships. The developmental mechanisms (accommodation, assimilation) are Piagetian, not Bowlbian.',
+    },
+    teachingPoint: 'Bowlby\'s attachment theory: IWM = cognitive-affective representation of self (as worthy of care) and others (as reliable/unreliable). Attachment style determined by caregiver responsiveness pattern: Consistent responsive → secure (others = reliable, self = worthy). Inconsistent → anxious-preoccupied (others = unpredictable → hypervigilance). Avoidant → avoidant (others = consistently unresponsive → deactivate attachment system). Disorganized → disorganized (caregiver = source of fear → approach-avoidance conflict).',
+    relatedTopics: ['Bowlby attachment theory', 'Internal working model', 'Anxious preoccupied attachment', 'Caregiver responsiveness', 'Attachment styles'],
+  },
+  {
+    id: 'mcat-qb-ps-049',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '6B',
+    foundationalConcept: '6',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'discrete',
+    question: 'A participant is asked to memorize a list of 20 words and recall them immediately after presentation. Analysis shows the participant correctly recalls the first 3 and last 4 words with high accuracy but recalls few of the middle words. One week later, the same participant is asked about the same list; now, the last-word advantage is gone and only the first 3 words are recalled. Which memory phenomena account for these two patterns, and which mechanism explains the disappearance of the recency effect at one week?',
+    choices: [
+      { label: 'A', text: 'Primacy effect (first items) and recency effect (last items) in immediate recall; the recency effect disappears at one week because last-list items were held in short-term/working memory at retrieval but have since decayed due to limited STM capacity' },
+      { label: 'B', text: 'Primacy effect (first items) and recency effect (last items) in immediate recall; the recency effect disappears at one week because last-list items received fewer rehearsals than early items and thus were never consolidated into long-term memory' },
+      { label: 'C', text: 'Encoding specificity (first items) and state-dependent learning (last items); the one-week delay removes the state cue, eliminating recall of last items' },
+      { label: 'D', text: 'Proactive interference (first items) and retroactive interference (last items); retroactive interference from daily experiences in the subsequent week specifically disrupts memory for last items only' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The immediate recall pattern (primacy + recency) is the classic serial position effect. The primacy effect arises because early list items receive more rehearsal and are thus transferred to long-term memory (LTM). The recency effect arises because the last few items are still in short-term/working memory at the time of immediate recall and can be "read out" directly. At one week, the recency effect disappears because the items that were in STM at immediate recall have since decayed — they were never deeply rehearsed, so they were not consolidated into LTM. The primacy effect survives because those early items were rehearsed into LTM. Note: B captures this well by emphasizing that last items received fewer rehearsals and were not consolidated into LTM. Choice A also describes decay, which is consistent, but B is more precisely correct about WHY the recency items are not retained — it is the consolidation/rehearsal failure, not just STM capacity per se.',
+    wrongAnswerExplanations: {
+      C: 'Encoding specificity and state-dependent learning refer to the principle that memory retrieval is best when retrieval conditions match encoding conditions. This framework does not specifically predict why the LAST items are lost while the FIRST items survive. It would predict symmetric loss across all items if the retrieval state changed, not a selective recency-only loss.',
+      D: 'Proactive interference (PI) describes how old memories impair new memory formation (not why first items are recalled better). Retroactive interference (RI) describes how new learning impairs recall of older memories (which would actually predict worse recall for the FIRST/middle items, not last items, if subsequent daily experiences create RI). The interference framework does not straightforwardly predict the serial position effect pattern described.',
+    },
+    teachingPoint: 'Serial position effect: primacy = first items recalled best because rehearsed into LTM. Recency = last items recalled best because still in STM at time of immediate retrieval. Recency effect is STM-dependent → disappears with delay (no consolidation). Primacy effect is LTM-dependent → survives delay. Classic test: delay between learning and recall + distractor task eliminates recency but not primacy. This is the key behavioral signature distinguishing STM and LTM.',
+    relatedTopics: ['Serial position effect', 'Primacy and recency', 'Short-term memory', 'Long-term memory consolidation', 'Rehearsal and memory'],
+  },
+  {
+    id: 'mcat-qb-ps-050',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '9A',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'discrete',
+    question: 'Goffman\'s concept of stigma describes how certain attributes — including physical disabilities, mental illness, criminal history, and membership in marginalized racial or ethnic groups — become deeply discrediting and reduce the bearer from a "whole person" to a "tainted, discounted one." Goffman distinguished between discredited stigma (the attribute is visible and known) and discreditable stigma (the attribute is not yet known or visible). Which of the following scenarios best illustrates discreditable stigma?',
+    choices: [
+      { label: 'A', text: 'A person using a wheelchair in a job interview, where the interviewer immediately adjusts their expectations and communication style based on the visible disability' },
+      { label: 'B', text: 'A person with a history of depression who has fully recovered and shows no current symptoms, concealing their psychiatric history on a job application for fear of discrimination' },
+      { label: 'C', text: 'A formerly incarcerated person who displays visible tattoos associated with gang membership, which are immediately noticed by potential employers' },
+      { label: 'D', text: 'A person with vitiligo (visible depigmentation patches) who experiences social discomfort from others\' prolonged staring in public spaces' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. Goffman\'s discreditable stigma refers to an attribute that is stigmatizing but not yet visible or known to others — the person must actively manage information about themselves to prevent the stigma from becoming known. A person with a recovered depression history who conceals it on a job application is managing a discreditable stigma: the attribute (psychiatric history) is potentially stigmatizing but not visible in current interactions. The person\'s primary challenge is information management (whether and when to disclose).',
+    wrongAnswerExplanations: {
+      A: 'A wheelchair user whose disability is immediately visible to the interviewer represents discredited stigma — the attribute is visible and known, so the individual must manage social interactions and others\' reactions rather than managing information about their identity.',
+      C: 'Visible tattoos associated with gang membership are immediately perceivable by potential employers — this represents discredited stigma (the attribute is visible and known). There is no need for information management; the challenge is managing others\' immediate reactions.',
+      D: 'Vitiligo is a visible physical characteristic that is immediately noticeable in social interactions. Others\' staring responses confirm that the attribute is visible and known — this is discredited stigma, not discreditable.',
+    },
+    teachingPoint: 'Goffman\'s stigma distinction: Discredited = stigma is already known/visible → challenge is managing social interactions (e.g., "how will they treat me now that they know?"). Discreditable = stigma is not yet known/visible → challenge is information management (e.g., "should I disclose? when? to whom?"). Key question: Is the stigmatizing attribute visible in the current interaction? Yes → discredited. No → discreditable. Examples: HIV-positive person (discreditable until disclosed), wheelchair user (discredited), recovered alcoholic (discreditable).',
+    relatedTopics: ['Goffman stigma', 'Discredited vs discreditable', 'Information management', 'Social identity', 'Stigma management'],
+  },
+  {
+    id: 'mcat-qb-ps-051',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '10A',
+    foundationalConcept: '10',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'discrete',
+    question: 'A sociologist studying racial health disparities finds that, after controlling for income, education, and health insurance status, Black patients are still 30% less likely to receive guideline-recommended pain medication than White patients with identical diagnoses. The sociologist proposes two competing explanations: (1) implicit racial bias among providers leads to differential treatment; (2) structural inequalities in hospital resource allocation mean that hospitals serving majority-Black communities have fewer pain specialists and medications on formulary. Which type of evidence would BEST distinguish between these two explanations?',
+    choices: [
+      { label: 'A', text: 'A study comparing pain medication rates between Black and White patients treated by the SAME provider in the SAME hospital, combined with an implicit association test (IAT) administered to those providers' },
+      { label: 'B', text: 'A national survey of hospital formularies comparing pain medication availability in majority-Black vs. majority-White census tract hospitals, without controlling for provider identity' },
+      { label: 'C', text: 'A study comparing Black patient outcomes in Black-serving hospitals vs. White-serving hospitals, using mortality rate as the primary outcome' },
+      { label: 'D', text: 'An experimental study randomly assigning patients (presented as Black or White via vignette) to physician participants and measuring treatment recommendations' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. To distinguish between provider-level implicit bias and hospital-level structural inequalities, the ideal design holds the hospital-level structural factor constant (by studying patients treated in the SAME hospital) and varies only the patient race, while simultaneously measuring the proposed mechanism of provider bias (IAT scores). If Black patients still receive less pain medication than White patients treated by the SAME providers in the SAME hospital, structural (hospital-level) resource limitations cannot explain the disparity — pointing to provider-level factors. The IAT data allow testing whether providers with higher implicit bias scores show larger racial disparities in prescribing, providing mechanistic evidence for the implicit bias explanation.',
+    wrongAnswerExplanations: {
+      B: 'A formulary survey would provide evidence for the structural (hospital resource) explanation but cannot address the implicit bias explanation. It does not control for provider behavior within institutions. Even if Black-serving hospitals have lower formulary availability, you cannot rule out provider bias from this data alone.',
+      C: 'Mortality rate comparison does not distinguish between implicit bias and structural inequality — both mechanisms could produce different mortality outcomes. Additionally, mortality is a distal outcome that reflects many factors beyond pain management. The specific mechanism (provider behavior vs. resource availability) cannot be isolated from mortality data.',
+      D: 'A vignette experiment with physician participants can establish causal evidence for implicit racial bias in treatment recommendations (by randomly assigning patient race). However, it does not address the structural inequality explanation (hospital formularies are not varied in a vignette study). A is stronger because it addresses both mechanisms simultaneously in a real clinical setting.',
+    },
+    teachingPoint: 'Distinguishing individual vs. structural explanations for health disparities: (1) Provider-level (implicit bias): vary patient race with same providers, measure provider IAT → within-provider, within-hospital racial disparities implicate provider behavior. (2) Hospital-level (structural): compare resource availability across hospitals by neighborhood composition → disparities correlate with institutional resources. The ideal design holds constant the factor you\'re NOT testing. Same hospital + same provider → isolates provider-level factors.',
+    relatedTopics: ['Racial health disparities', 'Implicit bias', 'Structural racism', 'Health disparities research design', 'IAT implicit association test'],
+  },
+  {
+    id: 'mcat-qb-ps-052',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '7B',
+    foundationalConcept: '7',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'discrete',
+    question: 'During the encoding of a traumatic event, extremely high levels of norepinephrine and cortisol are released. Survivors often report vivid, intrusive memories of certain sensory details (e.g., a smell, a sound) but fragmented or absent memory for the sequence of events. Which of the following best explains this memory profile, integrating the roles of the amygdala and hippocampus?',
+    choices: [
+      { label: 'A', text: 'High norepinephrine potentiates amygdala activation, enhancing emotional and sensory detail encoding, while high cortisol impairs hippocampal function, disrupting contextual and sequential (episodic) consolidation' },
+      { label: 'B', text: 'High cortisol activates the hippocampus, causing over-consolidation of sequential details, while norepinephrine suppresses the amygdala, explaining the fragmentation of emotional memories' },
+      { label: 'C', text: 'Traumatic stress activates the prefrontal cortex to selectively encode threat-relevant information while suppressing amygdala activity, producing sensory clarity with no emotional component' },
+      { label: 'D', text: 'Norepinephrine and cortisol both enhance hippocampal long-term potentiation, producing uniformly superior memory for all aspects of traumatic events compared to neutral events' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. During acute stress, the amygdala is highly activated by norepinephrine (released from the locus coeruleus) and by the general arousal response. The amygdala enhances the encoding of emotionally and threat-relevant sensory details — explaining vivid, intrusive sensory memories. Simultaneously, high cortisol (from the HPA axis) has a paradoxical effect on the hippocampus: while moderate cortisol enhances hippocampal consolidation, extremely high cortisol impairs hippocampal function (due to glucocorticoid receptor downregulation and neurotoxicity at extremes). The hippocampus is responsible for contextual and sequential (episodic) memory consolidation — so hippocampal impairment produces fragmented, out-of-sequence episodic memory while amygdala-enhanced sensory details remain vivid. This profile is consistent with PTSD symptomatology.',
+    wrongAnswerExplanations: {
+      B: 'High cortisol does NOT activate the hippocampus or cause over-consolidation of sequential details. At stress levels, cortisol impairs hippocampal function. Additionally, norepinephrine does not suppress the amygdala — it strongly activates it via β-adrenergic receptors. This choice reverses the actual neurobiological relationships.',
+      C: 'The prefrontal cortex is actually inhibited/impaired during acute high stress (cortisol and norepinephrine reduce PFC executive function — the "amygdala hijack" concept). The amygdala is activated, not suppressed, during traumatic events. PFC suppression contributes to the loss of deliberate, contextual memory organization.',
+      D: 'Norepinephrine and cortisol do NOT uniformly enhance all aspects of memory. The dissociation is precisely the point: amygdala-mediated emotional/sensory memory is enhanced while hippocampus-mediated contextual/sequential memory is impaired. Traumatic memories are NOT uniformly superior — they are fragmented and disorganized for sequence while vivid for sensory details.',
+    },
+    teachingPoint: 'Stress hormones and memory: Norepinephrine → activates amygdala → enhances emotional/sensory detail encoding (vivid sensory memories). Cortisol (moderate) → enhances consolidation. Cortisol (extreme/chronic) → impairs hippocampus → disrupts contextual, sequential, episodic consolidation. Result: amygdala-dependent emotional memory enhanced + hippocampus-dependent episodic memory fragmented = classic trauma memory profile. This dissociation underlies PTSD intrusive symptoms (vivid sensory fragments) vs. narrative incoherence (cannot sequence the event).',
+    relatedTopics: ['Amygdala and emotional memory', 'Hippocampus and episodic memory', 'Cortisol and memory', 'Norepinephrine stress response', 'Trauma and PTSD memory'],
+  },
 ]

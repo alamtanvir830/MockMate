@@ -1478,4 +1478,348 @@ The most defensible position locates meaning in the interaction between text, au
     teachingPoint: 'Undermine questions: identify the core CLAIM of the position (Hirsch: "agreed-upon authorial intent produces determinate, stable meaning") then find an option that shows this claim is false. The most direct attack tests the claim at its core. C directly falsifies: same intent → contradictory meanings. This shows that intent is INSUFFICIENT to determine meaning, which is Hirsch\'s central thesis. A, B, D test adjacent but not central claims.',
     relatedTopics: ['Weaken arguments', 'Hirsch intentionalism', 'Determinate meaning claim', 'Sufficient vs necessary conditions', 'CARS undermine questions'],
   },
+
+  // ── Passage 9: Philosophy of Science — Kuhn vs. Popper (Q043–Q047) ────────
+  {
+    id: 'mcat-qb-cars-043',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy of Science',
+    contentCategory: 'Reasoning Within the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Karl Popper held that science advances through a logic of bold conjecture and rigorous refutation. For Popper, a theory is scientific only if it is in principle falsifiable — capable of making predictions that could, under specified conditions, be proven wrong by observation. Scientists do not confirm theories; they attempt to destroy them, and the theories that survive this aggressive testing earn provisional credibility. The accumulation of knowledge proceeds not by verification but by progressive elimination of error.
+
+Thomas Kuhn, drawing on detailed historical case studies, offered a fundamentally different account. Science, Kuhn argued, operates most of the time in the mode of "normal science" — systematic puzzle-solving within an established paradigm, a shared matrix of assumptions, methods, and exemplary solutions. Within normal science, anomalies are almost always accommodated or temporarily set aside rather than used as falsifying refutations. Paradigm shifts are not incremental but revolutionary: they occur when anomalies accumulate to the point of crisis, at which point the community undergoes a rapid gestalt switch from one framework to another. The new paradigm is in some respects incommensurable with the old — it reconfigures what counts as a problem, what counts as a solution, and even what is perceived as data.
+
+The tension between Popper and Kuhn has proven productive. Critics argue that Kuhn's account, while historically accurate, threatens to undermine the rationality of science: if paradigm changes are partly driven by sociological factors, rhetorical persuasion, and generational turnover — rather than purely by evidence and logic — then scientific progress cannot be straightforwardly described as movement toward truth. Popper's normative model provides a more reassuring picture, but it struggles to explain why anomalies are regularly tolerated and why falsification in practice is almost never decisive.
+
+A careful reading of both thinkers suggests they are answering different questions. Popper describes what science ought ideally to do — a normative methodology. Kuhn describes what science actually does — a descriptive sociology of knowledge. On this reading, the conflict largely dissolves: we may simultaneously embrace Popperian falsification as the regulative ideal scientists should aspire to, and Kuhnian normal science as a realistic portrait of how paradigm-embedded communities actually operate. The tension is not a contradiction but a productive dialectic between the real and the ideal.`,
+    question: 'Which of the following best states the main argument of the passage?',
+    choices: [
+      { label: 'A', text: 'Popper\'s falsificationism is empirically superior to Kuhn\'s paradigm theory because Popper\'s account better explains historical scientific revolutions' },
+      { label: 'B', text: 'Kuhn\'s sociological account of science inevitably leads to relativism, undermining the rationality that Popper\'s methodology preserves' },
+      { label: 'C', text: 'The apparent conflict between Popper and Kuhn largely dissolves once we recognize that Popper offers a normative ideal while Kuhn provides a descriptive account of actual scientific practice' },
+      { label: 'D', text: 'Both Popper and Kuhn are wrong, and a new account is needed that combines strict falsification with historical sensitivity to scientific communities' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The main argument is developed in the fourth paragraph: "Popper describes what science ought ideally to do — a normative methodology. Kuhn describes what science actually does — a descriptive sociology of knowledge. On this reading, the conflict largely dissolves." The author explicitly distinguishes the normative from the descriptive domain and concludes that the apparent conflict is a "productive dialectic" between the real and the ideal, not a genuine contradiction.',
+    wrongAnswerExplanations: {
+      A: 'The author does not declare Popper empirically superior to Kuhn. Paragraph 2 explicitly credits Kuhn\'s account with superior historical accuracy ("drawing on detailed historical case studies"), while noting that Popper\'s model "struggles to explain why anomalies are regularly tolerated." The author is neutral on which is better, proposing instead that they answer different questions.',
+      B: 'The author mentions the relativism worry (paragraph 3) only to present it as a tension that motivates further analysis. The author\'s resolution (paragraph 4) explicitly rejects the idea that Kuhn\'s account inevitably leads to relativism — the conflict "largely dissolves" through proper characterization of each theory\'s domain.',
+      D: 'The author does not argue that both thinkers are wrong or call for a new account to replace them. The resolution in paragraph 4 maintains both accounts in complementary rather than adversarial roles.',
+    },
+    teachingPoint: 'Main argument in a synthesis passage: when a passage presents two opposing views and then resolves them, the main argument is the synthesis/resolution, not either of the original positions. Signal words: "a careful reading suggests..." and "the conflict largely dissolves." The final paragraph always contains the author\'s positive conclusion in this type of structure: present view A, present view B, describe tension, resolve the tension.',
+    relatedTopics: ['Main argument', 'Normative vs descriptive', 'Synthesis conclusion', 'CARS argument structure', 'Philosophy of science'],
+  },
+  {
+    id: 'mcat-qb-cars-044',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy of Science',
+    contentCategory: 'Foundations of Comprehension',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `Karl Popper held that science advances through a logic of bold conjecture and rigorous refutation. For Popper, a theory is scientific only if it is in principle falsifiable — capable of making predictions that could, under specified conditions, be proven wrong by observation. Scientists do not confirm theories; they attempt to destroy them, and the theories that survive this aggressive testing earn provisional credibility. The accumulation of knowledge proceeds not by verification but by progressive elimination of error.
+
+Thomas Kuhn, drawing on detailed historical case studies, offered a fundamentally different account. Science, Kuhn argued, operates most of the time in the mode of "normal science" — systematic puzzle-solving within an established paradigm, a shared matrix of assumptions, methods, and exemplary solutions. Within normal science, anomalies are almost always accommodated or temporarily set aside rather than used as falsifying refutations. Paradigm shifts are not incremental but revolutionary: they occur when anomalies accumulate to the point of crisis, at which point the community undergoes a rapid gestalt switch from one framework to another. The new paradigm is in some respects incommensurable with the old — it reconfigures what counts as a problem, what counts as a solution, and even what is perceived as data.
+
+The tension between Popper and Kuhn has proven productive. Critics argue that Kuhn's account, while historically accurate, threatens to undermine the rationality of science: if paradigm changes are partly driven by sociological factors, rhetorical persuasion, and generational turnover — rather than purely by evidence and logic — then scientific progress cannot be straightforwardly described as movement toward truth. Popper's normative model provides a more reassuring picture, but it struggles to explain why anomalies are regularly tolerated and why falsification in practice is almost never decisive.
+
+A careful reading of both thinkers suggests they are answering different questions. Popper describes what science ought ideally to do — a normative methodology. Kuhn describes what science actually does — a descriptive sociology of knowledge. On this reading, the conflict largely dissolves: we may simultaneously embrace Popperian falsification as the regulative ideal scientists should aspire to, and Kuhnian normal science as a realistic portrait of how paradigm-embedded communities actually operate. The tension is not a contradiction but a productive dialectic between the real and the ideal.`,
+    question: 'The author\'s treatment of both Popper and Kuhn is best characterized as:',
+    choices: [
+      { label: 'A', text: 'Strongly partisan — the author argues that Kuhn\'s historical work decisively refutes Popper\'s philosophical methodology' },
+      { label: 'B', text: 'Dismissive of both thinkers, arguing that neither account captures the genuine complexity of scientific change' },
+      { label: 'C', text: 'Even-handed and reconciliatory — the author credits both thinkers with genuine insights and argues that they address different, complementary questions' },
+      { label: 'D', text: 'Guardedly sympathetic to Popper, ultimately endorsing falsificationism as more scientifically rigorous than Kuhn\'s sociology of knowledge' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The author explicitly credits both thinkers: Kuhn offers "historical accuracy" and detailed case studies; Popper provides "a more reassuring picture" and the normative ideal of falsification. The final paragraph embraces both — Popperian falsification as regulative ideal AND Kuhnian normal science as descriptive reality. The resolution is reconciliatory, not adversarial.',
+    wrongAnswerExplanations: {
+      A: 'The passage does not present Kuhn as decisively refuting Popper. Paragraph 3 notes Kuhn is "historically accurate" but Paragraph 4 preserves Popper\'s normative role. The author is not partisan toward Kuhn.',
+      B: 'The author does not dismiss either thinker. The final paragraph explicitly endorses both frameworks for different purposes: "we may simultaneously embrace..." — this is the opposite of dismissal.',
+      D: 'The passage does not ultimately endorse Popper over Kuhn. The resolution treats both equally: Popper = normative ideal; Kuhn = descriptive reality. Neither is ranked above the other.',
+    },
+    teachingPoint: 'Tone identification in synthesis passages: when the author resolves an apparent conflict by assigning each view to a different domain (normative vs. descriptive), the tone is reconciliatory/synthetic. Look for the signal phrase in the conclusion paragraph: "we may simultaneously embrace..." = reconciliatory. Contrast with adversarial (one wins), dismissive (both lose), or partisan (one preferred).',
+    relatedTopics: ['Author tone', 'Reconciliatory argument', 'Even-handed treatment', 'CARS tone questions', 'Synthesis structure'],
+  },
+  {
+    id: 'mcat-qb-cars-045',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy of Science',
+    contentCategory: 'Reasoning Beyond the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Karl Popper held that science advances through a logic of bold conjecture and rigorous refutation. For Popper, a theory is scientific only if it is in principle falsifiable — capable of making predictions that could, under specified conditions, be proven wrong by observation. Scientists do not confirm theories; they attempt to destroy them, and the theories that survive this aggressive testing earn provisional credibility. The accumulation of knowledge proceeds not by verification but by verification but by progressive elimination of error.
+
+Thomas Kuhn, drawing on detailed historical case studies, offered a fundamentally different account. Science, Kuhn argued, operates most of the time in the mode of "normal science" — systematic puzzle-solving within an established paradigm, a shared matrix of assumptions, methods, and exemplary solutions. Within normal science, anomalies are almost always accommodated or temporarily set aside rather than used as falsifying refutations. Paradigm shifts are not incremental but revolutionary: they occur when anomalies accumulate to the point of crisis, at which point the community undergoes a rapid gestalt switch from one framework to another. The new paradigm is in some respects incommensurable with the old — it reconfigures what counts as a problem, what counts as a solution, and even what is perceived as data.
+
+The tension between Popper and Kuhn has proven productive. Critics argue that Kuhn's account, while historically accurate, threatens to undermine the rationality of science: if paradigm changes are partly driven by sociological factors, rhetorical persuasion, and generational turnover — rather than purely by evidence and logic — then scientific progress cannot be straightforwardly described as movement toward truth. Popper's normative model provides a more reassuring picture, but it struggles to explain why anomalies are regularly tolerated and why falsification in practice is almost never decisive.
+
+A careful reading of both thinkers suggests they are answering different questions. Popper describes what science ought ideally to do — a normative methodology. Kuhn describes what science actually does — a descriptive sociology of knowledge. On this reading, the conflict largely dissolves: we may simultaneously embrace Popperian falsification as the regulative ideal scientists should aspire to, and Kuhnian normal science as a realistic portrait of how paradigm-embedded communities actually operate. The tension is not a contradiction but a productive dialectic between the real and the ideal.`,
+    question: 'A distinguished physicist continues defending the Standard Model of particle physics even after three independent experiments report results that the theory cannot easily explain, arguing that the anomalies must reflect experimental error or unaccounted-for variables. Based on the passage, which thinker\'s account does this scientist\'s behavior most closely exemplify, and why?',
+    choices: [
+      { label: 'A', text: 'Popper\'s account; the scientist is attempting to falsify the anomalous data rather than the theory, which is the proper Popperian method' },
+      { label: 'B', text: 'Kuhn\'s account; within normal science, scientists typically accommodate or explain away anomalies rather than treating them as falsifications, defending the paradigm until the anomalies reach a critical mass' },
+      { label: 'C', text: 'Neither account; the passage describes this kind of behavior as scientifically irrational and outside the scope of both Popper\'s and Kuhn\'s frameworks' },
+      { label: 'D', text: 'Both equally; both Popper and Kuhn predict that scientists will dismiss anomalous results as experimental errors' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. Paragraph 2 of the passage states explicitly: "Within normal science, anomalies are almost always accommodated or temporarily set aside rather than used as falsifying refutations." The physicist\'s behavior — defending the established theory (paradigm) against anomalous data by attributing the discrepancies to experimental error — is a textbook example of anomaly accommodation within Kuhn\'s normal science framework. Kuhn treats this as typical, not exceptional, scientific behavior.',
+    wrongAnswerExplanations: {
+      A: 'Popper\'s scientist would attempt to falsify the THEORY, not the anomalous data. For Popper, if experiments consistently contradict a theory\'s predictions, the correct scientific response is to consider the theory potentially falsified. The physicist described is shielding the theory from anomalies — the opposite of Popperian falsificationism.',
+      C: 'The passage explicitly characterizes anomaly accommodation as NORMAL behavior in Kuhn\'s account, not as scientifically irrational. Paragraph 2 states this is how normal science operates "most of the time." The passage does not condemn this behavior as irrational.',
+      D: 'Popper does NOT predict that scientists will dismiss anomalous results as experimental errors. For Popper, such anomalous results are opportunities for falsification — scientists should take them seriously rather than explain them away. This behavior is specifically Kuhnian, not Popperian.',
+    },
+    teachingPoint: 'Attribution questions using passage examples: match the specific behavior to the description of each thinker in the passage. Kuhn: anomalies are accommodated within normal science (passage: "anomalies are almost always accommodated or temporarily set aside"). Popper: anomalies should prompt serious attempts at theory falsification. Shielding a theory from anomalous data = Kuhnian behavior. Actively attempting to falsify the theory using anomalous data = Popperian behavior.',
+    relatedTopics: ['Kuhn normal science', 'Anomaly accommodation', 'Applying author\'s framework', 'Popper vs Kuhn application', 'CARS viewpoint application'],
+  },
+  {
+    id: 'mcat-qb-cars-046',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy of Science',
+    contentCategory: 'Reasoning Within the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Karl Popper held that science advances through a logic of bold conjecture and rigorous refutation. For Popper, a theory is scientific only if it is in principle falsifiable — capable of making predictions that could, under specified conditions, be proven wrong by observation. Scientists do not confirm theories; they attempt to destroy them, and the theories that survive this aggressive testing earn provisional credibility. The accumulation of knowledge proceeds not by verification but by progressive elimination of error.
+
+Thomas Kuhn, drawing on detailed historical case studies, offered a fundamentally different account. Science, Kuhn argued, operates most of the time in the mode of "normal science" — systematic puzzle-solving within an established paradigm, a shared matrix of assumptions, methods, and exemplary solutions. Within normal science, anomalies are almost always accommodated or temporarily set aside rather than used as falsifying refutations. Paradigm shifts are not incremental but revolutionary: they occur when anomalies accumulate to the point of crisis, at which point the community undergoes a rapid gestalt switch from one framework to another. The new paradigm is in some respects incommensurable with the old — it reconfigures what counts as a problem, what counts as a solution, and even what is perceived as data.
+
+The tension between Popper and Kuhn has proven productive. Critics argue that Kuhn's account, while historically accurate, threatens to undermine the rationality of science: if paradigm changes are partly driven by sociological factors, rhetorical persuasion, and generational turnover — rather than purely by evidence and logic — then scientific progress cannot be straightforwardly described as movement toward truth. Popper's normative model provides a more reassuring picture, but it struggles to explain why anomalies are regularly tolerated and why falsification in practice is almost never decisive.
+
+A careful reading of both thinkers suggests they are answering different questions. Popper describes what science ought ideally to do — a normative methodology. Kuhn describes what science actually does — a descriptive sociology of knowledge. On this reading, the conflict largely dissolves: we may simultaneously embrace Popperian falsification as the regulative ideal scientists should aspire to, and Kuhnian normal science as a realistic portrait of how paradigm-embedded communities actually operate. The tension is not a contradiction but a productive dialectic between the real and the ideal.`,
+    question: 'The primary function of the third paragraph in the passage\'s argumentative structure is to:',
+    choices: [
+      { label: 'A', text: 'Present empirical evidence that definitively resolves the debate between Popper and Kuhn in favor of Kuhn\'s historical account' },
+      { label: 'B', text: 'Articulate the genuine tension between the two accounts — specifically, the worry that Kuhn\'s descriptive accuracy undermines scientific rationalism — and identify the limitation of each thinker, motivating the synthesis in paragraph 4' },
+      { label: 'C', text: 'Introduce a third philosophical alternative that transcends both Popper\'s and Kuhn\'s frameworks, replacing the conflict with a new unified theory of scientific method' },
+      { label: 'D', text: 'Defend Popper against the relativist implications of Kuhn\'s account, concluding that falsificationism should be the only accepted methodology' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The third paragraph does two things: (1) states the tension — Kuhn is "historically accurate" but threatens scientific rationalism; Popper is normatively appealing but "struggles to explain" actual anomaly tolerance; and (2) does NOT resolve it, leaving open the question that paragraph 4 will answer. By articulating the limitations of both positions, paragraph 3 creates the logical need for the synthesis in paragraph 4. This is the classic setup-paragraph function.',
+    wrongAnswerExplanations: {
+      A: 'Paragraph 3 presents no empirical evidence. Its mode is philosophical criticism — stating that Kuhn\'s account risks relativism and Popper\'s struggles with historical anomalies. No resolution is reached; the paragraph ends with the tension unresolved.',
+      C: 'No third alternative is introduced in paragraph 3. The paragraph only discusses the tension between the existing two accounts. The synthesis in paragraph 4 is not a "new unified theory" but rather a redescription of the relationship between the two existing theories.',
+      D: 'Paragraph 3 does not defend Popper. It explicitly criticizes Popper\'s account: "Popper\'s normative model... struggles to explain why anomalies are regularly tolerated and why falsification in practice is almost never decisive." Both positions are criticized symmetrically.',
+    },
+    teachingPoint: 'Setup-tension paragraphs (typically the penultimate paragraph in a 4-paragraph passage): their function is to articulate why neither existing position is fully adequate, creating the logical need for the synthesis that follows. Identify this function by noting: (1) No resolution is reached; (2) Both positions are criticized; (3) A problem is posed that the following paragraph will answer. The word "tension" in the paragraph\'s opening sentence is a signal.',
+    relatedTopics: ['Paragraph function', 'Tension-setting paragraph', 'Argument setup', 'CARS paragraph structure', 'Before-synthesis paragraph'],
+  },
+  {
+    id: 'mcat-qb-cars-047',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy of Science',
+    contentCategory: 'Reasoning Beyond the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Karl Popper held that science advances through a logic of bold conjecture and rigorous refutation. For Popper, a theory is scientific only if it is in principle falsifiable — capable of making predictions that could, under specified conditions, be proven wrong by observation. Scientists do not confirm theories; they attempt to destroy them, and the theories that survive this aggressive testing earn provisional credibility. The accumulation of knowledge proceeds not by verification but by progressive elimination of error.
+
+Thomas Kuhn, drawing on detailed historical case studies, offered a fundamentally different account. Science, Kuhn argued, operates most of the time in the mode of "normal science" — systematic puzzle-solving within an established paradigm, a shared matrix of assumptions, methods, and exemplary solutions. Within normal science, anomalies are almost always accommodated or temporarily set aside rather than used as falsifying refutations. Paradigm shifts are not incremental but revolutionary: they occur when anomalies accumulate to the point of crisis, at which point the community undergoes a rapid gestalt switch from one framework to another. The new paradigm is in some respects incommensurable with the old — it reconfigures what counts as a problem, what counts as a solution, and even what is perceived as data.
+
+The tension between Popper and Kuhn has proven productive. Critics argue that Kuhn's account, while historically accurate, threatens to undermine the rationality of science: if paradigm changes are partly driven by sociological factors, rhetorical persuasion, and generational turnover — rather than purely by evidence and logic — then scientific progress cannot be straightforwardly described as movement toward truth. Popper's normative model provides a more reassuring picture, but it struggles to explain why anomalies are regularly tolerated and why falsification in practice is almost never decisive.
+
+A careful reading of both thinkers suggests they are answering different questions. Popper describes what science ought ideally to do — a normative methodology. Kuhn describes what science actually does — a descriptive sociology of knowledge. On this reading, the conflict largely dissolves: we may simultaneously embrace Popperian falsification as the regulative ideal scientists should aspire to, and Kuhnian normal science as a realistic portrait of how paradigm-embedded communities actually operate. The tension is not a contradiction but a productive dialectic between the real and the ideal.`,
+    question: 'A philosopher argues: "The author\'s resolution in paragraph 4 fails because a normative ideal that scientists persistently fail to follow cannot serve as a useful regulative standard." Which response would MOST effectively defend the author\'s position against this criticism?',
+    choices: [
+      { label: 'A', text: 'The criticism is correct; if scientists never follow Popperian falsification, then the ideal is vacuous and should be abandoned in favor of Kuhn\'s descriptive account alone' },
+      { label: 'B', text: 'The criticism misreads the author\'s resolution; the author never claims that scientists consistently follow Popperian falsification, only that it serves as a standard against which actual practice can be evaluated and improved' },
+      { label: 'C', text: 'The criticism is irrelevant; Popper\'s methodology is scientifically validated independently of whether individual scientists follow it' },
+      { label: 'D', text: 'The criticism succeeds in undermining the resolution, but a different synthesis is possible if Kuhn\'s descriptive account is treated as normative' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The author\'s resolution says Popperian falsification should be embraced as a "regulative ideal scientists should aspire to" — not a description of what scientists actually do. A regulative ideal, by definition, is a standard of evaluation, not a claim of universal compliance. The philosopher\'s criticism conflates the normative ("ought") with the descriptive ("is"): the fact that scientists fall short of the ideal is precisely the point of retaining both accounts. The ideal enables us to recognize and criticize departures from ideal scientific practice; it does not require constant compliance.',
+    wrongAnswerExplanations: {
+      A: 'This concedes the criticism and abandons the author\'s position entirely. The author\'s fourth paragraph is specifically designed to defend the usefulness of Popperian falsification as a regulative ideal despite Kuhnian departures from it. Conceding the criticism contradicts the author\'s explicit argument.',
+      C: 'The claim that Popper\'s methodology is "scientifically validated independently" introduces a claim not made in the passage. The passage does not validate Popper on independent scientific grounds; it argues for Popper on normative/evaluative grounds. Additionally, "irrelevant" is too dismissive — the criticism does engage with the author\'s central argument.',
+      D: 'Treating Kuhn\'s descriptive account as normative would be a fundamental mischaracterization of Kuhn\'s project (he never claimed to provide normative standards). Moreover, the author\'s resolution specifically preserves BOTH accounts in their respective domains; treating Kuhn as normative collapses the distinction the author\'s resolution depends on.',
+    },
+    teachingPoint: 'Defending an author\'s position: understand what the author actually claims (not a strawman). The author claims: Popperian falsification = regulative ideal (normative), not a description of actual behavior. The critic confuses normative ("ought") with descriptive ("is"). An effective defense shows this confusion. In CARS, "defend the author\'s position" questions require you to understand the author\'s argument precisely and identify the specific flaw in the critique.',
+    relatedTopics: ['Defending the author\'s argument', 'Normative vs descriptive distinction', 'Regulative ideal', 'CARS argument defense', 'Responding to objections'],
+  },
+
+  // ── Passage 10: Ethics — Moral Intuitions and the Trolley Problem (Q048–Q052) ─
+  {
+    id: 'mcat-qb-cars-048',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics',
+    contentCategory: 'Reasoning Within the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `In the canonical trolley scenario, a runaway trolley is headed toward five people who will be killed unless a bystander diverts it onto a side track, where it will kill one person instead. The majority of people presented with this dilemma say they would divert the trolley, embracing the utilitarian arithmetic: one death is preferable to five. Moral calculus appears to govern the intuition.
+
+In a structurally similar but phenomenologically different scenario, the trolley cannot be diverted by a lever. Instead, a bystander stands on a bridge above the tracks next to a large man whose bulk, if pushed onto the tracks, would stop the trolley and save the five. Most people who endorse diverting the trolley in the first scenario refuse to push the man in the second. The arithmetic is identical — one death prevents five — yet the intuitions diverge sharply. Philosophers have struggled to identify a principled distinction that would justify treating the cases differently while avoiding the accusation of mere squeamishness.
+
+Cognitive scientists have proposed a dual-process explanation: the lever case activates deliberative, System 2 reasoning, which performs cold utilitarian calculation and endorses the switch. The footbridge case activates immediate, emotionally laden System 1 responses — visceral aversion to direct physical contact with a victim — overriding the utilitarian calculus. The inconsistency in moral intuitions, on this view, is not a sign of sophisticated principled reasoning but an artifact of how our brains process different causal structures.
+
+Rather than treat the inconsistency as an embarrassment requiring elimination, however, the author suggests an alternative: the deontological intuition against direct harm may encode real moral wisdom about the dangers of unconstrained consequentialist reasoning. A system that permits — or even requires — treating individuals as mere means to aggregate ends could, if applied consistently, justify atrocities. The visceral resistance to pushing the large man may reflect not a cognitive glitch but an evolved moral constraint that operates as a safeguard against the pathologies of utilitarian extremism.`,
+    question: 'What is the primary argument of the passage?',
+    choices: [
+      { label: 'A', text: 'Cognitive science has resolved the trolley problem by demonstrating that moral intuitions are unreliable artifacts of dual-process reasoning and should be replaced by consistent utilitarian calculation' },
+      { label: 'B', text: 'The divergent intuitions in the trolley and footbridge cases suggest that utilitarianism is internally inconsistent and should be rejected as a moral theory' },
+      { label: 'C', text: 'The inconsistency in intuitions between the trolley and footbridge cases is explained by dual-process cognition, but the deontological intuition against direct harm may reflect genuine moral wisdom rather than mere cognitive bias' },
+      { label: 'D', text: 'Deontological moral philosophy is definitively superior to utilitarianism, as demonstrated by the widespread refusal to push the large man in the footbridge case' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The passage has two main moves: (1) paragraph 3 offers the dual-process cognitive explanation for the divergent intuitions, and (2) paragraph 4 resists the implication that this explanation debunks the deontological intuition, instead arguing it may reflect "real moral wisdom." The author\'s position is that the dual-process account explains the inconsistency without settling whether the deontological intuition should be trusted — it may be a safeguard against utilitarian extremism rather than a bias to be eliminated.',
+    wrongAnswerExplanations: {
+      A: 'The passage does not conclude that intuitions should be replaced by consistent utilitarian calculation. Paragraph 4 explicitly argues against this: the deontological intuition "may encode real moral wisdom" and serves as a "safeguard against the pathologies of utilitarian extremism." The author does not endorse the cognitive science debunking as grounds for adopting pure utilitarianism.',
+      B: 'The passage does not argue that utilitarianism is internally inconsistent. The divergent intuitions arise from human cognitive architecture, not from a logical flaw in utilitarian theory itself. Utilitarianism consistently endorses both switching and pushing on utilitarian grounds; the inconsistency is in HUMAN intuitions, not in the theory.',
+      D: 'The author does not declare deontology definitively superior to utilitarianism. The final paragraph is qualified: the deontological intuition "may" encode wisdom, and it "may reflect" an evolved constraint. The use of hedged language ("may reflect," "could") indicates a tentative suggestion, not a definitive claim of superiority.',
+    },
+    teachingPoint: 'Main argument questions with hedged conclusions: when the author uses tentative language ("may," "might," "suggests"), the main argument reflects this tentativeness. The argument is NOT "deontology wins" (too strong) and NOT "all intuitions should be ignored" (opposite of what paragraph 4 says). The main argument is the balanced claim that dual-process cognition explains the inconsistency but does not fully debunk the deontological intuition.',
+    relatedTopics: ['Main argument with hedged claims', 'Dual-process theory', 'Trolley problem', 'Utilitarian vs deontological', 'Moral intuition'],
+  },
+  {
+    id: 'mcat-qb-cars-049',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics',
+    contentCategory: 'Reasoning Within the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `In the canonical trolley scenario, a runaway trolley is headed toward five people who will be killed unless a bystander diverts it onto a side track, where it will kill one person instead. The majority of people presented with this dilemma say they would divert the trolley, embracing the utilitarian arithmetic: one death is preferable to five. Moral calculus appears to govern the intuition.
+
+In a structurally similar but phenomenologically different scenario, the trolley cannot be diverted by a lever. Instead, a bystander stands on a bridge above the tracks next to a large man whose bulk, if pushed onto the tracks, would stop the trolley and save the five. Most people who endorse diverting the trolley in the first scenario refuse to push the man in the second. The arithmetic is identical — one death prevents five — yet the intuitions diverge sharply. Philosophers have struggled to identify a principled distinction that would justify treating the cases differently while avoiding the accusation of mere squeamishness.
+
+Cognitive scientists have proposed a dual-process explanation: the lever case activates deliberative, System 2 reasoning, which performs cold utilitarian calculation and endorses the switch. The footbridge case activates immediate, emotionally laden System 1 responses — visceral aversion to direct physical contact with a victim — overriding the utilitarian calculus. The inconsistency in moral intuitions, on this view, is not a sign of sophisticated principled reasoning but an artifact of how our brains process different causal structures.
+
+Rather than treat the inconsistency as an embarrassment requiring elimination, however, the author suggests an alternative: the deontological intuition against direct harm may encode real moral wisdom about the dangers of unconstrained consequentialist reasoning. A system that permits — or even requires — treating individuals as mere means to aggregate ends could, if applied consistently, justify atrocities. The visceral resistance to pushing the large man may reflect not a cognitive glitch but an evolved moral constraint that operates as a safeguard against the pathologies of utilitarian extremism.`,
+    question: 'The author\'s argument in paragraph 4 rests on which implicit assumption?',
+    choices: [
+      { label: 'A', text: 'Cognitive processes that evolved through natural selection are always morally reliable guides because evolution selects for adaptive social behavior' },
+      { label: 'B', text: 'An automatic emotional response that produces morally problematic outcomes in thought experiments might nonetheless correspond to a generally beneficial moral constraint when applied across a broader range of real-world situations' },
+      { label: 'C', text: 'Utilitarian reasoning necessarily leads to atrocities when applied consistently, making deontological constraints the only defensible moral system' },
+      { label: 'D', text: 'The dual-process explanation for moral inconsistency is empirically wrong, and the real explanation is that the footbridge case involves a principled deontological distinction' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The author\'s argument in paragraph 4 is that the emotional resistance to pushing the large man may be "real moral wisdom" and a "safeguard against pathologies of utilitarian extremism." This argument only works if one assumes that the visceral response, even if it produces counterintuitive answers in stylized thought experiments, reflects a constraint that serves important protective functions in real-world moral decision-making. The author does not claim the response is always optimal in every scenario — only that it may reflect a generally beneficial constraint.',
+    wrongAnswerExplanations: {
+      A: 'The author does not claim that all evolved cognitive processes are morally reliable. The argument is specifically and carefully limited: "may reflect... an evolved moral constraint." The hedged language ("may") and the specific reference to "pathologies of utilitarian extremism" indicate the author is not making a general claim about evolutionary reliability of moral intuitions.',
+      C: 'The author does not claim that utilitarianism necessarily leads to atrocities in all applications. Paragraph 4 says "a system that permits or requires treating individuals as mere means... could, if applied consistently, justify atrocities" — the concern is about unconstrained or extreme application, not about utilitarianism in general. "Could" and "if applied consistently" are important qualifications.',
+      D: 'Paragraph 4 does not challenge the dual-process explanation. The author explicitly accepts the cognitive science account and proceeds from it: "Rather than treat the inconsistency as an embarrassment requiring elimination..." This accepting framing assumes the inconsistency is real and cognitively explained, and asks what follows from that.',
+    },
+    teachingPoint: 'Identifying implicit assumptions: an assumption is an unstated premise required for the argument to work. For paragraph 4\'s argument (emotional resistance to direct harm = moral wisdom), the unstated bridge is: "emotional responses that seem like bias in thought experiments can still serve as beneficial constraints across real-world cases." Without this bridge, the inference from "evolved response" to "moral wisdom" doesn\'t follow. Assumption questions require you to find the gap in the argument and identify what fills it.',
+    relatedTopics: ['Author assumptions', 'Implicit premises', 'Evolved moral intuitions', 'Moral wisdom argument', 'CARS assumption identification'],
+  },
+  {
+    id: 'mcat-qb-cars-050',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics',
+    contentCategory: 'Reasoning Within the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `In the canonical trolley scenario, a runaway trolley is headed toward five people who will be killed unless a bystander diverts it onto a side track, where it will kill one person instead. The majority of people presented with this dilemma say they would divert the trolley, embracing the utilitarian arithmetic: one death is preferable to five. Moral calculus appears to govern the intuition.
+
+In a structurally similar but phenomenologically different scenario, the trolley cannot be diverted by a lever. Instead, a bystander stands on a bridge above the tracks next to a large man whose bulk, if pushed onto the tracks, would stop the trolley and save the five. Most people who endorse diverting the trolley in the first scenario refuse to push the man in the second. The arithmetic is identical — one death prevents five — yet the intuitions diverge sharply. Philosophers have struggled to identify a principled distinction that would justify treating the cases differently while avoiding the accusation of mere squeamishness.
+
+Cognitive scientists have proposed a dual-process explanation: the lever case activates deliberative, System 2 reasoning, which performs cold utilitarian calculation and endorses the switch. The footbridge case activates immediate, emotionally laden System 1 responses — visceral aversion to direct physical contact with a victim — overriding the utilitarian calculus. The inconsistency in moral intuitions, on this view, is not a sign of sophisticated principled reasoning but an artifact of how our brains process different causal structures.
+
+Rather than treat the inconsistency as an embarrassment requiring elimination, however, the author suggests an alternative: the deontological intuition against direct harm may encode real moral wisdom about the dangers of unconstrained consequentialist reasoning. A system that permits — or even requires — treating individuals as mere means to aggregate ends could, if applied consistently, justify atrocities. The visceral resistance to pushing the large man may reflect not a cognitive glitch but an evolved moral constraint that operates as a safeguard against the pathologies of utilitarian extremism.`,
+    question: 'The primary function of the second paragraph (the footbridge scenario) is to:',
+    choices: [
+      { label: 'A', text: 'Demonstrate that utilitarian moral theory is internally contradictory by showing that its principles lead to incompatible conclusions' },
+      { label: 'B', text: 'Establish the central puzzle of the passage — that people who endorse the utilitarian arithmetic in the trolley case reject it in the structurally similar footbridge case — creating the problem that the rest of the passage addresses' },
+      { label: 'C', text: 'Introduce deontological ethics as the preferred alternative to utilitarianism by showing that most people are deontologists in practice' },
+      { label: 'D', text: 'Provide empirical evidence from psychological experiments that moral intuitions are generally unreliable' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The second paragraph introduces the footbridge case specifically to create a puzzle: how can the same people endorse the switch in the trolley case but reject the push in the footbridge case when "the arithmetic is identical"? This divergence is the central problem the passage spends the next two paragraphs explaining (cognitive science account in paragraph 3) and evaluating (moral wisdom argument in paragraph 4). Without the footbridge case, there is no puzzle to solve.',
+    wrongAnswerExplanations: {
+      A: 'Utilitarianism is not internally contradictory here — utilitarianism would consistently recommend both switching and pushing (the arithmetic is identical). The contradiction is in HUMAN INTUITIONS, not in the utilitarian theory itself. The passage does not argue that utilitarianism is internally inconsistent.',
+      C: 'The passage does not conclude that most people are deontologists in practice. Paragraph 2 notes the puzzle without resolving it, and the author explicitly avoids declaring deontology "preferred" — paragraph 4 uses hedged language ("may reflect") rather than endorsement.',
+      D: 'The second paragraph does not cite psychological experiments or make claims about general reliability of moral intuitions. It presents a single thought experiment to establish a specific inconsistency, not to make a broad empirical generalization.',
+    },
+    teachingPoint: 'Function of a contrast/puzzle-introducing paragraph: when a passage presents a second scenario specifically to contrast with the first, the function is to establish the puzzle or problem. Signal: "yet the intuitions diverge sharply" and "philosophers have struggled to identify a principled distinction" — these phrases directly indicate that paragraph 2\'s function is to establish the problem (divergent intuitions) that motivates the rest of the passage.',
+    relatedTopics: ['Paragraph function', 'Problem-establishing paragraph', 'Contrast paragraph', 'CARS structure', 'Footbridge trolley problem'],
+  },
+  {
+    id: 'mcat-qb-cars-051',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics',
+    contentCategory: 'Reasoning Beyond the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `In the canonical trolley scenario, a runaway trolley is headed toward five people who will be killed unless a bystander diverts it onto a side track, where it will kill one person instead. The majority of people presented with this dilemma say they would divert the trolley, embracing the utilitarian arithmetic: one death is preferable to five. Moral calculus appears to govern the intuition.
+
+In a structurally similar but phenomenologically different scenario, the trolley cannot be diverted by a lever. Instead, a bystander stands on a bridge above the tracks next to a large man whose bulk, if pushed onto the tracks, would stop the trolley and save the five. Most people who endorse diverting the trolley in the first scenario refuse to push the man in the second. The arithmetic is identical — one death prevents five — yet the intuitions diverge sharply. Philosophers have struggled to identify a principled distinction that would justify treating the cases differently while avoiding the accusation of mere squeamishness.
+
+Cognitive scientists have proposed a dual-process explanation: the lever case activates deliberative, System 2 reasoning, which performs cold utilitarian calculation and endorses the switch. The footbridge case activates immediate, emotionally laden System 1 responses — visceral aversion to direct physical contact with a victim — overriding the utilitarian calculus. The inconsistency in moral intuitions, on this view, is not a sign of sophisticated principled reasoning but an artifact of how our brains process different causal structures.
+
+Rather than treat the inconsistency as an embarrassment requiring elimination, however, the author suggests an alternative: the deontological intuition against direct harm may encode real moral wisdom about the dangers of unconstrained consequentialist reasoning. A system that permits — or even requires — treating individuals as mere means to aggregate ends could, if applied consistently, justify atrocities. The visceral resistance to pushing the large man may reflect not a cognitive glitch but an evolved moral constraint that operates as a safeguard against the pathologies of utilitarian extremism.`,
+    question: 'Which finding would most directly challenge the dual-process account presented in paragraph 3?',
+    choices: [
+      { label: 'A', text: 'A study finding that people who score high on measures of cognitive reflection (System 2 dominance) are MORE likely to endorse pushing the large man in the footbridge scenario' },
+      { label: 'B', text: 'A study finding that people given unlimited time to deliberate on the footbridge scenario are equally divided between pushing and not pushing' },
+      { label: 'C', text: 'A study finding that the lever-trolley and footbridge cases produce identical emotional arousal (as measured by fMRI) in participants who reach different moral conclusions' },
+      { label: 'D', text: 'Cross-cultural research showing that the proportion of people who endorse switching in the lever case is consistent across 40 different societies' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The dual-process account predicts that the footbridge case specifically activates emotional responses (System 1) that override utilitarian calculation, while the lever case is processed more coolly (System 2). If fMRI shows that both cases produce identical emotional arousal yet people reach different moral conclusions, the theory\'s core mechanism — that differential emotional activation drives the divergent intuitions — is undermined. The divergence would need a different explanation.',
+    wrongAnswerExplanations: {
+      A: 'This finding is actually CONSISTENT with the dual-process account: high System 2 dominance predicts that deliberative reasoning overrides emotional resistance, and those individuals should be more likely to endorse the utilitarian answer (pushing). The dual-process theory predicts exactly this pattern.',
+      B: 'Even division after deliberation does not directly challenge the dual-process account; it might indicate that with unlimited System 2 time, some people override the System 1 response. The theory does not predict universal rejection of pushing — only that System 1 responses typically dominate in real-time scenarios.',
+      D: 'Cross-cultural consistency of the lever-case endorsement is consistent with the dual-process theory (if the lever case activates System 2 reasoning universally across cultures). This finding neither challenges nor strongly supports the theory as applied to the critical divergence between cases.',
+    },
+    teachingPoint: 'Challenging a mechanistic account: identify the specific mechanism being challenged. Dual-process account mechanism: footbridge case → higher emotional arousal → System 1 dominates → deontological response. Challenge: show the mechanism is wrong (identical emotional arousal despite different outcomes). This is more direct than showing the prediction is wrong with different confounds. For theory-challenge questions, target the mechanism rather than peripheral predictions.',
+    relatedTopics: ['Challenging a mechanism', 'Dual-process theory', 'fMRI and moral cognition', 'CARS weaken questions', 'System 1 vs System 2'],
+  },
+  {
+    id: 'mcat-qb-cars-052',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics',
+    contentCategory: 'Foundations of Comprehension',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 1',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `In the canonical trolley scenario, a runaway trolley is headed toward five people who will be killed unless a bystander diverts it onto a side track, where it will kill one person instead. The majority of people presented with this dilemma say they would divert the trolley, embracing the utilitarian arithmetic: one death is preferable to five. Moral calculus appears to govern the intuition.
+
+In a structurally similar but phenomenologically different scenario, the trolley cannot be diverted by a lever. Instead, a bystander stands on a bridge above the tracks next to a large man whose bulk, if pushed onto the tracks, would stop the trolley and save the five. Most people who endorse diverting the trolley in the first scenario refuse to push the man in the second. The arithmetic is identical — one death prevents five — yet the intuitions diverge sharply. Philosophers have struggled to identify a principled distinction that would justify treating the cases differently while avoiding the accusation of mere squeamishness.
+
+Cognitive scientists have proposed a dual-process explanation: the lever case activates deliberative, System 2 reasoning, which performs cold utilitarian calculation and endorses the switch. The footbridge case activates immediate, emotionally laden System 1 responses — visceral aversion to direct physical contact with a victim — overriding the utilitarian calculus. The inconsistency in moral intuitions, on this view, is not a sign of sophisticated principled reasoning but an artifact of how our brains process different causal structures.
+
+Rather than treat the inconsistency as an embarrassment requiring elimination, however, the author suggests an alternative: the deontological intuition against direct harm may encode real moral wisdom about the dangers of unconstrained consequentialist reasoning. A system that permits — or even requires — treating individuals as mere means to aggregate ends could, if applied consistently, justify atrocities. The visceral resistance to pushing the large man may reflect not a cognitive glitch but an evolved moral constraint that operates as a safeguard against the pathologies of utilitarian extremism.`,
+    question: 'Based on the passage, the author\'s attitude toward utilitarianism is most accurately described as:',
+    choices: [
+      { label: 'A', text: 'Strongly hostile — utilitarianism is presented as a dangerous ideology that inevitably leads to moral catastrophe' },
+      { label: 'B', text: 'Uncritically favorable — utilitarianism correctly captures the moral arithmetic and people who reject it in the footbridge case are simply mistaken' },
+      { label: 'C', text: 'Cautiously critical — utilitarianism captures genuine moral reasoning (endorsed in the lever case) but becomes dangerous when applied as an unconstrained principle, potentially justifying atrocities' },
+      { label: 'D', text: 'Dismissive of both utilitarianism and deontology as inadequate, proposing dual-process theory as the only coherent account of moral judgment' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The author\'s attitude is nuanced: paragraph 1 acknowledges the lever case endorsement of utilitarian arithmetic without criticism (utilitarianism captures something real). Paragraph 4 warns specifically about "unconstrained consequentialist reasoning" that "could justify atrocities" — the concern is with extremism, not utilitarianism per se. The author is not hostile to utilitarianism itself; the concern is its pathological applications when applied without deontological constraints. "Cautiously critical" captures this nuanced stance.',
+    wrongAnswerExplanations: {
+      A: '"Strongly hostile" overstates the author\'s position. The passage does not say utilitarianism "inevitably" leads to catastrophe — it says a system of unconstrained consequentialist reasoning "could, if applied consistently" justify atrocities. "Could" and "if" are important hedges that indicate a conditional concern, not a blanket condemnation.',
+      B: 'The author does not endorse uncritical utilitarianism or say that footbridge refusers are simply mistaken. Paragraph 4 explicitly argues that the deontological intuition "may encode real moral wisdom" — this is the opposite of dismissing footbridge refusers as mistaken.',
+      D: 'The author does not dismiss either utilitarianism or deontology, and does not claim that dual-process theory replaces them as moral frameworks. The dual-process theory is a psychological/cognitive account of why intuitions diverge — not itself a moral theory. The author explicitly defends the moral significance of deontological intuitions in paragraph 4.',
+    },
+    teachingPoint: 'Nuanced tone questions: when an author acknowledges merit in a position they also criticize, the tone is neither "hostile" nor "favorable" but "cautiously critical" or "qualified." Key signals: (1) endorsing part of the view (utilitarianism works in lever case); (2) criticizing the extreme application ("pathologies," "atrocities"). "Cautiously critical" vs "strongly hostile" = difference between criticizing an extreme application and condemning the theory wholesale.',
+    relatedTopics: ['Author\'s attitude', 'Nuanced tone', 'Cautiously critical', 'Utilitarianism critique', 'CARS tone nuance'],
+  },
 ]
