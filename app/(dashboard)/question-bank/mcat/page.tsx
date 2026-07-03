@@ -50,10 +50,17 @@ const SECTION_SHORT: Record<string, string> = {
 }
 
 const SECTION_BADGE: Record<string, string> = {
-  'chem-phys': 'text-blue-400 bg-blue-900/40 border-blue-800/60',
-  'cars': 'text-purple-400 bg-purple-900/40 border-purple-800/60',
-  'bio-biochem': 'text-emerald-400 bg-emerald-900/40 border-emerald-800/60',
-  'psych-soc': 'text-amber-400 bg-amber-900/40 border-amber-800/60',
+  'chem-phys': 'text-blue-700 bg-blue-50 border-blue-200',
+  'cars': 'text-purple-700 bg-purple-50 border-purple-200',
+  'bio-biochem': 'text-emerald-700 bg-emerald-50 border-emerald-200',
+  'psych-soc': 'text-amber-700 bg-amber-50 border-amber-200',
+}
+
+const SECTION_HEADER_BG: Record<string, string> = {
+  'chem-phys': 'bg-blue-50 border-blue-100',
+  'cars': 'bg-purple-50 border-purple-100',
+  'bio-biochem': 'bg-emerald-50 border-emerald-100',
+  'psych-soc': 'bg-amber-50 border-amber-100',
 }
 
 type DifficultyFilter = 'all' | 'easy' | 'medium' | 'hard' | 'medium+hard'
@@ -84,13 +91,13 @@ function TriCheckbox({
       id={id}
       checked={checked}
       onChange={onChange}
-      className="h-3.5 w-3.5 rounded-sm cursor-pointer shrink-0"
-      style={{ accentColor: '#10b981' }}
+      className="h-4 w-4 rounded cursor-pointer shrink-0"
+      style={{ accentColor: '#059669' }}
     />
   )
 }
 
-function SectionRow({
+function SectionCard({
   section,
   selected,
   expandedSections,
@@ -111,9 +118,14 @@ function SectionRow({
   const expanded = expandedSections.has(section.id)
 
   return (
-    <div className="rounded-xl border border-[#1e4039] overflow-hidden">
+    <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
       {/* Section header */}
-      <div className="flex items-center gap-3 px-4 py-3 bg-[#132b27] hover:bg-[#183530] cursor-pointer select-none">
+      <div
+        className={cn(
+          'flex items-center gap-3 px-4 py-3 border-b cursor-pointer select-none hover:brightness-95 transition-all',
+          SECTION_HEADER_BG[section.id] ?? 'bg-slate-50 border-slate-200'
+        )}
+      >
         <TriCheckbox
           id={`chk-${section.id}`}
           checked={state === 'checked'}
@@ -127,13 +139,15 @@ function SectionRow({
           <span className={cn('text-[10px] font-bold px-1.5 py-0.5 rounded border shrink-0', SECTION_BADGE[section.id])}>
             {SECTION_SHORT[section.id] ?? section.id}
           </span>
-          <span className="text-[13px] font-semibold text-slate-200 leading-tight flex-1 min-w-0 truncate">
+          <span className="text-[13px] font-semibold text-slate-800 leading-tight flex-1 min-w-0">
             {section.label}
           </span>
-          <span className="text-[11px] text-slate-500 font-mono shrink-0">{section.count}</span>
+          <span className="text-[11px] bg-white/70 border border-emerald-200 text-emerald-700 font-semibold rounded-full px-2 py-0.5 shrink-0">
+            {section.count}
+          </span>
           <svg
             fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-            className={cn('h-3.5 w-3.5 text-slate-500 shrink-0 transition-transform', expanded ? 'rotate-90' : '')}
+            className={cn('h-4 w-4 text-slate-400 shrink-0 transition-transform', expanded ? 'rotate-90' : '')}
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
           </svg>
@@ -141,15 +155,15 @@ function SectionRow({
       </div>
 
       {expanded && (
-        <div className="bg-[#0e2420]">
+        <div>
           {section.children.map(disc => {
             const dState = getNodeState(disc, selected)
             const dExpanded = expandedDiscs.has(disc.id)
 
             return (
-              <div key={disc.id}>
+              <div key={disc.id} className="border-t border-slate-100">
                 {/* Discipline row */}
-                <div className="flex items-center gap-3 px-4 py-2.5 pl-8 border-t border-[#1a3530] hover:bg-[#132b27] cursor-pointer select-none">
+                <div className="flex items-center gap-3 px-4 py-2.5 pl-8 hover:bg-slate-50 cursor-pointer select-none transition-colors">
                   <TriCheckbox
                     id={`chk-${disc.id}`}
                     checked={dState === 'checked'}
@@ -160,11 +174,11 @@ function SectionRow({
                     onClick={() => onToggleDisc(disc.id)}
                     className="flex-1 flex items-center gap-2 text-left"
                   >
-                    <span className="text-[12px] font-medium text-slate-300 flex-1">{disc.label}</span>
-                    <span className="text-[11px] text-slate-500 font-mono">{disc.count}</span>
+                    <span className="text-[12px] font-semibold text-slate-700 flex-1">{disc.label}</span>
+                    <span className="text-[11px] bg-slate-100 text-slate-500 rounded-full px-2 py-0.5 font-medium">{disc.count}</span>
                     <svg
                       fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                      className={cn('h-3 w-3 text-slate-500 shrink-0 transition-transform', dExpanded ? 'rotate-90' : '')}
+                      className={cn('h-3.5 w-3.5 text-slate-400 shrink-0 transition-transform', dExpanded ? 'rotate-90' : '')}
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                     </svg>
@@ -176,18 +190,18 @@ function SectionRow({
                   <label
                     key={cat.id}
                     htmlFor={`chk-${cat.id}`}
-                    className="flex items-center gap-3 px-4 py-2 pl-14 border-t border-[#1a3530] hover:bg-[#132b27] cursor-pointer select-none"
+                    className="flex items-center gap-3 px-4 py-2 pl-14 hover:bg-slate-50 cursor-pointer select-none border-t border-slate-50 transition-colors"
                   >
                     <input
                       type="checkbox"
                       id={`chk-${cat.id}`}
                       checked={selected.has(cat.id)}
                       onChange={() => onToggle(cat)}
-                      className="h-3 w-3 rounded-sm cursor-pointer shrink-0"
-                      style={{ accentColor: '#10b981' }}
+                      className="h-3.5 w-3.5 rounded cursor-pointer shrink-0"
+                      style={{ accentColor: '#059669' }}
                     />
-                    <span className="text-[11px] text-slate-400 flex-1 leading-tight">{cat.label}</span>
-                    <span className="text-[10px] text-slate-600 font-mono shrink-0">{cat.count}</span>
+                    <span className="text-[11px] text-slate-600 flex-1 leading-tight">{cat.label}</span>
+                    <span className="text-[10px] bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-full px-1.5 py-0.5 shrink-0">{cat.count}</span>
                   </label>
                 ))}
               </div>
@@ -263,294 +277,161 @@ export default function MCATQuestionBankPage() {
     router.push(`/question-bank/mcat/practice?mode=custom&count=${pool.length}`)
   }
 
-  const sectionBreakdown = useMemo(() =>
-    tree.map(s => ({
-      id: s.id,
-      label: SECTION_SHORT[s.id] ?? s.id,
-      count: filteredQIds.filter(id => s.questionIds.includes(id)).length,
-    })), [tree, filteredQIds])
+  const startLabel = canStart
+    ? `${Math.min(filteredQIds.length, actualCount)} questions · ${mode} mode`
+    : filteredQIds.length === 0
+    ? 'No questions match filters'
+    : 'Enter a question count'
 
   // ── render ─────────────────────────────────────────────────────────────────
 
   return (
-    <div
-      className="flex rounded-2xl overflow-hidden border border-[#1e4039] bg-[#0c1e1b]"
-      style={{ height: 'calc(100vh - 7.5rem)' }}
-    >
-      {/* ── Left sidebar ─────────────────────────────────────── */}
-      <div className="hidden md:flex w-48 shrink-0 bg-[#0f2f2a] flex-col border-r border-[#1e4039]">
-        {/* Brand */}
-        <div className="px-4 py-4 border-b border-[#1e4039] shrink-0">
-          <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">MockMate</p>
-          <p className="text-[13px] font-semibold text-white mt-0.5 leading-tight">MCAT QBank</p>
-        </div>
-
-        {/* Nav */}
-        <nav className="flex-1 px-2 py-3 space-y-0.5 overflow-y-auto">
-          <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-emerald-900/40 border border-emerald-800/30">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4 text-emerald-400 shrink-0">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            <span className="text-[12px] font-semibold text-emerald-300">Create Set</span>
-          </div>
-
-          <Link href="/question-bank/mcat/results" className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/5 transition-colors group">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4 text-slate-500 group-hover:text-slate-300 shrink-0">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="text-[12px] text-slate-400 group-hover:text-slate-200">Previous Sets</span>
-          </Link>
-
-          <Link href="/question-bank/mcat/results" className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/5 transition-colors group">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4 text-slate-500 group-hover:text-slate-300 shrink-0">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-            </svg>
-            <span className="text-[12px] text-slate-400 group-hover:text-slate-200">Performance</span>
-          </Link>
-
-          <Link href="/anki" className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/5 transition-colors group">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4 text-slate-500 group-hover:text-slate-300 shrink-0">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" />
-            </svg>
-            <span className="text-[12px] text-slate-400 group-hover:text-slate-200">Flashcards</span>
-          </Link>
-
-          <div className="border-t border-[#1e4039] my-2" />
-
-          <button
-            onClick={() => {
-              if (typeof window !== 'undefined' && confirm('Reset your MCAT QB progress? This clears your seen questions and saved results.')) {
-                localStorage.removeItem('mockmate_mcat_qb_seen_v1')
-                localStorage.removeItem('mockmate_mcat_qb_results_v1')
-              }
-            }}
-            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/5 transition-colors group text-left"
-          >
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4 text-slate-500 group-hover:text-red-400 shrink-0">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-            </svg>
-            <span className="text-[12px] text-slate-400 group-hover:text-red-400">Reset Progress</span>
-          </button>
-
-          <Link href="/question-bank" className="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-white/5 transition-colors group">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4 text-slate-500 group-hover:text-slate-300 shrink-0">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-            </svg>
-            <span className="text-[12px] text-slate-400 group-hover:text-slate-200">Help</span>
-          </Link>
-        </nav>
-
-        <div className="px-3 py-3 border-t border-[#1e4039] shrink-0">
-          <p className="text-[9px] text-slate-600 leading-relaxed">
-            MCAT® is a registered trademark of the AAMC. MockMate is not affiliated with or endorsed by the AAMC.
-          </p>
-        </div>
+    <div className="w-full">
+      {/* Header */}
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-slate-900">MCAT Question Bank</h1>
+        <p className="text-slate-500 text-sm mt-1">
+          Select subjects and topics to build a targeted MCAT practice set.
+        </p>
       </div>
 
-      {/* ── Center: category tree ─────────────────────────────── */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        {/* Top bar */}
-        <div className="px-5 py-4 border-b border-[#1e4039] bg-[#0c1e1b] shrink-0">
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <div className="min-w-0">
-              <h1 className="text-[16px] font-bold text-white">MCAT Question Bank</h1>
-              <p className="text-[11px] text-slate-400 mt-0.5">Select topics to build a custom practice set</p>
-            </div>
-            <div className="flex items-center gap-1 shrink-0 flex-wrap justify-end">
-              <button onClick={collapseAll} className="text-[11px] text-slate-400 hover:text-slate-200 px-2 py-1 rounded hover:bg-white/5 transition-colors whitespace-nowrap">
-                Collapse All
-              </button>
-              <button onClick={expandAll} className="text-[11px] text-slate-400 hover:text-slate-200 px-2 py-1 rounded hover:bg-white/5 transition-colors whitespace-nowrap">
-                Expand All
-              </button>
-              <span className="text-slate-600 text-[11px]">·</span>
-              <button
-                onClick={() => setSelectedLeafIds(new Set(allLeafIds))}
-                className="text-[11px] text-emerald-500 hover:text-emerald-400 px-2 py-1 rounded hover:bg-emerald-900/20 transition-colors whitespace-nowrap"
-              >
-                Select All
-              </button>
-              <button
-                onClick={() => setSelectedLeafIds(new Set())}
-                className="text-[11px] text-slate-400 hover:text-slate-200 px-2 py-1 rounded hover:bg-white/5 transition-colors whitespace-nowrap"
-              >
-                Clear
-              </button>
-            </div>
-          </div>
+      {/* Personalized Practice Path */}
+      <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl p-4 mb-5 flex items-center gap-4">
+        <div className="h-10 w-10 rounded-full bg-emerald-100 border border-emerald-200 flex items-center justify-center shrink-0">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 text-emerald-600">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+          </svg>
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-sm font-semibold text-emerald-900">Personalized MCAT Practice Path</p>
+          <p className="text-xs text-emerald-700 mt-0.5">
+            Complete MCAT Practice Exam Form 1 to unlock a personalized path based on your missed topics.
+          </p>
+        </div>
+        <Link
+          href="/premade/mcat"
+          className="shrink-0 text-xs font-semibold text-emerald-700 bg-white border border-emerald-300 hover:bg-emerald-50 px-3 py-1.5 rounded-lg transition-colors whitespace-nowrap"
+        >
+          Take Practice Exam
+        </Link>
+      </div>
 
+      {/* Controls bar */}
+      <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-4 mb-5">
+        {/* Row 1: search + collapse/expand + select/clear */}
+        <div className="flex flex-wrap items-center gap-3 mb-3">
           {/* Search */}
-          <div className="relative">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+          <div className="relative flex-1 min-w-[180px]">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+              className="h-4 w-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
             </svg>
             <input
               type="text"
-              placeholder="Search topics…"
+              placeholder="Search topics, subjects, or skills…"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full bg-[#1a3530] border border-[#2a5048] text-[13px] text-slate-200 placeholder:text-slate-600 rounded-lg pl-9 pr-8 py-2 focus:outline-none focus:border-emerald-700 transition-colors"
+              className="w-full border border-slate-200 text-sm text-slate-700 placeholder:text-slate-400 rounded-lg pl-9 pr-8 py-2 focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-100 transition-colors bg-slate-50"
             />
             {search && (
               <button
                 onClick={() => setSearch('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 text-[12px]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 text-sm"
               >
                 ✕
               </button>
             )}
           </div>
 
-          <p className="text-[11px] text-slate-500 mt-2">
-            <span className="text-emerald-400 font-semibold">{selectedQIds.length}</span> of {allMCATQBQuestions.length} questions selected
-          </p>
-
-          {/* Mobile quick controls */}
-          <div className="md:hidden mt-3 flex gap-2 flex-wrap">
-            {(['all', 'easy', 'medium', 'hard'] as DifficultyFilter[]).map(d => (
-              <button
-                key={d}
-                onClick={() => setDifficulty(d)}
-                className={cn(
-                  'px-2.5 py-1 rounded-lg text-[11px] font-medium border transition-colors capitalize',
-                  difficulty === d
-                    ? 'bg-emerald-900/50 border-emerald-700 text-emerald-300'
-                    : 'border-[#1e4039] text-slate-400 hover:bg-white/5 hover:text-slate-200'
-                )}
-              >
-                {d === 'all' ? 'All Difficulties' : d}
-              </button>
-            ))}
-          </div>
-
-          {/* Mobile count + start */}
-          <div className="md:hidden mt-2 flex items-center gap-2">
-            <div className="flex gap-1">
-              {[10, 20, 30].map(n => (
-                <button
-                  key={n}
-                  onClick={() => { setCount(n); setUseCustom(false) }}
-                  className={cn(
-                    'px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-colors',
-                    !useCustom && count === n
-                      ? 'bg-emerald-900/50 border-emerald-700 text-emerald-300'
-                      : 'border-[#1e4039] text-slate-400'
-                  )}
-                >
-                  {n}
-                </button>
-              ))}
-            </div>
+          {/* Collapse/Expand */}
+          <div className="flex items-center gap-1">
             <button
-              onClick={handleStart}
-              disabled={!canStart}
-              className="flex-1 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-white font-bold text-[12px] py-1.5 rounded-lg transition-colors"
+              onClick={collapseAll}
+              className="text-xs text-slate-500 hover:text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors"
             >
-              Start Practice Set {canStart ? `(${Math.min(filteredQIds.length, actualCount)})` : ''}
+              Collapse All
+            </button>
+            <button
+              onClick={expandAll}
+              className="text-xs text-slate-500 hover:text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors"
+            >
+              Expand All
             </button>
           </div>
-        </div>
 
-        {/* Category tree */}
-        <div className="flex-1 overflow-y-auto px-5 py-4 space-y-2">
-          {displayTree.length === 0 ? (
-            <div className="py-16 text-center">
-              <p className="text-slate-500 text-[13px]">No topics match &ldquo;{search}&rdquo;</p>
-            </div>
-          ) : (
-            displayTree.map(section => (
-              <SectionRow
-                key={section.id}
-                section={section}
-                selected={selectedLeafIds}
-                expandedSections={expandedSections}
-                expandedDiscs={expandedDiscs}
-                onToggle={toggleNode}
-                onToggleSection={() => setExpandedSections(prev => {
-                  const next = new Set(prev)
-                  if (next.has(section.id)) next.delete(section.id)
-                  else next.add(section.id)
-                  return next
-                })}
-                onToggleDisc={discId => setExpandedDiscs(prev => {
-                  const next = new Set(prev)
-                  if (next.has(discId)) next.delete(discId)
-                  else next.add(discId)
-                  return next
-                })}
-              />
-            ))
-          )}
-        </div>
-      </div>
-
-      {/* ── Right panel: controls ─────────────────────────────── */}
-      <div className="hidden md:flex w-64 shrink-0 bg-[#0a1a17] border-l border-[#1e4039] flex-col overflow-y-auto">
-        {/* Selected count */}
-        <div className="px-5 py-4 border-b border-[#1e4039] shrink-0">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Available</p>
-          <p className="text-[32px] font-bold text-white leading-none">{filteredQIds.length}</p>
-          <p className="text-[11px] text-slate-500 mt-0.5">questions match filters</p>
-
-          {/* Section breakdown */}
-          <div className="grid grid-cols-2 gap-1.5 mt-3">
-            {sectionBreakdown.map(s => (
-              <div key={s.id} className={cn('rounded-lg border px-2.5 py-1.5 text-center', SECTION_BADGE[s.id])}>
-                <p className="text-[9px] font-bold uppercase">{s.label}</p>
-                <p className="text-[14px] font-bold">{s.count}</p>
-              </div>
-            ))}
+          {/* Select / Clear */}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => setSelectedLeafIds(new Set(allLeafIds))}
+              className="text-xs text-emerald-600 hover:text-emerald-700 px-2.5 py-1.5 rounded-lg border border-emerald-200 hover:bg-emerald-50 transition-colors font-medium"
+            >
+              Select All
+            </button>
+            <button
+              onClick={() => setSelectedLeafIds(new Set())}
+              className="text-xs text-slate-500 hover:text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 transition-colors"
+            >
+              Clear
+            </button>
           </div>
+
+          {/* Selected count */}
+          <p className="text-sm text-slate-500 ml-auto hidden sm:block">
+            <span className="font-semibold text-emerald-600">{filteredQIds.length}</span> available
+            {selectedQIds.length < allMCATQBQuestions.length && (
+              <> · <span className="font-semibold text-slate-700">{selectedQIds.length}</span> selected</>
+            )}
+          </p>
         </div>
 
-        {/* Difficulty */}
-        <div className="px-5 py-4 border-b border-[#1e4039] shrink-0">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2.5">Difficulty</p>
-          <div className="space-y-1.5">
+        {/* Row 2: filters + start button */}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          {/* Difficulty */}
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-xs font-medium text-slate-500 whitespace-nowrap">Difficulty:</span>
             {(['all', 'easy', 'medium', 'hard', 'medium+hard'] as DifficultyFilter[]).map(d => (
               <button
                 key={d}
                 onClick={() => setDifficulty(d)}
                 className={cn(
-                  'w-full px-3 py-1.5 rounded-lg text-left text-[12px] font-medium transition-colors border',
+                  'px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors whitespace-nowrap',
                   difficulty === d
-                    ? 'bg-emerald-900/40 border-emerald-700 text-emerald-300'
-                    : 'border-[#1e4039] text-slate-400 hover:bg-white/5 hover:text-slate-200'
+                    ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
+                    : 'border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700'
                 )}
               >
-                {d === 'all' ? 'All Difficulties' : d === 'medium+hard' ? 'Medium + Hard' : d.charAt(0).toUpperCase() + d.slice(1)}
+                {d === 'all' ? 'All' : d === 'medium+hard' ? 'Med+Hard' : d.charAt(0).toUpperCase() + d.slice(1)}
               </button>
             ))}
           </div>
-        </div>
 
-        {/* Question count */}
-        <div className="px-5 py-4 border-b border-[#1e4039] shrink-0">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2.5">Questions</p>
-          <div className="grid grid-cols-4 gap-1.5 mb-2">
+          {/* Divider */}
+          <div className="hidden sm:block h-5 w-px bg-slate-200" />
+
+          {/* Count */}
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-xs font-medium text-slate-500 whitespace-nowrap">Questions:</span>
             {[10, 20, 30, 40].map(n => (
               <button
                 key={n}
                 onClick={() => { setCount(n); setUseCustom(false) }}
                 className={cn(
-                  'py-1.5 rounded-lg text-[12px] font-semibold transition-colors border',
+                  'w-9 py-1 rounded-lg text-xs font-semibold border transition-colors',
                   !useCustom && count === n
-                    ? 'bg-emerald-900/40 border-emerald-700 text-emerald-300'
-                    : 'border-[#1e4039] text-slate-400 hover:bg-white/5 hover:text-slate-200'
+                    ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
+                    : 'border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700'
                 )}
               >
                 {n}
               </button>
             ))}
-          </div>
-          <div className="flex items-center gap-2">
             <button
               onClick={() => setUseCustom(v => !v)}
               className={cn(
-                'px-2.5 py-1.5 rounded-lg text-[12px] font-medium transition-colors border whitespace-nowrap',
+                'px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors',
                 useCustom
-                  ? 'bg-emerald-900/40 border-emerald-700 text-emerald-300'
-                  : 'border-[#1e4039] text-slate-400 hover:bg-white/5 hover:text-slate-200'
+                  ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
+                  : 'border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700'
               )}
             >
               Custom
@@ -563,60 +444,94 @@ export default function MCATQuestionBankPage() {
                 value={customCount}
                 onChange={e => setCustomCount(e.target.value)}
                 placeholder={`1–${filteredQIds.length}`}
-                className="flex-1 bg-[#1a3530] border border-[#2a5048] text-[12px] text-slate-200 placeholder:text-slate-600 rounded-lg px-2 py-1.5 focus:outline-none focus:border-emerald-700 transition-colors"
+                className="w-24 border border-slate-200 text-xs text-slate-700 placeholder:text-slate-400 rounded-lg px-2.5 py-1 focus:outline-none focus:border-emerald-400 transition-colors bg-slate-50"
               />
             )}
           </div>
-        </div>
 
-        {/* Mode */}
-        <div className="px-5 py-4 border-b border-[#1e4039] shrink-0">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2.5">Mode</p>
-          <div className="flex gap-2">
+          {/* Divider */}
+          <div className="hidden sm:block h-5 w-px bg-slate-200" />
+
+          {/* Mode */}
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs font-medium text-slate-500">Mode:</span>
             {(['tutor', 'timed'] as ModeFilter[]).map(m => (
               <button
                 key={m}
                 onClick={() => setMode(m)}
                 className={cn(
-                  'flex-1 py-1.5 rounded-lg text-[12px] font-medium transition-colors border capitalize',
+                  'px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors capitalize',
                   mode === m
-                    ? 'bg-emerald-900/40 border-emerald-700 text-emerald-300'
-                    : 'border-[#1e4039] text-slate-400 hover:bg-white/5 hover:text-slate-200'
+                    ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
+                    : 'border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700'
                 )}
               >
                 {m}
               </button>
             ))}
           </div>
-          {mode === 'timed' && (
-            <p className="text-[10px] text-slate-600 mt-1.5">Timed mode coming soon</p>
-          )}
+
+          {/* Start button */}
+          <div className="flex items-center gap-3 ml-auto">
+            <p className="text-xs text-slate-400 hidden md:block">{startLabel}</p>
+            <button
+              onClick={handleStart}
+              disabled={!canStart}
+              className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-2 rounded-xl transition-colors whitespace-nowrap shadow-sm"
+            >
+              Start Practice Set
+            </button>
+          </div>
         </div>
 
-        {/* Start */}
-        <div className="px-5 py-4 mt-auto shrink-0">
-          {filteredQIds.length === 0 ? (
-            <p className="text-[11px] text-slate-500 text-center mb-3">
-              No questions match your current selection.
-            </p>
-          ) : !canStart ? (
-            <p className="text-[11px] text-slate-500 text-center mb-3">
-              Enter a question count to continue.
-            </p>
-          ) : (
-            <p className="text-[11px] text-slate-500 text-center mb-3">
-              {Math.min(filteredQIds.length, actualCount)} questions · {mode} mode
-            </p>
+        {/* Mobile count indicator */}
+        <p className="text-sm text-slate-500 mt-3 sm:hidden">
+          <span className="font-semibold text-emerald-600">{filteredQIds.length}</span> available
+          {selectedQIds.length < allMCATQBQuestions.length && (
+            <> · <span className="font-semibold text-slate-700">{selectedQIds.length}</span> selected</>
           )}
-          <button
-            onClick={handleStart}
-            disabled={!canStart}
-            className="w-full bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-[13px] py-3 rounded-xl transition-colors"
-          >
-            Start Practice Set
-          </button>
-        </div>
+        </p>
       </div>
+
+      {/* Category grid */}
+      {displayTree.length === 0 ? (
+        <div className="py-20 text-center">
+          <p className="text-slate-400 text-sm">No topics match &ldquo;{search}&rdquo;</p>
+        </div>
+      ) : (
+        <div
+          className="grid gap-5"
+          style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))' }}
+        >
+          {displayTree.map(section => (
+            <SectionCard
+              key={section.id}
+              section={section}
+              selected={selectedLeafIds}
+              expandedSections={expandedSections}
+              expandedDiscs={expandedDiscs}
+              onToggle={toggleNode}
+              onToggleSection={() => setExpandedSections(prev => {
+                const next = new Set(prev)
+                if (next.has(section.id)) next.delete(section.id)
+                else next.add(section.id)
+                return next
+              })}
+              onToggleDisc={discId => setExpandedDiscs(prev => {
+                const next = new Set(prev)
+                if (next.has(discId)) next.delete(discId)
+                else next.add(discId)
+                return next
+              })}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Footer disclaimer */}
+      <p className="text-xs text-slate-400 mt-8 text-center">
+        MCAT® is a registered trademark of the AAMC. MockMate is not affiliated with or endorsed by the AAMC.
+      </p>
     </div>
   )
 }
