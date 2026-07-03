@@ -1134,4 +1134,348 @@ A third position refuses both the complete freedom of the universalist and the s
     teachingPoint: 'Strengthen/weaken questions: identify the exact claim being challenged or supported, then find the answer that engages most directly with that specific claim. The critic\'s claim is about INEVITABILITY of stereotyping by outsiders. The third view challenges inevitability by showing a pathway (quality of attention) that avoids it. Choices A and B address related but different issues.',
     relatedTopics: ['Strengthen/weaken', 'Argument analysis', 'Third view', 'CARS strategy', 'Inevitability claims'],
   },
+
+  // ── Passage 7: Philosophy of Education — Content vs. Process (Q033–Q037) ──
+  {
+    id: 'mcat-qb-cars-033',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy',
+    contentCategory: 'Foundations of Comprehension',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Two competing visions of education have structured pedagogical debate for more than a century. The first, exemplified by E.D. Hirsch's program of cultural literacy, holds that effective democratic citizenship requires a shared body of background knowledge — facts, narratives, allusions, and cultural touchstones — without which communication across social boundaries becomes impossible. On this view, the primary obligation of educators is transmissive: students must be inducted into the existing knowledge-base of their society before they can participate meaningfully in its public life. Hirsch argues that schools that prioritize process over content rob working-class students of the very cultural capital that would allow them to engage as equals in civic discourse.
+
+A fundamentally different vision emerges from John Dewey's instrumentalist philosophy. For Dewey, knowledge divorced from action is pedagogically inert. Education ought to be rooted in the genuine problems and experiences of the learner, with curriculum organized around inquiry rather than accumulation. The student is not an empty vessel to be filled but an active organism whose cognitive development proceeds through cycles of problem, hypothesis, experimentation, and resolution. Dewey feared that rote transmission of cultural content would produce passive recipients of received opinion rather than independent thinkers capable of reconstructing society.
+
+The opposition between these positions has generated a spurious binary in educational discourse. Critics of both camps note that Hirsch's model, while persuasive in emphasizing background knowledge, treats content as an end rather than a means — students may absorb disconnected facts without developing the capacity to deploy them in novel situations. Conversely, pure process-based pedagogy risks leaving students without the conceptual scaffolding necessary to engage productively with complex texts and ideas. An impoverished vocabulary of cultural reference does not enhance student agency; it constrains it.
+
+A more defensible position holds that cultural literacy and inquiry-based learning are complementary phases rather than alternative paradigms. Early education, on this view, should emphasize the acquisition of a broad shared repertoire — not as dogma, but as the grammar of future inquiry. Advanced instruction should then leverage that foundation to cultivate the habits of critical interrogation Dewey rightly prized. The failure of both Hirsch and Dewey lies not in their diagnoses but in their prescriptions: each correctly identifies what the other ignores while insisting, unnecessarily, that the virtues of their own position require the rejection of their opponent's.`,
+    question: 'Which of the following best states the main argument of the passage?',
+    choices: [
+      { label: 'A', text: 'Hirsch\'s cultural literacy program is pedagogically superior to Dewey\'s instrumentalism because it addresses the needs of disadvantaged students more directly' },
+      { label: 'B', text: 'Dewey\'s process-centered approach is ultimately more effective than content transmission for cultivating citizens capable of critical thought' },
+      { label: 'C', text: 'The apparent opposition between cultural literacy and inquiry-based learning is a false dichotomy; the two approaches are necessary complements at different stages of education' },
+      { label: 'D', text: 'Neither the Hirsch nor the Dewey model adequately addresses educational inequality, and both should be replaced by a wholly new approach' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The passage develops through a clear argumentative arc: paragraph 1 presents Hirsch, paragraph 2 presents Dewey, paragraph 3 critiques both, and paragraph 4 offers a synthesis. The author\'s position, articulated in the fourth paragraph, is that the two models are "complementary phases rather than alternative paradigms" — a direct statement of the synthesis position captured in C. The author explicitly calls the opposition "spurious" (paragraph 3), signaling that the binary framing itself is rejected.',
+    wrongAnswerExplanations: {
+      A: 'While the passage does mention Hirsch\'s equity argument (cultural capital for working-class students), the author neither endorses Hirsch as superior nor positions the argument as the main claim. The author critiques Hirsch in paragraph 3 and offers a synthesis in paragraph 4.',
+      B: 'The author does not endorse Dewey\'s model as ultimately superior. Paragraph 3 directly criticizes pure process-based pedagogy for leaving students "without the conceptual scaffolding necessary to engage productively." The author\'s synthesis treats Dewey as partially correct, not wholly correct.',
+      D: 'The author does not argue that both models should be replaced. On the contrary, the fourth paragraph explicitly draws on elements of both models, arguing they are "complementary phases" — the author wants to integrate them, not discard them.',
+    },
+    teachingPoint: 'Main argument questions: look for the sentence where the author states their own positive position (not just characterizes other views). Here it is in paragraph 4: "cultural literacy and inquiry-based learning are complementary phases rather than alternative paradigms." The paragraph that follows "critics of both" typically introduces the author\'s own synthetic view. Key signal: "spurious binary" = the author rejects the either/or framing.',
+    relatedTopics: ['Main argument', 'Author\'s thesis', 'Synthesis argument', 'CARS structure', 'False dichotomy'],
+  },
+  {
+    id: 'mcat-qb-cars-034',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy',
+    contentCategory: 'Foundations of Comprehension',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `Two competing visions of education have structured pedagogical debate for more than a century. The first, exemplified by E.D. Hirsch's program of cultural literacy, holds that effective democratic citizenship requires a shared body of background knowledge — facts, narratives, allusions, and cultural touchstones — without which communication across social boundaries becomes impossible. On this view, the primary obligation of educators is transmissive: students must be inducted into the existing knowledge-base of their society before they can participate meaningfully in its public life. Hirsch argues that schools that prioritize process over content rob working-class students of the very cultural capital that would allow them to engage as equals in civic discourse.
+
+A fundamentally different vision emerges from John Dewey's instrumentalist philosophy. For Dewey, knowledge divorced from action is pedagogically inert. Education ought to be rooted in the genuine problems and experiences of the learner, with curriculum organized around inquiry rather than accumulation. The student is not an empty vessel to be filled but an active organism whose cognitive development proceeds through cycles of problem, hypothesis, experimentation, and resolution. Dewey feared that rote transmission of cultural content would produce passive recipients of received opinion rather than independent thinkers capable of reconstructing society.
+
+The opposition between these positions has generated a spurious binary in educational discourse. Critics of both camps note that Hirsch's model, while persuasive in emphasizing background knowledge, treats content as an end rather than a means — students may absorb disconnected facts without developing the capacity to deploy them in novel situations. Conversely, pure process-based pedagogy risks leaving students without the conceptual scaffolding necessary to engage productively with complex texts and ideas. An impoverished vocabulary of cultural reference does not enhance student agency; it constrains it.
+
+A more defensible position holds that cultural literacy and inquiry-based learning are complementary phases rather than alternative paradigms. Early education, on this view, should emphasize the acquisition of a broad shared repertoire — not as dogma, but as the grammar of future inquiry. Advanced instruction should then leverage that foundation to cultivate the habits of critical interrogation Dewey rightly prized. The failure of both Hirsch and Dewey lies not in their diagnoses but in their prescriptions: each correctly identifies what the other ignores while insisting, unnecessarily, that the virtues of their own position require the rejection of their opponent's.`,
+    question: 'The author\'s tone toward both Hirsch and Dewey is best described as:',
+    choices: [
+      { label: 'A', text: 'Dismissive — the author treats both thinkers as fundamentally misguided and their positions as not worth serious engagement' },
+      { label: 'B', text: 'Analytically balanced, crediting both positions with genuine insights while criticizing each for an unnecessary prescriptive overreach' },
+      { label: 'C', text: 'Enthusiastically favorable toward Dewey and dismissive of Hirsch as representing an elitist content-delivery model' },
+      { label: 'D', text: 'Polemical and partisan, using rhetorical exaggeration to argue for a return to content-centered education' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The author gives genuine credit to both thinkers: Hirsch\'s emphasis on background knowledge is "persuasive" (paragraph 3) and his equity argument is acknowledged (paragraph 1); Dewey\'s emphasis on critical interrogation is called "rightly prized" (paragraph 4). However, the author criticizes both for overreach in their prescriptions: Hirsch treats content as an end rather than a means; Dewey neglects the scaffolding content provides. The final sentence explicitly states "each correctly identifies what the other ignores" — balanced acknowledgment of both — "while insisting, unnecessarily, that the virtues of their own position require the rejection of their opponent\'s" — the critique of both.',
+    wrongAnswerExplanations: {
+      A: 'Dismissive means not taking a position seriously. The author devotes a full paragraph to each thinker\'s substantive ideas and explicitly credits both with correct diagnoses in paragraph 4. This is the opposite of dismissive.',
+      C: 'The author does not favor Dewey over Hirsch. Paragraph 3 explicitly criticizes pure process-based pedagogy for leaving students without conceptual scaffolding. Paragraph 4 integrates both views, and the structure treats them symmetrically.',
+      D: 'Polemical connotes one-sided rhetorical advocacy. The author\'s stance is synthetic and concedes valid points to both sides. The passage argues neither for content-only nor process-only education but for a complementary phased approach.',
+    },
+    teachingPoint: 'Author tone questions: look for explicit evaluative language. "Persuasive" (for Hirsch), "rightly prized" (for Dewey), "spurious binary" (criticizing both), "unnecessarily" (critiquing both prescriptions) — these specific words map to "balanced but critical of both." Avoid extreme tone descriptors (dismissive, polemical) unless the text provides clear evidence of one-sided extreme language.',
+    relatedTopics: ['Author tone', 'Balanced analysis', 'Evaluative language', 'CARS tone questions', 'Synthesis argument structure'],
+  },
+  {
+    id: 'mcat-qb-cars-035',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy',
+    contentCategory: 'Reasoning Beyond the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Two competing visions of education have structured pedagogical debate for more than a century. The first, exemplified by E.D. Hirsch's program of cultural literacy, holds that effective democratic citizenship requires a shared body of background knowledge — facts, narratives, allusions, and cultural touchstones — without which communication across social boundaries becomes impossible. On this view, the primary obligation of educators is transmissive: students must be inducted into the existing knowledge-base of their society before they can participate meaningfully in its public life. Hirsch argues that schools that prioritize process over content rob working-class students of the very cultural capital that would allow them to engage as equals in civic discourse.
+
+A fundamentally different vision emerges from John Dewey's instrumentalist philosophy. For Dewey, knowledge divorced from action is pedagogically inert. Education ought to be rooted in the genuine problems and experiences of the learner, with curriculum organized around inquiry rather than accumulation. The student is not an empty vessel to be filled but an active organism whose cognitive development proceeds through cycles of problem, hypothesis, experimentation, and resolution. Dewey feared that rote transmission of cultural content would produce passive recipients of received opinion rather than independent thinkers capable of reconstructing society.
+
+The opposition between these positions has generated a spurious binary in educational discourse. Critics of both camps note that Hirsch's model, while persuasive in emphasizing background knowledge, treats content as an end rather than a means — students may absorb disconnected facts without developing the capacity to deploy them in novel situations. Conversely, pure process-based pedagogy risks leaving students without the conceptual scaffolding necessary to engage productively with complex texts and ideas. An impoverished vocabulary of cultural reference does not enhance student agency; it constrains it.
+
+A more defensible position holds that cultural literacy and inquiry-based learning are complementary phases rather than alternative paradigms. Early education, on this view, should emphasize the acquisition of a broad shared repertoire — not as dogma, but as the grammar of future inquiry. Advanced instruction should then leverage that foundation to cultivate the habits of critical interrogation Dewey rightly prized. The failure of both Hirsch and Dewey lies not in their diagnoses but in their prescriptions: each correctly identifies what the other ignores while insisting, unnecessarily, that the virtues of their own position require the rejection of their opponent's.`,
+    question: 'A school district implements a curriculum in which grades K–6 require students to master a core knowledge sequence of historical facts and literary allusions, and grades 7–12 shift to project-based inquiry in which students design and pursue their own investigations. Which response to this policy would the author of the passage most likely give?',
+    choices: [
+      { label: 'A', text: 'Criticism, because the core knowledge phase unduly restricts student autonomy and replicates the Hirschian errors identified in paragraph 3' },
+      { label: 'B', text: 'Approval, because the phased structure instantiates the complementary model the author advocates — early content acquisition followed by advanced inquiry-based learning' },
+      { label: 'C', text: 'Qualified approval, but only if the core knowledge phase explicitly connects each fact to civic participation rather than treating content as an end in itself' },
+      { label: 'D', text: 'Criticism, because the inquiry phase begins too late at grade 7 — students should encounter problem-based learning from the earliest years per Dewey\'s vision' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The author\'s prescription in paragraph 4 is precise: "Early education should emphasize the acquisition of a broad shared repertoire... Advanced instruction should then leverage that foundation to cultivate the habits of critical interrogation." The K–6 core knowledge / 7–12 inquiry-based structure matches this phased model exactly: early content followed by later inquiry. The author would likely see this as a practical implementation of the synthesis argued in paragraph 4.',
+    wrongAnswerExplanations: {
+      A: 'The author does not wholesale criticize content-based instruction — paragraph 3 calls Hirsch\'s emphasis "persuasive" and paragraph 4 endorses a content phase in early education. The criticism in paragraph 3 is that treating content as an END (not a means) is the error, not content instruction per se.',
+      C: 'While the author says the shared repertoire should be treated "not as dogma, but as the grammar of future inquiry," this does not impose the additional requirement that each fact be EXPLICITLY connected to civic participation. C adds a condition the author does not state, making it too restrictive. The author would approve the general structure without requiring this specific pedagogical feature.',
+      D: 'The author does not advocate for Dewey\'s full model in early education — paragraph 4 explicitly recommends content emphasis in early education. Starting inquiry earlier would actually contradict the author\'s view that content comes first as "the grammar of future inquiry."',
+    },
+    teachingPoint: 'Application questions: map the new scenario to the author\'s specific prescriptions. Author says: early education = content acquisition; advanced instruction = critical inquiry. The K-6/7-12 structure directly parallels this. Wrong answers often add conditions not stated (C) or misattribute one thinker\'s position to the author (A attributes the Hirsch critique to the whole author stance; D attributes Dewey\'s full view to the author).',
+    relatedTopics: ['Application to new scenario', 'Author\'s prescriptive position', 'Phased education model', 'CARS application questions', 'Misattribution traps'],
+  },
+  {
+    id: 'mcat-qb-cars-036',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy',
+    contentCategory: 'Reasoning Within the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Two competing visions of education have structured pedagogical debate for more than a century. The first, exemplified by E.D. Hirsch's program of cultural literacy, holds that effective democratic citizenship requires a shared body of background knowledge — facts, narratives, allusions, and cultural touchstones — without which communication across social boundaries becomes impossible. On this view, the primary obligation of educators is transmissive: students must be inducted into the existing knowledge-base of their society before they can participate meaningfully in its public life. Hirsch argues that schools that prioritize process over content rob working-class students of the very cultural capital that would allow them to engage as equals in civic discourse.
+
+A fundamentally different vision emerges from John Dewey's instrumentalist philosophy. For Dewey, knowledge divorced from action is pedagogically inert. Education ought to be rooted in the genuine problems and experiences of the learner, with curriculum organized around inquiry rather than accumulation. The student is not an empty vessel to be filled but an active organism whose cognitive development proceeds through cycles of problem, hypothesis, experimentation, and resolution. Dewey feared that rote transmission of cultural content would produce passive recipients of received opinion rather than independent thinkers capable of reconstructing society.
+
+The opposition between these positions has generated a spurious binary in educational discourse. Critics of both camps note that Hirsch's model, while persuasive in emphasizing background knowledge, treats content as an end rather than a means — students may absorb disconnected facts without developing the capacity to deploy them in novel situations. Conversely, pure process-based pedagogy risks leaving students without the conceptual scaffolding necessary to engage productively with complex texts and ideas. An impoverished vocabulary of cultural reference does not enhance student agency; it constrains it.
+
+A more defensible position holds that cultural literacy and inquiry-based learning are complementary phases rather than alternative paradigms. Early education, on this view, should emphasize the acquisition of a broad shared repertoire — not as dogma, but as the grammar of future inquiry. Advanced instruction should then leverage that foundation to cultivate the habits of critical interrogation Dewey rightly prized. The failure of both Hirsch and Dewey lies not in their diagnoses but in their prescriptions: each correctly identifies what the other ignores while insisting, unnecessarily, that the virtues of their own position require the rejection of their opponent's.`,
+    question: 'The primary function of the third paragraph in the passage is to:',
+    choices: [
+      { label: 'A', text: 'Provide empirical evidence from educational research that supports the author\'s synthetic proposal' },
+      { label: 'B', text: 'Introduce the author\'s positive proposal for reforming educational policy through a phased approach' },
+      { label: 'C', text: 'Identify the specific limitations of both the Hirsch and Dewey models in a way that motivates the need for the synthetic position advanced in paragraph 4' },
+      { label: 'D', text: 'Argue that Dewey\'s model is more flawed than Hirsch\'s, since process without content causes more harm than content without process' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The third paragraph critiques both positions: Hirsch\'s model "treats content as an end rather than a means" and pure process pedagogy "risks leaving students without the conceptual scaffolding." Neither position alone is sufficient. By identifying what each approach lacks, the paragraph sets up the logical need for the synthesis proposed in paragraph 4. This is a classic setup/transition function: critique both existing options → introduce the third option.',
+    wrongAnswerExplanations: {
+      A: 'The third paragraph contains no empirical evidence or research citations. Its mode is conceptual criticism, not data-based argumentation.',
+      B: 'The author\'s positive proposal appears in paragraph 4, not paragraph 3. Paragraph 3 is still in critique mode — it identifies problems with both existing views. The shift to positive prescription happens with "A more defensible position holds..." which opens paragraph 4.',
+      D: 'The critique of each position in paragraph 3 is symmetric: Hirsch\'s model has the problem of inert content; Dewey\'s has the problem of insufficient scaffolding. The author does not rank one failure as more severe than the other.',
+    },
+    teachingPoint: 'Paragraph function questions: identify the logical role each paragraph plays in the argument\'s structure. Common functions: (1) introduce a view; (2) present a counter-view; (3) critique both (setup for synthesis); (4) state author\'s own position; (5) apply/elaborate. Paragraph 3 is the "critique both" setup. Signal words for function: "however," "conversely," "critics of both camps" — these flag transition/critique paragraphs.',
+    relatedTopics: ['Paragraph function', 'Argument structure', 'Critique and synthesis structure', 'CARS paragraph roles', 'Transition paragraphs'],
+  },
+  {
+    id: 'mcat-qb-cars-037',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy',
+    contentCategory: 'Reasoning Beyond the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Two competing visions of education have structured pedagogical debate for more than a century. The first, exemplified by E.D. Hirsch's program of cultural literacy, holds that effective democratic citizenship requires a shared body of background knowledge — facts, narratives, allusions, and cultural touchstones — without which communication across social boundaries becomes impossible. On this view, the primary obligation of educators is transmissive: students must be inducted into the existing knowledge-base of their society before they can participate meaningfully in its public life. Hirsch argues that schools that prioritize process over content rob working-class students of the very cultural capital that would allow them to engage as equals in civic discourse.
+
+A fundamentally different vision emerges from John Dewey's instrumentalist philosophy. For Dewey, knowledge divorced from action is pedagogically inert. Education ought to be rooted in the genuine problems and experiences of the learner, with curriculum organized around inquiry rather than accumulation. The student is not an empty vessel to be filled but an active organism whose cognitive development proceeds through cycles of problem, hypothesis, experimentation, and resolution. Dewey feared that rote transmission of cultural content would produce passive recipients of received opinion rather than independent thinkers capable of reconstructing society.
+
+The opposition between these positions has generated a spurious binary in educational discourse. Critics of both camps note that Hirsch's model, while persuasive in emphasizing background knowledge, treats content as an end rather than a means — students may absorb disconnected facts without developing the capacity to deploy them in novel situations. Conversely, pure process-based pedagogy risks leaving students without the conceptual scaffolding necessary to engage productively with complex texts and ideas. An impoverished vocabulary of cultural reference does not enhance student agency; it constrains it.
+
+A more defensible position holds that cultural literacy and inquiry-based learning are complementary phases rather than alternative paradigms. Early education, on this view, should emphasize the acquisition of a broad shared repertoire — not as dogma, but as the grammar of future inquiry. Advanced instruction should then leverage that foundation to cultivate the habits of critical interrogation Dewey rightly prized. The failure of both Hirsch and Dewey lies not in their diagnoses but in their prescriptions: each correctly identifies what the other ignores while insisting, unnecessarily, that the virtues of their own position require the rejection of their opponent's.`,
+    question: 'Which finding would most directly strengthen the author\'s argument that cultural literacy and inquiry-based learning are complementary rather than alternative approaches?',
+    choices: [
+      { label: 'A', text: 'A study finding that students taught exclusively with Hirsch\'s curriculum score higher on standardized content-knowledge tests than students taught exclusively with Dewey\'s methods' },
+      { label: 'B', text: 'A longitudinal study finding that students who first receive broad content instruction and subsequently shift to inquiry-based learning develop stronger critical-thinking and application skills than students who receive either type of instruction exclusively' },
+      { label: 'C', text: 'Evidence that working-class students in content-focused schools achieve higher civic participation rates than those in process-focused schools, supporting Hirsch\'s equity argument' },
+      { label: 'D', text: 'A historical analysis showing that the most successful national education systems in the 20th century emphasized content transmission from primary through university level' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The author\'s specific claim is that the two approaches are "complementary phases" — content first, then inquiry builds on that foundation. A longitudinal study showing that students who receive content-then-inquiry outperform students who receive either exclusively is direct empirical support for this phased complementarity model. It shows the combination is not merely additive but produces a synergistic outcome — exactly what "complementary" means in the author\'s argument.',
+    wrongAnswerExplanations: {
+      A: 'This finding would support Hirsch\'s model over Dewey\'s on one specific metric (content-knowledge tests), but it does not support the claim that the two are complementary. If anything, it supports the superiority of one approach over the other — the opposite of a complementarity argument.',
+      C: 'This finding supports Hirsch\'s equity argument for working-class students, but it only supports the content-focused portion of the author\'s position. It does not show that combining content instruction with inquiry produces better outcomes than either alone — which is the complementarity claim.',
+      D: 'Historical analysis of successful content-transmission systems would support the Hirschian component of the argument but not the complementarity claim. A historical analysis of systems using only content transmission cannot demonstrate that adding inquiry would improve outcomes.',
+    },
+    teachingPoint: 'Strengthen questions: identify the SPECIFIC claim to be strengthened (here: "the two approaches are complementary PHASES that together outperform either alone"), then find evidence that directly supports that specific claim. Wrong answers often support only one component of a synthesis argument rather than the synthesis itself. B is the only option that tests both approaches together and finds synergistic benefit.',
+    relatedTopics: ['Strengthen arguments', 'Complementarity claim', 'Empirical support', 'CARS reasoning questions', 'Longitudinal study design'],
+  },
+
+  // ── Passage 8: Authorial Intention and Literary Interpretation (Q038–Q042) ─
+  {
+    id: 'mcat-qb-cars-038',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Literary Criticism',
+    contentCategory: 'Reasoning Beyond the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `The question of who controls the meaning of a literary text has been contested with unusual ferocity in the twentieth century. For E.D. Hirsch, the answer was unambiguous: meaning is identical with the author's willed verbal meaning — what the author consciously intended to communicate through a specific arrangement of words. Without authorial intention as the determinate horizon of interpretation, Hirsch argued, textual meaning becomes unstable, a shifting surface responsive to every reader's projection. The consequence, he warned, is interpretive relativism: if the text means whatever any reader makes of it, then literary interpretation loses its claim to knowledge and collapses into mere opinion.
+
+Roland Barthes offered a directly contrary position in his celebrated essay "The Death of the Author." For Barthes, the authority of the author is an ideological construct — the fiction of a unified originary consciousness that gives a text its "true" meaning. But writing, once released into the public sphere, activates cultural codes that precede and exceed any individual author's intentions. Meaning is not deposited in a text by its author; it is produced by readers drawing on shared signifying systems. Barthes's "death" of the author is thus simultaneously a "birth of the reader": interpretive activity is legitimate, creative, and plural rather than derivative and constrained.
+
+The challenge for any theory that follows Barthes's emancipatory gesture is accounting for interpretive legitimacy: if the author's intention is irrelevant, what prevents entirely arbitrary readings? One cannot simply invoke reader response without explaining why some responses seem clearly wrong — why reading Kafka's Metamorphosis as a travel narrative, or Swift's A Modest Proposal as a sincere cookery pamphlet, is an interpretive failure and not merely an alternative reading. Constraints on interpretation must come from somewhere.
+
+The most defensible position locates meaning in the interaction between text, author-context, and reader, with authorial intention functioning as one constraint among several — supplemented by generic conventions, historical context, intertextual relations, and the coherence demands of the text itself. On this account, interpretation is neither an act of archaeological recovery (the critic excavates the author's buried intention) nor unconstrained creation (the reader invents the text anew) but a disciplined negotiation of multiple stabilizing factors.`,
+    question: 'What would Barthes most likely say about a literary student who cites the author\'s private diary to support their reading of a poem?',
+    choices: [
+      { label: 'A', text: 'The diary provides authoritative evidence of the poem\'s meaning, and the student is methodologically correct to consult it' },
+      { label: 'B', text: 'The student has made an error by appealing to authorial intent; once published, a text enters the sphere of cultural codes, and the author\'s privately stated intentions are irrelevant to the text\'s meaning' },
+      { label: 'C', text: 'The approach is valid only if the diary was written contemporaneously with the poem, reflecting the author\'s conscious design at the moment of composition' },
+      { label: 'D', text: 'The approach is valid if the diary corroborates evidence already present in the text, but invalid if it introduces meaning not textually supported' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. Barthes\'s position is that the author\'s intention — wherever documented — is irrelevant to meaning once the text enters public circulation. The "death of the author" is precisely the claim that meaning is not deposited by the author but produced by readers through cultural codes. Consulting the author\'s diary is an intentionalist methodology that Barthes explicitly rejects: it treats the author as the privileged authority on textual meaning. For Barthes, this is an ideological error that suppresses the reader\'s role as meaning-producer.',
+    wrongAnswerExplanations: {
+      A: 'This is the Hirschian position (paragraph 1), not Barthes\'s. Hirsch would say the diary provides evidence of the author\'s willed verbal meaning. Barthes would say the opposite.',
+      C: 'Barthes does not qualify his position based on the timing of the biographical document. His claim is categorical: authorial intention is irrelevant regardless of when it was expressed. Adding a contemporaneity condition contradicts the logic of Barthes\'s argument.',
+      D: 'This describes a text-immanent approach that uses biographical evidence only to corroborate what the text already indicates. This is closer to the author\'s own synthesis position (paragraph 4: authorial intention as "one constraint among several") than to Barthes\'s position, which categorically excludes authorial intent as a constraint.',
+    },
+    teachingPoint: 'Attribution questions (what would X say?): match the answer to the specific position of the named thinker in the passage. Barthes = death of the author = authorial intent irrelevant = consulting diary is wrong. Hirsch = intent is everything = consulting diary is right. The author = intent is one constraint among several = consulting diary is one valid input but not decisive. Avoid conflating the author\'s own synthesis position with the individual thinkers\' positions.',
+    relatedTopics: ['Attribution question', 'Barthes vs Hirsch', 'Author\'s intention', 'Reader-response theory', 'CARS viewpoint questions'],
+  },
+  {
+    id: 'mcat-qb-cars-039',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Literary Criticism',
+    contentCategory: 'Reasoning Within the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The question of who controls the meaning of a literary text has been contested with unusual ferocity in the twentieth century. For E.D. Hirsch, the answer was unambiguous: meaning is identical with the author's willed verbal meaning — what the author consciously intended to communicate through a specific arrangement of words. Without authorial intention as the determinate horizon of interpretation, Hirsch argued, textual meaning becomes unstable, a shifting surface responsive to every reader's projection. The consequence, he warned, is interpretive relativism: if the text means whatever any reader makes of it, then literary interpretation loses its claim to knowledge and collapses into mere opinion.
+
+Roland Barthes offered a directly contrary position in his celebrated essay "The Death of the Author." For Barthes, the authority of the author is an ideological construct — the fiction of a unified originary consciousness that gives a text its "true" meaning. But writing, once released into the public sphere, activates cultural codes that precede and exceed any individual author's intentions. Meaning is not deposited in a text by its author; it is produced by readers drawing on shared signifying systems. Barthes's "death" of the author is thus simultaneously a "birth of the reader": interpretive activity is legitimate, creative, and plural rather than derivative and constrained.
+
+The challenge for any theory that follows Barthes's emancipatory gesture is accounting for interpretive legitimacy: if the author's intention is irrelevant, what prevents entirely arbitrary readings? One cannot simply invoke reader response without explaining why some responses seem clearly wrong — why reading Kafka's Metamorphosis as a travel narrative, or Swift's A Modest Proposal as a sincere cookery pamphlet, is an interpretive failure and not merely an alternative reading. Constraints on interpretation must come from somewhere.
+
+The most defensible position locates meaning in the interaction between text, author-context, and reader, with authorial intention functioning as one constraint among several — supplemented by generic conventions, historical context, intertextual relations, and the coherence demands of the text itself. On this account, interpretation is neither an act of archaeological recovery (the critic excavates the author's buried intention) nor unconstrained creation (the reader invents the text anew) but a disciplined negotiation of multiple stabilizing factors.`,
+    question: 'The primary function of the third paragraph is to:',
+    choices: [
+      { label: 'A', text: 'Demonstrate through examples that reader-response theory always produces obviously incorrect interpretations' },
+      { label: 'B', text: 'Identify the theoretical problem that Barthes\'s position must solve — namely, how to distinguish legitimate from arbitrary interpretations — thereby motivating the need for interpretive constraints articulated in paragraph 4' },
+      { label: 'C', text: 'Argue that Hirsch\'s intentionalist position is ultimately more defensible than Barthes\'s because it avoids the problem of relativism' },
+      { label: 'D', text: 'Provide empirical evidence that readers who ignore authorial intention make more interpretive errors on standardized literary assessments' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The third paragraph poses a challenge to Barthes\'s view: if the author\'s intent is irrelevant, what prevents arbitrary readings? The paragraph uses the Kafka and Swift examples not to show that reader-response always fails, but to establish that some readings are clearly wrong, which means constraints must exist somewhere. This creates the logical need for the answer given in paragraph 4: multiple constraints (genre, context, text coherence) that stabilize interpretation without resorting to authorial intent as the sole anchor.',
+    wrongAnswerExplanations: {
+      A: 'The paragraph does not say reader-response ALWAYS produces incorrect interpretations. It says a specific challenge needs answering: how do we rule out manifestly wrong readings? The Kafka and Swift examples illustrate that some readings are wrong, but not that all reader-responses are. The word "always" overstates the claim.',
+      C: 'The paragraph raises a problem for Barthes but does not conclude that Hirsch is therefore correct. The author never endorses Hirsch\'s intentionalism as the solution — paragraph 4 proposes a multi-constraint approach, not a return to Hirsch.',
+      D: 'There is no empirical evidence or research cited anywhere in the passage. The mode of argument is philosophical and conceptual throughout.',
+    },
+    teachingPoint: 'Function of a problem-raising paragraph: when an author raises a challenge to a previously described view (here: Barthes), the function is to create the logical space for a third option. The challenge is not itself the answer — it sets up the answer in the next paragraph. Signal phrase: "The challenge for any theory that follows Barthes\'s... is accounting for interpretive legitimacy."',
+    relatedTopics: ['Paragraph function', 'Problem-raising paragraph', 'Setup for synthesis', 'CARS structure', 'Logical transitions'],
+  },
+  {
+    id: 'mcat-qb-cars-040',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Literary Criticism',
+    contentCategory: 'Foundations of Comprehension',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `The question of who controls the meaning of a literary text has been contested with unusual ferocity in the twentieth century. For E.D. Hirsch, the answer was unambiguous: meaning is identical with the author's willed verbal meaning — what the author consciously intended to communicate through a specific arrangement of words. Without authorial intention as the determinate horizon of interpretation, Hirsch argued, textual meaning becomes unstable, a shifting surface responsive to every reader's projection. The consequence, he warned, is interpretive relativism: if the text means whatever any reader makes of it, then literary interpretation loses its claim to knowledge and collapses into mere opinion.
+
+Roland Barthes offered a directly contrary position in his celebrated essay "The Death of the Author." For Barthes, the authority of the author is an ideological construct — the fiction of a unified originary consciousness that gives a text its "true" meaning. But writing, once released into the public sphere, activates cultural codes that precede and exceed any individual author's intentions. Meaning is not deposited in a text by its author; it is produced by readers drawing on shared signifying systems. Barthes's "death" of the author is thus simultaneously a "birth of the reader": interpretive activity is legitimate, creative, and plural rather than derivative and constrained.
+
+The challenge for any theory that follows Barthes's emancipatory gesture is accounting for interpretive legitimacy: if the author's intention is irrelevant, what prevents entirely arbitrary readings? One cannot simply invoke reader response without explaining why some responses seem clearly wrong — why reading Kafka's Metamorphosis as a travel narrative, or Swift's A Modest Proposal as a sincere cookery pamphlet, is an interpretive failure and not merely an alternative reading. Constraints on interpretation must come from somewhere.
+
+The most defensible position locates meaning in the interaction between text, author-context, and reader, with authorial intention functioning as one constraint among several — supplemented by generic conventions, historical context, intertextual relations, and the coherence demands of the text itself. On this account, interpretation is neither an act of archaeological recovery (the critic excavates the author's buried intention) nor unconstrained creation (the reader invents the text anew) but a disciplined negotiation of multiple stabilizing factors.`,
+    question: 'The author\'s position on textual interpretation is best characterized as:',
+    choices: [
+      { label: 'A', text: 'A strong defense of Hirsch\'s intentionalism: the author\'s willed meaning is the only legitimate basis for interpretation' },
+      { label: 'B', text: 'A full endorsement of Barthes: authorial intention is an ideological illusion and readers are the sole producers of meaning' },
+      { label: 'C', text: 'A moderate synthesis in which authorial intention is one legitimate constraint among several, alongside genre conventions, historical context, and textual coherence' },
+      { label: 'D', text: 'A purely formalist position: only structural features of the text itself, independent of author or reader, determine meaning' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. Paragraph 4 states the author\'s position directly: "authorial intention functioning as one constraint among several — supplemented by generic conventions, historical context, intertextual relations, and the coherence demands of the text itself." This is explicitly a synthesis: neither Hirsch\'s exclusive intentionalism nor Barthes\'s exclusion of authorial intent, but a multi-factor approach where intention is included but not dominant.',
+    wrongAnswerExplanations: {
+      A: 'The author explicitly rejects Hirsch\'s exclusive reliance on authorial intention. Paragraph 4 says interpretation is "neither an act of archaeological recovery" — archaeological recovery is a metaphor for excavating the author\'s buried intention. This directly contradicts a strong Hirschian position.',
+      B: 'The author explicitly rejects Barthes\'s exclusion of authorial intent. Paragraph 3 raises the problem with reader-response: it cannot explain why some readings are wrong. Paragraph 4 includes authorial intention as "one constraint among several," not zero.',
+      D: 'Formalism (exclusive focus on textual structures, bracketing author and reader) is not described in the passage as the author\'s position. The author explicitly includes author-context and reader alongside the text in the meaning-making interaction.',
+    },
+    teachingPoint: 'Author\'s position questions: look for the paragraph where the author states their own positive view (not just describing others). Here, paragraph 4 begins "The most defensible position holds..." — this is the author\'s own position, clearly stated. The structure: present view A (Hirsch), present view B (Barthes), raise a problem with B, then state synthesis. Author = synthesis = C.',
+    relatedTopics: ['Author\'s position', 'Synthesis identification', 'Intentionalism vs reader-response', 'Multi-constraint interpretation', 'CARS author\'s view'],
+  },
+  {
+    id: 'mcat-qb-cars-041',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Literary Criticism',
+    contentCategory: 'Foundations of Comprehension',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The question of who controls the meaning of a literary text has been contested with unusual ferocity in the twentieth century. For E.D. Hirsch, the answer was unambiguous: meaning is identical with the author's willed verbal meaning — what the author consciously intended to communicate through a specific arrangement of words. Without authorial intention as the determinate horizon of interpretation, Hirsch argued, textual meaning becomes unstable, a shifting surface responsive to every reader's projection. The consequence, he warned, is interpretive relativism: if the text means whatever any reader makes of it, then literary interpretation loses its claim to knowledge and collapses into mere opinion.
+
+Roland Barthes offered a directly contrary position in his celebrated essay "The Death of the Author." For Barthes, the authority of the author is an ideological construct — the fiction of a unified originary consciousness that gives a text its "true" meaning. But writing, once released into the public sphere, activates cultural codes that precede and exceed any individual author's intentions. Meaning is not deposited in a text by its author; it is produced by readers drawing on shared signifying systems. Barthes's "death" of the author is thus simultaneously a "birth of the reader": interpretive activity is legitimate, creative, and plural rather than derivative and constrained.
+
+The challenge for any theory that follows Barthes's emancipatory gesture is accounting for interpretive legitimacy: if the author's intention is irrelevant, what prevents entirely arbitrary readings? One cannot simply invoke reader response without explaining why some responses seem clearly wrong — why reading Kafka's Metamorphosis as a travel narrative, or Swift's A Modest Proposal as a sincere cookery pamphlet, is an interpretive failure and not merely an alternative reading. Constraints on interpretation must come from somewhere.
+
+The most defensible position locates meaning in the interaction between text, author-context, and reader, with authorial intention functioning as one constraint among several — supplemented by generic conventions, historical context, intertextual relations, and the coherence demands of the text itself. On this account, interpretation is neither an act of archaeological recovery (the critic excavates the author's buried intention) nor unconstrained creation (the reader invents the text anew) but a disciplined negotiation of multiple stabilizing factors.`,
+    question: 'As used in paragraph 1, the word "determinate" most nearly means:',
+    choices: [
+      { label: 'A', text: 'Authoritative and influential in shaping critical opinion' },
+      { label: 'B', text: 'Fixed and bounded — setting a definite limit on the range of valid interpretations' },
+      { label: 'C', text: 'Democratic, ensuring all readers have equal access to the text\'s meaning' },
+      { label: 'D', text: 'Progressive, representing the cumulative development of textual meaning over time' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. In context, Hirsch argues that without authorial intention as the "determinate horizon of interpretation," meaning becomes "unstable." "Determinate" here means fixed and bounded — it defines a determinate (definite, circumscribed) range of valid interpretations by anchoring meaning to the author\'s intent. The opposite of determinate in this context is indeterminate: meanings that are not fixed, not bounded, open to any reading. The word is used technically in literary theory to mean "having a definite, fixed value" (contrasted with indeterminate = open-ended).',
+    wrongAnswerExplanations: {
+      A: '"Authoritative and influential in shaping critical opinion" captures something about authority but misses the key function in the sentence: setting a limit on valid meanings. Hirsch\'s point is that authorial intent CONSTRAINS (bounds) interpretation, not merely that it is influential.',
+      C: '"Democratic" and equal access are not concepts discussed in this passage. The sentence is about stability and fixity of meaning, not accessibility or equality.',
+      D: '"Progressive" and "cumulative development over time" describe an evolving or developmental process, which is the opposite of "determinate" (fixed). Determinate meaning in Hirsch\'s sense is stable and unchanging — the author\'s intent is fixed at the time of composition.',
+    },
+    teachingPoint: 'Vocabulary in context: "determinate" = having a fixed, bounded, definite value (contrasted with "indeterminate" = open, shifting). Context clue: "Without authorial intention as the determinate horizon of interpretation, textual meaning becomes unstable" — the word "unstable" is the antonym of what "determinate" provides (stability, fixity). Use the contrast structure to infer word meaning.',
+    relatedTopics: ['Vocabulary in context', 'Determinate vs indeterminate', 'Context clues', 'Hirsch intentionalism', 'CARS vocabulary questions'],
+  },
+  {
+    id: 'mcat-qb-cars-042',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Literary Criticism',
+    contentCategory: 'Reasoning Beyond the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `The question of who controls the meaning of a literary text has been contested with unusual ferocity in the twentieth century. For E.D. Hirsch, the answer was unambiguous: meaning is identical with the author's willed verbal meaning — what the author consciously intended to communicate through a specific arrangement of words. Without authorial intention as the determinate horizon of interpretation, Hirsch argued, textual meaning becomes unstable, a shifting surface responsive to every reader's projection. The consequence, he warned, is interpretive relativism: if the text means whatever any reader makes of it, then literary interpretation loses its claim to knowledge and collapses into mere opinion.
+
+Roland Barthes offered a directly contrary position in his celebrated essay "The Death of the Author." For Barthes, the authority of the author is an ideological construct — the fiction of a unified originary consciousness that gives a text its "true" meaning. But writing, once released into the public sphere, activates cultural codes that precede and exceed any individual author's intentions. Meaning is not deposited in a text by its author; it is produced by readers drawing on shared signifying systems. Barthes's "death" of the author is thus simultaneously a "birth of the reader": interpretive activity is legitimate, creative, and plural rather than derivative and constrained.
+
+The challenge for any theory that follows Barthes's emancipatory gesture is accounting for interpretive legitimacy: if the author's intention is irrelevant, what prevents entirely arbitrary readings? One cannot simply invoke reader response without explaining why some responses seem clearly wrong — why reading Kafka's Metamorphosis as a travel narrative, or Swift's A Modest Proposal as a sincere cookery pamphlet, is an interpretive failure and not merely an alternative reading. Constraints on interpretation must come from somewhere.
+
+The most defensible position locates meaning in the interaction between text, author-context, and reader, with authorial intention functioning as one constraint among several — supplemented by generic conventions, historical context, intertextual relations, and the coherence demands of the text itself. On this account, interpretation is neither an act of archaeological recovery (the critic excavates the author's buried intention) nor unconstrained creation (the reader invents the text anew) but a disciplined negotiation of multiple stabilizing factors.`,
+    question: 'Which scenario would most directly undermine Hirsch\'s position as presented in paragraph 1?',
+    choices: [
+      { label: 'A', text: 'Two readers who disagree about a poem\'s authorial intent arrive at conflicting interpretations, one of which is clearly more supported by the text' },
+      { label: 'B', text: 'Research shows that readers with access to biographical context about an author produce more nuanced analyses than those without' },
+      { label: 'C', text: 'Two careful readers who have studied the same author\'s letters and interviews, and who agree on what the author intended, nevertheless produce mutually contradictory interpretations of a specific passage' },
+      { label: 'D', text: 'A survey finds that most readers prefer interpretations grounded in textual evidence over those based on the author\'s stated intentions' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. Hirsch\'s central claim is that authorial intention provides a "determinate horizon" — it fixes and stabilizes meaning, preventing relativism. If two readers who agree on what the author intended still arrive at contradictory interpretations, this shows that even knowing the intention does not stabilize meaning. It directly falsifies Hirsch\'s core premise: that shared authorial intent produces shared, determinate meaning. The agreement on intent but disagreement on interpretation means that intent is insufficient as a stabilizer of meaning.',
+    wrongAnswerExplanations: {
+      A: 'This scenario shows that disagreement about intent leads to interpretive conflict and that textual evidence can adjudicate between interpretations. This actually supports the idea that constraints (textual evidence) matter, but it does not directly test whether agreement on intent stabilizes meaning — which is Hirsch\'s specific claim.',
+      B: 'This finding supports Hirsch\'s position rather than undermining it — if biographical/intentional context produces more nuanced readings, this suggests intent is useful and relevant to interpretation. This would strengthen, not weaken, Hirsch.',
+      D: 'Reader preference for text-based over intent-based interpretation is a survey of reader preference, not a test of whether intent-based interpretation produces more stable/determinate readings. Hirsch\'s claim is about what interpretation should be grounded in for epistemological stability, not about what readers prefer.',
+    },
+    teachingPoint: 'Undermine questions: identify the core CLAIM of the position (Hirsch: "agreed-upon authorial intent produces determinate, stable meaning") then find an option that shows this claim is false. The most direct attack tests the claim at its core. C directly falsifies: same intent → contradictory meanings. This shows that intent is INSUFFICIENT to determine meaning, which is Hirsch\'s central thesis. A, B, D test adjacent but not central claims.',
+    relatedTopics: ['Weaken arguments', 'Hirsch intentionalism', 'Determinate meaning claim', 'Sufficient vs necessary conditions', 'CARS undermine questions'],
+  },
 ]
