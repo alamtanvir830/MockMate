@@ -1664,4 +1664,368 @@ To replicate and extend these findings, researchers designed a study in which pa
     teachingPoint: 'Stress hormones and memory: Norepinephrine → activates amygdala → enhances emotional/sensory detail encoding (vivid sensory memories). Cortisol (moderate) → enhances consolidation. Cortisol (extreme/chronic) → impairs hippocampus → disrupts contextual, sequential, episodic consolidation. Result: amygdala-dependent emotional memory enhanced + hippocampus-dependent episodic memory fragmented = classic trauma memory profile. This dissociation underlies PTSD intrusive symptoms (vivid sensory fragments) vs. narrative incoherence (cannot sequence the event).',
     relatedTopics: ['Amygdala and emotional memory', 'Hippocampus and episodic memory', 'Cortisol and memory', 'Norepinephrine stress response', 'Trauma and PTSD memory'],
   },
+
+  // ── Passage 8: SES Health Gradient (Q053–Q057) ──────────────────────────────
+  {
+    id: 'mcat-qb-ps-053',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '9A',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 3',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Research on the social determinants of health consistently documents a graded relationship between socioeconomic status (SES) and health outcomes — the "SES health gradient." Higher SES is associated with lower rates of cardiovascular disease, infection, and premature mortality, and this gradient persists even among individuals well above the poverty threshold. Two principal models compete to explain this finding.
+
+The psychosocial pathway model posits that chronic awareness of relative social position generates ongoing psychological stress. Comparative rank in a social hierarchy activates neuroendocrine stress responses — elevated cortisol, heightened sympathetic tone — that, sustained over years, damage cardiovascular and immune systems. This model predicts that perceived inequality, not absolute income, drives health disparities: a modestly wealthy person in a highly unequal society may experience worse health than a person of similar absolute income in a more egalitarian society.
+
+The material and structural model holds that SES determines access to health-promoting resources: nutritious food, safe housing, stable employment, healthcare, and time for health-maintaining behaviors. On this view, absolute deprivation drives health differences, and reducing material inequalities — rather than addressing perceived inequality — is the appropriate policy response.
+
+Researchers studying a cohort of 80,000 adults in a single metropolitan area stratified participants into income quintiles and tracked mortality over 10 years. The relative risk of all-cause mortality compared to the highest quintile was then calculated for each lower quintile.`,
+    tableData: {
+      headers: ['SES Quintile', 'Annual Mortality Rate (per 100,000)', 'Relative Risk vs. Q5'],
+      rows: [
+        ['Q1 (lowest)', '850', '2.93'],
+        ['Q2', '620', '2.14'],
+        ['Q3', '480', '1.66'],
+        ['Q4', '380', '1.31'],
+        ['Q5 (highest)', '290', '1.00 (reference)'],
+      ],
+      caption: 'Table 1. Mortality by SES quintile, metropolitan cohort study (n = 80,000, 10-year follow-up)',
+    },
+    question: 'Which pattern in Table 1 most directly supports the "gradient" characterization of the SES-health relationship, as opposed to a threshold model?',
+    choices: [
+      { label: 'A', text: 'The large absolute difference between Q1 (850/100,000) and Q5 (290/100,000), which demonstrates that poverty is hazardous to health' },
+      { label: 'B', text: 'The graded, stepwise decrease in mortality across ALL five quintiles — including between Q4 (380) and Q5 (290), both above a poverty threshold — suggesting health improves continuously with rising SES rather than only up to a minimum threshold' },
+      { label: 'C', text: 'The relative risks greater than 1.00 in Q1–Q4, which shows that all groups below the highest quintile face excess mortality risk' },
+      { label: 'D', text: 'The high absolute mortality rate in Q1, which indicates that the lowest socioeconomic group bears the greatest health burden in society' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. A gradient model predicts continuous, graded improvement in health across ALL levels of SES — including among those above poverty. A threshold model would predict that health differences are concentrated around the poverty line, with no meaningful differences among higher SES groups. The key evidence for the gradient is the Q4→Q5 difference (380 vs. 290, relative risk 1.31): even the second-highest quintile (Q4) has substantially higher mortality than Q5. This above-poverty gradient cannot be explained by material deprivation alone and directly supports the gradient (not threshold) characterization.',
+    wrongAnswerExplanations: {
+      A: 'The Q1 vs. Q5 absolute difference is large and important, but it is consistent with BOTH a gradient AND a threshold model (both would predict the worst health in Q1). It does not distinguish between models because a threshold model would also predict Q1 > Q5.',
+      C: 'All groups having relative risks > 1.00 simply means everyone below Q5 has higher mortality than Q5 — this is consistent with both gradient and threshold models. The key question is whether differences exist continuously or only at the threshold. All choices C shows is that Q5 has the best outcomes, not whether the pattern is a gradient.',
+      D: 'Q1 bearing the greatest burden is again consistent with both models. The specific feature that distinguishes the gradient from the threshold model is the presence of meaningful health differences ABOVE the poverty threshold (Q3 vs. Q4 vs. Q5), not just the extremes.',
+    },
+    teachingPoint: 'Gradient vs. threshold model: gradient = continuous health improvement at all SES levels (above poverty matters too). Threshold = health only improves up to some minimum income; above that, no further effect. KEY EVIDENCE for gradient: differences between Q3, Q4, Q5 (all above poverty). Threshold model WOULD predict Q4 ≈ Q5 (both above threshold). The Q4→Q5 difference (RR = 1.31) directly refutes the threshold model and supports the gradient.',
+    relatedTopics: ['SES health gradient', 'Gradient vs threshold model', 'Relative risk interpretation', 'Social determinants of health', 'Table interpretation'],
+  },
+  {
+    id: 'mcat-qb-ps-054',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '9A',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Research on the social determinants of health consistently documents a graded relationship between socioeconomic status (SES) and health outcomes — the "SES health gradient." Higher SES is associated with lower rates of cardiovascular disease, infection, and premature mortality, and this gradient persists even among individuals well above the poverty threshold. Two principal models compete to explain this finding.
+
+The psychosocial pathway model posits that chronic awareness of relative social position generates ongoing psychological stress. Comparative rank in a social hierarchy activates neuroendocrine stress responses — elevated cortisol, heightened sympathetic tone — that, sustained over years, damage cardiovascular and immune systems. This model predicts that perceived inequality, not absolute income, drives health disparities: a modestly wealthy person in a highly unequal society may experience worse health than a person of similar absolute income in a more egalitarian society.
+
+The material and structural model holds that SES determines access to health-promoting resources: nutritious food, safe housing, stable employment, healthcare, and time for health-maintaining behaviors. On this view, absolute deprivation drives health differences, and reducing material inequalities — rather than addressing perceived inequality — is the appropriate policy response.
+
+Researchers studying a cohort of 80,000 adults in a single metropolitan area stratified participants into income quintiles and tracked mortality over 10 years. The relative risk of all-cause mortality compared to the highest quintile was then calculated for each lower quintile.`,
+    tableData: {
+      headers: ['SES Quintile', 'Annual Mortality Rate (per 100,000)', 'Relative Risk vs. Q5'],
+      rows: [
+        ['Q1 (lowest)', '850', '2.93'],
+        ['Q2', '620', '2.14'],
+        ['Q3', '480', '1.66'],
+        ['Q4', '380', '1.31'],
+        ['Q5 (highest)', '290', '1.00 (reference)'],
+      ],
+      caption: 'Table 1. Mortality by SES quintile, metropolitan cohort study (n = 80,000, 10-year follow-up)',
+    },
+    question: 'Which additional finding would most strongly support the psychosocial pathway model over the material/structural model?',
+    choices: [
+      { label: 'A', text: 'A study showing that among individuals with the same absolute income, those who live in regions with greater income inequality have higher mortality rates than those who live in more egalitarian regions with the same absolute income' },
+      { label: 'B', text: 'A study showing that Q1 participants have lower rates of health insurance coverage, fewer fruit and vegetable servings per day, and more exposure to environmental toxins than Q5 participants' },
+      { label: 'C', text: 'A study showing that providing free healthcare to Q1 and Q2 participants reduces their mortality rates to Q5 levels within 5 years' },
+      { label: 'D', text: 'A study showing that all five quintiles have similar rates of health insurance coverage and similar caloric intake but that Q1–Q4 participants report greater perceived financial stress than Q5' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. The psychosocial model specifically predicts that PERCEIVED inequality and relative standing — not material deprivation — drive health differences. Choice D creates conditions where material access is equalized (same insurance, same caloric intake) but psychosocial stress differences remain (Q1–Q4 report greater perceived financial stress). If health disparities persist under these conditions, material factors cannot explain the gradient — pointing to psychosocial pathways. This is a direct test of the psychosocial model\'s prediction: perceived stress → worse health, independent of material conditions.',
+    wrongAnswerExplanations: {
+      A: 'This finding supports the psychosocial model but is weaker than D because it compares people in different regions (different material conditions may covary with inequality). D is a stronger test because it directly controls for material factors within the same population. A is confounded by other regional differences.',
+      B: 'This finding SUPPORTS the material/structural model: lower insurance, worse diet, more toxins — all material factors — differ by SES. This would suggest that material deprivation explains the gradient, not psychosocial factors.',
+      C: 'If free healthcare for Q1 and Q2 equalizes mortality, this strongly supports the material/structural model (healthcare access = material resource). This evidence supports the OPPOSITE model from what the question asks.',
+    },
+    teachingPoint: 'Differentiating psychosocial vs. material models: Psychosocial model unique prediction = perceived RELATIVE position matters, independent of absolute material conditions. Material model = absolute access to resources matters. Best test: equalize material conditions (hold constant) then test whether PERCEIVED inequality still predicts health differences. D does this directly: same insurance, same calories (material), but higher perceived stress → health gradient = psychosocial effect.',
+    relatedTopics: ['Psychosocial vs material health model', 'Relative vs absolute income', 'Perceived inequality and health', 'Testing competing explanations', 'SES health mechanisms'],
+  },
+  {
+    id: 'mcat-qb-ps-055',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '9A',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 4',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Research on the social determinants of health consistently documents a graded relationship between socioeconomic status (SES) and health outcomes — the "SES health gradient." Higher SES is associated with lower rates of cardiovascular disease, infection, and premature mortality, and this gradient persists even among individuals well above the poverty threshold. Two principal models compete to explain this finding.
+
+The psychosocial pathway model posits that chronic awareness of relative social position generates ongoing psychological stress. Comparative rank in a social hierarchy activates neuroendocrine stress responses — elevated cortisol, heightened sympathetic tone — that, sustained over years, damage cardiovascular and immune systems. This model predicts that perceived inequality, not absolute income, drives health disparities: a modestly wealthy person in a highly unequal society may experience worse health than a person of similar absolute income in a more egalitarian society.
+
+The material and structural model holds that SES determines access to health-promoting resources: nutritious food, safe housing, stable employment, healthcare, and time for health-maintaining behaviors. On this view, absolute deprivation drives health differences, and reducing material inequalities — rather than addressing perceived inequality — is the appropriate policy response.
+
+Researchers studying a cohort of 80,000 adults in a single metropolitan area stratified participants into income quintiles and tracked mortality over 10 years. The relative risk of all-cause mortality compared to the highest quintile was then calculated for each lower quintile.`,
+    tableData: {
+      headers: ['SES Quintile', 'Annual Mortality Rate (per 100,000)', 'Relative Risk vs. Q5'],
+      rows: [
+        ['Q1 (lowest)', '850', '2.93'],
+        ['Q2', '620', '2.14'],
+        ['Q3', '480', '1.66'],
+        ['Q4', '380', '1.31'],
+        ['Q5 (highest)', '290', '1.00 (reference)'],
+      ],
+      caption: 'Table 1. Mortality by SES quintile, metropolitan cohort study (n = 80,000, 10-year follow-up)',
+    },
+    question: 'A critic argues that the cohort study results could reflect reverse causation: poor health causes lower SES rather than lower SES causing poor health. Which study design would MOST directly control for this alternative explanation?',
+    choices: [
+      { label: 'A', text: 'A randomized controlled trial assigning participants to different SES conditions and measuring mortality over 10 years' },
+      { label: 'B', text: 'A cross-sectional survey measuring current SES and current health status in a large national sample' },
+      { label: 'C', text: 'A prospective cohort study measuring SES in childhood or early adulthood — before the development of adult chronic disease — then following participants longitudinally to measure adult health outcomes decades later' },
+      { label: 'D', text: 'A case-control study comparing the SES of individuals who died before age 65 (cases) with the SES of age-matched survivors (controls)' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. Reverse causation argues: poor health → reduced work capacity → lower income → lower SES measured at the same time. To rule this out, you need to establish the temporal sequence — SES must precede the health outcome. Measuring SES in CHILDHOOD or EARLY ADULTHOOD (before adult chronic disease develops) and then following participants longitudinally ensures that SES exposure precedes the health outcome by decades. If childhood SES predicts adult mortality after controlling for childhood health, reverse causation cannot explain the gradient.',
+    wrongAnswerExplanations: {
+      A: 'Randomly assigning people to SES levels is ethically impossible and practically infeasible. You cannot randomly make people wealthy or poor. Even if possible, it would not specifically address reverse causation — it would establish causation but is not the most feasible or ethical design for this question.',
+      B: 'A cross-sectional survey measures SES and health at the SAME TIME, which makes reverse causation impossible to rule out. If health and SES are measured simultaneously, you cannot determine which came first — this design is most vulnerable to reverse causation, not protective against it.',
+      D: 'A case-control study measures SES at the TIME OF THE STUDY (retrospectively or currently), after the health outcome. If poor health reduced SES before death, the cases would show lower SES than controls regardless of whether SES caused the health disparity. This design does not cleanly establish temporal sequence and remains vulnerable to reverse causation.',
+    },
+    teachingPoint: 'Reverse causation control: to rule out "Y causes X" when studying "X causes Y," establish that X preceded Y temporally. For SES-health: measure SES BEFORE health outcomes develop. Prospective cohort with childhood/early adult SES measurement = strongest design against reverse causation. Cross-sectional = worst (simultaneous measurement). Case-control with retrospective SES = intermediate. The key principle: temporal precedence is necessary (but not sufficient) for causal inference.',
+    relatedTopics: ['Reverse causation', 'Prospective cohort design', 'Temporal precedence', 'Confounds in SES research', 'Epidemiological study designs'],
+  },
+  {
+    id: 'mcat-qb-ps-056',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '9A',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `Research on the social determinants of health consistently documents a graded relationship between socioeconomic status (SES) and health outcomes — the "SES health gradient." Higher SES is associated with lower rates of cardiovascular disease, infection, and premature mortality, and this gradient persists even among individuals well above the poverty threshold. Two principal models compete to explain this finding.
+
+The psychosocial pathway model posits that chronic awareness of relative social position generates ongoing psychological stress. Comparative rank in a social hierarchy activates neuroendocrine stress responses — elevated cortisol, heightened sympathetic tone — that, sustained over years, damage cardiovascular and immune systems. This model predicts that perceived inequality, not absolute income, drives health disparities: a modestly wealthy person in a highly unequal society may experience worse health than a person of similar absolute income in a more egalitarian society.
+
+The material and structural model holds that SES determines access to health-promoting resources: nutritious food, safe housing, stable employment, healthcare, and time for health-maintaining behaviors. On this view, absolute deprivation drives health differences, and reducing material inequalities — rather than addressing perceived inequality — is the appropriate policy response.
+
+Researchers studying a cohort of 80,000 adults in a single metropolitan area stratified participants into income quintiles and tracked mortality over 10 years. The relative risk of all-cause mortality compared to the highest quintile was then calculated for each lower quintile.`,
+    tableData: {
+      headers: ['SES Quintile', 'Annual Mortality Rate (per 100,000)', 'Relative Risk vs. Q5'],
+      rows: [
+        ['Q1 (lowest)', '850', '2.93'],
+        ['Q2', '620', '2.14'],
+        ['Q3', '480', '1.66'],
+        ['Q4', '380', '1.31'],
+        ['Q5 (highest)', '290', '1.00 (reference)'],
+      ],
+      caption: 'Table 1. Mortality by SES quintile, metropolitan cohort study (n = 80,000, 10-year follow-up)',
+    },
+    question: 'The observation that the SES health gradient "persists even among individuals well above the poverty threshold" most directly challenges which hypothesis?',
+    choices: [
+      { label: 'A', text: 'A threshold model in which health improvements are confined to the transition out of poverty, and no further SES-health relationship exists above a minimum income floor' },
+      { label: 'B', text: 'The psychosocial pathway model, which predicts that relative inequality drives health differences among all SES groups, including the affluent' },
+      { label: 'C', text: 'The material/structural model in its strongest form, which predicts that all material needs are met above the poverty line, eliminating SES-health differences among the non-poor' },
+      { label: 'D', text: 'Both A and C equally, because both predict that above-poverty SES differences should not produce health disparities' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. A threshold model predicts health differences only around the poverty threshold; once basic material needs are met, no further SES-health gradient should exist. The observation that health improves continuously with rising SES even ABOVE poverty directly falsifies the threshold prediction. Both A and C describe "above-poverty health differences shouldn\'t exist," but A directly describes the threshold model while C overstates the material model (which in its standard form doesn\'t claim ALL material needs are met above poverty). The passage\'s language directly invokes and challenges the threshold hypothesis.',
+    wrongAnswerExplanations: {
+      B: 'The psychosocial model specifically PREDICTS that relative standing matters among all income groups, INCLUDING the affluent — making it consistent with the gradient persisting above poverty. The finding supports the psychosocial model, not challenges it.',
+      C: 'While the material model in an extreme form WOULD predict no gradient above poverty, the passage frames this as a specifically anti-threshold observation. Moreover, the material model in practice acknowledges that material advantages (better healthcare, housing, food) continue to improve above poverty — the standard material model does not claim all needs are met at the poverty line. A is the more precise answer.',
+      D: 'D is partially correct — both A and C in their extreme versions would predict no above-poverty gradient. However, A is the more direct and specific answer: the passage explicitly characterizes the SES-health relationship as NOT conforming to a threshold model. The threshold model is the specific target of the observation described in the question stem.',
+    },
+    teachingPoint: 'Threshold vs. gradient distinction: Threshold = health disparities only at/below poverty line; above that, no further effect. Gradient = continuous health improvement at every SES level. Observation of Q4→Q5 mortality differences (both above poverty) directly challenges the threshold model. This is the key epidemiological finding that motivates the psychosocial model: if material deprivation alone explained the gradient, it would stop at the poverty line.',
+    relatedTopics: ['SES threshold vs gradient', 'Above-poverty health disparities', 'Threshold model refutation', 'Health gradient characterization', 'Income and health'],
+  },
+  {
+    id: 'mcat-qb-ps-057',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '9A',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Research on the social determinants of health consistently documents a graded relationship between socioeconomic status (SES) and health outcomes — the "SES health gradient." Higher SES is associated with lower rates of cardiovascular disease, infection, and premature mortality, and this gradient persists even among individuals well above the poverty threshold. Two principal models compete to explain this finding.
+
+The psychosocial pathway model posits that chronic awareness of relative social position generates ongoing psychological stress. Comparative rank in a social hierarchy activates neuroendocrine stress responses — elevated cortisol, heightened sympathetic tone — that, sustained over years, damage cardiovascular and immune systems. This model predicts that perceived inequality, not absolute income, drives health disparities: a modestly wealthy person in a highly unequal society may experience worse health than a person of similar absolute income in a more egalitarian society.
+
+The material and structural model holds that SES determines access to health-promoting resources: nutritious food, safe housing, stable employment, healthcare, and time for health-maintaining behaviors. On this view, absolute deprivation drives health differences, and reducing material inequalities — rather than addressing perceived inequality — is the appropriate policy response.
+
+Researchers studying a cohort of 80,000 adults in a single metropolitan area stratified participants into income quintiles and tracked mortality over 10 years. The relative risk of all-cause mortality compared to the highest quintile was then calculated for each lower quintile.`,
+    tableData: {
+      headers: ['SES Quintile', 'Annual Mortality Rate (per 100,000)', 'Relative Risk vs. Q5'],
+      rows: [
+        ['Q1 (lowest)', '850', '2.93'],
+        ['Q2', '620', '2.14'],
+        ['Q3', '480', '1.66'],
+        ['Q4', '380', '1.31'],
+        ['Q5 (highest)', '290', '1.00 (reference)'],
+      ],
+      caption: 'Table 1. Mortality by SES quintile, metropolitan cohort study (n = 80,000, 10-year follow-up)',
+    },
+    question: 'A nation implements a redistributive policy that compresses income inequality by 50% — the income gap between Q1 and Q5 narrows substantially — but all material resources (healthcare access, food, housing quality) remain equal across quintiles before and after the policy. If mortality disparities between quintiles narrow substantially after the policy, which conclusion is best supported?',
+    choices: [
+      { label: 'A', text: 'The material/structural model is confirmed, because income redistribution changed material access to resources, which then drove the health improvement' },
+      { label: 'B', text: 'The psychosocial (relative status) pathway explains a substantial portion of the SES health gradient independently of material conditions, because the only variable changed was relative income inequality — not material access to healthcare, food, or housing' },
+      { label: 'C', text: 'Neither model is supported, because the policy experiment changed multiple confounders simultaneously, preventing attribution to either psychosocial or material pathways' },
+      { label: 'D', text: 'The gradient model is refuted because health disparities narrowed before material conditions changed, showing the gradient was not caused by SES' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The experimental design specifically holds material conditions constant (material resources equal before AND after policy) while changing only relative income inequality. If health disparities narrow under these conditions, the change can only be attributed to the PSYCHOSOCIAL mechanism: reduced perceived inequality → reduced chronic stress → improved health. This is a natural quasi-experiment that isolates the psychosocial pathway by controlling for material factors. The conclusion is that relative social position, not material access, is the operative mechanism.',
+    wrongAnswerExplanations: {
+      A: 'The scenario explicitly states that material resources "remain equal across quintiles before and after the policy." If material access is unchanged, the material model CANNOT explain the health improvement. Any improvement must be attributed to the non-material change — relative income inequality reduction — which is the psychosocial mechanism.',
+      C: 'The design specifically controls for material resources (held constant), making it a well-controlled quasi-experiment. The only variable changed is income inequality (relative position). This is not a confounded design — it isolates the psychosocial pathway by holding material conditions constant.',
+      D: 'Narrowing of disparities after the policy supports a causal role for SES (specifically relative inequality) in the gradient — it does not refute the gradient model. If anything, it confirms the gradient by showing that changing relative position improves health. Refuting the gradient would require showing SES had no effect.',
+    },
+    teachingPoint: 'Isolating psychosocial vs. material pathways: if you change ONLY relative inequality (not material access) and health disparities change → psychosocial pathway supported. If you change ONLY material access (not relative inequality) and health disparities change → material pathway supported. This is the logic of natural experiments in social epidemiology. The key design principle: hold constant the pathway you are NOT testing.',
+    relatedTopics: ['Psychosocial model support', 'Natural experiment design', 'Relative inequality and health', 'Isolating mechanisms', 'Health policy and SES'],
+  },
+
+  // ── Discrete Q058–Q062 ──────────────────────────────────────────────────────
+  {
+    id: 'mcat-qb-ps-058',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '7A',
+    foundationalConcept: '7',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'discrete',
+    question: 'A gambler plays slot machines for hours despite losing most of the time. Analysis shows that rewards (wins) occur after an unpredictable and variable number of lever pulls. Which reinforcement schedule best explains this behavior and why does it produce such high resistance to extinction?',
+    choices: [
+      { label: 'A', text: 'Variable ratio (VR) schedule — rewards occur after an unpredictable number of responses, producing the highest response rates and greatest extinction resistance because the next reward could always be imminent, making it difficult to distinguish an extinction period from a particularly long inter-reward interval' },
+      { label: 'B', text: 'Fixed ratio (FR) schedule — rewards occur after a predictable number of responses, producing high rates with brief post-reinforcement pauses, making the gambler pause briefly after each win before resuming' },
+      { label: 'C', text: 'Variable interval (VI) schedule — rewards are available after unpredictable time intervals, producing moderate, steady response rates without high peaks, which accounts for the sustained moderate pace of play' },
+      { label: 'D', text: 'Fixed interval (FI) schedule — rewards are given at predictable time intervals; scallop-shaped responding (low rate then rapid increase near the reward time) explains the variable pace of slot machine play' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. A variable ratio (VR) schedule delivers reinforcement after a variable number of responses — the animal or human cannot predict when the next reward will come. This produces two hallmark characteristics: (1) the highest sustained response rates of all schedules, because responding is always instrumentally linked to the next reward; and (2) greatest resistance to extinction, because when rewards stop (extinction), the organism cannot easily distinguish extinction from a particularly long inter-reward interval — every response could theoretically produce the next reward. Slot machines are the canonical real-world example of VR schedules.',
+    wrongAnswerExplanations: {
+      B: 'A fixed ratio schedule delivers rewards after a predictable number of responses (e.g., every 10th response). FR schedules produce post-reinforcement pauses (brief rest after each reward) and high rates between pauses. Slot machines are unpredictable — the number of pulls between wins varies, which is the defining feature of VR, not FR.',
+      C: 'Variable interval schedules deliver rewards based on unpredictable TIME intervals (e.g., after a variable amount of time has passed). The rate of responding does not change the probability of reward on VI schedules (since it is time-gated, not response-gated). VI produces moderate, steady rates — not the high-rate, compulsive responding seen in gamblers. VR produces higher rates because more responses always brings the next reward closer.',
+      D: 'Fixed interval schedules produce the classic scallop pattern: low response rate just after a reward, then accelerating as the next reward time approaches. This requires the organism to track time. Slot machines operate on the number of pulls (ratio-based), not on elapsed time, making FI the least applicable schedule.',
+    },
+    teachingPoint: 'Reinforcement schedule comparison: FI = scallop, moderate rate, pause after reward. FR = high rate, pause after reward. VI = steady moderate rate, no post-reinforcement pause. VR = HIGHEST rate, GREATEST extinction resistance, no pause. Real-world VR examples: slot machines, fishing, variable check-schedule (email). Extinction resistance mechanism: VR obscures when extinction begins because variable inter-reward intervals make it impossible to detect the absence of rewards early.',
+    relatedTopics: ['Variable ratio reinforcement', 'Extinction resistance', 'Reinforcement schedule comparison', 'Operant conditioning', 'Gambling behavior'],
+  },
+  {
+    id: 'mcat-qb-ps-059',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '8A',
+    foundationalConcept: '8',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'discrete',
+    question: 'A medical student who performs poorly on an MCAT practice exam attributes the outcome to the exam being poorly constructed, the room being too loud, and having gotten insufficient sleep the night before. The same student, observing a classmate who received the same low score, concludes that the classmate simply does not work hard enough and lacks the intellectual aptitude for medicine. Which combination of attribution biases best describes this pattern?',
+    choices: [
+      { label: 'A', text: 'Fundamental attribution error only — the student over-attributes the classmate\'s failure to internal dispositions, which is the defining feature of FAE' },
+      { label: 'B', text: 'Self-serving bias only — the student protects their own ego by attributing their failure to external causes' },
+      { label: 'C', text: 'Confirmation bias — the student selectively attends to information that confirms prior beliefs about their own ability and the classmate\'s limitations' },
+      { label: 'D', text: 'Actor-observer bias, which incorporates both self-serving attribution of own behavior to situational factors and observer attribution of the classmate\'s behavior to internal dispositions, demonstrating that attribution systematically varies with perspective' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. Actor-observer bias describes the tendency of actors to attribute their own behavior to situational factors while observers attribute the same behavior by others to dispositional (internal) factors. The student (as actor) uses situational attributions for their own failure: exam quality, room noise, sleep. The student (as observer) uses dispositional attributions for the classmate\'s identical failure: effort and aptitude. This systematic contrast between self-attribution and other-attribution is the defining feature of actor-observer bias. Note: the fundamental attribution error is the observer component alone; actor-observer bias specifies the CONTRAST between actor and observer perspectives.',
+    wrongAnswerExplanations: {
+      A: 'FAE captures only the OBSERVER component (attributing classmate\'s failure to internal factors). But the question describes a PATTERN — the student\'s self-attribution (situational) CONTRASTED with their other-attribution (dispositional). The full pattern is actor-observer bias, not just FAE. FAE is a component of actor-observer bias, but D is more complete.',
+      B: 'Self-serving bias is a motivational bias: attributing successes to internal factors (ability, effort) and failures to external factors (bad luck, unfair test). While the student\'s self-attribution resembles self-serving bias (failure → external), self-serving bias alone does not capture the observer component (attributing classmate\'s failure to internal factors). The CONTRAST between self and other attribution is actor-observer bias.',
+      C: 'Confirmation bias refers to selectively seeking or interpreting information in ways that confirm pre-existing beliefs. The question describes a pattern of causal attribution for a failure outcome — not selective attention to or interpretation of confirming information. Confirmation bias is not the best description of this attribution pattern.',
+    },
+    teachingPoint: 'Attribution bias hierarchy: FAE (fundamental attribution error) = observer ONLY overattributes others\' behavior to dispositions. Self-serving bias = self-serving attributions for own successes and failures (successes → internal; failures → external). Actor-observer bias = the CONTRAST: actors attribute own behavior to SITUATION; observers attribute same behavior by OTHERS to DISPOSITION. The medical student question is actor-observer bias because it specifically contrasts the student\'s own (situational) and classmate\'s (dispositional) attributions for the SAME behavior.',
+    relatedTopics: ['Actor-observer bias', 'Fundamental attribution error', 'Self-serving bias', 'Attribution theory', 'Situational vs dispositional attribution'],
+  },
+  {
+    id: 'mcat-qb-ps-060',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '6B',
+    foundationalConcept: '6',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'discrete',
+    question: 'A 17-year-old reports feeling unable to commit to a career path, frequently changing social groups and interests, and experiencing a pervasive sense of uncertainty about who they are and what they value. According to Erikson\'s theory of psychosocial development, which stage and crisis best describes this individual\'s experience?',
+    choices: [
+      { label: 'A', text: 'Initiative vs. Guilt (preschool stage) — the inability to commit reflects failure to develop purposeful goal-directed behavior in early childhood' },
+      { label: 'B', text: 'Industry vs. Inferiority (middle childhood stage) — inability to commit reflects a failure to master skills and develop a sense of competence in the school years' },
+      { label: 'C', text: 'Identity vs. Role Confusion (adolescence) — the inability to commit to a stable sense of self, vocation, or values, with frequent social role-shifting and existential uncertainty, is the defining manifestation of role confusion in Erikson\'s adolescent stage' },
+      { label: 'D', text: 'Intimacy vs. Isolation (young adulthood) — the inability to form stable commitments reflects difficulty establishing close relationships in early adulthood' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. Erikson\'s fifth stage, Identity vs. Role Confusion, spans adolescence (approximately ages 12–18). The central developmental task is forming a coherent, stable sense of identity: who one is, what one values, and what vocational and social commitments one can make. The 17-year-old\'s presentation — inability to commit to a career, shifting social groups, pervasive uncertainty about self and values — is a textbook description of role confusion, the unresolved pole of the Identity vs. Role Confusion crisis. Successful resolution yields a stable identity (Erikson\'s ego identity); failure produces role confusion and identity diffusion.',
+    wrongAnswerExplanations: {
+      A: 'Initiative vs. Guilt is Erikson\'s third stage (ages 3–6, preschool). It concerns the child\'s ability to initiate purposeful activities and play without excessive guilt. This does not describe adolescent identity concerns.',
+      B: 'Industry vs. Inferiority is Erikson\'s fourth stage (ages 6–12, middle childhood). It concerns developing competence in skills — academic, social, and practical — and the failure to feel capable (inferiority). While the 17-year-old\'s career uncertainty could suggest skill-related issues, the description of role-shifting and identity uncertainty is characteristic of the identity stage, not the industry stage.',
+      D: 'Intimacy vs. Isolation is Erikson\'s sixth stage (young adulthood, approximately 18–40). It concerns forming deep, committed relationships and the fear of intimacy leading to isolation. The 17-year-old\'s struggles are with self-definition (Who am I?) not with relational intimacy (Can I commit to a partner?). Erikson\'s theory requires identity formation (Stage 5) as a precondition for intimacy (Stage 6).',
+    },
+    teachingPoint: 'Erikson\'s stages (ages): Trust vs. Mistrust (0–1), Autonomy vs. Shame (1–3), Initiative vs. Guilt (3–6), Industry vs. Inferiority (6–12), Identity vs. Role Confusion (12–18), Intimacy vs. Isolation (18–40), Generativity vs. Stagnation (40–65), Integrity vs. Despair (65+). Key adolescent stage: Identity (5th stage) — "Who am I?" Role confusion = shifting identities, inability to commit, existential uncertainty. Marcia\'s 4 identity statuses extend this: foreclosure, moratorium, diffusion, achievement.',
+    relatedTopics: ['Erikson psychosocial stages', 'Identity vs role confusion', 'Adolescent identity development', 'Role confusion', 'Marcia identity statuses'],
+  },
+  {
+    id: 'mcat-qb-ps-061',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Sociology',
+    contentCategory: '9B',
+    foundationalConcept: '9',
+    scientificSkill: 'Skill 1',
+    difficulty: 'medium',
+    questionType: 'discrete',
+    question: 'A prestigious university professor earns a salary in the lowest quartile of their income bracket, holds a nationally recognized expert reputation, and has successfully lobbied state legislatures to increase education funding. Which of the following best illustrates what this scenario demonstrates about Weber\'s multidimensional theory of stratification?',
+    choices: [
+      { label: 'A', text: 'The professor\'s position can only be fully understood through Marx\'s economic class analysis — economic position determines all other aspects of social standing' },
+      { label: 'B', text: 'Weber\'s three components of stratification — class (economic), status (social honor/prestige), and party (political power) — can be partially independent: the professor has low class but high status and significant party (power) influence' },
+      { label: 'C', text: 'The professor exemplifies Bourdieu\'s concept of cultural capital — academic credentials substitute for economic capital and convert directly into social position' },
+      { label: 'D', text: 'The scenario demonstrates Durkheim\'s concept of social solidarity — the professor\'s role integrates multiple societal functions and exemplifies organic solidarity in a differentiated society' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. Max Weber argued that stratification operates along THREE partially independent dimensions: (1) Class — economic position, market situation, access to material resources; (2) Status — social honor, prestige, deference from others; (3) Party — organized political power, ability to influence collective decisions. The professor exemplifies partial independence: low class (salary in lowest income quartile), high status (nationally recognized expert reputation), and significant party influence (lobbying legislatures). This three-dimensional analysis is specifically Weberian and contrasts with Marx\'s reduction of all stratification to economic class.',
+    wrongAnswerExplanations: {
+      A: 'This describes the Marxist position — economic class as the determinative factor in all social relationships. The scenario specifically shows that the professor has low economic class but high status and power, illustrating that these dimensions ARE NOT reducible to class. This is precisely the Weberian critique of Marxist class reductionism.',
+      C: 'Bourdieu\'s framework distinguishes economic capital, social capital (networks and relationships), and cultural capital (education, credentials, cultural knowledge). While the professor\'s academic credentials could be described as cultural capital, the question specifically highlights the PARTIAL INDEPENDENCE of economic position, social honor, and political power — which is distinctively Weberian, not Bourdieusian. Bourdieu\'s capitals can all be converted into each other; Weber\'s dimensions are more explicitly stratified along separate axes.',
+      D: 'Durkheim\'s organic solidarity describes functional interdependence in complex, differentiated societies — individuals depend on each other because they perform different specialized functions. This concept does not address stratification dimensions or the relationship between economic and non-economic status. Social solidarity is about social cohesion, not about the independence of stratification dimensions.',
+    },
+    teachingPoint: 'Weber\'s three-component stratification: Class (economic) + Status (prestige) + Party (power) = partially independent. Low class ≠ low status or low power. Examples: clergy (low class, high status, high power); nouveau riche (high class, potentially low status); professors (variable class, typically high status). Contrast with Marx: Weber rejects economic determinism. MCAT key: if a question shows that economic position does not predict prestige or power, it is illustrating Weberian stratification.',
+    relatedTopics: ['Weber stratification', 'Class status party', 'Multidimensional stratification', 'Weber vs Marx', 'Social honor and prestige'],
+  },
+  {
+    id: 'mcat-qb-ps-062',
+    test: 'MCAT',
+    section: 'psych-soc',
+    discipline: 'Psychology',
+    contentCategory: '7C',
+    foundationalConcept: '7',
+    scientificSkill: 'Skill 1',
+    difficulty: 'hard',
+    questionType: 'discrete',
+    question: 'A witness to a car accident is interviewed two weeks later. They confidently report seeing the driver run a red light, but police camera footage shows the light was yellow. Psychologists find that during media coverage of the accident, numerous reports stated the driver "ran the red light." The witness cannot distinguish whether their memory comes from direct observation or from subsequent media reports. Which memory error BEST describes this finding, and how does it differ from a related term?',
+    choices: [
+      { label: 'A', text: 'Retroactive interference — new learning (media reports) disrupted the original memory, erasing the accurate yellow-light memory and replacing it with a false red-light memory' },
+      { label: 'B', text: 'Proactive interference — the original yellow-light memory blocked consolidation of media report information, but the witness is misattributing their original memory to external sources' },
+      { label: 'C', text: 'Confabulation — the witness is generating a false memory of running the red light without any awareness that it is false, and this occurs independently of any external suggestion' },
+      { label: 'D', text: 'Source monitoring error — the memory content (red light) may be accurate to the media reports the witness encountered, but the witness cannot correctly identify the SOURCE of the memory (media vs. direct observation), leading to the false claim of having personally witnessed the red light' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. Source monitoring refers to the cognitive process of attributing memories to their correct origin. A source monitoring error (or source monitoring failure) occurs when a memory is attributed to the wrong source — the content may be accurate (the witness did encounter information about a "red light") but the source attribution is incorrect (the information came from media reports, not from direct observation). The witness cannot distinguish between what they actually saw and what they subsequently read or heard. This is the defining feature of source monitoring error, and it is the specific mechanism underlying the misinformation effect studied by Loftus.',
+    wrongAnswerExplanations: {
+      A: 'Retroactive interference describes how NEW learning (learned after original material) impairs recall of ORIGINAL material. In RI, the original memory is disrupted or made less accessible by later learning. Source monitoring error is more specific: the CONTENT of the new information is now attributed to the original experience, rather than the original memory simply becoming inaccessible. RI is a forgetting mechanism; source monitoring error is an attribution/monitoring failure.',
+      B: 'Proactive interference describes how OLD learning impairs acquisition or recall of NEW material — the opposite direction from RI. Proactive interference (original yellow-light memory blocking media information) would predict that the witness CORRECTLY remembers the yellow light (the original memory blocks the new one). This is the opposite of what happened — the witness reports the red light (the newer, media-derived information). PI is not the correct mechanism here.',
+      C: 'Confabulation refers to the spontaneous production of false memories or fabricated narratives WITHOUT external suggestion and WITHOUT awareness that the content is false — typically seen in patients with neurological damage (e.g., Korsakoff syndrome, frontal lobe damage). The witness\'s error is NOT spontaneous fabrication; it has a clear external source (media reports). Moreover, confabulation occurs without external suggestion, whereas the witness\'s false memory was implanted by specific media misinformation.',
+    },
+    teachingPoint: 'Source monitoring error: correct memory content + wrong source attribution. Mechanism: witness genuinely encountered "red light" information (from media) but cannot distinguish it from their own observation. Misinformation effect (Loftus): post-event information alters memory — source monitoring failure is the cognitive mechanism. Compare: RI = new info disrupts OLD memory; source monitoring = cannot identify WHERE a memory comes from. Confabulation = spontaneous false memory without external suggestion (neurological). Cryptomnesia = believing you originated an idea actually encountered elsewhere.',
+    relatedTopics: ['Source monitoring error', 'Misinformation effect', 'Retroactive interference', 'Confabulation distinction', 'Eyewitness memory accuracy'],
+  },
 ]

@@ -1822,4 +1822,348 @@ Rather than treat the inconsistency as an embarrassment requiring elimination, h
     teachingPoint: 'Nuanced tone questions: when an author acknowledges merit in a position they also criticize, the tone is neither "hostile" nor "favorable" but "cautiously critical" or "qualified." Key signals: (1) endorsing part of the view (utilitarianism works in lever case); (2) criticizing the extreme application ("pathologies," "atrocities"). "Cautiously critical" vs "strongly hostile" = difference between criticizing an extreme application and condemning the theory wholesale.',
     relatedTopics: ['Author\'s attitude', 'Nuanced tone', 'Cautiously critical', 'Utilitarianism critique', 'CARS tone nuance'],
   },
+
+  // ── Passage 11: Ethics of Algorithmic Decision-Making (Q053–Q057) ─────────────
+  {
+    id: 'mcat-qb-cars-053',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics of Technology',
+    contentCategory: 'Reasoning Within the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The deployment of algorithmic systems in consequential social decisions — including parole determination, credit scoring, and employment screening — has generated both enthusiasm and alarm among scholars of technology and ethics. Proponents emphasize the advantages of algorithmic consistency: unlike human decision-makers, who are subject to mood effects, in-group favoritism, and fatigue-induced error, an algorithm applies the same parameters to every case. If a validated algorithm outperforms expert human judgment in predictive accuracy, the argument proceeds, there is a moral burden on those who reject it to justify their preference for demonstrably less accurate human decisions.
+
+Critics of this view have identified two structural problems that accuracy metrics alone cannot resolve. First, algorithms trained on historical data absorb the injustices embedded in those data: if loan approvals historically reflected racial discrimination, a model that learns from such records will reproduce discriminatory patterns even without containing any explicit race variable, through proxies such as zip code or school attended. Second, the opacity of complex machine-learning systems — the so-called black-box problem — forecloses meaningful contestation. When a human decision-maker denies a loan, the applicant can challenge the reasoning; when an algorithm denies it, neither the applicant nor often the institution can articulate the determinative factors.
+
+A response available to algorithmic proponents is that the opacity problem is technical rather than principled: interpretability tools, explainable AI methods, and adversarial auditing can in principle make algorithmic reasoning legible. On this view, the objections to algorithmic decision-making are contingent on current implementation failures, not intrinsic limitations.
+
+The author submits, however, that accuracy-optimization framing is itself the more fundamental problem. Maximizing aggregate predictive accuracy treats error as interchangeable across subjects. But if errors are systematically concentrated among already-disadvantaged groups — if the algorithm is more likely to misclassify Black loan applicants or low-income parolees — then aggregate accuracy gains may come at the cost of distributional justice. What is required is not just more accurate algorithms but frameworks that integrate distributive fairness, procedural transparency, and individual contestability as design constraints, not afterthoughts.`,
+    question: 'Which of the following best states the author\'s main argument in the passage?',
+    choices: [
+      { label: 'A', text: 'Algorithmic decision-making should be banned from consequential social contexts because it inevitably encodes historical injustices and lacks any meaningful accountability mechanism' },
+      { label: 'B', text: 'The opacity of machine-learning systems is the primary problem with algorithmic decision-making, but this can be resolved through technical improvements in explainable AI' },
+      { label: 'C', text: 'The dominant framing of algorithmic ethics around aggregate accuracy is fundamentally inadequate because it ignores the distributional concentration of errors; ethical algorithmic systems require frameworks that incorporate distributive fairness, transparency, and contestability' },
+      { label: 'D', text: 'Human decision-makers are inherently superior to algorithms in high-stakes contexts because they can provide reasons for their decisions and are held accountable through established legal and professional norms' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The author\'s main argument is developed across paragraphs 1–4 with the conclusion in paragraph 4: the problem is not just opacity (which paragraph 3 acknowledges may be technically fixable) but the underlying accuracy-optimization framework that treats errors as interchangeable. The author argues for frameworks integrating "distributive fairness, procedural transparency, and individual contestability." This is the passage\'s positive thesis — not mere criticism, but a constructive alternative standard.',
+    wrongAnswerExplanations: {
+      A: 'The author does not call for banning algorithmic systems from all consequential contexts. The passage critiques the current framing and calls for better design constraints, not prohibition. "Inevitably encodes historical injustices" overstates the author\'s position — paragraph 3 acknowledges that some critics\' concerns may be technically addressable.',
+      B: 'This accurately describes the position of the algorithmic proponents that the author is ultimately rejecting. Paragraph 3 presents this view, but paragraph 4 explicitly supersedes it: opacity is acknowledged as potentially fixable, but the author argues this misses the deeper problem of accuracy-first framing itself.',
+      D: 'The author never makes a general claim that human decision-makers are inherently superior. The passage acknowledges in paragraph 1 that human decision-makers are "subject to mood effects, in-group favoritism, and fatigue-induced error." The author\'s critique of algorithms does not entail an endorsement of human judgment.',
+    },
+    teachingPoint: 'Main argument in a 4-paragraph structured argument: paragraphs 1–2 present the debate (pro/con), paragraph 3 addresses a proponent rebuttal, paragraph 4 contains the author\'s conclusion. The main argument is ALWAYS in the final paragraph for this structure. Key signal: "The author submits, however..." in paragraph 4 marks the positive thesis. Do not mistake the rebuttal (paragraph 3) for the main argument.',
+    relatedTopics: ['Main argument in structured debate', 'Author\'s positive thesis', 'Ethics of technology', 'CARS argument structure', 'Algorithmic fairness'],
+  },
+  {
+    id: 'mcat-qb-cars-054',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics of Technology',
+    contentCategory: 'Foundations of Comprehension',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `The deployment of algorithmic systems in consequential social decisions — including parole determination, credit scoring, and employment screening — has generated both enthusiasm and alarm among scholars of technology and ethics. Proponents emphasize the advantages of algorithmic consistency: unlike human decision-makers, who are subject to mood effects, in-group favoritism, and fatigue-induced error, an algorithm applies the same parameters to every case. If a validated algorithm outperforms expert human judgment in predictive accuracy, the argument proceeds, there is a moral burden on those who reject it to justify their preference for demonstrably less accurate human decisions.
+
+Critics of this view have identified two structural problems that accuracy metrics alone cannot resolve. First, algorithms trained on historical data absorb the injustices embedded in those data: if loan approvals historically reflected racial discrimination, a model that learns from such records will reproduce discriminatory patterns even without containing any explicit race variable, through proxies such as zip code or school attended. Second, the opacity of complex machine-learning systems — the so-called black-box problem — forecloses meaningful contestation. When a human decision-maker denies a loan, the applicant can challenge the reasoning; when an algorithm denies it, neither the applicant nor often the institution can articulate the determinative factors.
+
+A response available to algorithmic proponents is that the opacity problem is technical rather than principled: interpretability tools, explainable AI methods, and adversarial auditing can in principle make algorithmic reasoning legible. On this view, the objections to algorithmic decision-making are contingent on current implementation failures, not intrinsic limitations.
+
+The author submits, however, that accuracy-optimization framing is itself the more fundamental problem. Maximizing aggregate predictive accuracy treats error as interchangeable across subjects. But if errors are systematically concentrated among already-disadvantaged groups — if the algorithm is more likely to misclassify Black loan applicants or low-income parolees — then aggregate accuracy gains may come at the cost of distributional justice. What is required is not just more accurate algorithms but frameworks that integrate distributive fairness, procedural transparency, and individual contestability as design constraints, not afterthoughts.`,
+    question: 'According to the passage, what is the "black-box problem" in algorithmic decision-making?',
+    choices: [
+      { label: 'A', text: 'The problem that algorithms trained on historical data reproduce discriminatory patterns through proxy variables such as zip code' },
+      { label: 'B', text: 'The opacity of complex machine-learning systems that prevents applicants and institutions from articulating the factors that determined an algorithmic decision, foreclosing meaningful contestation' },
+      { label: 'C', text: 'The problem that algorithms are not transparent about their accuracy rates when validated against expert human judgment' },
+      { label: 'D', text: 'The inability of algorithmic systems to process the full complexity of individual human circumstances, reducing subjects to data points' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. Paragraph 2 explicitly defines the black-box problem: "the opacity of complex machine-learning systems — the so-called black-box problem — forecloses meaningful contestation. When a human decision-maker denies a loan, the applicant can challenge the reasoning; when an algorithm denies it, neither the applicant nor often the institution can articulate the determinative factors." This is a direct retrieval from the passage.',
+    wrongAnswerExplanations: {
+      A: 'This describes the first structural problem identified in paragraph 2 (historical data encoding injustices through proxies), which is a separate problem from the black-box problem. The passage presents these as two distinct issues: (1) historical bias absorption and (2) the black-box opacity problem.',
+      C: 'The passage does not describe the black-box problem as relating to transparency about accuracy rates. The black-box problem is about the opacity of the decision-making process — why a specific decision was made — not about aggregate accuracy statistics.',
+      D: 'While the reduction of individuals to data points is a related critique of algorithmic systems, it is not the definition provided in the passage for the black-box problem. The passage specifically focuses on the opacity of the decisional factors and the resulting inability to contest decisions.',
+    },
+    teachingPoint: 'Direct retrieval questions: locate the exact passage definition. Paragraph 2 explicitly introduces the term "black-box problem" and immediately defines it: opacity of complex ML systems that forecloses contestation. Wrong answers describe related but distinct criticisms (historical bias = separate issue; complexity critique = not in passage; accuracy transparency = not the definition given). The passage defines terms explicitly — use those definitions.',
+    relatedTopics: ['Direct retrieval', 'Black-box problem', 'Algorithmic opacity', 'Defined terms in passage', 'CARS comprehension'],
+  },
+  {
+    id: 'mcat-qb-cars-055',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics of Technology',
+    contentCategory: 'Reasoning Beyond the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `The deployment of algorithmic systems in consequential social decisions — including parole determination, credit scoring, and employment screening — has generated both enthusiasm and alarm among scholars of technology and ethics. Proponents emphasize the advantages of algorithmic consistency: unlike human decision-makers, who are subject to mood effects, in-group favoritism, and fatigue-induced error, an algorithm applies the same parameters to every case. If a validated algorithm outperforms expert human judgment in predictive accuracy, the argument proceeds, there is a moral burden on those who reject it to justify their preference for demonstrably less accurate human decisions.
+
+Critics of this view have identified two structural problems that accuracy metrics alone cannot resolve. First, algorithms trained on historical data absorb the injustices embedded in those data: if loan approvals historically reflected racial discrimination, a model that learns from such records will reproduce discriminatory patterns even without containing any explicit race variable, through proxies such as zip code or school attended. Second, the opacity of complex machine-learning systems — the so-called black-box problem — forecloses meaningful contestation. When a human decision-maker denies a loan, the applicant can challenge the reasoning; when an algorithm denies it, neither the applicant nor often the institution can articulate the determinative factors.
+
+A response available to algorithmic proponents is that the opacity problem is technical rather than principled: interpretability tools, explainable AI methods, and adversarial auditing can in principle make algorithmic reasoning legible. On this view, the objections to algorithmic decision-making are contingent on current implementation failures, not intrinsic limitations.
+
+The author submits, however, that accuracy-optimization framing is itself the more fundamental problem. Maximizing aggregate predictive accuracy treats error as interchangeable across subjects. But if errors are systematically concentrated among already-disadvantaged groups — if the algorithm is more likely to misclassify Black loan applicants or low-income parolees — then aggregate accuracy gains may come at the cost of distributional justice. What is required is not just more accurate algorithms but frameworks that integrate distributive fairness, procedural transparency, and individual contestability as design constraints, not afterthoughts.`,
+    question: 'The proponents\' argument in paragraph 1 most critically depends on which implicit assumption?',
+    choices: [
+      { label: 'A', text: 'Algorithms are less subject to legal challenges than human decision-makers, making them more efficient for institutions to deploy at scale' },
+      { label: 'B', text: 'Consistency in applying decision criteria across cases is a morally sufficient standard for evaluating fairness in high-stakes decision-making' },
+      { label: 'C', text: 'The historical data used to train algorithms accurately reflect meritocratic outcomes free from systemic bias or discrimination' },
+      { label: 'D', text: 'Predictive accuracy for aggregate outcomes is both necessary and morally sufficient to justify using an algorithm in consequential decisions' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. The proponents\' core argument (paragraph 1) is: if an algorithm outperforms human judgment in predictive accuracy, there is a moral burden on those who reject it. For this argument to work, accuracy must be morally sufficient — not just useful, but sufficient to justify algorithmic deployment. The entire structure of the author\'s counterargument in paragraph 4 explicitly targets this assumption: accuracy treats errors as interchangeable but ignores their distribution. The author\'s rebuttal only makes sense if the proponents assume accuracy is a morally sufficient standard, which D captures.',
+    wrongAnswerExplanations: {
+      A: 'Legal efficiency is not mentioned in paragraph 1\'s proponent argument. The proponents\' argument is framed in terms of moral burden and accuracy, not institutional efficiency or legal exposure.',
+      B: 'Consistency is mentioned as an advantage of algorithms (paragraph 1), but the core assumption driving the "moral burden" argument is about accuracy — specifically that outperforming human judgment in accuracy creates an obligation to use algorithms. B confuses an advantage (consistency) with the moral premise of the argument.',
+      C: 'This is an assumption that the CRITICS identify as problematic (paragraph 2), not an assumption the proponents make. The proponents\' argument in paragraph 1 does not depend on claiming historical data is bias-free; the proponents are silent on data quality. The critics exploit this silence, but it is not the premise of the proponent argument as stated in paragraph 1.',
+    },
+    teachingPoint: 'Proponent assumption identification: trace the logical structure of the argument. Proponents: algorithm more accurate → moral burden to use it. For this to be a valid moral argument, accuracy must be MORALLY SUFFICIENT (not just instrumentally useful). The author attacks this in paragraph 4. When finding an assumption, ask: what must be true for this argument to work that the author does NOT explicitly state? The unstated premise is that accuracy is morally sufficient.',
+    relatedTopics: ['Implicit assumptions', 'Proponent argument structure', 'Moral sufficiency claim', 'CARS assumption identification', 'Algorithmic ethics'],
+  },
+  {
+    id: 'mcat-qb-cars-056',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics of Technology',
+    contentCategory: 'Reasoning Beyond the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `The deployment of algorithmic systems in consequential social decisions — including parole determination, credit scoring, and employment screening — has generated both enthusiasm and alarm among scholars of technology and ethics. Proponents emphasize the advantages of algorithmic consistency: unlike human decision-makers, who are subject to mood effects, in-group favoritism, and fatigue-induced error, an algorithm applies the same parameters to every case. If a validated algorithm outperforms expert human judgment in predictive accuracy, the argument proceeds, there is a moral burden on those who reject it to justify their preference for demonstrably less accurate human decisions.
+
+Critics of this view have identified two structural problems that accuracy metrics alone cannot resolve. First, algorithms trained on historical data absorb the injustices embedded in those data: if loan approvals historically reflected racial discrimination, a model that learns from such records will reproduce discriminatory patterns even without containing any explicit race variable, through proxies such as zip code or school attended. Second, the opacity of complex machine-learning systems — the so-called black-box problem — forecloses meaningful contestation. When a human decision-maker denies a loan, the applicant can challenge the reasoning; when an algorithm denies it, neither the applicant nor often the institution can articulate the determinative factors.
+
+A response available to algorithmic proponents is that the opacity problem is technical rather than principled: interpretability tools, explainable AI methods, and adversarial auditing can in principle make algorithmic reasoning legible. On this view, the objections to algorithmic decision-making are contingent on current implementation failures, not intrinsic limitations.
+
+The author submits, however, that accuracy-optimization framing is itself the more fundamental problem. Maximizing aggregate predictive accuracy treats error as interchangeable across subjects. But if errors are systematically concentrated among already-disadvantaged groups — if the algorithm is more likely to misclassify Black loan applicants or low-income parolees — then aggregate accuracy gains may come at the cost of distributional justice. What is required is not just more accurate algorithms but frameworks that integrate distributive fairness, procedural transparency, and individual contestability as design constraints, not afterthoughts.`,
+    question: 'Which of the following findings would most directly weaken the author\'s argument in paragraph 4?',
+    choices: [
+      { label: 'A', text: 'A study showing that when a fully explainable algorithm is used in parole decisions, its error rates are equally distributed across racial and income groups, with no systematic concentration of misclassifications among disadvantaged populations' },
+      { label: 'B', text: 'A survey showing that most applicants denied loans by algorithms report feeling less able to contest the decision than those denied by human loan officers' },
+      { label: 'C', text: 'A meta-analysis showing that algorithms outperform human judges in predictive accuracy across multiple domains including parole, lending, and hiring' },
+      { label: 'D', text: 'A study showing that human decision-makers are also more likely to deny loans to Black applicants and low-income borrowers, at rates comparable to algorithmic systems' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. The author\'s core argument in paragraph 4 is that accuracy-optimization fails because errors are "systematically concentrated among already-disadvantaged groups." If a study shows that error rates are equally distributed across racial and income groups (no systematic concentration), the author\'s key empirical premise is undermined. Without distributional injustice in errors, the author\'s argument for a different framework loses its primary justification. Note: A specifies a "fully explainable" algorithm, also addressing the transparency concern.',
+    wrongAnswerExplanations: {
+      B: 'This finding SUPPORTS the author\'s concerns about contestability (paragraph 2), not weakens them. The author argues for contestability as a design constraint; a survey showing algorithmic systems impede contestation reinforces the need for the author\'s framework.',
+      C: 'Demonstrating higher algorithmic accuracy supports the proponents\' view in paragraph 1, but this is precisely the position the author is arguing against in paragraph 4. The author already concedes that algorithms may be more accurate but argues accuracy alone is insufficient. More accuracy evidence does not directly counter the distributional justice argument.',
+      D: 'Showing that human decision-makers also discriminate suggests algorithms are not uniquely discriminatory — but this does not address the author\'s specific argument that error concentration in disadvantaged groups is a problem in algorithmic systems. The author\'s paragraph 4 argument stands regardless of whether humans also discriminate; the argument is about what standards algorithmic systems must meet.',
+    },
+    teachingPoint: 'Weakening an empirical argument: identify the key empirical PREMISE of the argument, then find what would show that premise is false. Paragraph 4 premise: algorithmic errors are systematically concentrated in disadvantaged groups. Choice A directly shows this premise is false (equally distributed errors). Choices B and D miss this target: B supports the author; D attacks a different claim (unique algorithmic discrimination vs. human discrimination). C strengthens proponents but doesn\'t touch paragraph 4\'s specific claim.',
+    relatedTopics: ['Weakening an argument', 'Empirical premise attack', 'Distributional justice', 'Error rate distribution', 'CARS weaken question'],
+  },
+  {
+    id: 'mcat-qb-cars-057',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Ethics of Technology',
+    contentCategory: 'Reasoning Beyond the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `The deployment of algorithmic systems in consequential social decisions — including parole determination, credit scoring, and employment screening — has generated both enthusiasm and alarm among scholars of technology and ethics. Proponents emphasize the advantages of algorithmic consistency: unlike human decision-makers, who are subject to mood effects, in-group favoritism, and fatigue-induced error, an algorithm applies the same parameters to every case. If a validated algorithm outperforms expert human judgment in predictive accuracy, the argument proceeds, there is a moral burden on those who reject it to justify their preference for demonstrably less accurate human decisions.
+
+Critics of this view have identified two structural problems that accuracy metrics alone cannot resolve. First, algorithms trained on historical data absorb the injustices embedded in those data: if loan approvals historically reflected racial discrimination, a model that learns from such records will reproduce discriminatory patterns even without containing any explicit race variable, through proxies such as zip code or school attended. Second, the opacity of complex machine-learning systems — the so-called black-box problem — forecloses meaningful contestation. When a human decision-maker denies a loan, the applicant can challenge the reasoning; when an algorithm denies it, neither the applicant nor often the institution can articulate the determinative factors.
+
+A response available to algorithmic proponents is that the opacity problem is technical rather than principled: interpretability tools, explainable AI methods, and adversarial auditing can in principle make algorithmic reasoning legible. On this view, the objections to algorithmic decision-making are contingent on current implementation failures, not intrinsic limitations.
+
+The author submits, however, that accuracy-optimization framing is itself the more fundamental problem. Maximizing aggregate predictive accuracy treats error as interchangeable across subjects. But if errors are systematically concentrated among already-disadvantaged groups — if the algorithm is more likely to misclassify Black loan applicants or low-income parolees — then aggregate accuracy gains may come at the cost of distributional justice. What is required is not just more accurate algorithms but frameworks that integrate distributive fairness, procedural transparency, and individual contestability as design constraints, not afterthoughts.`,
+    question: 'A government agency adopts an AI system to allocate disability benefits. The system is 92% accurate overall but denies benefits to disabled applicants from low-income rural areas at twice the rate of applicants from urban areas with identical disability profiles. Based on the passage, how would the author most likely evaluate this system?',
+    choices: [
+      { label: 'A', text: 'The system is acceptable because 92% accuracy exceeds typical human caseworker performance, satisfying the proponents\' standard outlined in paragraph 1' },
+      { label: 'B', text: 'The system is ethically inadequate despite its accuracy because its errors are systematically concentrated among disadvantaged applicants (low-income rural populations), violating the distributional fairness standard the author advocates in paragraph 4' },
+      { label: 'C', text: 'The system should be evaluated primarily on whether an explainable AI audit can reveal why rural applicants are denied more frequently, making the primary concern the technical opacity described in paragraph 2' },
+      { label: 'D', text: 'The system represents an improvement over human decision-making because it at least applies consistent parameters to all applicants, eliminating the mood effects and in-group favoritism described in paragraph 1' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The author\'s framework (paragraph 4) specifically argues that aggregate accuracy is insufficient when errors are "systematically concentrated among already-disadvantaged groups." The disability benefits scenario exactly illustrates this concern: 92% aggregate accuracy, but errors concentrated in low-income rural applicants — a disadvantaged group. The author would evaluate this system as ethically inadequate on distributional justice grounds, regardless of its accuracy advantage over human caseworkers.',
+    wrongAnswerExplanations: {
+      A: 'This adopts the proponents\' standard (paragraph 1), which the author explicitly rejects in paragraph 4. The author\'s whole point is that accuracy alone is morally insufficient. Applying the proponents\' standard as if it were the author\'s conclusion contradicts the passage\'s argumentative arc.',
+      C: 'While the author supports transparency (paragraph 4 includes "procedural transparency" as a requirement), the author\'s PRIMARY concern with this system would be its distributional unfairness, not its opacity. The author would likely argue that even if an audit revealed why rural applicants are denied more, this would not resolve the distributional injustice — it would merely make it more legible. Transparency is a necessary but not sufficient condition.',
+      D: 'The author does not accept consistency as a morally sufficient defense of algorithmic systems. Paragraph 1 presents this as the proponents\' argument; the author\'s counterargument in paragraph 4 shows that consistent application of biased criteria does not produce just outcomes.',
+    },
+    teachingPoint: 'Application to new case: match the case to the specific principle the author advocates. The author\'s test (paragraph 4): (1) Are errors distributed fairly? (2) Is there procedural transparency? (3) Can individuals contest decisions? For the disability AI: fails test (1) — errors systematically favor urban over rural (disadvantaged) applicants. Author evaluates by their standard, not the proponents\' standard and not the opacity test alone.',
+    relatedTopics: ['Applying author\'s framework', 'New case application', 'Distributional justice test', 'Author vs proponent standards', 'CARS application question'],
+  },
+
+  // ── Passage 12: Philosophy of History — Objectivity vs. Perspectivism (Q058–Q062) ─
+  {
+    id: 'mcat-qb-cars-058',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy of History',
+    contentCategory: 'Reasoning Within the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Nineteenth-century German historicism, exemplified by Leopold von Ranke's famous aspiration to describe the past "as it actually was" — wie es eigentlich gewesen — proposed that the historian's task is one of rigorous effacement of present perspective. Given sufficient archival depth and methodological rigor, history could, on this account, recover the past as an objective factual record, unmarked by the scholar's cultural position.
+
+The Annales school, which rose to prominence in the mid-twentieth century, challenged this picture from within the historical discipline. By privileging structures and long-run patterns over the narrative of events, Annalistes implicitly acknowledged that historical evidence does not arrange itself — it must be selected, organized around analytical frameworks, and interpreted through categories that reflect theoretical and cultural commitments. The very decision to write history of mentalités rather than battles, or of climate and demography rather than kings, is already an interpretive act that the objectivist model cannot neutrally justify.
+
+Hayden White's narrativism extended this critique to the formal level. In White's account, historical writing necessarily emplots events in literary modes — tragedy, comedy, romance, or satire — that impose a shape on what counts as beginning, middle, and end, and consequently on what counts as cause and resolution. The choice between a tragic emplotment of a revolution (ending in failure) and a comic one (ending in reconciliation) is not determined by the evidence alone; it reflects the historian's interpretive imagination.
+
+Against the temptation to conclude from these critiques that historical writing is merely fictional, the author urges a more measured response. The choice is not between objectivity and subjectivity but between making one's narrative choices explicit or concealing them. Ranke's demand for perspective-free history did not eliminate the interpretive choices that shaped his own accounts; it only obscured them. An acknowledged perspectivist who is transparent about their organizing frameworks is epistemically more honest — and more open to criticism and revision — than a self-described objectivist who naturalizes their own narrative choices as neutral fact.`,
+    question: 'What is the primary argument of the passage?',
+    choices: [
+      { label: 'A', text: 'Historical writing is indistinguishable from fiction because historians inevitably impose literary emplotment on events, as Hayden White demonstrates' },
+      { label: 'B', text: 'The Annales school\'s structural history represents the best available method for historical objectivity because it focuses on patterns rather than narratives' },
+      { label: 'C', text: 'The apparent choice between objective and subjective history is a false dichotomy; acknowledged perspectivism — transparency about one\'s interpretive frameworks — is more epistemically honest than unreflective claims to objectivity' },
+      { label: 'D', text: 'Ranke\'s ideal of historical objectivity is achievable with sufficient archival depth and methodological rigor, as the Annales school later demonstrated' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The author\'s main argument appears in paragraph 4: "The choice is not between objectivity and subjectivity but between making one\'s narrative choices explicit or concealing them." The author uses Ranke (P1), the Annales school (P2), and White (P3) to build toward this synthesis: the objectivity/subjectivity dichotomy is false, and acknowledged perspectivism is epistemically superior to unreflective objectivism. This is a synthesis structure — the main argument resolves an apparent binary by reframing it.',
+    wrongAnswerExplanations: {
+      A: 'The author explicitly argues AGAINST concluding that history is "merely fictional": paragraph 4 begins "Against the temptation to conclude from these critiques that historical writing is merely fictional, the author urges a more measured response." The passage acknowledges White\'s critique but resists the extreme conclusion.',
+      B: 'The passage does not endorse the Annales school as the best method for objectivity. The Annales school is presented as an example that already implicitly challenges the objectivist model (because selecting topics is interpretive). The passage does not evaluate the Annales school as better than other approaches.',
+      D: 'This is the opposite of the passage\'s argument. The author argues that Ranke\'s demand for perspective-free history "did not eliminate the interpretive choices that shaped his own accounts; it only obscured them." The passage criticizes Ranke\'s ideal as an unrealized and potentially unrealizable aspiration, not as achievable with more archives.',
+    },
+    teachingPoint: 'False dichotomy synthesis: when a passage presents two opposing positions and then resolves them by showing the dichotomy is false ("not A vs. B but C"), the main argument is always the synthetic reframing. Signal phrase in P4: "The choice is not between X and Y but between..." — this is the author\'s positive thesis. P1–P3 build the case; P4 delivers the conclusion. Main argument = P4\'s synthesis, not any single thinker\'s position.',
+    relatedTopics: ['Main argument as synthesis', 'False dichotomy resolution', 'Perspectivism vs objectivism', 'CARS argument structure', 'Philosophy of history'],
+  },
+  {
+    id: 'mcat-qb-cars-059',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy of History',
+    contentCategory: 'Reasoning Within the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Nineteenth-century German historicism, exemplified by Leopold von Ranke's famous aspiration to describe the past "as it actually was" — wie es eigentlich gewesen — proposed that the historian's task is one of rigorous effacement of present perspective. Given sufficient archival depth and methodological rigor, history could, on this account, recover the past as an objective factual record, unmarked by the scholar's cultural position.
+
+The Annales school, which rose to prominence in the mid-twentieth century, challenged this picture from within the historical discipline. By privileging structures and long-run patterns over the narrative of events, Annalistes implicitly acknowledged that historical evidence does not arrange itself — it must be selected, organized around analytical frameworks, and interpreted through categories that reflect theoretical and cultural commitments. The very decision to write history of mentalités rather than battles, or of climate and demography rather than kings, is already an interpretive act that the objectivist model cannot neutrally justify.
+
+Hayden White's narrativism extended this critique to the formal level. In White's account, historical writing necessarily emplots events in literary modes — tragedy, comedy, romance, or satire — that impose a shape on what counts as beginning, middle, and end, and consequently on what counts as cause and resolution. The choice between a tragic emplotment of a revolution (ending in failure) and a comic one (ending in reconciliation) is not determined by the evidence alone; it reflects the historian's interpretive imagination.
+
+Against the temptation to conclude from these critiques that historical writing is merely fictional, the author urges a more measured response. The choice is not between objectivity and subjectivity but between making one's narrative choices explicit or concealing them. Ranke's demand for perspective-free history did not eliminate the interpretive choices that shaped his own accounts; it only obscured them. An acknowledged perspectivist who is transparent about their organizing frameworks is epistemically more honest — and more open to criticism and revision — than a self-described objectivist who naturalizes their own narrative choices as neutral fact.`,
+    question: 'The primary function of the third paragraph (Hayden White\'s narrativism) in the passage\'s argumentative structure is to:',
+    choices: [
+      { label: 'A', text: 'Refute the Annales school\'s structural approach by demonstrating that structural history is also subject to literary emplotment' },
+      { label: 'B', text: 'Present White\'s position as the author\'s own conclusion, establishing that historical writing is equivalent to fiction' },
+      { label: 'C', text: 'Introduce an opposing view that the author will defend against in paragraph 4 by arguing for a return to Rankean objectivism' },
+      { label: 'D', text: 'Extend the critique of historical objectivism to the formal level by showing that even the narrative structure of historical accounts reflects interpretive choices rather than neutral fact, deepening the case that objectivism is untenable' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Choice D is correct. Paragraph 2 critiques objectivism at the level of topic selection (what historians choose to study). Paragraph 3 extends this critique to the formal/structural level: even how events are shaped into a narrative (emplotment) involves interpretive choices not determined by evidence. The function is to deepen and extend the critique initiated in paragraph 2, making the case that objectivism is untenable at every level of historical practice — not just topic selection but also narrative structure. This builds toward the synthesis in paragraph 4.',
+    wrongAnswerExplanations: {
+      A: 'The passage does not present paragraph 3 as a refutation of the Annales school. The Annales school and White are presented as sequential critiques of objectivism — they are on the same side. White extends the critique of objectivism; he does not attack the Annales school.',
+      B: 'The author explicitly distances themselves from the conclusion that historical writing is "merely fictional" in paragraph 4. Paragraph 3 presents White\'s position, but the author then qualifies it rather than fully endorsing it. The paragraph function is to advance the anti-objectivism argument, not to state the author\'s final position.',
+      C: 'The author does not defend Rankean objectivism after paragraph 3. Paragraph 4 critiques Ranke\'s model ("did not eliminate the interpretive choices that shaped his own accounts; it only obscured them"). The author\'s conclusion moves toward acknowledged perspectivism, not a return to objectivism.',
+    },
+    teachingPoint: 'Extension paragraph function: when each paragraph builds on the previous critique, identify what is being extended. P1 = objectivism. P2 = critique via topic selection (Annales). P3 = critique via narrative form (White). Function of P3 = EXTEND/DEEPEN the anti-objectivism argument from P2 (topic level) to the structural/formal level. Do not confuse "position the author endorses" with "function in the argument." P3 serves the argument by deepening the critique, even though the author qualifies White\'s conclusion in P4.',
+    relatedTopics: ['Paragraph function', 'Extension of argument', 'Critique deepening', 'CARS argument progression', 'Narrativism in historical philosophy'],
+  },
+  {
+    id: 'mcat-qb-cars-060',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy of History',
+    contentCategory: 'Reasoning Within the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'medium',
+    questionType: 'passage',
+    passageText: `Nineteenth-century German historicism, exemplified by Leopold von Ranke's famous aspiration to describe the past "as it actually was" — wie es eigentlich gewesen — proposed that the historian's task is one of rigorous effacement of present perspective. Given sufficient archival depth and methodological rigor, history could, on this account, recover the past as an objective factual record, unmarked by the scholar's cultural position.
+
+The Annales school, which rose to prominence in the mid-twentieth century, challenged this picture from within the historical discipline. By privileging structures and long-run patterns over the narrative of events, Annalistes implicitly acknowledged that historical evidence does not arrange itself — it must be selected, organized around analytical frameworks, and interpreted through categories that reflect theoretical and cultural commitments. The very decision to write history of mentalités rather than battles, or of climate and demography rather than kings, is already an interpretive act that the objectivist model cannot neutrally justify.
+
+Hayden White's narrativism extended this critique to the formal level. In White's account, historical writing necessarily emplots events in literary modes — tragedy, comedy, romance, or satire — that impose a shape on what counts as beginning, middle, and end, and consequently on what counts as cause and resolution. The choice between a tragic emplotment of a revolution (ending in failure) and a comic one (ending in reconciliation) is not determined by the evidence alone; it reflects the historian's interpretive imagination.
+
+Against the temptation to conclude from these critiques that historical writing is merely fictional, the author urges a more measured response. The choice is not between objectivity and subjectivity but between making one\'s narrative choices explicit or concealing them. Ranke's demand for perspective-free history did not eliminate the interpretive choices that shaped his own accounts; it only obscured them. An acknowledged perspectivist who is transparent about their organizing frameworks is epistemically more honest — and more open to criticism and revision — than a self-described objectivist who naturalizes their own narrative choices as neutral fact.`,
+    question: 'The author\'s conclusion in paragraph 4 rests on which central assumption?',
+    choices: [
+      { label: 'A', text: 'Making one\'s interpretive frameworks explicit and transparent enables more rigorous criticism and potential revision of those frameworks, making acknowledged perspectivism epistemically productive rather than merely honest' },
+      { label: 'B', text: 'Historical archives contain enough primary evidence to allow at least partial recovery of events "as they actually were," provided the historian applies sufficiently rigorous methodology' },
+      { label: 'C', text: 'Literary emplotment in historical writing always distorts the factual record more than topic selection does, making narrative form the primary obstacle to historical knowledge' },
+      { label: 'D', text: 'Historians who claim objectivity are always consciously concealing their interpretive biases and doing so for self-interested reasons' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A is correct. The author concludes that acknowledged perspectivism is epistemically superior because it is "more open to criticism and revision." For this conclusion to hold, explicit frameworks must actually enable better criticism and revision than concealed ones. This is the unstated bridge: transparency → enables critique → enables correction. Without this assumption, the conclusion (that explicit perspectivism is epistemically better) does not follow from the premises. The author doesn\'t just claim perspectivism is honest — they claim it is epistemically MORE PRODUCTIVE.',
+    wrongAnswerExplanations: {
+      B: 'The author\'s argument does not depend on partial recoverability of events. Paragraph 4 accepts that interpretive choices are unavoidable and argues for managing them explicitly — not for reducing them by better archival work. If anything, the author\'s framework assumes interpretive choices cannot be eliminated.',
+      C: 'The author treats topic selection (P2) and narrative emplotment (P3) as parallel problems — both undermine objectivism, neither is more fundamental than the other. The author does not rank them. The conclusion in P4 addresses both levels equally.',
+      D: 'The author explicitly says Ranke\'s objectivism "only obscured" interpretive choices — not that Ranke was consciously concealing biases for self-interested reasons. The author uses softer language: naturalization, obscuring. Self-interested deception is not implied. The author\'s argument can succeed even if objectivists sincerely believe in their methods.',
+    },
+    teachingPoint: 'Conclusion assumption identification: the conclusion is "acknowledged perspectivism is more epistemically honest AND more open to criticism." The assumption is: transparency about frameworks enables better criticism/revision. Without this link, honesty alone wouldn\'t justify "epistemically better" — it would only justify "more transparent." The claim of epistemic superiority requires that transparency is not just decorative but functionally useful for knowledge production.',
+    relatedTopics: ['Author assumption', 'Epistemic argument', 'Transparency enables critique', 'CARS assumption identification', 'Perspectivism and objectivism'],
+  },
+  {
+    id: 'mcat-qb-cars-061',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy of History',
+    contentCategory: 'Foundations of Comprehension',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 1',
+    difficulty: 'easy',
+    questionType: 'passage',
+    passageText: `Nineteenth-century German historicism, exemplified by Leopold von Ranke's famous aspiration to describe the past "as it actually was" — wie es eigentlich gewesen — proposed that the historian's task is one of rigorous effacement of present perspective. Given sufficient archival depth and methodological rigor, history could, on this account, recover the past as an objective factual record, unmarked by the scholar's cultural position.
+
+The Annales school, which rose to prominence in the mid-twentieth century, challenged this picture from within the historical discipline. By privileging structures and long-run patterns over the narrative of events, Annalistes implicitly acknowledged that historical evidence does not arrange itself — it must be selected, organized around analytical frameworks, and interpreted through categories that reflect theoretical and cultural commitments. The very decision to write history of mentalités rather than battles, or of climate and demography rather than kings, is already an interpretive act that the objectivist model cannot neutrally justify.
+
+Hayden White's narrativism extended this critique to the formal level. In White's account, historical writing necessarily emplots events in literary modes — tragedy, comedy, romance, or satire — that impose a shape on what counts as beginning, middle, and end, and consequently on what counts as cause and resolution. The choice between a tragic emplotment of a revolution (ending in failure) and a comic one (ending in reconciliation) is not determined by the evidence alone; it reflects the historian's interpretive imagination.
+
+Against the temptation to conclude from these critiques that historical writing is merely fictional, the author urges a more measured response. The choice is not between objectivity and subjectivity but between making one\'s narrative choices explicit or concealing them. Ranke's demand for perspective-free history did not eliminate the interpretive choices that shaped his own accounts; it only obscured them. An acknowledged perspectivist who is transparent about their organizing frameworks is epistemically more honest — and more open to criticism and revision — than a self-described objectivist who naturalizes their own narrative choices as neutral fact.`,
+    question: 'As used in paragraph 1 of the passage, "wie es eigentlich gewesen" most nearly means:',
+    choices: [
+      { label: 'A', text: 'A method of literary emplotment that shapes historical narratives through tragic, comic, or romantic modes' },
+      { label: 'B', text: 'An aspiration to recover the past as a purely factual record, free from the historian\'s interpretive perspective — to describe it "as it actually was"' },
+      { label: 'C', text: 'A structural approach to history that emphasizes long-run demographic and climatic patterns over the narrative of events' },
+      { label: 'D', text: 'The acknowledgment that all historical accounts are inevitably shaped by the cultural position of the scholar who writes them' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The passage explicitly translates and contextualizes the phrase immediately: "Leopold von Ranke\'s famous aspiration to describe the past \'as it actually was\' — wie es eigentlich gewesen — proposed that the historian\'s task is one of rigorous effacement of present perspective." The phrase means: the past as it actually was, i.e., an objective factual record unmarked by the historian\'s perspective. This is a direct comprehension question — the passage provides the translation and context.',
+    wrongAnswerExplanations: {
+      A: 'This describes White\'s literary emplotment concept from paragraph 3, not Ranke\'s phrase from paragraph 1. These are distinct and opposing positions in the passage.',
+      C: 'This describes the Annales school\'s approach (paragraph 2), which is presented as a critique of Ranke\'s model, not as a synonym for Ranke\'s aspiration.',
+      D: 'This describes the acknowledged perspectivist position advocated in paragraph 4, which is the opposite of Ranke\'s objectivist aspiration. Wie es eigentlich gewesen represents the view that an unmarked factual record is possible, not the acknowledgment that all accounts are culturally shaped.',
+    },
+    teachingPoint: 'Meaning in context: when a passage introduces a foreign phrase and immediately glosses it ("as it actually was"), the meaning in context IS the gloss. Do not import outside knowledge about the phrase. The passage is self-contained: "Ranke\'s aspiration to describe the past \'as it actually was\' — wie es eigentlich gewesen." This is direct retrieval with a comprehension translation check.',
+    relatedTopics: ['Meaning in context', 'Phrase interpretation', 'Direct retrieval', 'Ranke historicism', 'CARS vocabulary in context'],
+  },
+  {
+    id: 'mcat-qb-cars-062',
+    test: 'MCAT',
+    section: 'cars',
+    discipline: 'Philosophy of History',
+    contentCategory: 'Reasoning Beyond the Text',
+    foundationalConcept: 'CARS',
+    scientificSkill: 'Skill 2',
+    difficulty: 'hard',
+    questionType: 'passage',
+    passageText: `Nineteenth-century German historicism, exemplified by Leopold von Ranke's famous aspiration to describe the past "as it actually was" — wie es eigentlich gewesen — proposed that the historian's task is one of rigorous effacement of present perspective. Given sufficient archival depth and methodological rigor, history could, on this account, recover the past as an objective factual record, unmarked by the scholar's cultural position.
+
+The Annales school, which rose to prominence in the mid-twentieth century, challenged this picture from within the historical discipline. By privileging structures and long-run patterns over the narrative of events, Annalistes implicitly acknowledged that historical evidence does not arrange itself — it must be selected, organized around analytical frameworks, and interpreted through categories that reflect theoretical and cultural commitments. The very decision to write history of mentalités rather than battles, or of climate and demography rather than kings, is already an interpretive act that the objectivist model cannot neutrally justify.
+
+Hayden White's narrativism extended this critique to the formal level. In White's account, historical writing necessarily emplots events in literary modes — tragedy, comedy, romance, or satire — that impose a shape on what counts as beginning, middle, and end, and consequently on what counts as cause and resolution. The choice between a tragic emplotment of a revolution (ending in failure) and a comic one (ending in reconciliation) is not determined by the evidence alone; it reflects the historian's interpretive imagination.
+
+Against the temptation to conclude from these critiques that historical writing is merely fictional, the author urges a more measured response. The choice is not between objectivity and subjectivity but between making one\'s narrative choices explicit or concealing them. Ranke's demand for perspective-free history did not eliminate the interpretive choices that shaped his own accounts; it only obscured them. An acknowledged perspectivist who is transparent about their organizing frameworks is epistemically more honest — and more open to criticism and revision — than a self-described objectivist who naturalizes their own narrative choices as neutral fact.`,
+    question: 'Which of the following findings would most strongly challenge the author\'s conclusion in paragraph 4?',
+    choices: [
+      { label: 'A', text: 'An analysis showing that White\'s four literary modes (tragedy, comedy, romance, satire) do not exhaust the range of narrative structures historians employ' },
+      { label: 'B', text: 'Evidence that some historians who explicitly acknowledge their interpretive frameworks still produce accounts that are subsequently revised less often than those of self-described objectivists' },
+      { label: 'C', text: 'A study showing that historians from radically different cultural traditions and theoretical commitments consistently converge on the same conclusions about a contested historical event when using the same archival sources, suggesting that evidence substantially constrains interpretation' },
+      { label: 'D', text: 'A historical case study showing that a Rankean historian made significant factual errors in their account due to insufficient archival research' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. The author\'s argument rests on the claim that interpretive frameworks are unavoidably imposed on historical evidence — evidence cannot arrange itself neutrally. If historians from radically different cultural and theoretical positions nevertheless converge on the same conclusions using the same sources, this suggests that evidence exerts substantial constraint on interpretation — that the evidence does significantly determine the account rather than just the interpretive framework. This would undermine the author\'s premise that interpretation is fundamentally underdetermined by evidence, and would rehabilitate something like Ranke\'s aspiration.',
+    wrongAnswerExplanations: {
+      A: 'That White\'s taxonomy is incomplete does not weaken the author\'s argument. The author uses White\'s point to show that emplotment choices exist and are not determined by evidence alone — even if more than four modes are available, the point about underdetermination remains. Expanding the taxonomy does not restore objectivism.',
+      B: 'This finding actually SUPPORTS the author\'s conclusion. If acknowledged perspectivists are open to revision less often than self-described objectivists, it might suggest their transparency makes revision easier, consistent with the author\'s epistemic argument. The finding does not challenge the author.',
+      D: 'Showing that a Rankean historian made factual errors from insufficient archival research does not challenge the author\'s argument about interpretive choices — it would actually support the critique of objectivism by showing that even committed objectivists fall short of their ideals. The author\'s argument is about interpretive underdetermination, not archival thoroughness.',
+    },
+    teachingPoint: 'Challenging a "interpretation is underdetermined by evidence" argument: the strongest counter is showing that evidence IS sufficient to constrain interpretation — that rational inquiry converges despite interpretive diversity. Cross-cultural convergence on conclusions challenges underdetermination claims. Wrong answers attack peripheral claims (White\'s taxonomy, factual errors) rather than the core underdetermination premise. Always target the MOST CENTRAL premise for the strongest challenge.',
+    relatedTopics: ['Challenging underdetermination', 'Evidence and interpretation', 'Cross-cultural convergence', 'CARS weaken argument', 'Objectivism and perspectivism'],
+  },
 ]
