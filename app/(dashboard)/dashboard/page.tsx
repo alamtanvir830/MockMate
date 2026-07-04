@@ -230,10 +230,68 @@ export default async function DashboardPage() {
         )
       })()}
 
-      {/* Recent owned exams */}
+      {/* Pre-made Exams */}
+      <div>
+        <div className="mb-4">
+          <h2 className="text-base font-semibold text-slate-900">Pre-made Exams</h2>
+          <p className="text-sm text-slate-500 mt-0.5">Start with our ready-made full-length practice exams.</p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {/* SAT card */}
+          <Card className="flex flex-col gap-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                </svg>
+              </div>
+              <div className="flex gap-1.5 shrink-0">
+                <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-xs font-semibold text-emerald-700">Free</span>
+                <span className="inline-flex items-center rounded-full bg-blue-50 border border-blue-200 px-2 py-0.5 text-xs font-medium text-blue-600">Pre-made</span>
+              </div>
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-slate-900 text-sm leading-snug">Take your first free SAT Exam Form 1</p>
+              <p className="mt-1 text-xs text-slate-500">Start with a full-length SAT practice test in the digital adaptive style.</p>
+              <p className="mt-1.5 text-xs text-slate-400">Adaptive · Full length</p>
+            </div>
+            <Link href="/premade/sat/form-1">
+              <button className="w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 transition-colors">
+                Start SAT Form 1
+              </button>
+            </Link>
+          </Card>
+
+          {/* MCAT card */}
+          <Card className="flex flex-col gap-3">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21a48.25 48.25 0 01-8.135-.687c-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                </svg>
+              </div>
+              <div className="flex gap-1.5 shrink-0">
+                <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-xs font-medium text-emerald-700">Pre-made</span>
+              </div>
+            </div>
+            <div className="flex-1">
+              <p className="font-semibold text-slate-900 text-sm leading-snug">If you're taking the MCAT, take your first MCAT exam</p>
+              <p className="mt-1 text-xs text-slate-500">Begin with MCAT Form 1 and get section-by-section feedback and scoring.</p>
+              <p className="mt-1.5 text-xs text-slate-400">AAMC-style structure · Full length</p>
+            </div>
+            <Link href="/premade/mcat/form-1">
+              <button className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 transition-colors">
+                Start MCAT Form 1
+              </button>
+            </Link>
+          </Card>
+        </div>
+      </div>
+
+      {/* Exam History */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-base font-semibold text-slate-900">Recent exams</h2>
+          <h2 className="text-base font-semibold text-slate-900">Exam History</h2>
           <Link href="/exams" className="text-sm text-emerald-600 hover:text-emerald-500 font-medium transition-colors">
             View all
           </Link>
