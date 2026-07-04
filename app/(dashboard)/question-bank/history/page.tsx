@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { loadAllQBHistory, type QBHistoryEntry } from '@/lib/question-bank/history'
+import { syncLocalQBHistoryToSupabase, hasUnsyncedQBHistory } from '@/lib/question-bank/sync-to-supabase'
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
@@ -13,11 +14,35 @@ export default function QBHistoryPage() {
   const [entries, setEntries] = useState<QBHistoryEntry[]>([])
   const [loaded, setLoaded] = useState(false)
   const [filter, setFilter] = useState<'all' | 'SAT' | 'MCAT'>('all')
+  const [hasUnsynced, setHasUnsynced] = useState(false)
+  const [syncing, setSyncing] = useState(false)
+  const [syncMsg, setSyncMsg] = useState<string | null>(null)
 
   useEffect(() => {
     setEntries(loadAllQBHistory())
     setLoaded(true)
+    setHasUnsynced(hasUnsyncedQBHistory())
   }, [])
+
+  async function handleManualSync() {
+    setSyncing(true)
+    setSyncMsg(null)
+    try {
+      const result = await syncLocalQBHistoryToSupabase()
+      if (result.errors.length > 0) {
+        setSyncMsg(`Synced ${result.newlyInserted} set(s). Some errors occurred.`)
+      } else if (result.newlyInserted > 0) {
+        setSyncMsg(`Restored ${result.newlyInserted} practice set(s) to your account.`)
+      } else {
+        setSyncMsg('All history is already synced.')
+      }
+      setHasUnsynced(hasUnsyncedQBHistory())
+    } catch {
+      setSyncMsg('Sync failed. Please try again.')
+    } finally {
+      setSyncing(false)
+    }
+  }
 
   const filtered = filter === 'all' ? entries : entries.filter(e => e.test === filter)
 
@@ -33,6 +58,29 @@ export default function QBHistoryPage() {
         <h1 className="text-2xl font-bold text-slate-900">Question Bank History</h1>
         <p className="text-slate-500 text-sm mt-1">All your previous SAT and MCAT question bank practice sets.</p>
       </div>
+
+      {/* Manual sync banner */}
+      {(hasUnsynced || syncMsg) && (
+        <div className="mb-4 flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4 shrink-0 text-slate-400">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
+          </svg>
+          {syncMsg ? (
+            <span className="flex-1 text-slate-600">{syncMsg}</span>
+          ) : (
+            <span className="flex-1 text-slate-600">You have local practice history that hasn&apos;t been saved to your account.</span>
+          )}
+          {!syncMsg && (
+            <button
+              onClick={handleManualSync}
+              disabled={syncing}
+              className="shrink-0 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 disabled:opacity-60"
+            >
+              {syncing ? 'Syncing…' : 'Import old history'}
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Filter tabs */}
       <div className="flex gap-2 mb-5">

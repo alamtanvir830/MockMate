@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { MobileHeader } from '@/components/dashboard/mobile-header'
 import { SyncSatAttempts } from '@/components/premade/SyncSatAttempts'
+import { SyncQBHistory } from '@/components/question-bank/SyncQBHistory'
 
 export default async function DashboardLayout({
   children,
@@ -25,6 +26,7 @@ export default async function DashboardLayout({
         <MobileHeader />
         <main className="flex-1 overflow-y-auto">
           <SyncSatAttempts />
+          <SyncQBHistory />
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
             {children}
           </div>
