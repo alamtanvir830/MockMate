@@ -12,6 +12,7 @@ import {
   getSelectedQuestionIds,
   type CategoryNode,
 } from '@/lib/question-bank/mcat/categories'
+import { loadAllQBHistory, type QBHistoryEntry } from '@/lib/question-bank/history'
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -229,6 +230,10 @@ export default function MCATQuestionBankPage() {
   const [customCount, setCustomCount] = useState('')
   const [useCustom, setUseCustom] = useState(false)
   const [mode, setMode] = useState<ModeFilter>('tutor')
+  const [recentHistory, setRecentHistory] = useState<QBHistoryEntry[]>([])
+  useEffect(() => {
+    setRecentHistory(loadAllQBHistory().filter(e => e.test === 'MCAT').slice(0, 3))
+  }, [])
 
   const selectedQIds = useMemo(() => getSelectedQuestionIds(selectedLeafIds, tree), [selectedLeafIds, tree])
 
@@ -525,6 +530,31 @@ export default function MCATQuestionBankPage() {
               })}
             />
           ))}
+        </div>
+      )}
+
+      {/* MCAT QB History */}
+      {recentHistory.length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 p-4 mt-5">
+          <div className="flex items-center justify-between gap-4 mb-3">
+            <p className="text-sm font-semibold text-slate-700">MCAT Question Bank History</p>
+            <Link href="/question-bank/history?filter=MCAT" className="text-xs font-medium text-emerald-600 hover:underline whitespace-nowrap">
+              View all →
+            </Link>
+          </div>
+          <div className="divide-y divide-slate-100">
+            {recentHistory.map(entry => (
+              <div key={entry.id} className="flex items-center gap-3 py-2.5 first:pt-0 last:pb-0">
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-slate-700 truncate">{entry.title}</p>
+                  <p className="text-[11px] text-slate-400">{entry.correctCount}/{entry.totalQuestions} correct · {entry.accuracy}% · {new Date(entry.completedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</p>
+                </div>
+                <Link href={entry.reviewUrl} className="shrink-0 text-xs font-semibold text-emerald-600 hover:text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-2.5 py-1.5 rounded-lg transition-colors">
+                  Review
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 

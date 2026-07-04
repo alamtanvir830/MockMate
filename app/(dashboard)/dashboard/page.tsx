@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card'
 import { ExamStatusBadge } from '@/components/ui/badge'
 import { daysUntil, isExamLocked } from '@/lib/utils'
 import { seedDemoExam, seedDemoGroupExam } from '@/lib/demo/seed-demo-exam'
+import { QBHistorySection } from '@/components/dashboard/QBHistorySection'
 import type { Exam } from '@/types'
 
 export const metadata: Metadata = { title: 'Dashboard' }
@@ -287,6 +288,9 @@ export default async function DashboardPage() {
           </Card>
         </div>
       </div>
+
+      {/* Question Bank History */}
+      <QBHistorySection />
 
       {/* Exam History */}
       <div>
