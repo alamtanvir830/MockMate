@@ -324,7 +324,9 @@ export default function SATQuestionBankPage() {
 
   const [selectedSkills, setSelectedSkills] = useState<Set<string>>(() => new Set(ALL_SKILLS))
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(SECTIONS.map(s => s.id)))
-  const [expandedDomains, setExpandedDomains] = useState<Set<string>>(new Set())
+  const [expandedDomains, setExpandedDomains] = useState<Set<string>>(
+    new Set(SECTIONS.flatMap(s => s.domains.map(d => d.id)))
+  )
   const [search, setSearch] = useState('')
   const [difficulty, setDifficulty] = useState<DifficultyFilter>('all')
   const [count, setCount] = useState(10)
