@@ -3645,15 +3645,16 @@ Despite its success with hydrogen, the Bohr model fails for multi-electron atoms
     scientificSkill: 'Skill 2',
     difficulty: 'medium',
     questionType: 'discrete',
-    question: `A researcher measures initial rates for the reaction A + B → Products:
-
-| [A] (M) | [B] (M) | Initial Rate (M/s) |
-|:-------:|:-------:|:------------------:|
-| 0.10    | 0.10    | 2.0 × 10⁻³        |
-| 0.20    | 0.10    | 8.0 × 10⁻³        |
-| 0.10    | 0.20    | 4.0 × 10⁻³        |
-
-What is the overall reaction order?`,
+    question: 'A researcher measures initial rates for the reaction A + B → Products. The results are shown in Table 1. What is the overall reaction order?',
+    tableData: {
+      headers: ['[A] (M)', '[B] (M)', 'Initial Rate (M/s)'],
+      rows: [
+        ['0.10', '0.10', '2.0 × 10⁻³'],
+        ['0.20', '0.10', '8.0 × 10⁻³'],
+        ['0.10', '0.20', '4.0 × 10⁻³'],
+      ],
+      caption: 'Table 1. Initial Rate Data for A + B → Products',
+    },
     choices: [
       { label: 'A', text: 'First order overall' },
       { label: 'B', text: 'Second order overall (second order in A, zero order in B)' },
