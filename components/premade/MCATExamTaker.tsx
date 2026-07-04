@@ -61,6 +61,7 @@ function uid(): string {
   return `mcat_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`
 }
 
+// ── Kept for ResultsScreen ────────────────────────────────────────────────────
 const SECTION_COLORS = ['indigo', 'emerald', 'violet', 'amber'] as const
 type SectionColor = typeof SECTION_COLORS[number]
 
@@ -69,6 +70,22 @@ const colorMap: Record<SectionColor, { bg: string; text: string; border: string;
   emerald: { bg: 'bg-emerald-600', text: 'text-emerald-700', border: 'border-emerald-300', light: 'bg-emerald-50' },
   violet: { bg: 'bg-violet-600', text: 'text-violet-700', border: 'border-violet-300', light: 'bg-violet-50' },
   amber: { bg: 'bg-amber-500', text: 'text-amber-700', border: 'border-amber-300', light: 'bg-amber-50' },
+}
+
+// ── Icons ─────────────────────────────────────────────────────────────────────
+function IconChevronLeft({ className }: { className?: string }) {
+  return (
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className={className}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+    </svg>
+  )
+}
+function IconChevronRight({ className }: { className?: string }) {
+  return (
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className={className}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+    </svg>
+  )
 }
 
 // ─── MCATExamTaker ─────────────────────────────────────────────────────────────
@@ -88,23 +105,20 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
   const [bookmarks, setBookmarks] = useState<Set<string>>(
     new Set(initialAttempt?.bookmarks ?? [])
   )
-  // per-section timers in seconds
   const [sectionTimers, setSectionTimers] = useState<number[]>(
     form.sections.map(s => s.timeMinutes * 60)
   )
   const [breakSecsLeft, setBreakSecsLeft] = useState(0)
   const [timerActive, setTimerActive] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
-  const [expandedQ, setExpandedQ] = useState<string | null>(null)
 
-  // Computed attempt from initialAttempt for results page
   const attempt = initialAttempt ?? null
   const [liveAttempt, setLiveAttempt] = useState<MCATAttempt | null>(null)
   const [aiFeedback, setAIFeedback] = useState<MCATAIFeedback | null>(initialAttempt?.aiFeedback ?? null)
   const [aiFeedbackLoading, setAIFeedbackLoading] = useState(false)
   const [attemptId] = useState(() => uid())
 
-  // ── Timer logic ──────────────────────────────────────────────────────────────
+  // ── Timer ────────────────────────────────────────────────────────────────────
   const stopTimer = useCallback(() => {
     setTimerActive(false)
     if (timerRef.current) clearInterval(timerRef.current)
@@ -120,7 +134,6 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
           if (next[sIdx] > 0) {
             next[sIdx]--
           } else {
-            // time expired — auto-advance
             stopTimer()
             goToNextAfterSection(sIdx)
           }
@@ -192,7 +205,6 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
   // ── Finish exam ──────────────────────────────────────────────────────────────
   function finishExam() {
     stopTimer()
-    // Count correct per section
     const sectionCorrect = flatSections.map(flat =>
       flat.filter(({ q }) => answers[q.id] === q.correctAnswer).length
     )
@@ -252,7 +264,7 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
     const missed = flatSections.flatMap(flat =>
       flat
         .filter(({ q }) => a.answers[q.id] !== q.correctAnswer)
-        .map(({ q, passage }) => ({
+        .map(({ q }) => ({
           section: form.sections[q.sectionId === 'chem-phys' ? 0 : q.sectionId === 'cars' ? 1 : q.sectionId === 'bio-biochem' ? 2 : 3].abbreviation,
           questionType: q.questionType,
           discipline: q.discipline,
@@ -290,47 +302,70 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
   // ─── Render phases ──────────────────────────────────────────────────────────
 
   if (phase.tag === 'welcome') {
-    return <WelcomeScreen form={form} flatSections={flatSections} onStart={() => setPhase({ tag: 'section_intro', sIdx: 0 })} />
+    return (
+      <WelcomeScreen
+        form={form}
+        flatSections={flatSections}
+        onStart={() => setPhase({ tag: 'section_intro', sIdx: 0 })}
+      />
+    )
   }
 
+  // ── Section intro ────────────────────────────────────────────────────────────
   if (phase.tag === 'section_intro') {
     const { sIdx } = phase
     const sec = form.sections[sIdx]
-    const color = colorMap[SECTION_COLORS[sIdx]]
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center px-4 py-12">
-        <div className="w-full max-w-lg bg-white rounded-2xl border border-slate-200 shadow-sm p-8 text-center">
-          <div className={cn('inline-flex items-center justify-center h-14 w-14 rounded-xl mb-5', color.light)}>
-            <span className={cn('text-2xl font-bold', color.text)}>{sIdx + 1}</span>
+      <div className="min-h-screen bg-slate-50 flex flex-col">
+        <div className="bg-emerald-700 px-5 h-14 flex items-center justify-between shrink-0">
+          <div>
+            <div className="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-300 leading-none mb-0.5">
+              MockMate MCAT Practice Exam
+            </div>
+            <div className="text-[14px] font-bold text-white leading-none">{form.title}</div>
           </div>
-          <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Section {sIdx + 1} of {form.sections.length}</p>
-          <h1 className="text-xl font-bold text-slate-900 mb-2">{sec.title}</h1>
-          <p className="text-sm text-slate-500 mb-6">
-            {sec.seededCount} questions · {sec.timeMinutes} minutes
-            {sec.seededCount < sec.questionCount && (
-              <span className="ml-1 text-amber-600">(Phase 1: full exam has {sec.questionCount})</span>
-            )}
-          </p>
-          <div className="bg-slate-50 rounded-xl border border-slate-100 p-4 mb-6 text-left space-y-2">
-            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Section Rules</p>
-            <p className="text-sm text-slate-600">• Answer all questions within the time limit.</p>
-            <p className="text-sm text-slate-600">• You can move freely between questions within this section.</p>
-            <p className="text-sm text-slate-600">• Once you submit this section, you cannot return to it.</p>
-            {sec.breakAfterMinutes && (
-              <p className="text-sm text-slate-600">• A {sec.breakAfterMinutes}-minute break follows this section.</p>
-            )}
+          <div className="text-[11px] text-emerald-200">
+            Section {sIdx + 1} of {form.sections.length}
           </div>
-          <button
-            onClick={() => goToQuestion(sIdx, 0)}
-            className={cn('w-full py-3 rounded-xl text-white font-semibold text-sm transition-colors', color.bg, `hover:opacity-90`)}
-          >
-            Begin Section {sIdx + 1}
-          </button>
+        </div>
+
+        <div className="flex-1 flex items-center justify-center px-4 py-12">
+          <div className="w-full max-w-lg bg-white rounded-2xl border border-slate-200 shadow-sm p-8 text-center">
+            <div className="inline-flex items-center justify-center h-14 w-14 rounded-xl bg-emerald-50 mb-5">
+              <span className="text-2xl font-bold text-emerald-700">{sIdx + 1}</span>
+            </div>
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">
+              Section {sIdx + 1} of {form.sections.length}
+            </p>
+            <h1 className="text-xl font-bold text-slate-900 mb-2">{sec.title}</h1>
+            <p className="text-sm text-slate-500 mb-6">
+              {sec.seededCount} questions · {sec.timeMinutes} minutes
+              {sec.seededCount < sec.questionCount && (
+                <span className="ml-1 text-amber-600">(Phase 1: full exam has {sec.questionCount})</span>
+              )}
+            </p>
+            <div className="bg-slate-50 rounded-xl border border-slate-100 p-4 mb-6 text-left space-y-2">
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Section Rules</p>
+              <p className="text-sm text-slate-600">• Answer all questions within the time limit.</p>
+              <p className="text-sm text-slate-600">• You can move freely between questions within this section.</p>
+              <p className="text-sm text-slate-600">• Once you submit this section, you cannot return to it.</p>
+              {sec.breakAfterMinutes && (
+                <p className="text-sm text-slate-600">• A {sec.breakAfterMinutes}-minute break follows this section.</p>
+              )}
+            </div>
+            <button
+              onClick={() => goToQuestion(sIdx, 0)}
+              className="w-full py-3 rounded-xl bg-emerald-600 text-white font-semibold text-sm hover:bg-emerald-700 transition-colors"
+            >
+              Begin Section {sIdx + 1}
+            </button>
+          </div>
         </div>
       </div>
     )
   }
 
+  // ── Question phase ───────────────────────────────────────────────────────────
   if (phase.tag === 'question') {
     const { sIdx, qIdx } = phase
     const flat = flatSections[sIdx]
@@ -338,135 +373,232 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
     if (!item) return null
     const { q, passage } = item
     const sec = form.sections[sIdx]
-    const color = colorMap[SECTION_COLORS[sIdx]]
     const secsLeft = sectionTimers[sIdx]
     const isLastQ = qIdx === flat.length - 1
+    const isFlagged = bookmarks.has(q.id)
+    const hasPassage = passage !== null
 
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col">
-        {/* Header */}
-        <header className="sticky top-0 z-20 bg-white border-b border-slate-200 px-4 py-2 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className={cn('h-7 w-7 rounded-lg flex items-center justify-center text-xs font-bold text-white shrink-0', color.bg)}>
-              {sIdx + 1}
-            </div>
-            <p className="text-xs font-medium text-slate-600 truncate hidden sm:block">{sec.abbreviation}</p>
-          </div>
-          <p className="text-sm font-medium text-slate-700">Q {qIdx + 1} / {flat.length}</p>
-          <div className={cn('text-sm font-mono font-semibold px-3 py-1 rounded-lg', secsLeft < 300 ? 'bg-red-50 text-red-600' : 'bg-slate-100 text-slate-700')}>
-            {formatTime(secsLeft)}
-          </div>
-        </header>
+      <div className="h-screen w-full flex flex-col bg-white overflow-hidden">
 
-        {/* Content */}
-        <div className={cn('flex-1', passage ? 'grid md:grid-cols-2' : 'flex justify-center')}>
-          {/* Passage pane */}
-          {passage && (
-            <div className="overflow-y-auto border-r border-slate-200 bg-white px-6 py-6 max-h-[calc(100vh-56px)] md:max-h-none">
-              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-3">Passage</p>
-              <div className="prose prose-sm max-w-none text-slate-700 whitespace-pre-wrap leading-relaxed text-sm">
-                {passage.passageText}
+        {/* ══ STICKY HEADER ═══════════════════════════════════════════════════ */}
+        <div className="shrink-0">
+
+          {/* Main green bar */}
+          <div className="bg-emerald-700 px-5 h-14 flex items-center justify-between">
+            <div>
+              <div className="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-300 leading-none mb-0.5">
+                MockMate MCAT Practice Exam Form 1
               </div>
-              {passage.figures?.map((fig, i) => (
-                <div key={i} className="mt-4 border border-slate-200 rounded-lg overflow-hidden">
-                  {fig.type === 'table' && (
-                    <table className="w-full text-xs">
-                      {fig.title && <caption className="py-2 text-[11px] font-semibold text-slate-500 bg-slate-50">{fig.title}</caption>}
-                      <thead className="bg-slate-100">
-                        <tr>{(fig as { headers: string[] }).headers.map((h, hi) => <th key={hi} className="px-3 py-1.5 text-left font-semibold text-slate-700">{h}</th>)}</tr>
-                      </thead>
-                      <tbody>
-                        {(fig as { rows: string[][] }).rows.map((row, ri) => (
-                          <tr key={ri} className={ri % 2 ? 'bg-slate-50' : ''}>
-                            {row.map((cell, ci) => <td key={ci} className="px-3 py-1.5 text-slate-600">{cell}</td>)}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  )}
-                  {fig.type === 'figure' && (
-                    <div className="p-3">
-                      {fig.title && <p className="text-[11px] font-semibold text-slate-500 mb-1">{fig.title}</p>}
-                      <p className="text-xs text-slate-500 italic">{(fig as { description: string }).description}</p>
-                    </div>
-                  )}
+              <div className="text-[14px] font-bold text-white leading-none">
+                {sec.title} — Question {qIdx + 1} of {flat.length}
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className={cn(
+                'text-sm font-mono font-semibold px-3 py-1 rounded',
+                secsLeft < 300 ? 'bg-red-800/50 text-red-200' : 'bg-emerald-800/50 text-emerald-100'
+              )}>
+                {formatTime(secsLeft)}
+              </div>
+              <button
+                onClick={() => { stopTimer(); setPhase({ tag: 'section_review', sIdx }) }}
+                className="text-[11px] font-semibold text-emerald-200 hover:text-white border border-emerald-500 hover:border-emerald-300 px-3 py-1.5 rounded transition-colors"
+              >
+                Review Section
+              </button>
+            </div>
+          </div>
+
+          {/* Sub-bar: section | discipline | skill */}
+          <div className="bg-emerald-800 px-5 py-2 flex items-center gap-2 text-[11px]">
+            <span className="font-bold text-white">{sec.abbreviation}</span>
+            <span className="text-emerald-500 select-none">|</span>
+            <span className="text-emerald-200">{q.discipline}</span>
+            <span className="text-emerald-500 select-none">|</span>
+            <span className="text-emerald-300">{q.scientificSkill}</span>
+            {isFlagged && (
+              <>
+                <span className="text-emerald-500 select-none">|</span>
+                <span className="text-amber-300 font-semibold">⚑ Flagged for Review</span>
+              </>
+            )}
+          </div>
+
+          {/* Toolbar */}
+          <div className="bg-slate-50 border-b border-slate-200 px-4 h-9 flex items-center gap-0.5">
+            {/* Highlight — placeholder */}
+            <button
+              className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-slate-400 rounded hover:bg-slate-200/70 transition-colors"
+              title="Text highlighting — coming soon"
+              tabIndex={-1}
+            >
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-3.5 w-3.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+              </svg>
+              Highlight
+            </button>
+
+            {/* Strikeout — placeholder */}
+            <button
+              className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium text-slate-400 rounded hover:bg-slate-200/70 transition-colors"
+              title="Strikeout — coming soon"
+              tabIndex={-1}
+            >
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-3.5 w-3.5 opacity-70">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 12h12M9 6l3 3-3 3M15 6l-3 3 3 3" />
+              </svg>
+              Strikeout
+            </button>
+
+            <div className="w-px h-4 bg-slate-300 mx-1" />
+
+            {/* Flag — functional */}
+            <button
+              onClick={() => toggleBookmark(q.id)}
+              className={cn(
+                'flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-medium rounded transition-colors',
+                isFlagged
+                  ? 'text-amber-600 bg-amber-50 hover:bg-amber-100'
+                  : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
+              )}
+            >
+              <svg
+                fill={isFlagged ? 'currentColor' : 'none'}
+                viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-3.5 w-3.5"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
+              </svg>
+              {isFlagged ? 'Flagged' : 'Flag for Review'}
+            </button>
+          </div>
+        </div>
+        {/* ══ END STICKY HEADER ═══════════════════════════════════════════════ */}
+
+
+        {/* ══ CONTENT AREA ════════════════════════════════════════════════════ */}
+        <div className="flex flex-1 overflow-hidden">
+
+          {/* Left pane: passage */}
+          {hasPassage && (
+            <div className="w-[46%] shrink-0 border-r border-slate-200 bg-[#FAFAF8] overflow-y-auto">
+              <div className="px-7 py-6">
+                <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-4 pb-3 border-b border-slate-200">
+                  Passage
                 </div>
-              ))}
+                <div className="text-[13.5px] leading-[1.95] text-slate-800 whitespace-pre-wrap">
+                  {passage!.passageText}
+                </div>
+                {passage!.figures?.map((fig, i) => (
+                  <div key={i} className="mt-6 border border-slate-200 rounded overflow-hidden">
+                    {fig.type === 'table' && (
+                      <table className="w-full text-[12px]">
+                        {fig.title && (
+                          <caption className="py-2 px-3 text-[11px] font-semibold text-slate-500 bg-slate-50 text-left caption-top">
+                            {fig.title}
+                          </caption>
+                        )}
+                        <thead className="bg-slate-100 border-b border-slate-200">
+                          <tr>
+                            {(fig as { headers: string[] }).headers.map((h, hi) => (
+                              <th key={hi} className="px-3 py-2 text-left font-semibold text-slate-700">{h}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {(fig as { rows: string[][] }).rows.map((row, ri) => (
+                            <tr key={ri} className={ri % 2 ? 'bg-slate-50' : 'bg-white'}>
+                              {row.map((cell, ci) => (
+                                <td key={ci} className="px-3 py-2 text-slate-600">{cell}</td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    )}
+                    {fig.type === 'figure' && (
+                      <div className="p-4 bg-slate-50">
+                        {fig.title && (
+                          <p className="text-[11px] font-semibold text-slate-600 mb-2">{fig.title}</p>
+                        )}
+                        <p className="text-[12px] text-slate-500 italic">
+                          {(fig as { description: string }).description}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
-          {/* Question pane */}
-          <div className={cn('overflow-y-auto px-6 py-6 max-h-[calc(100vh-56px)]', !passage && 'w-full max-w-2xl')}>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-xs text-slate-400 font-medium">{q.discipline}</span>
-              <span className="text-slate-200">·</span>
-              <span className="text-xs text-slate-400">{q.scientificSkill}</span>
-              <button
-                onClick={() => toggleBookmark(q.id)}
-                className={cn('ml-auto text-[11px] px-2 py-0.5 rounded-full border transition-colors', bookmarks.has(q.id) ? 'bg-amber-50 border-amber-300 text-amber-600' : 'border-slate-200 text-slate-400 hover:text-amber-500')}
-              >
-                {bookmarks.has(q.id) ? '★ Flagged' : '☆ Flag'}
-              </button>
-            </div>
+          {/* Right pane: question + choices */}
+          <div className={cn('bg-white overflow-y-auto', hasPassage ? 'flex-1 min-w-0' : 'w-full')}>
+            <div className={cn('py-7', hasPassage ? 'px-7' : 'px-8 max-w-3xl mx-auto')}>
 
-            <p className="text-sm font-medium text-slate-900 leading-relaxed mb-5">{q.question}</p>
+              {/* Question label */}
+              <div className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-4 pb-3 border-b border-slate-200">
+                Question {qIdx + 1}
+              </div>
 
-            <div className="space-y-2.5">
-              {q.choices.map(choice => {
-                const selected = answers[q.id] === choice.label
-                return (
-                  <button
-                    key={choice.label}
-                    onClick={() => handleAnswer(q.id, choice.label as MCATChoiceLabel)}
-                    className={cn(
-                      'w-full text-left flex gap-3 items-start px-4 py-3 rounded-xl border text-sm transition-all',
-                      selected
-                        ? cn('border-2 font-medium', color.border, color.light, color.text)
-                        : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50'
-                    )}
-                  >
-                    <span className={cn('shrink-0 h-5 w-5 rounded-full border flex items-center justify-center text-[11px] font-bold mt-0.5',
-                      selected ? cn('border-current', color.text) : 'border-slate-300 text-slate-400'
-                    )}>
-                      {choice.label}
-                    </span>
-                    <span>{choice.text}</span>
-                  </button>
-                )
-              })}
-            </div>
+              {/* Question stem */}
+              <p className="text-[14px] font-medium text-slate-900 leading-relaxed mb-6">
+                {q.question}
+              </p>
 
-            {/* Navigation */}
-            <div className="flex items-center justify-between mt-8 gap-3">
-              <button
-                onClick={() => qIdx > 0 && setPhase({ tag: 'question', sIdx, qIdx: qIdx - 1 })}
-                disabled={qIdx === 0}
-                className="px-4 py-2 text-sm font-medium text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50 disabled:opacity-30 transition-colors"
-              >
-                ← Previous
-              </button>
-              {isLastQ ? (
-                <button
-                  onClick={() => { stopTimer(); setPhase({ tag: 'section_review', sIdx }) }}
-                  className={cn('px-5 py-2 text-sm font-semibold text-white rounded-lg transition-colors', color.bg, 'hover:opacity-90')}
-                >
-                  Review Section →
-                </button>
-              ) : (
-                <button
-                  onClick={() => setPhase({ tag: 'question', sIdx, qIdx: qIdx + 1 })}
-                  className={cn('px-5 py-2 text-sm font-semibold text-white rounded-lg transition-colors', color.bg, 'hover:opacity-90')}
-                >
-                  Next →
-                </button>
-              )}
+              {/* Answer choices */}
+              <div className="border border-slate-300 rounded overflow-hidden divide-y divide-slate-200">
+                {q.choices.map(choice => {
+                  const isSelected = answers[q.id] === choice.label
+                  return (
+                    <button
+                      key={choice.label}
+                      onClick={() => handleAnswer(q.id, choice.label as MCATChoiceLabel)}
+                      className={cn(
+                        'w-full flex items-stretch text-left transition-colors group',
+                        isSelected ? 'bg-emerald-50' : 'bg-white hover:bg-slate-50'
+                      )}
+                    >
+                      <span className={cn(
+                        'w-11 flex items-center justify-center text-[12px] font-bold shrink-0 border-r py-3.5',
+                        isSelected
+                          ? 'border-emerald-300 bg-emerald-100 text-emerald-700'
+                          : 'border-slate-200 bg-slate-50 text-slate-500 group-hover:border-slate-300'
+                      )}>
+                        {choice.label}
+                      </span>
+                      <span className={cn(
+                        'flex-1 px-5 py-3.5 text-[13px] leading-relaxed',
+                        isSelected ? 'text-slate-900' : 'text-slate-700'
+                      )}>
+                        {choice.text}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+
             </div>
           </div>
         </div>
+        {/* ══ END CONTENT AREA ════════════════════════════════════════════════ */}
 
-        {/* Question palette */}
-        <div className="border-t border-slate-200 bg-white px-4 py-2">
-          <div className="flex flex-wrap gap-1 justify-center">
+
+        {/* ══ STICKY FOOTER ═══════════════════════════════════════════════════ */}
+        <div className="shrink-0 bg-white border-t border-slate-300 px-4 py-2.5 flex items-center gap-3">
+
+          {/* Previous */}
+          <button
+            onClick={() => qIdx > 0 && setPhase({ tag: 'question', sIdx, qIdx: qIdx - 1 })}
+            disabled={qIdx === 0}
+            className="flex items-center gap-1.5 px-4 py-2 text-[12px] font-semibold text-slate-600 hover:text-slate-800 border border-slate-300 rounded hover:bg-slate-50 disabled:opacity-30 disabled:cursor-not-allowed transition-colors shrink-0"
+          >
+            <IconChevronLeft className="h-3.5 w-3.5" />
+            Previous
+          </button>
+
+          {/* Question palette — scrollable */}
+          <div className="flex-1 overflow-x-auto flex items-center gap-1 py-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {flat.map((item, i) => {
               const answered = !!answers[item.q.id]
               const flagged = bookmarks.has(item.q.id)
@@ -476,11 +608,14 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
                   key={i}
                   onClick={() => setPhase({ tag: 'question', sIdx, qIdx: i })}
                   className={cn(
-                    'h-6 w-6 rounded text-[10px] font-semibold transition-colors',
-                    current ? cn('text-white', color.bg) :
-                    flagged ? 'bg-amber-100 text-amber-600 border border-amber-300' :
-                    answered ? 'bg-slate-700 text-white' :
-                    'bg-slate-100 text-slate-400 hover:bg-slate-200'
+                    'shrink-0 h-6 w-6 rounded text-[10px] font-semibold transition-colors',
+                    current
+                      ? 'bg-emerald-600 text-white'
+                      : flagged
+                      ? 'bg-amber-100 text-amber-600 border border-amber-300'
+                      : answered
+                      ? 'bg-slate-700 text-white'
+                      : 'bg-slate-100 text-slate-400 hover:bg-slate-200'
                   )}
                 >
                   {i + 1}
@@ -488,114 +623,180 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
               )
             })}
           </div>
+
+          {/* Next / Review Section */}
+          {isLastQ ? (
+            <button
+              onClick={() => { stopTimer(); setPhase({ tag: 'section_review', sIdx }) }}
+              className="flex items-center gap-1.5 px-4 py-2 text-[12px] font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded transition-colors shrink-0"
+            >
+              Review Section
+              <IconChevronRight className="h-3.5 w-3.5" />
+            </button>
+          ) : (
+            <button
+              onClick={() => setPhase({ tag: 'question', sIdx, qIdx: qIdx + 1 })}
+              className="flex items-center gap-1.5 px-4 py-2 text-[12px] font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded transition-colors shrink-0"
+            >
+              Next
+              <IconChevronRight className="h-3.5 w-3.5" />
+            </button>
+          )}
         </div>
+        {/* ══ END STICKY FOOTER ═══════════════════════════════════════════════ */}
+
       </div>
     )
   }
 
+  // ── Section review ───────────────────────────────────────────────────────────
   if (phase.tag === 'section_review') {
     const { sIdx } = phase
     const flat = flatSections[sIdx]
     const sec = form.sections[sIdx]
-    const color = colorMap[SECTION_COLORS[sIdx]]
     const answered = flat.filter(({ q }) => !!answers[q.id]).length
     const unanswered = flat.length - answered
 
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center px-4 py-12">
-        <div className="w-full max-w-lg bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
-          <h2 className="text-lg font-bold text-slate-900 mb-1">Section Review</h2>
-          <p className="text-sm text-slate-500 mb-6">{sec.title}</p>
-
-          <div className="grid grid-cols-2 gap-3 mb-6">
-            <div className="bg-slate-50 rounded-xl p-3 text-center">
-              <p className="text-2xl font-bold text-slate-900">{answered}</p>
-              <p className="text-xs text-slate-500">Answered</p>
+      <div className="min-h-screen bg-slate-50 flex flex-col">
+        <div className="bg-emerald-700 px-5 h-14 flex items-center justify-between shrink-0">
+          <div>
+            <div className="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-300 leading-none mb-0.5">
+              MockMate MCAT Practice Exam Form 1
             </div>
-            <div className="bg-amber-50 rounded-xl p-3 text-center">
-              <p className="text-2xl font-bold text-amber-600">{unanswered}</p>
-              <p className="text-xs text-slate-500">Unanswered</p>
+            <div className="text-[14px] font-bold text-white leading-none">
+              Review — {sec.title}
             </div>
           </div>
-
-          <div className="flex flex-wrap gap-1 mb-6">
-            {flat.map((item, i) => {
-              const answered = !!answers[item.q.id]
-              const flagged = bookmarks.has(item.q.id)
-              return (
-                <button
-                  key={i}
-                  onClick={() => setPhase({ tag: 'question', sIdx, qIdx: i })}
-                  className={cn(
-                    'h-7 w-7 rounded text-xs font-semibold transition-colors',
-                    flagged ? 'bg-amber-100 text-amber-600 border border-amber-300' :
-                    answered ? 'bg-slate-700 text-white' :
-                    'bg-red-100 text-red-500 border border-red-200'
-                  )}
-                >
-                  {i + 1}
-                </button>
-              )
-            })}
+          <div className="text-[11px] text-emerald-200">
+            {answered} / {flat.length} answered
           </div>
+        </div>
 
-          <div className="flex gap-3">
-            <button
-              onClick={() => goToQuestion(sIdx, 0)}
-              className="flex-1 py-2.5 text-sm font-medium text-slate-700 border border-slate-200 rounded-xl hover:bg-slate-50"
-            >
-              Return to Section
-            </button>
-            <button
-              onClick={() => submitSection(sIdx)}
-              className={cn('flex-1 py-2.5 text-sm font-semibold text-white rounded-xl', color.bg, 'hover:opacity-90')}
-            >
-              Submit Section {sIdx + 1}
-            </button>
+        <div className="flex-1 flex items-center justify-center px-4 py-12">
+          <div className="w-full max-w-lg bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+            <h2 className="text-lg font-bold text-slate-900 mb-1">Section Review</h2>
+            <p className="text-sm text-slate-500 mb-6">{sec.title}</p>
+
+            <div className="grid grid-cols-2 gap-3 mb-6">
+              <div className="bg-slate-50 rounded-xl p-3 text-center">
+                <p className="text-2xl font-bold text-slate-900">{answered}</p>
+                <p className="text-xs text-slate-500">Answered</p>
+              </div>
+              <div className="bg-amber-50 rounded-xl p-3 text-center">
+                <p className="text-2xl font-bold text-amber-600">{unanswered}</p>
+                <p className="text-xs text-slate-500">Unanswered</p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-1 mb-6">
+              {flat.map((item, i) => {
+                const isAnswered = !!answers[item.q.id]
+                const flagged = bookmarks.has(item.q.id)
+                return (
+                  <button
+                    key={i}
+                    onClick={() => goToQuestion(sIdx, i)}
+                    className={cn(
+                      'h-7 w-7 rounded text-xs font-semibold transition-colors',
+                      flagged
+                        ? 'bg-amber-100 text-amber-600 border border-amber-300'
+                        : isAnswered
+                        ? 'bg-emerald-100 text-emerald-700 border border-emerald-200'
+                        : 'bg-red-100 text-red-500 border border-red-200'
+                    )}
+                  >
+                    {i + 1}
+                  </button>
+                )
+              })}
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 text-[11px] text-slate-500 mb-6">
+              <span className="flex items-center gap-1"><span className="h-3 w-3 rounded bg-emerald-100 border border-emerald-200 inline-block" /> Answered</span>
+              <span className="flex items-center gap-1"><span className="h-3 w-3 rounded bg-red-100 border border-red-200 inline-block" /> Unanswered</span>
+              <span className="flex items-center gap-1"><span className="h-3 w-3 rounded bg-amber-100 border border-amber-300 inline-block" /> Flagged</span>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => goToQuestion(sIdx, 0)}
+                className="flex-1 py-2.5 text-sm font-medium text-slate-700 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
+              >
+                Return to Section
+              </button>
+              <button
+                onClick={() => submitSection(sIdx)}
+                className="flex-1 py-2.5 text-sm font-semibold text-white rounded-xl bg-emerald-600 hover:bg-emerald-700 transition-colors"
+              >
+                Submit Section {sIdx + 1}
+              </button>
+            </div>
+            {unanswered > 0 && (
+              <p className="text-xs text-amber-600 text-center mt-3">
+                {unanswered} question{unanswered > 1 ? 's' : ''} unanswered — you can still go back.
+              </p>
+            )}
           </div>
-          {unanswered > 0 && (
-            <p className="text-xs text-amber-600 text-center mt-3">
-              {unanswered} question{unanswered > 1 ? 's' : ''} unanswered — you can still go back.
-            </p>
-          )}
         </div>
       </div>
     )
   }
 
+  // ── Break screen ─────────────────────────────────────────────────────────────
   if (phase.tag === 'break') {
     const { afterSIdx } = phase
     const sec = form.sections[afterSIdx]
     const nextSec = form.sections[afterSIdx + 1]
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md bg-white rounded-2xl border border-slate-200 shadow-sm p-8 text-center">
-          <div className="h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-6 w-6 text-slate-400">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+      <div className="min-h-screen bg-slate-50 flex flex-col">
+        <div className="bg-emerald-700 px-5 h-14 flex items-center justify-between shrink-0">
+          <div>
+            <div className="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-300 leading-none mb-0.5">
+              MockMate MCAT Practice Exam Form 1
+            </div>
+            <div className="text-[14px] font-bold text-white leading-none">Optional Break</div>
           </div>
-          <h2 className="text-lg font-bold text-slate-900 mb-1">Optional Break</h2>
-          <p className="text-sm text-slate-500 mb-4">
-            Section {afterSIdx + 1} complete. You have a {sec.breakAfterMinutes}-minute break.
-          </p>
-          <p className="text-3xl font-mono font-bold text-slate-900 mb-6">{formatTime(breakSecsLeft)}</p>
-          <p className="text-sm text-slate-500 mb-6">
-            Next: <strong>{nextSec?.title}</strong>
-          </p>
-          <button
-            onClick={() => { stopTimer(); startNextSection(afterSIdx + 1) }}
-            className="w-full py-3 rounded-xl bg-slate-900 text-white font-semibold text-sm hover:bg-slate-700 transition-colors"
-          >
-            Skip Break & Start Next Section
-          </button>
+          <div className="font-mono font-bold text-white text-xl">{formatTime(breakSecsLeft)}</div>
+        </div>
+
+        <div className="flex-1 flex items-center justify-center px-4 py-12">
+          <div className="w-full max-w-md bg-white rounded-2xl border border-slate-200 shadow-sm p-8 text-center">
+            <div className="h-12 w-12 rounded-full bg-emerald-50 flex items-center justify-center mx-auto mb-4">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-6 w-6 text-emerald-600">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h2 className="text-lg font-bold text-slate-900 mb-1">Optional Break</h2>
+            <p className="text-sm text-slate-500 mb-4">
+              Section {afterSIdx + 1} complete. You have a {sec.breakAfterMinutes}-minute break.
+            </p>
+            <p className="text-3xl font-mono font-bold text-emerald-700 mb-6">{formatTime(breakSecsLeft)}</p>
+            <p className="text-sm text-slate-500 mb-6">
+              Next: <strong>{nextSec?.title}</strong>
+            </p>
+            <button
+              onClick={() => { stopTimer(); startNextSection(afterSIdx + 1) }}
+              className="w-full py-3 rounded-xl bg-emerald-600 text-white font-semibold text-sm hover:bg-emerald-700 transition-colors"
+            >
+              Skip Break & Start Next Section
+            </button>
+          </div>
         </div>
       </div>
     )
   }
 
   if (phase.tag === 'results' && displayAttempt) {
-    return <ResultsScreen form={form} flatSections={flatSections} attempt={displayAttempt} aiFeedback={aiFeedback} aiFeedbackLoading={aiFeedbackLoading} />
+    return (
+      <ResultsScreen
+        form={form}
+        flatSections={flatSections}
+        attempt={displayAttempt}
+        aiFeedback={aiFeedback}
+        aiFeedbackLoading={aiFeedbackLoading}
+      />
+    )
   }
 
   return null
@@ -607,56 +808,65 @@ function WelcomeScreen({ form, flatSections, onStart }: {
   flatSections: FlatQ[][]
   onStart: () => void
 }) {
-  const totalSeeded = flatSections.reduce((s, f) => s + f.length, 0)
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center px-4 py-12">
-      <div className="w-full max-w-2xl">
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mb-4">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-12 w-12 rounded-xl bg-indigo-50 flex items-center justify-center">
-              <span className="text-xl font-bold text-indigo-600">M</span>
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">MockMate MCAT Practice</p>
-              <h1 className="text-xl font-bold text-slate-900">{form.title}</h1>
-            </div>
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      <div className="bg-emerald-700 px-5 h-14 flex items-center shrink-0">
+        <div>
+          <div className="text-[9px] font-bold uppercase tracking-[0.18em] text-emerald-300 leading-none mb-0.5">
+            MockMate MCAT Practice Exam
           </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-            {form.sections.map((sec, i) => {
-              const color = colorMap[SECTION_COLORS[i]]
-              const seeded = flatSections[i].length
-              return (
-                <div key={sec.id} className={cn('rounded-xl p-3 text-center', color.light)}>
-                  <p className={cn('text-[10px] font-bold uppercase tracking-wide', color.text)}>{sec.abbreviation}</p>
-                  <p className="text-lg font-bold text-slate-900 mt-1">{seeded}q</p>
-                  <p className="text-[10px] text-slate-500">{sec.timeMinutes} min</p>
-                </div>
-              )
-            })}
-          </div>
-
-          <div className="space-y-2 mb-6">
-            {form.sections.map((sec, i) => (
-              <div key={sec.id} className="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
-                <span className="text-slate-700">{i + 1}. {sec.title}</span>
-                <span className="text-slate-400">{sec.timeMinutes} min</span>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-xs text-slate-400 mb-6">{form.disclaimer}</p>
-
-          <button
-            onClick={onStart}
-            className="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold text-sm hover:bg-indigo-700 transition-colors"
-          >
-            Begin Exam
-          </button>
+          <div className="text-[14px] font-bold text-white leading-none">{form.title}</div>
         </div>
-        <Link href="/premade/mcat" className="text-sm text-slate-400 hover:text-slate-600 block text-center">
-          ← Back to MCAT Practice
-        </Link>
+      </div>
+
+      <div className="flex-1 flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-2xl">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 mb-4">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-12 w-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+                <span className="text-xl font-bold text-emerald-700">M</span>
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest">MockMate MCAT Practice</p>
+                <h1 className="text-xl font-bold text-slate-900">{form.title}</h1>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+              {form.sections.map((sec, i) => {
+                const seeded = flatSections[i].length
+                return (
+                  <div key={sec.id} className="rounded-xl p-3 text-center bg-emerald-50 border border-emerald-100">
+                    <p className="text-[10px] font-bold uppercase tracking-wide text-emerald-700">{sec.abbreviation}</p>
+                    <p className="text-lg font-bold text-slate-900 mt-1">{seeded}q</p>
+                    <p className="text-[10px] text-slate-500">{sec.timeMinutes} min</p>
+                  </div>
+                )
+              })}
+            </div>
+
+            <div className="space-y-2 mb-6">
+              {form.sections.map((sec, i) => (
+                <div key={sec.id} className="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 last:border-0">
+                  <span className="text-slate-700">{i + 1}. {sec.title}</span>
+                  <span className="text-slate-400">{sec.timeMinutes} min</span>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-xs text-slate-400 mb-6">{form.disclaimer}</p>
+
+            <button
+              onClick={onStart}
+              className="w-full py-3 rounded-xl bg-emerald-600 text-white font-semibold text-sm hover:bg-emerald-700 transition-colors"
+            >
+              Begin Exam
+            </button>
+          </div>
+          <Link href="/premade/mcat" className="text-sm text-slate-400 hover:text-slate-600 block text-center">
+            ← Back to MCAT Practice
+          </Link>
+        </div>
       </div>
     </div>
   )
@@ -682,7 +892,6 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
 
   const percentile = getApproximatePercentile(attempt.totalScore)
 
-  // Discipline breakdown
   const disciplineMap: Record<string, { correct: number; total: number }> = {}
   flatSections.forEach(flat => {
     flat.forEach(({ q }) => {
@@ -692,7 +901,6 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
     })
   })
 
-  // Skill breakdown
   const skillMap: Record<string, { correct: number; total: number }> = {}
   flatSections.forEach(flat => {
     flat.forEach(({ q }) => {
@@ -844,7 +1052,9 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
                 key={i}
                 onClick={() => setActiveSection(i)}
                 className={cn('px-4 py-3 text-xs font-semibold whitespace-nowrap transition-colors',
-                  activeSection === i ? cn('border-b-2 -mb-px', colorMap[SECTION_COLORS[i]].text, 'border-current') : 'text-slate-500 hover:text-slate-700'
+                  activeSection === i
+                    ? cn('border-b-2 -mb-px', colorMap[SECTION_COLORS[i]].text, 'border-current')
+                    : 'text-slate-500 hover:text-slate-700'
                 )}
               >
                 {sec.abbreviation}
@@ -870,9 +1080,9 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
                         <span className="text-xs text-slate-400">Q{i + 1}</span>
-                        <span className="text-xs text-slate-300">·</span>
+                        <span className="text-slate-200">·</span>
                         <span className="text-xs text-slate-400">{q.discipline}</span>
-                        <span className="text-xs text-slate-300">·</span>
+                        <span className="text-slate-200">·</span>
                         <span className="text-xs text-slate-400">{q.difficulty}</span>
                         {passage && <span className="text-xs text-indigo-400">passage</span>}
                       </div>
