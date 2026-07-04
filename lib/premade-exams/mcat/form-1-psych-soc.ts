@@ -13,7 +13,7 @@ export const psychSocSection: MCATSection = {
     {
       id: 'ps-p1',
       sectionId: 'psych-soc',
-      title: 'Passage 1',
+      title: 'Classical and Operant Conditioning',
       passageText: `Learning theorists have long distinguished between two major forms of associative learning: classical conditioning and operant conditioning. Classical conditioning, first systematically studied by Ivan Pavlov, involves pairing a neutral stimulus with an unconditioned stimulus that reliably produces an unconditioned response. Through repeated pairings, the previously neutral stimulus becomes a conditioned stimulus capable of eliciting a conditioned response similar to the original unconditioned response.
 
 Operant conditioning, developed by B.F. Skinner from Thorndike's earlier work on the law of effect, differs fundamentally in that behavior is shaped by its consequences. Reinforcement — positive (adding a pleasant stimulus) or negative (removing an aversive stimulus) — increases the likelihood of a behavior. Punishment — positive (adding an aversive stimulus) or negative (removing a pleasant stimulus) — decreases the likelihood of a behavior. Skinner identified four schedules of partial reinforcement: fixed-ratio, variable-ratio, fixed-interval, and variable-interval. Each schedule produces a distinct pattern of responding and different resistance to extinction.
@@ -162,7 +162,7 @@ A separate experiment examined spontaneous recovery: after extinction, rats were
     {
       id: 'ps-p2',
       sectionId: 'psych-soc',
-      title: 'Passage 2',
+      title: 'Bourdieu: Capital, Field, and Social Reproduction',
       passageText: `The French sociologist Pierre Bourdieu proposed that social inequality is reproduced across generations not only through economic capital (material wealth) but through cultural capital and social capital. Cultural capital encompasses the knowledge, skills, educational credentials, and aesthetic dispositions that are valued within a social field. It exists in three states: embodied (internalized dispositions and competencies), objectified (cultural goods such as books, art, and instruments), and institutionalized (academic credentials and degrees). Social capital refers to the actual and potential resources arising from membership in durable social networks.
 
 Central to Bourdieu's framework is the concept of habitus — the durable, transposable system of dispositions that individuals acquire through their social trajectory. Habitus functions below the level of conscious deliberation, shaping perceptions, judgments, and practices in ways that reproduce the conditions of the social field in which it was formed. Children raised in upper-class families develop habitual familiarity with cultural practices (visiting museums, playing classical instruments, discussing literature) that are evaluated positively by educational institutions. Because these practices appear natural to those who possess them, the advantages they confer are misrecognized as individual merit rather than social inheritance.
@@ -311,7 +311,7 @@ Data from a longitudinal study of educational attainment found that students fro
     {
       id: 'ps-p3',
       sectionId: 'psych-soc',
-      title: 'Passage 3',
+      title: 'Attribution Theory and the Fundamental Attribution Error',
       passageText: `Attribution theory examines how people explain the causes of behavior and events. Fritz Heider's foundational work distinguished between internal attributions (dispositional; behavior caused by a person's traits, abilities, or character) and external attributions (situational; behavior caused by context, circumstances, or chance). Lee Ross introduced the term fundamental attribution error (FAE) to describe the pervasive tendency of observers to over-attribute behavior to dispositional causes while under-weighting situational factors.
 
 The classic demonstration of the FAE was provided by Jones and Harris (1967), who showed that observers attributed pro-Castro attitudes to essay writers even when told the writers had been randomly assigned to write pro-Castro essays. The situational constraint (assignment) was discounted in favor of dispositional inference (the writer must actually hold those views).
@@ -462,7 +462,7 @@ Results: Condition A mean = 3.2 (SD = 0.9); Condition B mean = 5.4 (SD = 1.1); t
     {
       id: 'ps-p4',
       sectionId: 'psych-soc',
-      title: 'Passage 4',
+      title: 'Levels of Processing and Memory Encoding',
       passageText: `Cognitive psychologists Fergus Craik and Robert Lockhart proposed the levels of processing (LOP) framework as an alternative to the multi-store (Atkinson-Shiffrin) model of memory. Rather than emphasizing distinct structural stages, LOP theory argues that memory durability depends on the depth at which information is encoded. Structural (orthographic) processing — attending to superficial visual features of a word — represents the shallowest level and produces weak, short-lived memory traces. Phonological (acoustic) processing — attending to how a word sounds — represents an intermediate level. Semantic processing — attending to meaning, associations, and relationships to existing knowledge — represents the deepest level and produces the most durable, retrievable memory traces.
 
 Craik and Tulving (1975) demonstrated depth effects by presenting participants with words under incidental learning conditions. Participants answered different types of questions about each word: "Is the word in capitals?" (structural), "Does the word rhyme with TRAIN?" (phonological), or "Would the word fit the sentence 'He placed the ___ on the shelf'?" (semantic). Participants were not told they would later be tested. A subsequent recall test showed robust depth effects favoring semantic encoding.
@@ -623,7 +623,7 @@ To replicate LOP effects, researchers randomly assigned 90 undergraduates to enc
     {
       id: 'ps-p5',
       sectionId: 'psych-soc',
-      title: 'Passage 5',
+      title: 'Social Determinants of Health and the SES Gradient',
       passageText: `The social determinants of health (SDOH) are the conditions in which people are born, grow, live, work, and age. Decades of research have established a robust SES gradient in health: individuals with higher income, education, and occupational status experience lower rates of chronic disease and longer life expectancy than those with lower SES. This gradient persists across countries with differing healthcare systems, suggesting it reflects something fundamental about social stratification and health.
 
 Racial health disparities in the United States present a more complex picture. Black Americans experience significantly higher rates of hypertension, cardiovascular disease (CVD), premature mortality, and adverse birth outcomes than White Americans — disparities that persist after controlling for SES. Arline Geronimus's weathering hypothesis proposes that persistent exposure to racial discrimination and the chronic stress of navigating a racially stratified society produces cumulative biological wear. Geronimus termed this process weathering, and researchers subsequently operationalized it using the concept of allostatic load — the physiological cost of chronic stress activation, measurable via elevated cortisol, blood pressure, inflammatory markers, and accelerated telomere shortening.
@@ -785,7 +785,7 @@ Researchers analyzed national CVD mortality data across four groups defined by r
     {
       id: 'ps-p6',
       sectionId: 'psych-soc',
-      title: 'Passage 6',
+      title: 'Actor-Observer Asymmetry and Causal Attribution',
       passageText: `Attribution theory examines how individuals explain the causes of behavior — their own and others'. Fritz Heider proposed the fundamental distinction between internal (dispositional) attributions, in which behavior is explained by the actor's traits or intentions, and external (situational) attributions, in which behavior is explained by environmental or contextual factors.
 
 Lee Ross identified the fundamental attribution error (FAE), also called correspondence bias: the tendency to overestimate dispositional factors and underestimate situational factors when explaining other people's behavior. In a classic demonstration, participants who were told that essay writers had been assigned their position (for or against a political issue) still rated the writers' true attitudes as consistent with the essay's content — ignoring the situational constraint.
@@ -945,7 +945,7 @@ Researchers ran a study in which participants observed a job interview and rated
     {
       id: 'ps-p7',
       sectionId: 'psych-soc',
-      title: 'Passage 7',
+      title: 'Socialization, Identity, and Social Institutions',
       passageText: `Socialization is the lifelong process through which individuals learn and internalize the norms, values, beliefs, and behaviors appropriate to their culture. The family serves as the primary agent of socialization in early childhood, shaping language, emotional regulation, and basic social scripts. Schools, peer groups, mass media, and religious institutions function as secondary agents, extending and sometimes contesting the values transmitted by the family.
 
 George Herbert Mead proposed a symbolic interactionist account of socialization: the self develops through social interaction. Mead distinguished the "I" — the spontaneous, creative aspect of self — from the "me" — the socialized self formed by internalizing the expectations of others (the "generalized other"). Children progress through the preparatory stage (imitation without understanding), the play stage (role-playing specific others, such as parent or teacher), and the game stage (understanding and coordinating multiple social roles simultaneously — the generalized other). The capacity to take the perspective of the generalized other allows individuals to regulate their own behavior in accordance with social norms.
@@ -1107,7 +1107,7 @@ Researchers surveying first-generation college students (FGCSs) found that many 
     {
       id: 'ps-p8',
       sectionId: 'psych-soc',
-      title: 'Passage 8',
+      title: 'Cognitive Dissonance and Attitude Change',
       passageText: `Cognitive dissonance theory, developed by Leon Festinger, proposes that individuals experience psychological discomfort (dissonance) when they hold two cognitions that are psychologically inconsistent — when behavior conflicts with a belief, or when a belief conflicts with new information. This discomfort motivates cognitive or behavioral change to restore consistency. Festinger and Carlsmith's classic experiment demonstrated that participants paid only $1 to lie about a boring task later rated the task as more enjoyable than those paid $20. The small-payment group, lacking sufficient external justification for their behavior, resolved dissonance by changing their attitude — deciding the task was actually not so bad.
 
 The self-perception theory, proposed by Daryl Bem, offers a behavioral alternative: individuals infer their own attitudes from their behavior, just as they would infer another person's attitudes. On this view, the participant who was paid $1 concluded "I did this for little money, so I must have found it interesting" — without requiring the concept of arousing dissonance or needing to reduce it. Bem argued that dissonance arousal is unnecessary to explain attitude change and that self-perception provides a parsimonious account.

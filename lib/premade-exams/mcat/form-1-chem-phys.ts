@@ -13,7 +13,7 @@ export const chemPhysSection: MCATSection = {
     {
       id: 'cp-p1',
       sectionId: 'chem-phys',
-      title: 'Passage 1',
+      title: 'The Carbonate Buffer System',
       passageText: `The carbonate buffer system is the primary extracellular buffer in human blood, maintaining plasma pH near 7.4. This system consists of carbonic acid (H₂CO₃) and bicarbonate (HCO₃⁻), described by the equilibrium:
 
 H₂CO₃ ⇌ H⁺ + HCO₃⁻     pKₐ = 6.1
@@ -191,7 +191,7 @@ Table 1 shows the pH measured after adding NaOH to the carbonate solution.
     {
       id: 'cp-p2',
       sectionId: 'chem-phys',
-      title: 'Passage 2',
+      title: 'Michaelis-Menten Kinetics and Enzyme Inhibition',
       passageText: `Enzyme kinetics can be described by the Michaelis-Menten model, where reaction velocity (v) depends on substrate concentration [S]:
 
 v = Vmax[S] / (Km + [S])
@@ -349,7 +349,7 @@ On a Lineweaver-Burk plot, the y-intercept = 1/Vmax and the x-intercept = -1/Km.
     {
       id: 'cp-p3',
       sectionId: 'chem-phys',
-      title: 'Passage 3',
+      title: 'Hemodynamics and Fluid Flow',
       passageText: `Blood flow through vessels follows principles of fluid dynamics. For laminar flow, the Hagen-Poiseuille equation describes volumetric flow rate (Q):
 
 Q = (πr⁴ΔP) / (8ηL)
@@ -510,7 +510,7 @@ Experiment: In an in vitro model, a tube of inner radius 3 mm was reduced to 1.5
     {
       id: 'cp-p4',
       sectionId: 'chem-phys',
-      title: 'Passage 4',
+      title: 'Resting Membrane Potential and the Nernst Equation',
       passageText: `The resting membrane potential of neurons arises from unequal ion distributions across the plasma membrane. The equilibrium potential for any individual ion is described by the Nernst equation. At physiological temperature (37°C), this simplifies to:
 
 E_ion = (61.5 mV / z) × log([X]_out / [X]_in)
@@ -681,7 +681,7 @@ The Na⁺–K⁺ ATPase (sodium-potassium pump) actively transports three Na⁺ 
     {
       id: 'cp-p5',
       sectionId: 'chem-phys',
-      title: 'Passage 5',
+      title: 'Spectrophotometry and the Beer-Lambert Law',
       passageText: `Spectrophotometry exploits the absorption of electromagnetic radiation by molecules in solution. When monochromatic light of intensity I₀ passes through a solution of path length b (cm) containing an absorbing species at molar concentration c (mol/L), the Beer-Lambert law describes the transmitted intensity I:
 
 A = εbc = log(I₀ / I)
@@ -856,7 +856,7 @@ Note: Most spectrophotometers maintain a linear absorbance response only up to A
     {
       id: 'cp-p6',
       sectionId: 'chem-phys',
-      title: 'Passage 6',
+      title: 'Galvanic Cells and Electrochemical Potential',
       passageText: `Galvanic cells convert the free energy of spontaneous redox reactions into electrical work. In a standard Daniell cell, a zinc anode is oxidized (Zn → Zn²⁺ + 2e⁻) and copper ions are reduced at the cathode (Cu²⁺ + 2e⁻ → Cu). A salt bridge maintains electrical neutrality between the two half-cells. The standard cell potential is calculated as:
 
 E°cell = E°cathode − E°anode
@@ -1027,7 +1027,7 @@ A researcher constructs galvanic cells using various pairs of electrodes from Ta
     {
       id: 'cp-p7',
       sectionId: 'chem-phys',
-      title: 'Passage 7',
+      title: 'Weak Acid Titration and Henderson-Hasselbalch',
       passageText: `Acid-base titrations are used to determine the concentration and pKa of unknown acids. When a weak acid is titrated with a strong base, the titration curve displays a characteristic S-shape with two critical regions. At the half-equivalence point — when exactly half the weak acid has been neutralized — the Henderson-Hasselbalch equation simplifies to pH = pKa, because [HA] = [A⁻] and log(1) = 0:
 
 pH = pKa + log([A⁻]/[HA])
@@ -1193,7 +1193,7 @@ A researcher titrates 50.0 mL of 0.100 M acetic acid (pKa = 4.75) with 0.100 M N
     {
       id: 'cp-p8',
       sectionId: 'chem-phys',
-      title: 'Passage 8',
+      title: 'Lineweaver-Burk Analysis of Enzyme Inhibition',
       passageText: `Enzyme kinetics are described by the Michaelis-Menten equation:
 
 v = Vmax[S] / (Km + [S])

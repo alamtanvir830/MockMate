@@ -13,7 +13,7 @@ export const bioBiochemSection: MCATSection = {
     {
       id: 'bb-p1',
       sectionId: 'bio-biochem',
-      title: 'Passage 1',
+      title: 'Nucleotide Excision Repair and Xeroderma Pigmentosum',
       passageText: `Nucleotide excision repair (NER) is a versatile DNA repair pathway that removes bulky DNA lesions such as those caused by ultraviolet (UV) radiation. Two subpathways exist: global genome NER (GG-NER), which surveys the entire genome, and transcription-coupled NER (TC-NER), which is activated when RNA polymerase II stalls at a lesion during active transcription.
 
 NER proceeds through six coordinated steps: (1) lesion recognition, (2) local DNA unwinding by helicases XPB and XPD, (3) dual incision by endonucleases XPF-ERCC1 (5′ side) and XPG (3′ side), (4) excision of a ~25–30 nucleotide oligomer, (5) DNA synthesis by polymerase δ or ε using the undamaged strand as template, and (6) ligation by DNA ligase I or III.
@@ -182,7 +182,7 @@ Table 1: UDS (arbitrary units) in XP-D cells after transfection
     {
       id: 'bb-p2',
       sectionId: 'bio-biochem',
-      title: 'Passage 2',
+      title: 'EGFR Signaling and the RAS-MAPK Cascade',
       passageText: `Epidermal growth factor receptor (EGFR) is a receptor tyrosine kinase (RTK) that initiates the RAS-MAPK signaling cascade upon activation by EGF. Binding of EGF induces receptor dimerization, transphosphorylation of intracellular tyrosine residues, and recruitment of adaptor proteins including Grb2 and SOS. SOS functions as a guanine nucleotide exchange factor (GEF), catalyzing exchange of GDP for GTP on RAS, converting it from inactive (RAS-GDP) to active (RAS-GTP) form.
 
 RAS is a small GTPase with intrinsic GTPase activity that hydrolyzes RAS-GTP → RAS-GDP, terminating signaling. This hydrolysis is accelerated by GTPase-activating proteins (GAPs). Downstream, RAS-GTP activates RAF → MEK → ERK kinases, ultimately phosphorylating transcription factors that drive cell proliferation.
@@ -335,7 +335,7 @@ Researchers studying a lung adenocarcinoma cell line found constitutive ERK phos
     {
       id: 'bb-p3',
       sectionId: 'bio-biochem',
-      title: 'Passage 3',
+      title: 'ADH, Aquaporins, and Renal Water Reabsorption',
       passageText: `Antidiuretic hormone (ADH, also called vasopressin) is a peptide hormone synthesized in the hypothalamus and released from the posterior pituitary in response to increased plasma osmolarity (>295 mOsm/kg) or decreased blood volume. ADH acts on principal cells of the collecting duct by binding to V2 receptors, activating adenylyl cyclase, increasing cAMP, and activating protein kinase A (PKA), which phosphorylates aquaporin-2 (AQP2). Phosphorylated AQP2 inserts into the apical membrane, dramatically increasing water permeability and allowing water to move from the tubular lumen into the hypertonic interstitium and ultimately into the bloodstream.
 
 Diabetes insipidus (DI) is characterized by polyuria and polydipsia and results from either insufficient ADH secretion (central DI) or renal insensitivity to ADH (nephrogenic DI). Both forms result in dilute urine despite high plasma osmolarity.
@@ -506,7 +506,7 @@ SIADH (syndrome of inappropriate ADH secretion) results from excessive ADH relea
     {
       id: 'bb-p4',
       sectionId: 'bio-biochem',
-      title: 'Passage 4',
+      title: 'Hemoglobin Cooperativity and Oxygen Transport',
       passageText: `Hemoglobin (Hb) is a tetrameric protein (α₂β₂ in adults) responsible for O₂ transport in erythrocytes. Unlike myoglobin, which binds O₂ with hyperbolic kinetics (Hill coefficient nH = 1.0), hemoglobin exhibits a sigmoidal O₂-dissociation curve reflecting positive cooperativity (nH ≈ 2.7). This cooperativity arises from a conformational equilibrium between two quaternary states: the low-affinity T-state (tense, deoxy) and the high-affinity R-state (relaxed, oxy). Binding of O₂ to one subunit shifts the equilibrium toward the R-state, increasing affinity of the remaining subunits.
 
 Several allosteric effectors modulate Hb's O₂ affinity. Elevated partial pressure of CO₂ (PCO₂) and H⁺ — the Bohr effect — stabilize the T-state by protonating key histidine residues in the β-chains, promoting O₂ release in metabolically active tissues. 2,3-Bisphosphoglycerate (2,3-BPG), produced by erythrocytes via the Rapoport–Luebering shunt, binds preferentially to the central cavity formed by the four T-state subunits, further lowering O₂ affinity.
@@ -669,7 +669,7 @@ Researchers measured O₂ saturation of HbA and HbF at five PO₂ values under t
     {
       id: 'bb-p5',
       sectionId: 'bio-biochem',
-      title: 'Passage 5',
+      title: 'p53 Regulation and the DNA Damage Response',
       passageText: `The tumor suppressor p53 is a transcription factor that coordinates the cellular response to genotoxic stress. Under normal conditions, p53 protein is maintained at very low levels by MDM2, an E3 ubiquitin ligase that continuously binds p53, adds polyubiquitin chains, and targets it for proteasomal degradation. This constitutive turnover keeps p53 inactive in the absence of damage.
 
 When DNA is damaged — by ionizing radiation, UV light, chemotherapy, or replication stress — the ATM and ATR kinases are activated. These kinases phosphorylate p53 at multiple residues; phosphorylation at serine 15 (Ser15) directly disrupts the MDM2–p53 binding interface, preventing ubiquitination. Stabilized p53 accumulates and transcriptionally activates target genes: CDKN1A (encoding p21, a broad CDK inhibitor that arrests the cell cycle at G1/S), BAX (a pro-apoptotic BCL-2 family member that promotes mitochondrial cytochrome c release), and MDM2 itself — creating a negative-feedback loop to limit the response once repair is complete.
@@ -829,7 +829,7 @@ Researchers examined p53 and p21 protein levels by western blot in four cell lin
     {
       id: 'bb-p6',
       sectionId: 'bio-biochem',
-      title: 'Passage 6',
+      title: 'The Citric Acid Cycle and Aerobic Metabolism',
       passageText: `The citric acid cycle (TCA cycle) serves as the central metabolic hub for aerobic ATP production, linking carbohydrate, fat, and amino acid catabolism to the electron transport chain. One complete turn of the cycle oxidizes one acetyl-CoA to two CO₂, producing 3 NADH, 1 FADH₂, and 1 GTP per turn (using the standard numbering with succinate → fumarate as the FADH₂ step and succinyl-CoA → succinate as the GTP step).
 
 The cycle is regulated at three committed steps: isocitrate dehydrogenase (IDH), α-ketoglutarate dehydrogenase (αKGDH), and citrate synthase. All three are inhibited by high NADH/NAD⁺ ratios and ATP, and activated by ADP/AMP and Ca²⁺. Because these enzymes respond to the cell's energy charge, the cycle accelerates precisely when ATP demand exceeds supply.
@@ -992,7 +992,7 @@ Table 1 shows metabolite levels in three cell lines: normal astrocytes, IDH1-wil
     {
       id: 'bb-p7',
       sectionId: 'bio-biochem',
-      title: 'Passage 7',
+      title: 'Membrane Transport: Channels, Carriers, and Pumps',
       passageText: `Membrane transport proteins mediate the selective movement of ions and molecules across biological membranes, which are otherwise impermeable to most polar and charged species. Transport proteins fall into two major classes. Channels (including ion channels) provide an aqueous pore through which specific ions or water move by passive diffusion down electrochemical gradients. Transporters (carriers) undergo conformational changes to move substrates — they may operate by facilitated diffusion (passive), primary active transport (directly coupled to ATP hydrolysis), or secondary active transport (coupled to an ionic gradient established by a primary pump).
 
 The Na⁺/K⁺-ATPase is the archetypal primary active transporter. Per hydrolysis of one ATP, it exports 3 Na⁺ out of the cell and imports 2 K⁺ into the cell, generating a net outward movement of positive charge (electrogenic). The resulting Na⁺ gradient is used by numerous secondary active transporters: the Na⁺/glucose cotransporter (SGLT) in intestinal epithelial cells uses the inward Na⁺ gradient to drive glucose uptake against its concentration gradient (symport). In contrast, the Na⁺/Ca²⁺ exchanger (NCX) uses the same Na⁺ gradient to export Ca²⁺ (antiport).
@@ -1139,7 +1139,7 @@ Channelopathies — diseases caused by defective ion channels — illustrate the
     {
       id: 'bb-p8',
       sectionId: 'bio-biochem',
-      title: 'Passage 8',
+      title: 'Innate and Adaptive Immunity',
       passageText: `The immune system distinguishes self from non-self through a combination of innate and adaptive mechanisms. The innate immune system responds rapidly to pathogens via pattern recognition receptors (PRRs), such as Toll-like receptors (TLRs), which detect conserved microbial structures called pathogen-associated molecular patterns (PAMPs). This recognition does not require prior exposure and produces a nonspecific inflammatory response within minutes to hours.
 
 Adaptive immunity provides specificity and immunological memory. B lymphocytes produce antibodies that bind specific antigens, while cytotoxic T lymphocytes (CTLs, CD8⁺ T cells) destroy cells displaying non-self peptides on MHC class I molecules. Helper T cells (CD4⁺ T cells) recognize antigen presented on MHC class II molecules (expressed by professional antigen-presenting cells: dendritic cells, macrophages, B cells) and secrete cytokines that coordinate the adaptive response. The clonal selection theory states that each lymphocyte expresses a single, unique antigen receptor generated by somatic V(D)J recombination; antigen binding selects the matching lymphocyte for clonal expansion.

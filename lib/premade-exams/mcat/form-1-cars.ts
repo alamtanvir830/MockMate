@@ -13,7 +13,7 @@ export const carsSection: MCATSection = {
     {
       id: 'cars-p1',
       sectionId: 'cars',
-      title: 'Passage 1',
+      title: 'Language, Thought, and the Sapir-Whorf Hypothesis',
       passageText: `The hypothesis that language shapes thought — often called the Sapir-Whorf hypothesis — has occupied linguists and philosophers since Benjamin Lee Whorf proposed, in the mid-twentieth century, that the grammar and vocabulary of one's native language determine the categories through which one perceives and reasons about the world. In its strong form, the hypothesis implies that speakers of languages without a future tense cannot conceptualize future time, and that people whose language lacks color terms for blue and green cannot perceptually distinguish those hues. These claims proved empirically untenable. Speakers of Mandarin, a language with no obligatory grammatical marking of future events, demonstrate no impairment in planning or anticipating the future. Speakers of languages with fewer basic color terms nonetheless pass visual discrimination tasks that require distinguishing wavelengths in the blue-green range.
 
 Yet the strong formulation's failure does not discredit a subtler position. Cognitive scientists have accumulated evidence that language influences — rather than determines — certain aspects of cognition. Cross-linguistic studies of spatial reasoning find that speakers of languages that privilege absolute directions (north, south, east, west) over egocentric directions (left, right) are more reliably oriented to compass points, even when blindfolded and rotated. This is a genuine difference in habitual cognition that correlates with linguistic convention, yet it stops well short of claiming that egocentric-language speakers cannot orient themselves absolutely when required to do so. The linguistic influence is a matter of default tendency, not categorical inability.
@@ -160,7 +160,7 @@ The philosophical stakes of even the weak hypothesis are not trivial. If languag
     {
       id: 'cars-p2',
       sectionId: 'cars',
-      title: 'Passage 2',
+      title: 'Economic Inequality: Individual vs. Structural Accounts',
       passageText: `Explanations of economic inequality typically divide into two camps: those that emphasize individual attributes — skill, education, work ethic — and those that emphasize structural conditions — labor market institutions, historical patterns of capital accumulation, and political power. The former approach, dominant in neoclassical economics, treats income as a return on human capital. Workers earn wages proportional to their marginal productivity, and inequality therefore reflects differences in what individuals contribute. The latter approach, more common in institutional and heterodox economics, argues that wages are set through bargaining processes shaped by power asymmetries, union density, minimum wage legislation, and the historical residue of race and gender discrimination. From this perspective, two workers with identical productivity may receive very different wages depending on the strength of their collective bargaining position and the political environment in which they operate.
 
 The human capital framework has obvious appeal: it locates the determinants of earnings in factors that individuals can, at least in principle, change. Education and training programs become the policy instruments of choice. But critics argue this framing systematically underweights the role of initial conditions. A child born into poverty faces constraints on educational investment that are not the product of her choices or her parents' character, but of the economic position into which she was born. Returns on education, moreover, are not uniform: the credential obtained at a resource-poor school may yield substantially lower returns than the same credential from a more affluent institution — a difference that compounds rather than erodes initial disadvantage.
@@ -307,7 +307,7 @@ Structural accounts, in contrast, point to the dramatic declines in union member
     {
       id: 'cars-p3',
       sectionId: 'cars',
-      title: 'Passage 3',
+      title: 'Virginia Woolf and the Modernist Novel',
       passageText: `Virginia Woolf argued, in a series of essays written between the wars, that the novel had exhausted the conventions it inherited from the Victorian tradition — the omniscient narrator who surveys action from without, the plot organized around external events, the characters whose interiority is delivered through dialogue and behavior rather than accessed directly. These conventions, she suggested, were not neutral vehicles for representing experience but active constraints on what could be represented. The novel as she inherited it was, at its most fundamental level, shaped by the assumption that consciousness is opaque to direct presentation. A character's inner life could only be gestured at through what the character said and did; the narrator stood outside and interpreted.
 
 Woolf's project was to dissolve this barrier. Her technique — which critics have called stream of consciousness, though she herself distrusted the phrase as too hydraulic — sought to render the texture of mental experience as it actually occurs: associative, discontinuous, emotionally inflected, layered with memory and anticipation. In Mrs. Dalloway, a walk through London becomes a vehicle for tracking a mind as it moves through time, connecting present perception to past memory and future anxiety. There is no stable narrator interpreting this movement for the reader. The reader must orient herself by following the movement of Clarissa Dalloway's consciousness directly.
@@ -454,7 +454,7 @@ What Woolf achieved, and what made her technique both celebrated and controversi
     {
       id: 'cars-p4',
       sectionId: 'cars',
-      title: 'Passage 4',
+      title: 'Marcel Mauss and the Logic of Gift Exchange',
       passageText: `Marcel Mauss's 1925 essay "The Gift" proposed that exchange in non-market societies operates according to a logic fundamentally different from the utilitarian calculus that dominates modern economic thought. Where classical economics imagines exchange as a voluntary transaction between self-interested individuals seeking to maximize utility, Mauss described gift economies as governed by an obligation structure involving three interlocking duties: the obligation to give, the obligation to receive, and the obligation to reciprocate. These duties are not legally enforceable contracts; they are moral and social imperatives whose violation carries consequences in terms of status, honor, and social position rather than legal sanction.
 
 What is particularly counterintuitive about Mauss's analysis is that gift exchange, despite its surface appearance of generosity, is anything but free. The gift creates a debt. The recipient of a gift is placed in a state of obligation that can only be discharged through reciprocal giving — typically with interest, since failing to give more than one received signals an inability to compete in the prestige economy. Among the communities Mauss studied, excessive generosity functions as a form of domination: to give more than can be reciprocated is to humiliate the recipient and establish a hierarchy of obligation. The most extreme example he documented was the potlatch ceremony practiced by certain Pacific Northwest Indigenous peoples, in which wealth was ostentatiously given away or destroyed precisely to demonstrate the giver's superiority.
@@ -601,7 +601,7 @@ Critics of Mauss have argued that he projected Western preoccupations with recip
     {
       id: 'cars-p5',
       sectionId: 'cars',
-      title: 'Passage 5',
+      title: 'The Ambiguity of Historical Progress',
       passageText: `The claim that history moves in the direction of progress has served as one of the organizing myths of modern civilization. Enlightenment thinkers, confident in reason's capacity to improve the human condition, bequeathed to the nineteenth century a teleological narrative in which each epoch represents an advance over the last. Yet the concept of progress conceals an ambiguity that its advocates rarely acknowledge: it operates simultaneously as a descriptive claim about the direction of historical change and a normative claim about which changes count as improvements. These two functions are not easily separated, and conflating them generates serious philosophical and political confusion.
 
 The twentieth century supplied ample evidence against the complacent version of the progress narrative. The First World War demolished the Victorian confidence that industrial and scientific advancement produced moral advancement in proportion. Later events revealed that a society at the apex of European civilization, culture, and scientific achievement could organize atrocities with bureaucratic efficiency. These events did not refute the idea of progress — one might still argue that the abolition of certain forms of slavery, the extension of political rights to previously excluded groups, and the decline of interstate warfare in the postwar period constitute genuine advances. But they destroyed the version of the narrative that treated civilizational development as automatic and irreversible.
@@ -748,7 +748,7 @@ What remains available after this sobering revision is a chastened concept of pr
     {
       id: 'cars-p6',
       sectionId: 'cars',
-      title: 'Passage 6',
+      title: 'Documentary Photography and Objectivity',
       passageText: `The popular understanding of documentary photography rests on an implicit theory of mechanical objectivity: the camera records what is there, and the documentary photographer's task is to stay out of the way. On this view, the power of a documentary image derives from its faithfulness to an unmediated reality — an ethical obligation not to distort or deceive. This theory pervades both the practice and the reception of photojournalism. Readers trust that a photograph published as documentary evidence represents what the photographer found, as if the camera were a neutral conduit between the world and the viewer.
 
 The theory collapses under examination, however. Every photograph is the product of decisions — about where to stand, when to press the shutter, how to frame the subject, which image to select from a contact sheet of dozens — each of which constitutes a rhetorical act. Consider the famous image of an emaciated child collapsed near a vulture, taken during a 1993 African famine. That image was not a mechanical record; it was the result of choices the photographer made about proximity, angle, and moment. Those choices produced an image of devastating moral force, but also provoked accusations that the photographer exploited rather than documented suffering. The image's power is inseparable from its constructedness. In every documentary photograph, as in that one, what is shown and what is withheld are products of intention, not nature.
@@ -895,7 +895,7 @@ This is not, however, an argument for abandoning documentary practice or dissolv
     {
       id: 'cars-p7',
       sectionId: 'cars',
-      title: 'Passage 7',
+      title: 'Civil Disobedience in Liberal Democratic Theory',
       passageText: `Civil disobedience — the deliberate, public violation of a law or policy on moral grounds, with willingness to accept legal punishment — occupies an uneasy position in liberal democratic theory. Unlike ordinary crime, it makes no attempt at concealment; unlike revolution, it does not seek to overthrow the legal order. It appeals, rather, to the authority of the very principles the legal system claims to embody, arguing that a particular law or policy contradicts those principles. Civil disobedience stands in a paradoxical relationship to law: it violates the letter of law in order to vindicate its spirit.
 
 The moral justification for civil disobedience, according to its most rigorous defenders, depends on the satisfaction of several conditions. The injustice being protested must be serious and demonstrable, not merely inconvenient to those who find it objectionable. Legal and political channels of redress must have been exhausted or must demonstrably have failed to provide remedy within a reasonable timeframe. The act itself must be nonviolent, conducted openly rather than covertly, and directed at the injustice in question rather than at unrelated third parties. And crucially, the practitioner must be prepared to accept the legal consequences — a willingness that both affirms the seriousness of the moral claim and reaffirms respect for the rule of law even while breaking a specific rule.
@@ -1042,7 +1042,7 @@ Critics within democratic theory argue that these conditions, even if met, canno
     {
       id: 'cars-p8',
       sectionId: 'cars',
-      title: 'Passage 8',
+      title: 'Moral Luck and Moral Responsibility',
       passageText: `The concept of moral luck — the idea that factors beyond our control significantly determine the moral judgments we deserve — poses a deep challenge to traditional accounts of moral responsibility. Philosophers such as Kant argued that genuine moral worth depends solely on the will: only what we intend and choose lies within the moral domain. On this view, outcomes shaped by fortune are morally irrelevant; two drivers who behave identically but produce different outcomes due to chance are equally praiseworthy or blameworthy.
 
 Yet our actual moral practices diverge sharply from this Kantian ideal. The driver who happens to strike a pedestrian who unexpectedly steps into the road is treated — legally and socially — as bearing greater responsibility than the driver in identical circumstances who happened not to. This is not an aberration but a pervasive pattern: we judge people by the results of their choices, not merely their intentions, even when those results hinge on factors entirely outside their control.
@@ -1218,7 +1218,7 @@ This leads to what Nagel calls a profound paradox: our ordinary moral practices 
     {
       id: 'cars-p9',
       sectionId: 'cars',
-      title: 'Passage 9',
+      title: 'The Limits of the Rational Actor Model',
       passageText: `For most of the twentieth century, the dominant model in social science treated individual behavior as the product of rational calculation: people weigh costs and benefits, update beliefs in response to evidence, and act to maximize expected utility. This framework, sometimes called the rational actor model, proved enormously productive, generating precise predictions about markets, voting, and cooperation. Its appeal lay partly in parsimony — a single set of assumptions could, in principle, explain behavior across enormously diverse domains.
 
 By the 1970s and 1980s, psychologists Daniel Kahneman and Amos Tversky had systematically documented patterns of judgment and decision-making that deviated from the rational actor model in predictable, reproducible ways. Their work showed that people rely on cognitive heuristics — mental shortcuts such as anchoring (adjusting estimates insufficiently from an initial reference point), availability (judging probability by how easily examples come to mind), and representativeness (judging likelihood by resemblance to a prototype). These heuristics produce both efficient everyday reasoning and systematic errors when applied outside their domain of reliability.
@@ -1394,7 +1394,7 @@ A third, more nuanced position, associated with scholars such as Gerd Gigerenzer
     {
       id: 'cars-p10',
       sectionId: 'cars',
-      title: 'Passage 10',
+      title: 'The Novel as a Modern Form',
       passageText: `The novel has long been treated as a distinctly modern form — one that emerged in the eighteenth century alongside bourgeois individualism, print culture, and the secularization of experience. Ian Watt's influential account in The Rise of the Novel (1957) argued that the defining features of the novel — formal realism, detailed attention to individual psychology, and the particularization of time and place — are not merely aesthetic conventions but expressions of a specific historical consciousness: the consciousness of a rising middle class that believed in the individual's capacity to shape his or her own fate.
 
 If Watt's account has the virtue of explaining why the novel became the dominant literary form in the West, it also carries a limitation: it tends to treat the novel as an essentially Western and essentially modern invention. This limitation has come under sustained criticism from scholars who argue that sophisticated prose fiction — with complex plots, psychological interiority, and narrative self-awareness — existed in China, Japan, and the Arab world long before the eighteenth century. Murasaki Shikibu's The Tale of Genji (early eleventh century) is frequently cited as the world's first novel, featuring extended psychological portraiture and a narrator who comments on her own act of narration.
