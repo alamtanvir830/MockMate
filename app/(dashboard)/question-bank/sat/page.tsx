@@ -337,6 +337,7 @@ export default function SATQuestionBankPage() {
   const [recentSets, setRecentSets] = useState(0)
   const [browseSets, setBrowseSets] = useState(0)
   const [satAttempts, setSatAttempts] = useState<PremadeAttempt[]>([])
+  const [showAllAttempts, setShowAllAttempts] = useState(false)
 
   useEffect(() => {
     const results = loadAllQBResults()
@@ -491,12 +492,18 @@ export default function SATQuestionBankPage() {
                     </p>
                     <div className="space-y-2">
                       {(() => {
-                        const formTotals = satAttempts.reduce<Record<string, number>>((acc, a) => {
+                        const COLLAPSE_LIMIT = 3
+                        // Sort newest first
+                        const sorted = [...satAttempts].sort((a, b) =>
+                          new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime()
+                        )
+                        // Pre-compute labels for all attempts (sorted order: newest = highest number)
+                        const formTotals = sorted.reduce<Record<string, number>>((acc, a) => {
                           acc[a.examId] = (acc[a.examId] ?? 0) + 1
                           return acc
                         }, {})
                         const formCountSeen: Record<string, number> = {}
-                        return satAttempts.map(attempt => {
+                        const labeled = sorted.map(attempt => {
                           formCountSeen[attempt.examId] = (formCountSeen[attempt.examId] ?? 0) + 1
                           const attemptNum = formTotals[attempt.examId] - formCountSeen[attempt.examId] + 1
                           const formNum =
@@ -509,26 +516,43 @@ export default function SATQuestionBankPage() {
                           const date = new Date(attempt.completedAt).toLocaleDateString('en-US', {
                             month: 'short', day: 'numeric', year: 'numeric',
                           })
-                          return (
-                            <div
-                              key={attempt.id}
-                              className="flex items-center justify-between bg-white border border-emerald-100 rounded-lg px-3 py-2.5 gap-4"
-                            >
-                              <div>
-                                <p className="text-xs font-semibold text-slate-700">{label} — {date}</p>
-                                <p className="text-[11px] text-slate-500">
-                                  {attempt.totalScore} total · {attempt.rwScaled} R&amp;W · {attempt.mathScaled} Math
-                                </p>
-                              </div>
-                              <Link
-                                href={`/question-bank/sat/personalized/${attempt.id}`}
-                                className="shrink-0 bg-emerald-600 text-white font-semibold text-[11px] px-3 py-1.5 rounded-lg hover:bg-emerald-700 transition-colors whitespace-nowrap"
-                              >
-                                View practice sets
-                              </Link>
-                            </div>
-                          )
+                          return { attempt, label, date }
                         })
+                        const visible = showAllAttempts ? labeled : labeled.slice(0, COLLAPSE_LIMIT)
+                        const hiddenCount = labeled.length - COLLAPSE_LIMIT
+                        return (
+                          <>
+                            {visible.map(({ attempt, label, date }) => (
+                              <div
+                                key={attempt.id}
+                                className="flex items-center justify-between bg-white border border-emerald-100 rounded-lg px-3 py-2.5 gap-4"
+                              >
+                                <div>
+                                  <p className="text-xs font-semibold text-slate-700">{label} — {date}</p>
+                                  <p className="text-[11px] text-slate-500">
+                                    {attempt.totalScore} total · {attempt.rwScaled} R&amp;W · {attempt.mathScaled} Math
+                                  </p>
+                                </div>
+                                <Link
+                                  href={`/question-bank/sat/personalized/${attempt.id}`}
+                                  className="shrink-0 bg-emerald-600 text-white font-semibold text-[11px] px-3 py-1.5 rounded-lg hover:bg-emerald-700 transition-colors whitespace-nowrap"
+                                >
+                                  View practice sets
+                                </Link>
+                              </div>
+                            ))}
+                            {labeled.length > COLLAPSE_LIMIT && (
+                              <button
+                                onClick={() => setShowAllAttempts(v => !v)}
+                                className="text-xs font-medium text-emerald-700 hover:text-emerald-800 transition-colors mt-0.5"
+                              >
+                                {showAllAttempts
+                                  ? 'Show less'
+                                  : `Show more (${hiddenCount} older ${hiddenCount === 1 ? 'attempt' : 'attempts'})`}
+                              </button>
+                            )}
+                          </>
+                        )
                       })()}
                     </div>
                   </>
