@@ -247,10 +247,8 @@ export default function MCATQBPracticePage() {
 
   // ── Render ───────────────────────────────────────────────────────────────────
   // Break out of the dashboard container's padding to fill the content area edge-to-edge.
-  // Sticky header/footer pins to the main scroll container viewport.
-
   return (
-    <div className="-mt-8 -mb-8 -mx-4 sm:-mx-6 lg:-mx-8 flex flex-col bg-white">
+    <div className="min-h-screen w-full flex flex-col bg-white">
 
       {/* ══ STICKY HEADER ═══════════════════════════════════════════════════════ */}
       <div className="sticky top-0 z-20">
