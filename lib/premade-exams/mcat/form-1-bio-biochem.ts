@@ -22,13 +22,7 @@ Researchers studying xeroderma pigmentosum (XP), a hereditary condition characte
 
 Experiment: To test the requirement for XPD helicase activity, researchers introduced either wild-type XPD or a helicase-dead mutant (K48A) into XP complementation group D cells. UDS was measured at 1, 6, and 24 hours post-UV irradiation.
 
-Table 1: UDS (arbitrary units) in XP-D cells after transfection
-
-| Construct     | 1 hr | 6 hr | 24 hr |
-|---------------|------|------|-------|
-| Vector only   | 2    | 3    | 4     |
-| Wild-type XPD | 18   | 42   | 68    |
-| K48A mutant   | 3    | 4    | 5     |`,
+The results are shown in Table 1.`,
       figures: [
         {
           type: 'table',
@@ -340,16 +334,7 @@ Researchers studying a lung adenocarcinoma cell line found constitutive ERK phos
 
 Diabetes insipidus (DI) is characterized by polyuria and polydipsia and results from either insufficient ADH secretion (central DI) or renal insensitivity to ADH (nephrogenic DI). Both forms result in dilute urine despite high plasma osmolarity.
 
-Researchers compared urine and plasma osmolarity in four subject groups:
-
-Table 1: Osmolarity measurements (mOsm/kg)
-
-| Group               | Plasma osmolarity | Urine osmolarity |
-|---------------------|-------------------|------------------|
-| Normal              | 290               | 800              |
-| Central DI          | 305               | 80               |
-| Nephrogenic DI      | 308               | 75               |
-| SIADH (ADH excess)  | 270               | 900              |
+Researchers compared urine and plasma osmolarity in four subject groups, as shown in Table 1.
 
 SIADH (syndrome of inappropriate ADH secretion) results from excessive ADH release despite low plasma osmolarity.`,
       figures: [

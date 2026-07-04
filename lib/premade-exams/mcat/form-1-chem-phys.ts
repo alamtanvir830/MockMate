@@ -28,17 +28,7 @@ A researcher titrated a solution containing 0.10 M H₂CO₃ with 1.0 M NaOH. Th
 
 At the half-equivalence points, the buffer capacity is maximal because the concentrations of acid and conjugate base are equal. The buffer capacity diminishes as the ratio of acid to base deviates from 1:1. A buffer resists pH changes most effectively within ±1 pH unit of its pKₐ.
 
-Table 1 shows the pH measured after adding NaOH to the carbonate solution.
-
-| Volume NaOH added (mL) | pH   |
-|------------------------|------|
-| 0                      | 3.7  |
-| 5                      | 5.4  |
-| 10                     | 6.1  |
-| 15                     | 6.8  |
-| 20                     | 8.4  |
-| 25                     | 10.3 |
-| 30                     | 11.9 |`,
+The titration data are shown in Table 1.`,
       figures: [
         {
           type: 'table',
@@ -519,14 +509,6 @@ where z is the ion's charge (positive for cations), and concentrations are in mM
 
 Typical intracellular and extracellular ion concentrations for a mammalian neuron are given in Table 1. The measured resting membrane potential is approximately −70 mV (inside negative relative to outside).
 
-Table 1: Ion concentrations in a resting mammalian neuron
-
-| Ion | Intracellular (mM) | Extracellular (mM) |
-|-----|-------------------|-------------------|
-| K⁺  | 140               | 5                 |
-| Na⁺ | 14                | 145               |
-| Cl⁻ | 9                 | 110               |
-
 The Na⁺–K⁺ ATPase (sodium-potassium pump) actively transports three Na⁺ ions out of the cell and two K⁺ ions in per ATP consumed, maintaining the concentration gradients shown in Table 1. Because it moves unequal numbers of charges, it is electrogenic and contributes a small hyperpolarizing current to the resting potential.`,
       figures: [
         {
@@ -691,15 +673,6 @@ where A is absorbance (dimensionless), ε is the molar absorptivity (L·mol⁻¹
 Proteins containing tryptophan (Trp) or tyrosine (Tyr) absorb UV light near 280 nm with ε₂₈₀ values ranging from 5,500 to 40,000 L·mol⁻¹·cm⁻¹ depending on amino acid composition. Nucleic acids absorb maximally at 260 nm. The A₂₈₀/A₂₆₀ ratio exceeds 1.8 for pure protein; nucleic acid contamination lowers this ratio toward 1.0.
 
 A researcher characterizes a purified kinase enzyme (ε₂₈₀ = 40,000 L·mol⁻¹·cm⁻¹) using a 1.0 cm path length cuvette. Absorbance data are summarized in Table 1.
-
-Table 1: Absorbance data for the kinase enzyme at 280 nm
-
-| Sample | Concentration (µM) | A₂₈₀ |
-|--------|--------------------|------|
-| 1      | 2.5                | 0.10 |
-| 2      | 5.0                | 0.20 |
-| 3      | 10.0               | 0.40 |
-| 4      | 25.0               | 0.98 |
 
 Note: Most spectrophotometers maintain a linear absorbance response only up to A ≈ 0.8. Above this limit, stray light and detector saturation cause measured A to be lower than the true value.`,
       figures: [

@@ -399,7 +399,7 @@ export default function MCATQBPracticePage() {
 
         {/* ── Left pane: passage / stimulus ────────────────────────────────── */}
         {hasLeftPane && (
-          <div className="w-[46%] border-r border-slate-200 bg-[#FAFAF8] shrink-0">
+          <div className="w-[46%] border-r border-slate-200 bg-[#FAFAF8] shrink-0 overflow-x-hidden min-w-0">
             <div className="px-7 py-6">
               {currentQ.passageText && (
                 <>
