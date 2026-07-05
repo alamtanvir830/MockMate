@@ -5,6 +5,7 @@ export interface CategoryNode {
   label: string
   count: number
   questionIds: string[]
+  keywords?: string[]
   children: CategoryNode[]
 }
 
@@ -18,6 +19,7 @@ const SECTION_LABELS: Record<MCATQBSection, string> = {
 const SECTION_ORDER: MCATQBSection[] = ['chem-phys', 'cars', 'bio-biochem', 'psych-soc']
 
 export function buildCategoryTree(questions: MCATQBQuestion[]): CategoryNode[] {
+  const qMap = new Map<string, MCATQBQuestion>(questions.map(q => [q.id, q]))
   const sectionMap = new Map<MCATQBSection, Map<string, Map<string, string[]>>>()
 
   for (const q of questions) {
@@ -30,7 +32,7 @@ export function buildCategoryTree(questions: MCATQBQuestion[]): CategoryNode[] {
   }
 
   return SECTION_ORDER.map(section => {
-    const discMap = sectionMap.get(section) ?? new Map()
+    const discMap = sectionMap.get(section) ?? new Map<string, Map<string, string[]>>()
     const sectionQIds: string[] = []
     const discChildren: CategoryNode[] = []
 
@@ -39,11 +41,14 @@ export function buildCategoryTree(questions: MCATQBQuestion[]): CategoryNode[] {
       const catChildren: CategoryNode[] = []
 
       for (const [cat, qIds] of catMap) {
+        const allTopics: string[] = qIds.flatMap(id => qMap.get(id)?.relatedTopics ?? [])
+        const keywords: string[] = [...new Set(allTopics.map(t => t.toLowerCase()))]
         catChildren.push({
           id: `${section}::${disc}::${cat}`,
           label: cat,
           count: qIds.length,
           questionIds: qIds,
+          keywords,
           children: [],
         })
         discQIds.push(...qIds)

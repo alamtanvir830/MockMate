@@ -17,7 +17,7 @@ const ALL_QUESTIONS = [...rwQuestions, ...mathQuestions]
 
 // ── Static tree definition ────────────────────────────────────────────────────
 
-type SkillDef  = { label: string }
+type SkillDef  = { label: string; keywords?: string[] }
 type DomainDef = { id: string; skills: SkillDef[] }
 type SectionDef = { id: string; label: string; shortLabel: string; badge: string; headerBg: string; domains: DomainDef[] }
 
@@ -32,31 +32,31 @@ const SECTIONS: SectionDef[] = [
       {
         id: 'Craft and Structure',
         skills: [
-          { label: 'Words in Context' },
-          { label: 'Text Structure and Purpose' },
-          { label: 'Cross-Text Connections' },
+          { label: 'Words in Context', keywords: ['vocabulary', 'word meaning', 'context clues', 'definition'] },
+          { label: 'Text Structure and Purpose', keywords: ['organization', 'author purpose', 'function', 'structure', 'rhetoric'] },
+          { label: 'Cross-Text Connections', keywords: ['two texts', 'compare', 'contrast', 'paired passages', 'author 1', 'author 2'] },
         ],
       },
       {
         id: 'Information and Ideas',
         skills: [
-          { label: 'Central Ideas and Details' },
-          { label: 'Command of Evidence' },
-          { label: 'Inferences' },
+          { label: 'Central Ideas and Details', keywords: ['main idea', 'summary', 'supporting details', 'topic'] },
+          { label: 'Command of Evidence', keywords: ['evidence', 'graphs', 'charts', 'tables', 'data', 'quantitative', 'visual'] },
+          { label: 'Inferences', keywords: ['implied', 'inference', 'conclusions', 'implied meaning', 'suggest'] },
         ],
       },
       {
         id: 'Standard English Conventions',
         skills: [
-          { label: 'Boundaries' },
-          { label: 'Form, Structure, and Sense' },
+          { label: 'Boundaries', keywords: ['punctuation', 'commas', 'semicolons', 'colons', 'apostrophes', 'dashes', 'end marks', 'periods'] },
+          { label: 'Form, Structure, and Sense', keywords: ['verb tense', 'subject verb agreement', 'agreement', 'pronouns', 'modifiers', 'parallelism', 'word form', 'diction'] },
         ],
       },
       {
         id: 'Expression of Ideas',
         skills: [
-          { label: 'Rhetorical Synthesis' },
-          { label: 'Transitions' },
+          { label: 'Rhetorical Synthesis', keywords: ['notes', 'bullets', 'combine', 'source material', 'integrate', 'synthesize'] },
+          { label: 'Transitions', keywords: ['connecting words', 'cohesion', 'however', 'therefore', 'linking', 'moreover'] },
         ],
       },
     ],
@@ -71,40 +71,40 @@ const SECTIONS: SectionDef[] = [
       {
         id: 'Algebra',
         skills: [
-          { label: 'Linear equations in one variable' },
-          { label: 'Linear equations in two variables' },
-          { label: 'Linear functions' },
-          { label: 'Systems of two linear equations' },
-          { label: 'Linear inequalities' },
+          { label: 'Linear equations in one variable', keywords: ['solve for x', 'one variable', 'single variable'] },
+          { label: 'Linear equations in two variables', keywords: ['two variables', 'slope intercept', 'slope-intercept'] },
+          { label: 'Linear functions', keywords: ['slope', 'y-intercept', 'rate of change'] },
+          { label: 'Systems of two linear equations', keywords: ['substitution', 'elimination', 'simultaneous equations', 'intersection'] },
+          { label: 'Linear inequalities', keywords: ['inequality', 'greater than', 'less than', 'number line', 'solution set'] },
         ],
       },
       {
         id: 'Advanced Math',
         skills: [
-          { label: 'Equivalent expressions' },
-          { label: 'Nonlinear functions' },
-          { label: 'Quadratic equations' },
-          { label: 'Exponential functions' },
-          { label: 'Nonlinear equations in one variable' },
+          { label: 'Equivalent expressions', keywords: ['simplify', 'factor', 'expand', 'distribute', 'foil', 'polynomial'] },
+          { label: 'Nonlinear functions', keywords: ['polynomial', 'radical', 'absolute value', 'square root', 'cube root'] },
+          { label: 'Quadratic equations', keywords: ['quadratic formula', 'completing the square', 'factoring', 'roots', 'zeros', 'parabola', 'vertex'] },
+          { label: 'Exponential functions', keywords: ['growth', 'decay', 'exponents', 'exponential growth', 'exponential decay'] },
+          { label: 'Nonlinear equations in one variable', keywords: ['solve nonlinear', 'radical equation', 'rational equation'] },
         ],
       },
       {
         id: 'Problem-Solving and Data Analysis',
         skills: [
-          { label: 'Ratios, rates, proportional relationships' },
-          { label: 'Percentages' },
-          { label: 'One-variable data' },
-          { label: 'Two-variable data' },
-          { label: 'Probability' },
+          { label: 'Ratios, rates, proportional relationships', keywords: ['ratio', 'proportion', 'unit conversion', 'scale', 'rate'] },
+          { label: 'Percentages', keywords: ['percent', 'percent change', 'increase decrease', 'discount', 'markup'] },
+          { label: 'One-variable data', keywords: ['statistics', 'mean', 'median', 'mode', 'average', 'standard deviation', 'histogram', 'box plot', 'range'] },
+          { label: 'Two-variable data', keywords: ['scatter plot', 'correlation', 'regression', 'line of best fit', 'association', 'graph'] },
+          { label: 'Probability', keywords: ['chance', 'likelihood', 'outcomes', 'events', 'conditional probability', 'independent events'] },
         ],
       },
       {
         id: 'Geometry and Trigonometry',
         skills: [
-          { label: 'Area and volume' },
-          { label: 'Lines, angles, and triangles' },
-          { label: 'Right triangles and trigonometry' },
-          { label: 'Circles' },
+          { label: 'Area and volume', keywords: ['perimeter', 'surface area', 'shapes', 'rectangle', 'triangle area', 'circle area', 'cylinder', 'cone', 'sphere'] },
+          { label: 'Lines, angles, and triangles', keywords: ['angles', 'parallel lines', 'transversals', 'similar triangles', 'congruent', 'supplementary', 'complementary'] },
+          { label: 'Right triangles and trigonometry', keywords: ['sin', 'cos', 'tan', 'sine', 'cosine', 'tangent', 'trig', 'pythagorean theorem', 'soh cah toa', 'hypotenuse'] },
+          { label: 'Circles', keywords: ['circumference', 'arc length', 'sector', 'radius', 'diameter', 'chord'] },
         ],
       },
     ],
@@ -142,10 +142,13 @@ function filterSections(sections: SectionDef[], q: string): SectionDef[] {
   if (!q.trim()) return sections
   const lq = q.toLowerCase()
   return sections.flatMap(sec => {
-    if (sec.label.toLowerCase().includes(lq)) return [sec]
+    if (sec.label.toLowerCase().includes(lq) || sec.id.toLowerCase().includes(lq)) return [sec]
     const filteredDomains = sec.domains.flatMap(dom => {
       if (dom.id.toLowerCase().includes(lq)) return [dom]
-      const filteredSkills = dom.skills.filter(sk => sk.label.toLowerCase().includes(lq))
+      const filteredSkills = dom.skills.filter(sk =>
+        sk.label.toLowerCase().includes(lq) ||
+        sk.keywords?.some(k => k.toLowerCase().includes(lq))
+      )
       if (filteredSkills.length > 0) return [{ ...dom, skills: filteredSkills }]
       return []
     })
@@ -198,7 +201,7 @@ function TriCheckbox({
 // ── Section card component ────────────────────────────────────────────────────
 
 function SectionCard({
-  section, selectedSkills, expandedSections, expandedDomains,
+  section, selectedSkills, expandedSections, expandedDomains, searchActive,
   onToggleSection, onToggleDomain, onToggleSkill,
   onToggleSectionExpand, onToggleDomainExpand,
 }: {
@@ -206,6 +209,7 @@ function SectionCard({
   selectedSkills: Set<string>
   expandedSections: Set<string>
   expandedDomains: Set<string>
+  searchActive: boolean
   onToggleSection: (sec: SectionDef) => void
   onToggleDomain: (dom: DomainDef) => void
   onToggleSkill: (skill: string) => void
@@ -213,7 +217,7 @@ function SectionCard({
   onToggleDomainExpand: (id: string) => void
 }) {
   const secState = getSectionState(section, selectedSkills)
-  const expanded = expandedSections.has(section.id)
+  const expanded = searchActive || expandedSections.has(section.id)
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
@@ -254,7 +258,7 @@ function SectionCard({
         <div>
           {section.domains.map(dom => {
             const domState = getDomainState(dom, selectedSkills)
-            const domExpanded = expandedDomains.has(dom.id)
+            const domExpanded = searchActive || expandedDomains.has(dom.id)
 
             return (
               <div key={dom.id} className="border-t border-slate-100">
@@ -761,6 +765,7 @@ export default function SATQuestionBankPage() {
                   selectedSkills={selectedSkills}
                   expandedSections={expandedSections}
                   expandedDomains={expandedDomains}
+                  searchActive={!!search.trim()}
                   onToggleSection={toggleSection}
                   onToggleDomain={toggleDomain}
                   onToggleSkill={toggleSkill}

@@ -1581,7 +1581,7 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
     const gridInQ = !isMC ? (q as MathGridInQuestion) : null
     const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
     const underlineTargets = q.section === 'reading-writing' ? (q as RWQuestion).underlineTargets : undefined
-    const graphData = q.section === 'math' ? (q as MathMCQuestion | MathGridInQuestion).graphData as SATGraphData | undefined : undefined
+    const graphData = (q as { graphData?: SATGraphData }).graphData
     const sectionLabel = phase.section === 'rw' ? 'Reading and Writing' : 'Math'
     const moduleLabel = `Module ${phase.slot === 'm1' ? '1' : '2'}`
     const centerLabel = `${sectionLabel} — ${moduleLabel} | Q ${qNum} of ${qTotal}`
@@ -2215,7 +2215,7 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                 const choices = getChoices(q)
                 const stimulus = q.section === 'reading-writing' ? q.stimulus : (q as { stimulus?: string }).stimulus
                 const qUnderlineTargets = q.section === 'reading-writing' ? (q as RWQuestion).underlineTargets : undefined
-                const qGraphData = q.section === 'math' ? (q as MathMCQuestion | MathGridInQuestion).graphData as SATGraphData | undefined : undefined
+                const qGraphData = (q as { graphData?: SATGraphData }).graphData
                 const isGridIn = q.section === 'math' && (q as MathGridInQuestion).type === 'grid_in'
                 const skill = getSkill(q)
                 const statusIcon = !answered ? '?' : correct ? '✓' : '✗'

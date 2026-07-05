@@ -169,7 +169,7 @@ export const rwModule2EasyQuestions: RWQuestion[] = [
       { label: 'D', text: 'define permafrost as a source of renewable energy' },
     ],
     correctAnswer: 'A',
-    explanation: `Choice A is correct. The passage explains the feedback loop immediately after naming it: warming → thaw → greenhouse gas release → more warming. The phrase introduces the concept of a self-amplifying cycle, and choice B accurately describes what the passage defines.`,
+    explanation: `Choice A is correct. The passage explains the feedback loop immediately after naming it: warming → thaw → greenhouse gas release → more warming. The phrase introduces the concept of a self-amplifying cycle, and choice A accurately describes what the passage defines.`,
     wrongAnswerExplanations: {
       B: `Choice B is incorrect. The passage does not discuss reversing permafrost thaw; the feedback loop is presented as a danger, not a solution.`,
       C: `Choice C is incorrect. The passage does not compare permafrost thaw to ocean warming.`,
@@ -386,15 +386,20 @@ Text 2: While social media literacy programs sound appealing in principle, resea
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
     difficulty: 'medium',
-    stimulus: `A student writing a paper on renewable energy adoption wants to argue that solar energy installation has grown dramatically in the United States over the past decade. The table below shows annual solar capacity added in the U.S.
-
-Year | Solar Capacity Added (GW)
-2013 | 4.8
-2015 | 7.6
-2017 | 10.6
-2019 | 13.3
-2021 | 23.6
-2023 | 32.4`,
+    stimulus: `A student writing a paper on renewable energy adoption wants to argue that solar energy installation has grown dramatically in the United States over the past decade. The table shows annual solar capacity added in the U.S.`,
+    graphData: {
+      type: 'table',
+      title: 'Annual Solar Capacity Added in the U.S.',
+      headers: ['Year', 'Solar Capacity Added (GW)'],
+      rows: [
+        ['2013', '4.8'],
+        ['2015', '7.6'],
+        ['2017', '10.6'],
+        ['2019', '13.3'],
+        ['2021', '23.6'],
+        ['2023', '32.4'],
+      ],
+    },
     question: `Which statement best uses the data in the table to support the student's argument?`,
     choices: [
       { label: 'A', text: 'In 2021, the United States added 23.6 GW of solar capacity.' },
@@ -531,7 +536,7 @@ Year | Solar Capacity Added (GW)
       { label: 'D', text: 'Vaccines have evolved from Jenner\'s eighteenth-century smallpox preparation to twenty-first-century mRNA technology, achieving major reductions in disease along the way.' },
     ],
     correctAnswer: 'D',
-    explanation: `Choice D is correct. The student's goal is to introduce historical development over time. Only choice B spans the full historical range described in the notes (from 1796 to 2020) and captures the arc of progress, making it the most effective introductory sentence.`,
+    explanation: `Choice D is correct. The student's goal is to introduce historical development over time. Only choice D spans the full historical range described in the notes (from 1796 to 2020) and captures the arc of progress, making it the most effective introductory sentence.`,
     wrongAnswerExplanations: {
       A: `Choice A is incorrect. It covers only the earliest vaccine and does not introduce the broader historical development the student wants to describe.`,
       C: `Choice C is incorrect. It covers only the measles vaccine detail and does not convey a historical trajectory.`,

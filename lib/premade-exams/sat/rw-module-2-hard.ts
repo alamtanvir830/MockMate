@@ -362,16 +362,19 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
     difficulty: 'hard',
-    stimulus: `A political scientist is arguing that voter turnout in national elections is positively correlated with the perceived closeness of the race. Which evidence would most directly support this claim?
-
-The table below shows turnout rates for five national elections.
-
-Election | Margin of Victory (% points) | Voter Turnout (%)
-Election 1 | 2 | 74
-Election 2 | 8 | 64
-Election 3 | 15 | 55
-Election 4 | 3 | 72
-Election 5 | 18 | 51`,
+    stimulus: `A political scientist is arguing that voter turnout in national elections is positively correlated with the perceived closeness of the race. The table shows turnout rates for five national elections.`,
+    graphData: {
+      type: 'table',
+      title: 'Margin of Victory and Voter Turnout',
+      headers: ['Election', 'Margin of Victory (% points)', 'Voter Turnout (%)'],
+      rows: [
+        ['Election 1', '2', '74'],
+        ['Election 2', '8', '64'],
+        ['Election 3', '15', '55'],
+        ['Election 4', '3', '72'],
+        ['Election 5', '18', '51'],
+      ],
+    },
     question: `Which statement best uses the data in the table to support the political scientist's argument?`,
     choices: [
       { label: 'A', text: 'Elections with small margins of victory had the highest voter turnout, while elections with large margins had the lowest.' },

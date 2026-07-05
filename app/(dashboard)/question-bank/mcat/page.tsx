@@ -31,10 +31,13 @@ function filterTree(nodes: CategoryNode[], q: string): CategoryNode[] {
   if (!q.trim()) return nodes
   const lq = q.toLowerCase()
   return nodes.flatMap(node => {
+    const labelOrIdMatch =
+      node.label.toLowerCase().includes(lq) || node.id.toLowerCase().includes(lq)
     if (node.children.length === 0) {
-      return node.label.toLowerCase().includes(lq) ? [node] : []
+      const matches = labelOrIdMatch || (node.keywords?.some(k => k.includes(lq)) ?? false)
+      return matches ? [node] : []
     }
-    if (node.label.toLowerCase().includes(lq)) return [{ ...node }]
+    if (labelOrIdMatch) return [{ ...node }]
     const fc = filterTree(node.children, q)
     if (fc.length > 0) return [{ ...node, children: fc }]
     return []
@@ -103,6 +106,7 @@ function SectionCard({
   selected,
   expandedSections,
   expandedDiscs,
+  searchActive,
   onToggle,
   onToggleSection,
   onToggleDisc,
@@ -111,12 +115,13 @@ function SectionCard({
   selected: Set<string>
   expandedSections: Set<string>
   expandedDiscs: Set<string>
+  searchActive: boolean
   onToggle: (node: CategoryNode) => void
   onToggleSection: () => void
   onToggleDisc: (id: string) => void
 }) {
   const state = getNodeState(section, selected)
-  const expanded = expandedSections.has(section.id)
+  const expanded = searchActive || expandedSections.has(section.id)
 
   return (
     <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
@@ -159,7 +164,7 @@ function SectionCard({
         <div>
           {section.children.map(disc => {
             const dState = getNodeState(disc, selected)
-            const dExpanded = expandedDiscs.has(disc.id)
+            const dExpanded = searchActive || expandedDiscs.has(disc.id)
 
             return (
               <div key={disc.id} className="border-t border-slate-100">
@@ -515,6 +520,7 @@ export default function MCATQuestionBankPage() {
               selected={selectedLeafIds}
               expandedSections={expandedSections}
               expandedDiscs={expandedDiscs}
+              searchActive={!!search.trim()}
               onToggle={toggleNode}
               onToggleSection={() => setExpandedSections(prev => {
                 const next = new Set(prev)

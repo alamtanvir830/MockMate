@@ -1724,7 +1724,7 @@ The reaction is thought to proceed via a two-step mechanism: (1) N₂O₅ ⇌ NO
     id: 'mcat-qb-cp-054',
     test: 'MCAT',
     section: 'chem-phys',
-    discipline: 'Chemistry',
+    discipline: 'General Chemistry',
     contentCategory: '5E',
     foundationalConcept: '5',
     scientificSkill: 'Skill 1',
@@ -1766,7 +1766,7 @@ The investigators also examined what happens when an external voltage source gre
     id: 'mcat-qb-cp-055',
     test: 'MCAT',
     section: 'chem-phys',
-    discipline: 'Chemistry',
+    discipline: 'General Chemistry',
     contentCategory: '5E',
     foundationalConcept: '5',
     scientificSkill: 'Skill 4',
@@ -1808,7 +1808,7 @@ The investigators also examined what happens when an external voltage source gre
     id: 'mcat-qb-cp-056',
     test: 'MCAT',
     section: 'chem-phys',
-    discipline: 'Chemistry',
+    discipline: 'General Chemistry',
     contentCategory: '5E',
     foundationalConcept: '5',
     scientificSkill: 'Skill 2',
@@ -1850,7 +1850,7 @@ The investigators also examined what happens when an external voltage source gre
     id: 'mcat-qb-cp-057',
     test: 'MCAT',
     section: 'chem-phys',
-    discipline: 'Chemistry',
+    discipline: 'General Chemistry',
     contentCategory: '5E',
     foundationalConcept: '5',
     scientificSkill: 'Skill 1',
@@ -1892,7 +1892,7 @@ The investigators also examined what happens when an external voltage source gre
     id: 'mcat-qb-cp-058',
     test: 'MCAT',
     section: 'chem-phys',
-    discipline: 'Chemistry',
+    discipline: 'General Chemistry',
     contentCategory: '5E',
     foundationalConcept: '5',
     scientificSkill: 'Skill 1',
@@ -1936,7 +1936,7 @@ The investigators also examined what happens when an external voltage source gre
     id: 'mcat-qb-cp-059',
     test: 'MCAT',
     section: 'chem-phys',
-    discipline: 'Chemistry',
+    discipline: 'General Chemistry',
     contentCategory: '5A',
     foundationalConcept: '5',
     scientificSkill: 'Skill 4',
@@ -1963,21 +1963,21 @@ The investigators also examined what happens when an external voltage source gre
     id: 'mcat-qb-cp-060',
     test: 'MCAT',
     section: 'chem-phys',
-    discipline: 'Chemistry',
-    contentCategory: '5B',
-    foundationalConcept: '5',
+    discipline: 'Biochemistry',
+    contentCategory: '5B: Enzyme kinetics and inhibition',
+    foundationalConcept: '5: Chemical interactions and thermodynamics',
     scientificSkill: 'Skill 3',
     difficulty: 'hard',
     questionType: 'discrete',
-    question: 'A Lineweaver-Burk (double-reciprocal) analysis comparing an enzyme with no inhibitor versus with inhibitor X shows: both lines have the same y-intercept (same 1/Vmax), but the line with inhibitor X has a shallower slope that intersects the x-axis closer to the origin (less negative x-intercept — lower apparent 1/Km, corresponding to higher apparent Km). Which type of inhibition does this pattern represent, and what is the correct mechanistic explanation?',
+    question: 'A Lineweaver-Burk (double-reciprocal) analysis comparing an enzyme with no inhibitor versus with inhibitor X shows: both lines have the same y-intercept (same 1/Vmax), but the line with inhibitor X has a steeper slope that intersects the x-axis closer to the origin (less negative x-intercept — lower apparent 1/Km, corresponding to higher apparent Km). Which type of inhibition does this pattern represent, and what is the correct mechanistic explanation?',
     choices: [
       { label: 'A', text: 'Uncompetitive inhibition — the inhibitor binds only the enzyme-substrate complex, decreasing both apparent Km and Vmax proportionally, which shifts both intercepts' },
-      { label: 'B', text: 'Competitive inhibition — the inhibitor competes with substrate for the active site, raising the apparent Km without affecting Vmax, producing the same y-intercept but a steeper slope and more negative x-intercept' },
+      { label: 'B', text: 'Competitive inhibition — the inhibitor competes with substrate for the active site, raising the apparent Km without affecting Vmax, producing the same y-intercept but a steeper slope and an x-intercept closer to the origin' },
       { label: 'C', text: 'Pure noncompetitive inhibition — the inhibitor binds an allosteric site on both free enzyme and ES complex, lowering Vmax without changing Km' },
       { label: 'D', text: 'Irreversible inhibition — the inhibitor permanently modifies the active site, eliminating a fixed fraction of functional enzyme and reducing apparent Vmax while leaving Km unchanged' },
     ],
     correctAnswer: 'B',
-    explanation: 'Choice B is correct. In a Lineweaver-Burk plot (1/v vs. 1/[S]): y-intercept = 1/Vmax; x-intercept = −1/Km; slope = Km/Vmax. The described pattern — same y-intercept (same Vmax) and a less negative x-intercept (larger apparent Km) — is the signature of competitive inhibition. A competitive inhibitor raises the apparent Km (requires more substrate to achieve half-maximal velocity) but does not affect Vmax (excess substrate can displace the inhibitor). In a Lineweaver-Burk plot, this produces a higher slope (Km/Vmax increases since Km increases while Vmax is constant) and an x-intercept closer to zero (−1/Km_app is less negative). Wait — if x-intercept is "closer to the origin" (less negative), that means |−1/Km_app| is smaller, meaning Km_app is LARGER — consistent with competitive inhibition. The description in the question confirms this.',
+    explanation: 'Choice B is correct. In a Lineweaver-Burk plot (1/v vs. 1/[S]): y-intercept = 1/Vmax; x-intercept = −1/Km; slope = Km/Vmax. The described pattern — same y-intercept (same Vmax) and a less negative x-intercept — is the signature of competitive inhibition. A competitive inhibitor raises the apparent Km (more substrate is required to reach half-maximal velocity) but does not affect Vmax (excess substrate can outcompete the inhibitor). Because the x-intercept equals −1/Km, a larger apparent Km makes −1/Km_app smaller in magnitude, so the intercept sits closer to the origin. Meanwhile the slope Km/Vmax increases (steeper line) because Km rises while Vmax is unchanged. Both lines therefore meet at the same y-intercept.',
     wrongAnswerExplanations: {
       A: 'Uncompetitive inhibition produces a PARALLEL line to the uninhibited enzyme (same slope), shifted to a lower y-intercept (lower Vmax) AND a less negative x-intercept (lower apparent Km). Both Km and Vmax decrease by the same factor. This does NOT match — uncompetitive inhibition changes the y-intercept.',
       C: 'Pure noncompetitive inhibition produces a higher y-intercept (lower Vmax) with the SAME x-intercept (unchanged Km). The slope increases. This does NOT match the described pattern (same y-intercept, different x-intercept).',
@@ -1990,7 +1990,7 @@ The investigators also examined what happens when an external voltage source gre
     id: 'mcat-qb-cp-061',
     test: 'MCAT',
     section: 'chem-phys',
-    discipline: 'Chemistry',
+    discipline: 'General Chemistry',
     contentCategory: '5C',
     foundationalConcept: '5',
     scientificSkill: 'Skill 2',
@@ -2044,7 +2044,7 @@ The investigators also examined what happens when an external voltage source gre
     id: 'mcat-qb-cp-063',
     test: 'MCAT',
     section: 'chem-phys',
-    discipline: 'Chemistry',
+    discipline: 'General Chemistry',
     contentCategory: '4A',
     foundationalConcept: '4',
     scientificSkill: 'Skill 4',
@@ -3482,6 +3482,11 @@ Despite its success with hydrogen, the Bohr model fails for multi-electron atoms
     scientificSkill: 'Skill 2',
     difficulty: 'medium',
     questionType: 'passage',
+    passageText: `Hydrogen is the simplest atom and the cornerstone of modern atomic theory. Niels Bohr proposed that electrons occupy discrete circular orbits with radii rₙ = n²a₀ (a₀ = 0.0529 nm). Energy levels are Eₙ = −13.6/n² eV. Photon emission occurs when an electron transitions from a higher to a lower energy level. The Lyman series (transitions to n=1) produces ultraviolet photons; the Balmer series (transitions to n=2) produces visible photons; the Paschen series (transitions to n=3) produces infrared photons. The Rydberg equation: 1/λ = R_H(1/n₁² − 1/n₂²), where R_H = 1.097 × 10⁷ m⁻¹ and n₂ > n₁.
+
+Shortly after Bohr's model gained acceptance, Albert Einstein's photoelectric effect was recognized as providing independent evidence for the quantization of electromagnetic energy. In the photoelectric effect, light shining on a metal surface ejects electrons. The maximum kinetic energy of ejected electrons is KE_max = hν − φ, where h = 6.626 × 10⁻³⁴ J·s is Planck's constant, ν is photon frequency, and φ is the work function. The threshold frequency ν₀ = φ/h; below ν₀, no electrons are ejected regardless of light intensity.
+
+Despite its success with hydrogen, the Bohr model fails for multi-electron atoms because it treats electrons as classical particles in defined orbits, neglects electron-electron repulsion, and ignores the quantum mechanical wave nature of electrons. Modern quantum mechanics replaces Bohr's orbits with probability distributions (orbitals) described by four quantum numbers: principal (n), angular momentum (l), magnetic (mₗ), and spin (mₛ). The Pauli exclusion principle states that no two electrons in an atom can share the same set of all four quantum numbers.`,
     question: 'Which transition in the Balmer series produces the photon with the longest wavelength?',
     choices: [
       { label: 'A', text: 'n=6 → n=2' },
@@ -3509,6 +3514,11 @@ Despite its success with hydrogen, the Bohr model fails for multi-electron atoms
     scientificSkill: 'Skill 1',
     difficulty: 'medium',
     questionType: 'passage',
+    passageText: `Hydrogen is the simplest atom and the cornerstone of modern atomic theory. Niels Bohr proposed that electrons occupy discrete circular orbits with radii rₙ = n²a₀ (a₀ = 0.0529 nm). Energy levels are Eₙ = −13.6/n² eV. Photon emission occurs when an electron transitions from a higher to a lower energy level. The Lyman series (transitions to n=1) produces ultraviolet photons; the Balmer series (transitions to n=2) produces visible photons; the Paschen series (transitions to n=3) produces infrared photons. The Rydberg equation: 1/λ = R_H(1/n₁² − 1/n₂²), where R_H = 1.097 × 10⁷ m⁻¹ and n₂ > n₁.
+
+Shortly after Bohr's model gained acceptance, Albert Einstein's photoelectric effect was recognized as providing independent evidence for the quantization of electromagnetic energy. In the photoelectric effect, light shining on a metal surface ejects electrons. The maximum kinetic energy of ejected electrons is KE_max = hν − φ, where h = 6.626 × 10⁻³⁴ J·s is Planck's constant, ν is photon frequency, and φ is the work function. The threshold frequency ν₀ = φ/h; below ν₀, no electrons are ejected regardless of light intensity.
+
+Despite its success with hydrogen, the Bohr model fails for multi-electron atoms because it treats electrons as classical particles in defined orbits, neglects electron-electron repulsion, and ignores the quantum mechanical wave nature of electrons. Modern quantum mechanics replaces Bohr's orbits with probability distributions (orbitals) described by four quantum numbers: principal (n), angular momentum (l), magnetic (mₗ), and spin (mₛ). The Pauli exclusion principle states that no two electrons in an atom can share the same set of all four quantum numbers.`,
     question: 'The Bohr model accurately predicts the hydrogen emission spectrum but fails for multi-electron atoms. Which of the following BEST describes the fundamental reason for this failure?',
     choices: [
       { label: 'A', text: 'The Bohr model incorrectly assumes that all electrons orbit the nucleus at the same radius' },
@@ -3536,6 +3546,11 @@ Despite its success with hydrogen, the Bohr model fails for multi-electron atoms
     scientificSkill: 'Skill 1',
     difficulty: 'easy',
     questionType: 'passage',
+    passageText: `Hydrogen is the simplest atom and the cornerstone of modern atomic theory. Niels Bohr proposed that electrons occupy discrete circular orbits with radii rₙ = n²a₀ (a₀ = 0.0529 nm). Energy levels are Eₙ = −13.6/n² eV. Photon emission occurs when an electron transitions from a higher to a lower energy level. The Lyman series (transitions to n=1) produces ultraviolet photons; the Balmer series (transitions to n=2) produces visible photons; the Paschen series (transitions to n=3) produces infrared photons. The Rydberg equation: 1/λ = R_H(1/n₁² − 1/n₂²), where R_H = 1.097 × 10⁷ m⁻¹ and n₂ > n₁.
+
+Shortly after Bohr's model gained acceptance, Albert Einstein's photoelectric effect was recognized as providing independent evidence for the quantization of electromagnetic energy. In the photoelectric effect, light shining on a metal surface ejects electrons. The maximum kinetic energy of ejected electrons is KE_max = hν − φ, where h = 6.626 × 10⁻³⁴ J·s is Planck's constant, ν is photon frequency, and φ is the work function. The threshold frequency ν₀ = φ/h; below ν₀, no electrons are ejected regardless of light intensity.
+
+Despite its success with hydrogen, the Bohr model fails for multi-electron atoms because it treats electrons as classical particles in defined orbits, neglects electron-electron repulsion, and ignores the quantum mechanical wave nature of electrons. Modern quantum mechanics replaces Bohr's orbits with probability distributions (orbitals) described by four quantum numbers: principal (n), angular momentum (l), magnetic (mₗ), and spin (mₛ). The Pauli exclusion principle states that no two electrons in an atom can share the same set of all four quantum numbers.`,
     question: 'Which of the following sets of quantum numbers is IMPOSSIBLE for an electron in an atom?',
     choices: [
       { label: 'A', text: 'n=3, l=2, mₗ=−2, mₛ=+½' },
@@ -3563,6 +3578,11 @@ Despite its success with hydrogen, the Bohr model fails for multi-electron atoms
     scientificSkill: 'Skill 2',
     difficulty: 'medium',
     questionType: 'passage',
+    passageText: `Hydrogen is the simplest atom and the cornerstone of modern atomic theory. Niels Bohr proposed that electrons occupy discrete circular orbits with radii rₙ = n²a₀ (a₀ = 0.0529 nm). Energy levels are Eₙ = −13.6/n² eV. Photon emission occurs when an electron transitions from a higher to a lower energy level. The Lyman series (transitions to n=1) produces ultraviolet photons; the Balmer series (transitions to n=2) produces visible photons; the Paschen series (transitions to n=3) produces infrared photons. The Rydberg equation: 1/λ = R_H(1/n₁² − 1/n₂²), where R_H = 1.097 × 10⁷ m⁻¹ and n₂ > n₁.
+
+Shortly after Bohr's model gained acceptance, Albert Einstein's photoelectric effect was recognized as providing independent evidence for the quantization of electromagnetic energy. In the photoelectric effect, light shining on a metal surface ejects electrons. The maximum kinetic energy of ejected electrons is KE_max = hν − φ, where h = 6.626 × 10⁻³⁴ J·s is Planck's constant, ν is photon frequency, and φ is the work function. The threshold frequency ν₀ = φ/h; below ν₀, no electrons are ejected regardless of light intensity.
+
+Despite its success with hydrogen, the Bohr model fails for multi-electron atoms because it treats electrons as classical particles in defined orbits, neglects electron-electron repulsion, and ignores the quantum mechanical wave nature of electrons. Modern quantum mechanics replaces Bohr's orbits with probability distributions (orbitals) described by four quantum numbers: principal (n), angular momentum (l), magnetic (mₗ), and spin (mₛ). The Pauli exclusion principle states that no two electrons in an atom can share the same set of all four quantum numbers.`,
     question: 'Ultraviolet light of frequency 2.0 × 10¹⁵ Hz illuminates a metal with work function φ = 3.0 eV (h = 4.14 × 10⁻¹⁵ eV·s). If the intensity of light is doubled while the frequency remains unchanged, how are the maximum kinetic energy (KE_max) and the number of ejected electrons per unit time affected?',
     choices: [
       { label: 'A', text: 'KE_max unchanged; approximately twice as many electrons ejected per unit time' },

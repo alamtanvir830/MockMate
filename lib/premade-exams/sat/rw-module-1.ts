@@ -297,7 +297,7 @@ Text 2: Literary critics working in the tradition of sociolinguistics have since
       { label: 'D', text: 'argue that personal memory is shaped by social contexts rather than being purely private' },
     ],
     correctAnswer: 'D',
-    explanation: `Choice D is correct. The passage states that Halbwachs argued "individual memories are always shaped by the social frameworks within which people live" and that he "challenged the Cartesian assumption that memory is a purely private, internal phenomenon." This is accurately summarized by choice B.`,
+    explanation: `Choice D is correct. The passage states that Halbwachs argued "individual memories are always shaped by the social frameworks within which people live" and that he "challenged the Cartesian assumption that memory is a purely private, internal phenomenon." This is accurately summarized by choice D.`,
     wrongAnswerExplanations: {
       A: `Choice A is incorrect. The passage says memories are shaped by collective frameworks, not that they become identical across individuals.`,
       C: `Choice C is incorrect. The passage does not describe Halbwachs developing any experimental methods; his contribution was theoretical.`,
@@ -386,14 +386,17 @@ Text 2: Literary critics working in the tradition of sociolinguistics have since
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
     difficulty: 'medium',
-    stimulus: `A student studying wildlife management is preparing a report arguing that gray wolf reintroduction to Yellowstone National Park has had measurable ecological benefits. The student wants to include evidence that wolf predation has affected vegetation along riverbanks.
-
-The table below shows vegetation height measurements along three river sections in Yellowstone.
-
-River Section | Average vegetation height (1994, before wolves) | Average vegetation height (2014, after wolves)
-High predation risk zone | 0.4 m | 2.3 m
-Medium predation risk zone | 0.5 m | 1.1 m
-Low predation risk zone | 0.6 m | 0.7 m`,
+    stimulus: `A student studying wildlife management is preparing a report arguing that gray wolf reintroduction to Yellowstone National Park has had measurable ecological benefits. The student wants to include evidence that wolf predation has affected vegetation along riverbanks. The table shows vegetation height measurements along three river sections in Yellowstone.`,
+    graphData: {
+      type: 'table',
+      title: 'Average Vegetation Height by Predation Risk Zone',
+      headers: ['River Section', 'Height, 1994 (before wolves)', 'Height, 2014 (after wolves)'],
+      rows: [
+        ['High predation risk zone', '0.4 m', '2.3 m'],
+        ['Medium predation risk zone', '0.5 m', '1.1 m'],
+        ['Low predation risk zone', '0.6 m', '0.7 m'],
+      ],
+    },
     question: `Which statement best uses the data in the table to support the student's argument?`,
     choices: [
       { label: 'A', text: 'In all three river sections, vegetation height increased slightly after wolf reintroduction.' },

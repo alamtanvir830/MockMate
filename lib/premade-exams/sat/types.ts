@@ -99,6 +99,8 @@ export interface RWQuestion {
   skill: RWSkill
   difficulty: Difficulty
   stimulus: string
+  /** Optional rendered table/graph for data-based RW questions (e.g. Command of Evidence) */
+  graphData?: SATGraphData
   /** Exact phrases in the stimulus that the question refers to as "underlined" */
   underlineTargets?: string[]
   question: string
