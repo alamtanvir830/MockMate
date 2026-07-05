@@ -1,7 +1,7 @@
 // MockMate Estimated SAT Score Conversion
 // Converts raw section scores to estimated scaled 200–800 scores.
-// These are NOT official College Board scores — they are MockMate estimates
-// intended to give a rough sense of performance relative to the 200–800 scale.
+// These are NOT official College Board scores — they are MockMate estimated
+// scores intended to give a rough sense of performance on the 200–800 scale.
 //
 // Adaptive structure:
 //   RW:   Module 1 (27 Qs) + Module 2 Easy (27 Qs)  OR  Module 2 Hard (27 Qs)
@@ -10,13 +10,14 @@
 // Total questions per section: 54 RW, 44 Math
 // Routing thresholds: RW ≥ 14/27 → Hard M2; Math ≥ 11/22 → Hard M2
 //
-// Hard path: allows scores up to 800, requires near-perfect for 800
-// Easy path: caps lower (~730 RW, ~690 Math) — harder questions are valued more
+// Hard path top-end (exact, no rounding needed — all multiples of 10):
+//   RW:   47→730  48→740  49→750  50→760  51→770  52→780  53→790  54→800
+//   Math: 37→720  38→730  39→740  40→750  41→770  42→780  43→790  44→800
+// Easy path: caps at ~730 RW / ~690 Math — harder questions valued more
 
 // ── Raw score → scaled score tables ──────────────────────────────────────────
 // [rawScore, scaledEasyPath, scaledHardPath]
-// Hard path: 800 only at 53–54/54 RW, 43–44/44 Math
-// Hard 47/54 RW ≈ 740; Hard 37/44 Math ≈ 720
+// Top-end hard values are exact multiples of 10 — roundSATScore is a no-op there.
 
 const rwConversionTable: [number, number, number][] = [
   [0,  200, 200],
@@ -65,14 +66,14 @@ const rwConversionTable: [number, number, number][] = [
   [43, 641, 688],
   [44, 650, 700],
   [45, 658, 712],
-  [46, 668, 726],
-  [47, 678, 740],
-  [48, 686, 749],
-  [49, 695, 758],
-  [50, 703, 768],
-  [51, 711, 776],
-  [52, 718, 784],
-  [53, 724, 792],
+  [46, 668, 720],
+  [47, 678, 730],
+  [48, 686, 740],
+  [49, 695, 750],
+  [50, 703, 760],
+  [51, 711, 770],
+  [52, 718, 780],
+  [53, 724, 790],
   [54, 730, 800],
 ]
 
@@ -115,12 +116,12 @@ const mathConversionTable: [number, number, number][] = [
   [35, 630, 697],
   [36, 641, 709],
   [37, 652, 720],
-  [38, 659, 732],
-  [39, 666, 744],
-  [40, 673, 756],
-  [41, 678, 767],
-  [42, 683, 778],
-  [43, 687, 789],
+  [38, 659, 730],
+  [39, 666, 740],
+  [40, 673, 750],
+  [41, 678, 770],
+  [42, 683, 780],
+  [43, 687, 790],
   [44, 690, 800],
 ]
 
