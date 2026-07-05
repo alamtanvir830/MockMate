@@ -1965,7 +1965,7 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
 
         {/* 1. Score summary */}
         <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <h2 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-4">Estimated Score</h2>
+          <h2 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-4">MockMate Estimated SAT Score</h2>
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="text-center">
               <p className="text-[11px] text-slate-400 mb-1">Reading &amp; Writing</p>

@@ -928,7 +928,7 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
           <div className="flex items-end gap-6 flex-wrap">
             <div>
               <p className="text-5xl font-bold">{attempt.totalScore}</p>
-              <p className="text-sm text-white/60 mt-1">Estimated Total Score</p>
+              <p className="text-sm text-white/60 mt-1">MockMate Estimated MCAT Score</p>
             </div>
             <div className="flex gap-4">
               {sectionScores.map(s => (
