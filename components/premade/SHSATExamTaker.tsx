@@ -1132,6 +1132,18 @@ export function SHSATExamTaker({ form }: Props) {
     return starts
   }, [flatQuestions])
 
+  // passage number (1-indexed) for each passageId in RC
+  const passageNumberMap = useMemo(() => {
+    const map: Record<string, number> = {}
+    let idx = 1
+    for (const fq of flatQuestions) {
+      if (fq.subType === 'reading_comprehension' && fq.passageId && !map[fq.passageId]) {
+        map[fq.passageId] = idx++
+      }
+    }
+    return map
+  }, [flatQuestions])
+
   const mathSubIdx = useMemo(() =>
     form.subsections.findIndex(s => s.type === 'mathematics'),
     [form],
@@ -1154,6 +1166,7 @@ export function SHSATExamTaker({ form }: Props) {
   const [bookmarked, setBookmarked]     = useState<Set<string>>(new Set())
   const [secondsLeft, setSecondsLeft]   = useState(form.timeLimitMinutes * 60)
   const [timedOut, setTimedOut]         = useState(false)
+  const [showAttentionModal, setShowAttentionModal] = useState(false)
 
   const passagePanelRef = useRef<HTMLDivElement>(null)
   const prevPassageId   = useRef<string>('')
@@ -1211,6 +1224,17 @@ export function SHSATExamTaker({ form }: Props) {
       setPhase({ tag: 'question', globalIdx: subsectionStarts[phase.subIdx] }); return
     }
     if (phase.tag === 'question') {
+      // Block advancement if multi_select or match is partially answered
+      const curQ = flatQuestions[phase.globalIdx].question
+      if (curQ.type === 'multi_select') {
+        const selected = multiAnswers[curQ.id] ?? []
+        if (selected.length < curQ.selectCount) { setShowAttentionModal(true); return }
+      }
+      if (curQ.type === 'match') {
+        const assigned = matchAnswers[curQ.id] ?? {}
+        if (Object.keys(assigned).length < curQ.items.length) { setShowAttentionModal(true); return }
+      }
+
       const next = phase.globalIdx + 1
       if (next >= totalQ) { setPhase({ tag: 'end' }); return }
 
@@ -1556,57 +1580,87 @@ export function SHSATExamTaker({ form }: Props) {
   } else if (currentQ.type === 'match') {
     const mq = currentQ
     const sel = matchAnswers[mq.id] ?? {}
-    const setMatch = (itemId: string, catId: string) => {
+    const placeTile = (itemId: string, catId: string) => {
       setMatchAnswers(prev => {
-        const cur = prev[mq.id] ?? {}
-        const next = { ...cur }
-        if (next[itemId] === catId) delete next[itemId]
-        else next[itemId] = catId
+        const next = { ...(prev[mq.id] ?? {}), [itemId]: catId }
         return { ...prev, [mq.id]: next }
       })
     }
-    const assignedCount = Object.keys(sel).length
+    const removeTile = (itemId: string) => {
+      setMatchAnswers(prev => {
+        const next = { ...(prev[mq.id] ?? {}) }
+        delete next[itemId]
+        return { ...prev, [mq.id]: next }
+      })
+    }
+    const unplaced = mq.items.filter(item => !sel[item.id])
     questionContent = (
       <div>
-        <p className="text-[12px] font-semibold text-[#1b3a5c] bg-[#eaf0f7] border border-[#b0cce0] rounded px-3 py-2 mb-4">
-          Assign each quotation to the correct category.{' '}
-          {assignedCount < mq.items.length
-            ? `(${mq.items.length - assignedCount} remaining)`
-            : '✓ All assigned'}
-        </p>
-        <div className="space-y-3">
-          {mq.items.map((item) => {
-            const assigned = sel[item.id]
+        {/* Category boxes */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          {mq.categories.map(cat => {
+            const placed = mq.items.filter(item => sel[item.id] === cat.id)
             return (
-              <div key={item.id} className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3">
-                <p className="text-[13px] text-slate-800 mb-2.5 leading-relaxed">
-                  <span className="font-semibold text-slate-500 mr-2">{item.id}.</span>
-                  {item.text}
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  {mq.categories.map((cat) => {
-                    const active = assigned === cat.id
-                    return (
+              <div key={cat.id} className="rounded-lg border-2 border-[#1b3a5c] overflow-hidden">
+                <div className="bg-[#1b3a5c] text-white text-[11px] font-bold text-center py-1.5 px-2 uppercase tracking-wide">
+                  {cat.label}
+                </div>
+                <div className="bg-[#f0f5fa] min-h-[60px] p-2 space-y-1.5">
+                  {placed.length === 0 && (
+                    <p className="text-[11px] text-slate-400 italic text-center py-3">— empty —</p>
+                  )}
+                  {placed.map(item => (
+                    <div key={item.id} className="flex items-start gap-1.5 bg-white rounded border border-[#b0cce0] px-2 py-1.5">
+                      <span className="text-[11px] text-slate-700 leading-snug flex-1">{item.text}</span>
                       <button
-                        key={cat.id}
                         type="button"
-                        onClick={() => setMatch(item.id, cat.id)}
-                        className={cn(
-                          'rounded px-3 py-1.5 text-[12px] font-semibold border transition-all',
-                          active
-                            ? 'bg-[#1b3a5c] text-white border-[#1b3a5c]'
-                            : 'bg-white text-slate-600 border-slate-300 hover:border-[#1b3a5c] hover:text-[#1b3a5c]',
-                        )}
+                        onClick={() => removeTile(item.id)}
+                        aria-label="Remove"
+                        className="shrink-0 text-slate-400 hover:text-red-500 ml-0.5"
                       >
-                        {cat.label}
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} className="h-3 w-3">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
                       </button>
-                    )
-                  })}
+                    </div>
+                  ))}
                 </div>
               </div>
             )
           })}
         </div>
+        {/* Unplaced tiles */}
+        {unplaced.length > 0 ? (
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <p className="text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-widest">
+              Available — {unplaced.length} tile{unplaced.length !== 1 ? 's' : ''} remaining
+            </p>
+            <div className="space-y-2">
+              {unplaced.map(item => (
+                <div key={item.id} className="rounded border border-slate-300 bg-white p-2.5">
+                  <p className="text-[12px] text-slate-800 leading-relaxed mb-2">
+                    <span className="font-semibold text-slate-400 mr-1.5">{item.id}.</span>
+                    {item.text}
+                  </p>
+                  <div className="flex gap-2 flex-wrap">
+                    {mq.categories.map(cat => (
+                      <button
+                        key={cat.id}
+                        type="button"
+                        onClick={() => placeTile(item.id, cat.id)}
+                        className="rounded border border-[#1b3a5c] px-2.5 py-1 text-[11px] font-semibold text-[#1b3a5c] hover:bg-[#1b3a5c] hover:text-white transition-colors"
+                      >
+                        → {cat.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p className="text-center text-[12px] font-semibold text-emerald-600 py-1">✓ All tiles placed</p>
+        )}
       </div>
     )
   }
@@ -1639,6 +1693,31 @@ export function SHSATExamTaker({ form }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-white overflow-hidden">
 
+      {/* ── ATTENTION MODAL ───────────────────────────────────────────────── */}
+      {showAttentionModal && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-xl shadow-xl max-w-sm w-full mx-4 overflow-hidden">
+            <div className="bg-[#1b3a5c] px-6 py-4">
+              <h2 className="text-lg font-bold text-white">Attention</h2>
+            </div>
+            <div className="px-6 py-5">
+              <p className="text-[14px] text-slate-700 leading-relaxed">
+                You must answer all parts of the question before you can continue. You might need to scroll down to see what is unanswered.
+              </p>
+            </div>
+            <div className="px-6 pb-5 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowAttentionModal(false)}
+                className="rounded bg-[#1b3a5c] px-6 py-2 text-[14px] font-semibold text-white hover:bg-[#142e4d] transition-colors"
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── TOP NAV ──────────────────────────────────────────────────────── */}
       <NavBar
         onBack={handleBack}
@@ -1655,6 +1734,12 @@ export function SHSATExamTaker({ form }: Props) {
             {form.title}
             <span className="mx-2 text-white/30">/</span>
             {sectionLabel}
+            {subType === 'reading_comprehension' && fq.passageId && passageNumberMap[fq.passageId] != null && (
+              <>
+                <span className="mx-2 text-white/30">/</span>
+                PASSAGE {passageNumberMap[fq.passageId]} of {passageStarts.length}
+              </>
+            )}
             <span className="mx-2 text-white/30">/</span>
             Q {fq.globalNumber} of {totalQ}
           </span>

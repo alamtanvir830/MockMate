@@ -43,7 +43,7 @@ export const shsatForm2: SHSATForm = {
 
       passages: [
 
-        // ── Passage 1  (Q1–Q8)  The Unseen Light of the Deep ─────────────────
+        // ── Passage 1  (Q1–Q7)  The Unseen Light of the Deep ─────────────────
         {
           id: 'passage-1',
           title: 'The Unseen Light of the Deep',
@@ -133,21 +133,10 @@ export const shsatForm2: SHSATForm = {
               ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
               correct_answer: 'C',
             },
-            {
-              id: 'p1q8', type: 'mcq',
-              question: 'Which word best describes the overall tone of this passage?',
-              choices: [
-                { id: 'A', text: 'Skeptical' },
-                { id: 'B', text: 'Alarmist' },
-                { id: 'C', text: 'Informative' },
-                { id: 'D', text: 'Melancholic' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'C',
-            },
           ],
         },
 
-        // ── Passage 2  (Q9–Q16)  The Code of the Underground Railroad ─────────
+        // ── Passage 2  (Q8–Q16)  The Code of the Underground Railroad ─────────
         {
           id: 'passage-2',
           title: 'The Code of the Underground Railroad',
@@ -248,10 +237,21 @@ export const shsatForm2: SHSATForm = {
               ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
               correct_answer: 'C',
             },
+            {
+              id: 'p2q9', type: 'mcq',
+              question: 'Which sentence from the passage best supports the idea that the network had to function without centralized organization?',
+              choices: [
+                { id: 'A', text: '"Historians estimate that between 30,000 and 100,000 people used the Underground Railroad between 1810 and 1860."' },
+                { id: 'B', text: '"Tubman and others used spirituals — religious songs — as a means of communicating safe routes and departure times."' },
+                { id: 'C', text: '"The network relied on the courage of people from many backgrounds."' },
+                { id: 'D', text: '"The Fugitive Slave Act of 1850 required citizens of free states to assist in capturing and returning freedom seekers."' },
+              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
+              correct_answer: 'C',
+            },
           ],
         },
 
-        // ── Passage 3  (Q17–Q24)  The Last Day on the Mountain ───────────────
+        // ── Passage 3  (Q17–Q25)  The Last Day on the Mountain ───────────────
         {
           id: 'passage-3',
           title: 'The Last Day on the Mountain',
@@ -354,10 +354,21 @@ export const shsatForm2: SHSATForm = {
               ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
               correct_answer: 'C',
             },
+            {
+              id: 'p3q9', type: 'mcq',
+              question: 'What does Marcus\'s single-word response "Yeah" most likely reveal about him?',
+              choices: [
+                { id: 'A', text: 'He is too physically tired to speak in full sentences.' },
+                { id: 'B', text: 'He is paying close attention but prefers not to show it.' },
+                { id: 'C', text: 'He is emotionally detached and only partly engaged with those around him.' },
+                { id: 'D', text: 'He has privately decided to delay leaving for college.' },
+              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
+              correct_answer: 'C',
+            },
           ],
         },
 
-        // ── Passage 4  (Q25–Q32)  Clay ────────────────────────────────────────
+        // ── Passage 4  (Q26–Q34)  Clay ────────────────────────────────────────
         {
           id: 'passage-4',
           title: 'Clay',
@@ -458,224 +469,16 @@ export const shsatForm2: SHSATForm = {
               ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
               correct_answer: 'C',
             },
-          ],
-        },
-
-        // ── Passage 5  (Q33–Q40)  The Art of Memory ──────────────────────────
-        {
-          id: 'passage-5',
-          title: 'The Art of Memory: How Mnemonics Shape Learning',
-          contentType: 'prose',
-          content:
-            'The human brain is remarkably capable of storing and retrieving information, yet it was not designed to memorize random sequences of facts. Ancient Greek and Roman orators understood this limitation and developed a system known as the "method of loci" — a technique that involves mentally placing pieces of information along a familiar route or within an imagined building. By "walking" through that space in their minds, speakers could recall speeches of extraordinary length without a single written note.\n\n' +
-            'Modern psychologists have confirmed what ancient rhetoricians discovered by trial and error: memory is fundamentally associative. The brain retains information more effectively when new material is connected to something already known. A string of unrelated numbers, for example, is difficult to remember in isolation; the same numbers arranged into a birthdate or a phone number become immediately meaningful and far easier to retrieve.\n\n' +
-            'This principle underlies many mnemonic devices still in use today. Acronyms such as "ROYGBIV" help students recall the colors of the visible spectrum, while rhymes and songs have long been used to teach the order of the months, the bones of the body, and the capitals of nations. Research published by educational psychologists in the 1980s demonstrated that students who learned foreign vocabulary through keyword mnemonics — linking a new word to a similar-sounding word in their native language — outperformed control groups by as much as two to one on retention tests.\n\n' +
-            'Despite these advantages, mnemonics are not a replacement for deep understanding. A student who memorizes "PEMDAS" may execute the correct order of mathematical operations without grasping why parentheses take priority. Critics of heavy mnemonic use argue that overreliance on memory tricks can produce students who perform well on recall-based tests but struggle to apply knowledge to new contexts.\n\n' +
-            'The most effective learning, researchers now suggest, combines both approaches: using mnemonics as a scaffold to hold new information in place while deeper conceptual understanding is built beneath it. Like the temporary supports that hold a new arch in place until the stone can bear its own weight, memory techniques serve best when they are eventually no longer needed.',
-
-          questions: [
             {
-              id: 'p5q1', type: 'mcq',
-              question: 'Which statement best expresses the main idea of the passage?',
+              id: 'p4q9', type: 'mcq',
+              question: 'How does the final image of Clay standing in the rain contribute to the passage\'s overall meaning?',
               choices: [
-                { id: 'A', text: 'The method of loci was invented by Greek orators and has never changed since ancient times.' },
-                { id: 'B', text: 'Mnemonic devices are effective memory tools but work best when combined with genuine understanding.' },
-                { id: 'C', text: 'Memory tricks are too unreliable to be useful in modern educational settings.' },
-                { id: 'D', text: 'Acronyms and rhymes are the only types of mnemonics that have been scientifically proven.' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p5q2', type: 'mcq',
-              question: 'As used in the passage, the word "associative" most nearly means —',
-              choices: [
-                { id: 'A', text: 'working through groups of people' },
-                { id: 'B', text: 'functioning by making connections between ideas' },
-                { id: 'C', text: 'based on repetition and practice' },
-                { id: 'D', text: 'relying on visual images to recall facts' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p5q3', type: 'mcq',
-              question: 'Which detail from the passage best supports the claim that mnemonic techniques can improve academic performance?',
-              choices: [
-                { id: 'A', text: 'The method of loci was developed by ancient Greek and Roman orators.' },
-                { id: 'B', text: 'A string of unrelated numbers is difficult to remember in isolation.' },
-                { id: 'C', text: 'Students who used keyword mnemonics outperformed control groups by as much as two to one on retention tests.' },
-                { id: 'D', text: 'Critics argue that overreliance on mnemonics can prevent deep understanding.' },
+                { id: 'A', text: 'It shows that Clay has finally accepted his grandfather\'s death and is ready to move on.' },
+                { id: 'B', text: 'It suggests that Clay is deliberately punishing himself by staying outside in bad weather.' },
+                { id: 'C', text: 'It illustrates that grief, for Clay, is found in physical sensation and solitude rather than shared ritual.' },
+                { id: 'D', text: 'It indicates that Clay is saying a silent final goodbye before leaving the property.' },
               ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
               correct_answer: 'C',
-            },
-            {
-              id: 'p5q4', type: 'mcq',
-              question: 'Why does the author include the example of "PEMDAS" in the fourth paragraph?',
-              choices: [
-                { id: 'A', text: 'To demonstrate that mathematical mnemonics are always more effective than verbal ones.' },
-                { id: 'B', text: 'To show how a mnemonic can be memorized without the learner understanding the underlying concept.' },
-                { id: 'C', text: 'To argue that order of operations is the most difficult topic for students to learn.' },
-                { id: 'D', text: 'To provide evidence that educational psychologists created mnemonics in the 1980s.' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p5q5', type: 'mcq',
-              question: 'What can the reader infer about the "method of loci" based on the passage?',
-              choices: [
-                { id: 'A', text: 'It was used exclusively to help students memorize mathematical formulas.' },
-                { id: 'B', text: 'It relied on connecting information to familiar mental images rather than raw repetition.' },
-                { id: 'C', text: 'It was abandoned in ancient times and rediscovered by modern psychologists.' },
-                { id: 'D', text: 'It was proven ineffective compared to modern mnemonic techniques.' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p5q6', type: 'mcq',
-              question: 'According to the passage, what is the critics\' primary concern about heavy reliance on mnemonics?',
-              choices: [
-                { id: 'A', text: 'Mnemonics take too long to create and are rarely worth the effort.' },
-                { id: 'B', text: 'Students who use mnemonics often forget them before important tests.' },
-                { id: 'C', text: 'Overusing memory tricks can make it difficult to apply knowledge in new situations.' },
-                { id: 'D', text: 'Mnemonics work only for language-based subjects, not mathematics or science.' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'C',
-            },
-            {
-              id: 'p5q7', type: 'mcq',
-              question: 'The comparison to "temporary supports that hold a new arch in place" in the final paragraph suggests that mnemonics —',
-              choices: [
-                { id: 'A', text: 'should be removed as soon as deeper understanding is established' },
-                { id: 'B', text: 'are permanent structures that hold knowledge in place permanently' },
-                { id: 'C', text: 'require constant reinforcement or they will collapse under pressure' },
-                { id: 'D', text: 'work best when combined with physical objects rather than mental images' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'A',
-            },
-            {
-              id: 'p5q8', type: 'mcq',
-              question: 'Which word best describes the author\'s overall approach in this passage?',
-              choices: [
-                { id: 'A', text: 'One-sided — the author argues strongly for the use of mnemonics.' },
-                { id: 'B', text: 'Balanced — the author presents both the benefits and the limitations of mnemonics.' },
-                { id: 'C', text: 'Critical — the author believes mnemonics do more harm than good.' },
-                { id: 'D', text: 'Historical — the author focuses primarily on the origins of mnemonic devices.' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
-            },
-          ],
-        },
-
-        // ── Passage 6  (Q41–Q48)  The River (Poem) ───────────────────────────
-        {
-          id: 'passage-6',
-          title: 'The River',
-          contentType: 'poem',
-          content: '',
-          lines: [
-            { num: 1,  text: 'The river does not ask permission—' },
-            { num: 2,  text: 'it carves its path through limestone dark,' },
-            { num: 3,  text: 'turning obstacles to sediment,' },
-            { num: 4,  text: 'leaving channels as its mark.' },
-            { num: 0,  text: '' },
-            { num: 5,  text: 'In summer, children call it home,' },
-            { num: 6,  text: 'wade through shallows, catch the light;' },
-            { num: 7,  text: 'in winter, ice lays claim to it' },
-            { num: 8,  text: 'and stills the current overnight.' },
-            { num: 0,  text: '' },
-            { num: 9,  text: 'But come the thaw, the river rises,' },
-            { num: 10, text: 'reclaims the banks it used to own;' },
-            { num: 11, text: 'the boundary-makers pack their tools' },
-            { num: 12, text: 'and learn once more what rivers know.' },
-          ],
-
-          questions: [
-            {
-              id: 'p6q1', type: 'mcq',
-              question: 'Which statement best expresses the central idea of the poem?',
-              choices: [
-                { id: 'A', text: 'Rivers are dangerous and unpredictable forces that should be avoided.' },
-                { id: 'B', text: 'Natural forces persist and reassert themselves despite human attempts to contain them.' },
-                { id: 'C', text: 'Children are more in tune with nature than adults.' },
-                { id: 'D', text: 'The changing seasons cause rivers to shrink and grow in predictable ways.' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p6q2', type: 'mcq',
-              question: 'The opening line "The river does not ask permission" suggests that the river is —',
-              choices: [
-                { id: 'A', text: 'reckless and destructive in its behavior' },
-                { id: 'B', text: 'indifferent to human rules and boundaries' },
-                { id: 'C', text: 'responding to the demands of the children who use it' },
-                { id: 'D', text: 'changing course each season due to rainfall' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p6q3', type: 'mcq',
-              question: 'In lines 3–4, the image of "turning obstacles to sediment" and "leaving channels as its mark" primarily emphasizes that the river —',
-              choices: [
-                { id: 'A', text: 'destroys everything in its path without leaving anything behind' },
-                { id: 'B', text: 'reshapes the landscape as it moves, permanently altering the land' },
-                { id: 'C', text: 'becomes weaker as it encounters harder rock formations' },
-                { id: 'D', text: 'follows the same course year after year without change' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p6q4', type: 'mcq',
-              question: 'What contrast is established between the second stanza (lines 5–8) and the third stanza (lines 9–12)?',
-              choices: [
-                { id: 'A', text: 'The difference between a river that is shared by many people and one that belongs to no one.' },
-                { id: 'B', text: 'The difference between a river that is used joyfully in summer and one that is reclaimed in spring.' },
-                { id: 'C', text: 'The difference between the danger of a summer river and the safety of a frozen one.' },
-                { id: 'D', text: 'The difference between how adults experience rivers and how children experience them.' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p6q5', type: 'mcq',
-              question: 'Who are the "boundary-makers" referred to in line 11?',
-              choices: [
-                { id: 'A', text: 'Children who mark the edges of the river during summer.' },
-                { id: 'B', text: 'Animals that establish territory along the riverbanks.' },
-                { id: 'C', text: 'People who attempt to define or control the river\'s limits.' },
-                { id: 'D', text: 'Ice formations that block the river\'s current in winter.' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'C',
-            },
-            {
-              id: 'p6q6', type: 'mcq',
-              question: 'What does the phrase "learn once more what rivers know" in the final line most likely mean?',
-              choices: [
-                { id: 'A', text: 'Scientists must study rivers again each spring to update their records.' },
-                { id: 'B', text: 'Humans are repeatedly reminded that they cannot permanently control natural forces.' },
-                { id: 'C', text: 'Rivers have a kind of wisdom that can be taught to those who observe them.' },
-                { id: 'D', text: 'Children learn important life lessons from spending time near rivers.' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p6q7', type: 'mcq',
-              question: 'The structure of this poem — moving from winter\'s stillness in stanza two back to the river\'s resurgence in stanza three — primarily serves to —',
-              choices: [
-                { id: 'A', text: 'describe the physical geography of a specific river valley in detail' },
-                { id: 'B', text: 'create a cyclical pattern that reinforces the river\'s inevitable return' },
-                { id: 'C', text: 'establish suspense about whether the river will survive the winter' },
-                { id: 'D', text: 'contrast a peaceful natural world with a noisy human one' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p6q8', type: 'mcq',
-              question: 'Which word best describes the overall tone of this poem?',
-              choices: [
-                { id: 'A', text: 'Sorrowful' },
-                { id: 'B', text: 'Reverent' },
-                { id: 'C', text: 'Anxious' },
-                { id: 'D', text: 'Humorous' },
-              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-              correct_answer: 'B',
             },
           ],
         },
@@ -683,7 +486,8 @@ export const shsatForm2: SHSATForm = {
       ], // end passages (Reading Comprehension)
     },
 
-    // ── Revising/Editing Part A  Q49–Q53 ──────────────────────────────────────
+
+    // ── Revising/Editing Part A  Q35–Q42 ──────────────────────────────────────
     {
       id: 'rev-edit-a',
       type: 'revising_editing_a' as SHSATSubsectionType,
@@ -765,12 +569,45 @@ export const shsatForm2: SHSATForm = {
               ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
               correct_answer: 'C',
             },
+            {
+              id: 're-a-q6', type: 'mcq',
+              question: 'Read the following sentence:\n"Some early radio programs became so popular that celebrities who had never appeared in film were recognized across the country purely by their voices."\nWhere would this sentence BEST be placed in the passage?',
+              choices: [
+                { id: 'A', text: 'After sentence 2' },
+                { id: 'B', text: 'After sentence 6' },
+                { id: 'C', text: 'After sentence 9' },
+                { id: 'D', text: 'After sentence 12' },
+              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
+              correct_answer: 'B',
+            },
+            {
+              id: 're-a-q7', type: 'mcq',
+              question: 'Which sentence, if added after sentence 8, would BEST support the idea that radio created a shared national experience?',
+              choices: [
+                { id: 'A', text: 'Some Americans did not own radios and relied on neighbors to share news.' },
+                { id: 'B', text: 'Radio programming varied by region, with different content offered in different cities.' },
+                { id: 'C', text: 'When the president spoke on the radio, citizens in small towns and large cities heard the same words at the same moment.' },
+                { id: 'D', text: 'Radio announcers developed distinctive styles that listeners came to recognize over time.' },
+              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
+              correct_answer: 'C',
+            },
+            {
+              id: 're-a-q8', type: 'mcq',
+              question: 'Which sentence would BEST conclude the passage if added after sentence 12?',
+              choices: [
+                { id: 'A', text: 'Television relied on the same advertising model that radio had established.' },
+                { id: 'B', text: 'The legacy of radio can still be felt in modern broadcasting: its emphasis on clear, direct communication shaped the standards of journalism and entertainment for generations.' },
+                { id: 'C', text: 'Today, radio stations continue to operate in most major cities around the world.' },
+                { id: 'D', text: 'Guglielmo Marconi received the Nobel Prize in Physics in 1909 for his work on wireless telegraphy.' },
+              ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
+              correct_answer: 'B',
+            },
           ],
         },
       ],
     },
 
-    // ── Revising/Editing Part B  Q54–Q57 ──────────────────────────────────────
+    // ── Revising/Editing Part B  Q43–Q50 ──────────────────────────────────────
     {
       id: 'rev-edit-b',
       type: 'revising_editing_b' as SHSATSubsectionType,
@@ -823,10 +660,54 @@ export const shsatForm2: SHSATForm = {
           ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
           correct_answer: 'B',
         },
+        {
+          id: 're-b-q5', type: 'mcq',
+          question: 'Which sentence contains a subject-verb agreement error?',
+          choices: [
+            { id: 'A', text: 'The results of the experiment were difficult to interpret.' },
+            { id: 'B', text: 'Each of the volunteers submits a written summary at the end of the session.' },
+            { id: 'C', text: 'The jury deliberates for hours before reaching a verdict.' },
+            { id: 'D', text: 'Neither the principal nor the teachers was informed about the schedule change.' },
+          ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
+          correct_answer: 'D',
+        },
+        {
+          id: 're-b-q6', type: 'mcq',
+          question: 'Which word correctly completes the sentence?\n"The new policy will greatly _____ the way students are evaluated at the end of each semester."',
+          choices: [
+            { id: 'A', text: 'effect' },
+            { id: 'B', text: 'affects' },
+            { id: 'C', text: 'effecting' },
+            { id: 'D', text: 'affect' },
+          ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
+          correct_answer: 'D',
+        },
+        {
+          id: 're-b-q7', type: 'mcq',
+          question: 'Which revision BEST creates parallel structure in the following sentence?\n"The committee decided to review the budget, scheduling a new meeting, and that they would contact all members."',
+          choices: [
+            { id: 'A', text: 'The committee decided to review the budget, schedule a new meeting, and contact all members.' },
+            { id: 'B', text: 'The committee decided reviewing the budget, scheduling a new meeting, and contacting all members.' },
+            { id: 'C', text: 'The committee decided to review the budget, scheduling a new meeting, and to contact all members.' },
+            { id: 'D', text: 'The committee reviewed the budget, they scheduled a meeting, and they contacted members.' },
+          ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
+          correct_answer: 'A',
+        },
+        {
+          id: 're-b-q8', type: 'mcq',
+          question: 'Which transition word BEST fills in the blank?\n"The team had prepared thoroughly for the tournament. _____, they were eliminated in the second round."',
+          choices: [
+            { id: 'A', text: 'Therefore' },
+            { id: 'B', text: 'Similarly' },
+            { id: 'C', text: 'Nevertheless' },
+            { id: 'D', text: 'Furthermore' },
+          ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
+          correct_answer: 'C',
+        },
       ],
     },
 
-    // ── Mathematics  Q58–Q114 ─────────────────────────────────────────────────
+    // ── Mathematics  Q51–Q100 ─────────────────────────────────────────────────
     {
       id: 'math',
       type: 'mathematics' as SHSATSubsectionType,
@@ -842,7 +723,7 @@ export const shsatForm2: SHSATForm = {
         'Solve each problem. Select the answer from the choices given or enter your answer in the space provided.',
       questions: [
 
-        // ── Easy  Q58–Q70 ──────────────────────────────────────────────────
+        // ── Easy  Q51–Q57 ──────────────────────────────────────────────────
         {
           id: 'math-q1', type: 'mcq',
           question: 'What is 5 + 3 × 4?',
@@ -920,32 +801,6 @@ export const shsatForm2: SHSATForm = {
           ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
           correct_answer: 'D',
         },
-        {
-          id: 'math-q8', type: 'mcq',
-          question: 'What is 2/3 of 45?',
-          choices: [
-            { id: 'A', text: '20' },
-            { id: 'B', text: '25' },
-            { id: 'C', text: '30' },
-            { id: 'D', text: '35' },
-          ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-          correct_answer: 'C',
-        },
-        {
-          id: 'math-q9', type: 'mcq',
-          question: 'A number line shows points at −6 and 4. What is the distance between them?',
-          choices: [
-            { id: 'A', text: '2' },
-            { id: 'B', text: '6' },
-            { id: 'C', text: '10' },
-            { id: 'D', text: '12' },
-          ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-          correct_answer: 'C',
-        },
-        { id: 'math-q10', type: 'grid_in', question: 'What is 6 × 9?',   correct_answer: '54' } as SHSATGridInQuestion,
-        { id: 'math-q11', type: 'grid_in', question: 'What is 121 ÷ 11?', correct_answer: '11' } as SHSATGridInQuestion,
-        { id: 'math-q12', type: 'grid_in', question: 'What is 8²?',       correct_answer: '64' } as SHSATGridInQuestion,
-        { id: 'math-q13', type: 'grid_in', question: 'What is 1/3 of 60?', correct_answer: '20' } as SHSATGridInQuestion,
 
         // ── Medium  Q71–Q90 ────────────────────────────────────────────────
         {
@@ -1240,17 +1095,6 @@ export const shsatForm2: SHSATForm = {
             { id: 'D', text: '144°' },
           ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
           correct_answer: 'D',
-        },
-        {
-          id: 'math-q47', type: 'mcq',
-          question: 'A store buys an item for $90 and marks it up 20%. What is the selling price?',
-          choices: [
-            { id: 'A', text: '$100' },
-            { id: 'B', text: '$104' },
-            { id: 'C', text: '$108' },
-            { id: 'D', text: '$112' },
-          ] as [SHSATChoice, SHSATChoice, SHSATChoice, SHSATChoice],
-          correct_answer: 'C',
         },
         { id: 'math-q48', type: 'grid_in',
           question: 'What is the least common multiple (LCM) of 4 and 10?',

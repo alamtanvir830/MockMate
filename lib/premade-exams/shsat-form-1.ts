@@ -164,124 +164,133 @@ export const shsatForm1: SHSATForm = {
 
       passages: [
 
-        // ── Passage 1  (Q1–Q7)  POEM ───────────────────────────────────────
+        // ── Passage 1  (Q1–Q7)  Snowy Mountains (original poem) ───────────
         {
           id: 'passage-1',
-          title: 'The Grass',
-          author: 'Carl Sandburg',
+          title: 'Snowy Mountains',
           contentType: 'poem',
-          content: '',  // unused for poems; see lines[] below
+          content: '',
           lines: [
-            { num: 1,  text: 'Pile the bodies high at Austerlitz and Waterloo.' },
-            { num: 2,  text: 'Shovel them under and let me work—' },
-            { num: 3,  text: 'I am the grass; I cover all.' },
+            { num: 1,  text: 'The peaks stand crowned in white, untouched and free,' },
+            { num: 2,  text: 'Their solemn glaciers gleaming cold and bright,' },
+            { num: 3,  text: 'Where no road breaks the silence of the height' },
+            { num: 4,  text: 'And eagles wheel in slow majestic flight.' },
+            { num: 5,  text: 'The snowfields slope to valleys hushed in green,' },
+            { num: 6,  text: 'Where hidden streams run clear through mountain air,' },
+            { num: 7,  text: 'A world unmarked by hammer, saw, or spade.' },
             { num: 0,  text: '' },
-            { num: 4,  text: 'And pile them high at Gettysburg' },
-            { num: 5,  text: 'And pile them high at Ypres and Verdun.' },
-            { num: 6,  text: 'Shovel them under and let me work.' },
+            { num: 8,  text: 'Below, the grey road slices through the plain,' },
+            { num: 9,  text: 'And telephone poles stride in rigid rows,' },
+            { num: 10, text: 'And wooden fences mark what no man knows' },
+            { num: 11, text: 'Can long be held against the hillside\'s face.' },
+            { num: 12, text: 'The crumbling wall creeps up the eastern slope,' },
+            { num: 13, text: 'As if to cage the wind and fence the snow,' },
+            { num: 14, text: 'While billboards flash their colors to the road.' },
             { num: 0,  text: '' },
-            { num: 7,  text: 'Two years, ten years, and passengers ask the conductor:' },
-            { num: 8,  text: 'What place is this?' },
-            { num: 9,  text: 'Where are we now?' },
-            { num: 0,  text: '' },
-            { num: 10, text: 'I am the grass.' },
-            { num: 11, text: 'Let me work.' },
+            { num: 15, text: 'Yet still the peaks rise white above man\'s stir,' },
+            { num: 16, text: 'The summit speaks what no voice can restrain,' },
+            { num: 17, text: 'What no deed signed by mortal hand can own.' },
+            { num: 18, text: 'The ridge runs free beneath an open sky—' },
+            { num: 19, text: 'No smoke, no wire, no mark of any claim' },
+            { num: 20, text: 'Can dim the light that falls on each cold face,' },
+            { num: 21, text: 'Nor silence what the mountain silence says.' },
+            { num: 22, text: 'Here beauty needs no name to make it true.' },
           ],
           questions: [
             {
               id: 'p1q1', type: 'mcq',
-              question: 'The description in lines 1–6 helps establish a central idea of the poem by',
+              question: 'Which statement best expresses the central idea of the first stanza (lines 1–7)?',
               choices: [
-                { id: 'A', text: 'comparing different historical events to show their similarities' },
-                { id: 'B', text: 'emphasizing how quickly people forget the consequences of war' },
-                { id: 'C', text: 'describing the destruction of war and how it is eventually hidden' },
-                { id: 'D', text: 'suggesting that war is necessary for progress' },
+                { id: 'A', text: 'The mountains are difficult to climb and dangerous for travelers.' },
+                { id: 'B', text: 'Human development has significantly changed the appearance of the mountain peaks.' },
+                { id: 'C', text: 'The mountains are portrayed as majestic and untouched by human activity.' },
+                { id: 'D', text: 'Eagles and other wildlife are threatened by the mountain environment.' },
               ],
               correct_answer: 'C',
             },
             {
               id: 'p1q2', type: 'mcq',
-              question: 'Which detail from the poem reflects the speaker\'s view that people often fail to remember the past?',
+              question: 'Which detail from the poem best supports the idea that the natural world in stanza 1 is free from human presence?',
               choices: [
-                { id: 'A', text: '"Pile the bodies high" (line 1)' },
-                { id: 'B', text: '"Shovel them under and let me work" (line 2)' },
-                { id: 'C', text: '"Two years, ten years, and passengers ask the conductor" (line 7)' },
-                { id: 'D', text: '"I am the grass" (line 10)' },
+                { id: 'A', text: '"Their solemn glaciers gleaming cold and bright" (line 2)' },
+                { id: 'B', text: '"Where no road breaks the silence of the height" (line 3)' },
+                { id: 'C', text: '"The snowfields slope to valleys hushed in green" (line 5)' },
+                { id: 'D', text: '"Where hidden streams run clear through mountain air" (line 6)' },
+              ],
+              correct_answer: 'B',
+            },
+            {
+              id: 'p1q3', type: 'mcq',
+              question: 'As used in line 9, the phrase "telephone poles stride in rigid rows" most nearly suggests that the poles are —',
+              choices: [
+                { id: 'A', text: 'moving quickly across the landscape' },
+                { id: 'B', text: 'standing tall to provide better phone service' },
+                { id: 'C', text: 'arranged in an unnatural, mechanical way that contrasts with the surroundings' },
+                { id: 'D', text: 'old and beginning to lean after years of weather' },
               ],
               correct_answer: 'C',
             },
             {
-              id: 'p1q3', type: 'mcq',
-              question: 'How does the repetition of the phrase "let me work" affect the meaning of the poem?',
-              choices: [
-                { id: 'A', text: 'It emphasizes the natural process of covering the past' },
-                { id: 'B', text: 'It shows that the speaker is struggling to complete a task' },
-                { id: 'C', text: 'It creates a hopeful tone about the future' },
-                { id: 'D', text: 'It suggests that people are working together' },
-              ],
-              correct_answer: 'A',
-            },
-            {
               id: 'p1q4', type: 'multi_select',
-              question: 'In which two ways does the poet develop the speaker\'s point of view?\n\nSelect the TWO correct answers.',
+              question: 'In which two ways does the poet develop the speaker\'s point of view in the second stanza (lines 8–14)?\n\nSelect the TWO correct answers.',
               selectCount: 2,
               choices: [
-                { id: 'A', text: 'by listing multiple historical battle locations' },
-                { id: 'B', text: 'by describing the emotional impact on soldiers' },
-                { id: 'C', text: 'by showing how time causes people to forget events' },
-                { id: 'D', text: 'by comparing nature to human progress' },
-                { id: 'E', text: 'by explaining the causes of war' },
+                { id: 'A', text: 'by describing how human structures divide or confine the natural landscape' },
+                { id: 'B', text: 'by praising the roads and fences for making the mountains more accessible' },
+                { id: 'C', text: 'by comparing the mountains in summer to the mountains in winter' },
+                { id: 'D', text: 'by suggesting that human-made objects look out of place against the natural world' },
+                { id: 'E', text: 'by arguing that modern technology has improved life in mountain communities' },
               ],
-              correct_answers: ['A', 'C'],
+              correct_answers: ['A', 'D'],
             },
             {
               id: 'p1q5', type: 'mcq',
-              question: 'How do lines 7–9 most contribute to a theme of the poem?',
+              question: 'What do lines 21–22 ("Nor silence what the mountain silence says. / Here beauty needs no name to make it true.") most likely suggest?',
               choices: [
-                { id: 'A', text: 'by showing that time erases memory of past events' },
-                { id: 'B', text: 'by explaining how people learn from history' },
-                { id: 'C', text: 'by describing how travel spreads knowledge' },
-                { id: 'D', text: 'by showing respect for historical events' },
+                { id: 'A', text: 'The mountain is completely silent and has no visitors.' },
+                { id: 'B', text: 'The natural beauty of the mountains is self-evident and requires no explanation or label.' },
+                { id: 'C', text: 'Humans can eventually silence the natural world if they try hard enough.' },
+                { id: 'D', text: 'The mountain has a name that has been forgotten over time.' },
               ],
-              correct_answer: 'A',
+              correct_answer: 'B',
             },
             {
               id: 'p1q6', type: 'mcq',
-              question: 'The personification in the poem suggests that the grass is',
+              question: 'What concern does the speaker most likely express through the poem?',
               choices: [
-                { id: 'A', text: 'a symbol of nature\'s ability to erase human history' },
-                { id: 'B', text: 'a reminder of the importance of remembering the past' },
-                { id: 'C', text: 'a warning about future conflicts' },
-                { id: 'D', text: 'a symbol of human strength' },
+                { id: 'A', text: 'That mountain trails need to be better maintained for hikers.' },
+                { id: 'B', text: 'That human-made structures diminish the natural grandeur of the mountains.' },
+                { id: 'C', text: 'That eagles and wildlife are no longer found near mountain peaks.' },
+                { id: 'D', text: 'That billboards and roads help bring visitors to appreciate nature.' },
               ],
-              correct_answer: 'A',
+              correct_answer: 'B',
             },
             {
               id: 'p1q7', type: 'match',
-              question: 'Which quotations support the idea that war causes destruction, and which support the idea that time erases memory?\n\nAssign each quotation to the correct category.',
+              question: 'Read the following lines from the poem. Assign each line to the category that best describes what it represents.\n\nDrag each line to the correct box.',
               items: [
-                { id: '1', text: '"Pile the bodies high at Austerlitz and Waterloo"' },
-                { id: '2', text: '"Shovel them under and let me work"' },
-                { id: '3', text: '"Two years, ten years…"' },
-                { id: '4', text: '"Where are we now?"' },
-                { id: '5', text: '"I am the grass; I cover all"' },
+                { id: '1', text: '"The peaks stand crowned in white, untouched and free"' },
+                { id: '2', text: '"telephone poles stride in rigid rows"' },
+                { id: '3', text: '"hidden streams run clear through mountain air"' },
+                { id: '4', text: '"billboards flash their colors to the road"' },
+                { id: '5', text: '"The ridge runs free beneath an open sky"' },
               ],
               categories: [
-                { id: 'war',  label: 'War Causes Destruction' },
-                { id: 'time', label: 'Time Erases Memory' },
+                { id: 'natural', label: 'Nature\'s Presence' },
+                { id: 'human',   label: 'Human Intrusion' },
               ],
               correct_matches: {
-                '1': 'war',
-                '2': 'war',
-                '3': 'time',
-                '4': 'time',
-                '5': 'time',
+                '1': 'natural',
+                '2': 'human',
+                '3': 'natural',
+                '4': 'human',
+                '5': 'natural',
               },
             },
           ],
         },
 
-        // ── Passage 2  (Q8–Q19)  The Intelligence of Crows ───────────────────
+        // ── Passage 2  (Q8–Q16)  The Intelligence of Crows ───────────────────
         {
           id: 'passage-2',
           title: 'The Intelligence of Crows',
@@ -394,43 +403,10 @@ export const shsatForm1: SHSATForm = {
               ],
               correct_answers: ['B', 'C'],
             },
-            {
-              id: 'p2q10', type: 'mcq',
-              question: 'Which quotation best supports the idea that the crow in paragraph 2 was not acting impulsively?',
-              choices: [
-                { id: 'A', text: '"wanted food placed near a house"' },
-                { id: 'B', text: '"walked slowly toward it"' },
-                { id: 'C', text: '"took the food and flew away"' },
-                { id: 'D', text: '"The behavior suggested more than hunger"' },
-              ],
-              correct_answer: 'D',
-            },
-            {
-              id: 'p2q11', type: 'mcq',
-              question: 'The passage suggests that intelligence in animals can be shown by',
-              choices: [
-                { id: 'A', text: 'size and strength.' },
-                { id: 'B', text: 'noise and movement.' },
-                { id: 'C', text: 'learning, caution, and problem-solving.' },
-                { id: 'D', text: 'speed and flight.' },
-              ],
-              correct_answer: 'C',
-            },
-            {
-              id: 'p2q12', type: 'mcq',
-              question: 'Which statement best expresses the main idea of the passage?',
-              choices: [
-                { id: 'A', text: 'Crows are mainly instinctive birds that search for food.' },
-                { id: 'B', text: 'Crows show intelligence through careful observation and flexible behavior.' },
-                { id: 'C', text: 'Crows are dangerous because they remember people.' },
-                { id: 'D', text: 'Crows are unusual because they live near houses.' },
-              ],
-              correct_answer: 'B',
-            },
           ],
         },
 
-        // ── Passage 3  (Q20–Q32)  The Railway Children ─────────────────────
+        // ── Passage 3  (Q17–Q25)  The Railway Children ─────────────────────
         {
           id: 'passage-3',
           title: 'Excerpt from The Railway Children',
@@ -542,56 +518,10 @@ export const shsatForm1: SHSATForm = {
               ],
               correct_answer: 'A',
             },
-            {
-              id: 'p3q10', type: 'mcq',
-              question: 'Which word best describes the tone of the passage?',
-              choices: [
-                { id: 'A', text: 'Playful' },
-                { id: 'B', text: 'Suspenseful' },
-                { id: 'C', text: 'Humorous' },
-                { id: 'D', text: 'Calm' },
-              ],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p3q11', type: 'mcq',
-              question: 'Which statement best expresses a theme of the passage?',
-              choices: [
-                { id: 'A', text: 'Familiar things can become dangerous in unexpected situations.' },
-                { id: 'B', text: 'Children should avoid helping adults.' },
-                { id: 'C', text: 'Trains are always unsafe.' },
-                { id: 'D', text: 'Danger is best ignored.' },
-              ],
-              correct_answer: 'A',
-            },
-            {
-              id: 'p3q12', type: 'multi_select',
-              question: 'Which two details best show the children acting under pressure?\n\nSelect the TWO correct answers.',
-              selectCount: 2,
-              choices: [
-                { id: 'A', text: 'They learned the times when trains came and went.' },
-                { id: 'B', text: 'They tried to move some of the stones.' },
-                { id: 'C', text: 'They tore pieces from their clothing to make signals.' },
-                { id: 'D', text: 'They often waved to passengers.' },
-                { id: 'E', text: 'They had grown used to the sound of trains.' },
-              ],
-              correct_answers: ['B', 'C'],
-            },
-            {
-              id: 'p3q13', type: 'mcq',
-              question: 'The passage is mainly organized around',
-              choices: [
-                { id: 'A', text: 'a problem and the children\'s response to it.' },
-                { id: 'B', text: 'a comparison between two trains.' },
-                { id: 'C', text: 'a description of a peaceful afternoon.' },
-                { id: 'D', text: 'an explanation of railway schedules.' },
-              ],
-              correct_answer: 'A',
-            },
           ],
         },
 
-        // ── Passage 4  (Q33–Q48)  The Growth of the Great Libraries ────────
+        // ── Passage 4  (Q26–Q34)  The Growth of the Great Libraries ────────
         {
           id: 'passage-4',
           title: 'The Growth of the Great Libraries',
@@ -703,92 +633,13 @@ export const shsatForm1: SHSATForm = {
               ],
               correct_answer: 'B',
             },
-            {
-              id: 'p4q10', type: 'mcq',
-              question: 'Which word best describes the tone of the passage?',
-              choices: [
-                { id: 'A', text: 'Bitter' },
-                { id: 'B', text: 'Informative and appreciative' },
-                { id: 'C', text: 'Humorous' },
-                { id: 'D', text: 'Suspicious' },
-              ],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p4q11', type: 'mcq',
-              question: 'Read this sentence from paragraph 6:\n"Over time, public libraries became symbols of shared opportunity."\nHow does this sentence contribute to the passage?',
-              choices: [
-                { id: 'A', text: 'It summarizes the larger meaning of public libraries beyond their physical buildings.' },
-                { id: 'B', text: 'It introduces a new argument against libraries.' },
-                { id: 'C', text: 'It explains why libraries became less useful over time.' },
-                { id: 'D', text: 'It compares libraries to private homes.' },
-              ],
-              correct_answer: 'A',
-            },
-            {
-              id: 'p4q12', type: 'mcq',
-              question: 'Which statement would the author most likely agree with?',
-              choices: [
-                { id: 'A', text: 'Public libraries are useful only for people who cannot buy books.' },
-                { id: 'B', text: 'Public libraries helped make learning more available to the public.' },
-                { id: 'C', text: 'Public libraries solved all problems related to poverty.' },
-                { id: 'D', text: 'Public libraries were important only before modern technology.' },
-              ],
-              correct_answer: 'B',
-            },
-            {
-              id: 'p4q13', type: 'multi_select',
-              question: 'Which two ideas are developed in the passage?\n\nSelect the TWO correct answers.',
-              selectCount: 2,
-              choices: [
-                { id: 'A', text: 'Libraries expanded access to knowledge.' },
-                { id: 'B', text: 'Libraries were mainly built for wealthy families.' },
-                { id: 'C', text: 'Libraries could support learning but could not solve every social problem.' },
-                { id: 'D', text: 'Libraries replaced schools in most towns.' },
-                { id: 'E', text: 'Libraries were disliked by immigrants.' },
-              ],
-              correct_answers: ['A', 'C'],
-            },
-            {
-              id: 'p4q14', type: 'mcq',
-              question: 'The phrase "public good" in paragraph 6 suggests that learning',
-              choices: [
-                { id: 'A', text: 'should benefit the wider community.' },
-                { id: 'B', text: 'should remain private.' },
-                { id: 'C', text: 'is useful only for business owners.' },
-                { id: 'D', text: 'is less important than technology.' },
-              ],
-              correct_answer: 'A',
-            },
-            {
-              id: 'p4q15', type: 'mcq',
-              question: 'How does the passage mainly develop its central idea?',
-              choices: [
-                { id: 'A', text: 'By explaining how public libraries increased access to learning and became important community spaces' },
-                { id: 'B', text: 'By comparing libraries to schools and newspapers' },
-                { id: 'C', text: 'By listing every town that received a library' },
-                { id: 'D', text: 'By focusing only on Andrew Carnegie\'s personal life' },
-              ],
-              correct_answer: 'A',
-            },
-            {
-              id: 'p4q16', type: 'mcq',
-              question: 'Which quotation best supports the idea that libraries gave people a chance to improve their lives?',
-              choices: [
-                { id: 'A', text: '"Many families owned only a few volumes."' },
-                { id: 'B', text: '"Reading was often connected with wealth, education, and private collections."' },
-                { id: 'C', text: '"A person who wanted to learn should have the chance to do so."' },
-                { id: 'D', text: '"Some critics argued that libraries alone could not solve problems."' },
-              ],
-              correct_answer: 'C',
-            },
           ],
         },
 
       ], // end passages (RC)
     }, // end Reading Comprehension
 
-    // ── Revising/Editing Part A  Q49–Q53 ─────────────────────────────────────
+    // ── Revising/Editing Part A  Q35–Q42 ─────────────────────────────────────
     // Uses passages[] so the left panel shows the numbered-sentence passage.
     {
       id: 'rev-edit-a',
@@ -870,12 +721,45 @@ export const shsatForm1: SHSATForm = {
               ],
               correct_answer: 'B',
             },
+            {
+              id: 're-a-q6', type: 'mcq',
+              question: 'Read the following sentence:\n"His design principles would later influence park planners in cities across the country."\nWhere would this sentence BEST be placed in the passage?',
+              choices: [
+                { id: 'A', text: 'After sentence 3' },
+                { id: 'B', text: 'After sentence 4' },
+                { id: 'C', text: 'After sentence 6' },
+                { id: 'D', text: 'After sentence 9' },
+              ],
+              correct_answer: 'C',
+            },
+            {
+              id: 're-a-q7', type: 'mcq',
+              question: 'Which sentence, if added after sentence 8, would BEST support the idea that opposition to parks was partly based on economic concerns?',
+              choices: [
+                { id: 'A', text: 'City planners at the time were more focused on building roads than on beautifying neighborhoods.' },
+                { id: 'B', text: 'Developers calculated that a single block of parkland could generate far more tax revenue if used for commercial buildings.' },
+                { id: 'C', text: 'Some residents preferred the convenience of having stores nearby over having a park.' },
+                { id: 'D', text: 'Olmsted himself struggled to convince city councils of the value of his designs.' },
+              ],
+              correct_answer: 'B',
+            },
+            {
+              id: 're-a-q8', type: 'mcq',
+              question: 'Which sentence would BEST conclude the passage if added after sentence 11?',
+              choices: [
+                { id: 'A', text: 'Olmsted was born in Connecticut in 1822 and studied farming before turning to landscape architecture.' },
+                { id: 'B', text: 'The movement to create public parks ultimately demonstrated that designing accessible green spaces could improve the quality of city life for everyone.' },
+                { id: 'C', text: 'Today, city parks often include swimming pools, sports courts, and outdoor concert venues.' },
+                { id: 'D', text: 'Frederick Law Olmsted\'s most famous project was Central Park, completed in New York City in 1876.' },
+              ],
+              correct_answer: 'B',
+            },
           ],
         },
       ],
     },
 
-    // ── Revising/Editing Part B  Q54–Q57 ─────────────────────────────────────
+    // ── Revising/Editing Part B  Q43–Q50 ─────────────────────────────────────
     // Uses questions[] — centered layout; original sentence is embedded in question text.
     {
       id: 'rev-edit-b',
@@ -929,10 +813,54 @@ export const shsatForm1: SHSATForm = {
           ],
           correct_answer: 'A',
         },
+        {
+          id: 're-b-q5', type: 'mcq',
+          question: 'Which sentence contains a subject-verb agreement error?',
+          choices: [
+            { id: 'A', text: 'The results of the study were surprising to everyone involved.' },
+            { id: 'B', text: 'Each of the students submits their own report independently.' },
+            { id: 'C', text: 'The committee meets every Tuesday to discuss new proposals.' },
+            { id: 'D', text: 'Neither the manager nor the employees was available for comment.' },
+          ],
+          correct_answer: 'D',
+        },
+        {
+          id: 're-b-q6', type: 'mcq',
+          question: 'Which word correctly completes the sentence?\n"The decision to close the school will greatly _____ students who rely on its after-school programs."',
+          choices: [
+            { id: 'A', text: 'effect' },
+            { id: 'B', text: 'affects' },
+            { id: 'C', text: 'effecting' },
+            { id: 'D', text: 'affect' },
+          ],
+          correct_answer: 'D',
+        },
+        {
+          id: 're-b-q7', type: 'mcq',
+          question: 'Which revision BEST creates parallel structure in the following sentence?\n"Volunteers at the shelter were responsible for feeding the animals, to clean the kennels, and doing paperwork."',
+          choices: [
+            { id: 'A', text: 'Volunteers at the shelter were responsible for feeding the animals, cleaning the kennels, and doing paperwork.' },
+            { id: 'B', text: 'Volunteers at the shelter were responsible to feed the animals, clean the kennels, and do paperwork.' },
+            { id: 'C', text: 'Volunteers at the shelter were responsible for feeding the animals, cleaning the kennels, and to do paperwork.' },
+            { id: 'D', text: 'Volunteers at the shelter fed the animals, they cleaned kennels, and did paperwork.' },
+          ],
+          correct_answer: 'A',
+        },
+        {
+          id: 're-b-q8', type: 'mcq',
+          question: 'Which transition word BEST fills in the blank?\n"Jayla had studied for weeks before the final exam. _____, she found several questions unexpectedly difficult."',
+          choices: [
+            { id: 'A', text: 'Therefore' },
+            { id: 'B', text: 'Meanwhile' },
+            { id: 'C', text: 'Nevertheless' },
+            { id: 'D', text: 'Furthermore' },
+          ],
+          correct_answer: 'C',
+        },
       ],
     },
 
-    // ── Mathematics  Q58–Q114 ─────────────────────────────────────────────────
+    // ── Mathematics  Q51–Q100 ─────────────────────────────────────────────────
     {
       id: 'math',
       type: 'mathematics',
@@ -948,7 +876,7 @@ export const shsatForm1: SHSATForm = {
         'Solve each problem. Select the answer from the choices given or enter your answer in the space provided.',
       questions: [
 
-        // ── Easy  Q58–Q70 ──────────────────────────────────────────────────
+        // ── Easy  Q51–Q57 ──────────────────────────────────────────────────
         {
           id: 'math-q1', type: 'mcq',
           question: 'What is 36 ÷ 6 × 2?',
@@ -1026,32 +954,6 @@ export const shsatForm1: SHSATForm = {
           ],
           correct_answer: 'B',
         },
-        {
-          id: 'math-q8', type: 'mcq',
-          question: 'What is 1/3 of 27?',
-          choices: [
-            { id: 'A', text: '6' },
-            { id: 'B', text: '9' },
-            { id: 'C', text: '12' },
-            { id: 'D', text: '18' },
-          ],
-          correct_answer: 'B',
-        },
-        {
-          id: 'math-q9', type: 'mcq',
-          question: 'A number line shows points at −3 and 5. What is the distance between them?',
-          choices: [
-            { id: 'A', text: '2' },
-            { id: 'B', text: '5' },
-            { id: 'C', text: '8' },
-            { id: 'D', text: '15' },
-          ],
-          correct_answer: 'C',
-        },
-        { id: 'math-q10', type: 'grid_in', question: 'What is 7 × 8?',   correct_answer: '56' },
-        { id: 'math-q11', type: 'grid_in', question: 'What is 144 ÷ 12?', correct_answer: '12' },
-        { id: 'math-q12', type: 'grid_in', question: 'What is 9²?',       correct_answer: '81' },
-        { id: 'math-q13', type: 'grid_in', question: 'What is 1/2 of 50?', correct_answer: '25' },
 
         // ── Medium  Q71–Q90 ────────────────────────────────────────────────
         {
@@ -1346,17 +1248,6 @@ export const shsatForm1: SHSATForm = {
             { id: 'D', text: '135°' },
           ],
           correct_answer: 'D',
-        },
-        {
-          id: 'math-q47', type: 'mcq',
-          question: 'A store buys an item for $50 and marks it up 40%. What is the selling price?',
-          choices: [
-            { id: 'A', text: '$60' },
-            { id: 'B', text: '$65' },
-            { id: 'C', text: '$70' },
-            { id: 'D', text: '$75' },
-          ],
-          correct_answer: 'C',
         },
         { id: 'math-q48', type: 'grid_in',
           question: 'What is the least common multiple (LCM) of 6 and 8?',
