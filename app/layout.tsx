@@ -24,11 +24,11 @@ export const metadata: Metadata = {
     description:
       'Take your first free standardized exam and practice with affordable SAT, MCAT, SHSAT, and question bank tools built for students.',
     siteName: 'MockMate',
-    url: 'https://www.mockmateapp.com',
+    url: 'https://mockmateapp.com',
     type: 'website',
     images: [
       {
-        url: '/opengraph-image',
+        url: 'https://mockmateapp.com/mockmate-og-v3.png',
         width: 1200,
         height: 630,
         alt: 'MockMate — Take the exam before the exam.',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: 'MockMate — Your Standardized Exam Hub for Affordable Test Prep',
     description:
       'Take your first free standardized exam and practice with affordable SAT, MCAT, SHSAT, and question bank tools built for students.',
-    images: ['/opengraph-image'],
+    images: ['https://mockmateapp.com/mockmate-og-v3.png'],
   },
   metadataBase: new URL('https://www.mockmateapp.com'),
 }
