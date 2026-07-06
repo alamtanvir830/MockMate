@@ -23,21 +23,20 @@ const navItems = [
     ),
   },
   {
-    href: '/exams/create',
-    label: 'New Exam',
-    icon: (
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
-    highlight: true,
-  },
-  {
     href: '/premade',
-    label: 'Pre-made Exams',
+    label: 'Pre-made Exam (SAT & MCAT)',
     icon: (
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+      </svg>
+    ),
+  },
+  {
+    href: '/exams/create',
+    label: 'Create New Exam',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
   },
@@ -121,7 +120,7 @@ export function Sidebar({ userEmail, userFullName, subscriptionTier = 'free' }: 
 
       {/* Nav */}
       <nav className="flex-1 px-3 py-4 space-y-0.5">
-        {navItems.map(({ href, label, icon, highlight }) => {
+        {navItems.map(({ href, label, icon }) => {
           const isActive =
             href === '/dashboard'
               ? pathname === '/dashboard'
@@ -135,16 +134,10 @@ export function Sidebar({ userEmail, userFullName, subscriptionTier = 'free' }: 
                 'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                 isActive
                   ? 'bg-indigo-50 text-indigo-700'
-                  : highlight
-                  ? 'text-indigo-600 hover:bg-indigo-50'
                   : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
               )}
             >
-              <span
-                className={cn(
-                  isActive ? 'text-indigo-600' : highlight ? 'text-indigo-500' : 'text-slate-400',
-                )}
-              >
+              <span className={cn(isActive ? 'text-indigo-600' : 'text-slate-400')}>
                 {icon}
               </span>
               {label}

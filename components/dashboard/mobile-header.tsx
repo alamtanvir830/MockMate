@@ -8,8 +8,14 @@ import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard' },
-  { href: '/exams/create', label: 'New Exam' },
-  { href: '/exams', label: 'My Exams' },
+  { href: '/premade', label: 'Pre-made Exam (SAT & MCAT)' },
+  { href: '/exams/create', label: 'Create New Exam' },
+  { href: '/exams', label: 'Exam History' },
+  { href: '/question-bank', label: 'Question Bank' },
+  { href: '/groups', label: 'My Groups' },
+  { href: '/performance', label: 'Performance' },
+  { href: '/notes', label: 'Personal Notes' },
+  { href: '/billing', label: 'Billing' },
   { href: '/settings', label: 'Settings' },
 ]
 
