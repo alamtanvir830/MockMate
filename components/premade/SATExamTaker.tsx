@@ -976,7 +976,7 @@ function NumberedList({ text, className }: { text: string; className?: string })
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean }) {
+export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, isAdmin = false, allowRetake = true, showUnlockCTA = false, satUpgradeUnlocked = false }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean; isAdmin?: boolean; allowRetake?: boolean; showUnlockCTA?: boolean; satUpgradeUnlocked?: boolean }) {
   const isHistoryView = !!initialAttempt
 
   // ── Exam state ─────────────────────────────────────────────────────────────
@@ -1937,6 +1937,11 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
             )}
           </div>
           <div className="flex items-center gap-2">
+            {isAdmin && (
+              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2.5 py-1 text-[11px] font-semibold text-amber-700">
+                Admin testing mode
+              </span>
+            )}
             {isHistoryView && (
               <Link
                 href="/exams"
@@ -1945,20 +1950,22 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
                 ← My Exams
               </Link>
             )}
-            {isHistoryView ? (
-              <Link
-                href="/premade/sat/form-1"
-                className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
-              >
-                Take New Attempt
-              </Link>
-            ) : (
-              <button
-                onClick={handleRetake}
-                className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
-              >
-                Retake Test
-              </button>
+            {allowRetake && (
+              isHistoryView ? (
+                <Link
+                  href="/premade/sat/form-1"
+                  className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+                >
+                  Take New Attempt
+                </Link>
+              ) : (
+                <button
+                  onClick={handleRetake}
+                  className="border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+                >
+                  Retake Test
+                </button>
+              )
             )}
           </div>
         </div>
@@ -2323,6 +2330,49 @@ export default function SATExamTaker({ form, initialAttempt }: { form: SATForm; 
             </div>
           )}
         </div>
+
+        {/* Unlock CTA — shown on Form 1 results for non-admin users */}
+        {showUnlockCTA && (
+          <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100 p-6">
+            <h2 className="text-lg font-bold text-slate-900 mb-1">Ready for the next exam?</h2>
+            <p className="text-sm text-slate-600 mb-4">
+              {"You've completed your free SAT Form 1. Unlock SAT Form 2 and SAT Form 3 for more full-length adaptive practice."}
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {satUpgradeUnlocked ? (
+                <>
+                  <a
+                    href="/premade/sat/form-2"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
+                  >
+                    Start Form 2 →
+                  </a>
+                  <a
+                    href="/premade/sat/form-3"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-indigo-200 px-5 py-2.5 text-sm font-semibold text-indigo-700 hover:bg-indigo-50 transition-colors"
+                  >
+                    Start Form 3 →
+                  </a>
+                </>
+              ) : (
+                <>
+                  <a
+                    href="/billing"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
+                  >
+                    Unlock Form 2 &amp; Form 3
+                  </a>
+                  <a
+                    href="/premade/sat"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50 transition-colors"
+                  >
+                    View all forms
+                  </a>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     )
   }

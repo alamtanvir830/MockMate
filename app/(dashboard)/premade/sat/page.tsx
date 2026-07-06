@@ -1,10 +1,6 @@
 import Link from 'next/link'
-
-const forms = [
-  { num: '1', href: '/premade/sat/form-1' },
-  { num: '2', href: '/premade/sat/form-2' },
-  { num: '3', href: '/premade/sat/form-3' },
-]
+import { createClient } from '@/lib/supabase/server'
+import { isMockMateAdmin } from '@/lib/auth/admin'
 
 const cardDetails = [
   'Reading & Writing + Math',
@@ -13,7 +9,34 @@ const cardDetails = [
   '400–1600 estimated score range',
 ]
 
-export default function SATPremadePage() {
+export default async function SATPremadePage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const isAdmin = isMockMateAdmin(user)
+
+  let form1ResultsAttemptId: string | null = null
+
+  if (user && !isAdmin) {
+    const { data: completed } = await supabase
+      .from('standardized_exam_attempts')
+      .select('local_attempt_id')
+      .eq('user_id', user.id)
+      .eq('exam_type', 'SAT')
+      .eq('form_number', 1)
+      .not('completed_at', 'is', null)
+      .order('completed_at', { ascending: false })
+      .limit(1)
+      .maybeSingle()
+
+    form1ResultsAttemptId = completed?.local_attempt_id ?? null
+  }
+
+  const form1Completed = !!form1ResultsAttemptId
+  const form1Href = form1Completed
+    ? `/premade/sat/form-1/results/${form1ResultsAttemptId}`
+    : '/premade/sat/form-1'
+
   return (
     <div className="max-w-3xl mx-auto py-10 px-4">
       <div className="flex items-center gap-2 text-sm text-slate-500 mb-6">
@@ -27,7 +50,6 @@ export default function SATPremadePage() {
 
       {/* Feature strip */}
       <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] sm:items-center gap-5 mb-10 bg-slate-50 rounded-xl border border-slate-100 px-6 py-5">
-        {/* Left: exam specs */}
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 mb-2.5">Each exam includes</p>
           <ul className="space-y-1.5">
@@ -40,7 +62,6 @@ export default function SATPremadePage() {
           </ul>
         </div>
 
-        {/* Arrow */}
         <div className="flex sm:flex-col items-center gap-1.5 px-2">
           <span className="text-[11px] text-slate-400 whitespace-nowrap">followed by</span>
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4 text-slate-300 rotate-90 sm:rotate-0 shrink-0">
@@ -48,7 +69,6 @@ export default function SATPremadePage() {
           </svg>
         </div>
 
-        {/* Right: output features */}
         <ul className="space-y-1.5">
           {['instant estimated score report', 'AI feedback + weak-area breakdown', 'personalized practice sets from Q-Bank'].map((item) => (
             <li key={item} className="flex items-center gap-2 text-sm text-slate-600">
@@ -61,18 +81,49 @@ export default function SATPremadePage() {
 
       {/* Form cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {forms.map(({ num, href }) => (
+        {/* Form 1 — special handling */}
+        {form1Completed ? (
+          <div className="rounded-xl border border-emerald-200 bg-white p-6 flex flex-col">
+            <div className="flex items-start justify-between mb-4">
+              <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-indigo-600">1</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
+                Completed
+              </span>
+            </div>
+            <h2 className="font-semibold text-slate-900 mb-1">Form 1</h2>
+            <p className="text-xs text-slate-400 mb-3">You already completed this free exam.</p>
+            <ul className="space-y-1.5 mb-4">
+              {cardDetails.map((detail) => (
+                <li key={detail} className="text-xs text-slate-400 flex items-center gap-1.5">
+                  <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />
+                  {detail}
+                </li>
+              ))}
+            </ul>
+            <Link
+              href={form1Href}
+              className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors"
+            >
+              View Results →
+            </Link>
+          </div>
+        ) : isAdmin ? (
           <Link
-            key={num}
-            href={href}
+            href="/premade/sat/form-1"
             className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col"
           >
-            <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center mb-4 shrink-0">
-              <span className="text-sm font-bold text-indigo-600">{num}</span>
+            <div className="flex items-start justify-between mb-4">
+              <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-indigo-600">1</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
+                Admin
+              </span>
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-3">
-              Form {num}
-            </h2>
+            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-1">Form 1</h2>
+            <p className="text-[10px] text-amber-600 mb-3">Admin testing mode: retakes allowed</p>
             <ul className="space-y-1.5 mt-auto">
               {cardDetails.map((detail) => (
                 <li key={detail} className="text-xs text-slate-400 flex items-center gap-1.5">
@@ -82,7 +133,68 @@ export default function SATPremadePage() {
               ))}
             </ul>
           </Link>
-        ))}
+        ) : (
+          <Link
+            href="/premade/sat/form-1"
+            className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col"
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-indigo-600">1</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-sky-50 border border-sky-200 px-2 py-0.5 text-[10px] font-semibold text-sky-700">
+                Free
+              </span>
+            </div>
+            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-3">Form 1</h2>
+            <ul className="space-y-1.5 mt-auto">
+              {cardDetails.map((detail) => (
+                <li key={detail} className="text-xs text-slate-400 flex items-center gap-1.5">
+                  <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />
+                  {detail}
+                </li>
+              ))}
+            </ul>
+          </Link>
+        )}
+
+        {/* Form 2 */}
+        <Link
+          href="/premade/sat/form-2"
+          className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col"
+        >
+          <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center mb-4 shrink-0">
+            <span className="text-sm font-bold text-indigo-600">2</span>
+          </div>
+          <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-3">Form 2</h2>
+          <ul className="space-y-1.5 mt-auto">
+            {cardDetails.map((detail) => (
+              <li key={detail} className="text-xs text-slate-400 flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />
+                {detail}
+              </li>
+            ))}
+          </ul>
+        </Link>
+
+        {/* Form 3 */}
+        <Link
+          href="/premade/sat/form-3"
+          className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col"
+        >
+          <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center mb-4 shrink-0">
+            <span className="text-sm font-bold text-indigo-600">3</span>
+          </div>
+          <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-3">Form 3</h2>
+          <ul className="space-y-1.5 mt-auto">
+            {cardDetails.map((detail) => (
+              <li key={detail} className="text-xs text-slate-400 flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />
+                {detail}
+              </li>
+            ))}
+          </ul>
+        </Link>
       </div>
     </div>
   )
