@@ -5,29 +5,29 @@ import type { MathQuestion } from './types'
 
 export const mathModule2EasyQuestions: MathQuestion[] = [
 
-  // ── Algebra (7 MC) ───────────────────────────────────────────────────────────
+  // ── Algebra (6 MC) ───────────────────────────────────────────────────────────
 
   {
     id: 'm2e-01',
     section: 'math',
     moduleId: 'math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Linear equations in one variable',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Circles',
     difficulty: 'easy',
     type: 'multiple_choice',
-    question: 'What value of x satisfies 4x − 3 = 17?',
+    question: 'A circle has a radius of 7. What is the circumference of the circle, in terms of π?',
     choices: [
-      { label: 'A', text: '3' },
-      { label: 'B', text: '4' },
-      { label: 'C', text: '7' },
-      { label: 'D', text: '5' },
+      { label: 'A', text: '7π' },
+      { label: 'B', text: '14π' },
+      { label: 'C', text: '49π' },
+      { label: 'D', text: '28π' },
     ],
-    correctAnswer: 'D',
-    explanation: 'Add 3 to both sides: 4x = 20. Divide by 4: x = 5.',
+    correctAnswer: 'B',
+    explanation: 'Circumference = 2πr = 2π(7) = 14π.',
     wrongAnswerExplanations: {
-      A: 'Substituting x = 3: 4(3) − 3 = 9 ≠ 17.',
-      B: 'Substituting x = 4: 4(4) − 3 = 13 ≠ 17.',
-      C: 'Substituting x = 7: 4(7) − 3 = 25 ≠ 17.',
+      A: '7π uses r instead of 2r; the circumference formula is C = 2πr, not πr.',
+      C: '49π = πr² is the area of the circle, not the circumference.',
+      D: '28π = 4πr incorrectly doubles the circumference formula.',
     },
   },
 

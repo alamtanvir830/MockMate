@@ -5,7 +5,7 @@ import type { MathQuestion } from './types'
 
 export const mathModule2HardQuestions: MathQuestion[] = [
 
-  // ── Algebra (5 MC + 2 grid-in) ───────────────────────────────────────────────
+  // ── Algebra (4 MC + 1 grid-in) + Geometry (1 MC + 1 grid-in) ─────────────────
 
   {
     id: 'm2h-01',
@@ -59,23 +59,35 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     id: 'm2h-03',
     section: 'math',
     moduleId: 'math-module-2-hard',
-    domain: 'Algebra',
-    skill: 'Linear equations in one variable',
-    difficulty: 'medium',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Circles',
+    difficulty: 'hard',
     type: 'multiple_choice',
-    question: 'A company produces and sells widgets. The cost to produce n widgets is C = 0.08n + 12 (in dollars) and the revenue from selling n widgets is R = 0.12n. How many widgets must be sold to break even?',
+    graphData: {
+      type: 'geometry',
+      viewBox: { xMin: -1.5, xMax: 12.5, yMin: -1.5, yMax: 11.5 },
+      elements: [
+        { kind: 'poly', pts: [[0,0],[10,0],[9.51,3.09],[8.09,5.88],[5.88,8.09],[3.09,9.51]] as [number, number][], fill: '#e0e7ff', stroke: '#4f46e5' },
+        { kind: 'seg', p1: [0,0] as [number, number], p2: [10,0] as [number, number] },
+        { kind: 'seg', p1: [0,0] as [number, number], p2: [3.09,9.51] as [number, number] },
+        { kind: 'arc', center: [0,0] as [number, number], from: [1,0] as [number, number], to: [0.309,0.951] as [number, number], r: 1.5, label: '72°' },
+        { kind: 'label', x: 5, y: -0.9, text: '10' },
+        { kind: 'point', x: 0, y: 0 },
+      ],
+    },
+    question: 'A circle has a radius of 10. A central angle of 72° intercepts an arc. What is the area of the sector formed by this central angle, in terms of π?',
     choices: [
-      { label: 'A', text: '150' },
-      { label: 'B', text: '200' },
-      { label: 'C', text: '400' },
-      { label: 'D', text: '300' },
+      { label: 'A', text: '4π' },
+      { label: 'B', text: '20π' },
+      { label: 'C', text: '40π' },
+      { label: 'D', text: '100π' },
     ],
-    correctAnswer: 'D',
-    explanation: 'Set R = C: 0.12n = 0.08n + 12 → 0.04n = 12 → n = 300.',
+    correctAnswer: 'B',
+    explanation: 'Area of a sector = (central angle / 360°) × πr² = (72°/360°) × π(10²) = (1/5) × 100π = 20π.',
     wrongAnswerExplanations: {
-      A: 'At n = 150: R = 18, C = 12 + 12 = 24. Revenue < Cost — still losing money.',
-      B: 'At n = 200: R = 24, C = 16 + 12 = 28. Still not break-even.',
-      C: 'At n = 400: R = 48, C = 32 + 12 = 44. Already profitable — break-even passed.',
+      A: '4π is the arc length of this sector: (72°/360°) × 2π(10) = 4π — but the question asks for area, not arc length.',
+      C: '40π results from incorrectly dividing the angle by 180° instead of 360°: (72/180) × 100π = 40π.',
+      D: '100π = π(10²) is the total area of the full circle; the sector is only 72°/360° = 1/5 of the circle.',
     },
   },
 
@@ -145,15 +157,28 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     id: 'm2h-07',
     section: 'math',
     moduleId: 'math-module-2-hard',
-    domain: 'Algebra',
-    skill: 'Linear equations in one variable',
-    difficulty: 'medium',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Right triangles and trigonometry',
+    difficulty: 'hard',
     type: 'grid_in',
-    question: 'If (3a + 2)/4 − (a − 1)/2 = 3, what is the value of a?',
-    correctAnswer: '8',
-    acceptableAnswers: ['8'],
-    explanation: 'Multiply every term by 4: (3a + 2) − 2(a − 1) = 12. Distribute: 3a + 2 − 2a + 2 = 12. Combine: a + 4 = 12 → a = 8.',
-    scoringNotes: 'Only 8 is acceptable.',
+    graphData: {
+      type: 'geometry',
+      viewBox: { xMin: -2, xMax: 16, yMin: -2, yMax: 7.5 },
+      elements: [
+        { kind: 'poly', pts: [[0,0],[12,0],[12,5]] as [number, number][] },
+        { kind: 'right_angle', v: [12,0] as [number, number], a: [0,0] as [number, number], b: [12,5] as [number, number] },
+        { kind: 'label', x: -0.4, y: -0.7, text: 'P', weight: 'bold', size: 11 },
+        { kind: 'label', x: 12.6, y: -0.7, text: 'Q', weight: 'bold', size: 11 },
+        { kind: 'label', x: 12.6, y: 5.5, text: 'R', weight: 'bold', size: 11 },
+        { kind: 'label', x: 5.5, y: 3.1, text: '26', size: 11 },
+        { kind: 'label', x: 13.2, y: 2.5, text: '?', size: 11 },
+      ],
+    },
+    question: 'Right triangle PQR has a right angle at Q. If sin P = 5/13 and PR = 26, what is the length of QR?',
+    correctAnswer: '10',
+    acceptableAnswers: ['10'],
+    explanation: 'sin P = QR/PR (opposite over hypotenuse). Setting up: 5/13 = QR/26, so QR = 26 × (5/13) = 10.',
+    scoringNotes: 'Only 10 is acceptable.',
   },
 
   // ── Advanced Math (5 MC + 2 grid-in) ─────────────────────────────────────────

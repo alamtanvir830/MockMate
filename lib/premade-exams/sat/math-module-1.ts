@@ -5,29 +5,41 @@ import type { MathQuestion } from './types'
 
 export const mathModule1Questions: MathQuestion[] = [
 
-  // ── Algebra (7 MC) ───────────────────────────────────────────────────────────
+  // ── Algebra (6 MC) ───────────────────────────────────────────────────────────
 
   {
     id: 'm1-01',
     section: 'math',
     moduleId: 'math-module-1',
-    domain: 'Algebra',
-    skill: 'Linear equations in one variable',
-    difficulty: 'easy',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Lines, angles, and triangles',
+    difficulty: 'medium',
     type: 'multiple_choice',
-    question: 'What is the value of x in the equation 5x + 2 = 22?',
+    graphData: {
+      type: 'coordinate_plane',
+      xMin: -1, xMax: 9, yMin: -1, yMax: 12,
+      gridStep: 2,
+      points: [
+        { x: 1, y: 2, label: 'P(1, 2)' },
+        { x: 7, y: 10, label: 'Q(7, 10)' },
+      ],
+      lines: [
+        { points: [[1, 2], [7, 10]] as [number, number][], color: '#4f46e5' },
+      ],
+    },
+    question: 'In the xy-plane, point P has coordinates (1, 2) and point Q has coordinates (7, 10). What is the length of segment PQ?',
     choices: [
-      { label: 'A', text: '4' },
-      { label: 'B', text: '3' },
-      { label: 'C', text: '2' },
-      { label: 'D', text: '5' },
+      { label: 'A', text: '8' },
+      { label: 'B', text: '10' },
+      { label: 'C', text: '√68' },
+      { label: 'D', text: '14' },
     ],
-    correctAnswer: 'A',
-    explanation: 'Subtract 2 from both sides: 5x = 20. Divide by 5: x = 4.',
+    correctAnswer: 'B',
+    explanation: 'Apply the distance formula: PQ = √((7 − 1)² + (10 − 2)²) = √(36 + 64) = √100 = 10.',
     wrongAnswerExplanations: {
-      C: 'Substituting x = 2: 5(2) + 2 = 12 ≠ 22.',
-      B: 'Substituting x = 3: 5(3) + 2 = 17 ≠ 22.',
-      D: 'Substituting x = 5: 5(5) + 2 = 27 ≠ 22.',
+      A: '8 is the vertical difference 10 − 2, not the distance between the two points.',
+      C: '√68 would result from using (6² + 2²) or a similar arithmetic error in one of the squared differences.',
+      D: '14 = 6 + 8 adds the horizontal and vertical differences directly instead of squaring and taking the square root.',
     },
   },
 

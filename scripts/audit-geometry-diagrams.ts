@@ -56,6 +56,40 @@ function hasKind(src: string, questionId: string, kind: string): boolean {
   return chunk.includes(`kind: '${kind}'`)
 }
 
+// ── Form 1 Math Module 1 ──────────────────────────────────────────────────────
+
+const f1m1 = readFile('lib/premade-exams/sat/math-module-1.ts')
+
+console.log('--- Form 1 Math M1 ---')
+
+// m1-01: Coordinate distance P(1,2)→Q(7,10) → coordinate_plane type
+check('m1-01 has graphData',                        hasGraphData(f1m1, 'm1-01'))
+check('m1-01 uses coordinate_plane type',           hasCoordinatePlaneType(f1m1, 'm1-01'))
+check('m1-01 has point P at (1,2)',                 f1m1.slice(f1m1.indexOf("'m1-01'"), f1m1.indexOf("'m1-01'") + 2000).includes('x: 1, y: 2'))
+check('m1-01 has point Q at (7,10)',                f1m1.slice(f1m1.indexOf("'m1-01'"), f1m1.indexOf("'m1-01'") + 2000).includes('x: 7, y: 10'))
+check('m1-01 has connecting line',                  f1m1.slice(f1m1.indexOf("'m1-01'"), f1m1.indexOf("'m1-01'") + 2000).includes('lines:'))
+
+// ── Form 1 Math Module 2 Hard ─────────────────────────────────────────────────
+
+const f1m2h = readFile('lib/premade-exams/sat/math-module-2-hard.ts')
+
+console.log('\n--- Form 1 Math M2 Hard ---')
+
+// m2h-03: Sector area (r=10, 72°) → geometry with poly (sector) + arc (angle marker)
+check('m2h-03 has graphData',                       hasGraphData(f1m2h, 'm2h-03'))
+check('m2h-03 uses geometry type',                  hasGeometryType(f1m2h, 'm2h-03'))
+check('m2h-03 has poly element (sector)',           hasKind(f1m2h, 'm2h-03', 'poly'))
+check('m2h-03 has arc element (angle marker)',      hasKind(f1m2h, 'm2h-03', 'arc'))
+check('m2h-03 arc labels "72°"',                    f1m2h.slice(f1m2h.indexOf("'m2h-03'"), f1m2h.indexOf("'m2h-03'") + 2000).includes("label: '72°'"))
+check('m2h-03 labels "10" (radius)',                f1m2h.slice(f1m2h.indexOf("'m2h-03'"), f1m2h.indexOf("'m2h-03'") + 2000).includes("text: '10'"))
+
+// m2h-07: Right triangle trig (sin P = 5/13, PR=26) → geometry with poly + right_angle
+check('m2h-07 has graphData',                       hasGraphData(f1m2h, 'm2h-07'))
+check('m2h-07 uses geometry type',                  hasGeometryType(f1m2h, 'm2h-07'))
+check('m2h-07 has poly element (triangle)',         hasKind(f1m2h, 'm2h-07', 'poly'))
+check('m2h-07 has right_angle marker',              hasKind(f1m2h, 'm2h-07', 'right_angle'))
+check('m2h-07 labels "26" (hypotenuse)',            f1m2h.slice(f1m2h.indexOf("'m2h-07'"), f1m2h.indexOf("'m2h-07'") + 2000).includes("text: '26'"))
+
 // ── Form 2 Math Module 1 ───────────────────────────────────────────────────────
 
 const f2m1 = readFile('lib/premade-exams/sat/form-2-math-module-1.ts')
