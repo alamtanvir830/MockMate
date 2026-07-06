@@ -251,9 +251,9 @@ export default function PracticePage() {
         {/* Stimulus */}
         {currentQ.stimulus && (
           <div className="px-5 pt-4 pb-3 bg-slate-50 border-b border-slate-100">
-            <p className="text-[13px] text-slate-700 leading-relaxed">
+            <div className="text-[13px] text-slate-700 leading-relaxed">
               <StimulusRenderer text={currentQ.stimulus} underlineTargets={currentQ.underlineTargets} />
-            </p>
+            </div>
           </div>
         )}
 
