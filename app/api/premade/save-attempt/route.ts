@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { resolveUserIdentity } from '@/lib/supabase/resolve-user-identity'
 
 interface QuestionResponse {
   questionId: string
@@ -49,6 +50,8 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json() as SaveAttemptBody
 
+    const { user_name, user_email } = await resolveUserIdentity(supabase, user)
+
     // Compute attempt_number for this user + form
     const { count } = await supabase
       .from('standardized_exam_attempts')
@@ -65,6 +68,8 @@ export async function POST(req: NextRequest) {
       .insert({
         local_attempt_id:   body.localAttemptId,
         user_id:            user.id,
+        user_name,
+        user_email,
         exam_type:          body.examType,
         form_number:        body.formNumber,
         exam_title:         body.examTitle,

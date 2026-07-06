@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import type { PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
+import { resolveUserIdentity } from '@/lib/supabase/resolve-user-identity'
 import {
   resolveModules,
   formNumberFromId,
@@ -66,6 +67,8 @@ export async function POST(req: NextRequest) {
       countsByForm[fn] = count ?? 0
     }))
 
+    const { user_name, user_email } = await resolveUserIdentity(supabase, user)
+
     const errors: string[] = []
     let inserted = 0
 
@@ -112,6 +115,8 @@ export async function POST(req: NextRequest) {
           .insert({
             local_attempt_id:  attempt.id,
             user_id:           user.id,
+            user_name,
+            user_email,
             exam_type:         'SAT',
             form_number:       formNumber,
             exam_title:        attempt.examTitle,
