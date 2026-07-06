@@ -10,6 +10,16 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     skill: 'Lines, angles, and triangles',
     difficulty: 'easy',
     type: 'multiple_choice',
+    graphData: {
+      type: 'geometry',
+      viewBox: { xMin: -3.5, xMax: 3.5, yMin: -0.5, yMax: 3.2 },
+      elements: [
+        { kind: 'seg', p1: [-3, 0] as [number, number], p2: [3, 0] as [number, number] },
+        { kind: 'seg', p1: [0, 0] as [number, number], p2: [1.06, 2.27] as [number, number] },
+        { kind: 'arc', center: [0, 0] as [number, number], from: [1, 0] as [number, number], to: [0.4226, 0.9063] as [number, number], r: 0.65, label: '65°' },
+        { kind: 'point', x: 0, y: 0 },
+      ],
+    },
     question: 'Two angles are supplementary. One angle measures 65°. What is the measure of the other angle?',
     choices: [
       { label: 'A', text: '25°' },
@@ -478,6 +488,18 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     skill: 'Lines, angles, and triangles',
     difficulty: 'easy',
     type: 'grid_in',
+    graphData: {
+      type: 'coordinate_plane',
+      xMin: -1, xMax: 8, yMin: -1, yMax: 10,
+      gridStep: 2,
+      points: [
+        { x: 0, y: 0, label: 'A(0, 0)' },
+        { x: 6, y: 8, label: 'B(6, 8)' },
+      ],
+      lines: [
+        { points: [[0, 0], [6, 8]] as [number, number][], color: '#4f46e5' },
+      ],
+    },
     question: 'In the coordinate plane, point A is at (0, 0) and point B is at (6, 8). What is the distance from A to B?',
     correctAnswer: '10',
     acceptableAnswers: ['10'],

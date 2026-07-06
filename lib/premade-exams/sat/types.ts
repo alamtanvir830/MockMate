@@ -54,7 +54,23 @@ export interface TableGraphData {
   rows: string[][]
 }
 
-export type SATGraphData = CoordinatePlaneData | ScatterPlotData | BarChartData | TableGraphData
+export type GeometryElement =
+  | { kind: 'poly'; pts: [number, number][]; fill?: string; stroke?: string }
+  | { kind: 'right_angle'; v: [number, number]; a: [number, number]; b: [number, number] }
+  | { kind: 'arc'; center: [number, number]; from: [number, number]; to: [number, number]; r?: number; label?: string }
+  | { kind: 'circle'; cx: number; cy: number; r: number; fill?: string; stroke?: string }
+  | { kind: 'label'; x: number; y: number; text: string; dx?: number; dy?: number; anchor?: 'start' | 'middle' | 'end'; weight?: string; size?: number }
+  | { kind: 'point'; x: number; y: number; label?: string; dx?: number; dy?: number }
+  | { kind: 'seg'; p1: [number, number]; p2: [number, number]; stroke?: string; dashed?: boolean }
+
+export interface GeometryFigureData {
+  type: 'geometry'
+  title?: string
+  viewBox: { xMin: number; xMax: number; yMin: number; yMax: number }
+  elements: GeometryElement[]
+}
+
+export type SATGraphData = CoordinatePlaneData | ScatterPlotData | BarChartData | TableGraphData | GeometryFigureData
 
 // ─── Domain / Skill / Difficulty ─────────────────────────────────────────────
 

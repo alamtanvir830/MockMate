@@ -1,6 +1,6 @@
 'use client'
 
-import type { SATGraphData, CoordinatePlaneData, ScatterPlotData, BarChartData, TableGraphData } from '@/lib/premade-exams/sat/types'
+import type { SATGraphData, CoordinatePlaneData, ScatterPlotData, BarChartData, TableGraphData, GeometryFigureData, GeometryElement } from '@/lib/premade-exams/sat/types'
 import type { QBGraphData } from '@/lib/question-bank/types'
 
 type GraphData = SATGraphData | QBGraphData
@@ -298,6 +298,153 @@ function DataTable({ d }: { d: TableGraphData | (QBGraphData & { type: 'table' }
   )
 }
 
+// ─── Geometry Figure ─────────────────────────────────────────────────────────
+
+const GEO_W = 300
+const GEO_H = 220
+const GEO_PAD = 30
+
+function GeometryFigure({ d }: { d: GeometryFigureData }) {
+  const { viewBox: vb, elements, title } = d
+  const pw = GEO_W - 2 * GEO_PAD
+  const ph = GEO_H - 2 * GEO_PAD
+  const sx = (mx: number) => GEO_PAD + (mx - vb.xMin) / (vb.xMax - vb.xMin) * pw
+  const sy = (my: number) => GEO_PAD + (vb.yMax - my) / (vb.yMax - vb.yMin) * ph
+  const xSc = pw / (vb.xMax - vb.xMin)
+  const ySc = ph / (vb.yMax - vb.yMin)
+
+  return (
+    <svg viewBox={`0 0 ${GEO_W} ${GEO_H}`} className="w-full max-w-xs mx-auto block" aria-label={title ?? 'Geometry figure'}>
+      {title && (
+        <text x={GEO_W / 2} y={16} textAnchor="middle" fontSize="11" fontWeight="600" fill="#334155">{title}</text>
+      )}
+      {elements.map((el: GeometryElement, i: number) => {
+        switch (el.kind) {
+          case 'poly': {
+            const pts = el.pts.map(([mx, my]) => `${sx(mx)},${sy(my)}`).join(' ')
+            return <polygon key={i} points={pts} fill={el.fill ?? 'none'} stroke={el.stroke ?? '#334155'} strokeWidth="1.8" strokeLinejoin="round" />
+          }
+
+          case 'right_angle': {
+            const vsvgx = sx(el.v[0]), vsvgy = sy(el.v[1])
+            const asvgx = sx(el.a[0]), asvgy = sy(el.a[1])
+            const bsvgx = sx(el.b[0]), bsvgy = sy(el.b[1])
+            const d1 = Math.hypot(asvgx - vsvgx, asvgy - vsvgy)
+            const d2 = Math.hypot(bsvgx - vsvgx, bsvgy - vsvgy)
+            if (d1 < 1 || d2 < 1) return null
+            const u1x = (asvgx - vsvgx) / d1, u1y = (asvgy - vsvgy) / d1
+            const u2x = (bsvgx - vsvgx) / d2, u2y = (bsvgy - vsvgy) / d2
+            const S = 11
+            const p1x = vsvgx + S * u1x, p1y = vsvgy + S * u1y
+            const p2x = p1x + S * u2x, p2y = p1y + S * u2y
+            const p3x = vsvgx + S * u2x, p3y = vsvgy + S * u2y
+            return (
+              <polygon key={i}
+                points={`${vsvgx},${vsvgy} ${p1x},${p1y} ${p2x},${p2y} ${p3x},${p3y}`}
+                fill="none" stroke="#334155" strokeWidth="1.4"
+              />
+            )
+          }
+
+          case 'arc': {
+            const [cx, cy] = el.center
+            const [fx, fy] = el.from
+            const [tx, ty] = el.to
+            const r = el.r ?? 0.5
+            const dx1 = fx - cx, dy1 = fy - cy
+            const dx2 = tx - cx, dy2 = ty - cy
+            const len1 = Math.hypot(dx1, dy1), len2 = Math.hypot(dx2, dy2)
+            if (len1 < 1e-9 || len2 < 1e-9) return null
+            const rSVG = r * Math.min(xSc, ySc)
+            // cross > 0 in math (CCW from→to) → sweepFlag=0 (CCW in SVG, the short arc)
+            const cross = dx1 * dy2 - dy1 * dx2
+            const sweepFlag = cross > 0 ? 0 : 1
+            const startX = sx(cx + r * dx1 / len1), startY = sy(cy + r * dy1 / len1)
+            const endX = sx(cx + r * dx2 / len2), endY = sy(cy + r * dy2 / len2)
+            const arcPath = `M ${startX} ${startY} A ${rSVG} ${rSVG} 0 0 ${sweepFlag} ${endX} ${endY}`
+            let labelEl = null
+            if (el.label) {
+              const midDirX = dx1 / len1 + dx2 / len2
+              const midDirY = dy1 / len1 + dy2 / len2
+              const midLen = Math.hypot(midDirX, midDirY)
+              const lr = r + 0.35
+              const lmx = cx + (midLen > 1e-9 ? lr * midDirX / midLen : r)
+              const lmy = cy + (midLen > 1e-9 ? lr * midDirY / midLen : 0)
+              labelEl = (
+                <text x={sx(lmx)} y={sy(lmy)} textAnchor="middle" dominantBaseline="central" fontSize="10" fill="#334155">
+                  {el.label}
+                </text>
+              )
+            }
+            return (
+              <g key={i}>
+                <path d={arcPath} fill="none" stroke="#334155" strokeWidth="1.3" />
+                {labelEl}
+              </g>
+            )
+          }
+
+          case 'circle': {
+            return (
+              <ellipse key={i}
+                cx={sx(el.cx)} cy={sy(el.cy)}
+                rx={el.r * xSc} ry={el.r * ySc}
+                fill={el.fill ?? 'none'}
+                stroke={el.stroke ?? '#4f46e5'}
+                strokeWidth="1.8"
+              />
+            )
+          }
+
+          case 'label': {
+            return (
+              <text key={i}
+                x={sx(el.x) + (el.dx ?? 0)}
+                y={sy(el.y) + (el.dy ?? 0)}
+                textAnchor={el.anchor ?? 'middle'}
+                dominantBaseline="central"
+                fontSize={el.size ?? 11}
+                fontWeight={el.weight ?? 'normal'}
+                fill="#334155">
+                {el.text}
+              </text>
+            )
+          }
+
+          case 'point': {
+            return (
+              <g key={i}>
+                <circle cx={sx(el.x)} cy={sy(el.y)} r="3.5" fill="#334155" />
+                {el.label && (
+                  <text x={sx(el.x) + (el.dx ?? 6)} y={sy(el.y) + (el.dy ?? -6)} fontSize="10" fill="#334155">
+                    {el.label}
+                  </text>
+                )}
+              </g>
+            )
+          }
+
+          case 'seg': {
+            return (
+              <line key={i}
+                x1={sx(el.p1[0])} y1={sy(el.p1[1])}
+                x2={sx(el.p2[0])} y2={sy(el.p2[1])}
+                stroke={el.stroke ?? '#334155'}
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeDasharray={el.dashed ? '4,3' : undefined}
+              />
+            )
+          }
+
+          default:
+            return null
+        }
+      })}
+    </svg>
+  )
+}
+
 // ─── Main Export ──────────────────────────────────────────────────────────────
 
 interface SATGraphProps {
@@ -321,6 +468,8 @@ export function SATGraph({ data, className }: SATGraphProps) {
       return wrapper(<BarChart d={data as BarChartData} />)
     case 'table':
       return wrapper(<DataTable d={data as TableGraphData} />)
+    case 'geometry':
+      return wrapper(<GeometryFigure d={data as GeometryFigureData} />)
     default:
       return null
   }

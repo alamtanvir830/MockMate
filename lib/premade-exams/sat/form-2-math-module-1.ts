@@ -9,6 +9,15 @@ export const f2MathModule1Questions: MathQuestion[] = [
     skill: 'Area and volume',
     difficulty: 'easy',
     type: 'multiple_choice',
+    graphData: {
+      type: 'geometry',
+      viewBox: { xMin: -2, xMax: 15, yMin: -1.5, yMax: 7 },
+      elements: [
+        { kind: 'poly', pts: [[0, 0], [12, 0], [12, 5], [0, 5]] as [number, number][] },
+        { kind: 'label', x: 6, y: -0.9, text: '12' },
+        { kind: 'label', x: 13.2, y: 2.5, text: '5' },
+      ],
+    },
     question: 'A rectangle has a length of 12 and a width of 5. What is the perimeter of the rectangle?',
     choices: [
       { label: 'A', text: '17' },
@@ -452,6 +461,20 @@ export const f2MathModule1Questions: MathQuestion[] = [
     skill: 'Lines, angles, and triangles',
     difficulty: 'easy',
     type: 'grid_in',
+    graphData: {
+      type: 'geometry',
+      viewBox: { xMin: -1, xMax: 5.5, yMin: -1.2, yMax: 4 },
+      elements: [
+        { kind: 'poly', pts: [[0, 0], [4, 0], [0, 3]] as [number, number][] },
+        { kind: 'right_angle', v: [0, 0] as [number, number], a: [4, 0] as [number, number], b: [0, 3] as [number, number] },
+        { kind: 'label', x: 2, y: -0.7, text: '4' },
+        { kind: 'label', x: -0.55, y: 1.5, text: '3' },
+        { kind: 'label', x: 2.3, y: 1.8, text: '?' },
+        { kind: 'label', x: -0.4, y: -0.45, text: 'A', weight: 'bold', size: 10 },
+        { kind: 'label', x: 4.35, y: -0.45, text: 'B', weight: 'bold', size: 10 },
+        { kind: 'label', x: -0.4, y: 3.3, text: 'C', weight: 'bold', size: 10 },
+      ],
+    },
     question: 'In a right triangle, the two legs have lengths 3 and 4. What is the length of the hypotenuse?',
     correctAnswer: '5',
     acceptableAnswers: ['5'],

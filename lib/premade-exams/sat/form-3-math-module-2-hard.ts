@@ -10,6 +10,22 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
     skill: 'Circles',
     difficulty: 'hard',
     type: 'multiple_choice',
+    graphData: {
+      type: 'geometry',
+      viewBox: { xMin: -5.5, xMax: 11.5, yMin: -7.5, yMax: 3.5 },
+      elements: [
+        { kind: 'seg', p1: [-5, 0] as [number, number], p2: [11, 0] as [number, number] },
+        { kind: 'seg', p1: [0, -7] as [number, number], p2: [0, 3.3] as [number, number] },
+        { kind: 'label', x: 10.5, y: 0, text: 'x', dy: -9, anchor: 'start', size: 10, weight: '600' },
+        { kind: 'label', x: 0, y: 3.2, text: 'y', dx: 8, size: 10, weight: '600' },
+        { kind: 'label', x: 5, y: 0, text: '5', dy: 13, size: 9 },
+        { kind: 'label', x: -5, y: 0, text: '−5', dy: 13, size: 9 },
+        { kind: 'label', x: 0, y: -5, text: '−5', dx: -6, anchor: 'end', size: 9 },
+        { kind: 'label', x: 0, y: 3, text: '3', dx: -6, anchor: 'end', size: 9 },
+        { kind: 'circle', cx: 3, cy: -2, r: 5 },
+        { kind: 'point', x: 3, y: -2, label: '(3, −2)', dx: 8, dy: -10 },
+      ],
+    },
     question: 'The equation x² + y² − 6x + 4y = 12 represents a circle in the xy-plane. What is the radius of the circle?',
     choices: [
       { label: 'A', text: '3' },
