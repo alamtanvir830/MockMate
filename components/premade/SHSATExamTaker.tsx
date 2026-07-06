@@ -8,6 +8,17 @@ import type {
   SHSATQuestion,
   SHSATPoemLine,
 } from '@/lib/premade-exams/shsat-form-1'
+import {
+  buildPool,
+  createAdaptiveState,
+  pickNext,
+  computeDomainAccuracy,
+  computeDifficultyAccuracy,
+  type AdaptivePool,
+  type AdaptiveState,
+  type PoolQuestion,
+} from '@/lib/premade-exams/shsat-adaptive-engine'
+import { QUESTION_META } from '@/lib/premade-exams/shsat-metadata'
 
 type AnswerKey = 'A' | 'B' | 'C' | 'D'
 
@@ -976,7 +987,7 @@ function EndScreen({
   )
 }
 
-// ─── Results screen (grading logic — do not modify) ───────────────────────────
+// ─── Results screen ───────────────────────────────────────────────────────────
 function ResultsScreen({
   form, flatQuestions, answers, multiAnswers, matchAnswers, timedOut, onRetake,
 }: {
@@ -994,6 +1005,18 @@ function ResultsScreen({
   ).length
   const pct = total > 0 ? Math.round((correct / total) * 100) : 0
 
+  const correctQIds = useMemo(() => {
+    const s = new Set<string>()
+    flatQuestions.forEach(fq => {
+      if (isQuestionCorrect(fq.question, answers, multiAnswers, matchAnswers)) s.add(fq.question.id)
+    })
+    return s
+  }, [flatQuestions, answers, multiAnswers, matchAnswers])
+
+  const shownQIds   = useMemo(() => flatQuestions.map(fq => fq.question.id), [flatQuestions])
+  const domainStats = useMemo(() => computeDomainAccuracy(shownQIds, correctQIds), [shownQIds, correctQIds])
+  const diffStats   = useMemo(() => computeDifficultyAccuracy(shownQIds, correctQIds), [shownQIds, correctQIds])
+
   return (
     <div className="min-h-screen bg-slate-50 py-10 px-4">
       {timedOut && (
@@ -1002,6 +1025,7 @@ function ResultsScreen({
         </div>
       )}
       <div className={cn('mx-auto max-w-3xl space-y-6', timedOut && 'pt-8')}>
+        {/* Score */}
         <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
           <p className="text-sm font-medium text-slate-500 mb-1">{form.title}</p>
           <div className="mt-3 flex items-end justify-center gap-2">
@@ -1009,6 +1033,59 @@ function ResultsScreen({
             <span className="text-2xl text-slate-400 mb-2">/{total}</span>
           </div>
           <p className="mt-1 text-lg font-semibold text-slate-700">{pct}% correct</p>
+          <p className="mt-3 text-[11px] text-slate-400 italic">
+            MockMate adaptive SHSAT-style practice — question difficulty adjusted based on your responses
+          </p>
+        </div>
+
+        {/* Adaptive breakdown */}
+        <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-slate-100">
+            <h2 className="text-sm font-semibold text-slate-800">Adaptive Performance Breakdown</h2>
+          </div>
+          <div className="px-6 py-5 grid grid-cols-2 gap-6">
+            {/* By section/domain */}
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3">By Section</p>
+              <div className="space-y-3">
+                {domainStats.map(d => {
+                  const pct2 = d.total > 0 ? Math.round((d.correct / d.total) * 100) : 0
+                  return (
+                    <div key={d.label}>
+                      <div className="flex justify-between text-[12px] mb-1">
+                        <span className="text-slate-700 font-medium">{d.label}</span>
+                        <span className="text-slate-500">{d.correct}/{d.total} ({pct2}%)</span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                        <div className="h-full rounded-full bg-[#1b3a5c]" style={{ width: `${pct2}%` }} />
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+            {/* By difficulty */}
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3">By Difficulty</p>
+              <div className="space-y-3">
+                {diffStats.map(d => {
+                  const pct2 = d.total > 0 ? Math.round((d.correct / d.total) * 100) : 0
+                  const color = d.difficulty === 'easy' ? 'bg-emerald-500' : d.difficulty === 'medium' ? 'bg-amber-500' : 'bg-red-500'
+                  return (
+                    <div key={d.label}>
+                      <div className="flex justify-between text-[12px] mb-1">
+                        <span className="text-slate-700 font-medium">{d.label}</span>
+                        <span className="text-slate-500">{d.correct}/{d.total} ({pct2}%)</span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                        <div className={`h-full rounded-full ${color}`} style={{ width: `${pct2}%` }} />
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
@@ -1107,42 +1184,80 @@ function ResultsScreen({
 
 interface Props { form: SHSATForm }
 
-export function SHSATExamTaker({ form }: Props) {
-  const flatQuestions = useMemo(() => buildFlatQuestions(form), [form])
-  const totalQ        = flatQuestions.length
+// ─── Helper: convert PoolQuestion → FlatQuestion ──────────────────────────────
+function makeFlatBatch(
+  pqs: PoolQuestion[],
+  startIdx: number,
+): FlatQuestion[] {
+  const isRC = pqs[0]?.subType === 'reading_comprehension' && !!pqs[0]?.passageId
+  const passageQStart = isRC ? startIdx + 1 : undefined
+  const passageQEnd   = isRC ? startIdx + pqs.length : undefined
+  return pqs.map((pq, i) => ({
+    globalIndex: startIdx + i,
+    globalNumber: startIdx + i + 1,
+    subIdx: pq.subIdx,
+    subType: pq.subType,
+    passageId: pq.passageId,
+    passageTitle: pq.passageTitle,
+    passageContent: pq.passageContent,
+    passageAuthor: pq.passageAuthor,
+    passageQStart,
+    passageQEnd,
+    passageContentType: pq.passageContentType,
+    passageLines: pq.passageLines,
+    question: pq.question,
+  }))
+}
 
+export function SHSATExamTaker({ form }: Props) {
+  // ── Adaptive pool (stable, built once) ─────────────────────────────────────
+  const pool = useMemo(() => buildPool(form), [form])
+
+  // Total questions = sum of all pool buckets
+  const totalQ = useMemo(() =>
+    pool.rcPassageGroups.reduce((acc, p) => acc + p.questions.length, 0)
+    + pool.revEditAQuestions.length
+    + pool.revEditBQuestions.length
+    + pool.mathQuestions.length,
+    [pool],
+  )
+
+  // ── Dynamic question list (grows as student answers) ───────────────────────
+  const [shownQuestions, setShownQuestions] = useState<FlatQuestion[]>([])
+  const [adaptiveState, setAdaptiveState]   = useState<AdaptiveState>(() => createAdaptiveState())
+  const [lockedQuestionIds, setLockedQuestionIds] = useState<Set<string>>(new Set())
+
+  // Derived from shownQuestions (replaces pre-built useMemos)
   const subsectionStarts = useMemo(() => {
     const starts: number[] = []
-    flatQuestions.forEach((fq) => {
+    shownQuestions.forEach((fq) => {
       if (starts[fq.subIdx] === undefined) starts[fq.subIdx] = fq.globalIndex
     })
     return starts
-  }, [flatQuestions])
+  }, [shownQuestions])
 
-  // globalIndex of first question in each RC passage
   const passageStarts = useMemo(() => {
     const starts: number[] = []
-    let currentPassageId: string | undefined = undefined
-    for (const fq of flatQuestions) {
-      if (fq.subType === 'reading_comprehension' && fq.passageId !== currentPassageId) {
-        currentPassageId = fq.passageId
+    let cur: string | undefined
+    for (const fq of shownQuestions) {
+      if (fq.subType === 'reading_comprehension' && fq.passageId !== cur) {
+        cur = fq.passageId
         starts.push(fq.globalIndex)
       }
     }
     return starts
-  }, [flatQuestions])
+  }, [shownQuestions])
 
-  // passage number (1-indexed) for each passageId in RC
   const passageNumberMap = useMemo(() => {
     const map: Record<string, number> = {}
     let idx = 1
-    for (const fq of flatQuestions) {
+    for (const fq of shownQuestions) {
       if (fq.subType === 'reading_comprehension' && fq.passageId && !map[fq.passageId]) {
         map[fq.passageId] = idx++
       }
     }
     return map
-  }, [flatQuestions])
+  }, [shownQuestions])
 
   const mathSubIdx = useMemo(() =>
     form.subsections.findIndex(s => s.type === 'mathematics'),
@@ -1150,14 +1265,16 @@ export function SHSATExamTaker({ form }: Props) {
   )
 
   const elaQuestions = useMemo(() =>
-    flatQuestions.filter(fq => fq.subType !== 'mathematics'),
-    [flatQuestions],
+    shownQuestions.filter(fq => fq.subType !== 'mathematics'),
+    [shownQuestions],
   )
 
   const lastELAGlobalIdx = useMemo(() =>
     elaQuestions.length > 0 ? elaQuestions[elaQuestions.length - 1].globalIndex : 0,
     [elaQuestions],
   )
+
+  const totalRCPassages = pool.rcPassageGroups.length
 
   const [phase, setPhase]               = useState<Phase>({ tag: 'welcome' })
   const [answers, setAnswers]           = useState<Record<string, AnswerKey>>({})
@@ -1182,13 +1299,13 @@ export function SHSATExamTaker({ form }: Props) {
   // ── Scroll passage panel to top on passage change ──────────────────────────
   useEffect(() => {
     if (phase.tag !== 'question') return
-    const fq = flatQuestions[phase.globalIdx]
+    const fq = shownQuestions[phase.globalIdx]
     if (!fq?.passageId) return
     if (fq.passageId !== prevPassageId.current) {
       prevPassageId.current = fq.passageId
       if (passagePanelRef.current) passagePanelRef.current.scrollTop = 0
     }
-  }, [phase, flatQuestions])
+  }, [phase, shownQuestions])
 
   // ── Navigation ─────────────────────────────────────────────────────────────
   const handleNext = useCallback(() => {
@@ -1198,49 +1315,96 @@ export function SHSATExamTaker({ form }: Props) {
     if (phase.tag === 'general_directions') {
       setPhase({ tag: 'ela_directions' }); return
     }
+
+    // ── ELA directions: pick first question adaptively ──────────────────────
     if (phase.tag === 'ela_directions') {
-      if (passageStarts.length > 0) {
-        setPhase({
-          tag: 'passage_intro',
-          passageGlobalStart: passageStarts[0],
-          passageNumber: 1,
-          totalPassages: passageStarts.length,
-        })
+      const { nextBatch, nextState } = pickNext(adaptiveState, pool, null)
+      if (nextBatch.length === 0) return
+      setAdaptiveState(nextState)
+      const newFqs = makeFlatBatch(nextBatch, 0)
+      setShownQuestions(newFqs)
+      const firstFq = newFqs[0]
+      if (firstFq.subType === 'reading_comprehension' && firstFq.passageId) {
+        setPhase({ tag: 'passage_intro', passageGlobalStart: 0, passageNumber: 1, totalPassages: totalRCPassages })
       } else {
         setPhase({ tag: 'question', globalIdx: 0 })
       }
       return
     }
+
     if (phase.tag === 'passage_intro') {
       setPhase({ tag: 'question', globalIdx: phase.passageGlobalStart }); return
     }
     if (phase.tag === 'end_ela') {
-      if (mathSubIdx >= 0) {
-        setPhase({ tag: 'transition', subIdx: mathSubIdx })
-      }
+      if (mathSubIdx >= 0) setPhase({ tag: 'transition', subIdx: mathSubIdx })
       return
     }
     if (phase.tag === 'transition') {
       setPhase({ tag: 'question', globalIdx: subsectionStarts[phase.subIdx] }); return
     }
+
     if (phase.tag === 'question') {
-      // Block advancement if multi_select or match is partially answered
-      const curQ = flatQuestions[phase.globalIdx].question
+      const curFq = shownQuestions[phase.globalIdx]
+      const curQ  = curFq.question
+
+      // Block if incomplete multi_select or match
       if (curQ.type === 'multi_select') {
-        const selected = multiAnswers[curQ.id] ?? []
-        if (selected.length < curQ.selectCount) { setShowAttentionModal(true); return }
+        const sel = multiAnswers[curQ.id] ?? []
+        if (sel.length < curQ.selectCount) { setShowAttentionModal(true); return }
       }
       if (curQ.type === 'match') {
         const assigned = matchAnswers[curQ.id] ?? {}
         if (Object.keys(assigned).length < curQ.items.length) { setShowAttentionModal(true); return }
       }
 
-      const next = phase.globalIdx + 1
-      if (next >= totalQ) { setPhase({ tag: 'end' }); return }
+      // Lock current question
+      setLockedQuestionIds(prev => new Set([...prev, curQ.id]))
 
-      const curFq  = flatQuestions[phase.globalIdx]
-      const nextFq = flatQuestions[next]
+      const nextIdx = phase.globalIdx + 1
 
+      // ── Case 1: more pre-queued questions remain (mid-passage or batch) ───
+      if (nextIdx < shownQuestions.length) {
+        const nextFq = shownQuestions[nextIdx]
+        if (nextFq.subIdx > curFq.subIdx) {
+          if (nextFq.subType === 'mathematics') {
+            setPhase({ tag: 'end_ela' })
+          } else {
+            setPhase({ tag: 'transition', subIdx: nextFq.subIdx })
+          }
+          return
+        }
+        // RC passage boundary (shouldn't occur mid-batch but guard anyway)
+        if (
+          curFq.subType === 'reading_comprehension' &&
+          nextFq.subType === 'reading_comprehension' &&
+          nextFq.passageId && nextFq.passageId !== curFq.passageId
+        ) {
+          const pIdx = passageStarts.indexOf(nextIdx)
+          if (pIdx !== -1) {
+            setPhase({ tag: 'passage_intro', passageGlobalStart: nextIdx, passageNumber: pIdx + 1, totalPassages: totalRCPassages })
+            return
+          }
+        }
+        setPhase({ tag: 'question', globalIdx: nextIdx })
+        return
+      }
+
+      // ── Case 2: end of batch — pick next adaptively ────────────────────────
+      const wasCorrect = isQuestionCorrect(curQ, answers, multiAnswers, matchAnswers)
+      const { nextBatch, nextState } = pickNext(adaptiveState, pool, wasCorrect)
+      setAdaptiveState(nextState)
+
+      if (nextBatch.length === 0) {
+        setPhase({ tag: 'end' }); return
+      }
+
+      const startIdx = shownQuestions.length
+      const newFqs   = makeFlatBatch(nextBatch, startIdx)
+      setShownQuestions(prev => [...prev, ...newFqs])
+
+      const nextFq = newFqs[0]
+
+      // Subsection boundary
       if (nextFq.subIdx > curFq.subIdx) {
         if (nextFq.subType === 'mathematics') {
           setPhase({ tag: 'end_ela' })
@@ -1250,28 +1414,20 @@ export function SHSATExamTaker({ form }: Props) {
         return
       }
 
-      // Passage boundary within Reading Comprehension
-      if (
-        curFq.subType === 'reading_comprehension' &&
-        nextFq.subType === 'reading_comprehension' &&
-        nextFq.passageId &&
-        nextFq.passageId !== curFq.passageId
-      ) {
-        const passageIdx = passageStarts.indexOf(next)
-        if (passageIdx !== -1) {
-          setPhase({
-            tag: 'passage_intro',
-            passageGlobalStart: next,
-            passageNumber: passageIdx + 1,
-            totalPassages: passageStarts.length,
-          })
-          return
-        }
+      // New RC passage
+      if (nextFq.subType === 'reading_comprehension' && nextFq.passageId !== curFq.passageId) {
+        const passageNum = nextState.seenPassageIds.size
+        setPhase({ tag: 'passage_intro', passageGlobalStart: startIdx, passageNumber: passageNum, totalPassages: totalRCPassages })
+        return
       }
 
-      setPhase({ tag: 'question', globalIdx: next })
+      setPhase({ tag: 'question', globalIdx: startIdx })
     }
-  }, [phase, flatQuestions, totalQ, subsectionStarts, passageStarts, mathSubIdx])
+  }, [
+    phase, shownQuestions, pool, adaptiveState,
+    answers, multiAnswers, matchAnswers,
+    subsectionStarts, passageStarts, mathSubIdx, totalRCPassages,
+  ])
 
   const handleBack = useCallback(() => {
     if (phase.tag === 'general_directions') {
@@ -1304,9 +1460,9 @@ export function SHSATExamTaker({ form }: Props) {
       setPhase({ tag: 'question', globalIdx: phase.globalIdx - 1 }); return
     }
     if (phase.tag === 'end') {
-      setPhase({ tag: 'question', globalIdx: totalQ - 1 })
+      setPhase({ tag: 'question', globalIdx: shownQuestions.length - 1 })
     }
-  }, [phase, totalQ, subsectionStarts, form.subsections, lastELAGlobalIdx])
+  }, [phase, shownQuestions.length, subsectionStarts, form.subsections, lastELAGlobalIdx])
 
   const handleGoTo = useCallback((i: number) => {
     setPhase({ tag: 'question', globalIdx: i })
@@ -1320,6 +1476,9 @@ export function SHSATExamTaker({ form }: Props) {
     setBookmarked(new Set())
     setSecondsLeft(form.timeLimitMinutes * 60)
     setTimedOut(false)
+    setShownQuestions([])
+    setAdaptiveState(createAdaptiveState())
+    setLockedQuestionIds(new Set())
     prevPassageId.current = ''
   }, [form.timeLimitMinutes])
 
@@ -1338,7 +1497,7 @@ export function SHSATExamTaker({ form }: Props) {
     return (
       <ResultsScreen
         form={form}
-        flatQuestions={flatQuestions}
+        flatQuestions={shownQuestions}
         answers={answers}
         multiAnswers={multiAnswers}
         matchAnswers={matchAnswers}
@@ -1380,7 +1539,7 @@ export function SHSATExamTaker({ form }: Props) {
 
   // ── Passage Intro ──────────────────────────────────────────────────────────
   if (phase.tag === 'passage_intro') {
-    const introFq = flatQuestions[phase.passageGlobalStart]
+    const introFq = shownQuestions[phase.passageGlobalStart]
     return (
       <PassageIntroScreen
         introFq={introFq}
@@ -1433,7 +1592,7 @@ export function SHSATExamTaker({ form }: Props) {
   if (phase.tag === 'end') {
     return (
       <EndScreen
-        flatQuestions={flatQuestions}
+        flatQuestions={shownQuestions}
         answers={answers}
         multiAnswers={multiAnswers}
         matchAnswers={matchAnswers}
@@ -1446,15 +1605,16 @@ export function SHSATExamTaker({ form }: Props) {
   }
 
   // ── Question screen ────────────────────────────────────────────────────────
-  const fq       = flatQuestions[phase.globalIdx]
+  const fq       = shownQuestions[phase.globalIdx]
   const subType  = fq.subType
   const currentQ = fq.question
+  const isLocked = lockedQuestionIds.has(currentQ.id)
 
   const isPassageLayout = !!fq.passageId
   const isMathLayout    = subType === 'mathematics'
   const isBookmarked    = bookmarked.has(currentQ.id)
 
-  const answeredCount = flatQuestions.filter(f =>
+  const answeredCount = shownQuestions.filter(f =>
     isQuestionAnswered(f.question, answers, multiAnswers, matchAnswers)
   ).length
 
@@ -1483,6 +1643,7 @@ export function SHSATExamTaker({ form }: Props) {
     const mcq = currentQ
     const currentAnswer = answers[mcq.id] as AnswerKey | undefined
     const toggleAnswer = (choice: AnswerKey) => {
+      if (isLocked) return
       setAnswers(prev => {
         const next = { ...prev }
         if (next[mcq.id] === choice) delete next[mcq.id]
@@ -1492,6 +1653,9 @@ export function SHSATExamTaker({ form }: Props) {
     }
     questionContent = (
       <div className="space-y-2.5">
+        {isLocked && (
+          <p className="text-[11px] text-slate-400 italic mb-1">Answer submitted — read only</p>
+        )}
         {mcq.choices.map((choice) => {
           const sel = currentAnswer === choice.id
           return (
@@ -1499,16 +1663,21 @@ export function SHSATExamTaker({ form }: Props) {
               key={choice.id}
               type="button"
               onClick={() => toggleAnswer(choice.id as AnswerKey)}
+              disabled={isLocked}
               className={cn(
-                'flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left text-[13px] transition-all cursor-pointer',
-                sel
-                  ? 'border-[#1b3a5c] bg-[#eaf0f7]'
-                  : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
+                'flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left text-[13px] transition-all',
+                isLocked ? 'cursor-default' : 'cursor-pointer',
+                sel && isLocked  ? 'border-slate-400 bg-slate-100'
+                  : sel          ? 'border-[#1b3a5c] bg-[#eaf0f7]'
+                  : isLocked     ? 'border-slate-200 bg-white opacity-60'
+                  :                'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
               )}
             >
               <span className={cn(
                 'flex h-5 w-5 shrink-0 mt-0.5 items-center justify-center rounded-full border-2 text-[11px] font-bold transition-colors',
-                sel ? 'border-[#1b3a5c] bg-[#1b3a5c] text-white' : 'border-slate-400 text-slate-500',
+                sel && isLocked  ? 'border-slate-500 bg-slate-500 text-white'
+                  : sel          ? 'border-[#1b3a5c] bg-[#1b3a5c] text-white'
+                  :                'border-slate-400 text-slate-500',
               )}>
                 {choice.id}
               </span>
@@ -1525,6 +1694,7 @@ export function SHSATExamTaker({ form }: Props) {
     const msq = currentQ
     const selected = multiAnswers[msq.id] ?? []
     const toggleMulti = (choiceId: string) => {
+      if (isLocked) return
       setMultiAnswers(prev => {
         const cur = prev[msq.id] ?? []
         let next: string[]
@@ -1540,12 +1710,16 @@ export function SHSATExamTaker({ form }: Props) {
     }
     questionContent = (
       <div>
-        <p className="text-[12px] font-semibold text-[#1b3a5c] bg-[#eaf0f7] border border-[#b0cce0] rounded px-3 py-2 mb-4">
-          Select <strong>{msq.selectCount}</strong> correct answers.{' '}
-          {selected.length < msq.selectCount
-            ? `(${msq.selectCount - selected.length} more needed)`
-            : '✓ Selection complete'}
-        </p>
+        {isLocked ? (
+          <p className="text-[11px] text-slate-400 italic mb-3">Answer submitted — read only</p>
+        ) : (
+          <p className="text-[12px] font-semibold text-[#1b3a5c] bg-[#eaf0f7] border border-[#b0cce0] rounded px-3 py-2 mb-4">
+            Select <strong>{msq.selectCount}</strong> correct answers.{' '}
+            {selected.length < msq.selectCount
+              ? `(${msq.selectCount - selected.length} more needed)`
+              : '✓ Selection complete'}
+          </p>
+        )}
         <div className="space-y-2.5">
           {msq.choices.map((choice) => {
             const sel = selected.includes(choice.id)
@@ -1554,16 +1728,21 @@ export function SHSATExamTaker({ form }: Props) {
                 key={choice.id}
                 type="button"
                 onClick={() => toggleMulti(choice.id)}
+                disabled={isLocked}
                 className={cn(
-                  'flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left text-[13px] transition-all cursor-pointer',
-                  sel
-                    ? 'border-[#1b3a5c] bg-[#eaf0f7]'
-                    : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
+                  'flex w-full items-start gap-3 rounded-lg border px-4 py-3 text-left text-[13px] transition-all',
+                  isLocked ? 'cursor-default' : 'cursor-pointer',
+                  sel && isLocked  ? 'border-slate-400 bg-slate-100'
+                    : sel          ? 'border-[#1b3a5c] bg-[#eaf0f7]'
+                    : isLocked     ? 'border-slate-200 bg-white opacity-60'
+                    :                'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
                 )}
               >
                 <span className={cn(
                   'flex h-5 w-5 shrink-0 mt-0.5 items-center justify-center rounded border-2 text-[11px] font-bold transition-colors',
-                  sel ? 'border-[#1b3a5c] bg-[#1b3a5c] text-white' : 'border-slate-400 text-slate-500',
+                  sel && isLocked  ? 'border-slate-500 bg-slate-500 text-white'
+                    : sel          ? 'border-[#1b3a5c] bg-[#1b3a5c] text-white'
+                    :                'border-slate-400 text-slate-500',
                 )}>
                   {sel ? '✓' : choice.id}
                 </span>
@@ -1581,12 +1760,14 @@ export function SHSATExamTaker({ form }: Props) {
     const mq = currentQ
     const sel = matchAnswers[mq.id] ?? {}
     const placeTile = (itemId: string, catId: string) => {
+      if (isLocked) return
       setMatchAnswers(prev => {
         const next = { ...(prev[mq.id] ?? {}), [itemId]: catId }
         return { ...prev, [mq.id]: next }
       })
     }
     const removeTile = (itemId: string) => {
+      if (isLocked) return
       setMatchAnswers(prev => {
         const next = { ...(prev[mq.id] ?? {}) }
         delete next[itemId]
@@ -1737,11 +1918,21 @@ export function SHSATExamTaker({ form }: Props) {
             {subType === 'reading_comprehension' && fq.passageId && passageNumberMap[fq.passageId] != null && (
               <>
                 <span className="mx-2 text-white/30">/</span>
-                PASSAGE {passageNumberMap[fq.passageId]} of {passageStarts.length}
+                PASSAGE {passageNumberMap[fq.passageId]} of {totalRCPassages}
               </>
             )}
             <span className="mx-2 text-white/30">/</span>
             Q {fq.globalNumber} of {totalQ}
+            {(() => {
+              const meta = QUESTION_META[currentQ.id]
+              if (!meta) return null
+              const col = meta.difficulty === 'easy' ? 'bg-emerald-500' : meta.difficulty === 'medium' ? 'bg-amber-500' : 'bg-red-500'
+              return (
+                <span className={`ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide text-white ${col}`}>
+                  {meta.difficulty}
+                </span>
+              )
+            })()}
           </span>
         }
       />
@@ -1778,9 +1969,15 @@ export function SHSATExamTaker({ form }: Props) {
                 Revising / Editing — Part A
               </p>
             )}
-            <p className="text-[11px] font-medium text-slate-500 italic mb-5">
-              Questions {fq.passageQStart}–{fq.passageQEnd} refer to the following passage.
-            </p>
+            {fq.subType === 'reading_comprehension' ? (
+              <p className="text-[11px] font-medium text-slate-500 italic mb-5">
+                Questions {fq.passageQStart}–{fq.passageQEnd} refer to the following passage.
+              </p>
+            ) : (
+              <p className="text-[11px] font-medium text-slate-500 italic mb-5">
+                This question refers to the following passage.
+              </p>
+            )}
             <h2 className="text-sm font-bold text-slate-900 mb-1">{fq.passageTitle}</h2>
             {fq.passageAuthor && (
               <p className="text-xs text-slate-500 mb-5">by {fq.passageAuthor}</p>
