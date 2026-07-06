@@ -58,7 +58,7 @@ export default function LandingPage() {
             </h1>
 
             <p className="mx-auto mt-8 max-w-2xl text-base sm:text-lg text-slate-500 leading-relaxed">
-              Build realistic mock exams from your own lectures, notes, syllabus, or previous exam format. Now also offering digital SAT-style prep with 3 practice forms, a 300+ question bank, instant AI feedback, score reports, and personalized weak-area question sets.
+              Take your first free SAT practice exam, build targeted question sets, and prepare for SAT, MCAT, and SHSAT without expensive prep-company pricing.
             </p>
 
             <p className="mt-4 inline-flex items-center gap-1.5 text-[13px] font-medium text-emerald-700">

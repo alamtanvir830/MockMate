@@ -14,11 +14,26 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'MockMate — Realistic Mock Exams Built From Your Materials',
+    default: 'MockMate — Your Standardized Exam Hub for Affordable Test Prep',
     template: '%s | MockMate',
   },
   description:
-    'Take a realistic mock exam built from your actual lectures and notes. Get scored instantly, see your weak topics, and send results to accountability friends.',
+    'Take your first free standardized exam and practice with affordable SAT, MCAT, SHSAT, and question bank tools built for students.',
+  openGraph: {
+    title: 'MockMate — Your Standardized Exam Hub for Affordable Test Prep',
+    description:
+      'Take your first free standardized exam and practice with affordable SAT, MCAT, SHSAT, and question bank tools built for students.',
+    siteName: 'MockMate',
+    url: 'https://www.mockmateapp.com',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'MockMate — Your Standardized Exam Hub for Affordable Test Prep',
+    description:
+      'Take your first free standardized exam and practice with affordable SAT, MCAT, SHSAT, and question bank tools built for students.',
+  },
+  metadataBase: new URL('https://www.mockmateapp.com'),
 }
 
 export default function RootLayout({
