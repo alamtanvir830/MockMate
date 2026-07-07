@@ -327,7 +327,7 @@ export default async function DashboardPage() {
 
             <div className="flex-1">
               <p className={`font-semibold text-sm leading-snug ${satForm1State.tag === 'expired' ? 'text-slate-400' : 'text-slate-900'}`}>
-                Take your first free SAT Exam Form 1
+                Take your first free SAT exam
               </p>
               {satForm1State.tag === 'admin' && (
                 <p className="mt-1 text-xs text-amber-600">Admin testing mode: timer disabled</p>
@@ -350,10 +350,10 @@ export default async function DashboardPage() {
               )}
               <p className="mt-1.5 text-xs text-slate-400">Adaptive · Full length</p>
               {satForm1State.tag !== 'admin' && satForm1State.tag !== 'completed' && satForm1State.tag !== 'expired' && (
-                <p className="mt-0.5 text-xs text-slate-400">Start with a full-length SAT practice test in the digital adaptive style.</p>
+                <p className="mt-0.5 text-xs text-slate-400">View SAT Forms 1, 2, and 3. Start free with Form 1 and unlock more full-length adaptive practice.</p>
               )}
               {(satForm1State.tag === 'completed' || satForm1State.tag === 'admin') && (
-                <p className="mt-0.5 text-xs text-slate-400">Start with a full-length SAT practice test in the digital adaptive style.</p>
+                <p className="mt-0.5 text-xs text-slate-400">View SAT Forms 1, 2, and 3. Start free with Form 1 and unlock more full-length adaptive practice.</p>
               )}
             </div>
 
@@ -370,9 +370,9 @@ export default async function DashboardPage() {
                 </button>
               </Link>
             ) : (
-              <Link href="/premade/sat/form-1">
+              <Link href="/premade/sat">
                 <button className="w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 transition-colors">
-                  Start SAT Form 1
+                  View SAT Practice Forms
                 </button>
               </Link>
             )}
