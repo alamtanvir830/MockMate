@@ -976,7 +976,7 @@ function NumberedList({ text, className }: { text: string; className?: string })
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, isAdmin = false, allowRetake = true, showUnlockCTA = false, satUpgradeUnlocked = false }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean; isAdmin?: boolean; allowRetake?: boolean; showUnlockCTA?: boolean; satUpgradeUnlocked?: boolean }) {
+export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, isAdmin = false, allowRetake = true, showUnlockCTA = false, satUpgradeUnlocked = false, countdownText }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean; isAdmin?: boolean; allowRetake?: boolean; showUnlockCTA?: boolean; satUpgradeUnlocked?: boolean; countdownText?: string }) {
   const isHistoryView = !!initialAttempt
 
   // ── Exam state ─────────────────────────────────────────────────────────────
@@ -1363,6 +1363,16 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
               <div className="bg-[#1b3a5c] px-8 py-6">
                 <h1 className="text-[18px] font-bold text-white leading-tight">{form.title}</h1>
                 <p className="text-[12px] text-white/60 mt-1">{form.description}</p>
+                {countdownText && !isAdmin && (
+                  <div className="mt-3 flex items-center gap-1.5">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 text-amber-300 shrink-0">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+                    </svg>
+                    <span className="text-[11px] text-amber-300 font-medium">
+                      Free access expires in <strong>{countdownText}</strong>
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="px-8 py-6 flex gap-8">
                 <div className="flex-1 space-y-4">
