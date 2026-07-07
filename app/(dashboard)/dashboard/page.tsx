@@ -8,7 +8,28 @@ import { ExamStatusBadge } from '@/components/ui/badge'
 import { daysUntil, isExamLocked } from '@/lib/utils'
 import { seedDemoExam, seedDemoGroupExam } from '@/lib/demo/seed-demo-exam'
 import { QBHistorySection } from '@/components/dashboard/QBHistorySection'
+import { isMockMateAdmin } from '@/lib/auth/admin'
 import type { Exam } from '@/types'
+
+type SatForm1CardState =
+  | { tag: 'admin' }
+  | { tag: 'completed'; attemptId: string }
+  | { tag: 'expired' }
+  | { tag: 'active'; expiresAt: string }
+  | { tag: 'default' }
+
+function satCountdownBannerText(expiresAt: string): string {
+  const msLeft = new Date(expiresAt).getTime() - Date.now()
+  if (msLeft <= 0) return 'Free SAT Form 1 access expired'
+  const totalHours = msLeft / (1000 * 60 * 60)
+  const days = Math.floor(totalHours / 24)
+  if (days >= 2) return `Limited time: ${days} days left to complete your free SAT Form 1`
+  if (days === 1) return 'Limited time: 1 day left to complete your free SAT Form 1'
+  const hours = Math.floor(totalHours)
+  if (hours >= 2) return `Limited time: ${hours} hours left to complete your free SAT Form 1`
+  if (hours >= 1) return 'Limited time: 1 hour left to complete your free SAT Form 1'
+  return 'Limited time: expires today'
+}
 
 export const metadata: Metadata = { title: 'Dashboard' }
 
@@ -78,6 +99,45 @@ export default async function DashboardPage() {
 
   const fullName = user?.user_metadata?.full_name as string | undefined
   const displayName = fullName ?? user?.email?.split('@')[0] ?? 'there'
+
+  // SAT Form 1 card state
+  const isAdminUser = isMockMateAdmin(user)
+  let satForm1State: SatForm1CardState = { tag: 'default' }
+
+  if (user) {
+    if (isAdminUser) {
+      satForm1State = { tag: 'admin' }
+    } else {
+      const [completedResult, accessResult] = await Promise.all([
+        supabase
+          .from('standardized_exam_attempts')
+          .select('local_attempt_id')
+          .eq('user_id', user.id)
+          .eq('exam_type', 'SAT')
+          .eq('form_number', 1)
+          .not('completed_at', 'is', null)
+          .order('completed_at', { ascending: false })
+          .limit(1)
+          .maybeSingle(),
+        supabase
+          .from('sat_form_1_access')
+          .select('access_expires_at')
+          .eq('user_id', user.id)
+          .maybeSingle(),
+      ])
+
+      const attemptId = completedResult.data?.local_attempt_id ?? null
+      const expiresAt = (accessResult.data as { access_expires_at: string } | null)?.access_expires_at ?? null
+
+      if (attemptId) {
+        satForm1State = { tag: 'completed', attemptId }
+      } else if (expiresAt && new Date(expiresAt) <= new Date()) {
+        satForm1State = { tag: 'expired' }
+      } else if (expiresAt) {
+        satForm1State = { tag: 'active', expiresAt }
+      }
+    }
+  }
 
   // Owned exams
   const { data: exams } = await supabase
@@ -241,26 +301,81 @@ export default async function DashboardPage() {
           {/* SAT card */}
           <Card className="flex flex-col gap-3">
             <div className="flex items-start justify-between gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+              <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${satForm1State.tag === 'expired' ? 'bg-slate-100 text-slate-400' : 'bg-blue-50 text-blue-600'}`}>
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                 </svg>
               </div>
               <div className="flex gap-1.5 shrink-0">
-                <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-xs font-semibold text-emerald-700">Free</span>
-                <span className="inline-flex items-center rounded-full bg-blue-50 border border-blue-200 px-2 py-0.5 text-xs font-medium text-blue-600">Pre-made</span>
+                {satForm1State.tag === 'completed' && (
+                  <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-xs font-semibold text-emerald-700">Completed</span>
+                )}
+                {satForm1State.tag === 'admin' && (
+                  <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-xs font-semibold text-amber-700">Admin</span>
+                )}
+                {satForm1State.tag === 'expired' && (
+                  <span className="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-xs font-semibold text-slate-500">Expired</span>
+                )}
+                {(satForm1State.tag === 'active' || satForm1State.tag === 'default') && (
+                  <>
+                    <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-xs font-semibold text-emerald-700">Free</span>
+                    <span className="inline-flex items-center rounded-full bg-blue-50 border border-blue-200 px-2 py-0.5 text-xs font-medium text-blue-600">Pre-made</span>
+                  </>
+                )}
               </div>
             </div>
+
             <div className="flex-1">
-              <p className="font-semibold text-slate-900 text-sm leading-snug">Take your first free SAT Exam Form 1</p>
-              <p className="mt-1 text-xs text-slate-500">Start with a full-length SAT practice test in the digital adaptive style.</p>
+              <p className={`font-semibold text-sm leading-snug ${satForm1State.tag === 'expired' ? 'text-slate-400' : 'text-slate-900'}`}>
+                Take your first free SAT Exam Form 1
+              </p>
+              {satForm1State.tag === 'admin' && (
+                <p className="mt-1 text-xs text-amber-600">Admin testing mode: timer disabled</p>
+              )}
+              {satForm1State.tag === 'completed' && (
+                <p className="mt-1 text-xs text-emerald-600 font-medium">Free attempt completed</p>
+              )}
+              {satForm1State.tag === 'active' && (
+                <div className="mt-1.5 flex items-start gap-1.5 rounded-lg bg-red-50 border border-red-200 px-2.5 py-2">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 text-red-500 shrink-0 mt-0.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+                  </svg>
+                  <p className="text-xs font-semibold text-red-700 leading-snug">
+                    {satCountdownBannerText(satForm1State.expiresAt)}
+                  </p>
+                </div>
+              )}
+              {satForm1State.tag === 'expired' && (
+                <p className="mt-1 text-xs text-red-500 font-medium">Free SAT Form 1 access expired</p>
+              )}
               <p className="mt-1.5 text-xs text-slate-400">Adaptive · Full length</p>
+              {satForm1State.tag !== 'admin' && satForm1State.tag !== 'completed' && satForm1State.tag !== 'expired' && (
+                <p className="mt-0.5 text-xs text-slate-400">Start with a full-length SAT practice test in the digital adaptive style.</p>
+              )}
+              {(satForm1State.tag === 'completed' || satForm1State.tag === 'admin') && (
+                <p className="mt-0.5 text-xs text-slate-400">Start with a full-length SAT practice test in the digital adaptive style.</p>
+              )}
             </div>
-            <Link href="/premade/sat/form-1">
-              <button className="w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 transition-colors">
-                Start SAT Form 1
-              </button>
-            </Link>
+
+            {satForm1State.tag === 'completed' ? (
+              <Link href={`/premade/sat/form-1/results/${satForm1State.attemptId}`}>
+                <button className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 transition-colors">
+                  View Results →
+                </button>
+              </Link>
+            ) : satForm1State.tag === 'expired' ? (
+              <Link href="/billing">
+                <button className="w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 transition-colors">
+                  Unlock More SAT Practice
+                </button>
+              </Link>
+            ) : (
+              <Link href="/premade/sat/form-1">
+                <button className="w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 transition-colors">
+                  Start SAT Form 1
+                </button>
+              </Link>
+            )}
           </Card>
 
           {/* MCAT card */}
