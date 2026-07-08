@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard' },
-  { href: '/premade', label: 'Pre-made Exam (SAT & MCAT)' },
+  { href: '/premade', label: 'Premade Exams (SAT)' },
   { href: '/exams/create', label: 'Create New Exam' },
   { href: '/exams', label: 'Exam History' },
   { href: '/question-bank', label: 'Question Bank' },
