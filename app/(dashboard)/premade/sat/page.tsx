@@ -101,6 +101,12 @@ export default async function SATPremadePage() {
         </ul>
       </div>
 
+      {/* Legal disclaimer */}
+      <p className="text-[11px] text-slate-400 mb-6 leading-relaxed">
+        MockMate is not affiliated with, endorsed by, or sponsored by College Board. SAT® is a registered trademark of College Board, which is not involved in the production of and does not endorse MockMate. All questions are independently created for practice purposes and are not official SAT questions.{' '}
+        <Link href="/sat-disclaimer" className="hover:underline">SAT Disclaimer</Link>
+      </p>
+
       {/* Form cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Form 1 — state-driven rendering */}

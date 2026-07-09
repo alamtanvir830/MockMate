@@ -126,7 +126,7 @@ export const f4RwModule2HardQuestions: RWQuestion[] = [
     domain: 'Craft and Structure',
     skill: 'Text Structure and Purpose',
     difficulty: 'hard',
-    stimulus: 'The following is adapted from a novel. She had rehearsed the refusal for days, arranging her reasons in a tidy row like place settings. But when the moment came and he looked at her with that mild, expectant patience, the row dissolved; she heard herself agreeing, in a bright voice she scarcely recognized, to precisely the thing she had resolved to decline.',
+    stimulus: 'The following is an original short passage. She had rehearsed the refusal for days, arranging her reasons in a tidy row like place settings. But when the moment came and he looked at her with that mild, expectant patience, the row dissolved; she heard herself agreeing, in a bright voice she scarcely recognized, to precisely the thing she had resolved to decline.',
     question: 'What is the main function of the phrase "arranging her reasons in a tidy row like place settings" in the text?',
     choices: [
       { label: 'A', text: 'To emphasize how carefully she had prepared to refuse, heightening the reversal that follows' },

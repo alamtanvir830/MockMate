@@ -149,7 +149,7 @@ export const f4RwModule1Questions: RWQuestion[] = [
     domain: 'Craft and Structure',
     skill: 'Text Structure and Purpose',
     difficulty: 'medium',
-    stimulus: 'The following is adapted from a nineteenth-century novel. The narrator describes a merchant. He counted his coins each evening not from greed, he insisted, but from a love of order — though the servants who watched him linger over each stack, muttering their names as if they were old friends, drew a different conclusion.',
+    stimulus: 'The following is an original short passage set in the nineteenth century. The narrator describes a merchant. He counted his coins each evening not from greed, he insisted, but from a love of order — though the servants who watched him linger over each stack, muttering their names as if they were old friends, drew a different conclusion.',
     question: 'What is the main function of the phrase "though the servants . . . a different conclusion" in the text?',
     choices: [
       { label: 'A', text: 'It confirms the merchant\'s stated reason for counting his coins' },

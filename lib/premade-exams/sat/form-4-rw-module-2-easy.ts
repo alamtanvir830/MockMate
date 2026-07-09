@@ -172,7 +172,7 @@ export const f4RwModule2EasyQuestions: RWQuestion[] = [
     domain: 'Craft and Structure',
     skill: 'Text Structure and Purpose',
     difficulty: 'medium',
-    stimulus: 'The following is adapted from a short story. The clerk kept the shop exactly as his late father had: the same faded sign, the same jars in the same order, the same brass bell above the door. Customers who had known the father sometimes paused, half expecting to see him behind the counter.',
+    stimulus: 'The following is an original short passage. The clerk kept the shop exactly as his late father had: the same faded sign, the same jars in the same order, the same brass bell above the door. Customers who had known the father sometimes paused, half expecting to see him behind the counter.',
     question: 'What is the main function of the details about the shop in the text?',
     choices: [
       { label: 'A', text: 'To explain how the shop\'s sales have increased' },

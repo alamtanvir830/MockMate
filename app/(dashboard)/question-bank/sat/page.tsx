@@ -805,8 +805,9 @@ export default function SATQuestionBankPage() {
         </>
       )}
 
-      <p className="text-xs text-slate-400 mt-8 text-center">
-        SAT is a trademark of College Board. MockMate is not affiliated with or endorsed by College Board.
+      <p className="text-xs text-slate-400 mt-8 text-center leading-relaxed">
+        MockMate is not affiliated with, endorsed by, or sponsored by College Board. SAT® is a registered trademark of College Board. All practice questions are independently created by MockMate for educational purposes and are not official SAT or College Board questions.{' '}
+        <Link href="/sat-disclaimer" className="hover:underline">SAT Disclaimer</Link>
       </p>
     </div>
   )

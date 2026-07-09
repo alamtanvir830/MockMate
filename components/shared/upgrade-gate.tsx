@@ -30,6 +30,7 @@ export function UpgradeGate({
 }: UpgradeGateProps) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [acknowledged, setAcknowledged] = useState(false)
 
   async function handleUnlock() {
     setLoading(true)
@@ -117,10 +118,21 @@ export function UpgradeGate({
           {error && (
             <p className="text-[12px] text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>
           )}
+          <label className="flex items-start gap-2.5 cursor-pointer rounded-lg bg-slate-50 border border-slate-200 px-3 py-2.5">
+            <input
+              type="checkbox"
+              checked={acknowledged}
+              onChange={e => setAcknowledged(e.target.checked)}
+              className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-indigo-600"
+            />
+            <span className="text-[11px] text-slate-600 leading-relaxed">
+              I understand that MockMate is an independent SAT-style practice platform and is not affiliated with, endorsed by, or sponsored by College Board.
+            </span>
+          </label>
           <button
             onClick={handleUnlock}
-            disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-bold text-[15px] py-3 rounded-xl transition-colors"
+            disabled={loading || !acknowledged}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-[15px] py-3 rounded-xl transition-colors"
           >
             {loading ? 'Redirecting to Stripe…' : 'Unlock Lifetime SAT Access for $9.99'}
           </button>

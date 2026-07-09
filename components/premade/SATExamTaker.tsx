@@ -200,7 +200,7 @@ function generateRWPrompt(skill: string, n: number, diff: string): string {
     'Form, Structure, and Sense': `Present sentences with a blank for a specific word form.\nCover: subject-verb agreement, pronoun-antecedent agreement, verb tense consistency, modifier placement, parallel structure, and possessive vs. plural nouns.\nMake distractors use plausible but grammatically incorrect forms.`,
   }
 
-  const specific = skMap[skill] ?? `Focus specifically on ${skill}. Use authentic SAT-style content and question phrasing.`
+  const specific = skMap[skill] ?? `Focus specifically on ${skill}. Use SAT-style practice content and question phrasing.`
 
   return `${base}${specific}\n\nFor every question include:\n- Correct answer with explanation of why it is right based on the passage\n- Explanation of why each wrong answer choice (A, B, C, or D) is incorrect\n\nFormat: number each question, include the passage, the question, four labeled choices, then the answer key.`
 }
@@ -499,8 +499,8 @@ function promptCardBullets(p: PracticePrompt): string[] {
   ]
 
   const hint = p.section === 'rw'
-    ? (skillHints[p.skill] ?? `Focus on ${p.skill} using authentic SAT-style passages`)
-    : (mathHints.find(([k]) => p.skill.toLowerCase().includes(k))?.[1] ?? `Focus on ${p.skill} in authentic SAT format`)
+    ? (skillHints[p.skill] ?? `Focus on ${p.skill} using SAT-style practice passages`)
+    : (mathHints.find(([k]) => p.skill.toLowerCase().includes(k))?.[1] ?? `Focus on ${p.skill} in SAT-style practice format`)
 
   if (p.section === 'rw') {
     return [intro,
