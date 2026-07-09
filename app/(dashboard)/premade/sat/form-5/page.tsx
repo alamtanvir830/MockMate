@@ -2,13 +2,13 @@ import { getEntitlements } from '@/lib/entitlements'
 import { UpgradeGate } from '@/components/shared/upgrade-gate'
 import SATExamTakerClient from './SATExamTakerClient'
 
-export default async function SATForm4Page() {
+export default async function SATForm5Page() {
   const { satUpgradeUnlocked } = await getEntitlements()
 
   if (!satUpgradeUnlocked) {
     return (
       <UpgradeGate
-        title="SAT Practice Test Form 4 — Locked"
+        title="SAT Practice Test Form 5 — Locked"
         description="Unlock SAT Forms 1, 2, 3, 4, and 5 plus the SAT Question Bank with unlimited lifetime access for a one-time payment."
         features={[
           { label: 'SAT Practice Test Forms 1, 2, 3, 4, and 5', subtext: 'Full-length adaptive SAT practice exams with score feedback' },
