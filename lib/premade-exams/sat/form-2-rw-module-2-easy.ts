@@ -262,7 +262,17 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
     difficulty: 'easy',
-    stimulus: 'A school nutritionist claims that students who eat breakfast perform better on morning assessments than students who skip it. The nutritionist has gathered data from 400 students over one semester:\n\n| Breakfast Habit | Average Morning Test Score |\n|---|---|\n| Always eats breakfast | 84 |\n| Sometimes eats breakfast | 78 |\n| Never eats breakfast | 71 |\n',
+    stimulus: 'A school nutritionist claims that students who eat breakfast perform better on morning assessments than students who skip it. The nutritionist gathered data from 400 students over one semester:',
+    graphData: {
+      type: 'table',
+      title: 'Breakfast Habits and Morning Test Scores',
+      headers: ['Breakfast Habit', 'Average Morning Test Score'],
+      rows: [
+        ['Always eats breakfast', '84'],
+        ['Sometimes eats breakfast', '78'],
+        ['Never eats breakfast', '71'],
+      ],
+    },
     question: 'Which choice best describes how the data supports the nutritionist\'s claim?',
     choices: [
       { label: 'A', text: 'The data is inconclusive because the sample size of 400 students is too small to draw conclusions' },

@@ -262,7 +262,18 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
     difficulty: 'hard',
-    stimulus: 'A team of public health researchers studied the relationship between neighborhood walkability scores and rates of Type 2 diabetes across 60 urban neighborhoods. Their results are summarized in the following table:\n\n| Walkability Quartile | Average Walkability Score | Diabetes Prevalence (%) | Median Household Income ($) |\n|---|---|---|---|\n| Q1 (Lowest) | 22 | 18.4 | 38,200 |\n| Q2 | 48 | 14.9 | 47,500 |\n| Q3 | 71 | 11.2 | 59,800 |\n| Q4 (Highest) | 89 | 7.6 | 74,100 |\n\nThe researchers concluded: "Higher neighborhood walkability is associated with lower rates of Type 2 diabetes."',
+    stimulus: 'A team of public health researchers studied the relationship between neighborhood walkability scores and rates of Type 2 diabetes across 60 urban neighborhoods. Their results are summarized below. The researchers concluded: "Higher neighborhood walkability is associated with lower rates of Type 2 diabetes."',
+    graphData: {
+      type: 'table',
+      title: 'Walkability, Diabetes Prevalence, and Income by Quartile',
+      headers: ['Walkability Quartile', 'Average Walkability Score', 'Diabetes Prevalence (%)', 'Median Household Income ($)'],
+      rows: [
+        ['Q1 (Lowest)', '22', '18.4', '38,200'],
+        ['Q2', '48', '14.9', '47,500'],
+        ['Q3', '71', '11.2', '59,800'],
+        ['Q4 (Highest)', '89', '7.6', '74,100'],
+      ],
+    },
     question: 'A peer reviewer argues that the data do not necessarily support a causal relationship between walkability and diabetes. Which observation from the data best supports the peer reviewer\'s concern?',
     choices: [
       { label: 'A', text: 'Diabetes prevalence is highest in the lowest-walkability quartile' },
@@ -308,7 +319,19 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
     difficulty: 'hard',
-    stimulus: 'An economist studying consumer spending patterns across five income brackets collected the following data on the percentage of income spent on housing, food, and discretionary purchases:\n\n| Income Bracket | % Spent on Housing | % Spent on Food | % Discretionary |\n|---|---|---|---|\n| Under $30K | 42 | 24 | 8 |\n| $30K–$60K | 33 | 19 | 16 |\n| $60K–$100K | 28 | 15 | 23 |\n| $100K–$200K | 22 | 12 | 31 |\n| Over $200K | 14 | 8 | 45 |\n\nThe economist claims: "As income rises, households spend a smaller share of their income on necessities and a larger share on discretionary purchases."',
+    stimulus: 'An economist studying consumer spending patterns across five income brackets collected data on the percentage of income spent on housing, food, and discretionary purchases. The economist claims: "As income rises, households spend a smaller share of their income on necessities and a larger share on discretionary purchases."',
+    graphData: {
+      type: 'table',
+      title: 'Consumer Spending Shares by Income Bracket',
+      headers: ['Income Bracket', '% Spent on Housing', '% Spent on Food', '% Discretionary'],
+      rows: [
+        ['Under $30K', '42', '24', '8'],
+        ['$30K–$60K', '33', '19', '16'],
+        ['$60K–$100K', '28', '15', '23'],
+        ['$100K–$200K', '22', '12', '31'],
+        ['Over $200K', '14', '8', '45'],
+      ],
+    },
     question: 'Which choice most accurately characterizes the support the data provides for the economist\'s claim?',
     choices: [
       { label: 'A', text: 'The data fully supports the claim; both housing and food percentages decline at every income level while discretionary spending rises' },

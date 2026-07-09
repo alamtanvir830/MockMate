@@ -262,7 +262,18 @@ export const f2RwModule1Questions: RWQuestion[] = [
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
     difficulty: 'medium',
-    stimulus: 'A researcher studying urban tree canopy coverage in four neighborhoods published the following data:\n\n| Neighborhood | Tree Canopy (%) | Mean Summer Temp (°C) | Respiratory Hospital Admissions (per 1,000) |\n|---|---|---|---|\n| Riverside | 42 | 26.1 | 8.2 |\n| Hillcrest | 28 | 28.4 | 11.6 |\n| Centerton | 15 | 31.2 | 14.9 |\n| Eastgate | 8 | 33.7 | 18.3 |\n\nThe researcher concluded: "Neighborhoods with greater tree coverage tend to have lower summer temperatures and fewer respiratory hospital admissions."',
+    stimulus: 'A researcher studying urban tree canopy coverage in four neighborhoods published the following data. The researcher concluded: "Neighborhoods with greater tree coverage tend to have lower summer temperatures and fewer respiratory hospital admissions."',
+    graphData: {
+      type: 'table',
+      title: 'Tree Canopy and Health Outcomes by Neighborhood',
+      headers: ['Neighborhood', 'Tree Canopy (%)', 'Mean Summer Temp (°C)', 'Respiratory Hospital Admissions (per 1,000)'],
+      rows: [
+        ['Riverside', '42', '26.1', '8.2'],
+        ['Hillcrest', '28', '28.4', '11.6'],
+        ['Centerton', '15', '31.2', '14.9'],
+        ['Eastgate', '8', '33.7', '18.3'],
+      ],
+    },
     question: 'Which choice best evaluates the researcher\'s conclusion in light of the data?',
     choices: [
       { label: 'A', text: 'The conclusion is unsupported; no relationship between tree coverage and temperature is visible in the data' },
