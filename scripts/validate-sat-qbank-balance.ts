@@ -95,8 +95,8 @@ console.log(`  Total             : ${grandTotal} questions`)
 
   INFO(`Difficulty: easy=${diffMap.easy} medium=${diffMap.medium} hard=${diffMap.hard}`)
 
-  if (rwTotal >= 255) PASS(`R&W total (${rwTotal}) ≥ 255 — 100 new questions confirmed`)
-  else FAIL(`R&W total (${rwTotal}) < 255 — expected 100 new questions added`)
+  if (rwTotal >= 305) PASS(`R&W total (${rwTotal}) ≥ 305 — 150 new questions confirmed`)
+  else FAIL(`R&W total (${rwTotal}) < 305 — expected 150 new questions total added`)
 }
 
 // ── Math Domain/Skill Breakdown ───────────────────────────────────────────
@@ -124,8 +124,8 @@ console.log(`  Total             : ${grandTotal} questions`)
   INFO(`Difficulty: easy=${diffMap.easy} medium=${diffMap.medium} hard=${diffMap.hard}`)
   INFO(`Grid-in questions: ${gridInCount}`)
 
-  if (mathTotal >= 259) PASS(`Math total (${mathTotal}) ≥ 259 — 100 new questions confirmed`)
-  else FAIL(`Math total (${mathTotal}) < 259 — expected 100 new questions added`)
+  if (mathTotal >= 309) PASS(`Math total (${mathTotal}) ≥ 309 — 150 new questions confirmed`)
+  else FAIL(`Math total (${mathTotal}) < 309 — expected 150 new questions total added`)
 
   if (gridInCount >= 10) PASS(`Grid-in count (${gridInCount}) ≥ 10`)
   else FAIL(`Grid-in count (${gridInCount}) < 10 — add more grid-in questions`)
@@ -134,8 +134,8 @@ console.log(`  Total             : ${grandTotal} questions`)
 // ── Grand Total ───────────────────────────────────────────────────────────
 {
   console.log(`\n── Grand Total ──`)
-  if (grandTotal >= 514) PASS(`Total (${grandTotal}) ≥ 514 — 200 new questions confirmed`)
-  else FAIL(`Total (${grandTotal}) < 514 — expected 200 new questions`)
+  if (grandTotal >= 614) PASS(`Total (${grandTotal}) ≥ 614 — 300 new questions confirmed`)
+  else FAIL(`Total (${grandTotal}) < 614 — expected 300 new questions total added`)
 }
 
 // ── Result ────────────────────────────────────────────────────────────────

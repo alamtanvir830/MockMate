@@ -2149,7 +2149,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-2">
                     <p className="text-[11px] font-semibold text-indigo-700 uppercase tracking-widest">What is the Personalized Practice Path?</p>
                     <p className="text-[12px] text-indigo-900 leading-relaxed">
-                      Your Personalized Practice Path is made of targeted question sets picked from MockMate&apos;s 500+ SAT-style Question Bank. These sets are chosen based on the skills you missed on this exam, so you can practice the areas that need the most work.
+                      Your Personalized Practice Path is made of targeted question sets picked from MockMate&apos;s 600+ SAT-style Question Bank. These sets are chosen based on the skills you missed on this exam, so you can practice the areas that need the most work.
                     </p>
                     <p className="text-[12px] text-indigo-900 leading-relaxed">
                       MockMate creates 4 targeted sets: 2 focused on Reading &amp; Writing weaknesses and 2 focused on Math weaknesses when both sections need review.

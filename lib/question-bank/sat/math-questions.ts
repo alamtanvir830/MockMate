@@ -1,6 +1,8 @@
 import type { QBQuestion } from '@/lib/question-bank/types'
 import { mathQuestionsB1 } from './math-questions-b1'
 import { mathQuestionsB2 } from './math-questions-b2'
+import { mathQuestionsB3a } from './math-questions-b3a'
+import { mathQuestionsB3b } from './math-questions-b3b'
 
 export const mathQuestions: QBQuestion[] = [
   // ─── Algebra: Linear equations in one variable ───────────────────────────
@@ -4345,4 +4347,6 @@ export const mathQuestions: QBQuestion[] = [
   },
   ...mathQuestionsB1,
   ...mathQuestionsB2,
+  ...mathQuestionsB3a,
+  ...mathQuestionsB3b,
 ]
