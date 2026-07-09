@@ -11,15 +11,15 @@ export default function Form1ExpiredScreen() {
         </div>
         <h1 className="text-[18px] font-bold text-slate-900 mb-2">Free Access Period Ended</h1>
         <p className="text-[13px] text-slate-500 leading-relaxed mb-6">
-          Your 10-day free window for SAT Form 1 has expired. Unlock Form 2 and Form 3 to keep
-          practicing, or head to the Question Bank for targeted drill sets.
+          Your 10-day free window for SAT Form 1 has expired. Unlock lifetime SAT access to keep
+          practicing with Forms 1–4, or head to the Question Bank for targeted drill sets.
         </p>
         <div className="flex flex-col gap-3">
           <Link
             href="/billing"
             className="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
           >
-            Unlock Form 2 &amp; Form 3
+            Unlock Lifetime SAT Access
           </Link>
           <Link
             href="/question-bank"

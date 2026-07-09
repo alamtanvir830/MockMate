@@ -8,12 +8,13 @@ export default async function SATForm2Page() {
   if (!satUpgradeUnlocked) {
     return (
       <UpgradeGate
-        title="SAT Practice Test Form 2 — Locked"
-        description="Unlock Form 2, Form 3, and 300+ Question Bank practice questions for a one-time payment."
+        title="Unlock Lifetime SAT Access"
+        description="Unlock SAT Forms 1, 2, 3, and 4 plus the SAT Question Bank with unlimited lifetime access for a one-time payment."
         features={[
-          { label: 'SAT Practice Test Form 2', subtext: 'Score feedback + personalized weak-area question sets from Q-Bank' },
-          { label: 'SAT Practice Test Form 3', subtext: 'Score feedback + personalized weak-area question sets from Q-Bank' },
-          { label: '300+ Question Bank questions', subtext: 'Extra targeted practice built from your weak areas' },
+          { label: 'SAT Practice Test Forms 1, 2, 3, and 4', subtext: 'Full-length adaptive SAT practice exams with score feedback' },
+          { label: 'Unlimited lifetime usage', subtext: 'Retake available SAT forms anytime after upgrading' },
+          { label: 'SAT Question Bank access', subtext: '300+ targeted practice questions built from your weak areas' },
+          { label: 'Personalized score reports', subtext: 'Review strengths, weaknesses, and recommended practice' },
         ]}
       />
     )

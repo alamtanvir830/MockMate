@@ -453,12 +453,12 @@ export default function SATQuestionBankPage() {
       {/* Upgrade gate (replaces the whole QBank if limit reached) */}
       {!entitlementLoading && !satUpgradeUnlocked && browseSets >= FREE_QB_LIMIT ? (
         <UpgradeGate
-          title="Unlock 80+ SAT Question Bank Questions"
-          description={`You've used your ${FREE_QB_LIMIT} free practice sets. Upgrade to access all SAT question bank questions.`}
+          title="Unlock Lifetime SAT Access"
+          description={`You've used your ${FREE_QB_LIMIT} free practice sets. Unlock unlimited lifetime access to all SAT content.`}
           features={[
-            { label: '80+ SAT Question Bank questions', subtext: 'Targeted skill practice for every SAT domain' },
-            { label: 'SAT Practice Test Form 2', subtext: 'Score feedback + personalized weak-area question sets' },
-            { label: 'SAT Practice Test Form 3', subtext: 'Score feedback + personalized weak-area question sets' },
+            { label: 'SAT Practice Test Forms 1, 2, 3, and 4', subtext: 'Full-length adaptive SAT practice exams with score feedback' },
+            { label: 'Unlimited lifetime usage', subtext: 'Retake available SAT forms anytime after upgrading' },
+            { label: 'SAT Question Bank access', subtext: '300+ targeted practice questions built from your weak areas' },
           ]}
           compact
         />
@@ -513,7 +513,8 @@ export default function SATQuestionBankPage() {
                           const formNum =
                             attempt.examId === 'sat-form-1' ? '1' :
                             attempt.examId === 'sat-form-2' ? '2' :
-                            attempt.examId === 'sat-form-3' ? '3' : ''
+                            attempt.examId === 'sat-form-3' ? '3' :
+                            attempt.examId === 'sat-form-4' ? '4' : ''
                           const label = formNum
                             ? `SAT Form ${formNum} Attempt ${attemptNum}`
                             : `SAT Attempt ${attemptNum}`

@@ -21,31 +21,25 @@ export default async function BillingPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
           </div>
-          <h1 className="text-xl font-bold text-slate-900">MockMate SAT Upgrade — Active</h1>
+          <h1 className="text-xl font-bold text-slate-900">Lifetime SAT Access — Active</h1>
           {unlockedDate && (
             <p className="text-[12px] text-slate-400 mt-1">Unlocked on {unlockedDate}</p>
           )}
           <p className="mt-3 text-[13px] text-slate-500 max-w-xs mx-auto leading-relaxed">
-            You have access to SAT Form 2, SAT Form 3, and 300+ Question Bank practice questions.
+            You have unlimited lifetime access to SAT Forms 1, 2, 3, and 4 plus the SAT Question Bank.
           </p>
           <div className="mt-6 space-y-2.5">
             <Link
-              href="/premade/sat/form-2"
+              href="/premade/sat"
               className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
             >
-              Go to SAT Form 2
-            </Link>
-            <Link
-              href="/premade/sat/form-3"
-              className="block w-full border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
-            >
-              Go to SAT Form 3
+              View SAT Practice Forms
             </Link>
             <Link
               href="/question-bank/sat"
               className="block w-full border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
             >
-              Question Bank
+              SAT Question Bank
             </Link>
           </div>
           {stripeCustomerId && (

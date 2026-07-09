@@ -16,14 +16,15 @@ interface UpgradeGateProps {
 }
 
 const DEFAULT_FEATURES: FeatureItem[] = [
-  { label: 'SAT Practice Test Form 2', subtext: 'Score feedback + personalized weak-area question sets from Q-Bank' },
-  { label: 'SAT Practice Test Form 3', subtext: 'Score feedback + personalized weak-area question sets from Q-Bank' },
-  { label: '300+ Question Bank questions', subtext: 'Extra targeted practice built from your weak areas' },
+  { label: 'SAT Practice Test Forms 1, 2, 3, and 4', subtext: 'Full-length adaptive SAT practice exams with score feedback' },
+  { label: 'Unlimited lifetime usage', subtext: 'Retake available SAT forms anytime after upgrading' },
+  { label: 'SAT Question Bank access', subtext: '300+ targeted practice questions built from your weak areas' },
+  { label: 'Personalized score reports', subtext: 'Review strengths, weaknesses, and recommended practice' },
 ]
 
 export function UpgradeGate({
-  title = 'Unlock the MockMate SAT Upgrade',
-  description = 'Unlock Form 2, Form 3, and 300+ Question Bank practice questions for a one-time payment.',
+  title = 'Unlock Lifetime SAT Access',
+  description = 'Unlock SAT Forms 1, 2, 3, and 4 plus the SAT Question Bank with unlimited lifetime access for a one-time payment.',
   features = DEFAULT_FEATURES,
   compact = false,
 }: UpgradeGateProps) {
@@ -64,7 +65,7 @@ export function UpgradeGate({
             disabled={loading}
             className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold text-[13px] px-4 py-2 rounded-lg transition-colors whitespace-nowrap"
           >
-            {loading ? 'Redirecting…' : 'Unlock for $9.99'}
+            {loading ? 'Redirecting…' : 'Unlock SAT Access for $9.99'}
           </button>
           <p className="text-[10px] text-indigo-400">Secure checkout powered by Stripe.</p>
         </div>
@@ -121,7 +122,7 @@ export function UpgradeGate({
             disabled={loading}
             className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-bold text-[15px] py-3 rounded-xl transition-colors"
           >
-            {loading ? 'Redirecting to Stripe…' : 'Unlock for $9.99'}
+            {loading ? 'Redirecting to Stripe…' : 'Unlock Lifetime SAT Access for $9.99'}
           </button>
           <p className="text-center text-[11px] text-slate-400 flex items-center justify-center gap-1.5">
             <svg fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth={1.5} className="h-3.5 w-3.5">

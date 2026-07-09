@@ -64,26 +64,20 @@ export default function PaymentSuccessPage() {
             </div>
             <h1 className="text-xl font-bold text-slate-900 mb-1">Payment successful!</h1>
             <p className="text-[13px] text-slate-500 mb-6 leading-relaxed">
-              Your MockMate SAT Upgrade is now unlocked. You have access to Form 2, Form 3, and 300+ Question Bank practice questions.
+              Your lifetime SAT access is now unlocked. You have unlimited access to SAT Forms 1, 2, 3, and 4 plus the SAT Question Bank.
             </p>
             <div className="space-y-2.5">
               <Link
-                href="/premade/sat/form-2"
+                href="/premade/sat"
                 className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
               >
-                Go to SAT Form 2
-              </Link>
-              <Link
-                href="/premade/sat/form-3"
-                className="block w-full bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
-              >
-                Go to SAT Form 3
+                View SAT Practice Forms
               </Link>
               <Link
                 href="/question-bank/sat"
                 className="block w-full bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
               >
-                Go to Question Bank
+                SAT Question Bank
               </Link>
             </div>
           </div>

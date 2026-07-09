@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { isMockMateAdmin } from '@/lib/auth/admin'
 import { getOrCreateForm1Access, isForm1Expired, formatCountdown } from '@/lib/premade-exams/sat/form1-access'
+import { getEntitlements } from '@/lib/entitlements'
 import SATExamTakerClient from './SATExamTakerClient'
 import Form1ExpiredScreen from '@/components/premade/Form1ExpiredScreen'
 
@@ -12,7 +13,14 @@ export default async function SATForm1Page() {
   const isAdmin = isMockMateAdmin(user)
 
   if (user && !isAdmin) {
-    // Completed check takes priority — redirect to their results
+    const { satUpgradeUnlocked } = await getEntitlements()
+
+    if (satUpgradeUnlocked) {
+      // Upgraded users: unlimited retakes, no countdown, no expiry restriction
+      return <SATExamTakerClient isAdmin={false} />
+    }
+
+    // Free user: completed check redirects to results (one-attempt rule)
     const { data: completed } = await supabase
       .from('standardized_exam_attempts')
       .select('local_attempt_id')

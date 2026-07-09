@@ -174,7 +174,7 @@ export default async function SATPremadePage() {
               href="/billing"
               className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700 transition-colors"
             >
-              Unlock Form 2 &amp; Form 3
+              Unlock Lifetime SAT Access
             </Link>
           </div>
         ) : (
