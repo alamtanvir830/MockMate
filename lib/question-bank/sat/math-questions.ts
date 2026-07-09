@@ -1,4 +1,6 @@
 import type { QBQuestion } from '@/lib/question-bank/types'
+import { mathQuestionsB1 } from './math-questions-b1'
+import { mathQuestionsB2 } from './math-questions-b2'
 
 export const mathQuestions: QBQuestion[] = [
   // ─── Algebra: Linear equations in one variable ───────────────────────────
@@ -4341,4 +4343,6 @@ export const mathQuestions: QBQuestion[] = [
     teachingPoint: 'Distance formula: d = sqrt((x2-x1)^2 + (y2-y1)^2). Be careful with negative coordinates: 2 - (-2) = 4, not 0.',
     relatedSkills: ['Linear equations in two variables'],
   },
+  ...mathQuestionsB1,
+  ...mathQuestionsB2,
 ]

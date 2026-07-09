@@ -1,4 +1,6 @@
 import type { QBQuestion } from '@/lib/question-bank/types'
+import { rwQuestionsB1 } from './rw-questions-b1'
+import { rwQuestionsB2 } from './rw-questions-b2'
 
 export const rwQuestions: QBQuestion[] = [
   // ─── Craft and Structure: Words in Context ───────────────────────────────
@@ -4525,4 +4527,6 @@ export const rwQuestions: QBQuestion[] = [
     teachingPoint: 'Word precision: the definition of food deserts is about ACCESS (being able to get there), not about SCARCITY (limited supply). "Inaccessible" most precisely names the access problem.',
     relatedSkills: ['Words in Context'],
   },
+  ...rwQuestionsB1,
+  ...rwQuestionsB2,
 ]
