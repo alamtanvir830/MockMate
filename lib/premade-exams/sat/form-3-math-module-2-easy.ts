@@ -1,7 +1,6 @@
 import type { MathQuestion } from './types'
 
 export const f3MathModule2EasyQuestions: MathQuestion[] = [
-  // ── Algebra (8) ───────────────────────────────────────────────────────────
   {
     id: 'sat-f3-math-m2e-q01',
     section: 'math',
@@ -25,6 +24,7 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
       D: 'x = 60 gives 120 + 60 + 60 = 240°, not 180°.',
     },
   },
+
   {
     id: 'sat-f3-math-m2e-q02',
     section: 'math',
@@ -48,146 +48,7 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
       D: '18 would require x = 6, but solving gives x = 5.',
     },
   },
-  {
-    id: 'sat-f3-math-m2e-q03',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Linear functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'The linear function f satisfies f(2) = 7 and f(5) = 16. What is the value of f(0)?',
-    choices: [
-      { label: 'A', text: '0' },
-      { label: 'B', text: '1' },
-      { label: 'C', text: '2' },
-      { label: 'D', text: '4' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Slope = (16 − 7)/(5 − 2) = 9/3 = 3. Using f(2) = 7: 3(2) + b = 7 → b = 1. So f(0) = 1.',
-    wrongAnswerExplanations: {
-      A: 'f(0) = 0 would require b = 0, but 3(2) + 0 = 6 ≠ 7.',
-      C: 'f(0) = 2 would require b = 2, but 3(2) + 2 = 8 ≠ 7.',
-      D: 'f(0) = 4 would require b = 4, but 3(2) + 4 = 10 ≠ 7.',
-    },
-  },
-  {
-    id: 'sat-f3-math-m2e-q04',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Linear functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'A driver decreases speed uniformly from 60 mph to 30 mph over 15 minutes. Which equation models the speed v (in mph) after t minutes?',
-    choices: [
-      { label: 'A', text: 'v = 60 − t' },
-      { label: 'B', text: 'v = 60 − 2t' },
-      { label: 'C', text: 'v = 30 + 2t' },
-      { label: 'D', text: 'v = 30t − 60' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The rate of decrease = (60 − 30)/15 = 2 mph per minute, starting from 60. So v = 60 − 2t. Check: at t = 15, v = 60 − 30 = 30.',
-    wrongAnswerExplanations: {
-      A: 'v = 60 − t decreases only 1 mph per minute, reaching 45 at t = 15, not 30.',
-      C: 'v = 30 + 2t increases speed and starts at 30, not 60.',
-      D: 'v = 30t − 60 is not decreasing and gives nonsensical speeds.',
-    },
-  },
-  {
-    id: 'sat-f3-math-m2e-q05',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Systems of two linear equations in two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'Amara has some $5 bills and some $10 bills. She has 10 bills in total and they are worth $80. How many $5 bills does she have?',
-    choices: [
-      { label: 'A', text: '3' },
-      { label: 'B', text: '4' },
-      { label: 'C', text: '5' },
-      { label: 'D', text: '6' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Let f = number of $5 bills and t = number of $10 bills. f + t = 10 and 5f + 10t = 80. Substitute t = 10 − f: 5f + 10(10 − f) = 80 → 100 − 5f = 80 → f = 4.',
-    wrongAnswerExplanations: {
-      A: 'f = 3 gives value 5(3) + 10(7) = 85 ≠ 80.',
-      C: 'f = 5 gives 5(5) + 10(5) = 75 ≠ 80.',
-      D: 'f = 6 gives 5(6) + 10(4) = 70 ≠ 80.',
-    },
-  },
-  {
-    id: 'sat-f3-math-m2e-q06',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Linear inequalities in one or two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'If −1 < 3 − 2x < 7, which of the following describes all values of x?',
-    choices: [
-      { label: 'A', text: '−2 < x < 2' },
-      { label: 'B', text: '−2 ≤ x ≤ 2' },
-      { label: 'C', text: 'x < 2' },
-      { label: 'D', text: 'x > −2' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'From 3 − 2x > −1: −2x > −4 → x < 2. From 3 − 2x < 7: −2x < 4 → x > −2. Combined: −2 < x < 2.',
-    wrongAnswerExplanations: {
-      B: 'The inequalities are strict (<), so the endpoints −2 and 2 are excluded.',
-      C: 'x < 2 captures only one bound; x must also exceed −2.',
-      D: 'x > −2 captures only one bound; x must also be less than 2.',
-    },
-  },
-  {
-    id: 'sat-f3-math-m2e-q07',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Linear equations in two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'Line m has a slope of 3/4 and passes through the point (8, 5). What is the y-intercept of line m?',
-    choices: [
-      { label: 'A', text: '−1' },
-      { label: 'B', text: '0' },
-      { label: 'C', text: '1' },
-      { label: 'D', text: '3' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Using point-slope form: y − 5 = (3/4)(x − 8) → y = (3/4)x − 6 + 5 → y = (3/4)x − 1. The y-intercept is −1.',
-    wrongAnswerExplanations: {
-      B: 'y-intercept 0 would give y = (3/4)x; at x = 8, y = 6 ≠ 5.',
-      C: 'y-intercept 1 would give y = (3/4)x + 1; at x = 8, y = 7 ≠ 5.',
-      D: 'y-intercept 3 would give y = (3/4)x + 3; at x = 8, y = 9 ≠ 5.',
-    },
-  },
-  {
-    id: 'sat-f3-math-m2e-q08',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Systems of two linear equations in two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'A store sells small and large bags of trail mix. Small bags cost $3 and large bags cost $7. A customer buys 8 bags and spends $36. How many large bags did the customer buy?',
-    choices: [
-      { label: 'A', text: '2' },
-      { label: 'B', text: '3' },
-      { label: 'C', text: '4' },
-      { label: 'D', text: '5' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Let s = small bags, L = large bags. s + L = 8 and 3s + 7L = 36. From the first: s = 8 − L. Substituting: 3(8 − L) + 7L = 36 → 24 − 3L + 7L = 36 → 4L = 12 → L = 3.',
-    wrongAnswerExplanations: {
-      A: '3(6) + 7(2) = 18 + 14 = 32 ≠ 36.',
-      C: '3(4) + 7(4) = 12 + 28 = 40 ≠ 36.',
-      D: '3(3) + 7(5) = 9 + 35 = 44 ≠ 36.',
-    },
-  },
 
-  // ── Advanced Math (5) ─────────────────────────────────────────────────────
   {
     id: 'sat-f3-math-m2e-q09',
     section: 'math',
@@ -211,6 +72,55 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
       D: '3x² − 2x − 9 has the wrong sign on the linear term; 2x(x + 1) contributes +2x.',
     },
   },
+
+  {
+    id: 'sat-f3-math-m2e-q14',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Ratios, rates, proportional relationships, and units',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'A pool contains 1,800 gallons of water. It drains at 40 gallons per minute and is simultaneously filled at 25 gallons per minute. How many minutes will it take to empty the pool?',
+    choices: [
+      { label: 'A', text: '45' },
+      { label: 'B', text: '72' },
+      { label: 'C', text: '90' },
+      { label: 'D', text: '120' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'The net drain rate = 40 − 25 = 15 gallons per minute. Time = 1,800 / 15 = 120 minutes.',
+    wrongAnswerExplanations: {
+      A: '45 = 1800/40 uses only the drain rate, ignoring the fill rate.',
+      B: '72 = 1800/25 uses only the fill rate.',
+      C: '90 does not correspond to the net rate of 15 gal/min.',
+    },
+  },
+
+  {
+    id: 'sat-f3-math-m2e-q03',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Linear functions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'The linear function f satisfies f(2) = 7 and f(5) = 16. What is the value of f(0)?',
+    choices: [
+      { label: 'A', text: '0' },
+      { label: 'B', text: '1' },
+      { label: 'C', text: '2' },
+      { label: 'D', text: '4' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Slope = (16 − 7)/(5 − 2) = 9/3 = 3. Using f(2) = 7: 3(2) + b = 7 → b = 1. So f(0) = 1.',
+    wrongAnswerExplanations: {
+      A: 'f(0) = 0 would require b = 0, but 3(2) + 0 = 6 ≠ 7.',
+      C: 'f(0) = 2 would require b = 2, but 3(2) + 2 = 8 ≠ 7.',
+      D: 'f(0) = 4 would require b = 4, but 3(2) + 4 = 10 ≠ 7.',
+    },
+  },
+
   {
     id: 'sat-f3-math-m2e-q10',
     section: 'math',
@@ -234,6 +144,55 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
       B: '(x−5)(x−1) = x² − 6x + 5 ≠ x² − 5x + 6.',
     },
   },
+
+  {
+    id: 'sat-f3-math-m2e-q15',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Percentages',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'A store prices items at 60% above wholesale cost. During a clearance sale, the retail price is reduced by 25%. The clearance sale price is what percent of the original wholesale cost?',
+    choices: [
+      { label: 'A', text: '80%' },
+      { label: 'B', text: '100%' },
+      { label: 'C', text: '120%' },
+      { label: 'D', text: '135%' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Let wholesale = 100. Retail = 100 × 1.60 = 160. Clearance = 160 × 0.75 = 120. So the clearance price is 120% of the wholesale cost.',
+    wrongAnswerExplanations: {
+      A: '80% subtracts the percentages (60% − 25% − ...) instead of applying them multiplicatively.',
+      B: '100% assumes the two changes cancel, but the discount applies to the marked-up 160.',
+      D: '135% ignores the 25% discount being applied to 160.',
+    },
+  },
+
+  {
+    id: 'sat-f3-math-m2e-q04',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Linear functions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'A driver decreases speed uniformly from 60 mph to 30 mph over 15 minutes. Which equation models the speed v (in mph) after t minutes?',
+    choices: [
+      { label: 'A', text: 'v = 60 − t' },
+      { label: 'B', text: 'v = 60 − 2t' },
+      { label: 'C', text: 'v = 30 + 2t' },
+      { label: 'D', text: 'v = 30t − 60' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The rate of decrease = (60 − 30)/15 = 2 mph per minute, starting from 60. So v = 60 − 2t. Check: at t = 15, v = 60 − 30 = 30.',
+    wrongAnswerExplanations: {
+      A: 'v = 60 − t decreases only 1 mph per minute, reaching 45 at t = 15, not 30.',
+      C: 'v = 30 + 2t increases speed and starts at 30, not 60.',
+      D: 'v = 30t − 60 is not decreasing and gives nonsensical speeds.',
+    },
+  },
+
   {
     id: 'sat-f3-math-m2e-q11',
     section: 'math',
@@ -257,6 +216,55 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
       D: '(x+4)(x+3) = x² + 7x + 12, not x² − x − 12.',
     },
   },
+
+  {
+    id: 'sat-f3-math-m2e-q16',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'One-variable data: distributions and measures of center and spread',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'The ages (in years) of 6 employees at a company are: 24, 31, 37, 42, 47, and 55. What is the median age?',
+    choices: [
+      { label: 'A', text: '37' },
+      { label: 'B', text: '39' },
+      { label: 'C', text: '39.5' },
+      { label: 'D', text: '42' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'With an even number of values, the median is the average of the two middle values. The data in order: 24, 31, 37, 42, 47, 55. The two middle values are 37 and 42. Median = (37 + 42)/2 = 39.5.',
+    wrongAnswerExplanations: {
+      A: '37 is the third value but not the median when there are 6 values.',
+      B: '39 is not the arithmetic mean of 37 and 42.',
+      D: '42 is the fourth value but is not the median alone for a 6-value dataset.',
+    },
+  },
+
+  {
+    id: 'sat-f3-math-m2e-q05',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Systems of two linear equations in two variables',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'Amara has some $5 bills and some $10 bills. She has 10 bills in total and they are worth $80. How many $5 bills does she have?',
+    choices: [
+      { label: 'A', text: '3' },
+      { label: 'B', text: '4' },
+      { label: 'C', text: '5' },
+      { label: 'D', text: '6' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Let f = number of $5 bills and t = number of $10 bills. f + t = 10 and 5f + 10t = 80. Substitute t = 10 − f: 5f + 10(10 − f) = 80 → 100 − 5f = 80 → f = 4.',
+    wrongAnswerExplanations: {
+      A: 'f = 3 gives value 5(3) + 10(7) = 85 ≠ 80.',
+      C: 'f = 5 gives 5(5) + 10(5) = 75 ≠ 80.',
+      D: 'f = 6 gives 5(6) + 10(4) = 70 ≠ 80.',
+    },
+  },
+
   {
     id: 'sat-f3-math-m2e-q12',
     section: 'math',
@@ -280,6 +288,55 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
       D: 'x² − 16 would be (x−4)(x+4), not (x+4)² − 16.',
     },
   },
+
+  {
+    id: 'sat-f3-math-m2e-q17',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Probability and conditional probability',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'In a class of 30 students, 18 passed the quiz and 12 failed. Of those who passed, 10 completed all homework; of those who failed, 2 completed all homework. What is the probability that a randomly selected student who completed all homework passed the quiz?',
+    choices: [
+      { label: 'A', text: '1/3' },
+      { label: 'B', text: '5/9' },
+      { label: 'C', text: '5/6' },
+      { label: 'D', text: '9/10' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Total students who completed all homework = 10 + 2 = 12. Of these, 10 passed. P(passed | completed HW) = 10/12 = 5/6.',
+    wrongAnswerExplanations: {
+      A: '1/3 does not match 10/12.',
+      B: '5/9 would use a homework total of 18, not 12.',
+      D: '9/10 inverts the ratio; the correct fraction is 10/12 = 5/6.',
+    },
+  },
+
+  {
+    id: 'sat-f3-math-m2e-q06',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Linear inequalities in one or two variables',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'If −1 < 3 − 2x < 7, which of the following describes all values of x?',
+    choices: [
+      { label: 'A', text: '−2 < x < 2' },
+      { label: 'B', text: '−2 ≤ x ≤ 2' },
+      { label: 'C', text: 'x < 2' },
+      { label: 'D', text: 'x > −2' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'From 3 − 2x > −1: −2x > −4 → x < 2. From 3 − 2x < 7: −2x < 4 → x > −2. Combined: −2 < x < 2.',
+    wrongAnswerExplanations: {
+      B: 'The inequalities are strict (<), so the endpoints −2 and 2 are excluded.',
+      C: 'x < 2 captures only one bound; x must also exceed −2.',
+      D: 'x > −2 captures only one bound; x must also be less than 2.',
+    },
+  },
+
   {
     id: 'sat-f3-math-m2e-q13',
     section: 'math',
@@ -304,99 +361,6 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     },
   },
 
-  // ── Problem-Solving and Data Analysis (5) ─────────────────────────────────
-  {
-    id: 'sat-f3-math-m2e-q14',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Ratios, rates, proportional relationships, and units',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'A pool contains 1,800 gallons of water. It drains at 40 gallons per minute and is simultaneously filled at 25 gallons per minute. How many minutes will it take to empty the pool?',
-    choices: [
-      { label: 'A', text: '45' },
-      { label: 'B', text: '72' },
-      { label: 'C', text: '90' },
-      { label: 'D', text: '120' },
-    ],
-    correctAnswer: 'D',
-    explanation: 'The net drain rate = 40 − 25 = 15 gallons per minute. Time = 1,800 / 15 = 120 minutes.',
-    wrongAnswerExplanations: {
-      A: '45 = 1800/40 uses only the drain rate, ignoring the fill rate.',
-      B: '72 = 1800/25 uses only the fill rate.',
-      C: '90 does not correspond to the net rate of 15 gal/min.',
-    },
-  },
-  {
-    id: 'sat-f3-math-m2e-q15',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Percentages',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'A store prices items at 60% above wholesale cost. During a clearance sale, the retail price is reduced by 25%. The clearance sale price is what percent of the original wholesale cost?',
-    choices: [
-      { label: 'A', text: '80%' },
-      { label: 'B', text: '100%' },
-      { label: 'C', text: '120%' },
-      { label: 'D', text: '135%' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'Let wholesale = 100. Retail = 100 × 1.60 = 160. Clearance = 160 × 0.75 = 120. So the clearance price is 120% of the wholesale cost.',
-    wrongAnswerExplanations: {
-      A: '80% subtracts the percentages (60% − 25% − ...) instead of applying them multiplicatively.',
-      B: '100% assumes the two changes cancel, but the discount applies to the marked-up 160.',
-      D: '135% ignores the 25% discount being applied to 160.',
-    },
-  },
-  {
-    id: 'sat-f3-math-m2e-q16',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'One-variable data: distributions and measures of center and spread',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'The ages (in years) of 6 employees at a company are: 24, 31, 37, 42, 47, and 55. What is the median age?',
-    choices: [
-      { label: 'A', text: '37' },
-      { label: 'B', text: '39' },
-      { label: 'C', text: '39.5' },
-      { label: 'D', text: '42' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'With an even number of values, the median is the average of the two middle values. The data in order: 24, 31, 37, 42, 47, 55. The two middle values are 37 and 42. Median = (37 + 42)/2 = 39.5.',
-    wrongAnswerExplanations: {
-      A: '37 is the third value but not the median when there are 6 values.',
-      B: '39 is not the arithmetic mean of 37 and 42.',
-      D: '42 is the fourth value but is not the median alone for a 6-value dataset.',
-    },
-  },
-  {
-    id: 'sat-f3-math-m2e-q17',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Probability and conditional probability',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'In a class of 30 students, 18 passed the quiz and 12 failed. Of those who passed, 10 completed all homework; of those who failed, 2 completed all homework. What is the probability that a randomly selected student who completed all homework passed the quiz?',
-    choices: [
-      { label: 'A', text: '1/3' },
-      { label: 'B', text: '5/9' },
-      { label: 'C', text: '5/6' },
-      { label: 'D', text: '9/10' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'Total students who completed all homework = 10 + 2 = 12. Of these, 10 passed. P(passed | completed HW) = 10/12 = 5/6.',
-    wrongAnswerExplanations: {
-      A: '1/3 does not match 10/12.',
-      B: '5/9 would use a homework total of 18, not 12.',
-      D: '9/10 inverts the ratio; the correct fraction is 10/12 = 5/6.',
-    },
-  },
   {
     id: 'sat-f3-math-m2e-q18',
     section: 'math',
@@ -421,7 +385,30 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     },
   },
 
-  // ── Geometry and Trigonometry (4) ─────────────────────────────────────────
+  {
+    id: 'sat-f3-math-m2e-q07',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Linear equations in two variables',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'Line m has a slope of 3/4 and passes through the point (8, 5). What is the y-intercept of line m?',
+    choices: [
+      { label: 'A', text: '−1' },
+      { label: 'B', text: '0' },
+      { label: 'C', text: '1' },
+      { label: 'D', text: '3' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Using point-slope form: y − 5 = (3/4)(x − 8) → y = (3/4)x − 6 + 5 → y = (3/4)x − 1. The y-intercept is −1.',
+    wrongAnswerExplanations: {
+      B: 'y-intercept 0 would give y = (3/4)x; at x = 8, y = 6 ≠ 5.',
+      C: 'y-intercept 1 would give y = (3/4)x + 1; at x = 8, y = 7 ≠ 5.',
+      D: 'y-intercept 3 would give y = (3/4)x + 3; at x = 8, y = 9 ≠ 5.',
+    },
+  },
+
   {
     id: 'sat-f3-math-m2e-q19',
     section: 'math',
@@ -445,6 +432,31 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
       D: '5/13 = sin(R), not cos(R).',
     },
   },
+
+  {
+    id: 'sat-f3-math-m2e-q08',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Systems of two linear equations in two variables',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'A store sells small and large bags of trail mix. Small bags cost $3 and large bags cost $7. A customer buys 8 bags and spends $36. How many large bags did the customer buy?',
+    choices: [
+      { label: 'A', text: '2' },
+      { label: 'B', text: '3' },
+      { label: 'C', text: '4' },
+      { label: 'D', text: '5' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Let s = small bags, L = large bags. s + L = 8 and 3s + 7L = 36. From the first: s = 8 − L. Substituting: 3(8 − L) + 7L = 36 → 24 − 3L + 7L = 36 → 4L = 12 → L = 3.',
+    wrongAnswerExplanations: {
+      A: '3(6) + 7(2) = 18 + 14 = 32 ≠ 36.',
+      C: '3(4) + 7(4) = 12 + 28 = 40 ≠ 36.',
+      D: '3(3) + 7(5) = 9 + 35 = 44 ≠ 36.',
+    },
+  },
+
   {
     id: 'sat-f3-math-m2e-q20',
     section: 'math',
@@ -469,7 +481,6 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     },
   },
 
-  // ── Grid-in questions (Q21–Q22) ───────────────────────────────────────────
   {
     id: 'sat-f3-math-m2e-q21',
     section: 'math',
@@ -483,6 +494,7 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     acceptableAnswers: ['24'],
     explanation: 'The other leg = √(25² − 7²) = √(625 − 49) = √576 = 24.',
   },
+
   {
     id: 'sat-f3-math-m2e-q22',
     section: 'math',

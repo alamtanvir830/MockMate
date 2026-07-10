@@ -4,9 +4,6 @@ import type { MathQuestion } from './types'
 // 17 multiple choice (q01–q17) + 5 grid-in (q18–q22)
 
 export const mathModule2EasyQuestions: MathQuestion[] = [
-
-  // ── Algebra (6 MC) ───────────────────────────────────────────────────────────
-
   {
     id: 'm2e-01',
     section: 'math',
@@ -56,128 +53,6 @@ export const mathModule2EasyQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'm2e-03',
-    section: 'math',
-    moduleId: 'math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Systems of two linear equations in two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'In the system of equations below, what is the value of 2x + y?\n3x + y = 19\nx = y + 1',
-    choices: [
-      { label: 'A', text: '14' },
-      { label: 'B', text: '9' },
-      { label: 'C', text: '11' },
-      { label: 'D', text: '19' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Substitute x = y + 1 into the first equation: 3(y + 1) + y = 19 → 4y + 3 = 19 → y = 4. Then x = 5. So 2x + y = 10 + 4 = 14.',
-    wrongAnswerExplanations: {
-      B: '9 = x + y = 5 + 4 — the question asks for 2x + y, not x + y.',
-      C: '11 = 2(4) + 3 — uses y = 4 but substitutes the wrong expression for x.',
-      D: '19 is the right-hand side of the first equation, not the value of 2x + y.',
-    },
-  },
-
-  {
-    id: 'm2e-04',
-    section: 'math',
-    moduleId: 'math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Linear inequalities in one or two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'Which of the following is equivalent to −1 ≤ 2x + 3 ≤ 9?',
-    choices: [
-      { label: 'A', text: '−2 ≤ x ≤ 3' },
-      { label: 'B', text: '−4 ≤ x ≤ 6' },
-      { label: 'C', text: '0 ≤ x ≤ 6' },
-      { label: 'D', text: '−1 ≤ x ≤ 3' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Subtract 3 from all three parts: −1 − 3 ≤ 2x ≤ 9 − 3 → −4 ≤ 2x ≤ 6. Divide by 2: −2 ≤ x ≤ 3.',
-    wrongAnswerExplanations: {
-      B: '−4 ≤ x ≤ 6 is the result before dividing by 2 — the division step was skipped.',
-      C: '0 ≤ x ≤ 6 subtracts 3 incorrectly: −1 − 3 ≠ 0.',
-      D: '−1 ≤ x ≤ 3 subtracts 3 from the right side but not the left side of the inequality.',
-    },
-  },
-
-  {
-    id: 'm2e-05',
-    section: 'math',
-    moduleId: 'math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Linear functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'Line k has a slope of −3 and passes through the point (0, 4). What is the equation of line k?',
-    choices: [
-      { label: 'A', text: 'y = 3x + 4' },
-      { label: 'B', text: 'y = −3x − 4' },
-      { label: 'C', text: 'y = −3x + 4' },
-      { label: 'D', text: 'y = 4x − 3' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'The point (0, 4) is the y-intercept, so b = 4. With slope −3: y = −3x + 4.',
-    wrongAnswerExplanations: {
-      A: 'The slope is −3, not 3.',
-      B: 'The y-intercept is +4, not −4.',
-      D: 'This confuses the slope and y-intercept values.',
-    },
-  },
-
-  {
-    id: 'm2e-06',
-    section: 'math',
-    moduleId: 'math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Linear functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'The equation P = 500 + 40t represents a town\'s population P after t years. What is the population when t = 10?',
-    choices: [
-      { label: 'A', text: '400' },
-      { label: 'B', text: '540' },
-      { label: 'C', text: '900' },
-      { label: 'D', text: '4,500' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'P = 500 + 40(10) = 500 + 400 = 900.',
-    wrongAnswerExplanations: {
-      A: '400 is just 40 × 10 — the increase — without adding the initial population of 500.',
-      B: '540 results from computing 500 + 40 = 540, treating t = 1 rather than t = 10.',
-      D: '4,500 results from multiplying 500 × 10 − 500 instead of using the correct formula.',
-    },
-  },
-
-  {
-    id: 'm2e-07',
-    section: 'math',
-    moduleId: 'math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Linear equations in one variable',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'If 5(2 − x) = 3x − 6, what is the value of x?',
-    choices: [
-      { label: 'A', text: '1' },
-      { label: 'B', text: '2' },
-      { label: 'C', text: '3' },
-      { label: 'D', text: '4' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Expand: 10 − 5x = 3x − 6. Add 5x: 10 = 8x − 6. Add 6: 16 = 8x. Divide: x = 2.',
-    wrongAnswerExplanations: {
-      A: 'Substituting x = 1: 5(1) = 5 and 3(1) − 6 = −3; 5 ≠ −3.',
-      C: 'Substituting x = 3: 5(−1) = −5 and 3(3) − 6 = 3; −5 ≠ 3.',
-      D: 'Substituting x = 4: 5(−2) = −10 and 3(4) − 6 = 6; −10 ≠ 6.',
-    },
-  },
-
-  // ── Advanced Math (6 MC) ─────────────────────────────────────────────────────
-
-  {
     id: 'm2e-08',
     section: 'math',
     moduleId: 'math-module-2-easy',
@@ -198,6 +73,54 @@ export const mathModule2EasyQuestions: MathQuestion[] = [
       A: 'b = 5: discriminant = 25 − 100 = −75 < 0 — no real solutions.',
       C: 'b = 20: discriminant = 400 − 100 = 300 > 0 — two real solutions.',
       D: 'b = 25: discriminant = 625 − 100 = 525 > 0 — two real solutions.',
+    },
+  },
+
+  {
+    id: 'm2e-14',
+    section: 'math',
+    moduleId: 'math-module-2-easy',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Ratios, rates, proportional relationships, and units',
+    difficulty: 'easy',
+    type: 'multiple_choice',
+    question: 'A car travels 240 miles in 4 hours. At the same speed, how many miles will it travel in 7 hours?',
+    choices: [
+      { label: 'A', text: '380' },
+      { label: 'B', text: '400' },
+      { label: 'C', text: '420' },
+      { label: 'D', text: '480' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Speed = 240 ÷ 4 = 60 mph. Distance in 7 hours = 60 × 7 = 420 miles.',
+    wrongAnswerExplanations: {
+      A: '380 does not match any valid calculation from 60 mph × 7.',
+      B: '400 = 60 × 6.67, using the wrong number of hours.',
+      D: '480 = 240 × 2, doubling the distance instead of scaling by 7/4.',
+    },
+  },
+
+  {
+    id: 'm2e-03',
+    section: 'math',
+    moduleId: 'math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Systems of two linear equations in two variables',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'In the system of equations below, what is the value of 2x + y?\n3x + y = 19\nx = y + 1',
+    choices: [
+      { label: 'A', text: '14' },
+      { label: 'B', text: '9' },
+      { label: 'C', text: '11' },
+      { label: 'D', text: '19' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Substitute x = y + 1 into the first equation: 3(y + 1) + y = 19 → 4y + 3 = 19 → y = 4. Then x = 5. So 2x + y = 10 + 4 = 14.',
+    wrongAnswerExplanations: {
+      B: '9 = x + y = 5 + 4 — the question asks for 2x + y, not x + y.',
+      C: '11 = 2(4) + 3 — uses y = 4 but substitutes the wrong expression for x.',
+      D: '19 is the right-hand side of the first equation, not the value of 2x + y.',
     },
   },
 
@@ -226,128 +149,6 @@ export const mathModule2EasyQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'm2e-10',
-    section: 'math',
-    moduleId: 'math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'Which of the following is a factored form of 2x² + 7x + 3?',
-    choices: [
-      { label: 'A', text: '(2x + 1)(x + 3)' },
-      { label: 'B', text: '(2x − 1)(x − 3)' },
-      { label: 'C', text: '(x + 3)(x + 1)' },
-      { label: 'D', text: '(2x + 3)(x + 1)' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Check: (2x + 1)(x + 3) = 2x² + 6x + x + 3 = 2x² + 7x + 3 ✓.',
-    wrongAnswerExplanations: {
-      B: '(2x − 1)(x − 3) = 2x² − 7x + 3, which has a negative middle term.',
-      C: '(x + 3)(x + 1) = x² + 4x + 3, which has the wrong leading coefficient.',
-      D: '(2x + 3)(x + 1) = 2x² + 2x + 3x + 3 = 2x² + 5x + 3, wrong middle term.',
-    },
-  },
-
-  {
-    id: 'm2e-11',
-    section: 'math',
-    moduleId: 'math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'The graph of f(x) = x² − 4x + 3 crosses the x-axis at two points. What is the sum of the x-coordinates of those points?',
-    choices: [
-      { label: 'A', text: '3' },
-      { label: 'B', text: '4' },
-      { label: 'C', text: '7' },
-      { label: 'D', text: '−4' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Factor: (x − 1)(x − 3) = 0, so x = 1 and x = 3. Sum = 1 + 3 = 4. (By Vieta\'s formulas, sum of roots = −b/a = −(−4)/1 = 4.)',
-    wrongAnswerExplanations: {
-      A: '3 is the product of the roots (c/a), not the sum.',
-      C: '7 adds both roots and the constant term.',
-      D: '−4 misapplies Vieta\'s formula with the wrong sign.',
-    },
-  },
-
-  {
-    id: 'm2e-12',
-    section: 'math',
-    moduleId: 'math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
-    difficulty: 'easy',
-    type: 'multiple_choice',
-    question: 'Which of the following is equivalent to √75?',
-    choices: [
-      { label: 'A', text: '5√3' },
-      { label: 'B', text: '3√5' },
-      { label: 'C', text: '15√3' },
-      { label: 'D', text: '25√3' },
-    ],
-    correctAnswer: 'A',
-    explanation: '√75 = √(25 · 3) = √25 · √3 = 5√3.',
-    wrongAnswerExplanations: {
-      B: '75 ÷ 9 is not an integer, so √9 cannot be factored out cleanly.',
-      C: '15 would mean √225 was factored out, but 75 ÷ 225 < 1.',
-      D: 'This uses 25 as the coefficient instead of √25 = 5.',
-    },
-  },
-
-  {
-    id: 'm2e-13',
-    section: 'math',
-    moduleId: 'math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'If f(x) = x² and g(x) = x + 3, what is the value of f(g(2))?',
-    choices: [
-      { label: 'A', text: '7' },
-      { label: 'B', text: '13' },
-      { label: 'C', text: '25' },
-      { label: 'D', text: '49' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'First evaluate g(2) = 2 + 3 = 5. Then f(g(2)) = f(5) = 5² = 25.',
-    wrongAnswerExplanations: {
-      A: '7 = f(2) + g(2) = 4 + 3, which is not the composition.',
-      B: 'This computes g(f(2)) instead: f(2) = 4, g(4) = 7 — a different order.',
-      D: '49 results from computing f(g(4)) = f(7) = 49, using g(4) instead of g(2).',
-    },
-  },
-
-  // ── Problem-Solving and Data Analysis (3 MC) ─────────────────────────────────
-
-  {
-    id: 'm2e-14',
-    section: 'math',
-    moduleId: 'math-module-2-easy',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Ratios, rates, proportional relationships, and units',
-    difficulty: 'easy',
-    type: 'multiple_choice',
-    question: 'A car travels 240 miles in 4 hours. At the same speed, how many miles will it travel in 7 hours?',
-    choices: [
-      { label: 'A', text: '380' },
-      { label: 'B', text: '400' },
-      { label: 'C', text: '420' },
-      { label: 'D', text: '480' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'Speed = 240 ÷ 4 = 60 mph. Distance in 7 hours = 60 × 7 = 420 miles.',
-    wrongAnswerExplanations: {
-      A: '380 does not match any valid calculation from 60 mph × 7.',
-      B: '400 = 60 × 6.67, using the wrong number of hours.',
-      D: '480 = 240 × 2, doubling the distance instead of scaling by 7/4.',
-    },
-  },
-
-  {
     id: 'm2e-15',
     section: 'math',
     moduleId: 'math-module-2-easy',
@@ -368,6 +169,54 @@ export const mathModule2EasyQuestions: MathQuestion[] = [
       B: '$144 = $120 × 1.20 — treats the net change as 50% − 30% = 20%, but percents apply to different bases.',
       C: '$108 = $120 × 0.90 — subtracts 10% from the original cost instead of applying each change correctly.',
       D: '$132 = $180 × (1 − 0.267) — uses an incorrect discount percentage.',
+    },
+  },
+
+  {
+    id: 'm2e-04',
+    section: 'math',
+    moduleId: 'math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Linear inequalities in one or two variables',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'Which of the following is equivalent to −1 ≤ 2x + 3 ≤ 9?',
+    choices: [
+      { label: 'A', text: '−2 ≤ x ≤ 3' },
+      { label: 'B', text: '−4 ≤ x ≤ 6' },
+      { label: 'C', text: '0 ≤ x ≤ 6' },
+      { label: 'D', text: '−1 ≤ x ≤ 3' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Subtract 3 from all three parts: −1 − 3 ≤ 2x ≤ 9 − 3 → −4 ≤ 2x ≤ 6. Divide by 2: −2 ≤ x ≤ 3.',
+    wrongAnswerExplanations: {
+      B: '−4 ≤ x ≤ 6 is the result before dividing by 2 — the division step was skipped.',
+      C: '0 ≤ x ≤ 6 subtracts 3 incorrectly: −1 − 3 ≠ 0.',
+      D: '−1 ≤ x ≤ 3 subtracts 3 from the right side but not the left side of the inequality.',
+    },
+  },
+
+  {
+    id: 'm2e-10',
+    section: 'math',
+    moduleId: 'math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Equivalent expressions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'Which of the following is a factored form of 2x² + 7x + 3?',
+    choices: [
+      { label: 'A', text: '(2x + 1)(x + 3)' },
+      { label: 'B', text: '(2x − 1)(x − 3)' },
+      { label: 'C', text: '(x + 3)(x + 1)' },
+      { label: 'D', text: '(2x + 3)(x + 1)' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Check: (2x + 1)(x + 3) = 2x² + 6x + x + 3 = 2x² + 7x + 3 ✓.',
+    wrongAnswerExplanations: {
+      B: '(2x − 1)(x − 3) = 2x² − 7x + 3, which has a negative middle term.',
+      C: '(x + 3)(x + 1) = x² + 4x + 3, which has the wrong leading coefficient.',
+      D: '(2x + 3)(x + 1) = 2x² + 2x + 3x + 3 = 2x² + 5x + 3, wrong middle term.',
     },
   },
 
@@ -396,7 +245,53 @@ export const mathModule2EasyQuestions: MathQuestion[] = [
     },
   },
 
-  // ── Geometry and Trigonometry (1 MC) ─────────────────────────────────────────
+  {
+    id: 'm2e-05',
+    section: 'math',
+    moduleId: 'math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Linear functions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'Line k has a slope of −3 and passes through the point (0, 4). What is the equation of line k?',
+    choices: [
+      { label: 'A', text: 'y = 3x + 4' },
+      { label: 'B', text: 'y = −3x − 4' },
+      { label: 'C', text: 'y = −3x + 4' },
+      { label: 'D', text: 'y = 4x − 3' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'The point (0, 4) is the y-intercept, so b = 4. With slope −3: y = −3x + 4.',
+    wrongAnswerExplanations: {
+      A: 'The slope is −3, not 3.',
+      B: 'The y-intercept is +4, not −4.',
+      D: 'This confuses the slope and y-intercept values.',
+    },
+  },
+
+  {
+    id: 'm2e-11',
+    section: 'math',
+    moduleId: 'math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear functions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'The graph of f(x) = x² − 4x + 3 crosses the x-axis at two points. What is the sum of the x-coordinates of those points?',
+    choices: [
+      { label: 'A', text: '3' },
+      { label: 'B', text: '4' },
+      { label: 'C', text: '7' },
+      { label: 'D', text: '−4' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Factor: (x − 1)(x − 3) = 0, so x = 1 and x = 3. Sum = 1 + 3 = 4. (By Vieta\'s formulas, sum of roots = −b/a = −(−4)/1 = 4.)',
+    wrongAnswerExplanations: {
+      A: '3 is the product of the roots (c/a), not the sum.',
+      C: '7 adds both roots and the constant term.',
+      D: '−4 misapplies Vieta\'s formula with the wrong sign.',
+    },
+  },
 
   {
     id: 'm2e-17',
@@ -422,20 +317,52 @@ export const mathModule2EasyQuestions: MathQuestion[] = [
     },
   },
 
-  // ── Grid-In Questions (q18–q22) ───────────────────────────────────────────────
+  {
+    id: 'm2e-06',
+    section: 'math',
+    moduleId: 'math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Linear functions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'The equation P = 500 + 40t represents a town\'s population P after t years. What is the population when t = 10?',
+    choices: [
+      { label: 'A', text: '400' },
+      { label: 'B', text: '540' },
+      { label: 'C', text: '900' },
+      { label: 'D', text: '4,500' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'P = 500 + 40(10) = 500 + 400 = 900.',
+    wrongAnswerExplanations: {
+      A: '400 is just 40 × 10 — the increase — without adding the initial population of 500.',
+      B: '540 results from computing 500 + 40 = 540, treating t = 1 rather than t = 10.',
+      D: '4,500 results from multiplying 500 × 10 − 500 instead of using the correct formula.',
+    },
+  },
 
   {
-    id: 'm2e-18',
+    id: 'm2e-12',
     section: 'math',
     moduleId: 'math-module-2-easy',
     domain: 'Advanced Math',
     skill: 'Equivalent expressions',
-    difficulty: 'medium',
-    type: 'grid_in',
-    question: 'If (x + 3)(x − 3) = x² + kx − 9 for all values of x, what is the value of k?',
-    correctAnswer: '0',
-    acceptableAnswers: ['0'],
-    explanation: 'Expand: (x + 3)(x − 3) = x² − 3x + 3x − 9 = x² − 9. The coefficient of x is 0, so k = 0.',
+    difficulty: 'easy',
+    type: 'multiple_choice',
+    question: 'Which of the following is equivalent to √75?',
+    choices: [
+      { label: 'A', text: '5√3' },
+      { label: 'B', text: '3√5' },
+      { label: 'C', text: '15√3' },
+      { label: 'D', text: '25√3' },
+    ],
+    correctAnswer: 'A',
+    explanation: '√75 = √(25 · 3) = √25 · √3 = 5√3.',
+    wrongAnswerExplanations: {
+      B: '75 ÷ 9 is not an integer, so √9 cannot be factored out cleanly.',
+      C: '15 would mean √225 was factored out, but 75 ÷ 225 < 1.',
+      D: 'This uses 25 as the coefficient instead of √25 = 5.',
+    },
   },
 
   {
@@ -454,6 +381,54 @@ export const mathModule2EasyQuestions: MathQuestion[] = [
   },
 
   {
+    id: 'm2e-07',
+    section: 'math',
+    moduleId: 'math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Linear equations in one variable',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'If 5(2 − x) = 3x − 6, what is the value of x?',
+    choices: [
+      { label: 'A', text: '1' },
+      { label: 'B', text: '2' },
+      { label: 'C', text: '3' },
+      { label: 'D', text: '4' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Expand: 10 − 5x = 3x − 6. Add 5x: 10 = 8x − 6. Add 6: 16 = 8x. Divide: x = 2.',
+    wrongAnswerExplanations: {
+      A: 'Substituting x = 1: 5(1) = 5 and 3(1) − 6 = −3; 5 ≠ −3.',
+      C: 'Substituting x = 3: 5(−1) = −5 and 3(3) − 6 = 3; −5 ≠ 3.',
+      D: 'Substituting x = 4: 5(−2) = −10 and 3(4) − 6 = 6; −10 ≠ 6.',
+    },
+  },
+
+  {
+    id: 'm2e-13',
+    section: 'math',
+    moduleId: 'math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear functions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'If f(x) = x² and g(x) = x + 3, what is the value of f(g(2))?',
+    choices: [
+      { label: 'A', text: '7' },
+      { label: 'B', text: '13' },
+      { label: 'C', text: '25' },
+      { label: 'D', text: '49' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'First evaluate g(2) = 2 + 3 = 5. Then f(g(2)) = f(5) = 5² = 25.',
+    wrongAnswerExplanations: {
+      A: '7 = f(2) + g(2) = 4 + 3, which is not the composition.',
+      B: 'This computes g(f(2)) instead: f(2) = 4, g(4) = 7 — a different order.',
+      D: '49 results from computing f(g(4)) = f(7) = 49, using g(4) instead of g(2).',
+    },
+  },
+
+  {
     id: 'm2e-20',
     section: 'math',
     moduleId: 'math-module-2-easy',
@@ -466,6 +441,20 @@ export const mathModule2EasyQuestions: MathQuestion[] = [
     acceptableAnswers: ['32'],
     explanation: 'The ratio of corresponding sides is DE/AB = 8/5. The perimeters of similar triangles scale by the same ratio: perimeter of DEF = 20 × (8/5) = 32.',
     scoringNotes: 'Answer must be 32.',
+  },
+
+  {
+    id: 'm2e-18',
+    section: 'math',
+    moduleId: 'math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Equivalent expressions',
+    difficulty: 'medium',
+    type: 'grid_in',
+    question: 'If (x + 3)(x − 3) = x² + kx − 9 for all values of x, what is the value of k?',
+    correctAnswer: '0',
+    acceptableAnswers: ['0'],
+    explanation: 'Expand: (x + 3)(x − 3) = x² − 3x + 3x − 9 = x² − 9. The coefficient of x is 0, so k = 0.',
   },
 
   {

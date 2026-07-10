@@ -4,9 +4,6 @@ import type { MathQuestion } from './types'
 // 17 multiple choice (q01–q17) + 5 grid-in (q18–q22)
 
 export const mathModule2HardQuestions: MathQuestion[] = [
-
-  // ── Algebra (4 MC + 1 grid-in) + Geometry (1 MC + 1 grid-in) ─────────────────
-
   {
     id: 'm2h-01',
     section: 'math',
@@ -28,30 +25,6 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       A: 'If k = 3, slope of first line = 1 ≠ 3/4 — the lines intersect (one solution).',
       C: 'If k = 6, slope of first line = 1/2 ≠ 3/4 — the lines intersect.',
       D: 'If k = 9, slope = 3/9 = 1/3 ≠ 3/4 — the lines intersect.',
-    },
-  },
-
-  {
-    id: 'm2h-02',
-    section: 'math',
-    moduleId: 'math-module-2-hard',
-    domain: 'Algebra',
-    skill: 'Linear functions',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question: 'Line p passes through the point (−2, 7) and is perpendicular to the line y = (1/3)x + 4. What is the equation of line p?',
-    choices: [
-      { label: 'A', text: 'y = 3x + 13' },
-      { label: 'B', text: 'y = −3x − 1' },
-      { label: 'C', text: 'y = (1/3)x + 23/3' },
-      { label: 'D', text: 'y = −3x + 1' },
-    ],
-    correctAnswer: 'D',
-    explanation: 'The slope of y = (1/3)x + 4 is 1/3. A perpendicular slope is −1/(1/3) = −3. Using point (−2, 7): y − 7 = −3(x + 2) → y = −3x − 6 + 7 → y = −3x + 1.',
-    wrongAnswerExplanations: {
-      A: 'Slope +3 is the reciprocal without flipping the sign — this line is not perpendicular.',
-      C: 'Same slope as the original — this is the parallel line through (−2, 7), not perpendicular.',
-      B: 'Correct slope −3, but wrong y-intercept: at x = −2, y = −3(−2) − 1 = 5 ≠ 7.',
     },
   },
 
@@ -92,54 +65,6 @@ export const mathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'm2h-04',
-    section: 'math',
-    moduleId: 'math-module-2-hard',
-    domain: 'Algebra',
-    skill: 'Systems of two linear equations in two variables',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question: 'The total cost of 5 adult tickets and 3 child tickets is $88. The total cost of 2 adult tickets and 6 child tickets is $64. What is the cost, in dollars, of one adult ticket?',
-    choices: [
-      { label: 'A', text: '$10' },
-      { label: 'B', text: '$12' },
-      { label: 'C', text: '$14' },
-      { label: 'D', text: '$16' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'Let a = adult price, c = child price. Equations: 5a + 3c = 88 and 2a + 6c = 64. Divide the second by 2: a + 3c = 32. Subtract from the first: 4a = 56 → a = 14. Verify: c = (32 − 14)/3 = 6; check: 5(14) + 3(6) = 88 ✓ and 2(14) + 6(6) = 64 ✓.',
-    wrongAnswerExplanations: {
-      A: 'If a = 10, then 3c = 22 — not an integer child price.',
-      B: 'If a = 12, then 3c = 20 — not an integer child price.',
-      D: 'If a = 16, then 3c = 16 — not an integer child price.',
-    },
-  },
-
-  {
-    id: 'm2h-05',
-    section: 'math',
-    moduleId: 'math-module-2-hard',
-    domain: 'Algebra',
-    skill: 'Linear inequalities in one or two variables',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question: 'Which of the following represents all values of x satisfying |2x − 1| ≤ 7?',
-    choices: [
-      { label: 'A', text: 'x ≤ 4' },
-      { label: 'B', text: '−3 ≤ x ≤ 4' },
-      { label: 'C', text: 'x ≥ −3' },
-      { label: 'D', text: '−4 ≤ x ≤ 3' },
-    ],
-    correctAnswer: 'B',
-    explanation: '|2x − 1| ≤ 7 means −7 ≤ 2x − 1 ≤ 7. Add 1: −6 ≤ 2x ≤ 8. Divide by 2: −3 ≤ x ≤ 4.',
-    wrongAnswerExplanations: {
-      A: 'This gives only the right boundary, missing the left constraint x ≥ −3.',
-      C: 'This gives only the left boundary, missing the right constraint x ≤ 4.',
-      D: 'This results from applying a sign error to the inner expression (treating it as −2x + 1 instead of 2x − 1).',
-    },
-  },
-
-  {
     id: 'm2h-06',
     section: 'math',
     moduleId: 'math-module-2-hard',
@@ -152,6 +77,30 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     acceptableAnswers: ['27'],
     explanation: '64 = 2⁶, so 2^(x + 3) = 2⁶ → x + 3 = 6 → x = 3. Therefore 3^x = 3³ = 27.',
     scoringNotes: 'Only 27 is acceptable.',
+  },
+
+  {
+    id: 'm2h-02',
+    section: 'math',
+    moduleId: 'math-module-2-hard',
+    domain: 'Algebra',
+    skill: 'Linear functions',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question: 'Line p passes through the point (−2, 7) and is perpendicular to the line y = (1/3)x + 4. What is the equation of line p?',
+    choices: [
+      { label: 'A', text: 'y = 3x + 13' },
+      { label: 'B', text: 'y = −3x − 1' },
+      { label: 'C', text: 'y = (1/3)x + 23/3' },
+      { label: 'D', text: 'y = −3x + 1' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'The slope of y = (1/3)x + 4 is 1/3. A perpendicular slope is −1/(1/3) = −3. Using point (−2, 7): y − 7 = −3(x + 2) → y = −3x − 6 + 7 → y = −3x + 1.',
+    wrongAnswerExplanations: {
+      A: 'Slope +3 is the reciprocal without flipping the sign — this line is not perpendicular.',
+      C: 'Same slope as the original — this is the parallel line through (−2, 7), not perpendicular.',
+      B: 'Correct slope −3, but wrong y-intercept: at x = −2, y = −3(−2) − 1 = 5 ≠ 7.',
+    },
   },
 
   {
@@ -182,8 +131,6 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     scoringNotes: 'Only 10 is acceptable.',
   },
 
-  // ── Advanced Math (5 MC + 2 grid-in) ─────────────────────────────────────────
-
   {
     id: 'm2h-08',
     section: 'math',
@@ -205,6 +152,54 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       B: 'These are the negatives of the correct roots; check: 2(−1/2)² + 5(−1/2) − 3 = 1/2 − 5/2 − 3 = −5 ≠ 0.',
       C: '2(1)² + 5(1) − 3 = 4 ≠ 0.',
       D: 'Same roots as B reordered — neither satisfies the equation.',
+    },
+  },
+
+  {
+    id: 'm2h-04',
+    section: 'math',
+    moduleId: 'math-module-2-hard',
+    domain: 'Algebra',
+    skill: 'Systems of two linear equations in two variables',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question: 'The total cost of 5 adult tickets and 3 child tickets is $88. The total cost of 2 adult tickets and 6 child tickets is $64. What is the cost, in dollars, of one adult ticket?',
+    choices: [
+      { label: 'A', text: '$10' },
+      { label: 'B', text: '$12' },
+      { label: 'C', text: '$14' },
+      { label: 'D', text: '$16' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Let a = adult price, c = child price. Equations: 5a + 3c = 88 and 2a + 6c = 64. Divide the second by 2: a + 3c = 32. Subtract from the first: 4a = 56 → a = 14. Verify: c = (32 − 14)/3 = 6; check: 5(14) + 3(6) = 88 ✓ and 2(14) + 6(6) = 64 ✓.',
+    wrongAnswerExplanations: {
+      A: 'If a = 10, then 3c = 22 — not an integer child price.',
+      B: 'If a = 12, then 3c = 20 — not an integer child price.',
+      D: 'If a = 16, then 3c = 16 — not an integer child price.',
+    },
+  },
+
+  {
+    id: 'm2h-15',
+    section: 'math',
+    moduleId: 'math-module-2-hard',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Ratios, rates, proportional relationships, and units',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question: 'Tank A contains 30 gallons of water and is being drained at a constant rate of 2 gallons per minute. At the same time, empty Tank B is being filled at a constant rate of 3 gallons per minute. After how many minutes will both tanks contain the same amount of water?',
+    choices: [
+      { label: 'A', text: '6' },
+      { label: 'B', text: '10' },
+      { label: 'C', text: '5' },
+      { label: 'D', text: '8' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Water in Tank A after t minutes: 30 − 2t. Water in Tank B after t minutes: 3t. Set equal: 30 − 2t = 3t → 30 = 5t → t = 6.',
+    wrongAnswerExplanations: {
+      B: 't = 10: Tank A has 10 gallons, Tank B has 30 — not equal.',
+      C: 't = 5: Tank A has 20 gallons, Tank B has 15 — not equal.',
+      D: 't = 8: Tank A has 14 gallons, Tank B has 24 — not equal.',
     },
   },
 
@@ -233,130 +228,26 @@ export const mathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'm2h-10',
+    id: 'm2h-05',
     section: 'math',
     moduleId: 'math-module-2-hard',
-    domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
+    domain: 'Algebra',
+    skill: 'Linear inequalities in one or two variables',
     difficulty: 'hard',
     type: 'multiple_choice',
-    question: 'For x ≠ 1, which expression is equivalent to (x² + 3x − 4)/(x − 1)?',
+    question: 'Which of the following represents all values of x satisfying |2x − 1| ≤ 7?',
     choices: [
-      { label: 'A', text: 'x − 4' },
-      { label: 'B', text: 'x + 4' },
-      { label: 'C', text: 'x + 3' },
-      { label: 'D', text: 'x² + 4' },
+      { label: 'A', text: 'x ≤ 4' },
+      { label: 'B', text: '−3 ≤ x ≤ 4' },
+      { label: 'C', text: 'x ≥ −3' },
+      { label: 'D', text: '−4 ≤ x ≤ 3' },
     ],
     correctAnswer: 'B',
-    explanation: 'Factor the numerator: x² + 3x − 4 = (x + 4)(x − 1). Cancel the common factor (x − 1): result is x + 4 for x ≠ 1.',
+    explanation: '|2x − 1| ≤ 7 means −7 ≤ 2x − 1 ≤ 7. Add 1: −6 ≤ 2x ≤ 8. Divide by 2: −3 ≤ x ≤ 4.',
     wrongAnswerExplanations: {
-      A: '(x − 4)(x − 1) = x² − 5x + 4 ≠ x² + 3x − 4.',
-      C: '(x + 3)(x − 1) = x² + 2x − 3 ≠ x² + 3x − 4.',
-      D: 'Dividing a degree-2 polynomial by a degree-1 polynomial yields a degree-1 result, not degree-2.',
-    },
-  },
-
-  {
-    id: 'm2h-11',
-    section: 'math',
-    moduleId: 'math-module-2-hard',
-    domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question: 'For x ≠ 2 and x ≠ −3, which expression is equivalent to (x² + x − 6)/(x² − 4)?',
-    choices: [
-      { label: 'A', text: '(x + 3)/(x + 2)' },
-      { label: 'B', text: '(x − 3)/(x − 2)' },
-      { label: 'C', text: '(x + 3)/(x − 2)' },
-      { label: 'D', text: '(x − 2)/(x + 2)' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Factor the numerator: x² + x − 6 = (x + 3)(x − 2). Factor the denominator: x² − 4 = (x + 2)(x − 2). Cancel the common factor (x − 2): result is (x + 3)/(x + 2).',
-    wrongAnswerExplanations: {
-      B: '(x − 3)(x − 2) = x² − 5x + 6, not x² + x − 6; the sign on 3 is wrong.',
-      C: 'Cancels (x + 2) instead of (x − 2) — both factors must be identified correctly.',
-      D: 'This is the reciprocal of the factor that was cancelled; the numerator is wrong.',
-    },
-  },
-
-  {
-    id: 'm2h-12',
-    section: 'math',
-    moduleId: 'math-module-2-hard',
-    domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question: 'The polynomial 2x³ − 5x² + kx − 6 is divisible by (x − 3) with no remainder. What is the value of k?',
-    choices: [
-      { label: 'A', text: '−1' },
-      { label: 'B', text: '1' },
-      { label: 'C', text: '3' },
-      { label: 'D', text: '−3' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'By the Remainder Theorem, if (x − 3) divides the polynomial with no remainder, then f(3) = 0. Substituting: 2(27) − 5(9) + 3k − 6 = 0 → 54 − 45 + 3k − 6 = 0 → 3 + 3k = 0 → k = −1.',
-    wrongAnswerExplanations: {
-      B: 'k = 1 gives f(3) = 3 + 3(1) = 6 ≠ 0; the polynomial is not divisible.',
-      C: 'k = 3 gives f(3) = 3 + 9 = 12 ≠ 0.',
-      D: 'k = −3 gives f(3) = 3 + 3(−3) = 3 − 9 = −6 ≠ 0.',
-    },
-  },
-
-  {
-    id: 'm2h-13',
-    section: 'math',
-    moduleId: 'math-module-2-hard',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear equations in one variable and systems of equations',
-    difficulty: 'hard',
-    type: 'grid_in',
-    question: 'The line y = 2x − k is tangent to the parabola y = x² − 4x + 5 (intersects it at exactly one point). What is the value of k?',
-    correctAnswer: '4',
-    acceptableAnswers: ['4'],
-    explanation: 'Set the equations equal: x² − 4x + 5 = 2x − k → x² − 6x + (5 + k) = 0. For exactly one intersection, the discriminant equals zero: (−6)² − 4(1)(5 + k) = 0 → 36 − 20 − 4k = 0 → 16 = 4k → k = 4.',
-    scoringNotes: 'Only 4 is acceptable.',
-  },
-
-  {
-    id: 'm2h-14',
-    section: 'math',
-    moduleId: 'math-module-2-hard',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear functions',
-    difficulty: 'hard',
-    type: 'grid_in',
-    question: 'If 4^x = 8, what is the value of x? Enter your answer as a fraction.',
-    correctAnswer: '3/2',
-    acceptableAnswers: ['3/2', '1.5'],
-    explanation: 'Express both sides as powers of 2: (2²)^x = 2³ → 2^(2x) = 2³ → 2x = 3 → x = 3/2.',
-    scoringNotes: '3/2 or 1.5 are both acceptable.',
-  },
-
-  // ── Problem-Solving and Data Analysis (4 MC) ─────────────────────────────────
-
-  {
-    id: 'm2h-15',
-    section: 'math',
-    moduleId: 'math-module-2-hard',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Ratios, rates, proportional relationships, and units',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question: 'Tank A contains 30 gallons of water and is being drained at a constant rate of 2 gallons per minute. At the same time, empty Tank B is being filled at a constant rate of 3 gallons per minute. After how many minutes will both tanks contain the same amount of water?',
-    choices: [
-      { label: 'A', text: '6' },
-      { label: 'B', text: '10' },
-      { label: 'C', text: '5' },
-      { label: 'D', text: '8' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Water in Tank A after t minutes: 30 − 2t. Water in Tank B after t minutes: 3t. Set equal: 30 − 2t = 3t → 30 = 5t → t = 6.',
-    wrongAnswerExplanations: {
-      B: 't = 10: Tank A has 10 gallons, Tank B has 30 — not equal.',
-      C: 't = 5: Tank A has 20 gallons, Tank B has 15 — not equal.',
-      D: 't = 8: Tank A has 14 gallons, Tank B has 24 — not equal.',
+      A: 'This gives only the right boundary, missing the left constraint x ≥ −3.',
+      C: 'This gives only the left boundary, missing the right constraint x ≤ 4.',
+      D: 'This results from applying a sign error to the inner expression (treating it as −2x + 1 instead of 2x − 1).',
     },
   },
 
@@ -386,6 +277,54 @@ export const mathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
+    id: 'm2h-10',
+    section: 'math',
+    moduleId: 'math-module-2-hard',
+    domain: 'Advanced Math',
+    skill: 'Equivalent expressions',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question: 'For x ≠ 1, which expression is equivalent to (x² + 3x − 4)/(x − 1)?',
+    choices: [
+      { label: 'A', text: 'x − 4' },
+      { label: 'B', text: 'x + 4' },
+      { label: 'C', text: 'x + 3' },
+      { label: 'D', text: 'x² + 4' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Factor the numerator: x² + 3x − 4 = (x + 4)(x − 1). Cancel the common factor (x − 1): result is x + 4 for x ≠ 1.',
+    wrongAnswerExplanations: {
+      A: '(x − 4)(x − 1) = x² − 5x + 4 ≠ x² + 3x − 4.',
+      C: '(x + 3)(x − 1) = x² + 2x − 3 ≠ x² + 3x − 4.',
+      D: 'Dividing a degree-2 polynomial by a degree-1 polynomial yields a degree-1 result, not degree-2.',
+    },
+  },
+
+  {
+    id: 'm2h-19',
+    section: 'math',
+    moduleId: 'math-module-2-hard',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Circles',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question: 'The equation x² + y² − 6x + 8y = 0 represents a circle in the xy-plane. What is the radius of this circle?',
+    choices: [
+      { label: 'A', text: '5' },
+      { label: 'B', text: '25' },
+      { label: 'C', text: '√7' },
+      { label: 'D', text: '7' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Complete the square for x and y. Group: (x² − 6x) + (y² + 8y) = 0. Complete: (x − 3)² − 9 + (y + 4)² − 16 = 0 → (x − 3)² + (y + 4)² = 25. This is a circle centered at (3, −4) with r² = 25, so r = 5.',
+    wrongAnswerExplanations: {
+      B: '25 is r², not r — the square root step was omitted.',
+      C: '√7 confuses this with completing the square incorrectly: √(9 − 16/2) or similar error.',
+      D: '7 may result from computing 9 − 2 = 7 or another arithmetic error during the square completion.',
+    },
+  },
+
+  {
     id: 'm2h-17',
     section: 'math',
     moduleId: 'math-module-2-hard',
@@ -410,53 +349,26 @@ export const mathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'm2h-18',
+    id: 'm2h-11',
     section: 'math',
     moduleId: 'math-module-2-hard',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Probability',
+    domain: 'Advanced Math',
+    skill: 'Equivalent expressions',
     difficulty: 'hard',
     type: 'multiple_choice',
-    stimulus: 'In a survey of 120 students, 50 said they play basketball, 40 said they play soccer, and 20 said they play both sports.',
-    question: 'A student from the survey is selected at random. What is the probability that the selected student plays exactly one of the two sports?',
+    question: 'For x ≠ 2 and x ≠ −3, which expression is equivalent to (x² + x − 6)/(x² − 4)?',
     choices: [
-      { label: 'A', text: '5/12' },
-      { label: 'B', text: '7/12' },
-      { label: 'C', text: '1/6' },
-      { label: 'D', text: '3/8' },
+      { label: 'A', text: '(x + 3)/(x + 2)' },
+      { label: 'B', text: '(x − 3)/(x − 2)' },
+      { label: 'C', text: '(x + 3)/(x − 2)' },
+      { label: 'D', text: '(x − 2)/(x + 2)' },
     ],
     correctAnswer: 'A',
-    explanation: 'Basketball only: 50 − 20 = 30 students. Soccer only: 40 − 20 = 20 students. Exactly one sport: 30 + 20 = 50 students. Probability = 50/120 = 5/12.',
+    explanation: 'Factor the numerator: x² + x − 6 = (x + 3)(x − 2). Factor the denominator: x² − 4 = (x + 2)(x − 2). Cancel the common factor (x − 2): result is (x + 3)/(x + 2).',
     wrongAnswerExplanations: {
-      B: '7/12 = 70/120 is the probability of playing at least one sport (30 + 20 + 20 = 70), including those who play both.',
-      C: '1/6 = 20/120 is the probability of playing both sports.',
-      D: '3/8 = 45/120 does not correspond to any standard calculation from the given data.',
-    },
-  },
-
-  // ── Geometry and Trigonometry (3 MC + 1 grid-in) ─────────────────────────────
-
-  {
-    id: 'm2h-19',
-    section: 'math',
-    moduleId: 'math-module-2-hard',
-    domain: 'Geometry and Trigonometry',
-    skill: 'Circles',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question: 'The equation x² + y² − 6x + 8y = 0 represents a circle in the xy-plane. What is the radius of this circle?',
-    choices: [
-      { label: 'A', text: '5' },
-      { label: 'B', text: '25' },
-      { label: 'C', text: '√7' },
-      { label: 'D', text: '7' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Complete the square for x and y. Group: (x² − 6x) + (y² + 8y) = 0. Complete: (x − 3)² − 9 + (y + 4)² − 16 = 0 → (x − 3)² + (y + 4)² = 25. This is a circle centered at (3, −4) with r² = 25, so r = 5.',
-    wrongAnswerExplanations: {
-      B: '25 is r², not r — the square root step was omitted.',
-      C: '√7 confuses this with completing the square incorrectly: √(9 − 16/2) or similar error.',
-      D: '7 may result from computing 9 − 2 = 7 or another arithmetic error during the square completion.',
+      B: '(x − 3)(x − 2) = x² − 5x + 6, not x² + x − 6; the sign on 3 is wrong.',
+      C: 'Cancels (x + 2) instead of (x − 2) — both factors must be identified correctly.',
+      D: 'This is the reciprocal of the factor that was cancelled; the numerator is wrong.',
     },
   },
 
@@ -485,6 +397,55 @@ export const mathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
+    id: 'm2h-18',
+    section: 'math',
+    moduleId: 'math-module-2-hard',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Probability',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    stimulus: 'In a survey of 120 students, 50 said they play basketball, 40 said they play soccer, and 20 said they play both sports.',
+    question: 'A student from the survey is selected at random. What is the probability that the selected student plays exactly one of the two sports?',
+    choices: [
+      { label: 'A', text: '5/12' },
+      { label: 'B', text: '7/12' },
+      { label: 'C', text: '1/6' },
+      { label: 'D', text: '3/8' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Basketball only: 50 − 20 = 30 students. Soccer only: 40 − 20 = 20 students. Exactly one sport: 30 + 20 = 50 students. Probability = 50/120 = 5/12.',
+    wrongAnswerExplanations: {
+      B: '7/12 = 70/120 is the probability of playing at least one sport (30 + 20 + 20 = 70), including those who play both.',
+      C: '1/6 = 20/120 is the probability of playing both sports.',
+      D: '3/8 = 45/120 does not correspond to any standard calculation from the given data.',
+    },
+  },
+
+  {
+    id: 'm2h-12',
+    section: 'math',
+    moduleId: 'math-module-2-hard',
+    domain: 'Advanced Math',
+    skill: 'Equivalent expressions',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question: 'The polynomial 2x³ − 5x² + kx − 6 is divisible by (x − 3) with no remainder. What is the value of k?',
+    choices: [
+      { label: 'A', text: '−1' },
+      { label: 'B', text: '1' },
+      { label: 'C', text: '3' },
+      { label: 'D', text: '−3' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'By the Remainder Theorem, if (x − 3) divides the polynomial with no remainder, then f(3) = 0. Substituting: 2(27) − 5(9) + 3k − 6 = 0 → 54 − 45 + 3k − 6 = 0 → 3 + 3k = 0 → k = −1.',
+    wrongAnswerExplanations: {
+      B: 'k = 1 gives f(3) = 3 + 3(1) = 6 ≠ 0; the polynomial is not divisible.',
+      C: 'k = 3 gives f(3) = 3 + 9 = 12 ≠ 0.',
+      D: 'k = −3 gives f(3) = 3 + 3(−3) = 3 − 9 = −6 ≠ 0.',
+    },
+  },
+
+  {
     id: 'm2h-21',
     section: 'math',
     moduleId: 'math-module-2-hard',
@@ -509,6 +470,21 @@ export const mathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
+    id: 'm2h-13',
+    section: 'math',
+    moduleId: 'math-module-2-hard',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear equations in one variable and systems of equations',
+    difficulty: 'hard',
+    type: 'grid_in',
+    question: 'The line y = 2x − k is tangent to the parabola y = x² − 4x + 5 (intersects it at exactly one point). What is the value of k?',
+    correctAnswer: '4',
+    acceptableAnswers: ['4'],
+    explanation: 'Set the equations equal: x² − 4x + 5 = 2x − k → x² − 6x + (5 + k) = 0. For exactly one intersection, the discriminant equals zero: (−6)² − 4(1)(5 + k) = 0 → 36 − 20 − 4k = 0 → 16 = 4k → k = 4.',
+    scoringNotes: 'Only 4 is acceptable.',
+  },
+
+  {
     id: 'm2h-22',
     section: 'math',
     moduleId: 'math-module-2-hard',
@@ -521,5 +497,20 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     acceptableAnswers: ['60'],
     explanation: 'By the Pythagorean theorem: a² + b² = 13² = 169. Expand (a + b)²: a² + 2ab + b² = 17² = 289. Substitute: 169 + 2ab = 289 → 2ab = 120 → ab = 60.',
     scoringNotes: 'Only 60 is acceptable.',
+  },
+
+  {
+    id: 'm2h-14',
+    section: 'math',
+    moduleId: 'math-module-2-hard',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear functions',
+    difficulty: 'hard',
+    type: 'grid_in',
+    question: 'If 4^x = 8, what is the value of x? Enter your answer as a fraction.',
+    correctAnswer: '3/2',
+    acceptableAnswers: ['3/2', '1.5'],
+    explanation: 'Express both sides as powers of 2: (2²)^x = 2³ → 2^(2x) = 2³ → 2x = 3 → x = 3/2.',
+    scoringNotes: '3/2 or 1.5 are both acceptable.',
   },
 ]

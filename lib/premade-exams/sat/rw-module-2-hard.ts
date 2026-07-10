@@ -3,9 +3,6 @@ import type { RWQuestion } from './types'
 // Reading and Writing Module 2 Hard — 27 questions (harder second module, ~12 medium / ~15 hard)
 
 export const rwModule2HardQuestions: RWQuestion[] = [
-
-  // ── Words in Context (5) ────────────────────────────────────────────────────
-
   {
     id: 'rw2h-01',
     section: 'reading-writing',
@@ -27,54 +24,6 @@ export const rwModule2HardQuestions: RWQuestion[] = [
       B: `Choice B is incorrect. "Deeply felt" describes the emotional intensity of interests, not their philosophical status as conditional or variable.`,
       C: `Choice C is incorrect. "Universal and binding" describes categorical imperatives, not the contingent interests that Kant is contrasting with them.`,
       D: `Choice D is incorrect. Kant's argument reserves "rational" for categorical imperatives; contingent interests are empirical, not purely rational.`,
-    },
-  },
-
-  {
-    id: 'rw2h-02',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Craft and Structure',
-    skill: 'Words in Context',
-    difficulty: 'medium',
-    stimulus: `The biologist Lynn Margulis proposed in the late 1960s that eukaryotic cells — those with a distinct nucleus — evolved through a process she called endosymbiosis: the permanent absorption of one bacterial cell by another. Mitochondria and chloroplasts, she argued, were once independent bacteria that were incorporated rather than digested by their host cells, entering into a mutually beneficial arrangement that became hereditary. Her theory was initially derided as heterodox, but decades of genetic evidence have since vindicated it, and endosymbiosis is now scientific consensus.`,
-    question: `As used in the passage, "heterodox" most nearly means`,
-    choices: [
-      { label: 'A', text: 'inaccurate and poorly evidenced' },
-      { label: 'B', text: 'departing from accepted scientific opinion' },
-      { label: 'C', text: 'mathematically complex' },
-      { label: 'D', text: 'based on philosophical rather than empirical reasoning' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. The passage notes that Margulis's theory was initially "derided as heterodox" but was later validated by genetic evidence. "Heterodox" means departing from established or accepted opinion — the theory went against the scientific mainstream at the time.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage explicitly says the theory was later vindicated, implying it was not inaccurate; "heterodox" describes its departure from consensus, not its evidential status.`,
-      C: `Choice C is incorrect. The passage makes no mention of mathematical complexity.`,
-      D: `Choice D is incorrect. Margulis's theory was biological and empirical, not philosophical.`,
-    },
-  },
-
-  {
-    id: 'rw2h-03',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Craft and Structure',
-    skill: 'Words in Context',
-    difficulty: 'hard',
-    stimulus: `Political theorists have long grappled with the tension between procedural and substantive conceptions of justice. Procedural accounts hold that an outcome is just if it results from a fair process, regardless of what that outcome happens to be. Substantive accounts, by contrast, evaluate outcomes directly against independent criteria of fairness or welfare. A persistent challenge for procedural theorists is the possibility that an ostensibly fair procedure can yield outcomes that are, by almost any independent reckoning, deeply unjust.`,
-    question: `As used in the passage, "ostensibly" most nearly means`,
-    choices: [
-      { label: 'A', text: 'secretly' },
-      { label: 'B', text: 'rigorously and transparently' },
-      { label: 'C', text: 'apparently but perhaps not genuinely' },
-      { label: 'D', text: 'historically established' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. The passage describes a procedure that appears fair by procedural standards but may still yield unjust outcomes. "Ostensibly" signals that something appears to be one way but may not actually be so — the appearance of fairness that does not guarantee substantive justice.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Secretly" implies hidden deception, but "ostensibly" describes surface appearance without implying deliberate concealment.`,
-      B: `Choice B is incorrect. "Rigorously and transparently" would suggest the procedure is genuinely fair, which is what the passage is questioning.`,
-      D: `Choice D is incorrect. Historical establishment is unrelated to the meaning of "ostensibly" in this context.`,
     },
   },
 
@@ -103,161 +52,6 @@ export const rwModule2HardQuestions: RWQuestion[] = [
   },
 
   {
-    id: 'rw2h-05',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Standard English Conventions',
-    skill: 'Form, Structure, and Sense',
-    difficulty: 'hard',
-    stimulus: `Beneath the museum's grand staircase ______ the forgotten storerooms in which curators recently uncovered dozens of uncatalogued artifacts. The discovery has prompted a comprehensive review of the institution's entire holdings.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: 'lies' },
-      { label: 'B', text: 'lie' },
-      { label: 'C', text: 'has been' },
-      { label: 'D', text: 'was' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. The sentence uses inverted syntax, placing the verb before its subject. The true subject is the plural noun "the forgotten storerooms," not the singular "staircase" in the introductory prepositional phrase. Because the subject is plural, the plural verb "lie" is required.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Lies" is singular; it may seem to agree with the nearby "staircase," but that noun is part of a prepositional phrase and cannot be the subject.`,
-      C: `Choice C is incorrect. "Has been" is singular and does not agree with the plural subject "storerooms."`,
-      D: `Choice D is incorrect. "Was" is singular and fails to agree with the plural subject; the inverted word order makes the plural subject easy to overlook.`,
-    },
-  },
-
-  // ── Text Structure and Purpose (3) ─────────────────────────────────────────
-
-  {
-    id: 'rw2h-06',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Craft and Structure',
-    skill: 'Text Structure and Purpose',
-    difficulty: 'medium',
-    stimulus: `The development of anesthesia in the 1840s transformed surgery from a procedure performed with brutal speed — since patient consciousness precluded lengthy operations — to a deliberate and expansive practice. Within a generation of ether's introduction, surgeons were performing operations on the chest and abdomen that would have been previously unthinkable. Yet this expansion of surgical possibility was accompanied by a corresponding expansion of surgical hubris: mortality rates from postoperative infection remained catastrophically high until Joseph Lister's antiseptic techniques were adopted in the 1870s.`,
-    question: `The primary purpose of the passage is to`,
-    choices: [
-      { label: 'A', text: 'argue that the development of anesthesia was less important than the development of antiseptic technique' },
-      { label: 'B', text: 'trace the biography of Joseph Lister and his contributions to medicine' },
-      { label: 'C', text: 'describe how a major surgical advance created both new capabilities and new risks' },
-      { label: 'D', text: 'compare surgical mortality rates before and after the introduction of ether' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. The passage describes how anesthesia dramatically expanded what surgeons could attempt (new capabilities) and then notes that this same expansion led to more patients dying from infection before antiseptic techniques arrived (new risks). The structure moves from advance to unintended consequence.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage does not rank the two innovations against each other in terms of importance.`,
-      B: `Choice B is incorrect. Lister is mentioned only briefly in the final clause; the passage is not about his biography.`,
-      D: `Choice D is incorrect. The passage mentions high mortality but does not present before-and-after comparative data.`,
-    },
-  },
-
-  {
-    id: 'rw2h-07',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Craft and Structure',
-    skill: 'Text Structure and Purpose',
-    difficulty: 'hard',
-    stimulus: `The philosopher Charles Taylor distinguishes between "weak" and "strong" evaluations of desire. A weak evaluation simply ranks preferences by how much one wants them. A strong evaluation assesses desires according to qualitative distinctions about worth — ranking some desires as higher, nobler, or more authentically expressive of who one wants to be than others. Taylor argues that the capacity for strong evaluation is constitutive of what it means to be a moral agent: it is what allows human beings to reflect on and potentially transform their motivational structures rather than simply acting on whichever desire happens to be strongest at a given moment.`,
-    underlineTargets: ['whichever desire happens to be strongest at a given moment'],
-    question: `The underlined phrase "whichever desire happens to be strongest at a given moment" primarily serves to`,
-    choices: [
-      { label: 'A', text: 'describe the behavior of agents capable of strong evaluation' },
-      { label: 'B', text: 'characterize the motivational behavior that strong evaluation allows agents to transcend' },
-      { label: 'C', text: 'provide an example of the qualitative distinctions involved in strong evaluation' },
-      { label: 'D', text: 'suggest that weak evaluations are always selfish and irrational' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. The phrase contrasts with strong evaluation: instead of reflecting on which desires are worthiest, an agent without this capacity merely acts on "whichever desire happens to be strongest." This phrase characterizes the unreflective motivational behavior that strong evaluation enables agents to move beyond.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The phrase describes agents incapable of or not engaged in strong evaluation, not those who exercise it.`,
-      C: `Choice C is incorrect. The phrase is a contrast to strong evaluation, not an example of it.`,
-      D: `Choice D is incorrect. The passage does not describe weak evaluations as selfish or irrational; it simply says they rank preferences by intensity rather than by qualitative worth.`,
-    },
-  },
-
-  {
-    id: 'rw2h-08',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Craft and Structure',
-    skill: 'Text Structure and Purpose',
-    difficulty: 'hard',
-    stimulus: `Recent studies in epigenetics have challenged the once-firm boundary between nature and nurture by demonstrating that environmental experiences can alter gene expression without changing the underlying DNA sequence. Exposure to stress, malnutrition, or trauma can add chemical tags to DNA or to the histone proteins around which DNA is wound, toggling genes on or off in ways that affect physiology, behavior, and vulnerability to disease. In some organisms, these epigenetic modifications have been shown to persist across generations — though the extent to which this occurs in humans remains an active area of research and debate.`,
-    question: `The final clause — "though the extent to which this occurs in humans remains an active area of research and debate" — primarily functions to`,
-    choices: [
-      { label: 'A', text: 'refute the claim that environmental experiences can alter gene expression in humans' },
-      { label: 'B', text: 'argue that human epigenetics requires more government funding for research' },
-      { label: 'C', text: 'suggest that epigenetics is a less credible field than classical genetics' },
-      { label: 'D', text: 'introduce a caveat limiting how broadly the multigenerational finding applies' },
-    ],
-    correctAnswer: 'D',
-    explanation: `Choice D is correct. The clause comes after the claim that epigenetic modifications can persist across generations "in some organisms." The final clause limits this finding by noting that the human case is uncertain and contested, making it a qualifying caveat that restricts how far the preceding claim can be extended.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The clause limits the generational persistence claim, not the broader claim that environments can alter gene expression in humans, which was established earlier in the passage.`,
-      C: `Choice C is incorrect. The passage presents epigenetics positively throughout; the caveat is about one specific question, not about the field's credibility.`,
-      B: `Choice B is incorrect. The clause describes the research status of a question, not a funding argument.`,
-    },
-  },
-
-  // ── Cross-Text Connections (2) ─────────────────────────────────────────────
-
-  {
-    id: 'rw2h-09',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'medium',
-    stimulus: `Text 1: Some anthropologists argue that the cognitive demands of large-scale social living drove the evolution of human intelligence. On this "social brain" hypothesis, the unusually large neocortex of Homo sapiens evolved primarily to track complex social relationships, manage alliances and rivalries, and understand the mental states of other individuals — capacities that would have conferred significant survival advantages in group-living species.
-
-Text 2: Critics of the social brain hypothesis note that several non-social species, including some solitary predators and tool-using birds, exhibit cognitive abilities that are difficult to account for purely through social complexity. They propose instead that ecological challenges — such as locating and processing novel food sources in variable environments — placed the primary selective pressure on intelligence, with social complexity being a consequence rather than a cause of cognitive expansion.`,
-    question: `Based on the passages, the author of Text 2 would most likely argue that the social brain hypothesis`,
-    choices: [
-      { label: 'A', text: 'is supported by the cognitive abilities observed in solitary predators' },
-      { label: 'B', text: 'correctly identifies social living as the only plausible driver of human intelligence' },
-      { label: 'C', text: 'overestimates the selective importance of social complexity relative to ecological challenges' },
-      { label: 'D', text: 'has been confirmed by comparative studies of neocortex size across species' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. Text 2 argues that ecological challenges, not social complexity, were the primary driver of intelligence, and that social complexity may have been a consequence of, not a cause for, cognitive expansion. This directly challenges the hypothesis of Text 1 by suggesting it overestimates the role of social selection.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Text 2 uses solitary predators' cognitive abilities as evidence against the social brain hypothesis, not in support of it.`,
-      B: `Choice B is incorrect. Text 2 explicitly disputes social living as the primary driver, making this claim the opposite of what the author argues.`,
-      D: `Choice D is incorrect. Text 2 does not confirm the hypothesis; it challenges it by proposing an alternative explanation.`,
-    },
-  },
-
-  {
-    id: 'rw2h-10',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'hard',
-    stimulus: `Text 1: The literary theorist Cleanth Brooks argued that the meaning of a great poem cannot be adequately paraphrased without fundamental loss. A poem's meaning is inseparable from its form — the specific arrangement of sounds, rhythms, images, and ironies through which it realizes its meaning. Attempting to extract the poem's "message" in prose destroys the very thing that makes the poem significant.
-
-Text 2: The philosopher Monroe Beardsley countered that the distinction between literary form and content is not as absolute as formalists like Brooks suggest. While a poem's formal properties undeniably shape its effect, it remains possible to identify propositional content — claims that are asserted or implied — that survives translation into different wordings and can be evaluated as true or false, insightful or banal.`,
-    question: `Which of the following, if true, would most directly strengthen the argument made in Text 2?`,
-    choices: [
-      { label: 'A', text: 'Scholars regularly produce accurate prose summaries of Shakespeare\'s plays that audiences find useful.' },
-      { label: 'B', text: 'Translators of poetry consistently report that rhyme schemes are impossible to preserve across languages.' },
-      { label: 'C', text: 'Two readers who produce different prose paraphrases of the same poem may both have understood it correctly.' },
-      { label: 'D', text: 'Formal properties such as meter and assonance have been shown to influence readers\' emotional responses.' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. Text 2 argues that some separable propositional content survives translation into different wording. If scholars can produce accurate prose summaries of Shakespeare's plays that are genuinely useful to audiences, this supports the idea that separable content (distinct from formal properties) can be extracted and conveyed — strengthening Beardsley's position against Brooks's formalism.`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. This observation about translation difficulty supports Brooks's argument (in Text 1) that form and content are inseparable, not Beardsley's argument in Text 2.`,
-      C: `Choice C is incorrect. The possibility of multiple valid paraphrases suggests variability in paraphrase, which does not directly strengthen the claim that extractable propositional content exists.`,
-      D: `Choice D is incorrect. This shows formal properties influence emotional response — a point consistent with Text 1's formalism — and does not address whether separable propositional content exists.`,
-    },
-  },
-
-  // ── Central Ideas and Details (3) ─────────────────────────────────────────
-
-  {
     id: 'rw2h-11',
     section: 'reading-writing',
     moduleId: 'rw-module-2-hard',
@@ -278,6 +72,54 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
       A: `Choice A is incorrect. The passage presents the Great Migration as preceding and enabling the Renaissance, not as something the Renaissance caused.`,
       C: `Choice C is incorrect. The passage explicitly connects the two, describing the Great Migration as a fuel source for the Renaissance.`,
       D: `Choice D is incorrect. The passage describes the Great Migration happening first and enabling the Renaissance, not the reverse.`,
+    },
+  },
+
+  {
+    id: 'rw2h-02',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'medium',
+    stimulus: `The biologist Lynn Margulis proposed in the late 1960s that eukaryotic cells — those with a distinct nucleus — evolved through a process she called endosymbiosis: the permanent absorption of one bacterial cell by another. Mitochondria and chloroplasts, she argued, were once independent bacteria that were incorporated rather than digested by their host cells, entering into a mutually beneficial arrangement that became hereditary. Her theory was initially derided as heterodox, but decades of genetic evidence have since vindicated it, and endosymbiosis is now scientific consensus.`,
+    question: `As used in the passage, "heterodox" most nearly means`,
+    choices: [
+      { label: 'A', text: 'inaccurate and poorly evidenced' },
+      { label: 'B', text: 'departing from accepted scientific opinion' },
+      { label: 'C', text: 'mathematically complex' },
+      { label: 'D', text: 'based on philosophical rather than empirical reasoning' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The passage notes that Margulis's theory was initially "derided as heterodox" but was later validated by genetic evidence. "Heterodox" means departing from established or accepted opinion — the theory went against the scientific mainstream at the time.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The passage explicitly says the theory was later vindicated, implying it was not inaccurate; "heterodox" describes its departure from consensus, not its evidential status.`,
+      C: `Choice C is incorrect. The passage makes no mention of mathematical complexity.`,
+      D: `Choice D is incorrect. Margulis's theory was biological and empirical, not philosophical.`,
+    },
+  },
+
+  {
+    id: 'rw2h-05',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Standard English Conventions',
+    skill: 'Form, Structure, and Sense',
+    difficulty: 'hard',
+    stimulus: `Beneath the museum's grand staircase ______ the forgotten storerooms in which curators recently uncovered dozens of uncatalogued artifacts. The discovery has prompted a comprehensive review of the institution's entire holdings.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: 'lies' },
+      { label: 'B', text: 'lie' },
+      { label: 'C', text: 'has been' },
+      { label: 'D', text: 'was' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The sentence uses inverted syntax, placing the verb before its subject. The true subject is the plural noun "the forgotten storerooms," not the singular "staircase" in the introductory prepositional phrase. Because the subject is plural, the plural verb "lie" is required.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "Lies" is singular; it may seem to agree with the nearby "staircase," but that noun is part of a prepositional phrase and cannot be the subject.`,
+      C: `Choice C is incorrect. "Has been" is singular and does not agree with the plural subject "storerooms."`,
+      D: `Choice D is incorrect. "Was" is singular and fails to agree with the plural subject; the inverted word order makes the plural subject easy to overlook.`,
     },
   },
 
@@ -306,6 +148,30 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
   },
 
   {
+    id: 'rw2h-03',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'hard',
+    stimulus: `Political theorists have long grappled with the tension between procedural and substantive conceptions of justice. Procedural accounts hold that an outcome is just if it results from a fair process, regardless of what that outcome happens to be. Substantive accounts, by contrast, evaluate outcomes directly against independent criteria of fairness or welfare. A persistent challenge for procedural theorists is the possibility that an ostensibly fair procedure can yield outcomes that are, by almost any independent reckoning, deeply unjust.`,
+    question: `As used in the passage, "ostensibly" most nearly means`,
+    choices: [
+      { label: 'A', text: 'secretly' },
+      { label: 'B', text: 'rigorously and transparently' },
+      { label: 'C', text: 'apparently but perhaps not genuinely' },
+      { label: 'D', text: 'historically established' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. The passage describes a procedure that appears fair by procedural standards but may still yield unjust outcomes. "Ostensibly" signals that something appears to be one way but may not actually be so — the appearance of fairness that does not guarantee substantive justice.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "Secretly" implies hidden deception, but "ostensibly" describes surface appearance without implying deliberate concealment.`,
+      B: `Choice B is incorrect. "Rigorously and transparently" would suggest the procedure is genuinely fair, which is what the passage is questioning.`,
+      D: `Choice D is incorrect. Historical establishment is unrelated to the meaning of "ostensibly" in this context.`,
+    },
+  },
+
+  {
     id: 'rw2h-13',
     section: 'reading-writing',
     moduleId: 'rw-module-2-hard',
@@ -329,8 +195,6 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
     },
   },
 
-  // ── Command of Evidence (4) ────────────────────────────────────────────────
-
   {
     id: 'rw2h-14',
     section: 'reading-writing',
@@ -352,6 +216,54 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
       B: `Choice B is incorrect. This addresses enforcement controversies rather than whether tariff rates have fallen.`,
       C: `Choice C is incorrect. Trade volume expansion is a different metric from tariff rates and does not directly show that agreements reduced tariffs.`,
       D: `Choice D is incorrect. This describes regional blocs' behavior toward internal tariffs and external barriers but does not quantify the overall reduction in tariff rates.`,
+    },
+  },
+
+  {
+    id: 'rw2h-06',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Craft and Structure',
+    skill: 'Text Structure and Purpose',
+    difficulty: 'medium',
+    stimulus: `The development of anesthesia in the 1840s transformed surgery from a procedure performed with brutal speed — since patient consciousness precluded lengthy operations — to a deliberate and expansive practice. Within a generation of ether's introduction, surgeons were performing operations on the chest and abdomen that would have been previously unthinkable. Yet this expansion of surgical possibility was accompanied by a corresponding expansion of surgical hubris: mortality rates from postoperative infection remained catastrophically high until Joseph Lister's antiseptic techniques were adopted in the 1870s.`,
+    question: `The primary purpose of the passage is to`,
+    choices: [
+      { label: 'A', text: 'argue that the development of anesthesia was less important than the development of antiseptic technique' },
+      { label: 'B', text: 'trace the biography of Joseph Lister and his contributions to medicine' },
+      { label: 'C', text: 'describe how a major surgical advance created both new capabilities and new risks' },
+      { label: 'D', text: 'compare surgical mortality rates before and after the introduction of ether' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. The passage describes how anesthesia dramatically expanded what surgeons could attempt (new capabilities) and then notes that this same expansion led to more patients dying from infection before antiseptic techniques arrived (new risks). The structure moves from advance to unintended consequence.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The passage does not rank the two innovations against each other in terms of importance.`,
+      B: `Choice B is incorrect. Lister is mentioned only briefly in the final clause; the passage is not about his biography.`,
+      D: `Choice D is incorrect. The passage mentions high mortality but does not present before-and-after comparative data.`,
+    },
+  },
+
+  {
+    id: 'rw2h-17',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Standard English Conventions',
+    skill: 'Boundaries',
+    difficulty: 'hard',
+    stimulus: `The mathematician Emmy Noether developed a theorem linking symmetries in physical systems to conservation laws, a result that remains foundational to modern physics. Her most celebrated contribution ______ profoundly influenced the development of theoretical physics, is still taught in graduate courses nearly a century later.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: ', which' },
+      { label: 'B', text: ' which' },
+      { label: 'C', text: ', that' },
+      { label: 'D', text: ' that' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. The clause "which profoundly influenced the development of theoretical physics" is a nonrestrictive relative clause: it adds extra information about "Her most celebrated contribution" without narrowing which contribution is meant. Nonrestrictive clauses are set off with a comma and introduced by "which." The matching comma after "physics" already closes the clause, so an opening comma before "which" is required.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. Omitting the comma before "which" leaves the nonrestrictive clause without its required opening comma, mismatching the comma that already closes the clause after "physics."`,
+      C: `Choice C is incorrect. "That" introduces restrictive clauses and is not preceded by a comma; using "that" here conflicts with the nonrestrictive, comma-enclosed structure of the clause.`,
+      D: `Choice D is incorrect. "That" cannot introduce a comma-set-off nonrestrictive clause, and without an opening comma the construction is inconsistent with the closing comma after "physics."`,
     },
   },
 
@@ -392,100 +304,27 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
   },
 
   {
-    id: 'rw2h-16',
+    id: 'rw2h-07',
     section: 'reading-writing',
     moduleId: 'rw-module-2-hard',
-    domain: 'Information and Ideas',
-    skill: 'Command of Evidence',
+    domain: 'Craft and Structure',
+    skill: 'Text Structure and Purpose',
     difficulty: 'hard',
-    stimulus: `A sociologist wants to challenge the claim that social mobility in the United States has declined significantly over the past fifty years. Which quotation would most directly support the sociologist's challenge?`,
-    question: `Which quotation would most directly support a challenge to the claim that U.S. social mobility has declined significantly over the past fifty years?`,
+    stimulus: `The philosopher Charles Taylor distinguishes between "weak" and "strong" evaluations of desire. A weak evaluation simply ranks preferences by how much one wants them. A strong evaluation assesses desires according to qualitative distinctions about worth — ranking some desires as higher, nobler, or more authentically expressive of who one wants to be than others. Taylor argues that the capacity for strong evaluation is constitutive of what it means to be a moral agent: it is what allows human beings to reflect on and potentially transform their motivational structures rather than simply acting on whichever desire happens to be strongest at a given moment.`,
+    underlineTargets: ['whichever desire happens to be strongest at a given moment'],
+    question: `The underlined phrase "whichever desire happens to be strongest at a given moment" primarily serves to`,
     choices: [
-      { label: 'A', text: '"The share of children who earn more than their parents has fallen from approximately 90% for children born in 1940 to around 50% for those born in 1980."' },
-      { label: 'B', text: '"Income inequality in the United States, as measured by the Gini coefficient, has increased substantially since the 1970s."' },
-      { label: 'C', text: '"When absolute mobility is adjusted for changes in cost of living and consumption patterns, children born in the 1980s appear to have maintained living standards comparable to or exceeding those of their parents."' },
-      { label: 'D', text: '"Intergenerational earnings correlations in the United States are higher than in most other developed nations, suggesting less relative mobility."' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. The sociologist wants to challenge the "significant decline" claim. This quotation provides an alternative measurement approach — adjusting for cost of living and consumption — that shows comparable or higher living standards, directly undermining the claim of a significant mobility decline.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. This quotation actually supports the claim that social mobility has declined, showing a drop from 90% to 50% in absolute mobility.`,
-      B: `Choice B is incorrect. Rising income inequality is often cited as evidence that mobility has declined, not as a challenge to that claim.`,
-      D: `Choice D is incorrect. This supports the idea that U.S. relative mobility is low compared to other countries, reinforcing rather than challenging the decline narrative.`,
-    },
-  },
-
-  {
-    id: 'rw2h-17',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
-    difficulty: 'hard',
-    stimulus: `The mathematician Emmy Noether developed a theorem linking symmetries in physical systems to conservation laws, a result that remains foundational to modern physics. Her most celebrated contribution ______ profoundly influenced the development of theoretical physics, is still taught in graduate courses nearly a century later.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: ', which' },
-      { label: 'B', text: ' which' },
-      { label: 'C', text: ', that' },
-      { label: 'D', text: ' that' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. The clause "which profoundly influenced the development of theoretical physics" is a nonrestrictive relative clause: it adds extra information about "Her most celebrated contribution" without narrowing which contribution is meant. Nonrestrictive clauses are set off with a comma and introduced by "which." The matching comma after "physics" already closes the clause, so an opening comma before "which" is required.`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. Omitting the comma before "which" leaves the nonrestrictive clause without its required opening comma, mismatching the comma that already closes the clause after "physics."`,
-      C: `Choice C is incorrect. "That" introduces restrictive clauses and is not preceded by a comma; using "that" here conflicts with the nonrestrictive, comma-enclosed structure of the clause.`,
-      D: `Choice D is incorrect. "That" cannot introduce a comma-set-off nonrestrictive clause, and without an opening comma the construction is inconsistent with the closing comma after "physics."`,
-    },
-  },
-
-  // ── Inferences (3) ────────────────────────────────────────────────────────
-
-  {
-    id: 'rw2h-18',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Information and Ideas',
-    skill: 'Inferences',
-    difficulty: 'medium',
-    stimulus: `The transition from hunter-gatherer societies to settled agricultural communities, which began approximately 10,000 years ago in the Fertile Crescent, is sometimes described as a straightforward advance in human wellbeing. Archaeological evidence complicates this narrative. Skeletal analysis shows that early farmers were, on average, shorter and had more nutritional deficiencies than their hunter-gatherer predecessors, suggesting that reliance on a narrow range of calorie-dense but micronutrient-poor crops had adverse health consequences. Meanwhile, living in proximity to domesticated animals facilitated the transmission of new infectious diseases to human populations.`,
-    question: `Based on the passage, it can most reasonably be inferred that the author of the passage believes`,
-    choices: [
-      { label: 'A', text: 'agriculture was, on balance, harmful to human civilization' },
-      { label: 'B', text: 'infectious disease was not a concern for hunter-gatherer societies' },
-      { label: 'C', text: 'hunter-gatherers had better lives in every measurable respect than early farmers' },
-      { label: 'D', text: 'the transition to agriculture involved tradeoffs that the "straightforward advance" narrative overlooks' },
-    ],
-    correctAnswer: 'D',
-    explanation: `Choice D is correct. The author notes that the transition "is sometimes described as a straightforward advance" but then introduces archaeological evidence showing health costs. The word "complicates" signals the author's view that reality was more nuanced — involving both advances and setbacks — which is a tradeoff the simple narrative misses.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The author complicates the positive narrative but does not argue that agriculture was net harmful. "Complicates" implies adding nuance, not reversing the assessment.`,
-      C: `Choice C is incorrect. The passage shows hunter-gatherers were taller and had fewer deficiencies, but it does not claim they were better off "in every measurable respect."`,
-      B: `Choice B is incorrect. The passage does not discuss disease rates among hunter-gatherers; it only notes that proximity to domesticated animals created new disease transmission opportunities for farmers.`,
-    },
-  },
-
-  {
-    id: 'rw2h-19',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Information and Ideas',
-    skill: 'Inferences',
-    difficulty: 'hard',
-    stimulus: `In 1973, the psychologists David Rosenhan and his colleagues published a study in which mentally healthy individuals were admitted to psychiatric hospitals after feigning a single symptom. Once admitted, they behaved entirely normally, yet staff continued to interpret ordinary behaviors as signs of mental illness. A pseudopatient who took notes was recorded in clinical charts as displaying "writing behavior." The study found that genuine psychiatric patients, who recognized the pseudopatients as healthy outsiders, were far more accurate in their assessments than the professionals who diagnosed the pseudopatients.`,
-    question: `Based on the passage, what can most reasonably be inferred about the professionals described in the Rosenhan study?`,
-    choices: [
-      { label: 'A', text: 'They were motivated primarily by financial incentives to keep patients hospitalized.' },
-      { label: 'B', text: 'Their initial diagnostic labels shaped how they subsequently interpreted the pseudopatients\' behaviors.' },
-      { label: 'C', text: 'They were more skilled than actual patients at recognizing who was genuinely ill.' },
-      { label: 'D', text: 'Their errors resulted from insufficient training in psychiatric diagnostic criteria.' },
+      { label: 'A', text: 'describe the behavior of agents capable of strong evaluation' },
+      { label: 'B', text: 'characterize the motivational behavior that strong evaluation allows agents to transcend' },
+      { label: 'C', text: 'provide an example of the qualitative distinctions involved in strong evaluation' },
+      { label: 'D', text: 'suggest that weak evaluations are always selfish and irrational' },
     ],
     correctAnswer: 'B',
-    explanation: `Choice B is correct. The passage shows that after admitting the pseudopatients, professionals interpreted perfectly normal behaviors as symptoms of illness. This pattern — where the initial diagnosis ("this person is ill") colored all subsequent observation — strongly supports the inference that diagnostic labels biased how professionals interpreted what they saw.`,
+    explanation: `Choice B is correct. The phrase contrasts with strong evaluation: instead of reflecting on which desires are worthiest, an agent without this capacity merely acts on "whichever desire happens to be strongest." This phrase characterizes the unreflective motivational behavior that strong evaluation enables agents to move beyond.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage does not mention financial incentives or economic motivations for the professionals' errors.`,
-      C: `Choice C is incorrect. The passage explicitly states that actual patients outperformed professionals in recognizing the pseudopatients as healthy.`,
-      D: `Choice D is incorrect. The passage does not attribute the errors to insufficient training; the explanation is more likely systematic perceptual bias from existing diagnoses.`,
+      A: `Choice A is incorrect. The phrase describes agents incapable of or not engaged in strong evaluation, not those who exercise it.`,
+      C: `Choice C is incorrect. The phrase is a contrast to strong evaluation, not an example of it.`,
+      D: `Choice D is incorrect. The passage does not describe weak evaluations as selfish or irrational; it simply says they rank preferences by intensity rather than by qualitative worth.`,
     },
   },
 
@@ -513,7 +352,53 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
     },
   },
 
-  // ── Rhetorical Synthesis (2) ──────────────────────────────────────────────
+  {
+    id: 'rw2h-16',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'hard',
+    stimulus: `A sociologist wants to challenge the claim that social mobility in the United States has declined significantly over the past fifty years. Which quotation would most directly support the sociologist's challenge?`,
+    question: `Which quotation would most directly support a challenge to the claim that U.S. social mobility has declined significantly over the past fifty years?`,
+    choices: [
+      { label: 'A', text: '"The share of children who earn more than their parents has fallen from approximately 90% for children born in 1940 to around 50% for those born in 1980."' },
+      { label: 'B', text: '"Income inequality in the United States, as measured by the Gini coefficient, has increased substantially since the 1970s."' },
+      { label: 'C', text: '"When absolute mobility is adjusted for changes in cost of living and consumption patterns, children born in the 1980s appear to have maintained living standards comparable to or exceeding those of their parents."' },
+      { label: 'D', text: '"Intergenerational earnings correlations in the United States are higher than in most other developed nations, suggesting less relative mobility."' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. The sociologist wants to challenge the "significant decline" claim. This quotation provides an alternative measurement approach — adjusting for cost of living and consumption — that shows comparable or higher living standards, directly undermining the claim of a significant mobility decline.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. This quotation actually supports the claim that social mobility has declined, showing a drop from 90% to 50% in absolute mobility.`,
+      B: `Choice B is incorrect. Rising income inequality is often cited as evidence that mobility has declined, not as a challenge to that claim.`,
+      D: `Choice D is incorrect. This supports the idea that U.S. relative mobility is low compared to other countries, reinforcing rather than challenging the decline narrative.`,
+    },
+  },
+
+  {
+    id: 'rw2h-08',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Craft and Structure',
+    skill: 'Text Structure and Purpose',
+    difficulty: 'hard',
+    stimulus: `Recent studies in epigenetics have challenged the once-firm boundary between nature and nurture by demonstrating that environmental experiences can alter gene expression without changing the underlying DNA sequence. Exposure to stress, malnutrition, or trauma can add chemical tags to DNA or to the histone proteins around which DNA is wound, toggling genes on or off in ways that affect physiology, behavior, and vulnerability to disease. In some organisms, these epigenetic modifications have been shown to persist across generations — though the extent to which this occurs in humans remains an active area of research and debate.`,
+    question: `The final clause — "though the extent to which this occurs in humans remains an active area of research and debate" — primarily functions to`,
+    choices: [
+      { label: 'A', text: 'refute the claim that environmental experiences can alter gene expression in humans' },
+      { label: 'B', text: 'argue that human epigenetics requires more government funding for research' },
+      { label: 'C', text: 'suggest that epigenetics is a less credible field than classical genetics' },
+      { label: 'D', text: 'introduce a caveat limiting how broadly the multigenerational finding applies' },
+    ],
+    correctAnswer: 'D',
+    explanation: `Choice D is correct. The clause comes after the claim that epigenetic modifications can persist across generations "in some organisms." The final clause limits this finding by noting that the human case is uncertain and contested, making it a qualifying caveat that restricts how far the preceding claim can be extended.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The clause limits the generational persistence claim, not the broader claim that environments can alter gene expression in humans, which was established earlier in the passage.`,
+      C: `Choice C is incorrect. The passage presents epigenetics positively throughout; the caveat is about one specific question, not about the field's credibility.`,
+      B: `Choice B is incorrect. The clause describes the research status of a question, not a funding argument.`,
+    },
+  },
 
   {
     id: 'rw2h-21',
@@ -540,6 +425,56 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
       A: `Choice A is incorrect. This presents a data point about Phoenix but does not describe the self-reinforcing cycle.`,
       C: `Choice C is incorrect. This describes a mitigation strategy, not the self-reinforcing nature of the problem.`,
       D: `Choice D is incorrect. This identifies a cause but does not capture the self-amplifying feedback that makes the effect particularly concerning.`,
+    },
+  },
+
+  {
+    id: 'rw2h-18',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Information and Ideas',
+    skill: 'Inferences',
+    difficulty: 'medium',
+    stimulus: `The transition from hunter-gatherer societies to settled agricultural communities, which began approximately 10,000 years ago in the Fertile Crescent, is sometimes described as a straightforward advance in human wellbeing. Archaeological evidence complicates this narrative. Skeletal analysis shows that early farmers were, on average, shorter and had more nutritional deficiencies than their hunter-gatherer predecessors, suggesting that reliance on a narrow range of calorie-dense but micronutrient-poor crops had adverse health consequences. Meanwhile, living in proximity to domesticated animals facilitated the transmission of new infectious diseases to human populations.`,
+    question: `Based on the passage, it can most reasonably be inferred that the author of the passage believes`,
+    choices: [
+      { label: 'A', text: 'agriculture was, on balance, harmful to human civilization' },
+      { label: 'B', text: 'infectious disease was not a concern for hunter-gatherer societies' },
+      { label: 'C', text: 'hunter-gatherers had better lives in every measurable respect than early farmers' },
+      { label: 'D', text: 'the transition to agriculture involved tradeoffs that the "straightforward advance" narrative overlooks' },
+    ],
+    correctAnswer: 'D',
+    explanation: `Choice D is correct. The author notes that the transition "is sometimes described as a straightforward advance" but then introduces archaeological evidence showing health costs. The word "complicates" signals the author's view that reality was more nuanced — involving both advances and setbacks — which is a tradeoff the simple narrative misses.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The author complicates the positive narrative but does not argue that agriculture was net harmful. "Complicates" implies adding nuance, not reversing the assessment.`,
+      C: `Choice C is incorrect. The passage shows hunter-gatherers were taller and had fewer deficiencies, but it does not claim they were better off "in every measurable respect."`,
+      B: `Choice B is incorrect. The passage does not discuss disease rates among hunter-gatherers; it only notes that proximity to domesticated animals created new disease transmission opportunities for farmers.`,
+    },
+  },
+
+  {
+    id: 'rw2h-09',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Craft and Structure',
+    skill: 'Cross-Text Connections',
+    difficulty: 'medium',
+    stimulus: `Text 1: Some anthropologists argue that the cognitive demands of large-scale social living drove the evolution of human intelligence. On this "social brain" hypothesis, the unusually large neocortex of Homo sapiens evolved primarily to track complex social relationships, manage alliances and rivalries, and understand the mental states of other individuals — capacities that would have conferred significant survival advantages in group-living species.
+
+Text 2: Critics of the social brain hypothesis note that several non-social species, including some solitary predators and tool-using birds, exhibit cognitive abilities that are difficult to account for purely through social complexity. They propose instead that ecological challenges — such as locating and processing novel food sources in variable environments — placed the primary selective pressure on intelligence, with social complexity being a consequence rather than a cause of cognitive expansion.`,
+    question: `Based on the passages, the author of Text 2 would most likely argue that the social brain hypothesis`,
+    choices: [
+      { label: 'A', text: 'is supported by the cognitive abilities observed in solitary predators' },
+      { label: 'B', text: 'correctly identifies social living as the only plausible driver of human intelligence' },
+      { label: 'C', text: 'overestimates the selective importance of social complexity relative to ecological challenges' },
+      { label: 'D', text: 'has been confirmed by comparative studies of neocortex size across species' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. Text 2 argues that ecological challenges, not social complexity, were the primary driver of intelligence, and that social complexity may have been a consequence of, not a cause for, cognitive expansion. This directly challenges the hypothesis of Text 1 by suggesting it overestimates the role of social selection.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. Text 2 uses solitary predators' cognitive abilities as evidence against the social brain hypothesis, not in support of it.`,
+      B: `Choice B is incorrect. Text 2 explicitly disputes social living as the primary driver, making this claim the opposite of what the author argues.`,
+      D: `Choice D is incorrect. Text 2 does not confirm the hypothesis; it challenges it by proposing an alternative explanation.`,
     },
   },
 
@@ -571,7 +506,55 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
     },
   },
 
-  // ── Transitions (2) ──────────────────────────────────────────────────────
+  {
+    id: 'rw2h-19',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Information and Ideas',
+    skill: 'Inferences',
+    difficulty: 'hard',
+    stimulus: `In 1973, the psychologists David Rosenhan and his colleagues published a study in which mentally healthy individuals were admitted to psychiatric hospitals after feigning a single symptom. Once admitted, they behaved entirely normally, yet staff continued to interpret ordinary behaviors as signs of mental illness. A pseudopatient who took notes was recorded in clinical charts as displaying "writing behavior." The study found that genuine psychiatric patients, who recognized the pseudopatients as healthy outsiders, were far more accurate in their assessments than the professionals who diagnosed the pseudopatients.`,
+    question: `Based on the passage, what can most reasonably be inferred about the professionals described in the Rosenhan study?`,
+    choices: [
+      { label: 'A', text: 'They were motivated primarily by financial incentives to keep patients hospitalized.' },
+      { label: 'B', text: 'Their initial diagnostic labels shaped how they subsequently interpreted the pseudopatients\' behaviors.' },
+      { label: 'C', text: 'They were more skilled than actual patients at recognizing who was genuinely ill.' },
+      { label: 'D', text: 'Their errors resulted from insufficient training in psychiatric diagnostic criteria.' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The passage shows that after admitting the pseudopatients, professionals interpreted perfectly normal behaviors as symptoms of illness. This pattern — where the initial diagnosis ("this person is ill") colored all subsequent observation — strongly supports the inference that diagnostic labels biased how professionals interpreted what they saw.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The passage does not mention financial incentives or economic motivations for the professionals' errors.`,
+      C: `Choice C is incorrect. The passage explicitly states that actual patients outperformed professionals in recognizing the pseudopatients as healthy.`,
+      D: `Choice D is incorrect. The passage does not attribute the errors to insufficient training; the explanation is more likely systematic perceptual bias from existing diagnoses.`,
+    },
+  },
+
+  {
+    id: 'rw2h-10',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Craft and Structure',
+    skill: 'Cross-Text Connections',
+    difficulty: 'hard',
+    stimulus: `Text 1: The literary theorist Cleanth Brooks argued that the meaning of a great poem cannot be adequately paraphrased without fundamental loss. A poem's meaning is inseparable from its form — the specific arrangement of sounds, rhythms, images, and ironies through which it realizes its meaning. Attempting to extract the poem's "message" in prose destroys the very thing that makes the poem significant.
+
+Text 2: The philosopher Monroe Beardsley countered that the distinction between literary form and content is not as absolute as formalists like Brooks suggest. While a poem's formal properties undeniably shape its effect, it remains possible to identify propositional content — claims that are asserted or implied — that survives translation into different wordings and can be evaluated as true or false, insightful or banal.`,
+    question: `Which of the following, if true, would most directly strengthen the argument made in Text 2?`,
+    choices: [
+      { label: 'A', text: 'Scholars regularly produce accurate prose summaries of Shakespeare\'s plays that audiences find useful.' },
+      { label: 'B', text: 'Translators of poetry consistently report that rhyme schemes are impossible to preserve across languages.' },
+      { label: 'C', text: 'Two readers who produce different prose paraphrases of the same poem may both have understood it correctly.' },
+      { label: 'D', text: 'Formal properties such as meter and assonance have been shown to influence readers\' emotional responses.' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. Text 2 argues that some separable propositional content survives translation into different wording. If scholars can produce accurate prose summaries of Shakespeare's plays that are genuinely useful to audiences, this supports the idea that separable content (distinct from formal properties) can be extracted and conveyed — strengthening Beardsley's position against Brooks's formalism.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. This observation about translation difficulty supports Brooks's argument (in Text 1) that form and content are inseparable, not Beardsley's argument in Text 2.`,
+      C: `Choice C is incorrect. The possibility of multiple valid paraphrases suggests variability in paraphrase, which does not directly strengthen the claim that extractable propositional content exists.`,
+      D: `Choice D is incorrect. This shows formal properties influence emotional response — a point consistent with Text 1's formalism — and does not address whether separable propositional content exists.`,
+    },
+  },
 
   {
     id: 'rw2h-23',
@@ -594,6 +577,54 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
       A: `Choice A is incorrect. "Therefore" would indicate that the Great Depression was a consequence of the classical view, but the sentence describes evidence contradicting that view.`,
       B: `Choice B is incorrect. "In other words" signals a restatement or clarification of the preceding point, but the second sentence is a counterexample, not a restatement.`,
       D: `Choice D is incorrect. "Similarly" would indicate that the two sentences describe parallel situations, but the second sentence contradicts the theoretical prediction in the first.`,
+    },
+  },
+
+  {
+    id: 'rw2h-25',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Standard English Conventions',
+    skill: 'Boundaries',
+    difficulty: 'medium',
+    stimulus: `The sociologist Émile Durkheim proposed that suicide — typically considered an intensely personal act — was in fact shaped by social forces _______ his analysis showed systematic variation in suicide rates across different types of social integration and regulation.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: ': his analysis' },
+      { label: 'B', text: ', his analysis' },
+      { label: 'C', text: 'his analysis' },
+      { label: 'D', text: 'and his analysis' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. A colon can introduce a clause that explains or elaborates on the preceding independent clause. Here, Durkheim's analysis showing systematic social variation is the explanation or evidence for the claim that suicide is shaped by social forces. A colon correctly joins these two independent clauses in an explanatory relationship.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. Using only a comma to join two independent clauses creates a comma splice.`,
+      C: `Choice C is incorrect. Joining two independent clauses with no punctuation creates a run-on sentence.`,
+      D: `Choice D is incorrect. "And" joins two equal clauses without indicating that the second explains the first, making the logical relationship between the clauses less clear than the colon.`,
+    },
+  },
+
+  {
+    id: 'rw2h-27',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Standard English Conventions',
+    skill: 'Form, Structure, and Sense',
+    difficulty: 'hard',
+    stimulus: `The research team's findings, _______ initially met with considerable skepticism by peer reviewers, have since been replicated in six independent laboratories across three continents.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: 'which were' },
+      { label: 'B', text: 'which was' },
+      { label: 'C', text: 'that were' },
+      { label: 'D', text: 'having been' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. The relative clause modifies "findings," which is the plural noun. The relative pronoun "which" correctly introduces a nonrestrictive clause (set off by commas), and "were" agrees in number with the plural antecedent "findings."`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. "Which was" uses a singular verb that does not agree with the plural noun "findings."`,
+      C: `Choice C is incorrect. "That were" uses a restrictive relative pronoun, which requires no surrounding commas. Since the clause is set off by commas in the sentence, "which" (nonrestrictive) is required.`,
+      D: `Choice D is incorrect. "Having been met with skepticism" is a participial phrase that could be grammatically placed here, but it changes the structure significantly and creates an awkward, run-on participial chain when the full sentence is read.`,
     },
   },
 
@@ -621,32 +652,6 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
     },
   },
 
-  // ── Boundaries (2) ──────────────────────────────────────────────────────
-
-  {
-    id: 'rw2h-25',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
-    difficulty: 'medium',
-    stimulus: `The sociologist Émile Durkheim proposed that suicide — typically considered an intensely personal act — was in fact shaped by social forces _______ his analysis showed systematic variation in suicide rates across different types of social integration and regulation.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: ': his analysis' },
-      { label: 'B', text: ', his analysis' },
-      { label: 'C', text: 'his analysis' },
-      { label: 'D', text: 'and his analysis' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. A colon can introduce a clause that explains or elaborates on the preceding independent clause. Here, Durkheim's analysis showing systematic social variation is the explanation or evidence for the claim that suicide is shaped by social forces. A colon correctly joins these two independent clauses in an explanatory relationship.`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. Using only a comma to join two independent clauses creates a comma splice.`,
-      C: `Choice C is incorrect. Joining two independent clauses with no punctuation creates a run-on sentence.`,
-      D: `Choice D is incorrect. "And" joins two equal clauses without indicating that the second explains the first, making the logical relationship between the clauses less clear than the colon.`,
-    },
-  },
-
   {
     id: 'rw2h-26',
     section: 'reading-writing',
@@ -668,32 +673,6 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
       B: `Choice B is incorrect. A comma here would weakly connect "three proposals" to the list without the clarity that a colon provides for formal enumeration.`,
       C: `Choice C is incorrect. A semicolon separates independent clauses or items in a complex list, but it does not correctly introduce a list following a complete independent clause.`,
       D: `Choice D is incorrect. "Which included" is a relative clause requiring that the antecedent "proposals" be followed by "which" — but rewriting the sentence this way creates awkward syntax and unnecessary wordiness.`,
-    },
-  },
-
-  // ── Form, Structure, and Sense (1) ────────────────────────────────────────
-
-  {
-    id: 'rw2h-27',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Standard English Conventions',
-    skill: 'Form, Structure, and Sense',
-    difficulty: 'hard',
-    stimulus: `The research team's findings, _______ initially met with considerable skepticism by peer reviewers, have since been replicated in six independent laboratories across three continents.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: 'which were' },
-      { label: 'B', text: 'which was' },
-      { label: 'C', text: 'that were' },
-      { label: 'D', text: 'having been' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. The relative clause modifies "findings," which is the plural noun. The relative pronoun "which" correctly introduces a nonrestrictive clause (set off by commas), and "were" agrees in number with the plural antecedent "findings."`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. "Which was" uses a singular verb that does not agree with the plural noun "findings."`,
-      C: `Choice C is incorrect. "That were" uses a restrictive relative pronoun, which requires no surrounding commas. Since the clause is set off by commas in the sentence, "which" (nonrestrictive) is required.`,
-      D: `Choice D is incorrect. "Having been met with skepticism" is a participial phrase that could be grammatically placed here, but it changes the structure significantly and creates an awkward, run-on participial chain when the full sentence is read.`,
     },
   },
 ]

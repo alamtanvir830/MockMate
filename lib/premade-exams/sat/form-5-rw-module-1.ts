@@ -1,30 +1,75 @@
 import type { RWQuestion } from './types'
 
 export const f5RwModule1Questions: RWQuestion[] = [
-
-  // ── Craft and Structure: Words in Context (q01–q03) ──────────────────────────
-
   {
-    id: 'sat-f5-rw-m1-q01',
+    id: 'sat-f5-rw-m1-q27',
     section: 'reading-writing',
     moduleId: 'f5-rw-module-1',
-    domain: 'Craft and Structure',
-    skill: 'Words in Context',
-    difficulty: 'easy',
-    stimulus: 'The chef\'s new recipe was praised by every critic who tried it. Unlike her previous dishes, which some found overly rich, this one was _______, pleasing diners who preferred lighter flavors.',
-    question: 'Which choice completes the text with the most logical and precise word or phrase?',
+    domain: 'Standard English Conventions',
+    skill: 'Form, Structure, and Sense',
+    difficulty: 'hard',
+    stimulus: 'The review committee praised the proposal for its clarity, its feasibility, and _______ it addressed long-standing gaps in the current policy framework.',
+    question: 'Which choice completes the text so that it conforms to the conventions of Standard Written English?',
     choices: [
-      { label: 'A', text: 'delicate' },
-      { label: 'B', text: 'elaborate' },
-      { label: 'C', text: 'pungent' },
-      { label: 'D', text: 'scarce' },
+      { label: 'A', text: 'the way' },
+      { label: 'B', text: 'for' },
+      { label: 'C', text: 'the fact that' },
+      { label: 'D', text: 'how' },
     ],
     correctAnswer: 'A',
-    explanation: '"Delicate" means subtle and light in flavor, which contrasts with the previous dishes described as overly rich and fits the preference of diners who liked lighter flavors.',
+    explanation: 'The sentence lists three things the committee praised: clarity (noun), feasibility (noun), and a third item that must be parallel. "The way it addressed..." is a noun phrase parallel to "clarity" and "feasibility." Choices C and D produce grammatically awkward or non-parallel structures when combined with the series, and Choice B creates a prepositional phrase that breaks the parallel structure of the list.',
     wrongAnswerExplanations: {
-      B: '"Elaborate" refers to complexity or intricacy, not lightness of flavor — it does not contrast with "overly rich."',
-      C: '"Pungent" means strong or sharp in taste or smell, which would be consistent with richness rather than contrasting it.',
-      D: '"Scarce" means limited in supply; it describes availability, not flavor.',
+      B: '"For it addressed" creates an incomplete subordinate clause that is not parallel to the nouns "clarity" and "feasibility."',
+      C: '"The fact that it addressed" is grammatically possible but creates a wordier, less idiomatic parallel than "the way it addressed."',
+      D: '"How it addressed" forms a noun clause, but "how" introduces an indirect question more naturally than a parallel list item; "the way" is more idiomatic and clearly parallel.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m1-q09',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'easy',
+    stimulus: 'The monarch butterfly undertakes one of the longest migrations of any insect in North America, traveling up to three thousand miles between its summer breeding grounds in the United States and Canada and its overwintering sites in the mountains of central Mexico. Unlike migratory birds, which often make the round trip in a single lifetime, no individual monarch completes the full cycle. Instead, the southward autumn migration is completed by one "super generation" of long-lived butterflies, while the return journey north in spring is accomplished by two or three successive generations of shorter-lived descendants.',
+    question: 'Which choice best states the main idea of the text?',
+    choices: [
+      { label: 'A', text: 'Monarch butterflies are superior to migratory birds because they travel farther distances each year.' },
+      { label: 'B', text: 'The monarch butterfly\'s multigenerational migration differs fundamentally from single-lifetime animal migrations.' },
+      { label: 'C', text: 'Scientists have recently discovered that monarch butterflies overwinter in the mountains of central Mexico.' },
+      { label: 'D', text: 'The return journey north is more difficult for monarch butterflies than the southward autumn migration.' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The passage\'s central point is that the monarch\'s migration is unusual because no single individual completes the full cycle — it is spread across multiple generations. The comparison to migratory birds reinforces how distinctive this multigenerational pattern is.',
+    wrongAnswerExplanations: {
+      A: 'The passage does not claim monarchs are superior to birds; it uses the bird comparison to highlight what is different about monarchs.',
+      C: 'The overwintering location is a supporting detail, not the main idea; the passage does not present this as a recent discovery.',
+      D: 'The passage does not compare the difficulty of the two legs of the journey.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m1-q17',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
+    difficulty: 'easy',
+    stimulus: 'Many people assume that cold weather directly causes illness. _______, viruses such as influenza and the common cold spread more easily in winter largely because people spend more time indoors in close proximity to one another, not because the temperature itself weakens the immune system.',
+    question: 'Which choice completes the text with the most logical transition?',
+    choices: [
+      { label: 'A', text: 'In addition' },
+      { label: 'B', text: 'In contrast' },
+      { label: 'C', text: 'As a result' },
+      { label: 'D', text: 'For instance' },
+    ],
+    correctAnswer: 'B',
+    explanation: '"In contrast" signals that the second sentence contradicts the assumption stated in the first — that cold directly causes illness. The second sentence replaces that assumption with an alternative explanation (indoor proximity), so a contrast transition is needed.',
+    wrongAnswerExplanations: {
+      A: '"In addition" signals that new, consistent information is being added, but the second sentence corrects the first, not adds to it.',
+      C: '"As a result" implies the second sentence is a consequence of the first, but the second sentence actually contradicts the first.',
+      D: '"For instance" introduces an example of the previous point, but the second sentence replaces the previous point rather than exemplifying it.',
     },
   },
 
@@ -53,6 +98,54 @@ export const f5RwModule1Questions: RWQuestion[] = [
   },
 
   {
+    id: 'sat-f5-rw-m1-q10',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'medium',
+    stimulus: 'The concept of "smart cities" — urban environments equipped with sensors, data networks, and automated systems — has attracted both enthusiasm and skepticism. Proponents argue that real-time data collection can optimize traffic flow, reduce energy consumption, and improve emergency response times. Critics, however, contend that the infrastructure required is prohibitively expensive and that continuous monitoring of public spaces raises serious privacy concerns. A further complication is the digital divide: cities that invest heavily in smart technology may inadvertently widen inequality between residents who can access and navigate digital services and those who cannot.',
+    question: 'Which choice best describes what the text does?',
+    choices: [
+      { label: 'A', text: 'It argues that smart cities represent the most promising solution to urban inequality.' },
+      { label: 'B', text: 'It presents both the potential benefits and the significant concerns associated with smart city development.' },
+      { label: 'C', text: 'It refutes the claim that smart city technology can improve emergency response times.' },
+      { label: 'D', text: 'It explains why most cities have already adopted smart city infrastructure.' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The passage is balanced: it first describes proponents\' arguments about traffic, energy, and emergency response, then outlines critics\' concerns about cost, privacy, and the digital divide. It neither endorses nor dismisses smart cities.',
+    wrongAnswerExplanations: {
+      A: 'The passage does not argue smart cities are the best solution to inequality — in fact, it warns they could worsen inequality.',
+      C: 'The passage does not refute the emergency-response claim; it presents it as one of the proponents\' arguments.',
+      D: 'The passage does not state that most cities have adopted smart city infrastructure.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m1-q18',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
+    difficulty: 'medium',
+    stimulus: 'Early conservationists believed that wilderness areas should be preserved in a state of pristine, human-free nature. _______, ecologists now recognize that many landscapes once considered "untouched" were in fact actively managed for millennia by Indigenous communities through practices such as controlled burning, selective harvesting, and irrigation.',
+    question: 'Which choice completes the text with the most logical transition?',
+    choices: [
+      { label: 'A', text: 'Similarly' },
+      { label: 'B', text: 'Therefore' },
+      { label: 'C', text: 'However' },
+      { label: 'D', text: 'Furthermore' },
+    ],
+    correctAnswer: 'C',
+    explanation: '"However" is the correct contrast transition. The first sentence describes an early belief in pristine, human-free wilderness; the second sentence contradicts this by revealing that many supposedly untouched landscapes were actually shaped by Indigenous land management. "However" appropriately signals this contradiction.',
+    wrongAnswerExplanations: {
+      A: '"Similarly" would indicate agreement or resemblance between the two sentences, but they present contrasting views.',
+      B: '"Therefore" signals a logical consequence of what came before, but the second sentence does not follow from the early conservationists\' belief — it challenges it.',
+      D: '"Furthermore" adds information in the same direction, but the second sentence moves in a different direction from the first.',
+    },
+  },
+
+  {
     id: 'sat-f5-rw-m1-q03',
     section: 'reading-writing',
     moduleId: 'f5-rw-module-1',
@@ -76,7 +169,53 @@ export const f5RwModule1Questions: RWQuestion[] = [
     },
   },
 
-  // ── Craft and Structure: Text Structure and Purpose (q04–q06) ─────────────────
+  {
+    id: 'sat-f5-rw-m1-q11',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'medium',
+    stimulus: 'Glass frogs, named for the translucency of their ventral skin, are native to the rainforests of Central and South America. Researchers studying one species recently discovered an unusual physiological strategy for surviving periods of rest: the frogs concentrate nearly ninety percent of their red blood cells into the liver, dramatically reducing the visibility of their circulatory system. Because red blood cells scatter light and make tissue appear opaque, withdrawing them from peripheral vessels renders the frogs far more transparent during sleep — and therefore far harder for predators to detect while resting on leaves.',
+    question: 'According to the text, why do glass frogs become more transparent when they sleep?',
+    choices: [
+      { label: 'A', text: 'Their skin produces a chemical that increases light transmission during periods of inactivity.' },
+      { label: 'B', text: 'Their red blood cells change color in response to lower nighttime temperatures.' },
+      { label: 'C', text: 'They concentrate their red blood cells in the liver, reducing the opacity caused by cells in peripheral vessels.' },
+      { label: 'D', text: 'They slow their metabolism, which causes their heart rate to drop and reduces blood flow to the skin.' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'The text explicitly states that glass frogs concentrate nearly ninety percent of their red blood cells into the liver, which removes from peripheral vessels the cells that scatter light and cause opacity — thereby increasing transparency.',
+    wrongAnswerExplanations: {
+      A: 'The text makes no mention of a chemical that increases light transmission; the mechanism is cell redistribution.',
+      B: 'The text does not mention temperature changes affecting cell color.',
+      D: 'While glass frogs are resting, the text does not describe reduced metabolism or heart rate as the cause of increased transparency.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m1-q19',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Expression of Ideas',
+    skill: 'Rhetorical Synthesis',
+    difficulty: 'medium',
+    stimulus: 'A student is writing a report about bioluminescence in deep-sea organisms. The student has gathered the following notes:\n\n- Bioluminescence is the production and emission of light by living organisms through chemical reactions.\n- In the deep ocean, where sunlight cannot penetrate, roughly 76 percent of species are estimated to be bioluminescent.\n- Organisms use bioluminescence for purposes including attracting prey, deterring predators, and communicating with potential mates.\n- The anglerfish dangles a glowing lure above its mouth to draw prey within striking distance.',
+    question: 'The student wants to introduce the main topic of bioluminescence and provide one specific example of its use. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
+    choices: [
+      { label: 'A', text: 'Bioluminescence, the production of light through chemical reactions in living organisms, serves many purposes in the deep ocean; for example, the anglerfish uses a glowing lure to attract prey.' },
+      { label: 'B', text: 'Approximately 76 percent of deep-sea species are bioluminescent, and scientists have studied this phenomenon for decades using remotely operated submersibles.' },
+      { label: 'C', text: 'Bioluminescence is used for attracting prey, deterring predators, and communicating with mates, all of which are important for survival in the deep ocean.' },
+      { label: 'D', text: 'The anglerfish is one of the most studied deep-sea animals, and its glowing lure has made it a popular subject in documentary films about ocean life.' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Choice A accomplishes both goals: it introduces bioluminescence with a definition drawn from the notes and then provides the specific example of the anglerfish\'s glowing lure. The other choices either omit the definition, include information not in the notes, or focus only on the example without introducing the broader topic.',
+    wrongAnswerExplanations: {
+      B: 'This choice provides a statistic but does not introduce bioluminescence with a definition, and it adds information about submersibles not found in the notes.',
+      C: 'This choice lists purposes of bioluminescence but does not introduce the concept with a definition or provide a single focused example.',
+      D: 'This choice focuses narrowly on the anglerfish and adds claims about documentary films not found in the notes; it does not introduce bioluminescence as a topic.',
+    },
+  },
 
   {
     id: 'sat-f5-rw-m1-q04',
@@ -99,6 +238,54 @@ export const f5RwModule1Questions: RWQuestion[] = [
       A: 'The sentence does not challenge Kuhn\'s theory; it reinforces and elaborates on Kuhn\'s own acknowledgment that communities matter.',
       B: 'No specific historical example of a lone scientist is provided; the sentence speaks in general terms.',
       D: 'The agricultural metaphor ("communal soil") is a rhetorical device, not a shift in topic toward agricultural or intellectual history.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m1-q12',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'medium',
+    stimulus: 'A researcher studying urban bird populations claims that species capable of modifying their vocalizations are better able to communicate effectively in noisy city environments than species with fixed calls.',
+    question: 'Which finding, if true, would most directly support this claim?',
+    choices: [
+      { label: 'A', text: 'Studies show that birds in cities have, on average, smaller body sizes than birds of the same species living in rural areas.' },
+      { label: 'B', text: 'Measurements confirm that birds capable of adjusting their song pitch sing at higher frequencies in noisy urban areas, and their songs remain detectable to mates and rivals at comparable distances to quieter rural environments.' },
+      { label: 'C', text: 'Surveys find that urban bird populations include a greater variety of species than populations in rural habitats of equivalent area.' },
+      { label: 'D', text: 'Observations reveal that birds in cities nest earlier in the spring than birds of the same species in rural areas.' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The claim is that vocal flexibility allows better communication in noisy environments. Choice B directly supports this: birds that adjust their pitch in noisy urban settings manage to maintain effective signal transmission to mates and rivals — showing that vocal modification preserves communicative function.',
+    wrongAnswerExplanations: {
+      A: 'Body size in cities is not relevant to the claim about vocal flexibility and communication effectiveness.',
+      C: 'Species diversity does not address whether individual species communicate more or less effectively based on vocal flexibility.',
+      D: 'Nesting timing relates to breeding behavior, not to the effectiveness of vocalization in noisy environments.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m1-q20',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Expression of Ideas',
+    skill: 'Rhetorical Synthesis',
+    difficulty: 'medium',
+    stimulus: 'A student is writing an essay about the history of public libraries in the United States. The student has gathered the following notes:\n\n- The first publicly funded library in the United States opened in Peterborough, New Hampshire, in 1833.\n- Andrew Carnegie funded the construction of 2,509 libraries worldwide between 1883 and 1929, including 1,679 in the United States.\n- Carnegie\'s libraries were designed with the idea that free access to knowledge would allow working-class individuals to educate themselves and improve their circumstances.\n- Today, the United States has approximately 17,000 public library locations serving over 170 million registered users.',
+    question: 'The student wants to emphasize the scale of Andrew Carnegie\'s contribution to public library expansion in the United States. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
+    choices: [
+      { label: 'A', text: 'Andrew Carnegie believed that free access to knowledge could help working-class people improve their lives, which motivated his philanthropic investments in public institutions.' },
+      { label: 'B', text: 'The first publicly funded library in the United States opened in 1833, decades before Carnegie began his library-building campaign.' },
+      { label: 'C', text: 'Between 1883 and 1929, Carnegie funded the construction of 1,679 libraries in the United States alone — more than any other single private donor in the nation\'s history.' },
+      { label: 'D', text: 'Today, the United States has approximately 17,000 public library locations, a number that reflects more than a century of investment in public access to information.' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Choice C emphasizes the scale of Carnegie\'s contribution by citing the specific number of US libraries he funded (1,679) and characterizing him as the largest single private donor — directly addressing the goal of highlighting the magnitude of his impact.',
+    wrongAnswerExplanations: {
+      A: 'This choice emphasizes Carnegie\'s motivation and philosophy, not the scale of his contribution.',
+      B: 'This choice highlights the early history of public libraries in the US but does not address Carnegie\'s contribution at all.',
+      D: 'This choice discusses the current scale of US libraries overall but does not attribute that scale to Carnegie specifically.',
     },
   },
 
@@ -127,180 +314,6 @@ export const f5RwModule1Questions: RWQuestion[] = [
   },
 
   {
-    id: 'sat-f5-rw-m1-q06',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Craft and Structure',
-    skill: 'Text Structure and Purpose',
-    difficulty: 'hard',
-    stimulus: 'The poet Lucille Clifton rarely used capitalization or traditional punctuation, choices that critics initially dismissed as mere stylistic quirks. Closer reading reveals these choices to be structurally load-bearing: the absence of capital letters at the start of lines erodes the hierarchical distinction between beginning and continuation, enacting through form the poems\' thematic insistence on circularity and return. The missing punctuation, meanwhile, refuses to police the reader\'s pace, leaving silences and ambiguities open rather than resolved. To read Clifton\'s poems as "ungrammatical" is therefore to mistake a deliberate architecture for an absence of design.',
-    question: 'What is the primary function of the final sentence in the context of the passage?',
-    choices: [
-      { label: 'A', text: 'To acknowledge a valid limitation of the author\'s own argument about Clifton\'s style' },
-      { label: 'B', text: 'To correct a common misreading by reframing Clifton\'s formal choices as intentional and structural' },
-      { label: 'C', text: 'To suggest that conventional grammar is unnecessary in all forms of poetry' },
-      { label: 'D', text: 'To introduce a new claim that contradicts the earlier analysis of capitalization and punctuation' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The final sentence directly addresses the misreading that Clifton\'s poems are merely "ungrammatical" and reframes that perception — calling her choices a "deliberate architecture" rather than an absence of design. This concludes the passage\'s argument that her formal unconventionality is purposeful and structural.',
-    wrongAnswerExplanations: {
-      A: 'The author does not acknowledge a limitation in their own argument; the sentence strengthens and finalizes it.',
-      C: 'The sentence makes a claim about Clifton\'s specific choices, not a universal claim about all poetry.',
-      D: 'The final sentence does not contradict the earlier analysis; it builds on it by preempting a dismissive interpretation.',
-    },
-  },
-
-  // ── Craft and Structure: Cross-Text Connections (q07–q08) ─────────────────────
-
-  {
-    id: 'sat-f5-rw-m1-q07',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'medium',
-    stimulus: 'Text 1\n\nUrban heat islands — zones in cities that are significantly warmer than surrounding rural areas — form primarily because buildings and pavement absorb and re-emit solar energy. Reducing this effect requires interventions at the surface level: reflective roofing materials, permeable pavements, and expanded tree canopy all lower surface temperatures by reducing heat absorption or increasing evapotranspiration.\n\nText 2\n\nCities are not passive thermal environments. The movement of vehicles, the operation of air conditioning units, and the heat expelled by industrial machinery collectively release enormous quantities of waste heat directly into the urban atmosphere. Addressing urban warming therefore demands attention not only to surface materials but also to the energy systems that actively generate heat within city boundaries.',
-    question: 'Based on the texts, how would the author of Text 2 most likely respond to the interventions described in Text 1?',
-    choices: [
-      { label: 'A', text: 'By arguing that surface-level interventions are entirely ineffective and should be abandoned' },
-      { label: 'B', text: 'By agreeing that surface materials are important but contending that interventions must also address active heat sources' },
-      { label: 'C', text: 'By claiming that waste heat from vehicles is less significant than surface absorption in causing urban warming' },
-      { label: 'D', text: 'By suggesting that permeable pavement is the single most important tool for reducing urban heat' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Text 2 does not dismiss surface-level interventions but expands the picture by pointing to active heat generation from vehicles, AC units, and industry. The author of Text 2 would therefore acknowledge the value of Text 1\'s approach while arguing it is incomplete without also addressing those energy systems.',
-    wrongAnswerExplanations: {
-      A: 'Text 2 says urban warming demands attention to surface materials "as well," implying surface interventions have value — not that they should be abandoned.',
-      C: 'Text 2 does not rank waste heat against surface absorption; it argues both must be considered.',
-      D: 'Permeable pavement is not mentioned in Text 2, and Text 2 does not endorse any single surface intervention.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m1-q08',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'hard',
-    stimulus: 'Text 1\n\nBehavioral economists have demonstrated that people systematically overweight immediate losses relative to equivalent future gains — a phenomenon called loss aversion. This bias, they argue, is a cognitive flaw: it leads individuals to make suboptimal choices by refusing trades that would, on net, improve their well-being. Interventions that reframe choices to reduce loss salience can therefore improve decision-making outcomes.\n\nText 2\n\nThe characterization of loss aversion as a "bias" assumes that rational choice theory provides the correct benchmark for human decision-making. But this assumption itself warrants scrutiny. In environments characterized by genuine uncertainty and resource scarcity — conditions that shaped human evolution — heightened sensitivity to losses may have conferred adaptive advantages. What economists label irrational may reflect a domain-specific rationality calibrated to ancestral conditions.',
-    question: 'The author of Text 2 would most likely challenge the claim in Text 1 that loss aversion is a "cognitive flaw" on the grounds that:',
-    choices: [
-      { label: 'A', text: 'loss aversion has been shown to improve long-term investment returns in modern financial markets' },
-      { label: 'B', text: 'the standard of rationality used to identify loss aversion as a flaw may itself be inappropriate for human contexts shaped by uncertainty and scarcity' },
-      { label: 'C', text: 'behavioral economists have failed to replicate their findings across different cultural populations' },
-      { label: 'D', text: 'reframing interventions always backfire by increasing the salience of losses rather than reducing it' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Text 2\'s central argument is that calling loss aversion a flaw assumes rational choice theory is the correct benchmark — but that benchmark may not apply to beings evolved under uncertainty and scarcity. This directly challenges the premise of Text 1\'s claim that loss aversion is a cognitive flaw.',
-    wrongAnswerExplanations: {
-      A: 'Text 2 makes an evolutionary argument, not a financial-markets argument; this claim is not supported by Text 2.',
-      C: 'Text 2 does not mention replication failures or cross-cultural variation in the research.',
-      D: 'Text 2 does not discuss reframing interventions at all; it focuses on the benchmark of rationality used to classify loss aversion.',
-    },
-  },
-
-  // ── Information and Ideas: Central Ideas and Details (q09–q11) ───────────────
-
-  {
-    id: 'sat-f5-rw-m1-q09',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Central Ideas and Details',
-    difficulty: 'easy',
-    stimulus: 'The monarch butterfly undertakes one of the longest migrations of any insect in North America, traveling up to three thousand miles between its summer breeding grounds in the United States and Canada and its overwintering sites in the mountains of central Mexico. Unlike migratory birds, which often make the round trip in a single lifetime, no individual monarch completes the full cycle. Instead, the southward autumn migration is completed by one "super generation" of long-lived butterflies, while the return journey north in spring is accomplished by two or three successive generations of shorter-lived descendants.',
-    question: 'Which choice best states the main idea of the text?',
-    choices: [
-      { label: 'A', text: 'Monarch butterflies are superior to migratory birds because they travel farther distances each year.' },
-      { label: 'B', text: 'The monarch butterfly\'s multigenerational migration differs fundamentally from single-lifetime animal migrations.' },
-      { label: 'C', text: 'Scientists have recently discovered that monarch butterflies overwinter in the mountains of central Mexico.' },
-      { label: 'D', text: 'The return journey north is more difficult for monarch butterflies than the southward autumn migration.' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The passage\'s central point is that the monarch\'s migration is unusual because no single individual completes the full cycle — it is spread across multiple generations. The comparison to migratory birds reinforces how distinctive this multigenerational pattern is.',
-    wrongAnswerExplanations: {
-      A: 'The passage does not claim monarchs are superior to birds; it uses the bird comparison to highlight what is different about monarchs.',
-      C: 'The overwintering location is a supporting detail, not the main idea; the passage does not present this as a recent discovery.',
-      D: 'The passage does not compare the difficulty of the two legs of the journey.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m1-q10',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Central Ideas and Details',
-    difficulty: 'medium',
-    stimulus: 'The concept of "smart cities" — urban environments equipped with sensors, data networks, and automated systems — has attracted both enthusiasm and skepticism. Proponents argue that real-time data collection can optimize traffic flow, reduce energy consumption, and improve emergency response times. Critics, however, contend that the infrastructure required is prohibitively expensive and that continuous monitoring of public spaces raises serious privacy concerns. A further complication is the digital divide: cities that invest heavily in smart technology may inadvertently widen inequality between residents who can access and navigate digital services and those who cannot.',
-    question: 'Which choice best describes what the text does?',
-    choices: [
-      { label: 'A', text: 'It argues that smart cities represent the most promising solution to urban inequality.' },
-      { label: 'B', text: 'It presents both the potential benefits and the significant concerns associated with smart city development.' },
-      { label: 'C', text: 'It refutes the claim that smart city technology can improve emergency response times.' },
-      { label: 'D', text: 'It explains why most cities have already adopted smart city infrastructure.' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The passage is balanced: it first describes proponents\' arguments about traffic, energy, and emergency response, then outlines critics\' concerns about cost, privacy, and the digital divide. It neither endorses nor dismisses smart cities.',
-    wrongAnswerExplanations: {
-      A: 'The passage does not argue smart cities are the best solution to inequality — in fact, it warns they could worsen inequality.',
-      C: 'The passage does not refute the emergency-response claim; it presents it as one of the proponents\' arguments.',
-      D: 'The passage does not state that most cities have adopted smart city infrastructure.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m1-q11',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Central Ideas and Details',
-    difficulty: 'medium',
-    stimulus: 'Glass frogs, named for the translucency of their ventral skin, are native to the rainforests of Central and South America. Researchers studying one species recently discovered an unusual physiological strategy for surviving periods of rest: the frogs concentrate nearly ninety percent of their red blood cells into the liver, dramatically reducing the visibility of their circulatory system. Because red blood cells scatter light and make tissue appear opaque, withdrawing them from peripheral vessels renders the frogs far more transparent during sleep — and therefore far harder for predators to detect while resting on leaves.',
-    question: 'According to the text, why do glass frogs become more transparent when they sleep?',
-    choices: [
-      { label: 'A', text: 'Their skin produces a chemical that increases light transmission during periods of inactivity.' },
-      { label: 'B', text: 'Their red blood cells change color in response to lower nighttime temperatures.' },
-      { label: 'C', text: 'They concentrate their red blood cells in the liver, reducing the opacity caused by cells in peripheral vessels.' },
-      { label: 'D', text: 'They slow their metabolism, which causes their heart rate to drop and reduces blood flow to the skin.' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'The text explicitly states that glass frogs concentrate nearly ninety percent of their red blood cells into the liver, which removes from peripheral vessels the cells that scatter light and cause opacity — thereby increasing transparency.',
-    wrongAnswerExplanations: {
-      A: 'The text makes no mention of a chemical that increases light transmission; the mechanism is cell redistribution.',
-      B: 'The text does not mention temperature changes affecting cell color.',
-      D: 'While glass frogs are resting, the text does not describe reduced metabolism or heart rate as the cause of increased transparency.',
-    },
-  },
-
-  // ── Information and Ideas: Command of Evidence (q12–q14) ─────────────────────
-
-  {
-    id: 'sat-f5-rw-m1-q12',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Command of Evidence',
-    difficulty: 'medium',
-    stimulus: 'A researcher studying urban bird populations claims that species capable of modifying their vocalizations are better able to communicate effectively in noisy city environments than species with fixed calls.',
-    question: 'Which finding, if true, would most directly support this claim?',
-    choices: [
-      { label: 'A', text: 'Studies show that birds in cities have, on average, smaller body sizes than birds of the same species living in rural areas.' },
-      { label: 'B', text: 'Measurements confirm that birds capable of adjusting their song pitch sing at higher frequencies in noisy urban areas, and their songs remain detectable to mates and rivals at comparable distances to quieter rural environments.' },
-      { label: 'C', text: 'Surveys find that urban bird populations include a greater variety of species than populations in rural habitats of equivalent area.' },
-      { label: 'D', text: 'Observations reveal that birds in cities nest earlier in the spring than birds of the same species in rural areas.' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The claim is that vocal flexibility allows better communication in noisy environments. Choice B directly supports this: birds that adjust their pitch in noisy urban settings manage to maintain effective signal transmission to mates and rivals — showing that vocal modification preserves communicative function.',
-    wrongAnswerExplanations: {
-      A: 'Body size in cities is not relevant to the claim about vocal flexibility and communication effectiveness.',
-      C: 'Species diversity does not address whether individual species communicate more or less effectively based on vocal flexibility.',
-      D: 'Nesting timing relates to breeding behavior, not to the effectiveness of vocalization in noisy environments.',
-    },
-  },
-
-  {
     id: 'sat-f5-rw-m1-q13',
     section: 'reading-writing',
     moduleId: 'f5-rw-module-1',
@@ -325,182 +338,6 @@ export const f5RwModule1Questions: RWQuestion[] = [
   },
 
   {
-    id: 'sat-f5-rw-m1-q14',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Command of Evidence',
-    difficulty: 'hard',
-    stimulus: 'Nutritional anthropologists studying the diets of early agricultural communities have proposed that the transition from foraging to farming actually reduced average dietary diversity, despite increasing caloric stability. The researchers contend that the reliance on a small number of staple crops, combined with the abandonment of foraging for a wide range of wild plants and animals, narrowed the range of micronutrients available to early farmers.',
-    question: 'Which finding, if true, would most directly challenge this claim?',
-    choices: [
-      { label: 'A', text: 'Skeletal analysis of early agricultural populations shows higher rates of iron-deficiency anemia compared with skeletal samples from earlier foraging communities in the same region.' },
-      { label: 'B', text: 'Isotope analysis of bones from early agricultural settlements reveals that these populations consumed a wider range of animal and plant species than previously assumed, including numerous wild plants gathered from field margins.' },
-      { label: 'C', text: 'Archaeological records show that early farming communities stored grain surpluses that allowed populations to survive periods of drought that would have been catastrophic for foragers.' },
-      { label: 'D', text: 'Genetic evidence indicates that populations in early agricultural societies developed mutations associated with increased starch digestion.' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The researchers claim that early farmers narrowed their dietary range by abandoning wild food sources. Choice B directly challenges this by providing isotope evidence that early agricultural communities continued to consume a wide range of wild animal and plant species — contradicting the claim that foraging for diverse wild foods was abandoned.',
-    wrongAnswerExplanations: {
-      A: 'Higher rates of anemia would support, not challenge, the claim that dietary diversity and micronutrient access declined.',
-      C: 'Grain surpluses speak to caloric stability, which the researchers already concede farming increased — this does not challenge the dietary diversity claim.',
-      D: 'Starch-digestion mutations are consistent with a diet heavy in staple crops, which supports rather than challenges the narrowing-diversity claim.',
-    },
-  },
-
-  // ── Information and Ideas: Inferences (q15–q16) ──────────────────────────────
-
-  {
-    id: 'sat-f5-rw-m1-q15',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Inferences',
-    difficulty: 'medium',
-    stimulus: 'The coelacanth, a fish long believed extinct, was rediscovered in 1938 off the coast of South Africa. Scientists were astonished not only by the fish\'s survival but also by how little its anatomy had changed over roughly 400 million years. Unlike many lineages that underwent dramatic morphological shifts in response to environmental pressures, the coelacanth\'s body plan has remained nearly static. Researchers hypothesize that because the fish inhabits deep, stable ocean environments where conditions change very slowly, the selection pressures that typically drive anatomical change have been minimal.',
-    question: 'Which inference is most strongly supported by the text?',
-    choices: [
-      { label: 'A', text: 'The coelacanth\'s survival proves that fish are generally more resilient than other vertebrates.' },
-      { label: 'B', text: 'Environmental stability may reduce the rate at which natural selection drives anatomical change in a species.' },
-      { label: 'C', text: 'Scientists in 1938 expected to find living specimens of supposedly extinct fish in deep ocean environments.' },
-      { label: 'D', text: 'All species inhabiting deep ocean environments evolve at slower rates than species in shallower waters.' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The text states that the coelacanth\'s stable, slowly changing deep-ocean habitat has meant minimal selection pressures for anatomical change. This supports the inference that stable environments reduce the rate at which selection drives physical evolution — a principle the text explicitly proposes as an explanation for the coelacanth\'s unchanged body plan.',
-    wrongAnswerExplanations: {
-      A: 'The text makes no comparison between fish and other vertebrates in terms of general resilience.',
-      C: 'The text describes scientists as "astonished" by the coelacanth\'s survival, which implies the opposite of expectation.',
-      D: 'The text discusses one species in one habitat; it does not support a universal claim about all deep-ocean versus shallow-water species.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m1-q16',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Inferences',
-    difficulty: 'hard',
-    stimulus: 'Historians of early modern Europe have noted a paradox in the spread of literacy during the sixteenth century: as printing technology made written texts more widely available, authorities in both church and state became more anxious about controlling what people read. Censorship indexes, book burnings, and licensing requirements for printers multiplied precisely during the decades of fastest literacy growth. Some scholars interpret this pattern as evidence that the elites who had previously monopolized access to texts recognized that widespread literacy threatened their interpretive authority — the power to determine what texts meant and who could legitimately speak about them.',
-    question: 'Which conclusion is most strongly supported by the information in the text?',
-    choices: [
-      { label: 'A', text: 'The invention of the printing press was the single most important cause of the decline of church authority in early modern Europe.' },
-      { label: 'B', text: 'The correlation between rising literacy and intensified censorship suggests that those in power may have viewed broader access to texts as a challenge to their interpretive control.' },
-      { label: 'C', text: 'Book burnings and censorship indexes were ineffective because literacy continued to grow despite these measures.' },
-      { label: 'D', text: 'Most early modern readers used their literacy primarily to read religious texts rather than to engage in political debate.' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The text presents the historical pattern (rising literacy coinciding with intensified censorship) and offers the scholars\' interpretation: elites feared that widespread literacy threatened their interpretive authority. Choice B accurately reflects this inference — that censorship may have been a response to the perceived threat of broader text access.',
-    wrongAnswerExplanations: {
-      A: 'The text does not claim printing was the single most important cause of church decline, nor does it rank causes.',
-      C: 'The text does not evaluate whether censorship was effective or ineffective; it only notes that these measures multiplied.',
-      D: 'The text does not describe what early modern readers actually chose to read.',
-    },
-  },
-
-  // ── Expression of Ideas: Transitions (q17–q18) ───────────────────────────────
-
-  {
-    id: 'sat-f5-rw-m1-q17',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Expression of Ideas',
-    skill: 'Transitions',
-    difficulty: 'easy',
-    stimulus: 'Many people assume that cold weather directly causes illness. _______, viruses such as influenza and the common cold spread more easily in winter largely because people spend more time indoors in close proximity to one another, not because the temperature itself weakens the immune system.',
-    question: 'Which choice completes the text with the most logical transition?',
-    choices: [
-      { label: 'A', text: 'In addition' },
-      { label: 'B', text: 'In contrast' },
-      { label: 'C', text: 'As a result' },
-      { label: 'D', text: 'For instance' },
-    ],
-    correctAnswer: 'B',
-    explanation: '"In contrast" signals that the second sentence contradicts the assumption stated in the first — that cold directly causes illness. The second sentence replaces that assumption with an alternative explanation (indoor proximity), so a contrast transition is needed.',
-    wrongAnswerExplanations: {
-      A: '"In addition" signals that new, consistent information is being added, but the second sentence corrects the first, not adds to it.',
-      C: '"As a result" implies the second sentence is a consequence of the first, but the second sentence actually contradicts the first.',
-      D: '"For instance" introduces an example of the previous point, but the second sentence replaces the previous point rather than exemplifying it.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m1-q18',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Expression of Ideas',
-    skill: 'Transitions',
-    difficulty: 'medium',
-    stimulus: 'Early conservationists believed that wilderness areas should be preserved in a state of pristine, human-free nature. _______, ecologists now recognize that many landscapes once considered "untouched" were in fact actively managed for millennia by Indigenous communities through practices such as controlled burning, selective harvesting, and irrigation.',
-    question: 'Which choice completes the text with the most logical transition?',
-    choices: [
-      { label: 'A', text: 'Similarly' },
-      { label: 'B', text: 'Therefore' },
-      { label: 'C', text: 'However' },
-      { label: 'D', text: 'Furthermore' },
-    ],
-    correctAnswer: 'C',
-    explanation: '"However" is the correct contrast transition. The first sentence describes an early belief in pristine, human-free wilderness; the second sentence contradicts this by revealing that many supposedly untouched landscapes were actually shaped by Indigenous land management. "However" appropriately signals this contradiction.',
-    wrongAnswerExplanations: {
-      A: '"Similarly" would indicate agreement or resemblance between the two sentences, but they present contrasting views.',
-      B: '"Therefore" signals a logical consequence of what came before, but the second sentence does not follow from the early conservationists\' belief — it challenges it.',
-      D: '"Furthermore" adds information in the same direction, but the second sentence moves in a different direction from the first.',
-    },
-  },
-
-  // ── Expression of Ideas: Rhetorical Synthesis (q19–q20) ──────────────────────
-
-  {
-    id: 'sat-f5-rw-m1-q19',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Expression of Ideas',
-    skill: 'Rhetorical Synthesis',
-    difficulty: 'medium',
-    stimulus: 'A student is writing a report about bioluminescence in deep-sea organisms. The student has gathered the following notes:\n\n- Bioluminescence is the production and emission of light by living organisms through chemical reactions.\n- In the deep ocean, where sunlight cannot penetrate, roughly 76 percent of species are estimated to be bioluminescent.\n- Organisms use bioluminescence for purposes including attracting prey, deterring predators, and communicating with potential mates.\n- The anglerfish dangles a glowing lure above its mouth to draw prey within striking distance.',
-    question: 'The student wants to introduce the main topic of bioluminescence and provide one specific example of its use. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
-    choices: [
-      { label: 'A', text: 'Bioluminescence, the production of light through chemical reactions in living organisms, serves many purposes in the deep ocean; for example, the anglerfish uses a glowing lure to attract prey.' },
-      { label: 'B', text: 'Approximately 76 percent of deep-sea species are bioluminescent, and scientists have studied this phenomenon for decades using remotely operated submersibles.' },
-      { label: 'C', text: 'Bioluminescence is used for attracting prey, deterring predators, and communicating with mates, all of which are important for survival in the deep ocean.' },
-      { label: 'D', text: 'The anglerfish is one of the most studied deep-sea animals, and its glowing lure has made it a popular subject in documentary films about ocean life.' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Choice A accomplishes both goals: it introduces bioluminescence with a definition drawn from the notes and then provides the specific example of the anglerfish\'s glowing lure. The other choices either omit the definition, include information not in the notes, or focus only on the example without introducing the broader topic.',
-    wrongAnswerExplanations: {
-      B: 'This choice provides a statistic but does not introduce bioluminescence with a definition, and it adds information about submersibles not found in the notes.',
-      C: 'This choice lists purposes of bioluminescence but does not introduce the concept with a definition or provide a single focused example.',
-      D: 'This choice focuses narrowly on the anglerfish and adds claims about documentary films not found in the notes; it does not introduce bioluminescence as a topic.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m1-q20',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-1',
-    domain: 'Expression of Ideas',
-    skill: 'Rhetorical Synthesis',
-    difficulty: 'medium',
-    stimulus: 'A student is writing an essay about the history of public libraries in the United States. The student has gathered the following notes:\n\n- The first publicly funded library in the United States opened in Peterborough, New Hampshire, in 1833.\n- Andrew Carnegie funded the construction of 2,509 libraries worldwide between 1883 and 1929, including 1,679 in the United States.\n- Carnegie\'s libraries were designed with the idea that free access to knowledge would allow working-class individuals to educate themselves and improve their circumstances.\n- Today, the United States has approximately 17,000 public library locations serving over 170 million registered users.',
-    question: 'The student wants to emphasize the scale of Andrew Carnegie\'s contribution to public library expansion in the United States. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
-    choices: [
-      { label: 'A', text: 'Andrew Carnegie believed that free access to knowledge could help working-class people improve their lives, which motivated his philanthropic investments in public institutions.' },
-      { label: 'B', text: 'The first publicly funded library in the United States opened in 1833, decades before Carnegie began his library-building campaign.' },
-      { label: 'C', text: 'Between 1883 and 1929, Carnegie funded the construction of 1,679 libraries in the United States alone — more than any other single private donor in the nation\'s history.' },
-      { label: 'D', text: 'Today, the United States has approximately 17,000 public library locations, a number that reflects more than a century of investment in public access to information.' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'Choice C emphasizes the scale of Carnegie\'s contribution by citing the specific number of US libraries he funded (1,679) and characterizing him as the largest single private donor — directly addressing the goal of highlighting the magnitude of his impact.',
-    wrongAnswerExplanations: {
-      A: 'This choice emphasizes Carnegie\'s motivation and philosophy, not the scale of his contribution.',
-      B: 'This choice highlights the early history of public libraries in the US but does not address Carnegie\'s contribution at all.',
-      D: 'This choice discusses the current scale of US libraries overall but does not attribute that scale to Carnegie specifically.',
-    },
-  },
-
-  // ── Standard English Conventions: Boundaries (q21–q24) ───────────────────────
-
-  {
     id: 'sat-f5-rw-m1-q21',
     section: 'reading-writing',
     moduleId: 'f5-rw-module-1',
@@ -521,6 +358,54 @@ export const f5RwModule1Questions: RWQuestion[] = [
       B: 'Creates a comma splice — two independent clauses joined only by a comma.',
       C: '"During it" is informal and creates an unclear pronoun reference.',
       D: '"And which" lacks a preceding relative pronoun and creates an ungrammatical structure.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m1-q06',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Craft and Structure',
+    skill: 'Text Structure and Purpose',
+    difficulty: 'hard',
+    stimulus: 'The poet Lucille Clifton rarely used capitalization or traditional punctuation, choices that critics initially dismissed as mere stylistic quirks. Closer reading reveals these choices to be structurally load-bearing: the absence of capital letters at the start of lines erodes the hierarchical distinction between beginning and continuation, enacting through form the poems\' thematic insistence on circularity and return. The missing punctuation, meanwhile, refuses to police the reader\'s pace, leaving silences and ambiguities open rather than resolved. To read Clifton\'s poems as "ungrammatical" is therefore to mistake a deliberate architecture for an absence of design.',
+    question: 'What is the primary function of the final sentence in the context of the passage?',
+    choices: [
+      { label: 'A', text: 'To acknowledge a valid limitation of the author\'s own argument about Clifton\'s style' },
+      { label: 'B', text: 'To correct a common misreading by reframing Clifton\'s formal choices as intentional and structural' },
+      { label: 'C', text: 'To suggest that conventional grammar is unnecessary in all forms of poetry' },
+      { label: 'D', text: 'To introduce a new claim that contradicts the earlier analysis of capitalization and punctuation' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The final sentence directly addresses the misreading that Clifton\'s poems are merely "ungrammatical" and reframes that perception — calling her choices a "deliberate architecture" rather than an absence of design. This concludes the passage\'s argument that her formal unconventionality is purposeful and structural.',
+    wrongAnswerExplanations: {
+      A: 'The author does not acknowledge a limitation in their own argument; the sentence strengthens and finalizes it.',
+      C: 'The sentence makes a claim about Clifton\'s specific choices, not a universal claim about all poetry.',
+      D: 'The final sentence does not contradict the earlier analysis; it builds on it by preempting a dismissive interpretation.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m1-q14',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'hard',
+    stimulus: 'Nutritional anthropologists studying the diets of early agricultural communities have proposed that the transition from foraging to farming actually reduced average dietary diversity, despite increasing caloric stability. The researchers contend that the reliance on a small number of staple crops, combined with the abandonment of foraging for a wide range of wild plants and animals, narrowed the range of micronutrients available to early farmers.',
+    question: 'Which finding, if true, would most directly challenge this claim?',
+    choices: [
+      { label: 'A', text: 'Skeletal analysis of early agricultural populations shows higher rates of iron-deficiency anemia compared with skeletal samples from earlier foraging communities in the same region.' },
+      { label: 'B', text: 'Isotope analysis of bones from early agricultural settlements reveals that these populations consumed a wider range of animal and plant species than previously assumed, including numerous wild plants gathered from field margins.' },
+      { label: 'C', text: 'Archaeological records show that early farming communities stored grain surpluses that allowed populations to survive periods of drought that would have been catastrophic for foragers.' },
+      { label: 'D', text: 'Genetic evidence indicates that populations in early agricultural societies developed mutations associated with increased starch digestion.' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The researchers claim that early farmers narrowed their dietary range by abandoning wild food sources. Choice B directly challenges this by providing isotope evidence that early agricultural communities continued to consume a wide range of wild animal and plant species — contradicting the claim that foraging for diverse wild foods was abandoned.',
+    wrongAnswerExplanations: {
+      A: 'Higher rates of anemia would support, not challenge, the claim that dietary diversity and micronutrient access declined.',
+      C: 'Grain surpluses speak to caloric stability, which the researchers already concede farming increased — this does not challenge the dietary diversity claim.',
+      D: 'Starch-digestion mutations are consistent with a diet heavy in staple crops, which supports rather than challenges the narrowing-diversity claim.',
     },
   },
 
@@ -549,6 +434,54 @@ export const f5RwModule1Questions: RWQuestion[] = [
   },
 
   {
+    id: 'sat-f5-rw-m1-q07',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Craft and Structure',
+    skill: 'Cross-Text Connections',
+    difficulty: 'medium',
+    stimulus: 'Text 1\n\nUrban heat islands — zones in cities that are significantly warmer than surrounding rural areas — form primarily because buildings and pavement absorb and re-emit solar energy. Reducing this effect requires interventions at the surface level: reflective roofing materials, permeable pavements, and expanded tree canopy all lower surface temperatures by reducing heat absorption or increasing evapotranspiration.\n\nText 2\n\nCities are not passive thermal environments. The movement of vehicles, the operation of air conditioning units, and the heat expelled by industrial machinery collectively release enormous quantities of waste heat directly into the urban atmosphere. Addressing urban warming therefore demands attention not only to surface materials but also to the energy systems that actively generate heat within city boundaries.',
+    question: 'Based on the texts, how would the author of Text 2 most likely respond to the interventions described in Text 1?',
+    choices: [
+      { label: 'A', text: 'By arguing that surface-level interventions are entirely ineffective and should be abandoned' },
+      { label: 'B', text: 'By agreeing that surface materials are important but contending that interventions must also address active heat sources' },
+      { label: 'C', text: 'By claiming that waste heat from vehicles is less significant than surface absorption in causing urban warming' },
+      { label: 'D', text: 'By suggesting that permeable pavement is the single most important tool for reducing urban heat' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Text 2 does not dismiss surface-level interventions but expands the picture by pointing to active heat generation from vehicles, AC units, and industry. The author of Text 2 would therefore acknowledge the value of Text 1\'s approach while arguing it is incomplete without also addressing those energy systems.',
+    wrongAnswerExplanations: {
+      A: 'Text 2 says urban warming demands attention to surface materials "as well," implying surface interventions have value — not that they should be abandoned.',
+      C: 'Text 2 does not rank waste heat against surface absorption; it argues both must be considered.',
+      D: 'Permeable pavement is not mentioned in Text 2, and Text 2 does not endorse any single surface intervention.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m1-q15',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Inferences',
+    difficulty: 'medium',
+    stimulus: 'The coelacanth, a fish long believed extinct, was rediscovered in 1938 off the coast of South Africa. Scientists were astonished not only by the fish\'s survival but also by how little its anatomy had changed over roughly 400 million years. Unlike many lineages that underwent dramatic morphological shifts in response to environmental pressures, the coelacanth\'s body plan has remained nearly static. Researchers hypothesize that because the fish inhabits deep, stable ocean environments where conditions change very slowly, the selection pressures that typically drive anatomical change have been minimal.',
+    question: 'Which inference is most strongly supported by the text?',
+    choices: [
+      { label: 'A', text: 'The coelacanth\'s survival proves that fish are generally more resilient than other vertebrates.' },
+      { label: 'B', text: 'Environmental stability may reduce the rate at which natural selection drives anatomical change in a species.' },
+      { label: 'C', text: 'Scientists in 1938 expected to find living specimens of supposedly extinct fish in deep ocean environments.' },
+      { label: 'D', text: 'All species inhabiting deep ocean environments evolve at slower rates than species in shallower waters.' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The text states that the coelacanth\'s stable, slowly changing deep-ocean habitat has meant minimal selection pressures for anatomical change. This supports the inference that stable environments reduce the rate at which selection drives physical evolution — a principle the text explicitly proposes as an explanation for the coelacanth\'s unchanged body plan.',
+    wrongAnswerExplanations: {
+      A: 'The text makes no comparison between fish and other vertebrates in terms of general resilience.',
+      C: 'The text describes scientists as "astonished" by the coelacanth\'s survival, which implies the opposite of expectation.',
+      D: 'The text discusses one species in one habitat; it does not support a universal claim about all deep-ocean versus shallow-water species.',
+    },
+  },
+
+  {
     id: 'sat-f5-rw-m1-q23',
     section: 'reading-writing',
     moduleId: 'f5-rw-module-1',
@@ -569,6 +502,54 @@ export const f5RwModule1Questions: RWQuestion[] = [
       B: 'After a semicolon, repeating "a model" creates a fragmented appositive that does not form a complete independent clause.',
       C: 'A colon typically introduces an explanation, list, or elaboration of what comes before it; the second clause here is a qualifying condition, not a direct elaboration introduced by a colon.',
       D: '"However" signals a stronger contrast or reversal than the relationship between the two clauses warrants; "yet" is more appropriate for mild qualification.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m1-q08',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Craft and Structure',
+    skill: 'Cross-Text Connections',
+    difficulty: 'hard',
+    stimulus: 'Text 1\n\nBehavioral economists have demonstrated that people systematically overweight immediate losses relative to equivalent future gains — a phenomenon called loss aversion. This bias, they argue, is a cognitive flaw: it leads individuals to make suboptimal choices by refusing trades that would, on net, improve their well-being. Interventions that reframe choices to reduce loss salience can therefore improve decision-making outcomes.\n\nText 2\n\nThe characterization of loss aversion as a "bias" assumes that rational choice theory provides the correct benchmark for human decision-making. But this assumption itself warrants scrutiny. In environments characterized by genuine uncertainty and resource scarcity — conditions that shaped human evolution — heightened sensitivity to losses may have conferred adaptive advantages. What economists label irrational may reflect a domain-specific rationality calibrated to ancestral conditions.',
+    question: 'The author of Text 2 would most likely challenge the claim in Text 1 that loss aversion is a "cognitive flaw" on the grounds that:',
+    choices: [
+      { label: 'A', text: 'loss aversion has been shown to improve long-term investment returns in modern financial markets' },
+      { label: 'B', text: 'the standard of rationality used to identify loss aversion as a flaw may itself be inappropriate for human contexts shaped by uncertainty and scarcity' },
+      { label: 'C', text: 'behavioral economists have failed to replicate their findings across different cultural populations' },
+      { label: 'D', text: 'reframing interventions always backfire by increasing the salience of losses rather than reducing it' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Text 2\'s central argument is that calling loss aversion a flaw assumes rational choice theory is the correct benchmark — but that benchmark may not apply to beings evolved under uncertainty and scarcity. This directly challenges the premise of Text 1\'s claim that loss aversion is a cognitive flaw.',
+    wrongAnswerExplanations: {
+      A: 'Text 2 makes an evolutionary argument, not a financial-markets argument; this claim is not supported by Text 2.',
+      C: 'Text 2 does not mention replication failures or cross-cultural variation in the research.',
+      D: 'Text 2 does not discuss reframing interventions at all; it focuses on the benchmark of rationality used to classify loss aversion.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m1-q16',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Inferences',
+    difficulty: 'hard',
+    stimulus: 'Historians of early modern Europe have noted a paradox in the spread of literacy during the sixteenth century: as printing technology made written texts more widely available, authorities in both church and state became more anxious about controlling what people read. Censorship indexes, book burnings, and licensing requirements for printers multiplied precisely during the decades of fastest literacy growth. Some scholars interpret this pattern as evidence that the elites who had previously monopolized access to texts recognized that widespread literacy threatened their interpretive authority — the power to determine what texts meant and who could legitimately speak about them.',
+    question: 'Which conclusion is most strongly supported by the information in the text?',
+    choices: [
+      { label: 'A', text: 'The invention of the printing press was the single most important cause of the decline of church authority in early modern Europe.' },
+      { label: 'B', text: 'The correlation between rising literacy and intensified censorship suggests that those in power may have viewed broader access to texts as a challenge to their interpretive control.' },
+      { label: 'C', text: 'Book burnings and censorship indexes were ineffective because literacy continued to grow despite these measures.' },
+      { label: 'D', text: 'Most early modern readers used their literacy primarily to read religious texts rather than to engage in political debate.' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The text presents the historical pattern (rising literacy coinciding with intensified censorship) and offers the scholars\' interpretation: elites feared that widespread literacy threatened their interpretive authority. Choice B accurately reflects this inference — that censorship may have been a response to the perceived threat of broader text access.',
+    wrongAnswerExplanations: {
+      A: 'The text does not claim printing was the single most important cause of church decline, nor does it rank causes.',
+      C: 'The text does not evaluate whether censorship was effective or ineffective; it only notes that these measures multiplied.',
+      D: 'The text does not describe what early modern readers actually chose to read.',
     },
   },
 
@@ -595,8 +576,6 @@ export const f5RwModule1Questions: RWQuestion[] = [
       D: '"Being a conclusion" creates a dangling participial phrase because "conclusion" has no clear grammatical subject to modify in this position.',
     },
   },
-
-  // ── Standard English Conventions: Form, Structure, and Sense (q25–q27) ───────
 
   {
     id: 'sat-f5-rw-m1-q25',
@@ -647,27 +626,26 @@ export const f5RwModule1Questions: RWQuestion[] = [
   },
 
   {
-    id: 'sat-f5-rw-m1-q27',
+    id: 'sat-f5-rw-m1-q01',
     section: 'reading-writing',
     moduleId: 'f5-rw-module-1',
-    domain: 'Standard English Conventions',
-    skill: 'Form, Structure, and Sense',
-    difficulty: 'hard',
-    stimulus: 'The review committee praised the proposal for its clarity, its feasibility, and _______ it addressed long-standing gaps in the current policy framework.',
-    question: 'Which choice completes the text so that it conforms to the conventions of Standard Written English?',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'easy',
+    stimulus: 'The chef\'s new recipe was praised by every critic who tried it. Unlike her previous dishes, which some found overly rich, this one was _______, pleasing diners who preferred lighter flavors.',
+    question: 'Which choice completes the text with the most logical and precise word or phrase?',
     choices: [
-      { label: 'A', text: 'the way' },
-      { label: 'B', text: 'for' },
-      { label: 'C', text: 'the fact that' },
-      { label: 'D', text: 'how' },
+      { label: 'A', text: 'delicate' },
+      { label: 'B', text: 'elaborate' },
+      { label: 'C', text: 'pungent' },
+      { label: 'D', text: 'scarce' },
     ],
     correctAnswer: 'A',
-    explanation: 'The sentence lists three things the committee praised: clarity (noun), feasibility (noun), and a third item that must be parallel. "The way it addressed..." is a noun phrase parallel to "clarity" and "feasibility." Choices C and D produce grammatically awkward or non-parallel structures when combined with the series, and Choice B creates a prepositional phrase that breaks the parallel structure of the list.',
+    explanation: '"Delicate" means subtle and light in flavor, which contrasts with the previous dishes described as overly rich and fits the preference of diners who liked lighter flavors.',
     wrongAnswerExplanations: {
-      B: '"For it addressed" creates an incomplete subordinate clause that is not parallel to the nouns "clarity" and "feasibility."',
-      C: '"The fact that it addressed" is grammatically possible but creates a wordier, less idiomatic parallel than "the way it addressed."',
-      D: '"How it addressed" forms a noun clause, but "how" introduces an indirect question more naturally than a parallel list item; "the way" is more idiomatic and clearly parallel.',
+      B: '"Elaborate" refers to complexity or intricacy, not lightness of flavor — it does not contrast with "overly rich."',
+      C: '"Pungent" means strong or sharp in taste or smell, which would be consistent with richness rather than contrasting it.',
+      D: '"Scarce" means limited in supply; it describes availability, not flavor.',
     },
   },
-
 ]

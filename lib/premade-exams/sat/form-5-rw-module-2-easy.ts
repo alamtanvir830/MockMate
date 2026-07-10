@@ -1,8 +1,6 @@
 import type { RWQuestion } from './types'
 
 export const f5RwModule2EasyQuestions: RWQuestion[] = [
-  // ── Words in Context (4) ─────────────────────────────────────────────────
-
   {
     id: 'sat-f5-rw-m2e-q01',
     section: 'reading-writing',
@@ -24,6 +22,54 @@ export const f5RwModule2EasyQuestions: RWQuestion[] = [
       B: '"Brief" refers to length, not the quality of drawing viewers into the experience.',
       C: '"Controversial" describes something that provokes disagreement, not the sense of being transported into a setting.',
       D: '"Repetitive" means doing the same thing over and over, which contradicts the sense of vividness the passage conveys.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q10',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Information and Ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'easy',
+    stimulus: 'The cacao tree is unusual among fruit-bearing plants because its pods grow directly from the trunk and large branches rather than from the tips of smaller stems. This trait, called cauliflory, is thought to help attract the specific small insects and animals that pollinate cacao flowers, which are too small and fragile to compete for pollinators that visit flowers at the canopy level.',
+    question: 'Which choice best states the main idea of the text?',
+    choices: [
+      { label: 'A', text: 'The cacao tree produces pods that are unusually large' },
+      { label: 'B', text: 'The cacao tree is distinctive in growing its fruit directly on its trunk and branches, likely to aid pollination' },
+      { label: 'C', text: 'Most tropical trees grow fruit at the tips of their smallest branches' },
+      { label: 'D', text: 'Cacao flowers attract the same pollinators that visit the forest canopy' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The passage introduces cauliflory — fruit growing from the trunk and branches — and explains why it likely exists: to attract suitable pollinators for cacao\'s small flowers.',
+    wrongAnswerExplanations: {
+      A: 'Pod size is never mentioned in the passage.',
+      C: 'The passage describes this as the opposite of what cacao does, not as a universal rule.',
+      D: 'The passage says cacao flowers are "too small and fragile to compete" with canopy-level flowers for those pollinators — the opposite of this choice.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q18',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
+    difficulty: 'easy',
+    stimulus: 'Regular handwashing with soap and water remains one of the most effective ways to prevent the spread of illness. _______, many outbreaks of food-borne disease occur in settings where people do not wash their hands before handling food.',
+    question: 'Which choice completes the text with the most logical transition?',
+    choices: [
+      { label: 'A', text: 'In fact,' },
+      { label: 'B', text: 'By contrast,' },
+      { label: 'C', text: 'For example,' },
+      { label: 'D', text: 'Therefore,' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'The second sentence gives a specific instance of illness spreading when handwashing is skipped — an example that supports the first sentence. "For example" is the correct transition.',
+    wrongAnswerExplanations: {
+      A: '"In fact" adds emphasis or a surprising truth, but the second sentence is an illustration, not a surprising reinforcement.',
+      B: '"By contrast" signals opposition; the two sentences are consistent, not contrasting.',
+      D: '"Therefore" signals a result or conclusion; the second sentence is not a consequence of the first but an example of it.',
     },
   },
 
@@ -52,204 +98,6 @@ export const f5RwModule2EasyQuestions: RWQuestion[] = [
   },
 
   {
-    id: 'sat-f5-rw-m2e-q03',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Words in Context',
-    difficulty: 'medium',
-    stimulus: 'The new director\'s approach to running the theater company was far more _______ than her predecessor\'s: whereas he had made nearly every decision alone, she formed working groups, held open meetings, and invited input from actors, stagehands, and administrators alike.',
-    question: 'Which choice completes the text with the most logical and precise word or phrase?',
-    choices: [
-      { label: 'A', text: 'secretive' },
-      { label: 'B', text: 'collaborative' },
-      { label: 'C', text: 'costly' },
-      { label: 'D', text: 'cautious' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The new director\'s open meetings and working groups contrast with her predecessor\'s solo decision-making. "Collaborative" — involving others — captures this contrast precisely.',
-    wrongAnswerExplanations: {
-      A: '"Secretive" is the opposite of the new director\'s open, inclusive approach.',
-      C: '"Costly" refers to financial expense, not to a leadership style involving others.',
-      D: '"Cautious" means careful or hesitant, which does not address whether decisions were made alone or with others.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m2e-q04',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Words in Context',
-    difficulty: 'medium',
-    stimulus: 'Evidence that the ancient trading post once bustled with activity was _______ : archaeologists found warehouses packed with imported ceramics, a copper-smelting furnace, coin hoards from three different empires, and the foundations of a large inn.',
-    question: 'Which choice completes the text with the most logical and precise word or phrase?',
-    choices: [
-      { label: 'A', text: 'scarce' },
-      { label: 'B', text: 'puzzling' },
-      { label: 'C', text: 'abundant' },
-      { label: 'D', text: 'recent' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'The passage lists multiple distinct types of evidence — ceramics, a furnace, coin hoards, an inn\'s foundations — pointing to "abundant" (plentiful) evidence.',
-    wrongAnswerExplanations: {
-      A: '"Scarce" means rare or limited, contradicting the long list of finds described.',
-      B: '"Puzzling" would mean confusing or hard to interpret, but the evidence straightforwardly supports the claim about trade.',
-      D: '"Recent" describes when the evidence was found or made, not how much of it there is.',
-    },
-  },
-
-  // ── Text Structure and Purpose (3) ────────────────────────────────────────
-
-  {
-    id: 'sat-f5-rw-m2e-q05',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Text Structure and Purpose',
-    difficulty: 'easy',
-    stimulus: 'Chameleons do not change color primarily to camouflage themselves. New research shows that color change is mainly a form of communication: chameleons shift their hues to signal mood, dominance, or readiness to mate. Camouflage is a secondary benefit, not the main purpose of this ability.',
-    question: 'What is the main purpose of the passage?',
-    choices: [
-      { label: 'A', text: 'To argue that chameleons are more intelligent than other reptiles' },
-      { label: 'B', text: 'To correct a common misconception about why chameleons change color' },
-      { label: 'C', text: 'To describe the habitats where chameleons are found' },
-      { label: 'D', text: 'To explain how chameleons physically produce different colors in their skin' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The passage directly challenges the widespread belief that color change is for camouflage, then explains the actual purpose — communication. Its aim is to correct a misconception.',
-    wrongAnswerExplanations: {
-      A: 'The passage does not compare chameleons\' intelligence to other reptiles.',
-      C: 'Habitats are not mentioned anywhere in the passage.',
-      D: 'The passage states what color change is for, not the biological mechanism of how it is produced.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m2e-q06',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Text Structure and Purpose',
-    difficulty: 'medium',
-    stimulus: 'The novelist spent fifteen years working on the same manuscript. She rewrote the first chapter more than forty times, deleted two complete drafts, and at one point abandoned the project for three years before returning to it. The book, when it finally appeared, won a major literary prize.',
-    question: 'What is the main function of the details about the rewrites and abandoned drafts in the text?',
-    choices: [
-      { label: 'A', text: 'To suggest that the novelist lacked confidence in her abilities' },
-      { label: 'B', text: 'To explain why literary prizes are difficult to win' },
-      { label: 'C', text: 'To illustrate the persistence required to complete a difficult creative work' },
-      { label: 'D', text: 'To compare the novelist\'s process with other writers\' methods' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'The many rewrites, deleted drafts, and years-long abandonment — followed by an eventual prize — illustrate that difficult creative work demands sustained persistence.',
-    wrongAnswerExplanations: {
-      A: 'The passage frames the long process as dedication, not as a sign of self-doubt.',
-      B: 'The prize is mentioned as the outcome; the passage does not explain the criteria or difficulty of winning awards.',
-      D: 'No other writers\' processes are mentioned for comparison.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m2e-q07',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Text Structure and Purpose',
-    difficulty: 'medium',
-    stimulus: 'At the edge of the old harbor, a single wooden fishing boat sat in dry dock. Its hull was warped and salt-stained, and the name painted on its stern had faded to near-illegibility. The old fisherman who had come to look at it stood quietly, not saying a word.',
-    question: 'Which choice best describes the overall effect of the details in the passage?',
-    choices: [
-      { label: 'A', text: 'They create a mood of abandonment and time passing' },
-      { label: 'B', text: 'They celebrate the boat\'s craftsmanship and durability' },
-      { label: 'C', text: 'They argue that old boats should be restored and preserved' },
-      { label: 'D', text: 'They explain the technical process of building wooden boats' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'The warped, salt-stained hull, the faded name, the dry dock, and the fisherman\'s silence collectively create an atmosphere of neglect, decline, and the passage of time.',
-    wrongAnswerExplanations: {
-      B: 'The details emphasize deterioration, not the quality or strength of the boat\'s construction.',
-      C: 'The passage observes the scene but does not advocate for any course of action.',
-      D: 'No steps in boat construction are described.',
-    },
-  },
-
-  // ── Cross-Text Connections (2) ────────────────────────────────────────────
-
-  {
-    id: 'sat-f5-rw-m2e-q08',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'easy',
-    stimulus: 'Text 1\n\nSocial media platforms give ordinary people a powerful voice. Anyone with a phone can share news, build a following, and reach audiences that once required expensive broadcast equipment. This democratization of information has allowed communities and movements to organize and be heard in ways previously impossible.\n\nText 2\n\nSocial media has made it easier to spread false information at speed. Because anyone can post anything without editorial review, misleading claims can reach millions of people before fact-checkers can respond. The same openness that gives everyone a voice also gives that voice to those who wish to deceive.',
-    question: 'Both texts would most likely agree that social media',
-    choices: [
-      { label: 'A', text: 'should be more tightly regulated by governments' },
-      { label: 'B', text: 'allows people who are not journalists or broadcasters to reach large audiences' },
-      { label: 'C', text: 'has improved the overall quality of public information' },
-      { label: 'D', text: 'is used primarily by political movements' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Text 1 says anyone with a phone can reach audiences that once required expensive equipment. Text 2 says anyone can post anything without editorial review. Both agree that non-journalists and non-broadcasters can now reach large audiences.',
-    wrongAnswerExplanations: {
-      A: 'Neither text discusses government regulation.',
-      C: 'Text 2 argues that misinformation spreads widely, so it does not agree that information quality has improved.',
-      D: 'Neither text claims social media is used mainly by political movements.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m2e-q09',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'medium',
-    stimulus: 'Text 1\n\nZoos play an essential role in wildlife conservation. Many species, including the California condor and the Arabian oryx, survived extinction only because captive breeding programs at accredited zoos maintained their populations long enough for wild reintroduction efforts to succeed. Zoos also fund field conservation projects and educate millions of visitors each year about the importance of protecting wild habitats.\n\nText 2\n\nHowever well-intentioned, keeping animals in captivity cannot substitute for protecting the habitats they depend on. Successful captive breeding programs are rare; most species in decline cannot be saved by zoos alone. Conservationists argue that the resources spent on zoo animals would produce far greater results if directed toward habitat preservation and anti-poaching enforcement in the wild.',
-    question: 'How would the author of Text 2 most likely respond to the argument in Text 1 that zoos saved species such as the California condor and the Arabian oryx?',
-    choices: [
-      { label: 'A', text: 'By agreeing that captive breeding programs are the most effective conservation strategy available' },
-      { label: 'B', text: 'By arguing that the condor and oryx cases show zoos should be given more funding' },
-      { label: 'C', text: 'By acknowledging those cases while arguing they are exceptions and that zoo resources would generally help wildlife more if spent on habitat protection' },
-      { label: 'D', text: 'By claiming that the California condor and Arabian oryx were never actually endangered' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'Text 2 says successful captive breeding programs are "rare" and argues money would go further toward habitat protection. The author of Text 2 would grant that a few cases succeeded while insisting they are exceptions and that the strategy should shift to habitat conservation.',
-    wrongAnswerExplanations: {
-      A: 'Text 2 explicitly argues against captive breeding as the primary strategy.',
-      B: 'Text 2 argues resources should move away from zoo animals, not that zoos need more funding.',
-      D: 'Text 2 does not dispute that these species were endangered; it disputes the scalability of the zoo approach.',
-    },
-  },
-
-  // ── Central Ideas and Details (3) ─────────────────────────────────────────
-
-  {
-    id: 'sat-f5-rw-m2e-q10',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Information and Ideas',
-    skill: 'Central Ideas and Details',
-    difficulty: 'easy',
-    stimulus: 'The cacao tree is unusual among fruit-bearing plants because its pods grow directly from the trunk and large branches rather than from the tips of smaller stems. This trait, called cauliflory, is thought to help attract the specific small insects and animals that pollinate cacao flowers, which are too small and fragile to compete for pollinators that visit flowers at the canopy level.',
-    question: 'Which choice best states the main idea of the text?',
-    choices: [
-      { label: 'A', text: 'The cacao tree produces pods that are unusually large' },
-      { label: 'B', text: 'The cacao tree is distinctive in growing its fruit directly on its trunk and branches, likely to aid pollination' },
-      { label: 'C', text: 'Most tropical trees grow fruit at the tips of their smallest branches' },
-      { label: 'D', text: 'Cacao flowers attract the same pollinators that visit the forest canopy' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The passage introduces cauliflory — fruit growing from the trunk and branches — and explains why it likely exists: to attract suitable pollinators for cacao\'s small flowers.',
-    wrongAnswerExplanations: {
-      A: 'Pod size is never mentioned in the passage.',
-      C: 'The passage describes this as the opposite of what cacao does, not as a universal rule.',
-      D: 'The passage says cacao flowers are "too small and fragile to compete" with canopy-level flowers for those pollinators — the opposite of this choice.',
-    },
-  },
-
-  {
     id: 'sat-f5-rw-m2e-q11',
     section: 'reading-writing',
     moduleId: 'f5-rw-module-2-easy',
@@ -270,6 +118,54 @@ export const f5RwModule2EasyQuestions: RWQuestion[] = [
       A: 'This reverses the two women\'s roles as described.',
       C: 'The passage says Seacole "funded the entire operation herself," indicating no government funding.',
       D: 'The passage says she cared for British soldiers and was celebrated by veterans — no such limitation is mentioned.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q19',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
+    difficulty: 'easy',
+    stimulus: 'The town planned to widen the main road to reduce traffic congestion. _______ residents near the road organized a petition against the project, arguing it would increase noise and harm local businesses during construction.',
+    question: 'Which choice completes the text with the most logical transition?',
+    choices: [
+      { label: 'A', text: 'As a result,' },
+      { label: 'B', text: 'Similarly,' },
+      { label: 'C', text: 'Nonetheless,' },
+      { label: 'D', text: 'In response,' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'The residents organized a petition in reaction to the town\'s road-widening plan. "In response" accurately signals that the petition was a reaction to that specific plan.',
+    wrongAnswerExplanations: {
+      A: '"As a result" implies the petition caused the plan, reversing the logical order.',
+      B: '"Similarly" signals that the second sentence parallels the first, but the residents are pushing back, not doing something similar.',
+      C: '"Nonetheless" implies the residents acted despite something — but there is nothing earlier suggesting they might not act.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q03',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'medium',
+    stimulus: 'The new director\'s approach to running the theater company was far more _______ than her predecessor\'s: whereas he had made nearly every decision alone, she formed working groups, held open meetings, and invited input from actors, stagehands, and administrators alike.',
+    question: 'Which choice completes the text with the most logical and precise word or phrase?',
+    choices: [
+      { label: 'A', text: 'secretive' },
+      { label: 'B', text: 'collaborative' },
+      { label: 'C', text: 'costly' },
+      { label: 'D', text: 'cautious' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The new director\'s open meetings and working groups contrast with her predecessor\'s solo decision-making. "Collaborative" — involving others — captures this contrast precisely.',
+    wrongAnswerExplanations: {
+      A: '"Secretive" is the opposite of the new director\'s open, inclusive approach.',
+      C: '"Costly" refers to financial expense, not to a leadership style involving others.',
+      D: '"Cautious" means careful or hesitant, which does not address whether decisions were made alone or with others.',
     },
   },
 
@@ -297,7 +193,53 @@ export const f5RwModule2EasyQuestions: RWQuestion[] = [
     },
   },
 
-  // ── Command of Evidence (3) ───────────────────────────────────────────────
+  {
+    id: 'sat-f5-rw-m2e-q20',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Expression of Ideas',
+    skill: 'Rhetorical Synthesis',
+    difficulty: 'easy',
+    stimulus: 'While researching a topic, a student has taken the following notes:\n• The Atacama Desert in South America is one of the driest places on Earth.\n• Some parts of the Atacama receive less than 1 mm of rainfall per year.\n• Despite extreme aridity, the Atacama hosts unique plant species adapted to fog rather than rain.\n• These plants absorb moisture from coastal fog that rolls in from the Pacific Ocean.\n• Indigenous peoples have lived in the Atacama for thousands of years, using fog-collection techniques.',
+    question: 'The student wants to emphasize that life has found ways to survive in the Atacama despite its extreme dryness. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
+    choices: [
+      { label: 'A', text: 'Although the Atacama receives less than 1 mm of rain per year in some areas, plants and people there have adapted to obtain water from coastal fog instead.' },
+      { label: 'B', text: 'The Atacama Desert is located in South America.' },
+      { label: 'C', text: 'The Atacama Desert receives very little rainfall each year.' },
+      { label: 'D', text: 'Some deserts are drier than others, depending on location.' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'The goal is to show that life survives extreme dryness. Choice A states the extreme dryness and then directly contrasts it with the adaptation — fog-based water — used by both plants and people.',
+    wrongAnswerExplanations: {
+      B: 'Geographic location does not address survival strategies in extreme dryness.',
+      C: 'This states the problem (low rainfall) but does not show that life has adapted to overcome it.',
+      D: 'This is a general statement about deserts, not specifically about survival in the Atacama.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q04',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'medium',
+    stimulus: 'Evidence that the ancient trading post once bustled with activity was _______ : archaeologists found warehouses packed with imported ceramics, a copper-smelting furnace, coin hoards from three different empires, and the foundations of a large inn.',
+    question: 'Which choice completes the text with the most logical and precise word or phrase?',
+    choices: [
+      { label: 'A', text: 'scarce' },
+      { label: 'B', text: 'puzzling' },
+      { label: 'C', text: 'abundant' },
+      { label: 'D', text: 'recent' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'The passage lists multiple distinct types of evidence — ceramics, a furnace, coin hoards, an inn\'s foundations — pointing to "abundant" (plentiful) evidence.',
+    wrongAnswerExplanations: {
+      A: '"Scarce" means rare or limited, contradicting the long list of finds described.',
+      B: '"Puzzling" would mean confusing or hard to interpret, but the evidence straightforwardly supports the claim about trade.',
+      D: '"Recent" describes when the evidence was found or made, not how much of it there is.',
+    },
+  },
 
   {
     id: 'sat-f5-rw-m2e-q13',
@@ -320,6 +262,54 @@ export const f5RwModule2EasyQuestions: RWQuestion[] = [
       A: 'Cost comparisons with sports programs have no bearing on student attendance.',
       C: 'How many states offer these programs says nothing about whether participants attend school more regularly.',
       D: 'Enthusiasm is a measure of engagement, not of school attendance.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q21',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Expression of Ideas',
+    skill: 'Rhetorical Synthesis',
+    difficulty: 'medium',
+    stimulus: 'While researching a topic, a student has taken the following notes:\n• Jazz music emerged in New Orleans in the early twentieth century, blending African rhythms, blues, and European harmonic traditions.\n• Key early figures include cornetist Buddy Bolden, pianist Jelly Roll Morton, and trumpeter Louis Armstrong.\n• Jazz spread rapidly to Chicago and New York as musicians migrated northward during the Great Migration.\n• By the 1920s, jazz clubs had opened in cities across the United States and in Europe.\n• Jazz influenced later musical styles including swing, bebop, and rock and roll.',
+    question: 'The student wants to highlight the broad reach jazz achieved in a relatively short time. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
+    choices: [
+      { label: 'A', text: 'Jazz blended African rhythms, blues, and European harmonic traditions.' },
+      { label: 'B', text: 'Buddy Bolden, Jelly Roll Morton, and Louis Armstrong were among the key figures of early jazz.' },
+      { label: 'C', text: 'Emerging in New Orleans in the early twentieth century, jazz had spread to cities across the United States and to Europe by the 1920s.' },
+      { label: 'D', text: 'Jazz later influenced swing, bebop, and rock and roll.' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'The goal is to show broad reach in a short time. Choice C names the origin (New Orleans, early twentieth century) and then shows the rapid spread (across the U.S. and Europe by the 1920s), directly capturing both geographic breadth and speed.',
+    wrongAnswerExplanations: {
+      A: 'The musical blend describes the style\'s origins, not its spread.',
+      B: 'Naming key musicians does not address how widely or quickly jazz spread.',
+      D: 'Later influences on other genres address jazz\'s legacy, not its geographic reach during its early decades.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q05',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Text Structure and Purpose',
+    difficulty: 'easy',
+    stimulus: 'Chameleons do not change color primarily to camouflage themselves. New research shows that color change is mainly a form of communication: chameleons shift their hues to signal mood, dominance, or readiness to mate. Camouflage is a secondary benefit, not the main purpose of this ability.',
+    question: 'What is the main purpose of the passage?',
+    choices: [
+      { label: 'A', text: 'To argue that chameleons are more intelligent than other reptiles' },
+      { label: 'B', text: 'To correct a common misconception about why chameleons change color' },
+      { label: 'C', text: 'To describe the habitats where chameleons are found' },
+      { label: 'D', text: 'To explain how chameleons physically produce different colors in their skin' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The passage directly challenges the widespread belief that color change is for camouflage, then explains the actual purpose — communication. Its aim is to correct a misconception.',
+    wrongAnswerExplanations: {
+      A: 'The passage does not compare chameleons\' intelligence to other reptiles.',
+      C: 'Habitats are not mentioned anywhere in the passage.',
+      D: 'The passage states what color change is for, not the biological mechanism of how it is produced.',
     },
   },
 
@@ -359,182 +349,6 @@ export const f5RwModule2EasyQuestions: RWQuestion[] = [
   },
 
   {
-    id: 'sat-f5-rw-m2e-q15',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Information and Ideas',
-    skill: 'Command of Evidence',
-    difficulty: 'medium',
-    stimulus: 'A historian argues that the introduction of the mechanical clock in medieval European towns reshaped daily life by creating a shared, standardized experience of time that replaced the varied signals — church bells, sunrise, sunset — that communities had previously used to coordinate activities.',
-    question: 'Which finding, if true, would most directly support the historian\'s argument?',
-    choices: [
-      { label: 'A', text: 'Medieval clock towers were built from the same type of stone as local churches' },
-      { label: 'B', text: 'Town records from the period after clock installation show that meetings, market hours, and curfews were increasingly scheduled in specific hours rather than relative to sunrise or sunset' },
-      { label: 'C', text: 'The mechanical clock was invented in China before it appeared in Europe' },
-      { label: 'D', text: 'Some medieval towns had populations of fewer than a thousand people' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The historian\'s argument is that the clock created standardized time coordination. Evidence that scheduling shifted from sun-based references to precise hours directly supports this claim.',
-    wrongAnswerExplanations: {
-      A: 'Building materials for clock towers say nothing about how time was experienced or used.',
-      C: 'The clock\'s origin in China is a separate historical question and does not address how it changed life in European towns.',
-      D: 'Town population size is unrelated to how residents coordinated time.',
-    },
-  },
-
-  // ── Inferences (2) ────────────────────────────────────────────────────────
-
-  {
-    id: 'sat-f5-rw-m2e-q16',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Information and Ideas',
-    skill: 'Inferences',
-    difficulty: 'easy',
-    stimulus: 'Mangrove forests grow in coastal areas where saltwater and freshwater mix. Their dense, tangled root systems slow water flow, allowing fine sediments to settle and build up over time. As sediment accumulates, the seafloor gradually rises — a process that has allowed some mangrove coastlines to keep pace with rising sea levels for thousands of years. This suggests that healthy mangrove forests _______',
-    question: 'Which choice most logically completes the text?',
-    choices: [
-      { label: 'A', text: 'are less effective at filtering water than inland forests.' },
-      { label: 'B', text: 'may help protect coastlines from flooding even as sea levels continue to rise.' },
-      { label: 'C', text: 'reduce the overall biodiversity of the coastal areas they occupy.' },
-      { label: 'D', text: 'will eventually disappear as temperatures increase.' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The passage explains that mangrove root systems build up sediment, raising the seafloor and enabling coastlines to keep pace with sea-level rise. The logical inference is that healthy mangroves can help protect coasts as seas continue to rise.',
-    wrongAnswerExplanations: {
-      A: 'Water filtration is never discussed in the passage; this comparison is unsupported.',
-      C: 'The passage does not mention biodiversity at all, and the inference contradicts the positive role mangroves are described as playing.',
-      D: 'The passage describes a protective mechanism, not a projection of mangrove decline.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m2e-q17',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Information and Ideas',
-    skill: 'Inferences',
-    difficulty: 'medium',
-    stimulus: 'Researchers studying the ruins of a Bronze Age palace found no evidence of grand throne rooms, formal audience halls, or public monuments bearing royal inscriptions — the kinds of features typically associated with the centralized rule of a single powerful king. Instead, the complex contained dozens of equal-sized administrative rooms, each with its own storage facilities and record-keeping archives.',
-    question: 'Which inference is most strongly supported by the findings described in the text?',
-    choices: [
-      { label: 'A', text: 'The palace was abandoned before it could be fully completed' },
-      { label: 'B', text: 'The society that built the palace may have been governed collectively rather than by a single ruler' },
-      { label: 'C', text: 'Bronze Age palace builders did not know how to construct large halls' },
-      { label: 'D', text: 'The palace\'s archives were destroyed before archaeologists arrived' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The absence of royal symbols and the presence of many equal-sized administrative rooms with individual record-keeping facilities suggest a distributed, collective form of governance rather than rule by one monarch.',
-    wrongAnswerExplanations: {
-      A: 'The passage describes a complex that clearly exists and has multiple rooms — nothing indicates it was unfinished.',
-      C: 'The passage says the complex lacked such halls, not that its builders lacked the ability to construct them.',
-      D: 'The passage says archives were found, not destroyed.',
-    },
-  },
-
-  // ── Transitions (2) ───────────────────────────────────────────────────────
-
-  {
-    id: 'sat-f5-rw-m2e-q18',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Expression of Ideas',
-    skill: 'Transitions',
-    difficulty: 'easy',
-    stimulus: 'Regular handwashing with soap and water remains one of the most effective ways to prevent the spread of illness. _______, many outbreaks of food-borne disease occur in settings where people do not wash their hands before handling food.',
-    question: 'Which choice completes the text with the most logical transition?',
-    choices: [
-      { label: 'A', text: 'In fact,' },
-      { label: 'B', text: 'By contrast,' },
-      { label: 'C', text: 'For example,' },
-      { label: 'D', text: 'Therefore,' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'The second sentence gives a specific instance of illness spreading when handwashing is skipped — an example that supports the first sentence. "For example" is the correct transition.',
-    wrongAnswerExplanations: {
-      A: '"In fact" adds emphasis or a surprising truth, but the second sentence is an illustration, not a surprising reinforcement.',
-      B: '"By contrast" signals opposition; the two sentences are consistent, not contrasting.',
-      D: '"Therefore" signals a result or conclusion; the second sentence is not a consequence of the first but an example of it.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m2e-q19',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Expression of Ideas',
-    skill: 'Transitions',
-    difficulty: 'easy',
-    stimulus: 'The town planned to widen the main road to reduce traffic congestion. _______ residents near the road organized a petition against the project, arguing it would increase noise and harm local businesses during construction.',
-    question: 'Which choice completes the text with the most logical transition?',
-    choices: [
-      { label: 'A', text: 'As a result,' },
-      { label: 'B', text: 'Similarly,' },
-      { label: 'C', text: 'Nonetheless,' },
-      { label: 'D', text: 'In response,' },
-    ],
-    correctAnswer: 'D',
-    explanation: 'The residents organized a petition in reaction to the town\'s road-widening plan. "In response" accurately signals that the petition was a reaction to that specific plan.',
-    wrongAnswerExplanations: {
-      A: '"As a result" implies the petition caused the plan, reversing the logical order.',
-      B: '"Similarly" signals that the second sentence parallels the first, but the residents are pushing back, not doing something similar.',
-      C: '"Nonetheless" implies the residents acted despite something — but there is nothing earlier suggesting they might not act.',
-    },
-  },
-
-  // ── Rhetorical Synthesis (2) ──────────────────────────────────────────────
-
-  {
-    id: 'sat-f5-rw-m2e-q20',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Expression of Ideas',
-    skill: 'Rhetorical Synthesis',
-    difficulty: 'easy',
-    stimulus: 'While researching a topic, a student has taken the following notes:\n• The Atacama Desert in South America is one of the driest places on Earth.\n• Some parts of the Atacama receive less than 1 mm of rainfall per year.\n• Despite extreme aridity, the Atacama hosts unique plant species adapted to fog rather than rain.\n• These plants absorb moisture from coastal fog that rolls in from the Pacific Ocean.\n• Indigenous peoples have lived in the Atacama for thousands of years, using fog-collection techniques.',
-    question: 'The student wants to emphasize that life has found ways to survive in the Atacama despite its extreme dryness. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
-    choices: [
-      { label: 'A', text: 'Although the Atacama receives less than 1 mm of rain per year in some areas, plants and people there have adapted to obtain water from coastal fog instead.' },
-      { label: 'B', text: 'The Atacama Desert is located in South America.' },
-      { label: 'C', text: 'The Atacama Desert receives very little rainfall each year.' },
-      { label: 'D', text: 'Some deserts are drier than others, depending on location.' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'The goal is to show that life survives extreme dryness. Choice A states the extreme dryness and then directly contrasts it with the adaptation — fog-based water — used by both plants and people.',
-    wrongAnswerExplanations: {
-      B: 'Geographic location does not address survival strategies in extreme dryness.',
-      C: 'This states the problem (low rainfall) but does not show that life has adapted to overcome it.',
-      D: 'This is a general statement about deserts, not specifically about survival in the Atacama.',
-    },
-  },
-
-  {
-    id: 'sat-f5-rw-m2e-q21',
-    section: 'reading-writing',
-    moduleId: 'f5-rw-module-2-easy',
-    domain: 'Expression of Ideas',
-    skill: 'Rhetorical Synthesis',
-    difficulty: 'medium',
-    stimulus: 'While researching a topic, a student has taken the following notes:\n• Jazz music emerged in New Orleans in the early twentieth century, blending African rhythms, blues, and European harmonic traditions.\n• Key early figures include cornetist Buddy Bolden, pianist Jelly Roll Morton, and trumpeter Louis Armstrong.\n• Jazz spread rapidly to Chicago and New York as musicians migrated northward during the Great Migration.\n• By the 1920s, jazz clubs had opened in cities across the United States and in Europe.\n• Jazz influenced later musical styles including swing, bebop, and rock and roll.',
-    question: 'The student wants to highlight the broad reach jazz achieved in a relatively short time. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
-    choices: [
-      { label: 'A', text: 'Jazz blended African rhythms, blues, and European harmonic traditions.' },
-      { label: 'B', text: 'Buddy Bolden, Jelly Roll Morton, and Louis Armstrong were among the key figures of early jazz.' },
-      { label: 'C', text: 'Emerging in New Orleans in the early twentieth century, jazz had spread to cities across the United States and to Europe by the 1920s.' },
-      { label: 'D', text: 'Jazz later influenced swing, bebop, and rock and roll.' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'The goal is to show broad reach in a short time. Choice C names the origin (New Orleans, early twentieth century) and then shows the rapid spread (across the U.S. and Europe by the 1920s), directly capturing both geographic breadth and speed.',
-    wrongAnswerExplanations: {
-      A: 'The musical blend describes the style\'s origins, not its spread.',
-      B: 'Naming key musicians does not address how widely or quickly jazz spread.',
-      D: 'Later influences on other genres address jazz\'s legacy, not its geographic reach during its early decades.',
-    },
-  },
-
-  // ── Boundaries (3) ────────────────────────────────────────────────────────
-
-  {
     id: 'sat-f5-rw-m2e-q22',
     section: 'reading-writing',
     moduleId: 'f5-rw-module-2-easy',
@@ -555,6 +369,54 @@ export const f5RwModule2EasyQuestions: RWQuestion[] = [
       B: '", but" signals contrast or exception, but the second clause is a consequence of the first, not a contrast.',
       C: 'Without the comma before "so," the two independent clauses run together, creating a run-on sentence.',
       D: '"; and" uses a semicolon correctly between two independent clauses, but "and" signals addition, not cause and effect. The conjunction "so" better fits the meaning, and it requires a comma, not a semicolon.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q06',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Text Structure and Purpose',
+    difficulty: 'medium',
+    stimulus: 'The novelist spent fifteen years working on the same manuscript. She rewrote the first chapter more than forty times, deleted two complete drafts, and at one point abandoned the project for three years before returning to it. The book, when it finally appeared, won a major literary prize.',
+    question: 'What is the main function of the details about the rewrites and abandoned drafts in the text?',
+    choices: [
+      { label: 'A', text: 'To suggest that the novelist lacked confidence in her abilities' },
+      { label: 'B', text: 'To explain why literary prizes are difficult to win' },
+      { label: 'C', text: 'To illustrate the persistence required to complete a difficult creative work' },
+      { label: 'D', text: 'To compare the novelist\'s process with other writers\' methods' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'The many rewrites, deleted drafts, and years-long abandonment — followed by an eventual prize — illustrate that difficult creative work demands sustained persistence.',
+    wrongAnswerExplanations: {
+      A: 'The passage frames the long process as dedication, not as a sign of self-doubt.',
+      B: 'The prize is mentioned as the outcome; the passage does not explain the criteria or difficulty of winning awards.',
+      D: 'No other writers\' processes are mentioned for comparison.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q15',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'medium',
+    stimulus: 'A historian argues that the introduction of the mechanical clock in medieval European towns reshaped daily life by creating a shared, standardized experience of time that replaced the varied signals — church bells, sunrise, sunset — that communities had previously used to coordinate activities.',
+    question: 'Which finding, if true, would most directly support the historian\'s argument?',
+    choices: [
+      { label: 'A', text: 'Medieval clock towers were built from the same type of stone as local churches' },
+      { label: 'B', text: 'Town records from the period after clock installation show that meetings, market hours, and curfews were increasingly scheduled in specific hours rather than relative to sunrise or sunset' },
+      { label: 'C', text: 'The mechanical clock was invented in China before it appeared in Europe' },
+      { label: 'D', text: 'Some medieval towns had populations of fewer than a thousand people' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The historian\'s argument is that the clock created standardized time coordination. Evidence that scheduling shifted from sun-based references to precise hours directly supports this claim.',
+    wrongAnswerExplanations: {
+      A: 'Building materials for clock towers say nothing about how time was experienced or used.',
+      C: 'The clock\'s origin in China is a separate historical question and does not address how it changed life in European towns.',
+      D: 'Town population size is unrelated to how residents coordinated time.',
     },
   },
 
@@ -583,6 +445,54 @@ export const f5RwModule2EasyQuestions: RWQuestion[] = [
   },
 
   {
+    id: 'sat-f5-rw-m2e-q07',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Text Structure and Purpose',
+    difficulty: 'medium',
+    stimulus: 'At the edge of the old harbor, a single wooden fishing boat sat in dry dock. Its hull was warped and salt-stained, and the name painted on its stern had faded to near-illegibility. The old fisherman who had come to look at it stood quietly, not saying a word.',
+    question: 'Which choice best describes the overall effect of the details in the passage?',
+    choices: [
+      { label: 'A', text: 'They create a mood of abandonment and time passing' },
+      { label: 'B', text: 'They celebrate the boat\'s craftsmanship and durability' },
+      { label: 'C', text: 'They argue that old boats should be restored and preserved' },
+      { label: 'D', text: 'They explain the technical process of building wooden boats' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'The warped, salt-stained hull, the faded name, the dry dock, and the fisherman\'s silence collectively create an atmosphere of neglect, decline, and the passage of time.',
+    wrongAnswerExplanations: {
+      B: 'The details emphasize deterioration, not the quality or strength of the boat\'s construction.',
+      C: 'The passage observes the scene but does not advocate for any course of action.',
+      D: 'No steps in boat construction are described.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q16',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Information and Ideas',
+    skill: 'Inferences',
+    difficulty: 'easy',
+    stimulus: 'Mangrove forests grow in coastal areas where saltwater and freshwater mix. Their dense, tangled root systems slow water flow, allowing fine sediments to settle and build up over time. As sediment accumulates, the seafloor gradually rises — a process that has allowed some mangrove coastlines to keep pace with rising sea levels for thousands of years. This suggests that healthy mangrove forests _______',
+    question: 'Which choice most logically completes the text?',
+    choices: [
+      { label: 'A', text: 'are less effective at filtering water than inland forests.' },
+      { label: 'B', text: 'may help protect coastlines from flooding even as sea levels continue to rise.' },
+      { label: 'C', text: 'reduce the overall biodiversity of the coastal areas they occupy.' },
+      { label: 'D', text: 'will eventually disappear as temperatures increase.' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The passage explains that mangrove root systems build up sediment, raising the seafloor and enabling coastlines to keep pace with sea-level rise. The logical inference is that healthy mangroves can help protect coasts as seas continue to rise.',
+    wrongAnswerExplanations: {
+      A: 'Water filtration is never discussed in the passage; this comparison is unsupported.',
+      C: 'The passage does not mention biodiversity at all, and the inference contradicts the positive role mangroves are described as playing.',
+      D: 'The passage describes a protective mechanism, not a projection of mangrove decline.',
+    },
+  },
+
+  {
     id: 'sat-f5-rw-m2e-q24',
     section: 'reading-writing',
     moduleId: 'f5-rw-module-2-easy',
@@ -606,7 +516,53 @@ export const f5RwModule2EasyQuestions: RWQuestion[] = [
     },
   },
 
-  // ── Form, Structure, and Sense (3) ────────────────────────────────────────
+  {
+    id: 'sat-f5-rw-m2e-q08',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Cross-Text Connections',
+    difficulty: 'easy',
+    stimulus: 'Text 1\n\nSocial media platforms give ordinary people a powerful voice. Anyone with a phone can share news, build a following, and reach audiences that once required expensive broadcast equipment. This democratization of information has allowed communities and movements to organize and be heard in ways previously impossible.\n\nText 2\n\nSocial media has made it easier to spread false information at speed. Because anyone can post anything without editorial review, misleading claims can reach millions of people before fact-checkers can respond. The same openness that gives everyone a voice also gives that voice to those who wish to deceive.',
+    question: 'Both texts would most likely agree that social media',
+    choices: [
+      { label: 'A', text: 'should be more tightly regulated by governments' },
+      { label: 'B', text: 'allows people who are not journalists or broadcasters to reach large audiences' },
+      { label: 'C', text: 'has improved the overall quality of public information' },
+      { label: 'D', text: 'is used primarily by political movements' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Text 1 says anyone with a phone can reach audiences that once required expensive equipment. Text 2 says anyone can post anything without editorial review. Both agree that non-journalists and non-broadcasters can now reach large audiences.',
+    wrongAnswerExplanations: {
+      A: 'Neither text discusses government regulation.',
+      C: 'Text 2 argues that misinformation spreads widely, so it does not agree that information quality has improved.',
+      D: 'Neither text claims social media is used mainly by political movements.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q17',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Information and Ideas',
+    skill: 'Inferences',
+    difficulty: 'medium',
+    stimulus: 'Researchers studying the ruins of a Bronze Age palace found no evidence of grand throne rooms, formal audience halls, or public monuments bearing royal inscriptions — the kinds of features typically associated with the centralized rule of a single powerful king. Instead, the complex contained dozens of equal-sized administrative rooms, each with its own storage facilities and record-keeping archives.',
+    question: 'Which inference is most strongly supported by the findings described in the text?',
+    choices: [
+      { label: 'A', text: 'The palace was abandoned before it could be fully completed' },
+      { label: 'B', text: 'The society that built the palace may have been governed collectively rather than by a single ruler' },
+      { label: 'C', text: 'Bronze Age palace builders did not know how to construct large halls' },
+      { label: 'D', text: 'The palace\'s archives were destroyed before archaeologists arrived' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The absence of royal symbols and the presence of many equal-sized administrative rooms with individual record-keeping facilities suggest a distributed, collective form of governance rather than rule by one monarch.',
+    wrongAnswerExplanations: {
+      A: 'The passage describes a complex that clearly exists and has multiple rooms — nothing indicates it was unfinished.',
+      C: 'The passage says the complex lacked such halls, not that its builders lacked the ability to construct them.',
+      D: 'The passage says archives were found, not destroyed.',
+    },
+  },
 
   {
     id: 'sat-f5-rw-m2e-q25',
@@ -629,6 +585,30 @@ export const f5RwModule2EasyQuestions: RWQuestion[] = [
       A: '"Review" is present tense and does not match the completed past action described.',
       B: '"Reviews" is present tense and similarly mismatches the past sequence of events.',
       D: '"Will have reviewed" is the future perfect, suggesting the reviewing has not yet happened, which contradicts "before agreeing" — a past completed event.',
+    },
+  },
+
+  {
+    id: 'sat-f5-rw-m2e-q09',
+    section: 'reading-writing',
+    moduleId: 'f5-rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Cross-Text Connections',
+    difficulty: 'medium',
+    stimulus: 'Text 1\n\nZoos play an essential role in wildlife conservation. Many species, including the California condor and the Arabian oryx, survived extinction only because captive breeding programs at accredited zoos maintained their populations long enough for wild reintroduction efforts to succeed. Zoos also fund field conservation projects and educate millions of visitors each year about the importance of protecting wild habitats.\n\nText 2\n\nHowever well-intentioned, keeping animals in captivity cannot substitute for protecting the habitats they depend on. Successful captive breeding programs are rare; most species in decline cannot be saved by zoos alone. Conservationists argue that the resources spent on zoo animals would produce far greater results if directed toward habitat preservation and anti-poaching enforcement in the wild.',
+    question: 'How would the author of Text 2 most likely respond to the argument in Text 1 that zoos saved species such as the California condor and the Arabian oryx?',
+    choices: [
+      { label: 'A', text: 'By agreeing that captive breeding programs are the most effective conservation strategy available' },
+      { label: 'B', text: 'By arguing that the condor and oryx cases show zoos should be given more funding' },
+      { label: 'C', text: 'By acknowledging those cases while arguing they are exceptions and that zoo resources would generally help wildlife more if spent on habitat protection' },
+      { label: 'D', text: 'By claiming that the California condor and Arabian oryx were never actually endangered' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Text 2 says successful captive breeding programs are "rare" and argues money would go further toward habitat protection. The author of Text 2 would grant that a few cases succeeded while insisting they are exceptions and that the strategy should shift to habitat conservation.',
+    wrongAnswerExplanations: {
+      A: 'Text 2 explicitly argues against captive breeding as the primary strategy.',
+      B: 'Text 2 argues resources should move away from zoo animals, not that zoos need more funding.',
+      D: 'Text 2 does not dispute that these species were endangered; it disputes the scalability of the zoo approach.',
     },
   },
 

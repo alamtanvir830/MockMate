@@ -3,9 +3,6 @@ import type { RWQuestion } from './types'
 // Reading and Writing Module 1 — 27 questions, mixed difficulty (routing module)
 
 export const rwModule1Questions: RWQuestion[] = [
-
-  // ── Words in Context (5) ────────────────────────────────────────────────────
-
   {
     id: 'rw1-01',
     section: 'reading-writing',
@@ -27,54 +24,6 @@ export const rwModule1Questions: RWQuestion[] = [
       A: `Choice A is incorrect. "Absorb" means to take in or soak up, which is the opposite of what these organisms do with light.`,
       C: `Choice C is incorrect. "Reflect" means to bounce light back from a surface, but bioluminescent organisms generate their own light rather than reflecting an external source.`,
       D: `Choice D is incorrect. "Measure" refers to quantifying something, which has no connection to producing or releasing light.`,
-    },
-  },
-
-  {
-    id: 'rw1-02',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Craft and Structure',
-    skill: 'Words in Context',
-    difficulty: 'easy',
-    stimulus: `The Silk Road was not a single road but a network of overland and maritime trade routes connecting East Asia, South Asia, Central Asia, the Middle East, and Europe for over a millennium. Merchants traveling these routes did not merely exchange goods such as silk, spices, and porcelain; they also served as conduits for the diffusion of ideas, religions, and technologies across vast distances. The spread of papermaking from China to the Islamic world and eventually to Europe exemplifies how knowledge traveled alongside trade.`,
-    question: `As used in the passage, "conduits" most nearly means`,
-    choices: [
-      { label: 'A', text: 'channels' },
-      { label: 'B', text: 'containers' },
-      { label: 'C', text: 'obstacles' },
-      { label: 'D', text: 'records' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. In this context, merchants acted as "conduits" for ideas and knowledge, meaning they were the means through which these things passed from one place to another. "Channels" captures this role of being a pathway or medium of transmission.`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. "Containers" implies holding something in place, but the passage emphasizes movement and spread across distances.`,
-      C: `Choice C is incorrect. "Obstacles" implies blocking or hindering, which is opposite to the merchants' role in facilitating diffusion.`,
-      D: `Choice D is incorrect. "Records" refers to documentation, not to means of transmission.`,
-    },
-  },
-
-  {
-    id: 'rw1-03',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Craft and Structure',
-    skill: 'Words in Context',
-    difficulty: 'medium',
-    stimulus: `In behavioral economics, "anchoring" refers to the cognitive bias in which an individual relies too heavily on the first piece of information encountered when making decisions. Once an anchor is established, subsequent judgments are made by adjusting from that initial figure, often insufficiently. Retailers exploit this tendency by prominently displaying an inflated "original" price next to a discounted one, making the sale price appear more compelling than it might otherwise seem.`,
-    question: `As used in the passage, "anchor" most nearly means`,
-    choices: [
-      { label: 'A', text: 'a heavy object used to moor a vessel' },
-      { label: 'B', text: 'a feature that provides emotional stability' },
-      { label: 'C', text: 'a reference point that influences later judgments' },
-      { label: 'D', text: 'a factual claim that cannot be disputed' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. In the passage, an "anchor" is the initial piece of information that shapes all subsequent decisions. Describing it as a "reference point that influences later judgments" accurately captures this technical usage in behavioral economics.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. This is the common nautical meaning of "anchor," but the passage uses the term in a cognitive and economic context with no reference to vessels.`,
-      B: `Choice B is incorrect. While "anchoring" can colloquially suggest stability, the passage specifically describes it as a cognitive bias affecting decision-making, not emotional grounding.`,
-      D: `Choice D is incorrect. The passage makes no claim about the anchor being indisputable; in fact, the anchor is often an arbitrary or inflated number.`,
     },
   },
 
@@ -103,6 +52,54 @@ export const rwModule1Questions: RWQuestion[] = [
   },
 
   {
+    id: 'rw1-11',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'easy',
+    stimulus: `In the mid-twentieth century, researchers discovered that certain sharks possess sensory organs called ampullae of Lorenzini, which detect the weak electrical fields generated by the muscle contractions of nearby prey. These organs, distributed across the shark's snout, allow the animal to locate fish hidden beneath sand or in murky water where vision is limited. The same electroreceptive system also helps sharks detect the Earth's magnetic field, likely assisting in long-distance navigation across open ocean.`,
+    question: `Which choice best states the main idea of the passage?`,
+    choices: [
+      { label: 'A', text: 'Sharks are the most electrically sensitive animals in the ocean.' },
+      { label: 'B', text: 'Researchers have recently developed tools to measure electrical fields in ocean water.' },
+      { label: 'C', text: 'Sharks rely primarily on electroreception rather than vision to hunt.' },
+      { label: 'D', text: 'The ampullae of Lorenzini serve both predatory and navigational functions in sharks.' },
+    ],
+    correctAnswer: 'D',
+    explanation: `Choice D is correct. The passage describes the ampullae of Lorenzini, explains their role in detecting prey, and then adds that they also assist with magnetic navigation. The main idea encompasses both of these functions, which the passage presents in sequence.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The passage does not compare shark electroreception to other marine animals, so no claim about sharks being "most sensitive" is supported.`,
+      C: `Choice C is incorrect. The passage says electroreception helps "where vision is limited," implying sharks do use vision; it does not establish a primary reliance on electroreception.`,
+      B: `Choice B is incorrect. The passage does not mention any research tools; it describes the biology of the sharks' sensory organs.`,
+    },
+  },
+
+  {
+    id: 'rw1-02',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'easy',
+    stimulus: `The Silk Road was not a single road but a network of overland and maritime trade routes connecting East Asia, South Asia, Central Asia, the Middle East, and Europe for over a millennium. Merchants traveling these routes did not merely exchange goods such as silk, spices, and porcelain; they also served as conduits for the diffusion of ideas, religions, and technologies across vast distances. The spread of papermaking from China to the Islamic world and eventually to Europe exemplifies how knowledge traveled alongside trade.`,
+    question: `As used in the passage, "conduits" most nearly means`,
+    choices: [
+      { label: 'A', text: 'channels' },
+      { label: 'B', text: 'containers' },
+      { label: 'C', text: 'obstacles' },
+      { label: 'D', text: 'records' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. In this context, merchants acted as "conduits" for ideas and knowledge, meaning they were the means through which these things passed from one place to another. "Channels" captures this role of being a pathway or medium of transmission.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. "Containers" implies holding something in place, but the passage emphasizes movement and spread across distances.`,
+      C: `Choice C is incorrect. "Obstacles" implies blocking or hindering, which is opposite to the merchants' role in facilitating diffusion.`,
+      D: `Choice D is incorrect. "Records" refers to documentation, not to means of transmission.`,
+    },
+  },
+
+  {
     id: 'rw1-05',
     section: 'reading-writing',
     moduleId: 'rw-module-1',
@@ -126,7 +123,101 @@ export const rwModule1Questions: RWQuestion[] = [
     },
   },
 
-  // ── Text Structure and Purpose (3) ─────────────────────────────────────────
+  {
+    id: 'rw1-12',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'medium',
+    stimulus: `The concept of "collective memory" — the shared recollections of a social group — was first developed systematically by the sociologist Maurice Halbwachs in the early twentieth century. Halbwachs argued that individual memories are always shaped by the social frameworks within which people live, meaning that even seemingly personal recollections are filtered through collective categories such as language, culture, and group identity. His work challenged the Cartesian assumption that memory is a purely private, internal phenomenon and suggested instead that remembering is an inherently social act.`,
+    question: `According to the passage, Halbwachs's contribution to the study of memory was to`,
+    choices: [
+      { label: 'A', text: 'demonstrate that individuals within a group remember events identically' },
+      { label: 'B', text: 'show that language is the only meaningful influence on individual memory' },
+      { label: 'C', text: 'develop experimental methods to measure the accuracy of group recollections' },
+      { label: 'D', text: 'argue that personal memory is shaped by social contexts rather than being purely private' },
+    ],
+    correctAnswer: 'D',
+    explanation: `Choice D is correct. The passage states that Halbwachs argued "individual memories are always shaped by the social frameworks within which people live" and that he "challenged the Cartesian assumption that memory is a purely private, internal phenomenon." This is accurately summarized by choice D.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The passage says memories are shaped by collective frameworks, not that they become identical across individuals.`,
+      C: `Choice C is incorrect. The passage does not describe Halbwachs developing any experimental methods; his contribution was theoretical.`,
+      B: `Choice B is incorrect. The passage mentions language as one of several social frameworks (alongside culture and group identity), not as the sole influence.`,
+    },
+  },
+
+  {
+    id: 'rw1-03',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'medium',
+    stimulus: `In behavioral economics, "anchoring" refers to the cognitive bias in which an individual relies too heavily on the first piece of information encountered when making decisions. Once an anchor is established, subsequent judgments are made by adjusting from that initial figure, often insufficiently. Retailers exploit this tendency by prominently displaying an inflated "original" price next to a discounted one, making the sale price appear more compelling than it might otherwise seem.`,
+    question: `As used in the passage, "anchor" most nearly means`,
+    choices: [
+      { label: 'A', text: 'a heavy object used to moor a vessel' },
+      { label: 'B', text: 'a feature that provides emotional stability' },
+      { label: 'C', text: 'a reference point that influences later judgments' },
+      { label: 'D', text: 'a factual claim that cannot be disputed' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. In the passage, an "anchor" is the initial piece of information that shapes all subsequent decisions. Describing it as a "reference point that influences later judgments" accurately captures this technical usage in behavioral economics.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. This is the common nautical meaning of "anchor," but the passage uses the term in a cognitive and economic context with no reference to vessels.`,
+      B: `Choice B is incorrect. While "anchoring" can colloquially suggest stability, the passage specifically describes it as a cognitive bias affecting decision-making, not emotional grounding.`,
+      D: `Choice D is incorrect. The passage makes no claim about the anchor being indisputable; in fact, the anchor is often an arbitrary or inflated number.`,
+    },
+  },
+
+  {
+    id: 'rw1-13',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Standard English Conventions',
+    skill: 'Boundaries',
+    difficulty: 'medium',
+    stimulus: `The Antikythera mechanism, an ancient Greek device recovered from a shipwreck in 1901, is often called the world's first analog computer. Its intricate system of bronze gears could predict the positions of the sun and moon ______ some historians believe it could also forecast eclipses years in advance.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: ', some historians believe' },
+      { label: 'B', text: '; some historians believe' },
+      { label: 'C', text: 'some historians believe' },
+      { label: 'D', text: ' some historians, believing' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The text contains two independent clauses: "Its intricate system of bronze gears could predict the positions of the sun and moon" and "some historians believe it could also forecast eclipses years in advance." A semicolon correctly joins two independent clauses that are closely related without a coordinating conjunction.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. Joining two independent clauses with only a comma creates a comma splice.`,
+      C: `Choice C is incorrect. Placing two independent clauses next to each other with no punctuation creates a run-on sentence.`,
+      D: `Choice D is incorrect. Changing "believe" to the participle "believing" creates a fragment, leaving the second clause without a main verb.`,
+    },
+  },
+
+  {
+    id: 'rw1-14',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'easy',
+    stimulus: `A researcher studying urban heat islands wants to demonstrate that tree canopy coverage reduces surface temperatures in cities. Which quotation from a study report would most directly support this claim?`,
+    question: `Which quotation from a study report would most directly support the claim that tree canopy coverage reduces surface temperatures in cities?`,
+    choices: [
+      { label: 'A', text: '"City residents who live near parks report higher levels of life satisfaction than those who do not."' },
+      { label: 'B', text: '"Surface temperatures in treed neighborhoods averaged 4.2°C lower than in comparable neighborhoods without tree cover."' },
+      { label: 'C', text: '"Urban trees provide habitat for over 200 species of birds in North American cities."' },
+      { label: 'D', text: '"The installation of green roofs has increased in major cities by 15% over the past decade."' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. This quotation directly states that surface temperatures were measurably lower in areas with tree cover compared to areas without it, which is exactly the claim the researcher wants to support.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. Life satisfaction is a psychological measure unrelated to surface temperature.`,
+      C: `Choice C is incorrect. Biodiversity benefits are unrelated to temperature reduction.`,
+      D: `Choice D is incorrect. Green roof installation rates do not directly support a claim about tree canopy and surface temperature.`,
+    },
+  },
 
   {
     id: 'rw1-06',
@@ -149,6 +240,54 @@ export const rwModule1Questions: RWQuestion[] = [
       A: `Choice A is incorrect. The passage focuses exclusively on mangroves and does not compare them to other coastal habitats such as salt marshes or coral reefs.`,
       C: `Choice C is incorrect. While the passage mentions shrimp farming as a threat, it does not make an explicit argument calling for a ban.`,
       D: `Choice D is incorrect. The passage mentions filtration as one function but does not describe the chemical mechanism behind it.`,
+    },
+  },
+
+  {
+    id: 'rw1-17',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Standard English Conventions',
+    skill: 'Boundaries',
+    difficulty: 'medium',
+    stimulus: `The nineteenth-century chemist Dmitri Mendeleev is celebrated for a bold predictive achievement ______ he left gaps in his periodic table for elements that had not yet been discovered. When elements such as gallium and germanium were later found, their properties matched his forecasts with striking accuracy.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: ': he left' },
+      { label: 'B', text: ', he left' },
+      { label: 'C', text: ' he left' },
+      { label: 'D', text: ', leaving' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. The first clause is a complete independent clause that makes a general claim ("celebrated for a bold predictive achievement"), and the second independent clause explains what that achievement was. A colon is used to introduce an explanation or elaboration that follows a complete sentence.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. A comma joining two independent clauses without a coordinating conjunction creates a comma splice.`,
+      C: `Choice C is incorrect. Running two independent clauses together with no punctuation produces a run-on sentence.`,
+      D: `Choice D is incorrect. "Leaving" turns the second clause into a modifying phrase, but the resulting sentence loses the explanatory force and reads awkwardly; more importantly, it fails to signal the elaborative relationship that a colon provides.`,
+    },
+  },
+
+  {
+    id: 'rw1-15',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'medium',
+    stimulus: `Historians have long debated the primary causes of the decline of the Roman Empire. Edward Gibbon famously attributed it to the spread of Christianity and the "barbarization" of the army. Modern historians tend to emphasize structural economic factors, including currency debasement, overtaxation, and the disruption of long-distance trade networks. Some scholars have added climatic and epidemiological factors, arguing that a prolonged period of cooling and a series of devastating plagues weakened the empire's population and productive capacity.`,
+    question: `Which quotation from a historian's work would most directly support the argument that economic factors were central to Rome's decline?`,
+    choices: [
+      { label: 'A', text: '"The adoption of Christianity shifted Roman civic life toward otherworldly concerns, undermining the martial virtues that had sustained the empire."' },
+      { label: 'B', text: '"Germanic military commanders became increasingly indispensable to the Roman army during the fourth and fifth centuries."' },
+      { label: 'C', text: '"The Antonine Plague of 165–180 CE may have killed up to five million people, decimating the agricultural workforce."' },
+      { label: 'D', text: `"By the third century, the empire's silver denarius contained less than five percent silver, eroding public trust in currency and hampering commerce."` },
+    ],
+    correctAnswer: 'D',
+    explanation: `Choice D is correct. This quotation directly addresses currency debasement — one of the structural economic factors the passage mentions — and connects it to commerce, making it the strongest support for an economic explanation of Rome's decline.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. This supports the cultural-religious explanation associated with Gibbon, not an economic argument.`,
+      B: `Choice B is incorrect. This describes military changes consistent with "barbarization" of the army, supporting a different argument.`,
+      C: `Choice C is incorrect. This supports the epidemiological explanation described in the passage's final sentence, not the economic argument.`,
     },
   },
 
@@ -178,204 +317,26 @@ export const rwModule1Questions: RWQuestion[] = [
   },
 
   {
-    id: 'rw1-08',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Craft and Structure',
-    skill: 'Text Structure and Purpose',
-    difficulty: 'hard',
-    stimulus: `Some historians have argued that the printing press was the single most transformative technology in the history of Western civilization. Others, however, caution against what they call "technological determinism" — the assumption that a single invention causes sweeping social change independent of the economic, political, and cultural conditions in which it operates. On this view, the printing press accelerated changes that were already underway rather than originating them. Whether as cause or catalyst, the technology unquestionably reshaped how knowledge was produced, disseminated, and challenged.`,
-    question: `The passage is primarily organized to`,
-    choices: [
-      { label: 'A', text: 'outline competing interpretations of the printing press and then reach a limited consensus' },
-      { label: 'B', text: 'present a historical argument and then describe the evidence that disproves it' },
-      { label: 'C', text: 'trace the chronological development of printing technology in Western Europe' },
-      { label: 'D', text: 'defend technological determinism against its critics' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. The passage first presents historians who credit the press as the most transformative technology, then introduces critics of technological determinism who offer a more nuanced view, and concludes by noting that both sides agree the press reshaped knowledge — a limited common ground.`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. The passage does not "disprove" the first argument; it offers a different interpretation and then acknowledges an area of agreement.`,
-      C: `Choice C is incorrect. The passage is entirely interpretive and historiographical, with no chronological account of printing technology's development.`,
-      D: `Choice D is incorrect. The passage presents critics of technological determinism with apparent sympathy and does not argue in its defense.`,
-    },
-  },
-
-  // ── Cross-Text Connections (2) ─────────────────────────────────────────────
-
-  {
-    id: 'rw1-09',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'medium',
-    stimulus: `Text 1: Proponents of urban rewilding argue that reintroducing apex predators to city-adjacent ecosystems can regulate deer populations, reduce overgrazing, and restore vegetation diversity. In the absence of natural predators, deer browse unchecked, suppressing undergrowth and reducing habitat quality for songbirds and smaller mammals. Even the psychological effect of predator presence — what ecologists call "the ecology of fear" — can alter prey behavior in ways that benefit the broader ecosystem.
-
-Text 2: Critics of urban rewilding express concern that the unpredictable movements of large predators pose unacceptable risks to human safety, livestock, and companion animals in areas close to residential zones. They argue that non-lethal management strategies, including fertility control and targeted relocation, can achieve similar ecological benefits without the dangers associated with predator reintroduction. The costs and liabilities of a failed rewilding program, they note, could fall disproportionately on rural communities.`,
-    question: `Based on the passages, the authors of Text 1 and Text 2 would most likely agree that`,
-    choices: [
-      { label: 'A', text: 'reintroducing apex predators to urban areas is too dangerous to attempt' },
-      { label: 'B', text: 'the ecology of fear is an unproven concept without scientific support' },
-      { label: 'C', text: 'deer population management near cities is a legitimate ecological concern' },
-      { label: 'D', text: 'fertility control programs are superior to predator reintroduction' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. Text 1 identifies unchecked deer populations as an ecological problem that rewilding can address. Text 2 does not dispute this problem but argues for alternative management strategies. Both passages implicitly agree that deer population management near cities is a real and important concern.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. This is the view of Text 2's critics, not a shared position. Text 1 clearly advocates for predator reintroduction.`,
-      B: `Choice B is incorrect. Text 2 does not challenge the science of the ecology of fear; it raises practical safety concerns about predator presence.`,
-      D: `Choice D is incorrect. Text 2 suggests fertility control as a preferable alternative, but Text 1 makes no comparison between strategies.`,
-    },
-  },
-
-  {
-    id: 'rw1-10',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'hard',
-    stimulus: `Text 1: The novelist Zora Neale Hurston, writing in the 1930s, insisted that Black vernacular speech was not a degraded form of Standard American English but a fully expressive, rule-governed linguistic system with its own aesthetic richness. Her fiction drew extensively on the rhythms, idioms, and storytelling conventions of the African American South, a choice that her contemporaries sometimes criticized as pandering to stereotypes rather than advancing racial uplift.
-
-Text 2: Literary critics working in the tradition of sociolinguistics have since validated Hurston's intuitions, demonstrating through empirical research that African American Vernacular English (AAVE) exhibits consistent grammatical rules, complex aspectual distinctions, and a rich oral tradition that standard written English cannot fully represent. They argue that dismissing AAVE as "incorrect" reflects social prejudice, not linguistic analysis.`,
-    question: `How would the author of Text 2 most likely respond to the contemporaries mentioned in Text 1 who criticized Hurston?`,
-    choices: [
-      { label: 'A', text: 'By arguing that their criticism was aesthetically valid even if linguistically misinformed' },
-      { label: 'B', text: 'By suggesting their view reflected social bias rather than an accurate assessment of language' },
-      { label: 'C', text: 'By defending their concern that vernacular speech should be reserved for oral communication' },
-      { label: 'D', text: 'By conceding that Hurston\'s literary choices were strategically unwise for the era' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. Text 2 explicitly argues that dismissing AAVE as "incorrect" reflects "social prejudice, not linguistic analysis." The critics in Text 1 implicitly viewed vernacular speech as inferior, which is precisely the attitude Text 2's author would challenge as rooted in bias rather than linguistic fact.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Text 2 provides no basis for conceding aesthetic validity to those who dismissed vernacular speech.`,
-      C: `Choice C is incorrect. Text 2 defends AAVE as a full linguistic system appropriate for literary expression, not something confined to oral contexts.`,
-      D: `Choice D is incorrect. Text 2 supports Hurston's position without qualification and would not endorse the strategic objection raised by her contemporaries.`,
-    },
-  },
-
-  // ── Central Ideas and Details (3) ─────────────────────────────────────────
-
-  {
-    id: 'rw1-11',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Central Ideas and Details',
-    difficulty: 'easy',
-    stimulus: `In the mid-twentieth century, researchers discovered that certain sharks possess sensory organs called ampullae of Lorenzini, which detect the weak electrical fields generated by the muscle contractions of nearby prey. These organs, distributed across the shark's snout, allow the animal to locate fish hidden beneath sand or in murky water where vision is limited. The same electroreceptive system also helps sharks detect the Earth's magnetic field, likely assisting in long-distance navigation across open ocean.`,
-    question: `Which choice best states the main idea of the passage?`,
-    choices: [
-      { label: 'A', text: 'Sharks are the most electrically sensitive animals in the ocean.' },
-      { label: 'B', text: 'Researchers have recently developed tools to measure electrical fields in ocean water.' },
-      { label: 'C', text: 'Sharks rely primarily on electroreception rather than vision to hunt.' },
-      { label: 'D', text: 'The ampullae of Lorenzini serve both predatory and navigational functions in sharks.' },
-    ],
-    correctAnswer: 'D',
-    explanation: `Choice D is correct. The passage describes the ampullae of Lorenzini, explains their role in detecting prey, and then adds that they also assist with magnetic navigation. The main idea encompasses both of these functions, which the passage presents in sequence.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage does not compare shark electroreception to other marine animals, so no claim about sharks being "most sensitive" is supported.`,
-      C: `Choice C is incorrect. The passage says electroreception helps "where vision is limited," implying sharks do use vision; it does not establish a primary reliance on electroreception.`,
-      B: `Choice B is incorrect. The passage does not mention any research tools; it describes the biology of the sharks' sensory organs.`,
-    },
-  },
-
-  {
-    id: 'rw1-12',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Central Ideas and Details',
-    difficulty: 'medium',
-    stimulus: `The concept of "collective memory" — the shared recollections of a social group — was first developed systematically by the sociologist Maurice Halbwachs in the early twentieth century. Halbwachs argued that individual memories are always shaped by the social frameworks within which people live, meaning that even seemingly personal recollections are filtered through collective categories such as language, culture, and group identity. His work challenged the Cartesian assumption that memory is a purely private, internal phenomenon and suggested instead that remembering is an inherently social act.`,
-    question: `According to the passage, Halbwachs's contribution to the study of memory was to`,
-    choices: [
-      { label: 'A', text: 'demonstrate that individuals within a group remember events identically' },
-      { label: 'B', text: 'show that language is the only meaningful influence on individual memory' },
-      { label: 'C', text: 'develop experimental methods to measure the accuracy of group recollections' },
-      { label: 'D', text: 'argue that personal memory is shaped by social contexts rather than being purely private' },
-    ],
-    correctAnswer: 'D',
-    explanation: `Choice D is correct. The passage states that Halbwachs argued "individual memories are always shaped by the social frameworks within which people live" and that he "challenged the Cartesian assumption that memory is a purely private, internal phenomenon." This is accurately summarized by choice D.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage says memories are shaped by collective frameworks, not that they become identical across individuals.`,
-      C: `Choice C is incorrect. The passage does not describe Halbwachs developing any experimental methods; his contribution was theoretical.`,
-      B: `Choice B is incorrect. The passage mentions language as one of several social frameworks (alongside culture and group identity), not as the sole influence.`,
-    },
-  },
-
-  {
-    id: 'rw1-13',
+    id: 'rw1-20',
     section: 'reading-writing',
     moduleId: 'rw-module-1',
     domain: 'Standard English Conventions',
     skill: 'Boundaries',
     difficulty: 'medium',
-    stimulus: `The Antikythera mechanism, an ancient Greek device recovered from a shipwreck in 1901, is often called the world's first analog computer. Its intricate system of bronze gears could predict the positions of the sun and moon ______ some historians believe it could also forecast eclipses years in advance.`,
+    stimulus: `The composer Florence Price broke barriers in American classical music during the 1930s. Her Symphony in E minor ______ the first work by an African American woman performed by a major orchestra—premiered with the Chicago Symphony in 1933 to critical acclaim. Rediscovered decades after her death, her scores are now performed regularly around the world.`,
     question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
     choices: [
-      { label: 'A', text: ', some historians believe' },
-      { label: 'B', text: '; some historians believe' },
-      { label: 'C', text: 'some historians believe' },
-      { label: 'D', text: ' some historians, believing' },
+      { label: 'A', text: ', which was' },
+      { label: 'B', text: '—which was' },
+      { label: 'C', text: 'which was' },
+      { label: 'D', text: '(which was' },
     ],
     correctAnswer: 'B',
-    explanation: `Choice B is correct. The text contains two independent clauses: "Its intricate system of bronze gears could predict the positions of the sun and moon" and "some historians believe it could also forecast eclipses years in advance." A semicolon correctly joins two independent clauses that are closely related without a coordinating conjunction.`,
+    explanation: `Choice B is correct. The phrase "the first work by an African American woman performed by a major orchestra" is a nonessential interrupter, and the sentence already uses a dash after "1933... acclaim" to close it. A pair of dashes must be used consistently to set off the interrupting phrase, so an opening dash is required to match the closing dash.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Joining two independent clauses with only a comma creates a comma splice.`,
-      C: `Choice C is incorrect. Placing two independent clauses next to each other with no punctuation creates a run-on sentence.`,
-      D: `Choice D is incorrect. Changing "believe" to the participle "believing" creates a fragment, leaving the second clause without a main verb.`,
-    },
-  },
-
-  // ── Command of Evidence (4) ────────────────────────────────────────────────
-
-  {
-    id: 'rw1-14',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Command of Evidence',
-    difficulty: 'easy',
-    stimulus: `A researcher studying urban heat islands wants to demonstrate that tree canopy coverage reduces surface temperatures in cities. Which quotation from a study report would most directly support this claim?`,
-    question: `Which quotation from a study report would most directly support the claim that tree canopy coverage reduces surface temperatures in cities?`,
-    choices: [
-      { label: 'A', text: '"City residents who live near parks report higher levels of life satisfaction than those who do not."' },
-      { label: 'B', text: '"Surface temperatures in treed neighborhoods averaged 4.2°C lower than in comparable neighborhoods without tree cover."' },
-      { label: 'C', text: '"Urban trees provide habitat for over 200 species of birds in North American cities."' },
-      { label: 'D', text: '"The installation of green roofs has increased in major cities by 15% over the past decade."' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. This quotation directly states that surface temperatures were measurably lower in areas with tree cover compared to areas without it, which is exactly the claim the researcher wants to support.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Life satisfaction is a psychological measure unrelated to surface temperature.`,
-      C: `Choice C is incorrect. Biodiversity benefits are unrelated to temperature reduction.`,
-      D: `Choice D is incorrect. Green roof installation rates do not directly support a claim about tree canopy and surface temperature.`,
-    },
-  },
-
-  {
-    id: 'rw1-15',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Command of Evidence',
-    difficulty: 'medium',
-    stimulus: `Historians have long debated the primary causes of the decline of the Roman Empire. Edward Gibbon famously attributed it to the spread of Christianity and the "barbarization" of the army. Modern historians tend to emphasize structural economic factors, including currency debasement, overtaxation, and the disruption of long-distance trade networks. Some scholars have added climatic and epidemiological factors, arguing that a prolonged period of cooling and a series of devastating plagues weakened the empire's population and productive capacity.`,
-    question: `Which quotation from a historian's work would most directly support the argument that economic factors were central to Rome's decline?`,
-    choices: [
-      { label: 'A', text: '"The adoption of Christianity shifted Roman civic life toward otherworldly concerns, undermining the martial virtues that had sustained the empire."' },
-      { label: 'B', text: '"Germanic military commanders became increasingly indispensable to the Roman army during the fourth and fifth centuries."' },
-      { label: 'C', text: '"The Antonine Plague of 165–180 CE may have killed up to five million people, decimating the agricultural workforce."' },
-      { label: 'D', text: `"By the third century, the empire's silver denarius contained less than five percent silver, eroding public trust in currency and hampering commerce."` },
-    ],
-    correctAnswer: 'D',
-    explanation: `Choice D is correct. This quotation directly addresses currency debasement — one of the structural economic factors the passage mentions — and connects it to commerce, making it the strongest support for an economic explanation of Rome's decline.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. This supports the cultural-religious explanation associated with Gibbon, not an economic argument.`,
-      B: `Choice B is incorrect. This describes military changes consistent with "barbarization" of the army, supporting a different argument.`,
-      C: `Choice C is incorrect. This supports the epidemiological explanation described in the passage's final sentence, not the economic argument.`,
+      A: `Choice A is incorrect. A comma cannot be paired with a dash to enclose the same nonessential phrase; punctuation marks surrounding an interrupter must match.`,
+      C: `Choice C is incorrect. Omitting any opening punctuation leaves the nonessential phrase incorrectly attached and produces an unbalanced construction with the later dash.`,
+      D: `Choice D is incorrect. An opening parenthesis cannot be paired with a closing dash; enclosing punctuation must match.`,
     },
   },
 
@@ -414,104 +375,28 @@ Text 2: Literary critics working in the tradition of sociolinguistics have since
   },
 
   {
-    id: 'rw1-17',
+    id: 'rw1-08',
     section: 'reading-writing',
     moduleId: 'rw-module-1',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
-    difficulty: 'medium',
-    stimulus: `The nineteenth-century chemist Dmitri Mendeleev is celebrated for a bold predictive achievement ______ he left gaps in his periodic table for elements that had not yet been discovered. When elements such as gallium and germanium were later found, their properties matched his forecasts with striking accuracy.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    domain: 'Craft and Structure',
+    skill: 'Text Structure and Purpose',
+    difficulty: 'hard',
+    stimulus: `Some historians have argued that the printing press was the single most transformative technology in the history of Western civilization. Others, however, caution against what they call "technological determinism" — the assumption that a single invention causes sweeping social change independent of the economic, political, and cultural conditions in which it operates. On this view, the printing press accelerated changes that were already underway rather than originating them. Whether as cause or catalyst, the technology unquestionably reshaped how knowledge was produced, disseminated, and challenged.`,
+    question: `The passage is primarily organized to`,
     choices: [
-      { label: 'A', text: ': he left' },
-      { label: 'B', text: ', he left' },
-      { label: 'C', text: ' he left' },
-      { label: 'D', text: ', leaving' },
+      { label: 'A', text: 'outline competing interpretations of the printing press and then reach a limited consensus' },
+      { label: 'B', text: 'present a historical argument and then describe the evidence that disproves it' },
+      { label: 'C', text: 'trace the chronological development of printing technology in Western Europe' },
+      { label: 'D', text: 'defend technological determinism against its critics' },
     ],
     correctAnswer: 'A',
-    explanation: `Choice A is correct. The first clause is a complete independent clause that makes a general claim ("celebrated for a bold predictive achievement"), and the second independent clause explains what that achievement was. A colon is used to introduce an explanation or elaboration that follows a complete sentence.`,
+    explanation: `Choice A is correct. The passage first presents historians who credit the press as the most transformative technology, then introduces critics of technological determinism who offer a more nuanced view, and concludes by noting that both sides agree the press reshaped knowledge — a limited common ground.`,
     wrongAnswerExplanations: {
-      B: `Choice B is incorrect. A comma joining two independent clauses without a coordinating conjunction creates a comma splice.`,
-      C: `Choice C is incorrect. Running two independent clauses together with no punctuation produces a run-on sentence.`,
-      D: `Choice D is incorrect. "Leaving" turns the second clause into a modifying phrase, but the resulting sentence loses the explanatory force and reads awkwardly; more importantly, it fails to signal the elaborative relationship that a colon provides.`,
+      B: `Choice B is incorrect. The passage does not "disprove" the first argument; it offers a different interpretation and then acknowledges an area of agreement.`,
+      C: `Choice C is incorrect. The passage is entirely interpretive and historiographical, with no chronological account of printing technology's development.`,
+      D: `Choice D is incorrect. The passage presents critics of technological determinism with apparent sympathy and does not argue in its defense.`,
     },
   },
-
-  // ── Inferences (3) ────────────────────────────────────────────────────────
-
-  {
-    id: 'rw1-18',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Inferences',
-    difficulty: 'easy',
-    stimulus: `Unlike most fish, which rely on gills to extract dissolved oxygen from water, the lungfish possesses both gills and a primitive lung that allows it to breathe air. During periods of drought, when rivers and ponds in its African habitat dry up completely, the lungfish burrows into the mud, secretes a moisture-retaining cocoon of mucus, and can survive in a dormant state for months or even years until the rains return. This adaptation appears to have changed little over the past 400 million years.`,
-    question: `Based on the passage, it can most reasonably be inferred that the lungfish`,
-    choices: [
-      { label: 'A', text: 'is more closely related to land animals than to other fish' },
-      { label: 'B', text: 'would not survive in permanently flooded environments' },
-      { label: 'C', text: 'can tolerate extreme environmental conditions that would kill most fish' },
-      { label: 'D', text: 'evolved its lung specifically to migrate between different bodies of water' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. The passage describes an animal that can survive in complete drought for months or years by entering dormancy in dried mud — conditions under which virtually no other fish could survive. This strongly supports the inference that it can tolerate extreme conditions lethal to most fish.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage does not discuss the evolutionary relationship between the lungfish and land animals, so no such inference is supported.`,
-      B: `Choice B is incorrect. The passage says the lungfish has gills and breathes air, suggesting it is well-adapted to aquatic life when water is available; there is no reason to infer it cannot survive in permanently flooded environments.`,
-      D: `Choice D is incorrect. The passage says the lung allows the lungfish to survive drought; it does not link the lung to a purpose of migrating between water bodies.`,
-    },
-  },
-
-  {
-    id: 'rw1-19',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Inferences',
-    difficulty: 'medium',
-    stimulus: `In the decades following World War II, the United States government invested heavily in the interstate highway system, subsidizing suburban housing development and making car ownership increasingly necessary for participation in daily economic life. Public transit ridership in most American cities declined sharply during this period as federal highway dollars flowed freely while transit systems received comparatively little support. By the 1970s, many once-robust urban rail and bus networks had either closed or contracted significantly.`,
-    question: `Based on the passage, it can most reasonably be inferred that`,
-    choices: [
-      { label: 'A', text: 'urban transit ridership declined primarily because residents found trains and buses uncomfortable' },
-      { label: 'B', text: 'all American cities experienced the same level of transit ridership decline' },
-      { label: 'C', text: 'car ownership rates in the United States were higher before the interstate highway system was built' },
-      { label: 'D', text: 'government funding priorities contributed to the deterioration of public transit in American cities' },
-    ],
-    correctAnswer: 'D',
-    explanation: `Choice D is correct. The passage directly states that federal highway funds "flowed freely" while transit systems "received comparatively little support," and that transit systems subsequently declined. The inference that government funding priorities contributed to this outcome is well-supported.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage attributes the decline to infrastructure investment patterns, not passenger preferences about comfort.`,
-      C: `Choice C is incorrect. The passage implies car ownership increased with highway investment, suggesting it was lower before — the opposite of what choice C claims.`,
-      B: `Choice B is incorrect. The passage uses "most American cities," implying variation rather than uniformity.`,
-    },
-  },
-
-  {
-    id: 'rw1-20',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
-    difficulty: 'medium',
-    stimulus: `The composer Florence Price broke barriers in American classical music during the 1930s. Her Symphony in E minor ______ the first work by an African American woman performed by a major orchestra—premiered with the Chicago Symphony in 1933 to critical acclaim. Rediscovered decades after her death, her scores are now performed regularly around the world.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: ', which was' },
-      { label: 'B', text: '—which was' },
-      { label: 'C', text: 'which was' },
-      { label: 'D', text: '(which was' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. The phrase "the first work by an African American woman performed by a major orchestra" is a nonessential interrupter, and the sentence already uses a dash after "1933... acclaim" to close it. A pair of dashes must be used consistently to set off the interrupting phrase, so an opening dash is required to match the closing dash.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. A comma cannot be paired with a dash to enclose the same nonessential phrase; punctuation marks surrounding an interrupter must match.`,
-      C: `Choice C is incorrect. Omitting any opening punctuation leaves the nonessential phrase incorrectly attached and produces an unbalanced construction with the later dash.`,
-      D: `Choice D is incorrect. An opening parenthesis cannot be paired with a closing dash; enclosing punctuation must match.`,
-    },
-  },
-
-  // ── Rhetorical Synthesis (2) ──────────────────────────────────────────────
 
   {
     id: 'rw1-21',
@@ -538,6 +423,56 @@ Text 2: Literary critics working in the tradition of sociolinguistics have since
       A: `Choice A is incorrect. It covers only two of the four benefits (environmental and physical), omitting mental health and social benefits.`,
       C: `Choice C is incorrect. It addresses only the mental health benefit, not the variety of benefits the student needs to introduce.`,
       D: `Choice D is incorrect. It singles out one benefit as "most important," which contradicts the goal of introducing a variety.`,
+    },
+  },
+
+  {
+    id: 'rw1-18',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Inferences',
+    difficulty: 'easy',
+    stimulus: `Unlike most fish, which rely on gills to extract dissolved oxygen from water, the lungfish possesses both gills and a primitive lung that allows it to breathe air. During periods of drought, when rivers and ponds in its African habitat dry up completely, the lungfish burrows into the mud, secretes a moisture-retaining cocoon of mucus, and can survive in a dormant state for months or even years until the rains return. This adaptation appears to have changed little over the past 400 million years.`,
+    question: `Based on the passage, it can most reasonably be inferred that the lungfish`,
+    choices: [
+      { label: 'A', text: 'is more closely related to land animals than to other fish' },
+      { label: 'B', text: 'would not survive in permanently flooded environments' },
+      { label: 'C', text: 'can tolerate extreme environmental conditions that would kill most fish' },
+      { label: 'D', text: 'evolved its lung specifically to migrate between different bodies of water' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. The passage describes an animal that can survive in complete drought for months or years by entering dormancy in dried mud — conditions under which virtually no other fish could survive. This strongly supports the inference that it can tolerate extreme conditions lethal to most fish.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The passage does not discuss the evolutionary relationship between the lungfish and land animals, so no such inference is supported.`,
+      B: `Choice B is incorrect. The passage says the lungfish has gills and breathes air, suggesting it is well-adapted to aquatic life when water is available; there is no reason to infer it cannot survive in permanently flooded environments.`,
+      D: `Choice D is incorrect. The passage says the lung allows the lungfish to survive drought; it does not link the lung to a purpose of migrating between water bodies.`,
+    },
+  },
+
+  {
+    id: 'rw1-09',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Craft and Structure',
+    skill: 'Cross-Text Connections',
+    difficulty: 'medium',
+    stimulus: `Text 1: Proponents of urban rewilding argue that reintroducing apex predators to city-adjacent ecosystems can regulate deer populations, reduce overgrazing, and restore vegetation diversity. In the absence of natural predators, deer browse unchecked, suppressing undergrowth and reducing habitat quality for songbirds and smaller mammals. Even the psychological effect of predator presence — what ecologists call "the ecology of fear" — can alter prey behavior in ways that benefit the broader ecosystem.
+
+Text 2: Critics of urban rewilding express concern that the unpredictable movements of large predators pose unacceptable risks to human safety, livestock, and companion animals in areas close to residential zones. They argue that non-lethal management strategies, including fertility control and targeted relocation, can achieve similar ecological benefits without the dangers associated with predator reintroduction. The costs and liabilities of a failed rewilding program, they note, could fall disproportionately on rural communities.`,
+    question: `Based on the passages, the authors of Text 1 and Text 2 would most likely agree that`,
+    choices: [
+      { label: 'A', text: 'reintroducing apex predators to urban areas is too dangerous to attempt' },
+      { label: 'B', text: 'the ecology of fear is an unproven concept without scientific support' },
+      { label: 'C', text: 'deer population management near cities is a legitimate ecological concern' },
+      { label: 'D', text: 'fertility control programs are superior to predator reintroduction' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. Text 1 identifies unchecked deer populations as an ecological problem that rewilding can address. Text 2 does not dispute this problem but argues for alternative management strategies. Both passages implicitly agree that deer population management near cities is a real and important concern.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. This is the view of Text 2's critics, not a shared position. Text 1 clearly advocates for predator reintroduction.`,
+      B: `Choice B is incorrect. Text 2 does not challenge the science of the ecology of fear; it raises practical safety concerns about predator presence.`,
+      D: `Choice D is incorrect. Text 2 suggests fertility control as a preferable alternative, but Text 1 makes no comparison between strategies.`,
     },
   },
 
@@ -569,7 +504,55 @@ Text 2: Literary critics working in the tradition of sociolinguistics have since
     },
   },
 
-  // ── Transitions (2) ──────────────────────────────────────────────────────
+  {
+    id: 'rw1-19',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Inferences',
+    difficulty: 'medium',
+    stimulus: `In the decades following World War II, the United States government invested heavily in the interstate highway system, subsidizing suburban housing development and making car ownership increasingly necessary for participation in daily economic life. Public transit ridership in most American cities declined sharply during this period as federal highway dollars flowed freely while transit systems received comparatively little support. By the 1970s, many once-robust urban rail and bus networks had either closed or contracted significantly.`,
+    question: `Based on the passage, it can most reasonably be inferred that`,
+    choices: [
+      { label: 'A', text: 'urban transit ridership declined primarily because residents found trains and buses uncomfortable' },
+      { label: 'B', text: 'all American cities experienced the same level of transit ridership decline' },
+      { label: 'C', text: 'car ownership rates in the United States were higher before the interstate highway system was built' },
+      { label: 'D', text: 'government funding priorities contributed to the deterioration of public transit in American cities' },
+    ],
+    correctAnswer: 'D',
+    explanation: `Choice D is correct. The passage directly states that federal highway funds "flowed freely" while transit systems "received comparatively little support," and that transit systems subsequently declined. The inference that government funding priorities contributed to this outcome is well-supported.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The passage attributes the decline to infrastructure investment patterns, not passenger preferences about comfort.`,
+      C: `Choice C is incorrect. The passage implies car ownership increased with highway investment, suggesting it was lower before — the opposite of what choice C claims.`,
+      B: `Choice B is incorrect. The passage uses "most American cities," implying variation rather than uniformity.`,
+    },
+  },
+
+  {
+    id: 'rw1-10',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Craft and Structure',
+    skill: 'Cross-Text Connections',
+    difficulty: 'hard',
+    stimulus: `Text 1: The novelist Zora Neale Hurston, writing in the 1930s, insisted that Black vernacular speech was not a degraded form of Standard American English but a fully expressive, rule-governed linguistic system with its own aesthetic richness. Her fiction drew extensively on the rhythms, idioms, and storytelling conventions of the African American South, a choice that her contemporaries sometimes criticized as pandering to stereotypes rather than advancing racial uplift.
+
+Text 2: Literary critics working in the tradition of sociolinguistics have since validated Hurston's intuitions, demonstrating through empirical research that African American Vernacular English (AAVE) exhibits consistent grammatical rules, complex aspectual distinctions, and a rich oral tradition that standard written English cannot fully represent. They argue that dismissing AAVE as "incorrect" reflects social prejudice, not linguistic analysis.`,
+    question: `How would the author of Text 2 most likely respond to the contemporaries mentioned in Text 1 who criticized Hurston?`,
+    choices: [
+      { label: 'A', text: 'By arguing that their criticism was aesthetically valid even if linguistically misinformed' },
+      { label: 'B', text: 'By suggesting their view reflected social bias rather than an accurate assessment of language' },
+      { label: 'C', text: 'By defending their concern that vernacular speech should be reserved for oral communication' },
+      { label: 'D', text: 'By conceding that Hurston\'s literary choices were strategically unwise for the era' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. Text 2 explicitly argues that dismissing AAVE as "incorrect" reflects "social prejudice, not linguistic analysis." The critics in Text 1 implicitly viewed vernacular speech as inferior, which is precisely the attitude Text 2's author would challenge as rooted in bias rather than linguistic fact.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. Text 2 provides no basis for conceding aesthetic validity to those who dismissed vernacular speech.`,
+      C: `Choice C is incorrect. Text 2 defends AAVE as a full linguistic system appropriate for literary expression, not something confined to oral contexts.`,
+      D: `Choice D is incorrect. Text 2 supports Hurston's position without qualification and would not endorse the strategic objection raised by her contemporaries.`,
+    },
+  },
 
   {
     id: 'rw1-23',
@@ -592,6 +575,54 @@ Text 2: Literary critics working in the tradition of sociolinguistics have since
       A: `Choice A is incorrect. "However" signals contrast, but the second sentence adds a complementary benefit rather than contradicting the first.`,
       B: `Choice B is incorrect. "In contrast" indicates opposition between ideas, but both sentences describe benefits of photosynthesis.`,
       D: `Choice D is incorrect. "Nevertheless" concedes a point and then introduces a contrasting idea, which does not fit the additive logic of this passage.`,
+    },
+  },
+
+  {
+    id: 'rw1-25',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Standard English Conventions',
+    skill: 'Boundaries',
+    difficulty: 'easy',
+    stimulus: `The Venus flytrap is a carnivorous plant native to the coastal bogs of North and South Carolina _______ it captures insects and other small prey using snap traps formed by its specialized leaves.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: '; it captures' },
+      { label: 'B', text: ', it captures' },
+      { label: 'C', text: 'it captures' },
+      { label: 'D', text: '. It captures' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. The two clauses are independent ("The Venus flytrap is...Carolina" and "it captures insects..."). A semicolon correctly joins two independent clauses without a coordinating conjunction.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. Using only a comma to join two independent clauses creates a comma splice, which is a boundary error.`,
+      C: `Choice C is incorrect. Joining two independent clauses with no punctuation creates a run-on sentence.`,
+      D: `Choice D is also correct grammatically, but it creates two separate sentences where the original structure calls for a single connected sentence, making it the less precise choice compared to A.`,
+    },
+  },
+
+  {
+    id: 'rw1-27',
+    section: 'reading-writing',
+    moduleId: 'rw-module-1',
+    domain: 'Standard English Conventions',
+    skill: 'Form, Structure, and Sense',
+    difficulty: 'medium',
+    stimulus: `The committee _______ its final recommendations to the board after months of deliberation, compiling data from dozens of community surveys and stakeholder interviews.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: 'present' },
+      { label: 'B', text: 'are presenting' },
+      { label: 'C', text: 'presented' },
+      { label: 'D', text: 'presenting' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. The sentence describes a completed action (the committee submitted recommendations after a process of deliberation), so the simple past tense "presented" is the correct verb form. The phrase "after months of deliberation" confirms this is a past event.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "Present" is the simple present tense, which does not match the past context indicated by "after months of deliberation."`,
+      B: `Choice B is incorrect. "Are presenting" is the present progressive tense, implying an action currently in progress, which contradicts the completed nature of the action described.`,
+      D: `Choice D is incorrect. "Presenting" is a participle; without a helping verb, it cannot serve as the main verb of the sentence.`,
     },
   },
 
@@ -619,32 +650,6 @@ Text 2: Literary critics working in the tradition of sociolinguistics have since
     },
   },
 
-  // ── Boundaries (2) ──────────────────────────────────────────────────────
-
-  {
-    id: 'rw1-25',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
-    difficulty: 'easy',
-    stimulus: `The Venus flytrap is a carnivorous plant native to the coastal bogs of North and South Carolina _______ it captures insects and other small prey using snap traps formed by its specialized leaves.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: '; it captures' },
-      { label: 'B', text: ', it captures' },
-      { label: 'C', text: 'it captures' },
-      { label: 'D', text: '. It captures' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. The two clauses are independent ("The Venus flytrap is...Carolina" and "it captures insects..."). A semicolon correctly joins two independent clauses without a coordinating conjunction.`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. Using only a comma to join two independent clauses creates a comma splice, which is a boundary error.`,
-      C: `Choice C is incorrect. Joining two independent clauses with no punctuation creates a run-on sentence.`,
-      D: `Choice D is also correct grammatically, but it creates two separate sentences where the original structure calls for a single connected sentence, making it the less precise choice compared to A.`,
-    },
-  },
-
   {
     id: 'rw1-26',
     section: 'reading-writing',
@@ -666,32 +671,6 @@ Text 2: Literary critics working in the tradition of sociolinguistics have since
       B: `Choice B is incorrect. Using the pronoun "she" in place of "who" creates a grammatical error: the clause "she won the Nobel Prize" would not fit properly within the commas as a relative clause modifier.`,
       C: `Choice C is incorrect. "And she" would create a compound sentence structure that doesn't work between the two commas that set off the modifier.`,
       D: `Choice D is incorrect. "Having won the Nobel Prize" is a participial phrase that changes the meaning; it suggests the prize was a prerequisite for being best known, rather than simply adding biographical information.`,
-    },
-  },
-
-  // ── Form, Structure, and Sense (1) ────────────────────────────────────────
-
-  {
-    id: 'rw1-27',
-    section: 'reading-writing',
-    moduleId: 'rw-module-1',
-    domain: 'Standard English Conventions',
-    skill: 'Form, Structure, and Sense',
-    difficulty: 'medium',
-    stimulus: `The committee _______ its final recommendations to the board after months of deliberation, compiling data from dozens of community surveys and stakeholder interviews.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: 'present' },
-      { label: 'B', text: 'are presenting' },
-      { label: 'C', text: 'presented' },
-      { label: 'D', text: 'presenting' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. The sentence describes a completed action (the committee submitted recommendations after a process of deliberation), so the simple past tense "presented" is the correct verb form. The phrase "after months of deliberation" confirms this is a past event.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Present" is the simple present tense, which does not match the past context indicated by "after months of deliberation."`,
-      B: `Choice B is incorrect. "Are presenting" is the present progressive tense, implying an action currently in progress, which contradicts the completed nature of the action described.`,
-      D: `Choice D is incorrect. "Presenting" is a participle; without a helping verb, it cannot serve as the main verb of the sentence.`,
     },
   },
 ]

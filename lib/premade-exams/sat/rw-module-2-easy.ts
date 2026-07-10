@@ -3,9 +3,6 @@ import type { RWQuestion } from './types'
 // Reading and Writing Module 2 Easy — 27 questions (easier second module, ~15 easy / 12 medium)
 
 export const rwModule2EasyQuestions: RWQuestion[] = [
-
-  // ── Words in Context (5) ────────────────────────────────────────────────────
-
   {
     id: 'rw2e-01',
     section: 'reading-writing',
@@ -27,54 +24,6 @@ export const rwModule2EasyQuestions: RWQuestion[] = [
       B: `Choice B is incorrect. "Disguise" means to conceal, but the purpose of the dance is to reveal, not hide, information.`,
       C: `Choice C is incorrect. "Request" implies asking for something; the bee is sharing information, not making a request.`,
       D: `Choice D is incorrect. "Store" implies keeping information in one place, but the bee is sharing it outward with nest-mates.`,
-    },
-  },
-
-  {
-    id: 'rw2e-02',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Words in Context',
-    difficulty: 'easy',
-    stimulus: `The Wright brothers' first successful powered flight at Kitty Hawk in December 1903 lasted only twelve seconds and covered approximately 120 feet. Although modest by any later standard, this brief flight marked a pivotal moment in human history, demonstrating for the first time that a heavier-than-air, engine-powered machine could sustain controlled flight. Within a decade, aircraft had been adapted for military reconnaissance, and within another generation, commercial aviation had transformed long-distance travel.`,
-    question: `As used in the passage, "sustain" most nearly means`,
-    choices: [
-      { label: 'A', text: 'withstand' },
-      { label: 'B', text: 'endure' },
-      { label: 'C', text: 'maintain' },
-      { label: 'D', text: 'support financially' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. In this context, "sustain controlled flight" means to keep controlled flight going continuously. "Maintain" captures this meaning of keeping something ongoing or in operation.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Withstand" implies resisting a force, but the passage is about maintaining flight, not resisting anything.`,
-      B: `Choice B is incorrect. "Endure" typically implies suffering through hardship, which does not fit the technical context of maintaining flight.`,
-      D: `Choice D is incorrect. "Support financially" is another meaning of "sustain" but clearly does not fit the aeronautical context.`,
-    },
-  },
-
-  {
-    id: 'rw2e-03',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Words in Context',
-    difficulty: 'easy',
-    stimulus: `The author Octavia Butler began writing science fiction as a teenager, convinced that the genre could serve as a vehicle for exploring questions about race, power, and human nature that mainstream fiction often avoided. Her novels frequently feature protagonists navigating societies built on rigid hierarchies of dominance, forcing readers to examine how systems of oppression function and what resistance to them might look like. Butler received the prestigious MacArthur Fellowship in 1995, the first science fiction writer to be so honored.`,
-    question: `As used in the passage, "vehicle" most nearly means`,
-    choices: [
-      { label: 'A', text: 'means' },
-      { label: 'B', text: 'automobile' },
-      { label: 'C', text: 'obstacle' },
-      { label: 'D', text: 'reward' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. Butler saw science fiction as a "vehicle" for exploring social questions, meaning she used the genre as a method or means of inquiry. "Means" accurately captures this figurative usage.`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. The passage is using "vehicle" figuratively; there is no literal automobile in context.`,
-      C: `Choice C is incorrect. "Obstacle" is the opposite of what Butler intended; she saw the genre as an enabler, not a barrier.`,
-      D: `Choice D is incorrect. "Reward" has no connection to the meaning of "vehicle" in this context.`,
     },
   },
 
@@ -103,6 +52,54 @@ export const rwModule2EasyQuestions: RWQuestion[] = [
   },
 
   {
+    id: 'rw2e-11',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Information and Ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'easy',
+    stimulus: `The Great Barrier Reef, located off the northeastern coast of Australia, is the world's largest coral reef system and is visible from space. It supports extraordinary biodiversity, providing habitat for more than 1,500 species of fish, 4,000 species of mollusks, and hundreds of species of coral. The reef faces serious threats from rising ocean temperatures, which cause coral bleaching, as well as from agricultural runoff that increases algae growth and reduces water clarity. Conservation efforts include water quality improvements and programs to remove the predatory crown-of-thorns starfish that consumes coral tissue.`,
+    question: `Which choice best states the main idea of the passage?`,
+    choices: [
+      { label: 'A', text: 'The Great Barrier Reef is the only coral reef system threatened by climate change.' },
+      { label: 'B', text: 'The Great Barrier Reef is a biodiverse ecosystem facing multiple environmental threats.' },
+      { label: 'C', text: 'Crown-of-thorns starfish are the primary cause of coral decline in the Great Barrier Reef.' },
+      { label: 'D', text: 'Conservation efforts have successfully reversed the decline of the Great Barrier Reef.' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The passage describes the reef's remarkable biodiversity and then identifies multiple threats — temperature rise, runoff, and starfish predation. Together these two elements define the main idea: the reef is biologically rich but under pressure from various environmental factors.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The passage does not claim the Great Barrier Reef is the only reef threatened by climate change.`,
+      C: `Choice C is incorrect. Starfish are mentioned as one of several threats; the passage names rising temperatures and agricultural runoff as well.`,
+      D: `Choice D is incorrect. The passage mentions conservation efforts but does not claim they have been successful.`,
+    },
+  },
+
+  {
+    id: 'rw2e-02',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'easy',
+    stimulus: `The Wright brothers' first successful powered flight at Kitty Hawk in December 1903 lasted only twelve seconds and covered approximately 120 feet. Although modest by any later standard, this brief flight marked a pivotal moment in human history, demonstrating for the first time that a heavier-than-air, engine-powered machine could sustain controlled flight. Within a decade, aircraft had been adapted for military reconnaissance, and within another generation, commercial aviation had transformed long-distance travel.`,
+    question: `As used in the passage, "sustain" most nearly means`,
+    choices: [
+      { label: 'A', text: 'withstand' },
+      { label: 'B', text: 'endure' },
+      { label: 'C', text: 'maintain' },
+      { label: 'D', text: 'support financially' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. In this context, "sustain controlled flight" means to keep controlled flight going continuously. "Maintain" captures this meaning of keeping something ongoing or in operation.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "Withstand" implies resisting a force, but the passage is about maintaining flight, not resisting anything.`,
+      B: `Choice B is incorrect. "Endure" typically implies suffering through hardship, which does not fit the technical context of maintaining flight.`,
+      D: `Choice D is incorrect. "Support financially" is another meaning of "sustain" but clearly does not fit the aeronautical context.`,
+    },
+  },
+
+  {
     id: 'rw2e-05',
     section: 'reading-writing',
     moduleId: 'rw-module-2-easy',
@@ -126,7 +123,101 @@ export const rwModule2EasyQuestions: RWQuestion[] = [
     },
   },
 
-  // ── Text Structure and Purpose (3) ─────────────────────────────────────────
+  {
+    id: 'rw2e-12',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Information and Ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'easy',
+    stimulus: `Isaac Newton developed the laws of motion and universal gravitation in the mid-seventeenth century, providing a mathematical framework that explained both the motion of objects on Earth and the orbits of celestial bodies. For more than two centuries, Newton's laws were regarded as the complete and final description of physical reality. Albert Einstein's theories of special and general relativity, published in 1905 and 1915, revealed that Newtonian mechanics was not wrong but rather a special case of a more comprehensive framework, accurate at everyday speeds but requiring correction at velocities approaching the speed of light.`,
+    question: `According to the passage, Einstein's theories`,
+    choices: [
+      { label: 'A', text: "proved that Newton's laws of motion were entirely incorrect" },
+      { label: 'B', text: "showed that Newton's laws were accurate only for very slow-moving objects" },
+      { label: 'C', text: 'expanded the framework of physics by showing that Newtonian mechanics was a limited special case' },
+      { label: 'D', text: 'were developed as a direct response to experimental evidence that contradicted Newton' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. The passage explicitly states that Einstein revealed Newtonian mechanics to be "not wrong but rather a special case of a more comprehensive framework." Choice C paraphrases this accurately.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The passage explicitly says Newton's laws were "not wrong," contradicting this choice.`,
+      B: `Choice B is incorrect. The passage says Newtonian mechanics requires "correction at velocities approaching the speed of light," implying it works well at everyday speeds, not only for very slow objects.`,
+      D: `Choice D is incorrect. The passage does not describe the motivation behind Einstein's work or mention any experimental contradiction of Newton.`,
+    },
+  },
+
+  {
+    id: 'rw2e-03',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'easy',
+    stimulus: `The author Octavia Butler began writing science fiction as a teenager, convinced that the genre could serve as a vehicle for exploring questions about race, power, and human nature that mainstream fiction often avoided. Her novels frequently feature protagonists navigating societies built on rigid hierarchies of dominance, forcing readers to examine how systems of oppression function and what resistance to them might look like. Butler received the prestigious MacArthur Fellowship in 1995, the first science fiction writer to be so honored.`,
+    question: `As used in the passage, "vehicle" most nearly means`,
+    choices: [
+      { label: 'A', text: 'means' },
+      { label: 'B', text: 'automobile' },
+      { label: 'C', text: 'obstacle' },
+      { label: 'D', text: 'reward' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. Butler saw science fiction as a "vehicle" for exploring social questions, meaning she used the genre as a method or means of inquiry. "Means" accurately captures this figurative usage.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. The passage is using "vehicle" figuratively; there is no literal automobile in context.`,
+      C: `Choice C is incorrect. "Obstacle" is the opposite of what Butler intended; she saw the genre as an enabler, not a barrier.`,
+      D: `Choice D is incorrect. "Reward" has no connection to the meaning of "vehicle" in this context.`,
+    },
+  },
+
+  {
+    id: 'rw2e-13',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Standard English Conventions',
+    skill: 'Boundaries',
+    difficulty: 'easy',
+    stimulus: `The public library recently extended its evening hours to better serve working families. Attendance has risen sharply since the change ______ many patrons now visit after their workdays end.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: ', and' },
+      { label: 'B', text: ',' },
+      { label: 'C', text: ' and' },
+      { label: 'D', text: 'and, that' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. The text contains two independent clauses: "Attendance has risen sharply since the change" and "many patrons now visit after their workdays end." Two independent clauses can be correctly joined with a comma followed by a coordinating conjunction such as "and."`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. A comma alone cannot join two independent clauses; doing so creates a comma splice.`,
+      C: `Choice C is incorrect. When "and" joins two independent clauses, a comma is required before it; omitting the comma is a punctuation error in this construction.`,
+      D: `Choice D is incorrect. "And, that" is ungrammatical and creates a confusing, incorrect construction between the two clauses.`,
+    },
+  },
+
+  {
+    id: 'rw2e-14',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'easy',
+    stimulus: `A student is writing an essay arguing that regular physical exercise improves academic performance in middle school students. Which quotation from a study would most directly support this claim?`,
+    question: `Which quotation from a study would most directly support the claim that regular exercise improves academic performance in middle school students?`,
+    choices: [
+      { label: 'A', text: '"Students who participate in organized sports report higher levels of social belonging and school spirit."' },
+      { label: 'B', text: '"Physical education classes in middle schools have been reduced in many districts due to budget constraints."' },
+      { label: 'C', text: '"Middle school students who exercised at least 30 minutes daily showed GPA improvements averaging 0.4 points compared to sedentary peers."' },
+      { label: 'D', text: '"Adult workers who exercise regularly report reduced absenteeism and higher job satisfaction."' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. This quotation directly measures the relationship between daily exercise and GPA in middle school students, which is precisely the claim the student wants to support.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. Social belonging and school spirit are not measures of academic performance.`,
+      B: `Choice B is incorrect. This describes a policy trend, not evidence of a relationship between exercise and academic outcomes.`,
+      D: `Choice D is incorrect. Adult workers are not middle school students, so this evidence does not directly support the specific claim.`,
+    },
+  },
 
   {
     id: 'rw2e-06',
@@ -149,6 +240,54 @@ export const rwModule2EasyQuestions: RWQuestion[] = [
       A: `Choice A is incorrect. The passage does not mention population decline.`,
       C: `Choice C is incorrect. The passage focuses exclusively on monarch butterflies without comparing them to other insects.`,
       D: `Choice D is incorrect. The passage is purely descriptive and makes no policy argument.`,
+    },
+  },
+
+  {
+    id: 'rw2e-17',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Standard English Conventions',
+    skill: 'Boundaries',
+    difficulty: 'easy',
+    stimulus: `The chef spent years perfecting her signature sourdough bread. Each loaf requires nearly two full days of preparation ______ the long fermentation gives the bread its distinctive tangy flavor and chewy texture.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: ', the' },
+      { label: 'B', text: '. The' },
+      { label: 'C', text: ' the' },
+      { label: 'D', text: ', which the' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. "Each loaf requires nearly two full days of preparation" and "the long fermentation gives the bread its distinctive tangy flavor and chewy texture" are both independent clauses. A period correctly separates two independent clauses into two complete sentences.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. Joining two independent clauses with only a comma creates a comma splice.`,
+      C: `Choice C is incorrect. Placing two independent clauses side by side with no punctuation creates a run-on sentence.`,
+      D: `Choice D is incorrect. Inserting "which" produces an ungrammatical construction, leaving the clause without a proper subject-verb structure.`,
+    },
+  },
+
+  {
+    id: 'rw2e-15',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'easy',
+    stimulus: `A researcher studying ocean plastic pollution wants to support the claim that single-use plastic packaging is the largest source of ocean plastic. Which evidence would most directly support this claim?`,
+    question: `Which evidence would most directly support the claim that single-use plastic packaging is the largest source of ocean plastic?`,
+    choices: [
+      { label: 'A', text: 'A study finding that fishing gear accounts for 46% of the Great Pacific Garbage Patch by weight' },
+      { label: 'B', text: 'Survey data showing that 68% of ocean plastic debris consists of single-use packaging items such as bottles and bags' },
+      { label: 'C', text: 'An analysis showing that plastic production has increased 200-fold since the 1950s' },
+      { label: 'D', text: 'A report estimating that 8 million metric tons of plastic enter the ocean each year' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. This evidence directly states that the largest category of ocean plastic debris is single-use packaging, which is exactly what the researcher wants to demonstrate.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. This finding would actually challenge the claim, suggesting fishing gear — not packaging — is the largest source.`,
+      C: `Choice C is incorrect. Overall plastic production trends do not specify what share comes from single-use packaging or how much reaches the ocean.`,
+      D: `Choice D is incorrect. The total volume of ocean plastic does not specify whether single-use packaging is the dominant source.`,
     },
   },
 
@@ -178,204 +317,26 @@ export const rwModule2EasyQuestions: RWQuestion[] = [
   },
 
   {
-    id: 'rw2e-08',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Text Structure and Purpose',
-    difficulty: 'medium',
-    stimulus: `Until the late nineteenth century, most medical practitioners believed that diseases were caused by "miasma" — noxious vapors arising from decaying organic matter. This theory seemed to explain why disease rates were higher in swampy, foul-smelling areas. The germ theory of disease, developed by scientists including Louis Pasteur and Robert Koch, gradually displaced the miasma theory by demonstrating that specific microorganisms cause specific diseases. The shift required not only new evidence but also a fundamental reconceptualization of what disease is and how it spreads.`,
-    question: `The passage is primarily organized to`,
-    choices: [
-      { label: 'A', text: 'argue that the germ theory of disease has important limitations' },
-      { label: 'B', text: 'warn readers about the continued dangers of miasma in urban environments' },
-      { label: 'C', text: 'explain the experimental methods Pasteur and Koch used in their research' },
-      { label: 'D', text: 'describe how one scientific theory replaced another and what that transition involved' },
-    ],
-    correctAnswer: 'D',
-    explanation: `Choice D is correct. The passage traces a historical transition from miasma theory to germ theory, notes why the old theory seemed plausible, and concludes that the shift required both new evidence and new conceptual frameworks. This is a description of one theory replacing another.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage does not critique germ theory or suggest it has weaknesses.`,
-      C: `Choice C is incorrect. The passage mentions Pasteur and Koch but does not describe their experimental methods.`,
-      B: `Choice B is incorrect. The passage presents miasma theory as a historical belief that was replaced, not as a current threat.`,
-    },
-  },
-
-  // ── Cross-Text Connections (2) ─────────────────────────────────────────────
-
-  {
-    id: 'rw2e-09',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'easy',
-    stimulus: `Text 1: Proponents of a four-day workweek argue that reducing working hours increases employee wellbeing, decreases burnout, and ultimately raises productivity by allowing workers to return to their tasks more refreshed. Several pilot programs in Iceland and New Zealand found that output was maintained or improved even when employees worked one day less per week.
-
-Text 2: Critics caution that results from four-day workweek trials may not be broadly applicable. Many of the most successful trials involved knowledge workers in office settings whose output is difficult to measure, and whose workflow can be restructured more easily than that of hourly workers in manufacturing or healthcare. Generalizing from these results to the entire economy may therefore be premature.`,
-    question: `Based on the passages, the author of Text 2 would most likely respond to the pilot program results mentioned in Text 1 by arguing that`,
-    choices: [
-      { label: 'A', text: 'the pilot programs were conducted unethically and their data should be discarded' },
-      { label: 'B', text: 'the results, while valid in their context, may not apply to all types of workers' },
-      { label: 'C', text: 'employee wellbeing is not a legitimate factor in workplace policy decisions' },
-      { label: 'D', text: 'productivity always declines when workers have fewer hours in the office' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. Text 2 does not dispute that the pilot programs produced positive results; it argues that those results came from contexts (knowledge workers in office settings) that may not represent the broader economy. This is a methodological concern about generalizability, not a rejection of the data.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Text 2 raises no ethical objections to the pilot programs.`,
-      C: `Choice C is incorrect. Text 2 does not challenge employee wellbeing as a relevant factor; it questions whether pilot results generalize across worker types.`,
-      D: `Choice D is incorrect. Text 2 actually acknowledges that the trials showed maintained or improved productivity — it just questions whether this result generalizes.`,
-    },
-  },
-
-  {
-    id: 'rw2e-10',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'medium',
-    stimulus: `Text 1: Advocates of social media literacy education argue that teaching young people to identify misinformation, evaluate sources, and understand algorithmic content curation should be a core part of the school curriculum. They contend that digital literacy is now as fundamental as reading and writing for informed citizenship.
-
-Text 2: While social media literacy programs sound appealing in principle, researchers have found that brief classroom interventions produce only modest improvements in students' ability to detect false information, and that these gains often fade quickly after the instruction ends. More structural solutions — including platform regulation and algorithmic transparency requirements — may be necessary to address misinformation at scale.`,
-    question: `The authors of Text 1 and Text 2 would most likely agree that`,
-    choices: [
-      { label: 'A', text: 'misinformation on social media poses no meaningful threat to democratic society' },
-      { label: 'B', text: 'platform regulation is the most effective response to online misinformation' },
-      { label: 'C', text: 'addressing the spread of misinformation online is an important societal concern' },
-      { label: 'D', text: 'social media literacy programs should be permanently removed from school curricula' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. Text 1 argues for media literacy education because misinformation is a serious problem; Text 2 also treats misinformation as a problem serious enough to require structural solutions. Both texts share the premise that misinformation is a significant concern worth addressing.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Both texts treat misinformation as a genuine problem, not a trivial one.`,
-      B: `Choice B is incorrect. Text 2 suggests structural solutions may be necessary, but Text 1 does not address platform regulation, so there is no agreement on this point.`,
-      D: `Choice D is incorrect. Text 2 criticizes the effectiveness of brief interventions but does not call for removing literacy programs entirely.`,
-    },
-  },
-
-  // ── Central Ideas and Details (3) ─────────────────────────────────────────
-
-  {
-    id: 'rw2e-11',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Information and Ideas',
-    skill: 'Central Ideas and Details',
-    difficulty: 'easy',
-    stimulus: `The Great Barrier Reef, located off the northeastern coast of Australia, is the world's largest coral reef system and is visible from space. It supports extraordinary biodiversity, providing habitat for more than 1,500 species of fish, 4,000 species of mollusks, and hundreds of species of coral. The reef faces serious threats from rising ocean temperatures, which cause coral bleaching, as well as from agricultural runoff that increases algae growth and reduces water clarity. Conservation efforts include water quality improvements and programs to remove the predatory crown-of-thorns starfish that consumes coral tissue.`,
-    question: `Which choice best states the main idea of the passage?`,
-    choices: [
-      { label: 'A', text: 'The Great Barrier Reef is the only coral reef system threatened by climate change.' },
-      { label: 'B', text: 'The Great Barrier Reef is a biodiverse ecosystem facing multiple environmental threats.' },
-      { label: 'C', text: 'Crown-of-thorns starfish are the primary cause of coral decline in the Great Barrier Reef.' },
-      { label: 'D', text: 'Conservation efforts have successfully reversed the decline of the Great Barrier Reef.' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. The passage describes the reef's remarkable biodiversity and then identifies multiple threats — temperature rise, runoff, and starfish predation. Together these two elements define the main idea: the reef is biologically rich but under pressure from various environmental factors.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage does not claim the Great Barrier Reef is the only reef threatened by climate change.`,
-      C: `Choice C is incorrect. Starfish are mentioned as one of several threats; the passage names rising temperatures and agricultural runoff as well.`,
-      D: `Choice D is incorrect. The passage mentions conservation efforts but does not claim they have been successful.`,
-    },
-  },
-
-  {
-    id: 'rw2e-12',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Information and Ideas',
-    skill: 'Central Ideas and Details',
-    difficulty: 'easy',
-    stimulus: `Isaac Newton developed the laws of motion and universal gravitation in the mid-seventeenth century, providing a mathematical framework that explained both the motion of objects on Earth and the orbits of celestial bodies. For more than two centuries, Newton's laws were regarded as the complete and final description of physical reality. Albert Einstein's theories of special and general relativity, published in 1905 and 1915, revealed that Newtonian mechanics was not wrong but rather a special case of a more comprehensive framework, accurate at everyday speeds but requiring correction at velocities approaching the speed of light.`,
-    question: `According to the passage, Einstein's theories`,
-    choices: [
-      { label: 'A', text: "proved that Newton's laws of motion were entirely incorrect" },
-      { label: 'B', text: "showed that Newton's laws were accurate only for very slow-moving objects" },
-      { label: 'C', text: 'expanded the framework of physics by showing that Newtonian mechanics was a limited special case' },
-      { label: 'D', text: 'were developed as a direct response to experimental evidence that contradicted Newton' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. The passage explicitly states that Einstein revealed Newtonian mechanics to be "not wrong but rather a special case of a more comprehensive framework." Choice C paraphrases this accurately.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage explicitly says Newton's laws were "not wrong," contradicting this choice.`,
-      B: `Choice B is incorrect. The passage says Newtonian mechanics requires "correction at velocities approaching the speed of light," implying it works well at everyday speeds, not only for very slow objects.`,
-      D: `Choice D is incorrect. The passage does not describe the motivation behind Einstein's work or mention any experimental contradiction of Newton.`,
-    },
-  },
-
-  {
-    id: 'rw2e-13',
+    id: 'rw2e-20',
     section: 'reading-writing',
     moduleId: 'rw-module-2-easy',
     domain: 'Standard English Conventions',
     skill: 'Boundaries',
     difficulty: 'easy',
-    stimulus: `The public library recently extended its evening hours to better serve working families. Attendance has risen sharply since the change ______ many patrons now visit after their workdays end.`,
+    stimulus: `Solar-powered streetlights have become increasingly common in cities around the world. They store energy from sunlight during the day ______ they use that stored power to illuminate roads and sidewalks after dark.`,
     question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
     choices: [
-      { label: 'A', text: ', and' },
-      { label: 'B', text: ',' },
-      { label: 'C', text: ' and' },
-      { label: 'D', text: 'and, that' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. The text contains two independent clauses: "Attendance has risen sharply since the change" and "many patrons now visit after their workdays end." Two independent clauses can be correctly joined with a comma followed by a coordinating conjunction such as "and."`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. A comma alone cannot join two independent clauses; doing so creates a comma splice.`,
-      C: `Choice C is incorrect. When "and" joins two independent clauses, a comma is required before it; omitting the comma is a punctuation error in this construction.`,
-      D: `Choice D is incorrect. "And, that" is ungrammatical and creates a confusing, incorrect construction between the two clauses.`,
-    },
-  },
-
-  // ── Command of Evidence (4) ────────────────────────────────────────────────
-
-  {
-    id: 'rw2e-14',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Information and Ideas',
-    skill: 'Command of Evidence',
-    difficulty: 'easy',
-    stimulus: `A student is writing an essay arguing that regular physical exercise improves academic performance in middle school students. Which quotation from a study would most directly support this claim?`,
-    question: `Which quotation from a study would most directly support the claim that regular exercise improves academic performance in middle school students?`,
-    choices: [
-      { label: 'A', text: '"Students who participate in organized sports report higher levels of social belonging and school spirit."' },
-      { label: 'B', text: '"Physical education classes in middle schools have been reduced in many districts due to budget constraints."' },
-      { label: 'C', text: '"Middle school students who exercised at least 30 minutes daily showed GPA improvements averaging 0.4 points compared to sedentary peers."' },
-      { label: 'D', text: '"Adult workers who exercise regularly report reduced absenteeism and higher job satisfaction."' },
+      { label: 'A', text: ' then' },
+      { label: 'B', text: ', then' },
+      { label: 'C', text: ', and then' },
+      { label: 'D', text: ' and then, they' },
     ],
     correctAnswer: 'C',
-    explanation: `Choice C is correct. This quotation directly measures the relationship between daily exercise and GPA in middle school students, which is precisely the claim the student wants to support.`,
+    explanation: `Choice C is correct. "They store energy from sunlight during the day" and "they use that stored power to illuminate roads and sidewalks after dark" are two independent clauses. Joining them with a comma and the coordinating conjunction "and" correctly avoids a run-on sentence.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Social belonging and school spirit are not measures of academic performance.`,
-      B: `Choice B is incorrect. This describes a policy trend, not evidence of a relationship between exercise and academic outcomes.`,
-      D: `Choice D is incorrect. Adult workers are not middle school students, so this evidence does not directly support the specific claim.`,
-    },
-  },
-
-  {
-    id: 'rw2e-15',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Information and Ideas',
-    skill: 'Command of Evidence',
-    difficulty: 'easy',
-    stimulus: `A researcher studying ocean plastic pollution wants to support the claim that single-use plastic packaging is the largest source of ocean plastic. Which evidence would most directly support this claim?`,
-    question: `Which evidence would most directly support the claim that single-use plastic packaging is the largest source of ocean plastic?`,
-    choices: [
-      { label: 'A', text: 'A study finding that fishing gear accounts for 46% of the Great Pacific Garbage Patch by weight' },
-      { label: 'B', text: 'Survey data showing that 68% of ocean plastic debris consists of single-use packaging items such as bottles and bags' },
-      { label: 'C', text: 'An analysis showing that plastic production has increased 200-fold since the 1950s' },
-      { label: 'D', text: 'A report estimating that 8 million metric tons of plastic enter the ocean each year' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. This evidence directly states that the largest category of ocean plastic debris is single-use packaging, which is exactly what the researcher wants to demonstrate.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. This finding would actually challenge the claim, suggesting fishing gear — not packaging — is the largest source.`,
-      C: `Choice C is incorrect. Overall plastic production trends do not specify what share comes from single-use packaging or how much reaches the ocean.`,
-      D: `Choice D is incorrect. The total volume of ocean plastic does not specify whether single-use packaging is the dominant source.`,
+      A: `Choice A is incorrect. The word "then" is an adverb, not a conjunction, so placing it between two independent clauses without a conjunction leaves a run-on sentence.`,
+      B: `Choice B is incorrect. "Then" is not a coordinating conjunction, so a comma plus "then" produces a comma splice between the two independent clauses.`,
+      D: `Choice D is incorrect. Placing a comma after "then" and before "they" creates faulty, confusing punctuation and does not correctly join the clauses.`,
     },
   },
 
@@ -417,104 +378,28 @@ Text 2: While social media literacy programs sound appealing in principle, resea
   },
 
   {
-    id: 'rw2e-17',
+    id: 'rw2e-08',
     section: 'reading-writing',
     moduleId: 'rw-module-2-easy',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
-    difficulty: 'easy',
-    stimulus: `The chef spent years perfecting her signature sourdough bread. Each loaf requires nearly two full days of preparation ______ the long fermentation gives the bread its distinctive tangy flavor and chewy texture.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    domain: 'Craft and Structure',
+    skill: 'Text Structure and Purpose',
+    difficulty: 'medium',
+    stimulus: `Until the late nineteenth century, most medical practitioners believed that diseases were caused by "miasma" — noxious vapors arising from decaying organic matter. This theory seemed to explain why disease rates were higher in swampy, foul-smelling areas. The germ theory of disease, developed by scientists including Louis Pasteur and Robert Koch, gradually displaced the miasma theory by demonstrating that specific microorganisms cause specific diseases. The shift required not only new evidence but also a fundamental reconceptualization of what disease is and how it spreads.`,
+    question: `The passage is primarily organized to`,
     choices: [
-      { label: 'A', text: ', the' },
-      { label: 'B', text: '. The' },
-      { label: 'C', text: ' the' },
-      { label: 'D', text: ', which the' },
+      { label: 'A', text: 'argue that the germ theory of disease has important limitations' },
+      { label: 'B', text: 'warn readers about the continued dangers of miasma in urban environments' },
+      { label: 'C', text: 'explain the experimental methods Pasteur and Koch used in their research' },
+      { label: 'D', text: 'describe how one scientific theory replaced another and what that transition involved' },
     ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. "Each loaf requires nearly two full days of preparation" and "the long fermentation gives the bread its distinctive tangy flavor and chewy texture" are both independent clauses. A period correctly separates two independent clauses into two complete sentences.`,
+    correctAnswer: 'D',
+    explanation: `Choice D is correct. The passage traces a historical transition from miasma theory to germ theory, notes why the old theory seemed plausible, and concludes that the shift required both new evidence and new conceptual frameworks. This is a description of one theory replacing another.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Joining two independent clauses with only a comma creates a comma splice.`,
-      C: `Choice C is incorrect. Placing two independent clauses side by side with no punctuation creates a run-on sentence.`,
-      D: `Choice D is incorrect. Inserting "which" produces an ungrammatical construction, leaving the clause without a proper subject-verb structure.`,
+      A: `Choice A is incorrect. The passage does not critique germ theory or suggest it has weaknesses.`,
+      C: `Choice C is incorrect. The passage mentions Pasteur and Koch but does not describe their experimental methods.`,
+      B: `Choice B is incorrect. The passage presents miasma theory as a historical belief that was replaced, not as a current threat.`,
     },
   },
-
-  // ── Inferences (3) ────────────────────────────────────────────────────────
-
-  {
-    id: 'rw2e-18',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Information and Ideas',
-    skill: 'Inferences',
-    difficulty: 'easy',
-    stimulus: `The International Space Station (ISS) orbits Earth at an altitude of approximately 400 kilometers, completing one orbit every 90 minutes. Crew members aboard the station experience roughly 16 sunrises and sunsets per 24-hour period. The station relies entirely on solar panels for electrical power, but during portions of each orbit when the station passes through Earth's shadow, battery reserves supply the needed electricity. Because of the station's altitude and speed, crew members are in a state of continuous free fall around Earth, which is what produces the sensation of weightlessness.`,
-    question: `Based on the passage, it can most reasonably be inferred that the ISS crew experiences weightlessness because`,
-    choices: [
-      { label: 'A', text: 'the station is too far from Earth for gravity to have any effect' },
-      { label: 'B', text: 'the station and crew are in continuous free fall around Earth' },
-      { label: 'C', text: 'the solar panels reduce the gravitational force on the station' },
-      { label: 'D', text: 'traveling at high speed counteracts the effects of gravity completely' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. The passage explicitly states that crew members are "in a state of continuous free fall around Earth, which is what produces the sensation of weightlessness." This is directly stated in the passage, making it the correct inference.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage does not say gravity has no effect; in fact, continuous free fall requires gravity to be present.`,
-      C: `Choice C is incorrect. Solar panels are mentioned only as a power source; there is no suggestion they affect gravity.`,
-      D: `Choice D is incorrect. The passage says weightlessness comes from free fall, not from speed counteracting gravity.`,
-    },
-  },
-
-  {
-    id: 'rw2e-19',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Information and Ideas',
-    skill: 'Inferences',
-    difficulty: 'easy',
-    stimulus: `The cassowary, a large flightless bird native to the tropical rainforests of New Guinea and northeastern Australia, is often described as the world's most dangerous bird. Its powerful legs can deliver kicks with enough force to cause serious injury, and the dagger-like casque on its head can be used as a weapon. Despite this fearsome reputation, cassowaries are shy animals that retreat when they can and attack humans only when cornered, provoked, or defending their young.`,
-    question: `Based on the passage, it can most reasonably be inferred that cassowary attacks on humans`,
-    choices: [
-      { label: 'A', text: 'are most likely to happen when humans threaten the birds or their offspring' },
-      { label: 'B', text: 'occur primarily in urban areas where cassowaries have lost their fear of humans' },
-      { label: 'C', text: 'are a frequent and unpredictable danger for rainforest residents' },
-      { label: 'D', text: 'occur only in Australia, not in New Guinea' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. The passage states cassowaries "attack humans only when cornered, provoked, or defending their young." This directly supports the inference that attacks are most likely when humans pose a threat to the birds or their offspring.`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. The passage says cassowaries live in rainforests and are shy; there is no mention of urban areas.`,
-      C: `Choice C is incorrect. The passage describes cassowaries as shy animals that avoid humans when possible, suggesting attacks are not frequent or random.`,
-      D: `Choice D is incorrect. The passage says cassowaries live in both New Guinea and Australia, with no geographic restriction on attacks.`,
-    },
-  },
-
-  {
-    id: 'rw2e-20',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
-    difficulty: 'easy',
-    stimulus: `Solar-powered streetlights have become increasingly common in cities around the world. They store energy from sunlight during the day ______ they use that stored power to illuminate roads and sidewalks after dark.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: ' then' },
-      { label: 'B', text: ', then' },
-      { label: 'C', text: ', and then' },
-      { label: 'D', text: ' and then, they' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. "They store energy from sunlight during the day" and "they use that stored power to illuminate roads and sidewalks after dark" are two independent clauses. Joining them with a comma and the coordinating conjunction "and" correctly avoids a run-on sentence.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The word "then" is an adverb, not a conjunction, so placing it between two independent clauses without a conjunction leaves a run-on sentence.`,
-      B: `Choice B is incorrect. "Then" is not a coordinating conjunction, so a comma plus "then" produces a comma splice between the two independent clauses.`,
-      D: `Choice D is incorrect. Placing a comma after "then" and before "they" creates faulty, confusing punctuation and does not correctly join the clauses.`,
-    },
-  },
-
-  // ── Rhetorical Synthesis (2) ──────────────────────────────────────────────
 
   {
     id: 'rw2e-21',
@@ -541,6 +426,56 @@ Text 2: While social media literacy programs sound appealing in principle, resea
       A: `Choice A is incorrect. It covers only the earliest vaccine and does not introduce the broader historical development the student wants to describe.`,
       C: `Choice C is incorrect. It covers only the measles vaccine detail and does not convey a historical trajectory.`,
       B: `Choice B is incorrect. It makes an evaluative claim about mRNA vaccines without introducing the broader sweep of vaccine history.`,
+    },
+  },
+
+  {
+    id: 'rw2e-18',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Information and Ideas',
+    skill: 'Inferences',
+    difficulty: 'easy',
+    stimulus: `The International Space Station (ISS) orbits Earth at an altitude of approximately 400 kilometers, completing one orbit every 90 minutes. Crew members aboard the station experience roughly 16 sunrises and sunsets per 24-hour period. The station relies entirely on solar panels for electrical power, but during portions of each orbit when the station passes through Earth's shadow, battery reserves supply the needed electricity. Because of the station's altitude and speed, crew members are in a state of continuous free fall around Earth, which is what produces the sensation of weightlessness.`,
+    question: `Based on the passage, it can most reasonably be inferred that the ISS crew experiences weightlessness because`,
+    choices: [
+      { label: 'A', text: 'the station is too far from Earth for gravity to have any effect' },
+      { label: 'B', text: 'the station and crew are in continuous free fall around Earth' },
+      { label: 'C', text: 'the solar panels reduce the gravitational force on the station' },
+      { label: 'D', text: 'traveling at high speed counteracts the effects of gravity completely' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The passage explicitly states that crew members are "in a state of continuous free fall around Earth, which is what produces the sensation of weightlessness." This is directly stated in the passage, making it the correct inference.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The passage does not say gravity has no effect; in fact, continuous free fall requires gravity to be present.`,
+      C: `Choice C is incorrect. Solar panels are mentioned only as a power source; there is no suggestion they affect gravity.`,
+      D: `Choice D is incorrect. The passage says weightlessness comes from free fall, not from speed counteracting gravity.`,
+    },
+  },
+
+  {
+    id: 'rw2e-09',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Cross-Text Connections',
+    difficulty: 'easy',
+    stimulus: `Text 1: Proponents of a four-day workweek argue that reducing working hours increases employee wellbeing, decreases burnout, and ultimately raises productivity by allowing workers to return to their tasks more refreshed. Several pilot programs in Iceland and New Zealand found that output was maintained or improved even when employees worked one day less per week.
+
+Text 2: Critics caution that results from four-day workweek trials may not be broadly applicable. Many of the most successful trials involved knowledge workers in office settings whose output is difficult to measure, and whose workflow can be restructured more easily than that of hourly workers in manufacturing or healthcare. Generalizing from these results to the entire economy may therefore be premature.`,
+    question: `Based on the passages, the author of Text 2 would most likely respond to the pilot program results mentioned in Text 1 by arguing that`,
+    choices: [
+      { label: 'A', text: 'the pilot programs were conducted unethically and their data should be discarded' },
+      { label: 'B', text: 'the results, while valid in their context, may not apply to all types of workers' },
+      { label: 'C', text: 'employee wellbeing is not a legitimate factor in workplace policy decisions' },
+      { label: 'D', text: 'productivity always declines when workers have fewer hours in the office' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. Text 2 does not dispute that the pilot programs produced positive results; it argues that those results came from contexts (knowledge workers in office settings) that may not represent the broader economy. This is a methodological concern about generalizability, not a rejection of the data.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. Text 2 raises no ethical objections to the pilot programs.`,
+      C: `Choice C is incorrect. Text 2 does not challenge employee wellbeing as a relevant factor; it questions whether pilot results generalize across worker types.`,
+      D: `Choice D is incorrect. Text 2 actually acknowledges that the trials showed maintained or improved productivity — it just questions whether this result generalizes.`,
     },
   },
 
@@ -572,7 +507,55 @@ Text 2: While social media literacy programs sound appealing in principle, resea
     },
   },
 
-  // ── Transitions (2) ──────────────────────────────────────────────────────
+  {
+    id: 'rw2e-19',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Information and Ideas',
+    skill: 'Inferences',
+    difficulty: 'easy',
+    stimulus: `The cassowary, a large flightless bird native to the tropical rainforests of New Guinea and northeastern Australia, is often described as the world's most dangerous bird. Its powerful legs can deliver kicks with enough force to cause serious injury, and the dagger-like casque on its head can be used as a weapon. Despite this fearsome reputation, cassowaries are shy animals that retreat when they can and attack humans only when cornered, provoked, or defending their young.`,
+    question: `Based on the passage, it can most reasonably be inferred that cassowary attacks on humans`,
+    choices: [
+      { label: 'A', text: 'are most likely to happen when humans threaten the birds or their offspring' },
+      { label: 'B', text: 'occur primarily in urban areas where cassowaries have lost their fear of humans' },
+      { label: 'C', text: 'are a frequent and unpredictable danger for rainforest residents' },
+      { label: 'D', text: 'occur only in Australia, not in New Guinea' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. The passage states cassowaries "attack humans only when cornered, provoked, or defending their young." This directly supports the inference that attacks are most likely when humans pose a threat to the birds or their offspring.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. The passage says cassowaries live in rainforests and are shy; there is no mention of urban areas.`,
+      C: `Choice C is incorrect. The passage describes cassowaries as shy animals that avoid humans when possible, suggesting attacks are not frequent or random.`,
+      D: `Choice D is incorrect. The passage says cassowaries live in both New Guinea and Australia, with no geographic restriction on attacks.`,
+    },
+  },
+
+  {
+    id: 'rw2e-10',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Cross-Text Connections',
+    difficulty: 'medium',
+    stimulus: `Text 1: Advocates of social media literacy education argue that teaching young people to identify misinformation, evaluate sources, and understand algorithmic content curation should be a core part of the school curriculum. They contend that digital literacy is now as fundamental as reading and writing for informed citizenship.
+
+Text 2: While social media literacy programs sound appealing in principle, researchers have found that brief classroom interventions produce only modest improvements in students' ability to detect false information, and that these gains often fade quickly after the instruction ends. More structural solutions — including platform regulation and algorithmic transparency requirements — may be necessary to address misinformation at scale.`,
+    question: `The authors of Text 1 and Text 2 would most likely agree that`,
+    choices: [
+      { label: 'A', text: 'misinformation on social media poses no meaningful threat to democratic society' },
+      { label: 'B', text: 'platform regulation is the most effective response to online misinformation' },
+      { label: 'C', text: 'addressing the spread of misinformation online is an important societal concern' },
+      { label: 'D', text: 'social media literacy programs should be permanently removed from school curricula' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. Text 1 argues for media literacy education because misinformation is a serious problem; Text 2 also treats misinformation as a problem serious enough to require structural solutions. Both texts share the premise that misinformation is a significant concern worth addressing.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. Both texts treat misinformation as a genuine problem, not a trivial one.`,
+      B: `Choice B is incorrect. Text 2 suggests structural solutions may be necessary, but Text 1 does not address platform regulation, so there is no agreement on this point.`,
+      D: `Choice D is incorrect. Text 2 criticizes the effectiveness of brief interventions but does not call for removing literacy programs entirely.`,
+    },
+  },
 
   {
     id: 'rw2e-23',
@@ -595,6 +578,54 @@ Text 2: While social media literacy programs sound appealing in principle, resea
       A: `Choice A is incorrect. "Therefore" signals a logical conclusion drawn from the preceding statement, but the second sentence adds a different method rather than drawing a conclusion.`,
       C: `Choice C is incorrect. "However" signals contrast, but using stars as a navigational cue does not contradict using magnetic fields.`,
       B: `Choice B is incorrect. "As a result" signals causation, implying that magnetic field detection causes star navigation, which is illogical.`,
+    },
+  },
+
+  {
+    id: 'rw2e-25',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Standard English Conventions',
+    skill: 'Boundaries',
+    difficulty: 'easy',
+    stimulus: `The platypus is one of the few venomous mammals in the world _______ males have spurs on their hind legs that can deliver a painful venom during mating season.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: '; males have' },
+      { label: 'B', text: ', males have' },
+      { label: 'C', text: 'males have' },
+      { label: 'D', text: 'and it has males that have' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. The two clauses are both independent (each could stand as its own sentence). A semicolon is the correct way to join two independent clauses without a coordinating conjunction.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. Joining two independent clauses with only a comma creates a comma splice, which is a Standard English error.`,
+      C: `Choice C is incorrect. Joining two independent clauses without any punctuation creates a run-on sentence.`,
+      D: `Choice D is incorrect. This construction is grammatically awkward and changes the meaning unnecessarily.`,
+    },
+  },
+
+  {
+    id: 'rw2e-27',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Standard English Conventions',
+    skill: 'Form, Structure, and Sense',
+    difficulty: 'medium',
+    stimulus: `Each of the students in the advanced chemistry class _______ required to submit a detailed lab report documenting their experimental methodology and results.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: 'are' },
+      { label: 'B', text: 'is' },
+      { label: 'C', text: 'were' },
+      { label: 'D', text: 'have been' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The grammatical subject of the sentence is "Each," which is a singular indefinite pronoun. Despite the intervening prepositional phrase "of the students in the advanced chemistry class," the verb must agree with the singular subject "Each," requiring the singular verb "is."`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "Are" is a plural verb, but the subject "Each" is singular.`,
+      C: `Choice C is incorrect. "Were" is past tense; the sentence describes a current requirement, calling for present tense.`,
+      D: `Choice D is incorrect. "Have been" is present perfect plural, which does not agree with the singular subject "Each."`,
     },
   },
 
@@ -622,32 +653,6 @@ Text 2: While social media literacy programs sound appealing in principle, resea
     },
   },
 
-  // ── Boundaries (2) ──────────────────────────────────────────────────────
-
-  {
-    id: 'rw2e-25',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
-    difficulty: 'easy',
-    stimulus: `The platypus is one of the few venomous mammals in the world _______ males have spurs on their hind legs that can deliver a painful venom during mating season.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: '; males have' },
-      { label: 'B', text: ', males have' },
-      { label: 'C', text: 'males have' },
-      { label: 'D', text: 'and it has males that have' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. The two clauses are both independent (each could stand as its own sentence). A semicolon is the correct way to join two independent clauses without a coordinating conjunction.`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. Joining two independent clauses with only a comma creates a comma splice, which is a Standard English error.`,
-      C: `Choice C is incorrect. Joining two independent clauses without any punctuation creates a run-on sentence.`,
-      D: `Choice D is incorrect. This construction is grammatically awkward and changes the meaning unnecessarily.`,
-    },
-  },
-
   {
     id: 'rw2e-26',
     section: 'reading-writing',
@@ -669,32 +674,6 @@ Text 2: While social media literacy programs sound appealing in principle, resea
       B: `Choice B is incorrect. A semicolon is used between two independent clauses, but "but also for his ability" is not an independent clause.`,
       C: `Choice C is incorrect. A comma before "but" is used in compound sentences joining two independent clauses, not in the "not only...but also" parallel structure.`,
       D: `Choice D is incorrect. A period would create a sentence fragment: "But also for his ability to explain complex scientific concepts" cannot stand alone.`,
-    },
-  },
-
-  // ── Form, Structure, and Sense (1) ────────────────────────────────────────
-
-  {
-    id: 'rw2e-27',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Standard English Conventions',
-    skill: 'Form, Structure, and Sense',
-    difficulty: 'medium',
-    stimulus: `Each of the students in the advanced chemistry class _______ required to submit a detailed lab report documenting their experimental methodology and results.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: 'are' },
-      { label: 'B', text: 'is' },
-      { label: 'C', text: 'were' },
-      { label: 'D', text: 'have been' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. The grammatical subject of the sentence is "Each," which is a singular indefinite pronoun. Despite the intervening prepositional phrase "of the students in the advanced chemistry class," the verb must agree with the singular subject "Each," requiring the singular verb "is."`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Are" is a plural verb, but the subject "Each" is singular.`,
-      C: `Choice C is incorrect. "Were" is past tense; the sentence describes a current requirement, calling for present tense.`,
-      D: `Choice D is incorrect. "Have been" is present perfect plural, which does not agree with the singular subject "Each."`,
     },
   },
 ]

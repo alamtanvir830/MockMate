@@ -4,9 +4,6 @@ import type { MathQuestion } from './types'
 // 17 multiple choice (q01–q17) + 5 grid-in (q18–q22)
 
 export const mathModule1Questions: MathQuestion[] = [
-
-  // ── Algebra (6 MC) ───────────────────────────────────────────────────────────
-
   {
     id: 'm1-01',
     section: 'math',
@@ -79,6 +76,54 @@ export const mathModule1Questions: MathQuestion[] = [
   },
 
   {
+    id: 'm1-08',
+    section: 'math',
+    moduleId: 'math-module-1',
+    domain: 'Advanced Math',
+    skill: 'Equivalent expressions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'The expression x² − 10x + 29 can be written as (x − a)² + b, where a and b are constants. What is the value of a + b?',
+    choices: [
+      { label: 'A', text: '9' },
+      { label: 'B', text: '14' },
+      { label: 'C', text: '29' },
+      { label: 'D', text: '5' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Complete the square: x² − 10x + 29 = (x − 5)² − 25 + 29 = (x − 5)² + 4. So a = 5 and b = 4, giving a + b = 9.',
+    wrongAnswerExplanations: {
+      B: '14 = 10 + 4 — incorrectly adds the coefficient 10 to b instead of using a = 5.',
+      C: '29 is the constant in the original expression, not a + b.',
+      D: '5 is the value of a alone; b = 4 must also be added.',
+    },
+  },
+
+  {
+    id: 'm1-15',
+    section: 'math',
+    moduleId: 'math-module-1',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Percentages',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'A solution is 40% alcohol by volume. If 20 mL of pure alcohol is added to 60 mL of this solution, what is the percent of alcohol in the new mixture?',
+    choices: [
+      { label: 'A', text: '55%' },
+      { label: 'B', text: '50%' },
+      { label: 'C', text: '60%' },
+      { label: 'D', text: '45%' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Original alcohol = 40% × 60 mL = 24 mL. After adding 20 mL of pure alcohol: total alcohol = 44 mL, total volume = 80 mL. Percent = 44/80 = 55%.',
+    wrongAnswerExplanations: {
+      B: '50% = (40% + 60%)/2 — incorrectly averages the two percent values instead of computing from volumes.',
+      C: '60% omits the dilution effect of the extra 20 mL water-free alcohol being added to a larger total.',
+      D: '45% results from computing 44/100 (wrong denominator) instead of 44/80.',
+    },
+  },
+
+  {
     id: 'm1-03',
     section: 'math',
     moduleId: 'math-module-1',
@@ -103,6 +148,63 @@ export const mathModule1Questions: MathQuestion[] = [
   },
 
   {
+    id: 'm1-09',
+    section: 'math',
+    moduleId: 'math-module-1',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear functions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'The function f(x) = x² − 6x + k has a minimum value of 4. What is the value of k?',
+    choices: [
+      { label: 'A', text: '13' },
+      { label: 'B', text: '10' },
+      { label: 'C', text: '4' },
+      { label: 'D', text: '7' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Complete the square: f(x) = (x − 3)² + (k − 9). The minimum value is k − 9. Setting k − 9 = 4 gives k = 13.',
+    wrongAnswerExplanations: {
+      B: '10 = 6 + 4 — adding the coefficient and minimum instead of using the vertex formula.',
+      C: '4 is the minimum value of f, not the value of k.',
+      D: '7 results from computing k = 4 + 3 instead of 4 + 9.',
+    },
+  },
+
+  {
+    id: 'm1-16',
+    section: 'math',
+    moduleId: 'math-module-1',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Two-variable data: models and scatterplots',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    stimulus: 'The scatter plot shows the number of hours students spent practicing a skill each week and their scores on a performance assessment.',
+    graphData: {
+      type: 'scatter',
+      xLabel: 'Hours of practice per week',
+      yLabel: 'Score',
+      xMin: 0, xMax: 8, yMin: 50, yMax: 100,
+      points: [[1,54],[1,60],[2,63],[3,68],[3,72],[4,70],[4,77],[5,80],[5,85],[6,83],[6,90],[7,92],[7,95]],
+      trendLine: { slope: 6.5, intercept: 50 },
+    },
+    question: 'Based on the scatter plot, which of the following best describes the association between hours of practice and performance score?',
+    choices: [
+      { label: 'A', text: 'Strong negative linear association' },
+      { label: 'B', text: 'No association' },
+      { label: 'C', text: 'Nonlinear association' },
+      { label: 'D', text: 'Strong positive linear association' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'As hours of practice increase, scores consistently increase in a roughly linear pattern. The data points cluster closely around an upward-sloping trend line, indicating a strong positive linear association.',
+    wrongAnswerExplanations: {
+      A: 'A negative association would show scores decreasing as hours increase — the opposite of what the scatter plot shows.',
+      B: 'There is a clear pattern in the data; the points are not randomly scattered.',
+      C: 'The points follow a roughly straight-line pattern, not a curved one.',
+    },
+  },
+
+  {
     id: 'm1-04',
     section: 'math',
     moduleId: 'math-module-1',
@@ -123,6 +225,54 @@ export const mathModule1Questions: MathQuestion[] = [
       A: 'x > 3 satisfies the first inequality but ignores the constraint x < 6.',
       C: 'x < 6 satisfies the second constraint but ignores x > 3.',
       D: 'x > 6 contradicts the second constraint x < 6.',
+    },
+  },
+
+  {
+    id: 'm1-10',
+    section: 'math',
+    moduleId: 'math-module-1',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear functions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'A savings account earns 4% annual interest compounded annually. If the initial deposit is $2,000, which expression represents the account balance after n years?',
+    choices: [
+      { label: 'A', text: '2000 + 0.04n' },
+      { label: 'B', text: '2000(1.04)ⁿ' },
+      { label: 'C', text: '2000(0.04)ⁿ' },
+      { label: 'D', text: '2000 × 1.04n' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Compound interest formula: A = P(1 + r)ⁿ = 2000(1.04)ⁿ.',
+    wrongAnswerExplanations: {
+      A: 'This models simple interest (adding a fixed amount each year), not compounding.',
+      C: '2000(0.04)ⁿ approaches 0 as n grows — it models decay.',
+      D: '1.04n is linear; compound growth requires n as an exponent on the base.',
+    },
+  },
+
+  {
+    id: 'm1-17',
+    section: 'math',
+    moduleId: 'math-module-1',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Percentages',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'A store\'s annual sales rose from $40,000 to $52,000. By what percent did sales increase?',
+    choices: [
+      { label: 'A', text: '20%' },
+      { label: 'B', text: '25%' },
+      { label: 'C', text: '30%' },
+      { label: 'D', text: '35%' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Percent increase = (change ÷ original) × 100 = (12,000 ÷ 40,000) × 100 = 30%.',
+    wrongAnswerExplanations: {
+      A: '20% of $40,000 = $8,000 → total $48,000, not $52,000.',
+      B: '25% of $40,000 = $10,000 → total $50,000, not $52,000.',
+      D: '35% of $40,000 = $14,000 → total $54,000, not $52,000.',
     },
   },
 
@@ -170,128 +320,6 @@ export const mathModule1Questions: MathQuestion[] = [
   },
 
   {
-    id: 'm1-06',
-    section: 'math',
-    moduleId: 'math-module-1',
-    domain: 'Algebra',
-    skill: 'Linear equations in two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'A company has fixed monthly costs of $4,800 and variable production costs of $6 per widget. Each widget sells for $14. Which equation represents the company\'s monthly profit P (in dollars) when n widgets are sold?',
-    choices: [
-      { label: 'A', text: 'P = 8n − 4,800' },
-      { label: 'B', text: 'P = 6n − 4,800' },
-      { label: 'C', text: 'P = 14n − 4,800' },
-      { label: 'D', text: 'P = 8n + 4,800' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Profit = Revenue − Total Costs = 14n − (6n + 4,800) = 8n − 4,800.',
-    wrongAnswerExplanations: {
-      C: 'This ignores the $6 variable cost per widget.',
-      B: '6 is the variable cost rate, not the profit per unit; profit per unit is 14 − 6 = 8.',
-      D: 'Fixed costs reduce profit, so 4,800 must be subtracted, not added.',
-    },
-  },
-
-  {
-    id: 'm1-07',
-    section: 'math',
-    moduleId: 'math-module-1',
-    domain: 'Algebra',
-    skill: 'Linear equations in one variable',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question: 'A store offers two discount plans. Plan X gives a flat $30 discount. Plan Y gives a 20% discount off the original price. For what purchase amount (in dollars) do both plans result in the same final price?',
-    choices: [
-      { label: 'A', text: '$100' },
-      { label: 'B', text: '$120' },
-      { label: 'C', text: '$150' },
-      { label: 'D', text: '$180' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'Set the plans equal: p − 30 = 0.8p → 0.2p = 30 → p = 150.',
-    wrongAnswerExplanations: {
-      A: 'At $100: Plan X gives $70, Plan Y gives $80 — not equal.',
-      B: 'At $120: Plan X gives $90, Plan Y gives $96 — not equal.',
-      D: 'At $180: Plan X gives $150, Plan Y gives $144 — not equal.',
-    },
-  },
-
-  // ── Advanced Math (7 MC) ─────────────────────────────────────────────────────
-
-  {
-    id: 'm1-08',
-    section: 'math',
-    moduleId: 'math-module-1',
-    domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'The expression x² − 10x + 29 can be written as (x − a)² + b, where a and b are constants. What is the value of a + b?',
-    choices: [
-      { label: 'A', text: '9' },
-      { label: 'B', text: '14' },
-      { label: 'C', text: '29' },
-      { label: 'D', text: '5' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Complete the square: x² − 10x + 29 = (x − 5)² − 25 + 29 = (x − 5)² + 4. So a = 5 and b = 4, giving a + b = 9.',
-    wrongAnswerExplanations: {
-      B: '14 = 10 + 4 — incorrectly adds the coefficient 10 to b instead of using a = 5.',
-      C: '29 is the constant in the original expression, not a + b.',
-      D: '5 is the value of a alone; b = 4 must also be added.',
-    },
-  },
-
-  {
-    id: 'm1-09',
-    section: 'math',
-    moduleId: 'math-module-1',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'The function f(x) = x² − 6x + k has a minimum value of 4. What is the value of k?',
-    choices: [
-      { label: 'A', text: '13' },
-      { label: 'B', text: '10' },
-      { label: 'C', text: '4' },
-      { label: 'D', text: '7' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Complete the square: f(x) = (x − 3)² + (k − 9). The minimum value is k − 9. Setting k − 9 = 4 gives k = 13.',
-    wrongAnswerExplanations: {
-      B: '10 = 6 + 4 — adding the coefficient and minimum instead of using the vertex formula.',
-      C: '4 is the minimum value of f, not the value of k.',
-      D: '7 results from computing k = 4 + 3 instead of 4 + 9.',
-    },
-  },
-
-  {
-    id: 'm1-10',
-    section: 'math',
-    moduleId: 'math-module-1',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'A savings account earns 4% annual interest compounded annually. If the initial deposit is $2,000, which expression represents the account balance after n years?',
-    choices: [
-      { label: 'A', text: '2000 + 0.04n' },
-      { label: 'B', text: '2000(1.04)ⁿ' },
-      { label: 'C', text: '2000(0.04)ⁿ' },
-      { label: 'D', text: '2000 × 1.04n' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Compound interest formula: A = P(1 + r)ⁿ = 2000(1.04)ⁿ.',
-    wrongAnswerExplanations: {
-      A: 'This models simple interest (adding a fixed amount each year), not compounding.',
-      C: '2000(0.04)ⁿ approaches 0 as n grows — it models decay.',
-      D: '1.04n is linear; compound growth requires n as an exponent on the base.',
-    },
-  },
-
-  {
     id: 'm1-11',
     section: 'math',
     moduleId: 'math-module-1',
@@ -312,6 +340,44 @@ export const mathModule1Questions: MathQuestion[] = [
       A: 'A common error is computing f(−2) = 3(−4) − 5 (not squaring first), giving a much lower value.',
       B: 'Arithmetic error in one of the evaluations.',
       C: 'Omitting the −5 in both terms gives 12 + 27 = 39; other errors yield 36.',
+    },
+  },
+
+  {
+    id: 'm1-18',
+    section: 'math',
+    moduleId: 'math-module-1',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Ratios, rates, proportional relationships, and units',
+    difficulty: 'medium',
+    type: 'grid_in',
+    question: 'A worker earns $20 per hour for the first 40 hours worked in a week and $30 per hour for each additional hour worked beyond 40. Last week the worker earned a total of $950. How many overtime hours did the worker work?',
+    correctAnswer: '5',
+    acceptableAnswers: ['5'],
+    explanation: 'Regular pay for 40 hours = 40 × $20 = $800. Overtime pay = $950 − $800 = $150. Overtime hours = $150 ÷ $30 = 5.',
+  },
+
+  {
+    id: 'm1-06',
+    section: 'math',
+    moduleId: 'math-module-1',
+    domain: 'Algebra',
+    skill: 'Linear equations in two variables',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'A company has fixed monthly costs of $4,800 and variable production costs of $6 per widget. Each widget sells for $14. Which equation represents the company\'s monthly profit P (in dollars) when n widgets are sold?',
+    choices: [
+      { label: 'A', text: 'P = 8n − 4,800' },
+      { label: 'B', text: 'P = 6n − 4,800' },
+      { label: 'C', text: 'P = 14n − 4,800' },
+      { label: 'D', text: 'P = 8n + 4,800' },
+    ],
+    correctAnswer: 'A',
+    explanation: 'Profit = Revenue − Total Costs = 14n − (6n + 4,800) = 8n − 4,800.',
+    wrongAnswerExplanations: {
+      C: 'This ignores the $6 variable cost per widget.',
+      B: '6 is the variable cost rate, not the profit per unit; profit per unit is 14 − 6 = 8.',
+      D: 'Fixed costs reduce profit, so 4,800 must be subtracted, not added.',
     },
   },
 
@@ -340,6 +406,44 @@ export const mathModule1Questions: MathQuestion[] = [
   },
 
   {
+    id: 'm1-19',
+    section: 'math',
+    moduleId: 'math-module-1',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Area and volume',
+    difficulty: 'medium',
+    type: 'grid_in',
+    question: 'The radius of a circle is increased by 50%. By what percent does the area of the circle increase?',
+    correctAnswer: '125',
+    acceptableAnswers: ['125'],
+    explanation: 'Let the original radius be r. New radius = 1.5r. Original area = πr². New area = π(1.5r)² = 2.25πr². Increase = (2.25 − 1) × 100% = 125%.',
+  },
+
+  {
+    id: 'm1-07',
+    section: 'math',
+    moduleId: 'math-module-1',
+    domain: 'Algebra',
+    skill: 'Linear equations in one variable',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question: 'A store offers two discount plans. Plan X gives a flat $30 discount. Plan Y gives a 20% discount off the original price. For what purchase amount (in dollars) do both plans result in the same final price?',
+    choices: [
+      { label: 'A', text: '$100' },
+      { label: 'B', text: '$120' },
+      { label: 'C', text: '$150' },
+      { label: 'D', text: '$180' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Set the plans equal: p − 30 = 0.8p → 0.2p = 30 → p = 150.',
+    wrongAnswerExplanations: {
+      A: 'At $100: Plan X gives $70, Plan Y gives $80 — not equal.',
+      B: 'At $120: Plan X gives $90, Plan Y gives $96 — not equal.',
+      D: 'At $180: Plan X gives $150, Plan Y gives $144 — not equal.',
+    },
+  },
+
+  {
     id: 'm1-13',
     section: 'math',
     moduleId: 'math-module-1',
@@ -364,6 +468,20 @@ export const mathModule1Questions: MathQuestion[] = [
   },
 
   {
+    id: 'm1-20',
+    section: 'math',
+    moduleId: 'math-module-1',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Area and volume',
+    difficulty: 'medium',
+    type: 'grid_in',
+    question: 'A rectangular box has a length of 8 inches, a width of 5 inches, and a height of 4 inches. What is the volume of the box, in cubic inches?',
+    correctAnswer: '160',
+    acceptableAnswers: ['160'],
+    explanation: 'Volume = length × width × height = 8 × 5 × 4 = 160 cubic inches.',
+  },
+
+  {
     id: 'm1-14',
     section: 'math',
     moduleId: 'math-module-1',
@@ -385,133 +503,6 @@ export const mathModule1Questions: MathQuestion[] = [
       B: 'At x = 0: y = −2 on the parabola but y = 0 on the line — not equal.',
       C: 'At x = 1: y = −1 on the parabola but y = 1 on the line — not equal.',
     },
-  },
-
-  // ── Problem-Solving and Data Analysis (3 MC) ─────────────────────────────────
-
-  {
-    id: 'm1-15',
-    section: 'math',
-    moduleId: 'math-module-1',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Percentages',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'A solution is 40% alcohol by volume. If 20 mL of pure alcohol is added to 60 mL of this solution, what is the percent of alcohol in the new mixture?',
-    choices: [
-      { label: 'A', text: '55%' },
-      { label: 'B', text: '50%' },
-      { label: 'C', text: '60%' },
-      { label: 'D', text: '45%' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Original alcohol = 40% × 60 mL = 24 mL. After adding 20 mL of pure alcohol: total alcohol = 44 mL, total volume = 80 mL. Percent = 44/80 = 55%.',
-    wrongAnswerExplanations: {
-      B: '50% = (40% + 60%)/2 — incorrectly averages the two percent values instead of computing from volumes.',
-      C: '60% omits the dilution effect of the extra 20 mL water-free alcohol being added to a larger total.',
-      D: '45% results from computing 44/100 (wrong denominator) instead of 44/80.',
-    },
-  },
-
-  {
-    id: 'm1-16',
-    section: 'math',
-    moduleId: 'math-module-1',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Two-variable data: models and scatterplots',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    stimulus: 'The scatter plot shows the number of hours students spent practicing a skill each week and their scores on a performance assessment.',
-    graphData: {
-      type: 'scatter',
-      xLabel: 'Hours of practice per week',
-      yLabel: 'Score',
-      xMin: 0, xMax: 8, yMin: 50, yMax: 100,
-      points: [[1,54],[1,60],[2,63],[3,68],[3,72],[4,70],[4,77],[5,80],[5,85],[6,83],[6,90],[7,92],[7,95]],
-      trendLine: { slope: 6.5, intercept: 50 },
-    },
-    question: 'Based on the scatter plot, which of the following best describes the association between hours of practice and performance score?',
-    choices: [
-      { label: 'A', text: 'Strong negative linear association' },
-      { label: 'B', text: 'No association' },
-      { label: 'C', text: 'Nonlinear association' },
-      { label: 'D', text: 'Strong positive linear association' },
-    ],
-    correctAnswer: 'D',
-    explanation: 'As hours of practice increase, scores consistently increase in a roughly linear pattern. The data points cluster closely around an upward-sloping trend line, indicating a strong positive linear association.',
-    wrongAnswerExplanations: {
-      A: 'A negative association would show scores decreasing as hours increase — the opposite of what the scatter plot shows.',
-      B: 'There is a clear pattern in the data; the points are not randomly scattered.',
-      C: 'The points follow a roughly straight-line pattern, not a curved one.',
-    },
-  },
-
-  {
-    id: 'm1-17',
-    section: 'math',
-    moduleId: 'math-module-1',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Percentages',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'A store\'s annual sales rose from $40,000 to $52,000. By what percent did sales increase?',
-    choices: [
-      { label: 'A', text: '20%' },
-      { label: 'B', text: '25%' },
-      { label: 'C', text: '30%' },
-      { label: 'D', text: '35%' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'Percent increase = (change ÷ original) × 100 = (12,000 ÷ 40,000) × 100 = 30%.',
-    wrongAnswerExplanations: {
-      A: '20% of $40,000 = $8,000 → total $48,000, not $52,000.',
-      B: '25% of $40,000 = $10,000 → total $50,000, not $52,000.',
-      D: '35% of $40,000 = $14,000 → total $54,000, not $52,000.',
-    },
-  },
-
-  // ── Grid-In Questions (q18–q22) ───────────────────────────────────────────────
-
-  {
-    id: 'm1-18',
-    section: 'math',
-    moduleId: 'math-module-1',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Ratios, rates, proportional relationships, and units',
-    difficulty: 'medium',
-    type: 'grid_in',
-    question: 'A worker earns $20 per hour for the first 40 hours worked in a week and $30 per hour for each additional hour worked beyond 40. Last week the worker earned a total of $950. How many overtime hours did the worker work?',
-    correctAnswer: '5',
-    acceptableAnswers: ['5'],
-    explanation: 'Regular pay for 40 hours = 40 × $20 = $800. Overtime pay = $950 − $800 = $150. Overtime hours = $150 ÷ $30 = 5.',
-  },
-
-  {
-    id: 'm1-19',
-    section: 'math',
-    moduleId: 'math-module-1',
-    domain: 'Geometry and Trigonometry',
-    skill: 'Area and volume',
-    difficulty: 'medium',
-    type: 'grid_in',
-    question: 'The radius of a circle is increased by 50%. By what percent does the area of the circle increase?',
-    correctAnswer: '125',
-    acceptableAnswers: ['125'],
-    explanation: 'Let the original radius be r. New radius = 1.5r. Original area = πr². New area = π(1.5r)² = 2.25πr². Increase = (2.25 − 1) × 100% = 125%.',
-  },
-
-  {
-    id: 'm1-20',
-    section: 'math',
-    moduleId: 'math-module-1',
-    domain: 'Geometry and Trigonometry',
-    skill: 'Area and volume',
-    difficulty: 'medium',
-    type: 'grid_in',
-    question: 'A rectangular box has a length of 8 inches, a width of 5 inches, and a height of 4 inches. What is the volume of the box, in cubic inches?',
-    correctAnswer: '160',
-    acceptableAnswers: ['160'],
-    explanation: 'Volume = length × width × height = 8 × 5 × 4 = 160 cubic inches.',
   },
 
   {
