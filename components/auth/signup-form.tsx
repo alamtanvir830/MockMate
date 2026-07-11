@@ -1,6 +1,7 @@
 'use client'
 
 import { useActionState } from 'react'
+import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { signup } from '@/app/actions/auth'
@@ -46,6 +47,14 @@ export function SignupForm() {
       <Button type="submit" loading={pending} className="w-full" size="md">
         Create account
       </Button>
+
+      <p className="text-xs text-slate-400 text-center">
+        After signing up, check your email to verify your account before signing
+        in.{' '}
+        <Link href="/login" className="underline hover:text-slate-600">
+          Already verified? Sign in →
+        </Link>
+      </p>
     </form>
   )
 }

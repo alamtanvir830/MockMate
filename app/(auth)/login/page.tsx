@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import Link from 'next/link'
 import { Logo } from '@/components/shared/logo'
 import { LoginForm } from '@/components/auth/login-form'
@@ -25,7 +26,9 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <LoginForm />
+          <Suspense fallback={<div className="h-64 animate-pulse bg-slate-50 rounded-lg" />}>
+            <LoginForm />
+          </Suspense>
 
           <p className="mt-6 text-center text-sm text-slate-500">
             Don&apos;t have an account?{' '}
