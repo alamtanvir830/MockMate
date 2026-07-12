@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { isMockMateAdmin } from '@/lib/auth/admin'
-import { isForm1Expired, formatCountdown } from '@/lib/premade-exams/sat/form1-access'
+import { getOrCreateForm1Access, isForm1Expired, formatCountdown } from '@/lib/premade-exams/sat/form1-access'
 import { getEntitlements } from '@/lib/entitlements'
 
 const cardDetails = [
@@ -21,8 +21,8 @@ export default async function SATPremadePage() {
   let form1ResultsAttemptId: string | null = null
   let form1AccessExpiresAt: string | null = null
 
-  if (user && !isAdmin) {
-    const [completedResult, accessResult] = await Promise.all([
+  if (user && !isAdmin && !satUpgradeUnlocked) {
+    const [completedResult, access] = await Promise.all([
       supabase
         .from('standardized_exam_attempts')
         .select('local_attempt_id')
@@ -33,15 +33,11 @@ export default async function SATPremadePage() {
         .order('completed_at', { ascending: false })
         .limit(1)
         .maybeSingle(),
-      supabase
-        .from('sat_form_1_access')
-        .select('access_expires_at')
-        .eq('user_id', user.id)
-        .maybeSingle(),
+      getOrCreateForm1Access(supabase, user),
     ])
 
     form1ResultsAttemptId = completedResult.data?.local_attempt_id ?? null
-    form1AccessExpiresAt = (accessResult.data as { access_expires_at: string } | null)?.access_expires_at ?? null
+    form1AccessExpiresAt = access.access_expires_at
   }
 
   const form1Completed = !!form1ResultsAttemptId
