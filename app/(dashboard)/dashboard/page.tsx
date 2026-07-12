@@ -9,6 +9,7 @@ import { daysUntil, isExamLocked } from '@/lib/utils'
 import { seedDemoExam, seedDemoGroupExam } from '@/lib/demo/seed-demo-exam'
 import { QBHistorySection } from '@/components/dashboard/QBHistorySection'
 import { isMockMateAdmin } from '@/lib/auth/admin'
+import { EmailVerificationBanner } from '@/components/auth/EmailVerificationBanner'
 import type { Exam } from '@/types'
 
 type SatForm1CardState =
@@ -183,8 +184,14 @@ export default async function DashboardPage() {
     for (const a of myAttempts ?? []) completedSharedIds.add(a.exam_id)
   }
 
+  const emailUnverified = !user?.email_confirmed_at
+
   return (
     <div className="space-y-8">
+      {emailUnverified && user?.email && (
+        <EmailVerificationBanner email={user.email} />
+      )}
+
       {/* Header — no top-right button */}
       <div>
         <h1 className="text-2xl font-bold text-slate-900">

@@ -18,7 +18,7 @@ export function LoginForm() {
 
   const bannerMessage =
     urlMessage === 'check_email'
-      ? 'Account created! Check your email to verify your account before signing in.'
+      ? 'Account created! You can sign in and start your SAT exam now. We also sent a verification email — check your inbox to enable password recovery.'
       : null
 
   const bannerError =
@@ -131,8 +131,11 @@ export function LoginForm() {
       )}
 
       <p className="text-xs text-slate-400 text-center leading-relaxed">
-        If you just created an account, verify your email first.{' '}
-        If the link expired, use &quot;Resend verification email&quot; above.
+        Having trouble signing in?{' '}
+        <Link href="/forgot-password" className="underline hover:text-slate-600">
+          Reset your password
+        </Link>
+        {' '}or use the resend option above.
       </p>
     </div>
   )

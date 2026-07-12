@@ -49,10 +49,9 @@ export function SignupForm() {
       </Button>
 
       <p className="text-xs text-slate-400 text-center">
-        After signing up, check your email to verify your account before signing
-        in.{' '}
+        You can access the dashboard immediately after signing up.{' '}
         <Link href="/login" className="underline hover:text-slate-600">
-          Already verified? Sign in →
+          Already have an account? Sign in →
         </Link>
       </p>
     </form>

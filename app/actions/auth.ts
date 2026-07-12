@@ -16,29 +16,26 @@ export async function login(
   const supabase = await createClient()
 
   const { error } = await supabase.auth.signInWithPassword({
-    email: formData.get('email') as string,
+    email: (formData.get('email') as string).toLowerCase().trim(),
     password: formData.get('password') as string,
   })
 
   if (error) {
-    // Supabase returns "Invalid login credentials" for both wrong password AND
-    // unconfirmed email (intentional security obfuscation). Give users a helpful hint.
     if (
       error.message.includes('Invalid login credentials') ||
       error.message.includes('invalid_credentials')
     ) {
-      return {
-        error:
-          'Invalid email or password. If you just signed up, please verify your email first.',
-      }
+      return { error: 'Invalid email or password.' }
     }
+    // Legacy unconfirmed accounts (created before email confirmation was disabled).
+    // New signups are auto-confirmed and won't hit this path.
     if (
       error.message.includes('Email not confirmed') ||
       error.message.includes('email_not_confirmed')
     ) {
       return {
         error:
-          'Please verify your email before logging in. Check your inbox or use "Resend verification email" below.',
+          'Your account email is unconfirmed. Use "Forgot password" to reset and verify your account.',
       }
     }
     return { error: error.message }
@@ -53,27 +50,37 @@ export async function signup(
 ): Promise<AuthState> {
   const supabase = await createClient()
 
+  const email = (formData.get('email') as string).toLowerCase().trim()
+  const password = formData.get('password') as string
+  const fullName = (formData.get('full_name') as string).trim()
+
   const { data, error } = await supabase.auth.signUp({
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
+    email,
+    password,
     options: {
-      data: {
-        full_name: formData.get('full_name') as string,
-      },
+      data: { full_name: fullName },
       emailRedirectTo: `${siteUrl()}/auth/callback`,
     },
   })
 
   if (error) {
+    if (
+      error.message.includes('User already registered') ||
+      error.message.includes('user_already_exists')
+    ) {
+      return {
+        error: 'An account with this email already exists. Try signing in instead.',
+      }
+    }
     return { error: error.message }
   }
 
-  // If email confirmation is disabled in Supabase, session is returned immediately.
+  // Email confirmation disabled in Supabase → session returned immediately.
   if (data.session) {
     redirect('/dashboard')
   }
 
-  // Email confirmation required — send the user to login with a prompt.
+  // Email confirmation still enabled → prompt user to check inbox.
   redirect('/login?message=check_email')
 }
 
@@ -144,18 +151,31 @@ export async function resendVerification(
 
   const { error } = await supabase.auth.resend({
     type: 'signup',
-    email: formData.get('email') as string,
+    email: (formData.get('email') as string).toLowerCase().trim(),
     options: {
       emailRedirectTo: `${siteUrl()}/auth/callback`,
     },
   })
 
   if (error) {
+    if (
+      error.message.toLowerCase().includes('rate limit') ||
+      error.message.includes('over_email_send_rate_limit') ||
+      error.message.includes('security purposes')
+    ) {
+      return { error: 'Please wait before requesting another email.' }
+    }
+    if (
+      error.message.includes('already confirmed') ||
+      error.message.includes('user_already_exists') ||
+      error.message.includes('email_exists')
+    ) {
+      return { error: 'This email is already verified. Try logging in.' }
+    }
     return { error: error.message }
   }
 
   return {
-    message:
-      'Verification email sent. Check your inbox and spam folder.',
+    message: 'Verification email sent. Check your inbox and spam folder.',
   }
 }
