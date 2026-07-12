@@ -1,6 +1,7 @@
 'use client'
 
 import { useActionState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -8,6 +9,8 @@ import { forgotPassword } from '@/app/actions/auth'
 
 export function ForgotPasswordForm() {
   const [state, action, pending] = useActionState(forgotPassword, null)
+  const searchParams = useSearchParams()
+  const linkExpired = searchParams.get('error') === 'link_expired'
 
   if (state?.message) {
     return (
@@ -37,6 +40,12 @@ export function ForgotPasswordForm() {
 
   return (
     <form action={action} className="space-y-4">
+      {linkExpired && (
+        <div className="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-700">
+          That reset link has expired or already been used. Enter your email to get a new one.
+        </div>
+      )}
+
       <p className="text-sm text-slate-500">
         Enter the email you used to create your account and we&apos;ll send a
         password reset link.

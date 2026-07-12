@@ -75,12 +75,12 @@ export async function signup(
     return { error: error.message }
   }
 
-  // Email confirmation disabled in Supabase → session returned immediately.
+  // With email confirmation OFF, session is returned immediately.
   if (data.session) {
     redirect('/dashboard')
   }
 
-  // Email confirmation still enabled → prompt user to check inbox.
+  // Fallback: email confirmation still enabled on Supabase side.
   redirect('/login?message=check_email')
 }
 
@@ -97,13 +97,20 @@ export async function forgotPassword(
   const supabase = await createClient()
 
   const { error } = await supabase.auth.resetPasswordForEmail(
-    formData.get('email') as string,
+    (formData.get('email') as string).toLowerCase().trim(),
     {
       redirectTo: `${siteUrl()}/auth/callback?next=/reset-password`,
     },
   )
 
   if (error) {
+    if (
+      error.message.toLowerCase().includes('rate limit') ||
+      error.message.includes('over_email_send_rate_limit') ||
+      error.message.includes('security purposes')
+    ) {
+      return { error: 'Please wait before requesting another reset email.' }
+    }
     return { error: error.message }
   }
 

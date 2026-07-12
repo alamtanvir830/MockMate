@@ -5,61 +5,64 @@ import type { EmailOtpType } from '@supabase/supabase-js'
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
-  const code = searchParams.get('code')
+  const code      = searchParams.get('code')
   const tokenHash = searchParams.get('token_hash')
-  const type = searchParams.get('type') as EmailOtpType | null
-  const next = searchParams.get('next') ?? '/dashboard'
-  const hasError = searchParams.get('error')
+  const type      = searchParams.get('type') as EmailOtpType | null
+  const next      = searchParams.get('next') ?? '/dashboard'
+  const hasError  = searchParams.get('error')
+
+  // Is this a password-reset callback? (type=recovery OR next was set to /reset-password)
+  const isRecovery = type === 'recovery' || next === '/reset-password'
 
   console.log('[auth/callback]', {
     hasCode: !!code,
     hasTokenHash: !!tokenHash,
     type,
     next,
+    isRecovery,
     hasError: !!hasError,
   })
 
+  // Supabase forwarded an error — route to the right recovery page
   if (hasError) {
-    console.error('[auth/callback] Supabase returned error param:', hasError)
-    return NextResponse.redirect(new URL('/login?error=confirmation_failed', origin))
+    console.error('[auth/callback] error from Supabase:', hasError, searchParams.get('error_description'))
+    if (isRecovery) {
+      return NextResponse.redirect(new URL('/forgot-password?error=link_expired', origin))
+    }
+    return NextResponse.redirect(new URL('/login?error=link_expired', origin))
   }
 
   const supabase = await createClient()
 
-  // PKCE flow — Supabase redirects here with ?code=...
+  // PKCE flow — ?code=...
   if (code) {
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
-    console.log('[auth/callback] PKCE exchange:', {
-      success: !error,
-      userEmail: data?.user?.email ?? null,
-      error: error?.message ?? null,
-    })
+    const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
       return NextResponse.redirect(new URL(next, origin))
     }
-    // If code exchange fails (e.g. code_verifier missing because link was opened
-    // in a different browser), fall through to login with a friendly message.
+    console.error('[auth/callback] PKCE exchange failed:', error.message)
     return NextResponse.redirect(
-      new URL('/login?error=link_expired', origin),
+      new URL(isRecovery ? '/forgot-password?error=link_expired' : '/login?error=link_expired', origin),
     )
   }
 
-  // Token hash flow — Supabase redirects here with ?token_hash=...&type=...
+  // OTP / token-hash flow — ?token_hash=...&type=...
   if (tokenHash && type) {
-    const { data, error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash })
-    console.log('[auth/callback] OTP verify:', {
-      success: !error,
-      userEmail: data?.user?.email ?? null,
-      error: error?.message ?? null,
-    })
+    const { error } = await supabase.auth.verifyOtp({ type, token_hash: tokenHash })
     if (!error) {
+      // Recovery OTP always lands on the reset-password page
+      if (type === 'recovery') {
+        return NextResponse.redirect(new URL('/reset-password', origin))
+      }
       return NextResponse.redirect(new URL(next, origin))
     }
-    return NextResponse.redirect(
-      new URL('/login?error=link_expired', origin),
-    )
+    console.error('[auth/callback] OTP verify failed:', error.message)
+    if (type === 'recovery') {
+      return NextResponse.redirect(new URL('/forgot-password?error=link_expired', origin))
+    }
+    return NextResponse.redirect(new URL('/login?error=link_expired', origin))
   }
 
-  console.warn('[auth/callback] No code or token_hash in URL')
-  return NextResponse.redirect(new URL('/login?error=confirmation_failed', origin))
+  console.warn('[auth/callback] no code or token_hash in URL')
+  return NextResponse.redirect(new URL('/login?error=link_expired', origin))
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import Link from 'next/link'
 import { Logo } from '@/components/shared/logo'
 import { ForgotPasswordForm } from '@/components/auth/forgot-password-form'
@@ -25,7 +26,9 @@ export default function ForgotPasswordPage() {
             </p>
           </div>
 
-          <ForgotPasswordForm />
+          <Suspense fallback={<div className="h-40 animate-pulse bg-slate-50 rounded-lg" />}>
+            <ForgotPasswordForm />
+          </Suspense>
         </div>
       </div>
     </div>
