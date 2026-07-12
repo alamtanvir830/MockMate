@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
-import { SAT_FORM1_LAUNCH_AT } from '@/lib/premade-exams/sat/form1-access'
 
 // POST /api/admin/backfill-sat-form-1-access
 // Header: Authorization: Bearer <SUPABASE_SERVICE_ROLE_KEY>
 //
 // Inserts a sat_form_1_access row for every auth user that doesn't already have one.
-// Existing users receive 10 days from the feature launch date.
+// New rows get 3 days from the current time (they'll be fine-tuned on first dashboard visit).
 export async function POST(req: NextRequest) {
   const token = (req.headers.get('authorization') ?? '').replace('Bearer ', '').trim()
   if (!token || token !== process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -14,11 +13,11 @@ export async function POST(req: NextRequest) {
   }
 
   const supabase = createAdminClient()
-  const TEN_DAYS_MS = 10 * 24 * 60 * 60 * 1000
-  const launchTs = new Date(SAT_FORM1_LAUNCH_AT).getTime()
-  const accessExpiresAt = new Date(launchTs + TEN_DAYS_MS).toISOString()
+  const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000
+  const now = Date.now()
+  const accessExpiresAt = new Date(now + THREE_DAYS_MS).toISOString()
+  const accessStartedAt = new Date(now).toISOString()
 
-  // Fetch all existing access rows to know which users are already covered
   const { data: existingRows, error: existingErr } = await supabase
     .from('sat_form_1_access')
     .select('user_id')
@@ -29,7 +28,6 @@ export async function POST(req: NextRequest) {
 
   const coveredUserIds = new Set((existingRows ?? []).map((r: { user_id: string }) => r.user_id))
 
-  // Page through all auth users and collect those without a row
   const rowsToInsert: {
     user_id: string
     email: string | null
@@ -42,23 +40,17 @@ export async function POST(req: NextRequest) {
   const perPage = 1000
 
   while (true) {
-    const { data: { users }, error: listErr } = await supabase.auth.admin.listUsers({
-      page,
-      perPage,
-    })
-
-    if (listErr) {
-      return NextResponse.json({ error: listErr.message }, { status: 500 })
-    }
+    const { data: { users }, error: listErr } = await supabase.auth.admin.listUsers({ page, perPage })
+    if (listErr) return NextResponse.json({ error: listErr.message }, { status: 500 })
 
     for (const u of users) {
       if (!coveredUserIds.has(u.id)) {
         rowsToInsert.push({
           user_id: u.id,
           email: u.email ?? null,
-          access_started_at: SAT_FORM1_LAUNCH_AT,
+          access_started_at: accessStartedAt,
           access_expires_at: accessExpiresAt,
-          reason: 'existing_user_grace_period',
+          reason: 'backfill_3_day_window',
         })
       }
     }
@@ -71,16 +63,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ inserted: 0, message: 'All users already have an access row.' })
   }
 
-  const { error: insertErr } = await supabase
-    .from('sat_form_1_access')
-    .insert(rowsToInsert)
+  const { error: insertErr } = await supabase.from('sat_form_1_access').insert(rowsToInsert)
+  if (insertErr) return NextResponse.json({ error: insertErr.message }, { status: 500 })
 
-  if (insertErr) {
-    return NextResponse.json({ error: insertErr.message }, { status: 500 })
-  }
-
-  return NextResponse.json({
-    inserted: rowsToInsert.length,
-    access_expires_at: accessExpiresAt,
-  })
+  return NextResponse.json({ inserted: rowsToInsert.length, access_expires_at: accessExpiresAt })
 }
