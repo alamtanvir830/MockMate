@@ -2192,6 +2192,30 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
           </div>
         )}
 
+        {/* Full Answer Key download — Form 1 only */}
+        {form.id === 'sat-form-1' && attemptIdRef.current && (
+          <div className="bg-white rounded-xl border border-slate-200 p-5 flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Full Answer Key</p>
+              <p className="text-[15px] font-bold text-slate-900 mb-1">Download Full Form 1 Answer Key PDF</p>
+              <p className="text-[12px] text-slate-500">
+                Printable answer key with every SAT Form 1 question — both adaptive Module 2 paths, correct answers, explanations, and visuals.
+              </p>
+            </div>
+            <a
+              href={`/premade/sat/form-1/results/${attemptIdRef.current}/full-answer-key`}
+              target="_blank"
+              rel="noreferrer"
+              className="shrink-0 flex items-center gap-1.5 bg-slate-900 hover:bg-slate-700 text-white text-[13px] font-semibold px-4 py-2.5 rounded-lg transition-colors whitespace-nowrap"
+            >
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+              </svg>
+              Open Printable Answer Key
+            </a>
+          </div>
+        )}
+
         {/* 5. Practice Prompts */}
         <PracticePromptsSection prompts={practicePrompts} hasMisses={hasMisses} />
 
