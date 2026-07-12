@@ -74,3 +74,7 @@ export function loadAllAttempts(): PremadeAttempt[] {
 export function loadAttempt(id: string): PremadeAttempt | null {
   return readStorage().find(a => a.id === id) ?? null
 }
+
+export function deleteAttempt(id: string): void {
+  writeStorage(readStorage().filter(a => a.id !== id))
+}

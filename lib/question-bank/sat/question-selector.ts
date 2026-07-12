@@ -111,6 +111,13 @@ export function loadAllQBResults(): import('../types').QBPracticeSetResult[] {
   } catch { return [] }
 }
 
+export function deleteQBResult(id: string): void {
+  if (typeof window === 'undefined') return
+  try {
+    localStorage.setItem(QB_RESULTS_KEY, JSON.stringify(loadAllQBResults().filter(r => r.id !== id)))
+  } catch { /* quota */ }
+}
+
 // Track seen question IDs per user session
 const QB_SEEN_KEY = 'mockmate_qb_seen_v1'
 

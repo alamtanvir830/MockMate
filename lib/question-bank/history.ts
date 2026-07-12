@@ -1,7 +1,7 @@
 // Unified QB history utility (client-side only via loadAllQBHistory)
 
-import { loadAllQBResults } from './sat/question-selector'
-import { loadAllMCATQBResults } from './mcat/question-selector'
+import { loadAllQBResults, deleteQBResult } from './sat/question-selector'
+import { loadAllMCATQBResults, deleteMCATQBResult } from './mcat/question-selector'
 import { rwQuestions } from './sat/rw-questions'
 import { mathQuestions } from './sat/math-questions'
 import { allMCATQBQuestions } from './mcat/index'

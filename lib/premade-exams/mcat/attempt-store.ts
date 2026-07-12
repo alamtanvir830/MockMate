@@ -40,3 +40,7 @@ export function loadAllMCATAttempts(): MCATAttempt[] {
 export function loadMCATAttempt(id: string): MCATAttempt | null {
   return readStorage().find(a => a.id === id) ?? null
 }
+
+export function deleteMCATAttempt(id: string): void {
+  writeStorage(readStorage().filter(a => a.id !== id))
+}

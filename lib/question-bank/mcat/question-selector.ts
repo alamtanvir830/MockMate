@@ -60,6 +60,13 @@ export function loadAllMCATQBResults(): MCATQBPracticeSetResult[] {
   } catch { return [] }
 }
 
+export function deleteMCATQBResult(id: string): void {
+  if (typeof window === 'undefined') return
+  try {
+    localStorage.setItem(MCAT_QB_RESULTS_KEY, JSON.stringify(loadAllMCATQBResults().filter(r => r.id !== id)))
+  } catch { /* quota */ }
+}
+
 export function getMCATSeenIds(): Set<string> {
   if (typeof window === 'undefined') return new Set()
   try {
