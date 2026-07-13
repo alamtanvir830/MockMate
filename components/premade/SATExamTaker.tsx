@@ -34,6 +34,7 @@ type SATPhase =
   | { tag: 'math_directions' }
   | { tag: 'math_break' }
   | { tag: 'module_review'; section: 'rw' | 'math'; slot: 'm1' | 'm2' }
+  | { tag: 'feedback' }
   | { tag: 'results' }
 
 type AnswerFilter = 'all' | 'incorrect' | 'unanswered' | 'rw' | 'math' | 'marked'
@@ -999,6 +1000,13 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
   const [calcOpen, setCalcOpen] = useState(false)
   const [refOpen, setRefOpen] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [feedbackRWM1, setFeedbackRWM1] = useState('')
+  const [feedbackRWM2, setFeedbackRWM2] = useState('')
+  const [feedbackMathM1, setFeedbackMathM1] = useState('')
+  const [feedbackMathM2, setFeedbackMathM2] = useState('')
+  const [feedbackTouched, setFeedbackTouched] = useState({ rwM1: false, rwM2: false, mathM1: false, mathM2: false })
+  const [feedbackSubmitting, setFeedbackSubmitting] = useState(false)
+  const [feedbackError, setFeedbackError] = useState('')
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const attemptIdRef = useRef<string>(initialAttempt?.id ?? '')
   const completedAtRef = useRef<string>(initialAttempt?.completedAt ?? '')
@@ -1331,6 +1339,9 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     setCalcOpen(false); setRefOpen(false)
     attemptIdRef.current = ''
     completedAtRef.current = ''
+    setFeedbackRWM1(''); setFeedbackRWM2(''); setFeedbackMathM1(''); setFeedbackMathM2('')
+    setFeedbackTouched({ rwM1: false, rwM2: false, mathM1: false, mathM2: false })
+    setFeedbackSubmitting(false); setFeedbackError('')
   }, [])
 
 
@@ -1769,7 +1780,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
       if (isFinal) {
         attemptIdRef.current = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
         completedAtRef.current = new Date().toISOString()
-        setPhase({ tag: 'results' })
+        setPhase({ tag: 'feedback' })
       } else if (phase.section === 'rw' && phase.slot === 'm1') {
         setPhase({ tag: 'rw_break' })
       } else if (phase.section === 'rw' && phase.slot === 'm2') {
@@ -1780,7 +1791,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     }
 
     const continueLabel = isFinal
-      ? 'Submit Test and See Results'
+      ? 'Continue to Module Feedback →'
       : phase.section === 'rw' && phase.slot === 'm1'
       ? 'Continue to Module 2 →'
       : phase.section === 'rw' && phase.slot === 'm2'
@@ -1853,24 +1864,137 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
 
               <button
                 onClick={handleContinue}
-                className={cn(
-                  'w-full font-semibold py-3 rounded-lg text-[14px] transition-colors',
-                  isFinal
-                    ? 'bg-green-600 hover:bg-green-700 text-white'
-                    : 'bg-[#1d4ed8] hover:bg-[#1e40af] text-white'
-                )}
+                className="w-full font-semibold py-3 rounded-lg text-[14px] transition-colors bg-[#1d4ed8] hover:bg-[#1e40af] text-white"
               >
                 {continueLabel}
               </button>
-              {!isFinal && (
-                <p className="text-[11px] text-slate-400 text-center mt-2">
-                  Once you continue, you cannot return to this module.
-                </p>
-              )}
+              <p className="text-[11px] text-slate-400 text-center mt-2">
+                Once you continue, you cannot return to this module.
+              </p>
             </div>
           </div>
         </div>
       </ExamWrapper>
+    )
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // PHASE: FEEDBACK
+  // ─────────────────────────────────────────────────────────────────────────
+  if (phase.tag === 'feedback') {
+    type FeedbackKey = 'rwM1' | 'rwM2' | 'mathM1' | 'mathM2'
+    const feedbackFields: { key: FeedbackKey; label: string; value: string; setter: (v: string) => void }[] = [
+      { key: 'rwM1',   label: 'Review Reading & Writing Module 1', value: feedbackRWM1,   setter: setFeedbackRWM1 },
+      { key: 'rwM2',   label: 'Review Reading & Writing Module 2', value: feedbackRWM2,   setter: setFeedbackRWM2 },
+      { key: 'mathM1', label: 'Review Math Module 1',              value: feedbackMathM1, setter: setFeedbackMathM1 },
+      { key: 'mathM2', label: 'Review Math Module 2',              value: feedbackMathM2, setter: setFeedbackMathM2 },
+    ]
+
+    const isFieldValid = (v: string) => v.trim().length >= 50
+    const allFeedbackValid = feedbackFields.every(f => isFieldValid(f.value))
+
+    const handleFeedbackSubmit = async () => {
+      setFeedbackTouched({ rwM1: true, rwM2: true, mathM1: true, mathM2: true })
+      if (!allFeedbackValid) return
+      setFeedbackSubmitting(true)
+      setFeedbackError('')
+      try {
+        const formNumber = parseInt(form.id.replace('sat-form-', ''), 10)
+        const res = await fetch('/api/sat/module-feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            formNumber,
+            localAttemptId:      attemptIdRef.current,
+            rwModule1Feedback:   feedbackRWM1.trim(),
+            rwModule2Feedback:   feedbackRWM2.trim(),
+            mathModule1Feedback: feedbackMathM1.trim(),
+            mathModule2Feedback: feedbackMathM2.trim(),
+            rwModule2Path:       rwM2Type,
+            mathModule2Path:     mathM2Type,
+          }),
+        })
+        if (!res.ok) {
+          const data = await res.json() as { error?: string }
+          setFeedbackError(data.error ?? 'Failed to submit. Please try again.')
+          return
+        }
+        setPhase({ tag: 'results' })
+      } catch {
+        setFeedbackError('Network error. Please check your connection and try again.')
+      } finally {
+        setFeedbackSubmitting(false)
+      }
+    }
+
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-start justify-center py-12 px-4">
+        <div className="w-full max-w-2xl">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8">
+            <h1 className="text-[22px] font-bold text-slate-900 mb-2">Before you submit your exam</h1>
+            <p className="text-[14px] text-slate-500 leading-relaxed mb-1">
+              Please leave a quick review of each module. Tell us what felt accurate, unclear, too easy, too hard, or confusing.
+            </p>
+            <p className="text-[12px] text-slate-400 mb-7">Each response must be at least 50 characters.</p>
+
+            <div className="space-y-6">
+              {feedbackFields.map(field => {
+                const count = field.value.trim().length
+                const touched = feedbackTouched[field.key]
+                const invalid = touched && count < 50
+                return (
+                  <div key={field.key}>
+                    <label className="block text-[13px] font-semibold text-slate-700 mb-1.5">
+                      {field.label}
+                    </label>
+                    <textarea
+                      value={field.value}
+                      onChange={e => field.setter(e.target.value)}
+                      onBlur={() => setFeedbackTouched(p => ({ ...p, [field.key]: true }))}
+                      placeholder="How accurate, clear, difficult, or confusing did this module feel?"
+                      rows={3}
+                      className={cn(
+                        'w-full rounded-lg border px-3 py-2.5 text-[13px] text-slate-800 resize-none focus:outline-none focus:ring-2 transition-colors',
+                        invalid
+                          ? 'bg-red-50 border-red-200 focus:ring-red-200'
+                          : 'bg-white border-slate-200 focus:ring-indigo-200'
+                      )}
+                    />
+                    <div className="flex items-center justify-between mt-1">
+                      {invalid
+                        ? <span className="text-[11px] text-red-700 font-medium">Minimum 50 characters required.</span>
+                        : <span />
+                      }
+                      <span className={cn('text-[11px] ml-auto', count >= 50 ? 'text-green-600' : 'text-slate-400')}>
+                        {count} / 50 characters
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            {feedbackError && (
+              <div className="mt-5 bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-[13px] text-red-700">
+                {feedbackError}
+              </div>
+            )}
+
+            <button
+              onClick={handleFeedbackSubmit}
+              disabled={feedbackSubmitting}
+              className={cn(
+                'mt-7 w-full font-semibold py-3 rounded-lg text-[14px] transition-colors',
+                allFeedbackValid && !feedbackSubmitting
+                  ? 'bg-green-600 hover:bg-green-700 text-white cursor-pointer'
+                  : 'bg-slate-100 text-slate-400 cursor-not-allowed'
+              )}
+            >
+              {feedbackSubmitting ? 'Submitting…' : 'Submit Feedback & View Results'}
+            </button>
+          </div>
+        </div>
+      </div>
     )
   }
 
