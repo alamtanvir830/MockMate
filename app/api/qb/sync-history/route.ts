@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { resolveUserIdentity } from '@/lib/supabase/resolve-user-identity'
 import { rwQuestions } from '@/lib/question-bank/sat/rw-questions'
 import { mathQuestions } from '@/lib/question-bank/sat/math-questions'
 import { allMCATQBQuestions } from '@/lib/question-bank/mcat'
@@ -70,6 +71,8 @@ export async function POST(req: NextRequest) {
     } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
 
+    const { user_name, user_email } = await resolveUserIdentity(supabase, user)
+
     const { satResults, mcatResults } = (await req.json()) as {
       satResults: QBPracticeSetResult[]
       mcatResults: MCATQBPracticeSetResult[]
@@ -128,6 +131,8 @@ export async function POST(req: NextRequest) {
         .insert({
           id: result.id,
           user_id: user.id,
+          user_name,
+          user_email,
           test: 'SAT',
           section: result.config.section ?? null,
           mode: result.config.mode,
@@ -213,6 +218,8 @@ export async function POST(req: NextRequest) {
         .insert({
           id: result.id,
           user_id: user.id,
+          user_name,
+          user_email,
           test: 'MCAT',
           section: result.config.section ?? null,
           mode: 'browse',
