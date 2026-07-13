@@ -54,21 +54,21 @@ export function UpgradeGate({
 
   if (compact) {
     return (
-      <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <div className="rounded-xl border border-amber-200 bg-amber-50 p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
         <div className="flex-1">
-          <p className="text-[13px] font-semibold text-indigo-900">{title}</p>
-          <p className="text-[12px] text-indigo-700 mt-0.5">{description}</p>
+          <p className="text-[13px] font-semibold text-amber-900">{title}</p>
+          <p className="text-[12px] text-amber-700 mt-0.5">{description}</p>
           {error && <p className="text-[11px] text-red-600 mt-1">{error}</p>}
         </div>
         <div className="flex flex-col items-end gap-1 shrink-0">
           <button
             onClick={handleUnlock}
             disabled={loading}
-            className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-semibold text-[13px] px-4 py-2 rounded-lg transition-colors whitespace-nowrap"
+            className="bg-amber-500 hover:bg-amber-600 disabled:opacity-60 text-white font-semibold text-[13px] px-4 py-2 rounded-lg transition-colors whitespace-nowrap"
           >
             {loading ? 'Redirecting…' : 'Unlock SAT Access for $9.99'}
           </button>
-          <p className="text-[10px] text-indigo-400">Secure checkout powered by Stripe.</p>
+          <p className="text-[10px] text-amber-500">Secure checkout powered by Stripe.</p>
         </div>
       </div>
     )
@@ -78,14 +78,15 @@ export function UpgradeGate({
     <div className="flex items-center justify-center min-h-[50vh] px-4">
       <div className="max-w-md w-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         {/* Header */}
-        <div className="bg-gradient-to-br from-indigo-600 to-indigo-800 px-6 py-8 text-center">
+        <div className="bg-gradient-to-br from-amber-500 via-yellow-500 to-amber-600 px-6 py-8 text-center">
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white/20">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-7 w-7 text-white">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.562.562 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
             </svg>
           </div>
+          <p className="text-[11px] font-semibold text-white/70 tracking-widest uppercase mb-2">SAT Premium</p>
           <h2 className="text-xl font-bold text-white">{title}</h2>
-          <p className="text-indigo-200 text-[13px] mt-2 leading-relaxed">{description}</p>
+          <p className="text-amber-100 text-[13px] mt-2 leading-relaxed">{description}</p>
         </div>
 
         {/* Features */}
@@ -111,9 +112,9 @@ export function UpgradeGate({
 
         {/* Price + CTA */}
         <div className="px-6 pb-6 space-y-3">
-          <div className="flex items-baseline gap-2">
+          <div className="flex items-baseline gap-2 flex-wrap">
             <span className="text-3xl font-bold text-slate-900">$9.99</span>
-            <span className="text-[13px] text-slate-400">one-time payment</span>
+            <span className="text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200 rounded-full px-2.5 py-0.5">One-time early access price</span>
           </div>
           {error && (
             <p className="text-[12px] text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>
@@ -123,7 +124,7 @@ export function UpgradeGate({
               type="checkbox"
               checked={acknowledged}
               onChange={e => setAcknowledged(e.target.checked)}
-              className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-indigo-600"
+              className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-amber-500"
             />
             <span className="text-[11px] text-slate-600 leading-relaxed">
               I understand that MockMate is an independent SAT-style practice platform and is not affiliated with, endorsed by, or sponsored by College Board.
@@ -132,7 +133,7 @@ export function UpgradeGate({
           <button
             onClick={handleUnlock}
             disabled={loading || !acknowledged}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-[15px] py-3 rounded-xl transition-colors"
+            className="w-full bg-amber-500 hover:bg-amber-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-[15px] py-3 rounded-xl transition-colors"
           >
             {loading ? 'Redirecting to Stripe…' : 'Unlock Lifetime SAT Access for $9.99'}
           </button>
@@ -144,7 +145,7 @@ export function UpgradeGate({
           </p>
           <p className="text-center text-[11px] text-slate-400">
             Have questions?{' '}
-            <Link href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">
+            <Link href="mailto:ranvi.contact@gmail.com" className="text-amber-600 hover:underline">
               ranvi.contact@gmail.com
             </Link>
           </p>
