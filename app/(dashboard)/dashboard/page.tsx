@@ -10,7 +10,8 @@ import { seedDemoExam, seedDemoGroupExam } from '@/lib/demo/seed-demo-exam'
 import { QBHistorySection } from '@/components/dashboard/QBHistorySection'
 import { isMockMateAdmin } from '@/lib/auth/admin'
 import { EmailVerificationBanner } from '@/components/auth/EmailVerificationBanner'
-import { getOrCreateForm1Access, formatCountdown } from '@/lib/premade-exams/sat/form1-access'
+import { getOrCreateForm1Access } from '@/lib/premade-exams/sat/form1-access'
+import { SatForm1BannerCountdown, SatForm1BadgeCountdown } from '@/components/sat/SatForm1Countdown'
 import type { Exam } from '@/types'
 
 type SatForm1CardState =
@@ -20,20 +21,6 @@ type SatForm1CardState =
   | { tag: 'expired' }
   | { tag: 'active'; expiresAt: string }
   | { tag: 'default' }
-
-function satCountdownBannerText(expiresAt: string): string {
-  const msLeft = new Date(expiresAt).getTime() - Date.now()
-  if (msLeft <= 0) return 'Free SAT Form 1 access expired'
-  const totalHours = msLeft / (1000 * 60 * 60)
-  const days = Math.floor(totalHours / 24)
-  const hours = Math.floor(totalHours % 24)
-  if (days >= 1) {
-    const hoursStr = hours > 0 ? ` ${hours}h` : ''
-    return `Limited time: ${days}d${hoursStr} left to complete your free SAT Form 1`
-  }
-  if (hours >= 1) return `Limited time: ${hours}h left to complete your free SAT Form 1`
-  return 'Limited time: expires very soon'
-}
 
 export const metadata: Metadata = { title: 'Dashboard' }
 
@@ -203,7 +190,7 @@ export default async function DashboardPage() {
               <div className="min-w-0">
                 <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-1">Limited Time</p>
                 <p className="text-[17px] font-bold text-red-900 leading-snug mb-1">
-                  You have {formatCountdown({ access_expires_at: satForm1State.expiresAt })} to complete SAT Form 1
+                  <SatForm1BannerCountdown expiresAt={satForm1State.expiresAt} />
                 </p>
                 <p className="text-[12px] text-red-700 leading-relaxed">
                   Your free SAT Form 1 access is limited-time. Complete the exam before the timer expires to keep your results.
@@ -355,7 +342,7 @@ export default async function DashboardPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
                   </svg>
                   <p className="text-xs font-semibold text-red-700 leading-snug">
-                    {satCountdownBannerText(satForm1State.expiresAt)}
+                    Limited time: <SatForm1BadgeCountdown expiresAt={satForm1State.expiresAt} /> to complete your free SAT Form 1
                   </p>
                 </div>
               )}

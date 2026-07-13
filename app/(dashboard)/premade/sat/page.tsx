@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { isMockMateAdmin } from '@/lib/auth/admin'
-import { getOrCreateForm1Access, isForm1Expired, formatCountdown } from '@/lib/premade-exams/sat/form1-access'
+import { getOrCreateForm1Access, isForm1Expired } from '@/lib/premade-exams/sat/form1-access'
+import { SatForm1BadgeCountdown } from '@/components/sat/SatForm1Countdown'
 import { getEntitlements } from '@/lib/entitlements'
 
 const cardDetails = [
@@ -50,10 +51,7 @@ export default async function SATPremadePage() {
     ? `/premade/sat/form-1/results/${form1ResultsAttemptId}`
     : '/premade/sat/form-1'
 
-  const countdown =
-    !form1Completed && !form1Expired && form1AccessExpiresAt
-      ? formatCountdown({ access_expires_at: form1AccessExpiresAt })
-      : null
+  const showCountdownBadge = !form1Completed && !form1Expired && form1AccessExpiresAt !== null
 
   return (
     <div className="max-w-5xl mx-auto py-10 px-4">
@@ -189,12 +187,12 @@ export default async function SATPremadePage() {
               <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-indigo-600">1</span>
               </div>
-              {countdown ? (
+              {showCountdownBadge ? (
                 <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
                   <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-2.5 w-2.5 shrink-0">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
                   </svg>
-                  {countdown} left
+                  <SatForm1BadgeCountdown expiresAt={form1AccessExpiresAt!} />
                 </span>
               ) : (
                 <span className="inline-flex items-center rounded-full bg-sky-50 border border-sky-200 px-2 py-0.5 text-[10px] font-semibold text-sky-700">
