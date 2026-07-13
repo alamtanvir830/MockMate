@@ -7,50 +7,164 @@ export const f5MathModule1Questions: MathQuestion[] = [
     moduleId: 'f5-math-module-1',
     domain: 'Algebra',
     skill: 'Linear equations in one variable',
-    difficulty: 'medium',
+    difficulty: 'easy',
     type: 'multiple_choice',
     question:
-      'A food truck charges a flat service fee of $5 plus $3.50 per taco ordered. A customer paid $26 in total. How many tacos did the customer order?',
+      'If 2x + 6 = 14, what is the value of x?',
     choices: [
-      { label: 'A', text: '5' },
-      { label: 'B', text: '6' },
-      { label: 'C', text: '7' },
-      { label: 'D', text: '8' },
+      { label: 'A', text: '3' },
+      { label: 'B', text: '4' },
+      { label: 'C', text: '5' },
+      { label: 'D', text: '10' },
     ],
     correctAnswer: 'B',
     explanation:
-      '5 + 3.50t = 26 → 3.50t = 21 → t = 6. The customer ordered 6 tacos.',
+      'Subtract 6 from both sides: 2x = 8. Divide both sides by 2: x = 4.',
     wrongAnswerExplanations: {
-      A: '5 + 3.50(5) = 22.50, not 26.',
-      C: '5 + 3.50(7) = 29.50, not 26.',
-      D: '5 + 3.50(8) = 33, not 26.',
+      A: 'Choice A is incorrect. 2(3) + 6 = 12, not 14.',
+      C: 'Choice C is incorrect. 2(5) + 6 = 16, not 14.',
+      D: 'Choice D is incorrect. 10 results from dividing 14 by 2 without first subtracting 6.',
     },
   },
 
   {
-    id: 'sat-f5-math-m1-q09',
+    id: 'sat-f5-math-m1-q02',
     section: 'math',
     moduleId: 'f5-math-module-1',
-    domain: 'Advanced Math',
-    skill: 'Quadratic equations',
-    difficulty: 'medium',
+    domain: 'Algebra',
+    skill: 'Linear equations in two variables',
+    difficulty: 'easy',
     type: 'multiple_choice',
     question:
-      'What are the solutions to x² − 7x + 12 = 0?',
+      'A line has the equation y = 3x + 5. What is the y-intercept of the line?',
     choices: [
-      { label: 'A', text: 'x = 2 and x = 6' },
-      { label: 'B', text: 'x = 3 and x = 4' },
-      { label: 'C', text: 'x = −3 and x = −4' },
-      { label: 'D', text: 'x = 1 and x = 12' },
+      { label: 'A', text: '3' },
+      { label: 'B', text: '5' },
+      { label: 'C', text: '8' },
+      { label: 'D', text: '15' },
     ],
     correctAnswer: 'B',
     explanation:
-      'Factor: x² − 7x + 12 = (x − 3)(x − 4) = 0. So x = 3 or x = 4. Check: 3 + 4 = 7 ✓ and 3 × 4 = 12 ✓.',
+      'In slope-intercept form y = mx + b, the y-intercept is the constant term b. Here b = 5, so the y-intercept is 5.',
     wrongAnswerExplanations: {
-      A: '2 + 6 = 8 ≠ 7, and 2 × 6 = 12. The product is correct but the sum is not.',
-      C: 'These give (x + 3)(x + 4) = x² + 7x + 12, which has a positive middle term, not negative.',
-      D: '1 + 12 = 13 ≠ 7. Neither condition is satisfied.',
+      A: 'Choice A is incorrect. 3 is the slope (the coefficient of x), not the y-intercept.',
+      C: 'Choice C is incorrect. 8 is the sum of the slope and y-intercept, not the y-intercept itself.',
+      D: 'Choice D is incorrect. 15 results from multiplying the slope by the y-intercept, which has no meaning here.',
     },
+  },
+
+  {
+    id: 'sat-f5-math-m1-q03',
+    section: 'math',
+    moduleId: 'f5-math-module-1',
+    domain: 'Algebra',
+    skill: 'Linear functions',
+    difficulty: 'easy',
+    type: 'multiple_choice',
+    stimulus:
+      'A dog walker charges a flat fee of $10 per visit plus $5 for each additional dog walked. The total charge T, in dollars, for walking d dogs in a single visit is given by T(d) = 5d + 10.',
+    question:
+      'What is the total charge for walking 4 dogs in a single visit?',
+    choices: [
+      { label: 'A', text: '$20' },
+      { label: 'B', text: '$25' },
+      { label: 'C', text: '$30' },
+      { label: 'D', text: '$40' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      'Substitute d = 4 into the function: T(4) = 5(4) + 10 = 20 + 10 = 30. The total charge is $30.',
+    wrongAnswerExplanations: {
+      A: 'Choice A is incorrect. $20 equals 5(4) without adding the flat fee of $10.',
+      B: 'Choice B is incorrect. $25 results from computing 5(3) + 10, using d = 3 instead of d = 4.',
+      D: 'Choice D is incorrect. $40 results from computing 5(4) + 20, using an incorrect flat fee of $20.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m1-q04',
+    section: 'math',
+    moduleId: 'f5-math-module-1',
+    domain: 'Algebra',
+    skill: 'Systems of two linear equations in two variables',
+    difficulty: 'easy',
+    type: 'multiple_choice',
+    question:
+      'What is the value of y in the system of equations below?\n\nx + y = 9\nx = 3',
+    choices: [
+      { label: 'A', text: '3' },
+      { label: 'B', text: '6' },
+      { label: 'C', text: '9' },
+      { label: 'D', text: '12' },
+    ],
+    correctAnswer: 'B',
+    explanation:
+      'Substitute x = 3 into the first equation: 3 + y = 9. Subtract 3 from both sides: y = 6.',
+    wrongAnswerExplanations: {
+      A: 'Choice A is incorrect. 3 is the value of x, not y.',
+      C: 'Choice C is incorrect. 9 is the sum x + y, not the value of y alone.',
+      D: 'Choice D is incorrect. 12 results from adding x to the sum instead of subtracting.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m1-q05',
+    section: 'math',
+    moduleId: 'f5-math-module-1',
+    domain: 'Algebra',
+    skill: 'Systems of two linear equations in two variables',
+    difficulty: 'medium',
+    type: 'grid_in',
+    question:
+      'In the system of equations below, what is the value of y?\n\n3x + 2y = 20\nx = 4',
+    correctAnswer: '4',
+    acceptableAnswers: ['4'],
+    explanation:
+      'Substitute x = 4 into the first equation: 3(4) + 2y = 20 → 12 + 2y = 20 → 2y = 8 → y = 4.',
+  },
+
+  {
+    id: 'sat-f5-math-m1-q06',
+    section: 'math',
+    moduleId: 'f5-math-module-1',
+    domain: 'Algebra',
+    skill: 'Linear inequalities in one or two variables',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question:
+      'Which of the following is the solution set of 3x − 7 > 8?',
+    choices: [
+      { label: 'A', text: 'x < 5' },
+      { label: 'B', text: 'x > 3' },
+      { label: 'C', text: 'x > 5' },
+      { label: 'D', text: 'x < −5' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      '3x − 7 > 8 → 3x > 15 → x > 5.',
+    wrongAnswerExplanations: {
+      A: 'The inequality sign is flipped incorrectly; there is no division by a negative number here.',
+      B: '3x > 15 gives x > 5, not x > 3. Dividing 15 by 3 yields 5.',
+      D: 'The inequality direction is wrong and the value is negative, which cannot result from adding 7 and dividing by 3.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m1-q08',
+    section: 'math',
+    moduleId: 'f5-math-module-1',
+    domain: 'Algebra',
+    skill: 'Linear functions',
+    difficulty: 'medium',
+    type: 'grid_in',
+    stimulus:
+      'A plumber charges a fixed call-out fee plus an hourly rate. After 2 hours of work, the total charge is $130. After 5 hours of work, the total charge is $250.',
+    question:
+      'What is the plumber\'s fixed call-out fee, in dollars?',
+    correctAnswer: '50',
+    acceptableAnswers: ['50'],
+    explanation:
+      'Let f be the fixed fee and r be the hourly rate. From the two data points: f + 2r = 130 and f + 5r = 250. Subtracting the first from the second: 3r = 120 → r = 40. Substituting back: f + 2(40) = 130 → f + 80 = 130 → f = 50.',
   },
 
   {
@@ -80,58 +194,6 @@ export const f5MathModule1Questions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m1-q02',
-    section: 'math',
-    moduleId: 'f5-math-module-1',
-    domain: 'Algebra',
-    skill: 'Linear equations in two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question:
-      'A line passes through the points (2, 1) and (8, 13). What is the slope of the line?',
-    choices: [
-      { label: 'A', text: '1' },
-      { label: 'B', text: '2' },
-      { label: 'C', text: '3' },
-      { label: 'D', text: '4' },
-    ],
-    correctAnswer: 'B',
-    explanation:
-      'slope = (13 − 1) / (8 − 2) = 12 / 6 = 2.',
-    wrongAnswerExplanations: {
-      A: 'This would require a rise of 6 over a run of 6, but the rise is 12.',
-      C: 'This would require a rise of 18 over a run of 6, but the rise is 12.',
-      D: 'This would require a rise of 24 over a run of 6, but the rise is 12.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m1-q10',
-    section: 'math',
-    moduleId: 'f5-math-module-1',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question:
-      'The function f(x) = −2x² + 8x − 3 has a graph that is a parabola. Which of the following best describes the parabola?',
-    choices: [
-      { label: 'A', text: 'Opens upward with a minimum value' },
-      { label: 'B', text: 'Opens downward with a maximum value' },
-      { label: 'C', text: 'Opens upward with a maximum value' },
-      { label: 'D', text: 'Opens downward with a minimum value' },
-    ],
-    correctAnswer: 'B',
-    explanation:
-      'The leading coefficient is −2, which is negative. A negative leading coefficient means the parabola opens downward, so it has a maximum value (at the vertex), not a minimum.',
-    wrongAnswerExplanations: {
-      A: 'A parabola opens upward only when the leading coefficient is positive. Here it is −2.',
-      C: 'A parabola that opens upward has a minimum, not a maximum.',
-      D: 'A downward-opening parabola has a maximum value at the vertex, not a minimum.',
-    },
-  },
-
-  {
     id: 'sat-f5-math-m1-q17',
     section: 'math',
     moduleId: 'f5-math-module-1',
@@ -154,60 +216,6 @@ export const f5MathModule1Questions: MathQuestion[] = [
       B: '$72 would result from applying a net 10% discount (20% − 10% = 10%), but the operations must be applied sequentially, not combined.',
       C: '$74.40 is incorrect. The second increase is 10% of the discounted price ($64), not 10% of the original.',
       D: '$78 = $80 × 0.975, which does not correspond to either operation correctly.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m1-q03',
-    section: 'math',
-    moduleId: 'f5-math-module-1',
-    domain: 'Algebra',
-    skill: 'Linear functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    stimulus:
-      'A car rental company charges customers based on the number of miles driven. The total cost C, in dollars, is modeled by the function C(m) = 0.25m + 40, where m is the number of miles driven.',
-    question:
-      'What is the best interpretation of the value 0.25 in this context?',
-    choices: [
-      { label: 'A', text: 'The flat daily rental fee is $0.25.' },
-      { label: 'B', text: 'The cost increases by $0.25 for each additional mile driven.' },
-      { label: 'C', text: 'The total cost is $0.25 when no miles are driven.' },
-      { label: 'D', text: 'The car can travel 0.25 miles per dollar spent.' },
-    ],
-    correctAnswer: 'B',
-    explanation:
-      'In the linear function C(m) = 0.25m + 40, the coefficient of m is the rate of change. It represents the additional cost per mile: $0.25 per mile driven.',
-    wrongAnswerExplanations: {
-      A: 'The flat daily fee is the constant term, $40, not 0.25.',
-      C: 'When m = 0, C(0) = 40, not 0.25.',
-      D: 'The slope gives cost per mile (dollars per mile), not miles per dollar.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m1-q11',
-    section: 'math',
-    moduleId: 'f5-math-module-1',
-    domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question:
-      'Which of the following is equivalent to (x − 3)(x + 5) + 2x?',
-    choices: [
-      { label: 'A', text: 'x² + 4x − 15' },
-      { label: 'B', text: 'x² − 4x − 15' },
-      { label: 'C', text: 'x² + 4x + 15' },
-      { label: 'D', text: 'x² − 2x − 15' },
-    ],
-    correctAnswer: 'A',
-    explanation:
-      'Expand (x − 3)(x + 5) = x² + 5x − 3x − 15 = x² + 2x − 15. Then add 2x: x² + 2x − 15 + 2x = x² + 4x − 15.',
-    wrongAnswerExplanations: {
-      B: 'x² − 4x − 15 would require subtracting 2x rather than adding it.',
-      C: 'The constant term −15 comes from (−3)(5) = −15, not +15.',
-      D: 'x² − 2x − 15 does not include the additional +2x from the outside term.',
     },
   },
 
@@ -240,58 +248,6 @@ export const f5MathModule1Questions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m1-q04',
-    section: 'math',
-    moduleId: 'f5-math-module-1',
-    domain: 'Algebra',
-    skill: 'Systems of two linear equations in two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question:
-      'What is the x-coordinate of the solution to the system of equations below?\n\n2x + y = 11\nx − y = 1',
-    choices: [
-      { label: 'A', text: '2' },
-      { label: 'B', text: '3' },
-      { label: 'C', text: '4' },
-      { label: 'D', text: '5' },
-    ],
-    correctAnswer: 'C',
-    explanation:
-      'Adding the two equations: (2x + y) + (x − y) = 11 + 1 → 3x = 12 → x = 4.',
-    wrongAnswerExplanations: {
-      A: 'If x = 2, then 2(2) + y = 11 gives y = 7, but x − y = 2 − 7 = −5 ≠ 1.',
-      B: 'If x = 3, then 2(3) + y = 11 gives y = 5, but x − y = 3 − 5 = −2 ≠ 1.',
-      D: 'If x = 5, then 2(5) + y = 11 gives y = 1, but x − y = 5 − 1 = 4 ≠ 1.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m1-q12',
-    section: 'math',
-    moduleId: 'f5-math-module-1',
-    domain: 'Advanced Math',
-    skill: 'Quadratic equations',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question:
-      'For what values of k does the equation x² − 6x + k = 0 have two distinct real solutions?',
-    choices: [
-      { label: 'A', text: 'k < 9' },
-      { label: 'B', text: 'k > 9' },
-      { label: 'C', text: 'k = 9' },
-      { label: 'D', text: 'k < −9' },
-    ],
-    correctAnswer: 'A',
-    explanation:
-      'For two distinct real solutions, the discriminant must be positive: b² − 4ac > 0. Here a = 1, b = −6, c = k. So (−6)² − 4(1)(k) > 0 → 36 − 4k > 0 → 4k < 36 → k < 9.',
-    wrongAnswerExplanations: {
-      B: 'If k > 9, the discriminant 36 − 4k < 0, meaning no real solutions exist.',
-      C: 'If k = 9, the discriminant equals 0, which gives exactly one repeated solution, not two distinct ones.',
-      D: 'k < −9 is a subset of k < 9 and too restrictive; any k < 9 (not just k < −9) gives two solutions.',
-    },
-  },
-
-  {
     id: 'sat-f5-math-m1-q19',
     section: 'math',
     moduleId: 'f5-math-module-1',
@@ -310,19 +266,81 @@ export const f5MathModule1Questions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m1-q05',
+    id: 'sat-f5-math-m1-q09',
     section: 'math',
     moduleId: 'f5-math-module-1',
-    domain: 'Algebra',
-    skill: 'Systems of two linear equations in two variables',
+    domain: 'Advanced Math',
+    skill: 'Quadratic equations',
     difficulty: 'medium',
-    type: 'grid_in',
+    type: 'multiple_choice',
     question:
-      'In the system of equations below, what is the value of y?\n\n3x + 2y = 20\nx = 4',
-    correctAnswer: '4',
-    acceptableAnswers: ['4'],
+      'What are the solutions to x² − 7x + 12 = 0?',
+    choices: [
+      { label: 'A', text: 'x = 2 and x = 6' },
+      { label: 'B', text: 'x = 3 and x = 4' },
+      { label: 'C', text: 'x = −3 and x = −4' },
+      { label: 'D', text: 'x = 1 and x = 12' },
+    ],
+    correctAnswer: 'B',
     explanation:
-      'Substitute x = 4 into the first equation: 3(4) + 2y = 20 → 12 + 2y = 20 → 2y = 8 → y = 4.',
+      'Factor: x² − 7x + 12 = (x − 3)(x − 4) = 0. So x = 3 or x = 4. Check: 3 + 4 = 7 ✓ and 3 × 4 = 12 ✓.',
+    wrongAnswerExplanations: {
+      A: '2 + 6 = 8 ≠ 7, and 2 × 6 = 12. The product is correct but the sum is not.',
+      C: 'These give (x + 3)(x + 4) = x² + 7x + 12, which has a positive middle term, not negative.',
+      D: '1 + 12 = 13 ≠ 7. Neither condition is satisfied.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m1-q10',
+    section: 'math',
+    moduleId: 'f5-math-module-1',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear functions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question:
+      'The function f(x) = −2x² + 8x − 3 has a graph that is a parabola. Which of the following best describes the parabola?',
+    choices: [
+      { label: 'A', text: 'Opens upward with a minimum value' },
+      { label: 'B', text: 'Opens downward with a maximum value' },
+      { label: 'C', text: 'Opens upward with a maximum value' },
+      { label: 'D', text: 'Opens downward with a minimum value' },
+    ],
+    correctAnswer: 'B',
+    explanation:
+      'The leading coefficient is −2, which is negative. A negative leading coefficient means the parabola opens downward, so it has a maximum value (at the vertex), not a minimum.',
+    wrongAnswerExplanations: {
+      A: 'A parabola opens upward only when the leading coefficient is positive. Here it is −2.',
+      C: 'A parabola that opens upward has a minimum, not a maximum.',
+      D: 'A downward-opening parabola has a maximum value at the vertex, not a minimum.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m1-q11',
+    section: 'math',
+    moduleId: 'f5-math-module-1',
+    domain: 'Advanced Math',
+    skill: 'Equivalent expressions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question:
+      'Which of the following is equivalent to (x − 3)(x + 5) + 2x?',
+    choices: [
+      { label: 'A', text: 'x² + 4x − 15' },
+      { label: 'B', text: 'x² − 4x − 15' },
+      { label: 'C', text: 'x² + 4x + 15' },
+      { label: 'D', text: 'x² − 2x − 15' },
+    ],
+    correctAnswer: 'A',
+    explanation:
+      'Expand (x − 3)(x + 5) = x² + 5x − 3x − 15 = x² + 2x − 15. Then add 2x: x² + 2x − 15 + 2x = x² + 4x − 15.',
+    wrongAnswerExplanations: {
+      B: 'x² − 4x − 15 would require subtracting 2x rather than adding it.',
+      C: 'The constant term −15 comes from (−3)(5) = −15, not +15.',
+      D: 'x² − 2x − 15 does not include the additional +2x from the outside term.',
+    },
   },
 
   {
@@ -339,60 +357,6 @@ export const f5MathModule1Questions: MathQuestion[] = [
     acceptableAnswers: ['3'],
     explanation:
       'The x-coordinate of the vertex is given by x = −b/(2a). Here a = 2, b = −12. So x = −(−12)/(2·2) = 12/4 = 3.',
-  },
-
-  {
-    id: 'sat-f5-math-m1-q20',
-    section: 'math',
-    moduleId: 'f5-math-module-1',
-    domain: 'Geometry and Trigonometry',
-    skill: 'Lines, angles, and triangles',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    stimulus:
-      'Two parallel lines are cut by a transversal. One of the interior angles formed on the same side of the transversal measures 65°.',
-    question:
-      'What is the measure of the co-interior angle (same-side interior angle) on the other parallel line, in degrees?',
-    choices: [
-      { label: 'A', text: '25°' },
-      { label: 'B', text: '65°' },
-      { label: 'C', text: '115°' },
-      { label: 'D', text: '130°' },
-    ],
-    correctAnswer: 'C',
-    explanation:
-      'Co-interior angles (also called same-side interior or consecutive interior angles) are supplementary when lines are parallel. So the other angle = 180° − 65° = 115°.',
-    wrongAnswerExplanations: {
-      A: '25° = 90° − 65°, which applies to complementary angles, not co-interior angles.',
-      B: '65° would be the alternate interior angle, which is equal, not the co-interior angle.',
-      D: '130° = 2 × 65°, which has no geometric basis here.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m1-q06',
-    section: 'math',
-    moduleId: 'f5-math-module-1',
-    domain: 'Algebra',
-    skill: 'Linear inequalities in one or two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question:
-      'Which of the following is the solution set of 3x − 7 > 8?',
-    choices: [
-      { label: 'A', text: 'x < 5' },
-      { label: 'B', text: 'x > 3' },
-      { label: 'C', text: 'x > 5' },
-      { label: 'D', text: 'x < −5' },
-    ],
-    correctAnswer: 'C',
-    explanation:
-      '3x − 7 > 8 → 3x > 15 → x > 5.',
-    wrongAnswerExplanations: {
-      A: 'The inequality sign is flipped incorrectly; there is no division by a negative number here.',
-      B: '3x > 15 gives x > 5, not x > 3. Dividing 15 by 3 yields 5.',
-      D: 'The inequality direction is wrong and the value is negative, which cannot result from adding 7 and dividing by 3.',
-    },
   },
 
   {
@@ -424,6 +388,34 @@ export const f5MathModule1Questions: MathQuestion[] = [
   },
 
   {
+    id: 'sat-f5-math-m1-q20',
+    section: 'math',
+    moduleId: 'f5-math-module-1',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Lines, angles, and triangles',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    stimulus:
+      'Two parallel lines are cut by a transversal. One of the interior angles formed on the same side of the transversal measures 65°.',
+    question:
+      'What is the measure of the co-interior angle (same-side interior angle) on the other parallel line, in degrees?',
+    choices: [
+      { label: 'A', text: '25°' },
+      { label: 'B', text: '65°' },
+      { label: 'C', text: '115°' },
+      { label: 'D', text: '130°' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      'Co-interior angles (also called same-side interior or consecutive interior angles) are supplementary when lines are parallel. So the other angle = 180° − 65° = 115°.',
+    wrongAnswerExplanations: {
+      A: '25° = 90° − 65°, which applies to complementary angles, not co-interior angles.',
+      B: '65° would be the alternate interior angle, which is equal, not the co-interior angle.',
+      D: '130° = 2 × 65°, which has no geometric basis here.',
+    },
+  },
+
+  {
     id: 'sat-f5-math-m1-q21',
     section: 'math',
     moduleId: 'f5-math-module-1',
@@ -446,6 +438,32 @@ export const f5MathModule1Questions: MathQuestion[] = [
       A: '13² = 169 ≠ 225. A 9-12-13 triangle is not a right triangle.',
       C: '17² = 289 ≠ 225.',
       D: '21² = 441 ≠ 225. This is too large.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m1-q22',
+    section: 'math',
+    moduleId: 'f5-math-module-1',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Area and volume',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question:
+      'A cylinder has a radius of r and a height equal to twice its radius. A cone has the same radius r and the same height as the cylinder. What fraction of the cylinder\'s volume is the cone\'s volume?',
+    choices: [
+      { label: 'A', text: '1/6' },
+      { label: 'B', text: '1/4' },
+      { label: 'C', text: '1/3' },
+      { label: 'D', text: '2/3' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      'Height of both shapes: h = 2r. Volume of cylinder: V_cyl = πr²h = πr²(2r) = 2πr³. Volume of cone: V_cone = (1/3)πr²h = (1/3)πr²(2r) = (2/3)πr³. Fraction = V_cone / V_cyl = (2πr³/3) / (2πr³) = 1/3.',
+    wrongAnswerExplanations: {
+      A: 'Choice A is incorrect. 1/6 would result from dividing the cone formula (1/3)πr²h by 2, but the denominator is the full cylinder volume 2πr³, not πr³.',
+      B: 'Choice B is incorrect. 1/4 does not correspond to either volume formula. The cone\'s volume is always 1/3 of the volume of a cylinder with the same base and height.',
+      D: 'Choice D is incorrect. 2/3 is the ratio of a sphere\'s volume to its circumscribed cylinder\'s volume — not the cone-to-cylinder ratio here.',
     },
   },
 
@@ -476,6 +494,32 @@ export const f5MathModule1Questions: MathQuestion[] = [
   },
 
   {
+    id: 'sat-f5-math-m1-q12',
+    section: 'math',
+    moduleId: 'f5-math-module-1',
+    domain: 'Advanced Math',
+    skill: 'Quadratic equations',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question:
+      'For what values of k does the equation x² − 6x + k = 0 have two distinct real solutions?',
+    choices: [
+      { label: 'A', text: 'k < 9' },
+      { label: 'B', text: 'k > 9' },
+      { label: 'C', text: 'k = 9' },
+      { label: 'D', text: 'k < −9' },
+    ],
+    correctAnswer: 'A',
+    explanation:
+      'For two distinct real solutions, the discriminant must be positive: b² − 4ac > 0. Here a = 1, b = −6, c = k. So (−6)² − 4(1)(k) > 0 → 36 − 4k > 0 → 4k < 36 → k < 9.',
+    wrongAnswerExplanations: {
+      B: 'If k > 9, the discriminant 36 − 4k < 0, meaning no real solutions exist.',
+      C: 'If k = 9, the discriminant equals 0, which gives exactly one repeated solution, not two distinct ones.',
+      D: 'k < −9 is a subset of k < 9 and too restrictive; any k < 9 (not just k < −9) gives two solutions.',
+    },
+  },
+
+  {
     id: 'sat-f5-math-m1-q15',
     section: 'math',
     moduleId: 'f5-math-module-1',
@@ -499,49 +543,5 @@ export const f5MathModule1Questions: MathQuestion[] = [
       C: 'The numerator after canceling is (x + 3), not (x − 3).',
       D: 'The denominator after canceling is (x + 2), not (x − 3).',
     },
-  },
-
-  {
-    id: 'sat-f5-math-m1-q22',
-    section: 'math',
-    moduleId: 'f5-math-module-1',
-    domain: 'Geometry and Trigonometry',
-    skill: 'Area and volume',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question:
-      'A rectangle has a length of (3x + 2) and a width of 4. Which expression represents the area of the rectangle?',
-    choices: [
-      { label: 'A', text: '12x + 2' },
-      { label: 'B', text: '12x + 6' },
-      { label: 'C', text: '12x + 8' },
-      { label: 'D', text: '7x + 6' },
-    ],
-    correctAnswer: 'C',
-    explanation:
-      'Area = length × width = 4(3x + 2) = 12x + 8.',
-    wrongAnswerExplanations: {
-      A: '4(3x + 2) = 12x + 8, not 12x + 2. The constant term must be 4 × 2 = 8.',
-      B: '12x + 6 would result from 3(4x + 2) or a different product; 4 × 2 = 8 not 6.',
-      D: '7x + 6 appears to add rather than multiply the dimensions.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m1-q08',
-    section: 'math',
-    moduleId: 'f5-math-module-1',
-    domain: 'Algebra',
-    skill: 'Linear functions',
-    difficulty: 'medium',
-    type: 'grid_in',
-    stimulus:
-      'A plumber charges a fixed call-out fee plus an hourly rate. After 2 hours of work, the total charge is $130. After 5 hours of work, the total charge is $250.',
-    question:
-      'What is the plumber\'s fixed call-out fee, in dollars?',
-    correctAnswer: '50',
-    acceptableAnswers: ['50'],
-    explanation:
-      'Let f be the fixed fee and r be the hourly rate. From the two data points: f + 2r = 130 and f + 5r = 250. Subtracting the first from the second: 3r = 120 → r = 40. Substituting back: f + 2(40) = 130 → f + 80 = 130 → f = 50.',
   },
 ]

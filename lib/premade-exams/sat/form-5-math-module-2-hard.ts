@@ -28,58 +28,6 @@ export const f5MathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m2h-q07',
-    section: 'math',
-    moduleId: 'f5-math-module-2-hard',
-    domain: 'Advanced Math',
-    skill: 'Quadratic equations',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question:
-      'Which of the following is equivalent to x² − 10x + 29?',
-    choices: [
-      { label: 'A', text: '(x − 5)² + 4' },
-      { label: 'B', text: '(x − 5)² − 4' },
-      { label: 'C', text: '(x + 5)² + 4' },
-      { label: 'D', text: '(x − 10)² + 29' },
-    ],
-    correctAnswer: 'A',
-    explanation:
-      'Complete the square: x² − 10x + 29 = (x² − 10x + 25) + 4 = (x − 5)² + 4. The vertex form is (x − 5)² + 4.',
-    wrongAnswerExplanations: {
-      B: '(x − 5)² − 4 = x² − 10x + 25 − 4 = x² − 10x + 21, which has a different constant term.',
-      C: '(x + 5)² + 4 = x² + 10x + 25 + 4 = x² + 10x + 29, with the wrong sign on the middle term.',
-      D: '(x − 10)² + 29 = x² − 20x + 100 + 29 = x² − 20x + 129, which is entirely different.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m2h-q14',
-    section: 'math',
-    moduleId: 'f5-math-module-2-hard',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Ratios, rates, proportional relationships, and units',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question:
-      'Machine A can complete a job in 6 hours. Machine B can complete the same job in 9 hours. If both machines work together, how many hours will it take them to complete the job?',
-    choices: [
-      { label: 'A', text: '3.0' },
-      { label: 'B', text: '3.6' },
-      { label: 'C', text: '4.5' },
-      { label: 'D', text: '5.4' },
-    ],
-    correctAnswer: 'B',
-    explanation:
-      'Machine A\'s rate is 1/6 of the job per hour; Machine B\'s rate is 1/9. Combined rate = 1/6 + 1/9 = 3/18 + 2/18 = 5/18 jobs per hour. Time = 1 ÷ (5/18) = 18/5 = 3.6 hours.',
-    wrongAnswerExplanations: {
-      A: '3.0 hours is the harmonic mean of 6 and 9 computed incorrectly as (6 + 9)/5 = 3, confusing the formula.',
-      C: '4.5 hours is the average of 6/2 and 9/2, not the combined work rate calculation.',
-      D: '5.4 hours is the result of averaging 6 and 9 then applying an incorrect reciprocal.',
-    },
-  },
-
-  {
     id: 'sat-f5-math-m2h-q02',
     section: 'math',
     moduleId: 'f5-math-module-2-hard',
@@ -102,58 +50,6 @@ export const f5MathModule2HardQuestions: MathQuestion[] = [
       A: 'x = 5 results from incorrectly distributing the negative sign as −2(x + 3) instead of −2(x − 3), changing the sign of the 3.',
       B: 'x = 7 results from multiplying only the numerators by 12 without correctly clearing the denominators (for example, treating the equation as x + 3 − (x − 3) = 24).',
       D: 'x = 11 comes from adding the fractions instead of subtracting, giving 3(x+3) + 2(x−3) = 24 → 5x + 3 = 24 → x = 21/5, then rounding up incorrectly to 11.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m2h-q08',
-    section: 'math',
-    moduleId: 'f5-math-module-2-hard',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear functions',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question:
-      'If f(x) = x² − 4x and g(x) = 2x − 7, for how many values of x does f(x) = g(x)?',
-    choices: [
-      { label: 'A', text: 'Zero' },
-      { label: 'B', text: 'One' },
-      { label: 'C', text: 'Two' },
-      { label: 'D', text: 'Three' },
-    ],
-    correctAnswer: 'C',
-    explanation:
-      'Set f(x) = g(x): x² − 4x = 2x − 7. Rearrange: x² − 6x + 7 = 0. Compute the discriminant: b² − 4ac = (−6)² − 4(1)(7) = 36 − 28 = 8. Since 8 > 0, there are two distinct real solutions. The parabola and the line intersect at exactly two points.',
-    wrongAnswerExplanations: {
-      A: 'Zero intersections would require the discriminant to be negative. Here the discriminant is 8 > 0, so two intersections exist.',
-      B: 'One intersection would require the discriminant to equal zero (the line is tangent to the parabola). Here the discriminant is 8, not 0.',
-      D: 'Three intersections are impossible when one equation is linear and the other is quadratic — there can be at most two.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m2h-q15',
-    section: 'math',
-    moduleId: 'f5-math-module-2-hard',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Percentages',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question:
-      'A jacket is marked up by 40% from its wholesale cost, then placed on sale at 25% off the marked price. The final sale price is what percent of the original wholesale cost?',
-    choices: [
-      { label: 'A', text: '95%' },
-      { label: 'B', text: '105%' },
-      { label: 'C', text: '115%' },
-      { label: 'D', text: '125%' },
-    ],
-    correctAnswer: 'B',
-    explanation:
-      'Let the wholesale cost be C. Marked price = 1.40C. Sale price = 0.75 × 1.40C = 1.05C. The sale price is 1.05C, which is 105% of the wholesale cost.',
-    wrongAnswerExplanations: {
-      A: '95% would result from a 5% net decrease; subtracting 40% − 25% = 15% net markup incorrectly gives 115%, not 95%.',
-      C: '115% results from incorrectly computing 40% − 25% = 15% net markup and adding it to 100%.',
-      D: '125% results from adding 40% and 25% instead of applying them sequentially.',
     },
   },
 
@@ -184,28 +80,112 @@ export const f5MathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m2h-q09',
+    id: 'sat-f5-math-m2h-q04',
     section: 'math',
     moduleId: 'f5-math-module-2-hard',
-    domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
+    domain: 'Algebra',
+    skill: 'Linear inequalities in one or two variables',
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'Which expression is equivalent to (x² − 9)/(x² − x − 6) for x ≠ 3 and x ≠ −2?',
+      'Which of the following represents all values of x that satisfy both −2 < 3x + 1 ≤ 10 and x > −1/3?',
     choices: [
-      { label: 'A', text: '(x + 3)/(x + 2)' },
-      { label: 'B', text: '(x − 3)/(x − 2)' },
-      { label: 'C', text: '(x + 3)/(x − 2)' },
-      { label: 'D', text: '(x − 3)/(x + 2)' },
+      { label: 'A', text: 'x > −1/3' },
+      { label: 'B', text: '−1 < x ≤ 3' },
+      { label: 'C', text: '−1/3 < x ≤ 3' },
+      { label: 'D', text: '0 < x ≤ 3' },
     ],
-    correctAnswer: 'A',
+    correctAnswer: 'C',
     explanation:
-      'Factor the numerator: x² − 9 = (x − 3)(x + 3). Factor the denominator: x² − x − 6 = (x − 3)(x + 2). Cancel the common factor (x − 3): (x − 3)(x + 3)/[(x − 3)(x + 2)] = (x + 3)/(x + 2), valid for x ≠ 3.',
+      'Solve the compound inequality −2 < 3x + 1 ≤ 10. Subtract 1 throughout: −3 < 3x ≤ 9. Divide by 3: −1 < x ≤ 3. Now intersect with x > −1/3. Since −1/3 > −1, the intersection is x > −1/3 AND x ≤ 3, giving −1/3 < x ≤ 3.',
     wrongAnswerExplanations: {
-      B: '(x − 3)/(x − 2) incorrectly factors the denominator as (x − 3)(x − 2), but x² − x − 6 = (x − 3)(x + 2).',
-      C: '(x + 3)/(x − 2) uses a correct numerator factor but incorrect denominator factoring.',
-      D: '(x − 3)/(x + 2) cancels the wrong factor from the numerator, leaving the (x − 3) term instead of (x + 3).',
+      A: 'x > −1/3 ignores the upper bound x ≤ 3 from the compound inequality.',
+      B: '−1 < x ≤ 3 is the solution to the compound inequality alone, before intersecting with x > −1/3.',
+      D: '0 < x ≤ 3 incorrectly rounds −1/3 to 0 as the lower bound.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2h-q05',
+    section: 'math',
+    moduleId: 'f5-math-module-2-hard',
+    domain: 'Algebra',
+    skill: 'Systems of two linear equations in two variables',
+    difficulty: 'hard',
+    type: 'grid_in',
+    question:
+      'In the system of equations 5x + 2y = 23 and 3x − 2y = 1, what is the value of x + y?',
+    correctAnswer: '7',
+    acceptableAnswers: ['7'],
+    explanation:
+      'Add the two equations to eliminate y: (5x + 2y) + (3x − 2y) = 23 + 1 → 8x = 24 → x = 3. Substitute x = 3 into the second equation: 3(3) − 2y = 1 → 9 − 2y = 1 → 2y = 8 → y = 4. Therefore x + y = 3 + 4 = 7.',
+  },
+
+  {
+    id: 'sat-f5-math-m2h-q06',
+    section: 'math',
+    moduleId: 'f5-math-module-2-hard',
+    domain: 'Algebra',
+    skill: 'Linear equations in two variables',
+    difficulty: 'hard',
+    type: 'grid_in',
+    question:
+      'A line passes through the points (a, 1) and (4, 7), and has slope 3. What is the value of a?',
+    correctAnswer: '2',
+    acceptableAnswers: ['2'],
+    explanation:
+      'Slope = (7 − 1)/(4 − a) = 6/(4 − a) = 3. Solving: 4 − a = 2 → a = 2.',
+  },
+
+  {
+    id: 'sat-f5-math-m2h-q14',
+    section: 'math',
+    moduleId: 'f5-math-module-2-hard',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Ratios, rates, proportional relationships, and units',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question:
+      'Machine A can complete a job in 6 hours. Machine B can complete the same job in 9 hours. If both machines work together, how many hours will it take them to complete the job?',
+    choices: [
+      { label: 'A', text: '3.0' },
+      { label: 'B', text: '3.6' },
+      { label: 'C', text: '4.5' },
+      { label: 'D', text: '5.4' },
+    ],
+    correctAnswer: 'B',
+    explanation:
+      'Machine A\'s rate is 1/6 of the job per hour; Machine B\'s rate is 1/9. Combined rate = 1/6 + 1/9 = 3/18 + 2/18 = 5/18 jobs per hour. Time = 1 ÷ (5/18) = 18/5 = 3.6 hours.',
+    wrongAnswerExplanations: {
+      A: '3.0 hours is the harmonic mean of 6 and 9 computed incorrectly as (6 + 9)/5 = 3, confusing the formula.',
+      C: '4.5 hours is the average of 6/2 and 9/2, not the combined work rate calculation.',
+      D: '5.4 hours is the result of averaging 6 and 9 then applying an incorrect reciprocal.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2h-q15',
+    section: 'math',
+    moduleId: 'f5-math-module-2-hard',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Percentages',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question:
+      'A jacket is marked up by 40% from its wholesale cost, then placed on sale at 25% off the marked price. The final sale price is what percent of the original wholesale cost?',
+    choices: [
+      { label: 'A', text: '95%' },
+      { label: 'B', text: '105%' },
+      { label: 'C', text: '115%' },
+      { label: 'D', text: '125%' },
+    ],
+    correctAnswer: 'B',
+    explanation:
+      'Let the wholesale cost be C. Marked price = 1.40C. Sale price = 0.75 × 1.40C = 1.05C. The sale price is 1.05C, which is 105% of the wholesale cost.',
+    wrongAnswerExplanations: {
+      A: '95% would result from a 5% net decrease; subtracting 40% − 25% = 15% net markup incorrectly gives 115%, not 95%.',
+      C: '115% results from incorrectly computing 40% − 25% = 15% net markup and adding it to 100%.',
+      D: '125% results from adding 40% and 25% instead of applying them sequentially.',
     },
   },
 
@@ -236,28 +216,96 @@ export const f5MathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m2h-q04',
+    id: 'sat-f5-math-m2h-q17',
     section: 'math',
     moduleId: 'f5-math-module-2-hard',
-    domain: 'Algebra',
-    skill: 'Linear inequalities in one or two variables',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Probability and conditional probability',
+    difficulty: 'hard',
+    type: 'grid_in',
+    question:
+      'In a group of 80 students, 45 study French, 30 study Spanish, and 15 study both languages. A student is selected at random from those who study Spanish. What is the probability that this student also studies French? Enter your answer as a fraction.',
+    correctAnswer: '1/2',
+    acceptableAnswers: ['1/2', '.5', '0.5', '15/30'],
+    explanation:
+      'We need P(French | Spanish) = P(French and Spanish) / P(Spanish). The number of students who study both is 15. The number who study Spanish is 30. Conditional probability = 15/30 = 1/2.',
+  },
+
+  {
+    id: 'sat-f5-math-m2h-q07',
+    section: 'math',
+    moduleId: 'f5-math-module-2-hard',
+    domain: 'Advanced Math',
+    skill: 'Quadratic equations',
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'Which of the following represents all values of x that satisfy both −2 < 3x + 1 ≤ 10 and x > −1/3?',
+      'Which of the following is equivalent to x² − 10x + 29?',
     choices: [
-      { label: 'A', text: 'x > −1/3' },
-      { label: 'B', text: '−1 < x ≤ 3' },
-      { label: 'C', text: '−1/3 < x ≤ 3' },
-      { label: 'D', text: '0 < x ≤ 3' },
+      { label: 'A', text: '(x − 5)² + 4' },
+      { label: 'B', text: '(x − 5)² − 4' },
+      { label: 'C', text: '(x + 5)² + 4' },
+      { label: 'D', text: '(x − 10)² + 29' },
+    ],
+    correctAnswer: 'A',
+    explanation:
+      'Complete the square: x² − 10x + 29 = (x² − 10x + 25) + 4 = (x − 5)² + 4. The vertex form is (x − 5)² + 4.',
+    wrongAnswerExplanations: {
+      B: '(x − 5)² − 4 = x² − 10x + 25 − 4 = x² − 10x + 21, which has a different constant term.',
+      C: '(x + 5)² + 4 = x² + 10x + 25 + 4 = x² + 10x + 29, with the wrong sign on the middle term.',
+      D: '(x − 10)² + 29 = x² − 20x + 100 + 29 = x² − 20x + 129, which is entirely different.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2h-q08',
+    section: 'math',
+    moduleId: 'f5-math-module-2-hard',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear functions',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question:
+      'If f(x) = x² − 4x and g(x) = 2x − 7, for how many values of x does f(x) = g(x)?',
+    choices: [
+      { label: 'A', text: 'Zero' },
+      { label: 'B', text: 'One' },
+      { label: 'C', text: 'Two' },
+      { label: 'D', text: 'Three' },
     ],
     correctAnswer: 'C',
     explanation:
-      'Solve the compound inequality −2 < 3x + 1 ≤ 10. Subtract 1 throughout: −3 < 3x ≤ 9. Divide by 3: −1 < x ≤ 3. Now intersect with x > −1/3. Since −1/3 > −1, the intersection is x > −1/3 AND x ≤ 3, giving −1/3 < x ≤ 3.',
+      'Set f(x) = g(x): x² − 4x = 2x − 7. Rearrange: x² − 6x + 7 = 0. Compute the discriminant: b² − 4ac = (−6)² − 4(1)(7) = 36 − 28 = 8. Since 8 > 0, there are two distinct real solutions. The parabola and the line intersect at exactly two points.',
     wrongAnswerExplanations: {
-      A: 'x > −1/3 ignores the upper bound x ≤ 3 from the compound inequality.',
-      B: '−1 < x ≤ 3 is the solution to the compound inequality alone, before intersecting with x > −1/3.',
-      D: '0 < x ≤ 3 incorrectly rounds −1/3 to 0 as the lower bound.',
+      A: 'Zero intersections would require the discriminant to be negative. Here the discriminant is 8 > 0, so two intersections exist.',
+      B: 'One intersection would require the discriminant to equal zero (the line is tangent to the parabola). Here the discriminant is 8, not 0.',
+      D: 'Three intersections are impossible when one equation is linear and the other is quadratic — there can be at most two.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2h-q09',
+    section: 'math',
+    moduleId: 'f5-math-module-2-hard',
+    domain: 'Advanced Math',
+    skill: 'Equivalent expressions',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question:
+      'Which expression is equivalent to (x² − 9)/(x² − x − 6) for x ≠ 3 and x ≠ −2?',
+    choices: [
+      { label: 'A', text: '(x + 3)/(x + 2)' },
+      { label: 'B', text: '(x − 3)/(x − 2)' },
+      { label: 'C', text: '(x + 3)/(x − 2)' },
+      { label: 'D', text: '(x − 3)/(x + 2)' },
+    ],
+    correctAnswer: 'A',
+    explanation:
+      'Factor the numerator: x² − 9 = (x − 3)(x + 3). Factor the denominator: x² − x − 6 = (x − 3)(x + 2). Cancel the common factor (x − 3): (x − 3)(x + 3)/[(x − 3)(x + 2)] = (x + 3)/(x + 2), valid for x ≠ 3.',
+    wrongAnswerExplanations: {
+      B: '(x − 3)/(x − 2) incorrectly factors the denominator as (x − 3)(x − 2), but x² − x − 6 = (x − 3)(x + 2).',
+      C: '(x + 3)/(x − 2) uses a correct numerator factor but incorrect denominator factoring.',
+      D: '(x − 3)/(x + 2) cancels the wrong factor from the numerator, leaving the (x − 3) term instead of (x + 3).',
     },
   },
 
@@ -275,38 +323,6 @@ export const f5MathModule2HardQuestions: MathQuestion[] = [
     acceptableAnswers: ['12'],
     explanation:
       'For exactly one real solution, the discriminant must equal zero. Here a = 3, b = −12, c = k. Discriminant: b² − 4ac = (−12)² − 4(3)(k) = 144 − 12k = 0 → 12k = 144 → k = 12.',
-  },
-
-  {
-    id: 'sat-f5-math-m2h-q17',
-    section: 'math',
-    moduleId: 'f5-math-module-2-hard',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Probability and conditional probability',
-    difficulty: 'hard',
-    type: 'grid_in',
-    question:
-      'In a group of 80 students, 45 study French, 30 study Spanish, and 15 study both languages. A student is selected at random from those who study Spanish. What is the probability that this student also studies French? Enter your answer as a fraction.',
-    correctAnswer: '1/2',
-    acceptableAnswers: ['1/2', '.5', '0.5', '15/30'],
-    explanation:
-      'We need P(French | Spanish) = P(French and Spanish) / P(Spanish). The number of students who study both is 15. The number who study Spanish is 30. Conditional probability = 15/30 = 1/2.',
-  },
-
-  {
-    id: 'sat-f5-math-m2h-q05',
-    section: 'math',
-    moduleId: 'f5-math-module-2-hard',
-    domain: 'Algebra',
-    skill: 'Systems of two linear equations in two variables',
-    difficulty: 'hard',
-    type: 'grid_in',
-    question:
-      'In the system of equations 5x + 2y = 23 and 3x − 2y = 1, what is the value of x + y?',
-    correctAnswer: '7',
-    acceptableAnswers: ['7'],
-    explanation:
-      'Add the two equations to eliminate y: (5x + 2y) + (3x − 2y) = 23 + 1 → 8x = 24 → x = 3. Substitute x = 3 into the second equation: 3(3) − 2y = 1 → 9 − 2y = 1 → 2y = 8 → y = 4. Therefore x + y = 3 + 4 = 7.',
   },
 
   {
@@ -336,48 +352,6 @@ export const f5MathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m2h-q18',
-    section: 'math',
-    moduleId: 'f5-math-module-2-hard',
-    domain: 'Geometry and Trigonometry',
-    skill: 'Circles',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question:
-      'What is the radius of the circle defined by the equation x² + y² − 6x + 8y − 11 = 0?',
-    choices: [
-      { label: 'A', text: '6' },
-      { label: 'B', text: '7' },
-      { label: 'C', text: '8' },
-      { label: 'D', text: '√56' },
-    ],
-    correctAnswer: 'A',
-    explanation:
-      'Complete the square for x and y. Group: (x² − 6x) + (y² + 8y) = 11. Complete the square: (x² − 6x + 9) + (y² + 8y + 16) = 11 + 9 + 16 = 36. So (x − 3)² + (y + 4)² = 36. The radius is √36 = 6.',
-    wrongAnswerExplanations: {
-      B: 'r = 7 comes from computing √(9 + 16 + 11) = √36 = 6 but then incorrectly taking the square root of 49 instead of 36.',
-      C: 'r = 8 results from adding 9 + 16 but neglecting to add these to the right side, then computing √(11 + 64) ≈ 8.',
-      D: '√56 results from incorrectly completing the square with the wrong constants added.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m2h-q06',
-    section: 'math',
-    moduleId: 'f5-math-module-2-hard',
-    domain: 'Algebra',
-    skill: 'Linear equations in two variables',
-    difficulty: 'hard',
-    type: 'grid_in',
-    question:
-      'A line passes through the points (a, 1) and (4, 7), and has slope 3. What is the value of a?',
-    correctAnswer: '2',
-    acceptableAnswers: ['2'],
-    explanation:
-      'Slope = (7 − 1)/(4 − a) = 6/(4 − a) = 3. Solving: 4 − a = 2 → a = 2.',
-  },
-
-  {
     id: 'sat-f5-math-m2h-q12',
     section: 'math',
     moduleId: 'f5-math-module-2-hard',
@@ -400,6 +374,48 @@ export const f5MathModule2HardQuestions: MathQuestion[] = [
       B: '0.20 is the percent lost, not the percent remaining; using 0.20 as the base gives far too fast a decay.',
       C: 'P(t) = 5000(0.80)^(3t) uses 3t as the exponent instead of t/3, making the decay rate 3 times too fast.',
       D: '1.20 indicates a 20% increase per period, not a decrease.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2h-q13',
+    section: 'math',
+    moduleId: 'f5-math-module-2-hard',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear functions',
+    difficulty: 'hard',
+    type: 'grid_in',
+    question:
+      'Let f(x) = 2x + 3 and g(x) = x² − 1. What is the value of g(f(1))?',
+    correctAnswer: '24',
+    acceptableAnswers: ['24'],
+    explanation:
+      'First compute f(1) = 2(1) + 3 = 5. Then compute g(f(1)) = g(5) = 5² − 1 = 25 − 1 = 24.',
+  },
+
+  {
+    id: 'sat-f5-math-m2h-q18',
+    section: 'math',
+    moduleId: 'f5-math-module-2-hard',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Circles',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question:
+      'What is the radius of the circle defined by the equation x² + y² − 6x + 8y − 11 = 0?',
+    choices: [
+      { label: 'A', text: '6' },
+      { label: 'B', text: '7' },
+      { label: 'C', text: '8' },
+      { label: 'D', text: '√56' },
+    ],
+    correctAnswer: 'A',
+    explanation:
+      'Complete the square for x and y. Group: (x² − 6x) + (y² + 8y) = 11. Complete the square: (x² − 6x + 9) + (y² + 8y + 16) = 11 + 9 + 16 = 36. So (x − 3)² + (y + 4)² = 36. The radius is √36 = 6.',
+    wrongAnswerExplanations: {
+      B: 'r = 7 comes from computing √(9 + 16 + 11) = √36 = 6 but then incorrectly taking the square root of 49 instead of 36.',
+      C: 'r = 8 results from adding 9 + 16 but neglecting to add these to the right side, then computing √(11 + 64) ≈ 8.',
+      D: '√56 results from incorrectly completing the square with the wrong constants added.',
     },
   },
 
@@ -427,22 +443,6 @@ export const f5MathModule2HardQuestions: MathQuestion[] = [
       C: '6√3 results from multiplying 4√3 by √3 instead of dividing by √3 to find s, then doubling incorrectly.',
       D: '12 results from multiplying 4√3 by the ratio √3 then multiplying again, overcounting the scaling.',
     },
-  },
-
-  {
-    id: 'sat-f5-math-m2h-q13',
-    section: 'math',
-    moduleId: 'f5-math-module-2-hard',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear functions',
-    difficulty: 'hard',
-    type: 'grid_in',
-    question:
-      'Let f(x) = 2x + 3 and g(x) = x² − 1. What is the value of g(f(1))?',
-    correctAnswer: '24',
-    acceptableAnswers: ['24'],
-    explanation:
-      'First compute f(1) = 2(1) + 3 = 5. Then compute g(f(1)) = g(5) = 5² − 1 = 25 − 1 = 24.',
   },
 
   {

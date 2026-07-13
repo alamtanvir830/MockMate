@@ -27,57 +27,6 @@ export const f5MathModule2EasyQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m2e-q08',
-    section: 'math',
-    moduleId: 'f5-math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Quadratic equations',
-    difficulty: 'easy',
-    type: 'multiple_choice',
-    question: 'Which of the following are solutions to x² + 5x + 6 = 0?',
-    choices: [
-      { label: 'A', text: 'x = 2 and x = 3' },
-      { label: 'B', text: 'x = −2 and x = −3' },
-      { label: 'C', text: 'x = −1 and x = −6' },
-      { label: 'D', text: 'x = 1 and x = 6' },
-    ],
-    correctAnswer: 'B',
-    explanation:
-      'Factor: x² + 5x + 6 = (x + 2)(x + 3) = 0. Setting each factor to zero gives x = −2 or x = −3.',
-    wrongAnswerExplanations: {
-      A: 'x = 2 gives 4 + 10 + 6 = 20 ≠ 0. The signs should be negative.',
-      C: '(x + 1)(x + 6) = x² + 7x + 6, which has a middle term of 7x, not 5x.',
-      D: 'x = 1 gives 1 + 5 + 6 = 12 ≠ 0.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m2e-q14',
-    section: 'math',
-    moduleId: 'f5-math-module-2-easy',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Ratios, rates, proportional relationships, and units',
-    difficulty: 'easy',
-    type: 'multiple_choice',
-    question:
-      'A car travels at a constant speed of 60 miles per hour. How many miles does the car travel in 2.5 hours?',
-    choices: [
-      { label: 'A', text: '100' },
-      { label: 'B', text: '120' },
-      { label: 'C', text: '150' },
-      { label: 'D', text: '180' },
-    ],
-    correctAnswer: 'C',
-    explanation:
-      'Distance = speed × time = 60 miles/hour × 2.5 hours = 150 miles.',
-    wrongAnswerExplanations: {
-      A: '100 miles corresponds to 60 × 1.67 hours, not 2.5 hours.',
-      B: '120 miles corresponds to 60 × 2 hours, using 2 instead of 2.5.',
-      D: '180 miles corresponds to 60 × 3 hours, using 3 instead of 2.5.',
-    },
-  },
-
-  {
     id: 'sat-f5-math-m2e-q02',
     section: 'math',
     moduleId: 'f5-math-module-2-easy',
@@ -103,56 +52,6 @@ export const f5MathModule2EasyQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m2e-q09',
-    section: 'math',
-    moduleId: 'f5-math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
-    difficulty: 'easy',
-    type: 'multiple_choice',
-    question: 'Which expression is equivalent to (x + 3)(x + 2)?',
-    choices: [
-      { label: 'A', text: 'x² + 5x + 5' },
-      { label: 'B', text: 'x² + 6x + 6' },
-      { label: 'C', text: 'x² + 5x + 6' },
-      { label: 'D', text: 'x² + 3x + 6' },
-    ],
-    correctAnswer: 'C',
-    explanation:
-      'Use FOIL: (x + 3)(x + 2) = x·x + x·2 + 3·x + 3·2 = x² + 2x + 3x + 6 = x² + 5x + 6.',
-    wrongAnswerExplanations: {
-      A: 'The constant term should be 3 × 2 = 6, not 5.',
-      B: 'The middle term should be 2x + 3x = 5x, not 6x.',
-      D: 'The middle term is 2x + 3x = 5x, not 3x.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m2e-q15',
-    section: 'math',
-    moduleId: 'f5-math-module-2-easy',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Percentages',
-    difficulty: 'easy',
-    type: 'multiple_choice',
-    question: 'What is 35% of 80?',
-    choices: [
-      { label: 'A', text: '24' },
-      { label: 'B', text: '28' },
-      { label: 'C', text: '35' },
-      { label: 'D', text: '45' },
-    ],
-    correctAnswer: 'B',
-    explanation:
-      '35% of 80 = 0.35 × 80 = 28.',
-    wrongAnswerExplanations: {
-      A: '24 = 30% of 80. The percent used was 30, not 35.',
-      C: '35 is the percent itself, not 35% of 80.',
-      D: '45 = 56.25% of 80, which does not match the given percent.',
-    },
-  },
-
-  {
     id: 'sat-f5-math-m2e-q03',
     section: 'math',
     moduleId: 'f5-math-module-2-easy',
@@ -174,57 +73,6 @@ export const f5MathModule2EasyQuestions: MathQuestion[] = [
       A: 'x = 1 gives y = 3(1) − 1 = 2, not 4.',
       C: 'x = 0 gives y = 3(0) − 1 = −1, not 1.',
       D: 'x = 3 gives y = 3(3) − 1 = 8, not 7.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m2e-q10',
-    section: 'math',
-    moduleId: 'f5-math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear functions',
-    difficulty: 'easy',
-    type: 'multiple_choice',
-    question: 'The function f is defined by f(x) = x² − 3. What is the value of f(4)?',
-    choices: [
-      { label: 'A', text: '1' },
-      { label: 'B', text: '8' },
-      { label: 'C', text: '13' },
-      { label: 'D', text: '19' },
-    ],
-    correctAnswer: 'C',
-    explanation:
-      'Substitute x = 4: f(4) = (4)² − 3 = 16 − 3 = 13.',
-    wrongAnswerExplanations: {
-      A: '1 results from computing 4 − 3 instead of 4² − 3.',
-      B: '8 results from computing 2(4) − 3 + 3 or a similar arithmetic error.',
-      D: '19 results from computing 4² + 3 = 19 instead of 4² − 3.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m2e-q16',
-    section: 'math',
-    moduleId: 'f5-math-module-2-easy',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Percentages',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question:
-      'The price of a jacket increased from $60 to $90. By what percent did the price increase?',
-    choices: [
-      { label: 'A', text: '30%' },
-      { label: 'B', text: '33%' },
-      { label: 'C', text: '50%' },
-      { label: 'D', text: '150%' },
-    ],
-    correctAnswer: 'C',
-    explanation:
-      'Percent increase = (change / original) × 100 = (90 − 60) / 60 × 100 = 30 / 60 × 100 = 50%.',
-    wrongAnswerExplanations: {
-      A: '30% is the dollar amount of the increase ($30), not the percent increase.',
-      B: '33% would result from dividing the increase by the new price (30/90 ≈ 33%), but percent change uses the original price.',
-      D: '150% would mean the price increased by 1.5 times the original; the new price is 1.5 times the original, but the increase itself is 50%.',
     },
   },
 
@@ -255,27 +103,68 @@ export const f5MathModule2EasyQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m2e-q11',
+    id: 'sat-f5-math-m2e-q05',
     section: 'math',
     moduleId: 'f5-math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Quadratic equations',
-    difficulty: 'medium',
+    domain: 'Algebra',
+    skill: 'Linear equations in one variable',
+    difficulty: 'easy',
+    type: 'grid_in',
+    question: 'If 5x + 4 = 19, what is the value of x?',
+    correctAnswer: '3',
+    acceptableAnswers: ['3'],
+    explanation:
+      'Subtract 4 from both sides: 5x = 15. Divide by 5: x = 3.',
+  },
+
+  {
+    id: 'sat-f5-math-m2e-q14',
+    section: 'math',
+    moduleId: 'f5-math-module-2-easy',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Ratios, rates, proportional relationships, and units',
+    difficulty: 'easy',
     type: 'multiple_choice',
-    question: 'What are the zeros of the function f(x) = x² − 7x + 10?',
+    question:
+      'A car travels at a constant speed of 60 miles per hour. How many miles does the car travel in 2.5 hours?',
     choices: [
-      { label: 'A', text: 'x = −2 and x = −5' },
-      { label: 'B', text: 'x = 2 and x = 5' },
-      { label: 'C', text: 'x = 1 and x = 10' },
-      { label: 'D', text: 'x = 7 and x = 10' },
+      { label: 'A', text: '100' },
+      { label: 'B', text: '120' },
+      { label: 'C', text: '150' },
+      { label: 'D', text: '180' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      'Distance = speed × time = 60 miles/hour × 2.5 hours = 150 miles.',
+    wrongAnswerExplanations: {
+      A: '100 miles corresponds to 60 × 1.67 hours, not 2.5 hours.',
+      B: '120 miles corresponds to 60 × 2 hours, using 2 instead of 2.5.',
+      D: '180 miles corresponds to 60 × 3 hours, using 3 instead of 2.5.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2e-q15',
+    section: 'math',
+    moduleId: 'f5-math-module-2-easy',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Percentages',
+    difficulty: 'easy',
+    type: 'multiple_choice',
+    question: 'What is 35% of 80?',
+    choices: [
+      { label: 'A', text: '24' },
+      { label: 'B', text: '28' },
+      { label: 'C', text: '35' },
+      { label: 'D', text: '45' },
     ],
     correctAnswer: 'B',
     explanation:
-      'Factor: x² − 7x + 10 = (x − 2)(x − 5) = 0. Setting each factor to zero: x = 2 or x = 5.',
+      '35% of 80 = 0.35 × 80 = 28.',
     wrongAnswerExplanations: {
-      A: '(x + 2)(x + 5) = x² + 7x + 10, which has a positive middle term, not −7x.',
-      C: '(x − 1)(x − 10) = x² − 11x + 10, which has −11x, not −7x.',
-      D: 'x = 7 gives 49 − 49 + 10 = 10 ≠ 0.',
+      A: '24 = 30% of 80. The percent used was 30, not 35.',
+      C: '35 is the percent itself, not 35% of 80.',
+      D: '45 = 56.25% of 80, which does not match the given percent.',
     },
   },
 
@@ -306,111 +195,78 @@ export const f5MathModule2EasyQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m2e-q05',
-    section: 'math',
-    moduleId: 'f5-math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Linear equations in one variable',
-    difficulty: 'easy',
-    type: 'grid_in',
-    question: 'If 5x + 4 = 19, what is the value of x?',
-    correctAnswer: '3',
-    acceptableAnswers: ['3'],
-    explanation:
-      'Subtract 4 from both sides: 5x = 15. Divide by 5: x = 3.',
-  },
-
-  {
-    id: 'sat-f5-math-m2e-q12',
+    id: 'sat-f5-math-m2e-q08',
     section: 'math',
     moduleId: 'f5-math-module-2-easy',
     domain: 'Advanced Math',
-    skill: 'Exponential functions',
-    difficulty: 'medium',
+    skill: 'Quadratic equations',
+    difficulty: 'easy',
     type: 'multiple_choice',
-    question:
-      'A colony of bacteria starts with 200 cells and doubles every hour. Which function gives the number of bacteria cells B after t hours?',
+    question: 'Which of the following are solutions to x² + 5x + 6 = 0?',
     choices: [
-      { label: 'A', text: 'B(t) = 200 + 2t' },
-      { label: 'B', text: 'B(t) = 200t²' },
-      { label: 'C', text: 'B(t) = 200(2)^t' },
-      { label: 'D', text: 'B(t) = 2(200)^t' },
+      { label: 'A', text: 'x = 2 and x = 3' },
+      { label: 'B', text: 'x = −2 and x = −3' },
+      { label: 'C', text: 'x = −1 and x = −6' },
+      { label: 'D', text: 'x = 1 and x = 6' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'B',
     explanation:
-      'The colony starts at 200 and multiplies by 2 each hour. After t hours, the count is 200 × 2^t. This is exponential growth with initial value 200 and growth factor 2.',
+      'Factor: x² + 5x + 6 = (x + 2)(x + 3) = 0. Setting each factor to zero gives x = −2 or x = −3.',
     wrongAnswerExplanations: {
-      A: 'B(t) = 200 + 2t is linear, adding 2 each hour rather than doubling.',
-      B: 'B(t) = 200t² is a quadratic (polynomial) model, not an exponential doubling model.',
-      D: 'B(t) = 2(200)^t places the initial amount as the base, which is not how exponential growth is modeled. After 1 hour it gives 2(200) = 400 but after 2 hours it gives 2(40000) = 80000, which is far too large.',
+      A: 'x = 2 gives 4 + 10 + 6 = 20 ≠ 0. The signs should be negative.',
+      C: '(x + 1)(x + 6) = x² + 7x + 6, which has a middle term of 7x, not 5x.',
+      D: 'x = 1 gives 1 + 5 + 6 = 12 ≠ 0.',
     },
   },
 
   {
-    id: 'sat-f5-math-m2e-q18',
-    section: 'math',
-    moduleId: 'f5-math-module-2-easy',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'One-variable data: distributions and measures of center and spread',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question:
-      'Five students took a quiz and received scores of 72, 78, 84, 90, and 96. What is the mean score for the five students?',
-    choices: [
-      { label: 'A', text: '80' },
-      { label: 'B', text: '82' },
-      { label: 'C', text: '84' },
-      { label: 'D', text: '86' },
-    ],
-    correctAnswer: 'C',
-    explanation:
-      'Mean = (72 + 78 + 84 + 90 + 96) / 5 = 420 / 5 = 84.',
-    wrongAnswerExplanations: {
-      A: '80 would be the mean if the sum were 400, but 72 + 78 + 84 + 90 + 96 = 420.',
-      B: '82 is not the mean; the correct sum of 420 divided by 5 gives 84.',
-      D: '86 would require a total sum of 430, not 420.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m2e-q06',
-    section: 'math',
-    moduleId: 'f5-math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Linear inequalities in one or two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'Which of the following describes all values of x for which 3x − 4 > 8?',
-    choices: [
-      { label: 'A', text: 'x > 4' },
-      { label: 'B', text: 'x > 1' },
-      { label: 'C', text: 'x < 4' },
-      { label: 'D', text: 'x > 2' },
-    ],
-    correctAnswer: 'A',
-    explanation:
-      'Add 4 to both sides: 3x > 12. Divide by 3: x > 4.',
-    wrongAnswerExplanations: {
-      B: 'x > 1 would result from incorrectly dividing 12 by a wrong number or misreading the inequality.',
-      C: 'The inequality sign does not flip here since we divided by a positive number; the correct direction is x > 4.',
-      D: 'x > 2 results from subtracting incorrectly; 3x > 6 would give x > 2, but 3x > 12 gives x > 4.',
-    },
-  },
-
-  {
-    id: 'sat-f5-math-m2e-q13',
+    id: 'sat-f5-math-m2e-q09',
     section: 'math',
     moduleId: 'f5-math-module-2-easy',
     domain: 'Advanced Math',
     skill: 'Equivalent expressions',
-    difficulty: 'medium',
-    type: 'grid_in',
-    question:
-      'The expression (2x + 4) / 2 can be written in the form x + c for some constant c. If x = 5, what is the value of x + c?',
-    correctAnswer: '7',
-    acceptableAnswers: ['7'],
+    difficulty: 'easy',
+    type: 'multiple_choice',
+    question: 'Which expression is equivalent to (x + 3)(x + 2)?',
+    choices: [
+      { label: 'A', text: 'x² + 5x + 5' },
+      { label: 'B', text: 'x² + 6x + 6' },
+      { label: 'C', text: 'x² + 5x + 6' },
+      { label: 'D', text: 'x² + 3x + 6' },
+    ],
+    correctAnswer: 'C',
     explanation:
-      'Simplify: (2x + 4) / 2 = x + 2. So c = 2. When x = 5, x + c = 5 + 2 = 7.',
+      'Use FOIL: (x + 3)(x + 2) = x·x + x·2 + 3·x + 3·2 = x² + 2x + 3x + 6 = x² + 5x + 6.',
+    wrongAnswerExplanations: {
+      A: 'The constant term should be 3 × 2 = 6, not 5.',
+      B: 'The middle term should be 2x + 3x = 5x, not 6x.',
+      D: 'The middle term is 2x + 3x = 5x, not 3x.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2e-q10',
+    section: 'math',
+    moduleId: 'f5-math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear functions',
+    difficulty: 'easy',
+    type: 'multiple_choice',
+    question: 'The function f is defined by f(x) = x² − 3. What is the value of f(4)?',
+    choices: [
+      { label: 'A', text: '1' },
+      { label: 'B', text: '8' },
+      { label: 'C', text: '13' },
+      { label: 'D', text: '19' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      'Substitute x = 4: f(4) = (4)² − 3 = 16 − 3 = 13.',
+    wrongAnswerExplanations: {
+      A: '1 results from computing 4 − 3 instead of 4² − 3.',
+      B: '8 results from computing 2(4) − 3 + 3 or a similar arithmetic error.',
+      D: '19 results from computing 4² + 3 = 19 instead of 4² − 3.',
+    },
   },
 
   {
@@ -436,6 +292,57 @@ export const f5MathModule2EasyQuestions: MathQuestion[] = [
       A: '13 is the sum of the length and width (8 + 5), not the area.',
       B: '26 is the perimeter (2 × 13), not the area.',
       D: '64 = 8², which uses only the length and ignores the width.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2e-q20',
+    section: 'math',
+    moduleId: 'f5-math-module-2-easy',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Lines, angles, and triangles',
+    difficulty: 'easy',
+    type: 'multiple_choice',
+    question:
+      'In a triangle, two of the interior angles measure 55° and 70°. What is the measure of the third interior angle?',
+    choices: [
+      { label: 'A', text: '45°' },
+      { label: 'B', text: '55°' },
+      { label: 'C', text: '60°' },
+      { label: 'D', text: '125°' },
+    ],
+    correctAnswer: 'B',
+    explanation:
+      'The interior angles of a triangle sum to 180°. Third angle = 180° − 55° − 70° = 55°.',
+    wrongAnswerExplanations: {
+      A: '45° = 180° − 55° − 80°; the second angle is 70°, not 80°.',
+      C: '60° is a common distractor but does not satisfy 55° + 70° + 60° = 185° ≠ 180°.',
+      D: '125° = 55° + 70°, which is the sum of the two known angles, not the missing angle.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2e-q06',
+    section: 'math',
+    moduleId: 'f5-math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Linear inequalities in one or two variables',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'Which of the following describes all values of x for which 3x − 4 > 8?',
+    choices: [
+      { label: 'A', text: 'x > 4' },
+      { label: 'B', text: 'x > 1' },
+      { label: 'C', text: 'x < 4' },
+      { label: 'D', text: 'x > 2' },
+    ],
+    correctAnswer: 'A',
+    explanation:
+      'Add 4 to both sides: 3x > 12. Divide by 3: x > 4.',
+    wrongAnswerExplanations: {
+      B: 'x > 1 would result from incorrectly dividing 12 by a wrong number or misreading the inequality.',
+      C: 'The inequality sign does not flip here since we divided by a positive number; the correct direction is x > 4.',
+      D: 'x > 2 results from subtracting incorrectly; 3x > 6 would give x > 2, but 3x > 12 gives x > 4.',
     },
   },
 
@@ -466,29 +373,122 @@ export const f5MathModule2EasyQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m2e-q20',
+    id: 'sat-f5-math-m2e-q16',
     section: 'math',
     moduleId: 'f5-math-module-2-easy',
-    domain: 'Geometry and Trigonometry',
-    skill: 'Lines, angles, and triangles',
-    difficulty: 'easy',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Percentages',
+    difficulty: 'medium',
     type: 'multiple_choice',
     question:
-      'In a triangle, two of the interior angles measure 55° and 70°. What is the measure of the third interior angle?',
+      'The price of a jacket increased from $60 to $90. By what percent did the price increase?',
     choices: [
-      { label: 'A', text: '45°' },
-      { label: 'B', text: '55°' },
-      { label: 'C', text: '60°' },
-      { label: 'D', text: '125°' },
+      { label: 'A', text: '30%' },
+      { label: 'B', text: '33%' },
+      { label: 'C', text: '50%' },
+      { label: 'D', text: '150%' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      'Percent increase = (change / original) × 100 = (90 − 60) / 60 × 100 = 30 / 60 × 100 = 50%.',
+    wrongAnswerExplanations: {
+      A: '30% is the dollar amount of the increase ($30), not the percent increase.',
+      B: '33% would result from dividing the increase by the new price (30/90 ≈ 33%), but percent change uses the original price.',
+      D: '150% would mean the price increased by 1.5 times the original; the new price is 1.5 times the original, but the increase itself is 50%.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2e-q18',
+    section: 'math',
+    moduleId: 'f5-math-module-2-easy',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'One-variable data: distributions and measures of center and spread',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question:
+      'Five students took a quiz and received scores of 72, 78, 84, 90, and 96. What is the mean score for the five students?',
+    choices: [
+      { label: 'A', text: '80' },
+      { label: 'B', text: '82' },
+      { label: 'C', text: '84' },
+      { label: 'D', text: '86' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      'Mean = (72 + 78 + 84 + 90 + 96) / 5 = 420 / 5 = 84.',
+    wrongAnswerExplanations: {
+      A: '80 would be the mean if the sum were 400, but 72 + 78 + 84 + 90 + 96 = 420.',
+      B: '82 is not the mean; the correct sum of 420 divided by 5 gives 84.',
+      D: '86 would require a total sum of 430, not 420.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2e-q11',
+    section: 'math',
+    moduleId: 'f5-math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Quadratic equations',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'What are the zeros of the function f(x) = x² − 7x + 10?',
+    choices: [
+      { label: 'A', text: 'x = −2 and x = −5' },
+      { label: 'B', text: 'x = 2 and x = 5' },
+      { label: 'C', text: 'x = 1 and x = 10' },
+      { label: 'D', text: 'x = 7 and x = 10' },
     ],
     correctAnswer: 'B',
     explanation:
-      'The interior angles of a triangle sum to 180°. Third angle = 180° − 55° − 70° = 55°.',
+      'Factor: x² − 7x + 10 = (x − 2)(x − 5) = 0. Setting each factor to zero: x = 2 or x = 5.',
     wrongAnswerExplanations: {
-      A: '45° = 180° − 55° − 80°; the second angle is 70°, not 80°.',
-      C: '60° is a common distractor but does not satisfy 55° + 70° + 60° = 185° ≠ 180°.',
-      D: '125° = 55° + 70°, which is the sum of the two known angles, not the missing angle.',
+      A: '(x + 2)(x + 5) = x² + 7x + 10, which has a positive middle term, not −7x.',
+      C: '(x − 1)(x − 10) = x² − 11x + 10, which has −11x, not −7x.',
+      D: 'x = 7 gives 49 − 49 + 10 = 10 ≠ 0.',
     },
+  },
+
+  {
+    id: 'sat-f5-math-m2e-q12',
+    section: 'math',
+    moduleId: 'f5-math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Exponential functions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question:
+      'A colony of bacteria starts with 200 cells and doubles every hour. Which function gives the number of bacteria cells B after t hours?',
+    choices: [
+      { label: 'A', text: 'B(t) = 200 + 2t' },
+      { label: 'B', text: 'B(t) = 200t²' },
+      { label: 'C', text: 'B(t) = 200(2)^t' },
+      { label: 'D', text: 'B(t) = 2(200)^t' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      'The colony starts at 200 and multiplies by 2 each hour. After t hours, the count is 200 × 2^t. This is exponential growth with initial value 200 and growth factor 2.',
+    wrongAnswerExplanations: {
+      A: 'B(t) = 200 + 2t is linear, adding 2 each hour rather than doubling.',
+      B: 'B(t) = 200t² is a quadratic (polynomial) model, not an exponential doubling model.',
+      D: 'B(t) = 2(200)^t places the initial amount as the base, which is not how exponential growth is modeled. After 1 hour it gives 2(200) = 400 but after 2 hours it gives 2(40000) = 80000, which is far too large.',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m2e-q13',
+    section: 'math',
+    moduleId: 'f5-math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Equivalent expressions',
+    difficulty: 'medium',
+    type: 'grid_in',
+    question:
+      'The expression (2x + 4) / 2 can be written in the form x + c for some constant c. If x = 5, what is the value of x + c?',
+    correctAnswer: '7',
+    acceptableAnswers: ['7'],
+    explanation:
+      'Simplify: (2x + 4) / 2 = x + 2. So c = 2. When x = 5, x + c = 5 + 2 = 7.',
   },
 
   {
