@@ -76,6 +76,30 @@ export const rwModule2HardQuestions: RWQuestion[] = [
   },
 
   {
+    id: 'rw2h-09',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'hard',
+    stimulus: `The anthropologist's account of the ritual was not so much a description as a refraction: she had passed the community's practices through the lens of her own theoretical commitments until what emerged bore the structure of her argument more than the texture of what she had witnessed. Her colleagues in the field admired the elegance of her analysis while privately doubting that any informant, had they read it, would have recognized themselves in its pages. The gap between the observed and the represented had been, as it so often is in ethnographic work, tendentious.`,
+    question: `As used in the passage, "tendentious" most nearly means`,
+    choices: [
+      { label: 'A', text: 'shaped by a particular interpretive bias rather than straightforwardly objective' },
+      { label: 'B', text: 'excessively long and difficult to read' },
+      { label: 'C', text: 'deliberately falsified to mislead readers' },
+      { label: 'D', text: 'attentive to minor details at the expense of broader patterns' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. The passage describes how the anthropologist passed the community's practices through "her own theoretical commitments" until the analysis reflected her argument more than observable reality — and her colleagues doubted informants would recognize themselves in the account. This is the portrait of analysis bent by prior interpretive commitments rather than straightforwardly objective. "Tendentious" in this context means shaped by a particular bias, exactly fitting the passage's portrait of scholarship distorted by theoretical precommitments.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. The passage does not describe the account as long or difficult; the colleagues admired its "elegance," suggesting it was well-crafted rather than unwieldy.`,
+      C: `Choice C is incorrect. "Deliberately falsified" implies intentional deception, but the passage suggests the distortion arose from theoretical lens-shaping rather than conscious dishonesty.`,
+      D: `Choice D is incorrect. Nothing in the passage suggests excessive attention to detail at the expense of broader patterns; the criticism is that the analysis over-imposed an argument, not that it got lost in minutiae.`,
+    },
+  },
+
+  {
     id: 'rw2h-06',
     section: 'reading-writing',
     moduleId: 'rw-module-2-hard',
@@ -149,58 +173,6 @@ export const rwModule2HardQuestions: RWQuestion[] = [
   },
 
   {
-    id: 'rw2h-09',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'hard',
-    stimulus: `Text 1: Economists studying long-run growth have argued that technological innovation is the primary driver of sustained increases in per-capita income. Capital accumulation, they note, is subject to diminishing returns: each additional unit of capital added to a fixed labor supply yields smaller and smaller productivity gains. Only continuous technological progress, which shifts the production function upward rather than moving along it, can prevent an economy from converging to a stagnant steady state. Empirical analyses of industrialized economies across the past two centuries support this conclusion.
-
-Text 2: Researchers in economic history have raised methodological concerns about studies linking innovation to long-run growth. Cross-country and cross-century comparisons are notoriously difficult to make on commensurable terms, since measures of "technological innovation" vary by researcher, period, and available data sources. Institutional factors — property rights regimes, contract enforcement, political stability — are correlated both with rates of innovation and with growth, making it difficult to establish that innovation is an independent cause rather than a co-occurring feature of the same underlying institutional environment.`,
-    question: `How would the author of Text 2 most likely respond to the empirical claim made in the final sentence of Text 1?`,
-    choices: [
-      { label: 'A', text: 'By agreeing that empirical analyses confirm the role of technological innovation and extending the argument to developing economies' },
-      { label: 'B', text: 'By arguing that the empirical analyses are irrelevant because growth theory is purely mathematical' },
-      { label: 'C', text: 'By questioning whether the empirical analyses adequately isolate innovation from the institutional conditions that may independently drive both innovation and growth' },
-      { label: 'D', text: 'By proposing that capital accumulation, not innovation, is the actual mechanism behind the patterns the empirical analyses reveal' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. Text 2's central methodological concern is that institutional factors (property rights, contract enforcement, political stability) are correlated with both innovation and growth, making it hard to identify innovation as an independent cause. Applied to the empirical claim in Text 1's final sentence, this concern would target exactly whether the studies successfully isolate innovation from the institutional conditions that accompany it — the confounding variable problem Text 2 raises.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Text 2 raises methodological objections to such empirical analyses rather than endorsing them; the author would not simply agree and extend the argument.`,
-      B: `Choice B is incorrect. Text 2 does not argue that growth theory is purely mathematical or that empirical evidence is irrelevant; it raises concerns about the quality and interpretation of empirical evidence, not its relevance in principle.`,
-      D: `Choice D is incorrect. Text 2 does not argue for capital accumulation as an alternative mechanism; it raises identification problems without proposing a rival causal explanation.`,
-    },
-  },
-
-  {
-    id: 'rw2h-10',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'hard',
-    stimulus: `Text 1: The literary theorist Cleanth Brooks argued that the meaning of a great poem cannot be adequately paraphrased without fundamental loss. A poem's meaning is inseparable from its form — the specific arrangement of sounds, rhythms, images, and ironies through which it realizes its meaning. Attempting to extract the poem's "message" in prose destroys the very thing that makes the poem significant.
-
-Text 2: The philosopher Monroe Beardsley countered that the distinction between literary form and content is not as absolute as formalists like Brooks suggest. While a poem's formal properties undeniably shape its effect, it remains possible to identify propositional content — claims that are asserted or implied — that survives translation into different wordings and can be evaluated as true or false, insightful or banal.`,
-    question: `Which of the following, if true, would most directly strengthen the argument made in Text 2?`,
-    choices: [
-      { label: 'A', text: 'Scholars regularly produce accurate prose summaries of Shakespeare\'s plays that audiences find useful.' },
-      { label: 'B', text: 'Translators of poetry consistently report that rhyme schemes are impossible to preserve across languages.' },
-      { label: 'C', text: 'Two readers who produce different prose paraphrases of the same poem may both have understood it correctly.' },
-      { label: 'D', text: 'Formal properties such as meter and assonance have been shown to influence readers\' emotional responses.' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. Text 2 argues that some separable propositional content survives translation into different wording. If scholars can produce accurate prose summaries of Shakespeare's plays that are genuinely useful to audiences, this supports the idea that separable content (distinct from formal properties) can be extracted and conveyed — strengthening Beardsley's position against Brooks's formalism.`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. This observation about translation difficulty supports Brooks's argument (in Text 1) that form and content are inseparable, not Beardsley's argument in Text 2.`,
-      C: `Choice C is incorrect. The possibility of multiple valid paraphrases suggests variability in paraphrase, which does not directly strengthen the claim that extractable propositional content exists.`,
-      D: `Choice D is incorrect. This shows formal properties influence emotional response — a point consistent with Text 1's formalism — and does not address whether separable propositional content exists.`,
-    },
-  },
-
-  {
     id: 'rw2h-11',
     section: 'reading-writing',
     moduleId: 'rw-module-2-hard',
@@ -245,6 +217,30 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
       A: `Choice A is incorrect. The passage does not claim satisficing produces better outcomes than optimization; it says it is "often nearly as effective," implying optimization might still be superior if achievable.`,
       C: `Choice C is incorrect. Satisficing still involves rational deliberation — setting aspiration levels and evaluating options — it just does not require exhaustive comparison.`,
       B: `Choice B is incorrect. The passage makes no ethical argument about the moral acceptability of optimization outcomes.`,
+    },
+  },
+
+  {
+    id: 'rw2h-10',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'hard',
+    stimulus: `A philosopher of science argues that scientific consensus can persist long after the preponderance of new evidence has shifted against it, because established paradigms shape which anomalies researchers notice and which they dismiss as noise. She draws on the following passages from a historical study of contested scientific transitions.`,
+    question: `Which quotation from the study most directly supports the philosopher's argument?`,
+    choices: [
+      { label: 'A', text: '"In the decades before the acceptance of plate tectonics, geologists repeatedly catalogued the same puzzling distribution of fossil species across non-contiguous continents but classified these findings as curiosities rather than as evidence demanding a new theoretical framework."' },
+      { label: 'B', text: '"The eventual acceptance of germ theory was hastened by technological improvements in microscopy that allowed researchers to visualize individual microorganisms with unprecedented clarity."' },
+      { label: 'C', text: '"Paradigm shifts in science are typically preceded by periods of intense disagreement among specialists, during which rival camps compete for institutional funding and journal space."' },
+      { label: 'D', text: '"The history of astronomy suggests that anomalous observations are often incorporated into existing models through small adjustments — such as the addition of epicycles — before a fundamentally new model is accepted."' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. The philosopher's specific claim is that consensus persists because established paradigms determine which anomalies are noticed and which are dismissed as noise. Choice A directly supports this: geologists repeatedly catalogued anomalous fossil distributions but classified them as curiosities rather than paradigm-threatening evidence — the existing geological paradigm shaped how they interpreted the data, suppressing recognition of its significance. This is precisely the mechanism the philosopher describes.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. It attributes the shift to a technological improvement (better microscopes) rather than to paradigm-driven perception of evidence. It does not address how established consensus shapes the interpretation of anomalies.`,
+      C: `Choice C is incorrect. It describes institutional competition during transitions but says nothing about how paradigms filter which evidence is taken seriously — the philosopher's specific claim about why consensus persists.`,
+      D: `Choice D is incorrect. It describes how anomalies are accommodated within existing models through adjustments, which is related but focuses on model revision rather than on the paradigm's role in causing researchers to dismiss rather than notice evidence.`,
     },
   },
 
@@ -377,110 +373,6 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
       A: `Choice A is incorrect. The passage does not mention financial incentives or economic motivations for the professionals' errors.`,
       C: `Choice C is incorrect. The passage explicitly states that actual patients outperformed professionals in recognizing the pseudopatients as healthy.`,
       D: `Choice D is incorrect. The passage does not attribute the errors to insufficient training; the explanation is more likely systematic perceptual bias from existing diagnoses.`,
-    },
-  },
-
-  {
-    id: 'rw2h-21',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Expression of Ideas',
-    skill: 'Rhetorical Synthesis',
-    difficulty: 'hard',
-    stimulus: `A student is writing an essay arguing that antibiotic resistance is primarily an economic problem, not merely a medical one, and has compiled the following notes:
-• Antibiotics are frequently prescribed for viral infections against which they have no effect, partly because of patient pressure and partly because the time cost of testing to confirm a bacterial cause is borne by individual clinicians while the social cost of resistance is borne by the public.
-• Pharmaceutical companies have little financial incentive to develop new antibiotics because antibiotics are used briefly and cured patients stop purchasing them, unlike treatments for chronic conditions.
-• In livestock agriculture, antibiotics are routinely administered at sub-therapeutic doses to promote growth, accelerating the development of resistant strains in contexts where the profit motive is direct and the costs are externalized.
-• Effective new antibiotic compounds do exist in laboratory settings but remain underdeveloped because the projected return on investment does not justify the cost of clinical trials.`,
-    question: `The student wants to write a thesis sentence that argues resistance is primarily an economic problem by synthesizing the structural incentive failures described across the notes. Which choice most effectively accomplishes this goal?`,
-    choices: [
-      { label: 'A', text: 'Antibiotic resistance is worsening globally because patients pressure physicians to prescribe medications that are not medically appropriate.' },
-      { label: 'B', text: 'Because the individual incentives of clinicians, pharmaceutical companies, and agricultural producers all encourage antibiotic overuse or underinvestment in new drugs while the resulting costs are borne collectively, resistance is fundamentally a problem of misaligned economic incentives rather than of medical ignorance.' },
-      { label: 'C', text: 'Pharmaceutical companies should be required to invest in antibiotic research, and agricultural use of sub-therapeutic antibiotics should be regulated more strictly.' },
-      { label: 'D', text: 'Laboratory compounds that could address resistance exist but remain underdeveloped, suggesting that the pipeline for new antibiotics is not as empty as critics claim.' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. The student's specific goal is to synthesize the structural incentive failures across all four notes into a thesis that frames resistance as an economic problem. Choice B does exactly this: it identifies the common thread across clinicians (time cost externalized), pharmaceutical companies (low return on investment), and agricultural producers (profit motive with externalized costs), and explicitly frames the synthesis as "misaligned economic incentives" rather than medical ignorance. It is the only choice that draws on multiple notes to argue for the economic framing the student wants to establish.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. It draws on only the first note (patient pressure on clinicians) and identifies a single actor, missing the broader structural argument the student wants to make across all four notes. It also frames the problem as inappropriate prescribing rather than as a systemic economic incentive failure.`,
-      C: `Choice C is incorrect. It proposes policy solutions (regulation and investment mandates) rather than advancing a thesis about what kind of problem resistance is. A thesis sentence should make an argument, not recommend policy actions.`,
-      D: `Choice D is incorrect. It draws on only the fourth note and actually partially challenges the framing (suggesting the pipeline is not as empty as critics claim), which undermines rather than supports the student's argument.`,
-    },
-  },
-
-  {
-    id: 'rw2h-22',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Expression of Ideas',
-    skill: 'Rhetorical Synthesis',
-    difficulty: 'hard',
-    stimulus: `A student writing about the philosophy of science has taken the following notes:
-• Karl Popper argued that a scientific theory is valid only if it makes predictions that could, in principle, be proven false by experiment.
-• Thomas Kuhn argued that science does not progress through steady accumulation but through revolutionary "paradigm shifts" — abrupt reorganizations of the entire conceptual framework of a discipline.
-• Paul Feyerabend argued that there is no single scientific method; successful science has employed a wide variety of procedures, and rigid adherence to any one method can impede discovery.
-• All three thinkers wrote primarily in the mid-to-late twentieth century and responded directly to one another's work.`,
-    question: `The student wants to write a sentence for a section arguing that philosophers of science in the twentieth century disagreed about what distinguishes genuine science from other forms of inquiry. Which choice most effectively uses the notes to accomplish this goal?`,
-    choices: [
-      { label: 'A', text: 'Popper, Kuhn, and Feyerabend all wrote in the mid-to-late twentieth century and engaged with each other\'s ideas.' },
-      { label: 'B', text: 'Thomas Kuhn argued that science advances through paradigm shifts rather than steady accumulation of knowledge.' },
-      { label: 'C', text: 'Twentieth-century philosophers including Popper, Kuhn, and Feyerabend offered competing accounts of what makes a discipline scientific, disagreeing on whether science requires falsifiability, proceeds by paradigm shifts, or even follows a consistent method at all.' },
-      { label: 'D', text: 'Paul Feyerabend believed that any single scientific method could become an obstacle to discovery.' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. The student wants to show that these thinkers disagreed about what distinguishes science. Only choice C captures all three philosophers, summarizes their distinct positions, and frames their disagreement — making it the most effective sentence for the stated purpose.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. It establishes historical context (they were contemporaries who engaged with each other) but does not convey any of their substantive disagreements.`,
-      B: `Choice B is incorrect. It covers only Kuhn's view and does not introduce the diversity of competing positions.`,
-      D: `Choice D is incorrect. It covers only Feyerabend's position and does not illustrate the broader disagreement among the three thinkers.`,
-    },
-  },
-
-  {
-    id: 'rw2h-23',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Expression of Ideas',
-    skill: 'Transitions',
-    difficulty: 'hard',
-    stimulus: `Proponents of deliberative democracy argue that political legitimacy derives not from majority voting alone but from the quality of public reasoning that precedes it: decisions reached after inclusive, reasoned debate have a stronger claim to democratic authority than those reached by preference aggregation without deliberation. Critics concede that deliberation can refine and clarify political disagreements. _______, they contend, it rarely resolves the deep value conflicts that drive the most contentious political disputes — and may even sharpen disagreement by giving each side a more articulate vocabulary for defending its position.`,
-    question: `Which choice completes the text with the most logical transition?`,
-    choices: [
-      { label: 'A', text: 'Consequently' },
-      { label: 'B', text: 'In addition' },
-      { label: 'C', text: 'For instance' },
-      { label: 'D', text: 'Yet' },
-    ],
-    correctAnswer: 'D',
-    explanation: `Choice D is correct. The sentence before the blank concedes a point in favor of deliberation (it can refine and clarify disagreements). The sentence after the blank introduces a contrasting limitation (deliberation rarely resolves deep value conflicts). The logical relationship is concession followed by counter-qualification — the critic grants a partial point and then pushes back on a stronger claim. "Yet" signals exactly this kind of concessive contrast, acknowledging what has just been granted while pivoting to the stronger objection.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Consequently" signals a causal result, implying that what follows is an outcome or logical consequence of what precedes it. But the critics are not saying that deliberation's ability to refine disagreements leads to failure to resolve them; they are making a separate, contrasting point.`,
-      B: `Choice B is incorrect. "In addition" signals that the following point supplements or adds to the previous one. But the following clause is a limitation that qualifies the concession just made — it is a contrast, not an addition.`,
-      C: `Choice C is incorrect. "For instance" introduces a specific example illustrating the preceding claim. The following sentence is not an example of deliberation refining disagreements; it is a contrasting objection about deliberation's limits.`,
-    },
-  },
-
-  {
-    id: 'rw2h-24',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-hard',
-    domain: 'Expression of Ideas',
-    skill: 'Transitions',
-    difficulty: 'hard',
-    stimulus: `Scholars in the tradition of cultural psychology have argued that cognitive processes previously assumed to be universal — such as analytic reasoning, categorization strategies, and attention patterns — vary systematically across cultures. _______, researchers have proposed that individuals raised in East Asian cultures tend to attend more holistically to contextual information, while those raised in Western cultures tend to focus more analytically on individual objects.`,
-    question: `Which choice completes the text with the most logical transition?`,
-    choices: [
-      { label: 'A', text: 'Nevertheless' },
-      { label: 'B', text: 'For instance' },
-      { label: 'C', text: 'On the contrary' },
-      { label: 'D', text: 'In conclusion' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. The first sentence makes a general claim (cognitive processes vary across cultures). The second sentence provides a specific example of this variation (East Asian vs. Western attention patterns). "For instance" introduces an illustrative example of a preceding general claim.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Nevertheless" signals a contrast or qualification, but the second sentence supports and illustrates the first rather than contradicting it.`,
-      C: `Choice C is incorrect. "On the contrary" introduces a direct contradiction of the previous statement, but the second sentence is consistent with and illustrative of the first.`,
-      D: `Choice D is incorrect. "In conclusion" signals a summary at the end of an argument, which does not fit the mid-passage relationship between these two sentences.`,
     },
   },
 
@@ -632,23 +524,23 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
     id: 'rw2h-20',
     section: 'reading-writing',
     moduleId: 'rw-module-2-hard',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
     difficulty: 'hard',
-    stimulus: `Early telescopes suffered from chromatic aberration, a distortion that surrounded bright objects with rings of false color and blurred fine detail. Isaac Newton concluded that the flaw was an inescapable property of refracting lenses ______ he designed a reflecting telescope that used mirrors instead, sidestepping the problem entirely.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    stimulus: `The architectural movement known as Brutalism achieved its greatest visibility in the 1960s and 1970s, when governments and universities commissioned massive concrete structures intended to project permanence, civic seriousness, and institutional confidence. Many of these buildings now face demolition, their raw facades having grown unpopular with the publics they were meant to impress. _______, a growing cohort of architects, historians, and preservation advocates argues that the most significant Brutalist structures deserve legal protection as works of artistic and historical importance.`,
+    question: `Which choice completes the text with the most logical transition?`,
     choices: [
-      { label: 'A', text: ', therefore,' },
-      { label: 'B', text: '; therefore,' },
-      { label: 'C', text: ' therefore,' },
-      { label: 'D', text: 'therefore' },
+      { label: 'A', text: 'As a result' },
+      { label: 'B', text: 'Likewise' },
+      { label: 'C', text: 'That said' },
+      { label: 'D', text: 'For instance' },
     ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. Both "Isaac Newton concluded that the flaw was an inescapable property of refracting lenses" and "he designed a reflecting telescope that used mirrors instead" are independent clauses. When a conjunctive adverb such as "therefore" links two independent clauses, a semicolon must precede it (and a comma follows it). The semicolon supplies the required sentence boundary.`,
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. The first two sentences establish that Brutalist buildings face demolition because the public has grown to dislike them. The third sentence introduces a contrasting countercurrent: preservation advocates argue the most significant ones should be protected. The relationship is concessive — acknowledging a prevailing tendency before introducing a complicating counterposition. "That said" precisely signals this kind of concessive pivot: it grants the preceding point while introducing a qualifying counter-view.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. A conjunctive adverb like "therefore" is not a coordinating conjunction, so a comma before it cannot join two independent clauses; this creates a comma splice.`,
-      C: `Choice C is incorrect. Placing "therefore" between two independent clauses with no preceding semicolon or period leaves them fused as a run-on sentence.`,
-      D: `Choice D is incorrect. Omitting both the boundary punctuation and the following comma runs the two independent clauses together and mispunctuates the conjunctive adverb.`,
+      A: `Choice A is incorrect. "As a result" signals that the third sentence is a consequence of the demolition pressures described in the second sentence. But the emergence of a preservation movement is not a consequence of demolition pressure; it is a reaction against it, making causation the wrong logical relationship.`,
+      B: `Choice B is incorrect. "Likewise" signals that the third sentence adds a parallel or similar point, but the preservation argument is opposed to the demolition trend rather than parallel to it.`,
+      D: `Choice D is incorrect. "For instance" introduces a specific example illustrating the preceding claim. The third sentence is not an example of Brutalist buildings facing demolition; it is a counter-movement that complicates that trend.`,
     },
   },
 
@@ -656,23 +548,127 @@ Text 2: The philosopher Monroe Beardsley countered that the distinction between 
     id: 'rw2h-26',
     section: 'reading-writing',
     moduleId: 'rw-module-2-hard',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
     difficulty: 'hard',
-    stimulus: `The city's urban planning commission approved three proposals last Tuesday _______ the construction of a riverside park, the expansion of the light rail system, and the establishment of a commercial district in the former industrial zone.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    stimulus: `Scholars of tragedy have long argued that the genre achieves its emotional power by making the protagonist's downfall feel both inevitable and unjust — that the audience must simultaneously accept the logic that brings the hero to ruin and resist the feeling that the punishment fits the transgression. _______, recent work in moral psychology has suggested that this tension maps onto a genuine feature of human ethical cognition: our tendency to hold people responsible for foreseeable consequences of their choices even when those consequences exceed what any reasonable agent could have anticipated.`,
+    question: `Which choice completes the text with the most logical transition?`,
     choices: [
-      { label: 'A', text: ':' },
-      { label: 'B', text: ',' },
-      { label: 'C', text: ';' },
-      { label: 'D', text: '— which included' },
+      { label: 'A', text: 'Nevertheless' },
+      { label: 'B', text: 'Interestingly' },
+      { label: 'C', text: 'In contrast' },
+      { label: 'D', text: 'By the same token' },
     ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. A colon is the correct punctuation to introduce a list or enumeration that follows and specifies an antecedent claim. "Three proposals" announces that items will follow, and the colon formally introduces the list.`,
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The first sentence presents a long-standing literary claim about tragedy. The second sentence introduces a new, surprising finding from an unrelated field — moral psychology — that happens to map onto and corroborate the literary claim. This convergence between aesthetics and cognitive science is noteworthy and somewhat unexpected, making "Interestingly" the right signal: it introduces a development the reader would find striking given what was just stated.`,
     wrongAnswerExplanations: {
-      B: `Choice B is incorrect. A comma here would weakly connect "three proposals" to the list without the clarity that a colon provides for formal enumeration.`,
-      C: `Choice C is incorrect. A semicolon separates independent clauses or items in a complex list, but it does not correctly introduce a list following a complete independent clause.`,
-      D: `Choice D is incorrect. "Which included" is a relative clause requiring that the antecedent "proposals" be followed by "which" — but rewriting the sentence this way creates awkward syntax and unnecessary wordiness.`,
+      A: `Choice A is incorrect. "Nevertheless" signals a contrast or qualification of the preceding point, but the moral psychology research supports and illuminates the literary claim rather than contradicting or complicating it.`,
+      C: `Choice C is incorrect. "In contrast" introduces an opposing or diverging idea, but the second sentence is consistent with and confirmatory of the first rather than opposed to it.`,
+      D: `Choice D is incorrect. "By the same token" signals that the second sentence makes a parallel point using the same logic as the first, but the second sentence draws on a different field and framing — it is not simply restating the same argument in a parallel register.`,
+    },
+  },
+
+  {
+    id: 'rw2h-23',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
+    difficulty: 'hard',
+    stimulus: `Proponents of deliberative democracy argue that political legitimacy derives not from majority voting alone but from the quality of public reasoning that precedes it: decisions reached after inclusive, reasoned debate have a stronger claim to democratic authority than those reached by preference aggregation without deliberation. Critics concede that deliberation can refine and clarify political disagreements. _______, they contend, it rarely resolves the deep value conflicts that drive the most contentious political disputes — and may even sharpen disagreement by giving each side a more articulate vocabulary for defending its position.`,
+    question: `Which choice completes the text with the most logical transition?`,
+    choices: [
+      { label: 'A', text: 'Consequently' },
+      { label: 'B', text: 'In addition' },
+      { label: 'C', text: 'For instance' },
+      { label: 'D', text: 'Yet' },
+    ],
+    correctAnswer: 'D',
+    explanation: `Choice D is correct. The sentence before the blank concedes a point in favor of deliberation (it can refine and clarify disagreements). The sentence after the blank introduces a contrasting limitation (deliberation rarely resolves deep value conflicts). The logical relationship is concession followed by counter-qualification — the critic grants a partial point and then pushes back on a stronger claim. "Yet" signals exactly this kind of concessive contrast, acknowledging what has just been granted while pivoting to the stronger objection.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "Consequently" signals a causal result, implying that what follows is an outcome or logical consequence of what precedes it. But the critics are not saying that deliberation's ability to refine disagreements leads to failure to resolve them; they are making a separate, contrasting point.`,
+      B: `Choice B is incorrect. "In addition" signals that the following point supplements or adds to the previous one. But the following clause is a limitation that qualifies the concession just made — it is a contrast, not an addition.`,
+      C: `Choice C is incorrect. "For instance" introduces a specific example illustrating the preceding claim. The following sentence is not an example of deliberation refining disagreements; it is a contrasting objection about deliberation's limits.`,
+    },
+  },
+
+  {
+    id: 'rw2h-24',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
+    difficulty: 'hard',
+    stimulus: `Scholars in the tradition of cultural psychology have argued that cognitive processes previously assumed to be universal — such as analytic reasoning, categorization strategies, and attention patterns — vary systematically across cultures. _______, researchers have proposed that individuals raised in East Asian cultures tend to attend more holistically to contextual information, while those raised in Western cultures tend to focus more analytically on individual objects.`,
+    question: `Which choice completes the text with the most logical transition?`,
+    choices: [
+      { label: 'A', text: 'Nevertheless' },
+      { label: 'B', text: 'For instance' },
+      { label: 'C', text: 'On the contrary' },
+      { label: 'D', text: 'In conclusion' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The first sentence makes a general claim (cognitive processes vary across cultures). The second sentence provides a specific example of this variation (East Asian vs. Western attention patterns). "For instance" introduces an illustrative example of a preceding general claim.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "Nevertheless" signals a contrast or qualification, but the second sentence supports and illustrates the first rather than contradicting it.`,
+      C: `Choice C is incorrect. "On the contrary" introduces a direct contradiction of the previous statement, but the second sentence is consistent with and illustrative of the first.`,
+      D: `Choice D is incorrect. "In conclusion" signals a summary at the end of an argument, which does not fit the mid-passage relationship between these two sentences.`,
+    },
+  },
+
+  {
+    id: 'rw2h-21',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Expression of Ideas',
+    skill: 'Rhetorical Synthesis',
+    difficulty: 'hard',
+    stimulus: `A student is writing an essay arguing that antibiotic resistance is primarily an economic problem, not merely a medical one, and has compiled the following notes:
+• Antibiotics are frequently prescribed for viral infections against which they have no effect, partly because of patient pressure and partly because the time cost of testing to confirm a bacterial cause is borne by individual clinicians while the social cost of resistance is borne by the public.
+• Pharmaceutical companies have little financial incentive to develop new antibiotics because antibiotics are used briefly and cured patients stop purchasing them, unlike treatments for chronic conditions.
+• In livestock agriculture, antibiotics are routinely administered at sub-therapeutic doses to promote growth, accelerating the development of resistant strains in contexts where the profit motive is direct and the costs are externalized.
+• Effective new antibiotic compounds do exist in laboratory settings but remain underdeveloped because the projected return on investment does not justify the cost of clinical trials.`,
+    question: `The student wants to write a thesis sentence that argues resistance is primarily an economic problem by synthesizing the structural incentive failures described across the notes. Which choice most effectively accomplishes this goal?`,
+    choices: [
+      { label: 'A', text: 'Antibiotic resistance is worsening globally because patients pressure physicians to prescribe medications that are not medically appropriate.' },
+      { label: 'B', text: 'Because the individual incentives of clinicians, pharmaceutical companies, and agricultural producers all encourage antibiotic overuse or underinvestment in new drugs while the resulting costs are borne collectively, resistance is fundamentally a problem of misaligned economic incentives rather than of medical ignorance.' },
+      { label: 'C', text: 'Pharmaceutical companies should be required to invest in antibiotic research, and agricultural use of sub-therapeutic antibiotics should be regulated more strictly.' },
+      { label: 'D', text: 'Laboratory compounds that could address resistance exist but remain underdeveloped, suggesting that the pipeline for new antibiotics is not as empty as critics claim.' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The student's specific goal is to synthesize the structural incentive failures across all four notes into a thesis that frames resistance as an economic problem. Choice B does exactly this: it identifies the common thread across clinicians (time cost externalized), pharmaceutical companies (low return on investment), and agricultural producers (profit motive with externalized costs), and explicitly frames the synthesis as "misaligned economic incentives" rather than medical ignorance. It is the only choice that draws on multiple notes to argue for the economic framing the student wants to establish.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. It draws on only the first note (patient pressure on clinicians) and identifies a single actor, missing the broader structural argument the student wants to make across all four notes. It also frames the problem as inappropriate prescribing rather than as a systemic economic incentive failure.`,
+      C: `Choice C is incorrect. It proposes policy solutions (regulation and investment mandates) rather than advancing a thesis about what kind of problem resistance is. A thesis sentence should make an argument, not recommend policy actions.`,
+      D: `Choice D is incorrect. It draws on only the fourth note and actually partially challenges the framing (suggesting the pipeline is not as empty as critics claim), which undermines rather than supports the student's argument.`,
+    },
+  },
+
+  {
+    id: 'rw2h-22',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-hard',
+    domain: 'Expression of Ideas',
+    skill: 'Rhetorical Synthesis',
+    difficulty: 'hard',
+    stimulus: `A student writing about the philosophy of science has taken the following notes:
+• Karl Popper argued that a scientific theory is valid only if it makes predictions that could, in principle, be proven false by experiment.
+• Thomas Kuhn argued that science does not progress through steady accumulation but through revolutionary "paradigm shifts" — abrupt reorganizations of the entire conceptual framework of a discipline.
+• Paul Feyerabend argued that there is no single scientific method; successful science has employed a wide variety of procedures, and rigid adherence to any one method can impede discovery.
+• All three thinkers wrote primarily in the mid-to-late twentieth century and responded directly to one another's work.`,
+    question: `The student wants to write a sentence for a section arguing that philosophers of science in the twentieth century disagreed about what distinguishes genuine science from other forms of inquiry. Which choice most effectively uses the notes to accomplish this goal?`,
+    choices: [
+      { label: 'A', text: 'Popper, Kuhn, and Feyerabend all wrote in the mid-to-late twentieth century and engaged with each other\'s ideas.' },
+      { label: 'B', text: 'Thomas Kuhn argued that science advances through paradigm shifts rather than steady accumulation of knowledge.' },
+      { label: 'C', text: 'Twentieth-century philosophers including Popper, Kuhn, and Feyerabend offered competing accounts of what makes a discipline scientific, disagreeing on whether science requires falsifiability, proceeds by paradigm shifts, or even follows a consistent method at all.' },
+      { label: 'D', text: 'Paul Feyerabend believed that any single scientific method could become an obstacle to discovery.' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. The student wants to show that these thinkers disagreed about what distinguishes science. Only choice C captures all three philosophers, summarizes their distinct positions, and frames their disagreement — making it the most effective sentence for the stated purpose.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. It establishes historical context (they were contemporaries who engaged with each other) but does not convey any of their substantive disagreements.`,
+      B: `Choice B is incorrect. It covers only Kuhn's view and does not introduce the diversity of competing positions.`,
+      D: `Choice D is incorrect. It covers only Feyerabend's position and does not illustrate the broader disagreement among the three thinkers.`,
     },
   },
 ]

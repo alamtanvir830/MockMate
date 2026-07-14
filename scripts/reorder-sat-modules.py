@@ -20,27 +20,25 @@ from pathlib import Path
 
 BASE = Path(__file__).parent.parent / 'lib' / 'premade-exams' / 'sat'
 
-RW_DOMAIN_ORDER = {
-    'Craft and Structure': 0,
-    'Information and Ideas': 1,
-    'Expression of Ideas': 2,
-    'Standard English Conventions': 3,
-}
-RW_SKILL_ORDER = {
-    # Craft and Structure
+# Global R&W skill ordering (realistic digital SAT sequence):
+# Q1-4   Words in Context
+# Q5-9   Text Structure / Cross-Text / Central Ideas
+# Q10-13 Command of Evidence
+# Q14-15 Inferences (then Boundaries/FSS if needed)
+# Q16-21 Boundaries / Form, Structure, and Sense
+# Q22-24 Transitions
+# Q25-27 Transitions or Rhetorical Synthesis (RS closes the module)
+RW_GLOBAL_SKILL_ORDER = {
     'Words in Context': 0,
     'Text Structure and Purpose': 1,
-    'Cross-Text Connections': 2,
-    # Information and Ideas
-    'Central Ideas and Details': 0,
-    'Command of Evidence': 1,
-    'Inferences': 2,
-    # Expression of Ideas
-    'Rhetorical Synthesis': 0,
-    'Transitions': 1,
-    # Standard English Conventions
-    'Form, Structure, and Sense': 0,
-    'Boundaries': 1,
+    'Cross-Text Connections': 1,
+    'Central Ideas and Details': 1,
+    'Command of Evidence': 2,
+    'Inferences': 3,
+    'Boundaries': 4,
+    'Form, Structure, and Sense': 4,
+    'Transitions': 5,
+    'Rhetorical Synthesis': 6,
 }
 DIFFICULTY_ORDER = {'easy': 0, 'medium': 1, 'hard': 2}
 MATH_DOMAIN_ORDER = {
@@ -108,15 +106,12 @@ def split_blocks(array_content: str) -> list[str]:
 
 
 def get_rw_key(block: str) -> tuple:
-    domain = re.search(r"domain:\s*'([^']+)'", block)
     skill = re.search(r"skill:\s*'([^']+)'", block)
     diff = re.search(r"difficulty:\s*'([^']+)'", block)
-    d = domain.group(1) if domain else ''
     sk = skill.group(1) if skill else ''
     di = diff.group(1) if diff else 'medium'
     return (
-        RW_DOMAIN_ORDER.get(d, 9),
-        RW_SKILL_ORDER.get(sk, 9),
+        RW_GLOBAL_SKILL_ORDER.get(sk, 9),
         DIFFICULTY_ORDER.get(di, 1),
     )
 

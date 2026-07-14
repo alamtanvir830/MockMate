@@ -76,6 +76,30 @@ export const rwModule2EasyQuestions: RWQuestion[] = [
   },
 
   {
+    id: 'rw2e-09',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'easy',
+    stimulus: `The village had been prosperous once — its stone market hall and wide central square were evidence enough of that — but the closure of the mills had left it strangely inert. Shops stood empty, the square filled only on the occasional market day, and the younger residents had largely departed for the cities. An observer walking through on a weekday morning would find the streets quiet and the remaining inhabitants going about their routines with the measured patience of people who had made their accommodation with reduced circumstances.`,
+    question: `As used in the passage, "inert" most nearly means`,
+    choices: [
+      { label: 'A', text: 'hostile to outsiders' },
+      { label: 'B', text: 'lacking in activity or vitality' },
+      { label: 'C', text: 'chemically stable' },
+      { label: 'D', text: 'resistant to change' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The passage describes a village where shops stand empty, the square fills only occasionally, and the young have left — all signs of diminished activity and life. "Inert" in this context means lacking in activity or vitality, capturing the stillness and reduced energy of the depopulated town. The surrounding details all reinforce this meaning.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. Nothing in the passage suggests hostility toward outsiders; the village is simply quiet and depopulated.`,
+      C: `Choice C is incorrect. "Chemically stable" is a scientific definition of "inert" that makes no sense in the context of describing a village's social and economic condition.`,
+      D: `Choice D is incorrect. While "resistant to change" is sometimes associated with inertness, the passage emphasizes the absence of activity and energy, not stubbornness about changing; the villagers have in fact adapted to their reduced circumstances.`,
+    },
+  },
+
+  {
     id: 'rw2e-06',
     section: 'reading-writing',
     moduleId: 'rw-module-2-easy',
@@ -121,82 +145,6 @@ export const rwModule2EasyQuestions: RWQuestion[] = [
       B: `Choice B is incorrect. The passage does not discuss reversing permafrost thaw; the feedback loop is presented as a danger, not a solution.`,
       C: `Choice C is incorrect. The passage does not compare permafrost thaw to ocean warming.`,
       D: `Choice D is incorrect. The passage does not mention energy; the greenhouse gases released are described as a climate hazard.`,
-    },
-  },
-
-  {
-    id: 'rw2e-08',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Text Structure and Purpose',
-    difficulty: 'medium',
-    stimulus: `Until the late nineteenth century, most medical practitioners believed that diseases were caused by "miasma" — noxious vapors arising from decaying organic matter. This theory seemed to explain why disease rates were higher in swampy, foul-smelling areas. The germ theory of disease, developed by scientists including Louis Pasteur and Robert Koch, gradually displaced the miasma theory by demonstrating that specific microorganisms cause specific diseases. The shift required not only new evidence but also a fundamental reconceptualization of what disease is and how it spreads.`,
-    question: `The passage is primarily organized to`,
-    choices: [
-      { label: 'A', text: 'argue that the germ theory of disease has important limitations' },
-      { label: 'B', text: 'warn readers about the continued dangers of miasma in urban environments' },
-      { label: 'C', text: 'explain the experimental methods Pasteur and Koch used in their research' },
-      { label: 'D', text: 'describe how one scientific theory replaced another and what that transition involved' },
-    ],
-    correctAnswer: 'D',
-    explanation: `Choice D is correct. The passage traces a historical transition from miasma theory to germ theory, notes why the old theory seemed plausible, and concludes that the shift required both new evidence and new conceptual frameworks. This is a description of one theory replacing another.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage does not critique germ theory or suggest it has weaknesses.`,
-      C: `Choice C is incorrect. The passage mentions Pasteur and Koch but does not describe their experimental methods.`,
-      B: `Choice B is incorrect. The passage presents miasma theory as a historical belief that was replaced, not as a current threat.`,
-    },
-  },
-
-  {
-    id: 'rw2e-09',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'easy',
-    stimulus: `Text 1: Proponents of a four-day workweek argue that reducing working hours increases employee wellbeing, decreases burnout, and ultimately raises productivity by allowing workers to return to their tasks more refreshed. Several pilot programs in Iceland and New Zealand found that output was maintained or improved even when employees worked one day less per week.
-
-Text 2: Critics caution that results from four-day workweek trials may not be broadly applicable. Many of the most successful trials involved knowledge workers in office settings whose output is difficult to measure, and whose workflow can be restructured more easily than that of hourly workers in manufacturing or healthcare. Generalizing from these results to the entire economy may therefore be premature.`,
-    question: `Based on the passages, the author of Text 2 would most likely respond to the pilot program results mentioned in Text 1 by arguing that`,
-    choices: [
-      { label: 'A', text: 'the pilot programs were conducted unethically and their data should be discarded' },
-      { label: 'B', text: 'the results, while valid in their context, may not apply to all types of workers' },
-      { label: 'C', text: 'employee wellbeing is not a legitimate factor in workplace policy decisions' },
-      { label: 'D', text: 'productivity always declines when workers have fewer hours in the office' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. Text 2 does not dispute that the pilot programs produced positive results; it argues that those results came from contexts (knowledge workers in office settings) that may not represent the broader economy. This is a methodological concern about generalizability, not a rejection of the data.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Text 2 raises no ethical objections to the pilot programs.`,
-      C: `Choice C is incorrect. Text 2 does not challenge employee wellbeing as a relevant factor; it questions whether pilot results generalize across worker types.`,
-      D: `Choice D is incorrect. Text 2 actually acknowledges that the trials showed maintained or improved productivity — it just questions whether this result generalizes.`,
-    },
-  },
-
-  {
-    id: 'rw2e-10',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Craft and Structure',
-    skill: 'Cross-Text Connections',
-    difficulty: 'medium',
-    stimulus: `Text 1: Advocates of social media literacy education argue that teaching young people to identify misinformation, evaluate sources, and understand algorithmic content curation should be a core part of the school curriculum. They contend that digital literacy is now as fundamental as reading and writing for informed citizenship.
-
-Text 2: While social media literacy programs sound appealing in principle, researchers have found that brief classroom interventions produce only modest improvements in students' ability to detect false information, and that these gains often fade quickly after the instruction ends. More structural solutions — including platform regulation and algorithmic transparency requirements — may be necessary to address misinformation at scale.`,
-    question: `The authors of Text 1 and Text 2 would most likely agree that`,
-    choices: [
-      { label: 'A', text: 'misinformation on social media poses no meaningful threat to democratic society' },
-      { label: 'B', text: 'platform regulation is the most effective response to online misinformation' },
-      { label: 'C', text: 'addressing the spread of misinformation online is an important societal concern' },
-      { label: 'D', text: 'social media literacy programs should be permanently removed from school curricula' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. Text 1 argues for media literacy education because misinformation is a serious problem; Text 2 also treats misinformation as a problem serious enough to require structural solutions. Both texts share the premise that misinformation is a significant concern worth addressing.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Both texts treat misinformation as a genuine problem, not a trivial one.`,
-      B: `Choice B is incorrect. Text 2 suggests structural solutions may be necessary, but Text 1 does not address platform regulation, so there is no agreement on this point.`,
-      D: `Choice D is incorrect. Text 2 criticizes the effectiveness of brief interventions but does not call for removing literacy programs entirely.`,
     },
   },
 
@@ -249,6 +197,30 @@ Text 2: While social media literacy programs sound appealing in principle, resea
   },
 
   {
+    id: 'rw2e-08',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Craft and Structure',
+    skill: 'Text Structure and Purpose',
+    difficulty: 'medium',
+    stimulus: `Until the late nineteenth century, most medical practitioners believed that diseases were caused by "miasma" — noxious vapors arising from decaying organic matter. This theory seemed to explain why disease rates were higher in swampy, foul-smelling areas. The germ theory of disease, developed by scientists including Louis Pasteur and Robert Koch, gradually displaced the miasma theory by demonstrating that specific microorganisms cause specific diseases. The shift required not only new evidence but also a fundamental reconceptualization of what disease is and how it spreads.`,
+    question: `The passage is primarily organized to`,
+    choices: [
+      { label: 'A', text: 'argue that the germ theory of disease has important limitations' },
+      { label: 'B', text: 'warn readers about the continued dangers of miasma in urban environments' },
+      { label: 'C', text: 'explain the experimental methods Pasteur and Koch used in their research' },
+      { label: 'D', text: 'describe how one scientific theory replaced another and what that transition involved' },
+    ],
+    correctAnswer: 'D',
+    explanation: `Choice D is correct. The passage traces a historical transition from miasma theory to germ theory, notes why the old theory seemed plausible, and concludes that the shift required both new evidence and new conceptual frameworks. This is a description of one theory replacing another.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. The passage does not critique germ theory or suggest it has weaknesses.`,
+      C: `Choice C is incorrect. The passage mentions Pasteur and Koch but does not describe their experimental methods.`,
+      B: `Choice B is incorrect. The passage presents miasma theory as a historical belief that was replaced, not as a current threat.`,
+    },
+  },
+
+  {
     id: 'rw2e-14',
     section: 'reading-writing',
     moduleId: 'rw-module-2-easy',
@@ -293,6 +265,30 @@ Text 2: While social media literacy programs sound appealing in principle, resea
       A: `Choice A is incorrect. This finding would actually challenge the claim, suggesting fishing gear — not packaging — is the largest source.`,
       C: `Choice C is incorrect. Overall plastic production trends do not specify what share comes from single-use packaging or how much reaches the ocean.`,
       D: `Choice D is incorrect. The total volume of ocean plastic does not specify whether single-use packaging is the dominant source.`,
+    },
+  },
+
+  {
+    id: 'rw2e-10',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'medium',
+    stimulus: `A researcher studying childhood language acquisition argues that children exposed to more varied vocabulary in conversation before age three develop significantly stronger reading comprehension skills by the end of second grade. She cites the following passages from a longitudinal study tracking 400 children from infancy through early elementary school.`,
+    question: `Which quotation from the study most directly supports the researcher's argument?`,
+    choices: [
+      { label: 'A', text: '"Children in the high-vocabulary exposure group scored an average of 23 percentile points higher on standardized reading comprehension tests at the end of second grade than children in the low-exposure group."' },
+      { label: 'B', text: '"Parents in higher-income households tended to use a wider range of vocabulary with their children, and those children also showed higher rates of preschool enrollment."' },
+      { label: 'C', text: '"The study found that the quantity of words spoken to children — regardless of variety — was the strongest predictor of vocabulary size at age four."' },
+      { label: 'D', text: '"Children who scored in the top quartile for vocabulary at age three were more likely to attend college than children who scored in the bottom quartile, controlling for socioeconomic status."' },
+    ],
+    correctAnswer: 'A',
+    explanation: `Choice A is correct. The researcher claims that varied vocabulary exposure before age three predicts stronger reading comprehension by the end of second grade. Choice A directly supports this by reporting that children with high vocabulary exposure scored substantially higher on reading comprehension tests at the end of second grade — linking the specific input (vocabulary variety in early childhood) to the specific outcome (second-grade reading comprehension) the researcher identifies.`,
+    wrongAnswerExplanations: {
+      B: `Choice B is incorrect. It addresses a correlation between income, vocabulary, and preschool enrollment, but does not connect early vocabulary exposure to reading comprehension outcomes by second grade.`,
+      C: `Choice C is incorrect. It actually challenges the researcher's specific claim about vocabulary variety by suggesting that quantity alone (not variety) predicts vocabulary size — and it focuses on age-four vocabulary rather than second-grade reading comprehension.`,
+      D: `Choice D is incorrect. It links early vocabulary to long-term educational outcomes (college attendance), which is a different outcome than the second-grade reading comprehension the researcher is arguing about.`,
     },
   },
 
@@ -382,110 +378,6 @@ Text 2: While social media literacy programs sound appealing in principle, resea
   },
 
   {
-    id: 'rw2e-21',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Expression of Ideas',
-    skill: 'Rhetorical Synthesis',
-    difficulty: 'easy',
-    stimulus: `A student is writing a report about the history of vaccines and has gathered the following notes:
-• Edward Jenner developed the smallpox vaccine in 1796 using cowpox material.
-• The polio vaccine, developed by Jonas Salk, was introduced in 1955 and led to a dramatic reduction in polio cases.
-• The measles vaccine, introduced in 1963, reduced annual U.S. measles cases from roughly 500,000 to under 100 within two decades.
-• mRNA vaccine technology, used in COVID-19 vaccines developed in 2020, represented a new approach that could be adapted quickly to emerging viruses.`,
-    question: `The student wants to write a sentence introducing the historical development of vaccines over time. Which choice most effectively uses the notes to accomplish this goal?`,
-    choices: [
-      { label: 'A', text: 'The smallpox vaccine was developed by Edward Jenner in 1796.' },
-      { label: 'B', text: 'mRNA vaccines represent the most innovative development in vaccine history.' },
-      { label: 'C', text: 'The measles vaccine reduced U.S. cases from approximately 500,000 to under 100 annually within two decades.' },
-      { label: 'D', text: 'Vaccines have evolved from Jenner\'s eighteenth-century smallpox preparation to twenty-first-century mRNA technology, achieving major reductions in disease along the way.' },
-    ],
-    correctAnswer: 'D',
-    explanation: `Choice D is correct. The student's goal is to introduce historical development over time. Only choice D spans the full historical range described in the notes (from 1796 to 2020) and captures the arc of progress, making it the most effective introductory sentence.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. It covers only the earliest vaccine and does not introduce the broader historical development the student wants to describe.`,
-      C: `Choice C is incorrect. It covers only the measles vaccine detail and does not convey a historical trajectory.`,
-      B: `Choice B is incorrect. It makes an evaluative claim about mRNA vaccines without introducing the broader sweep of vaccine history.`,
-    },
-  },
-
-  {
-    id: 'rw2e-22',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Expression of Ideas',
-    skill: 'Rhetorical Synthesis',
-    difficulty: 'medium',
-    stimulus: `A student is preparing a presentation on the economic effects of remote work and has gathered the following notes:
-• Remote workers save an average of $4,000–$6,500 per year on commuting costs, work clothing, and lunches.
-• Employers who allow remote work report average annual savings of $11,000 per remote employee in reduced office space costs.
-• Cities with high concentrations of remote workers have seen increased spending in suburban commercial districts as workers frequent local businesses.
-• Some workers who moved to lower-cost areas during the pandemic reported increased purchasing power despite similar salaries.`,
-    question: `The student wants to highlight that remote work has produced economic benefits for multiple parties. Which choice most effectively uses the notes to accomplish this goal?`,
-    choices: [
-      { label: 'A', text: 'Remote workers can save thousands of dollars annually by eliminating commuting and related expenses.' },
-      { label: 'B', text: 'Remote work has generated economic benefits for individual workers, employers, and local communities.' },
-      { label: 'C', text: 'Employers save approximately $11,000 per year for each employee who works remotely.' },
-      { label: 'D', text: 'During the pandemic, many workers moved to lower-cost areas and experienced increased purchasing power.' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. The student wants to show that multiple parties benefit. Only choice B encompasses all three groups identified in the notes — workers (savings and purchasing power), employers (office cost savings), and communities (suburban commercial activity).`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. It addresses only the benefits to individual workers, omitting employers and communities.`,
-      C: `Choice C is incorrect. It addresses only the benefits to employers.`,
-      D: `Choice D is incorrect. It addresses only one specific worker benefit and does not capture benefits for employers or communities.`,
-    },
-  },
-
-  {
-    id: 'rw2e-23',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Expression of Ideas',
-    skill: 'Transitions',
-    difficulty: 'easy',
-    stimulus: `Many species of migratory birds navigate using the Earth's magnetic field, detecting it through specialized cells in their eyes. _______, some species also use the positions of stars and the angle of the setting sun as navigational cues.`,
-    question: `Which choice completes the text with the most logical transition?`,
-    choices: [
-      { label: 'A', text: 'Therefore' },
-      { label: 'B', text: 'As a result' },
-      { label: 'C', text: 'However' },
-      { label: 'D', text: 'In addition' },
-    ],
-    correctAnswer: 'D',
-    explanation: `Choice D is correct. The passage describes one navigational method (magnetic field) and then adds another (stars and sun). "In addition" signals the addition of a supplementary point, which is the relationship between the two sentences.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Therefore" signals a logical conclusion drawn from the preceding statement, but the second sentence adds a different method rather than drawing a conclusion.`,
-      C: `Choice C is incorrect. "However" signals contrast, but using stars as a navigational cue does not contradict using magnetic fields.`,
-      B: `Choice B is incorrect. "As a result" signals causation, implying that magnetic field detection causes star navigation, which is illogical.`,
-    },
-  },
-
-  {
-    id: 'rw2e-24',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Expression of Ideas',
-    skill: 'Transitions',
-    difficulty: 'medium',
-    stimulus: `The original manuscript of Mary Shelley's Frankenstein shows extensive edits and corrections in a second handwriting, widely believed to be that of her husband Percy Bysshe Shelley. Some scholars interpret this collaboration as evidence that Percy co-authored the novel. _______, the bulk of the creative work, including the central ideas, narrative structure, and most of the prose, is generally attributed to Mary Shelley by scholars who have studied the manuscript carefully.`,
-    question: `Which choice completes the text with the most logical transition?`,
-    choices: [
-      { label: 'A', text: 'In addition' },
-      { label: 'B', text: 'For instance' },
-      { label: 'C', text: 'Nevertheless' },
-      { label: 'D', text: 'As a result' },
-    ],
-    correctAnswer: 'C',
-    explanation: `Choice C is correct. The second sentence concedes that some scholars see co-authorship, then introduces a contrasting position: most scholars still attribute primary authorship to Mary Shelley. "Nevertheless" correctly signals this contrast — acknowledging the preceding point while introducing a counterpoint.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "In addition" would add a parallel point, but the second sentence introduces a contrast to the co-authorship interpretation.`,
-      B: `Choice B is incorrect. "For instance" introduces an example, but the final sentence is a counterargument, not an illustration.`,
-      D: `Choice D is incorrect. "As a result" indicates causation, implying Percy's edits caused Mary's primary authorship to be recognized, which is not the logical relationship between the sentences.`,
-    },
-  },
-
-  {
     id: 'rw2e-04',
     section: 'reading-writing',
     moduleId: 'rw-module-2-easy',
@@ -530,78 +422,6 @@ Text 2: While social media literacy programs sound appealing in principle, resea
       A: `Choice A is incorrect. "The watering of" is a noun phrase, which does not match the verb forms "clear" and "enrich" used earlier in the list.`,
       C: `Choice C is incorrect. "Watering" is a gerund (an -ing form), which breaks parallelism with the base-form verbs "clear" and "enrich."`,
       D: `Choice D is incorrect. "To water" is an infinitive, which does not match the base-form verbs used in the rest of the list.`,
-    },
-  },
-
-  {
-    id: 'rw2e-27',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Standard English Conventions',
-    skill: 'Form, Structure, and Sense',
-    difficulty: 'medium',
-    stimulus: `Each of the students in the advanced chemistry class _______ required to submit a detailed lab report documenting their experimental methodology and results.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: 'are' },
-      { label: 'B', text: 'is' },
-      { label: 'C', text: 'were' },
-      { label: 'D', text: 'have been' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. The grammatical subject of the sentence is "Each," which is a singular indefinite pronoun. Despite the intervening prepositional phrase "of the students in the advanced chemistry class," the verb must agree with the singular subject "Each," requiring the singular verb "is."`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Are" is a plural verb, but the subject "Each" is singular.`,
-      C: `Choice C is incorrect. "Were" is past tense; the sentence describes a current requirement, calling for present tense.`,
-      D: `Choice D is incorrect. "Have been" is present perfect plural, which does not agree with the singular subject "Each."`,
-    },
-  },
-
-  {
-    id: 'rw2e-13',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
-    difficulty: 'easy',
-    stimulus: `The public library recently extended its evening hours to better serve working families. Attendance has risen sharply since the change ______ many patrons now visit after their workdays end.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: ', and' },
-      { label: 'B', text: ',' },
-      { label: 'C', text: ' and' },
-      { label: 'D', text: 'and, that' },
-    ],
-    correctAnswer: 'A',
-    explanation: `Choice A is correct. The text contains two independent clauses: "Attendance has risen sharply since the change" and "many patrons now visit after their workdays end." Two independent clauses can be correctly joined with a comma followed by a coordinating conjunction such as "and."`,
-    wrongAnswerExplanations: {
-      B: `Choice B is incorrect. A comma alone cannot join two independent clauses; doing so creates a comma splice.`,
-      C: `Choice C is incorrect. When "and" joins two independent clauses, a comma is required before it; omitting the comma is a punctuation error in this construction.`,
-      D: `Choice D is incorrect. "And, that" is ungrammatical and creates a confusing, incorrect construction between the two clauses.`,
-    },
-  },
-
-  {
-    id: 'rw2e-17',
-    section: 'reading-writing',
-    moduleId: 'rw-module-2-easy',
-    domain: 'Standard English Conventions',
-    skill: 'Boundaries',
-    difficulty: 'easy',
-    stimulus: `The chef spent years perfecting her signature sourdough bread. Each loaf requires nearly two full days of preparation ______ the long fermentation gives the bread its distinctive tangy flavor and chewy texture.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
-    choices: [
-      { label: 'A', text: ', the' },
-      { label: 'B', text: '. The' },
-      { label: 'C', text: ' the' },
-      { label: 'D', text: ', which the' },
-    ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. "Each loaf requires nearly two full days of preparation" and "the long fermentation gives the bread its distinctive tangy flavor and chewy texture" are both independent clauses. A period correctly separates two independent clauses into two complete sentences.`,
-    wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Joining two independent clauses with only a comma creates a comma splice.`,
-      C: `Choice C is incorrect. Placing two independent clauses side by side with no punctuation creates a run-on sentence.`,
-      D: `Choice D is incorrect. Inserting "which" produces an ungrammatical construction, leaving the clause without a proper subject-verb structure.`,
     },
   },
 
@@ -654,6 +474,30 @@ Text 2: While social media literacy programs sound appealing in principle, resea
   },
 
   {
+    id: 'rw2e-27',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Standard English Conventions',
+    skill: 'Form, Structure, and Sense',
+    difficulty: 'medium',
+    stimulus: `Each of the students in the advanced chemistry class _______ required to submit a detailed lab report documenting their experimental methodology and results.`,
+    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    choices: [
+      { label: 'A', text: 'are' },
+      { label: 'B', text: 'is' },
+      { label: 'C', text: 'were' },
+      { label: 'D', text: 'have been' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The grammatical subject of the sentence is "Each," which is a singular indefinite pronoun. Despite the intervening prepositional phrase "of the students in the advanced chemistry class," the verb must agree with the singular subject "Each," requiring the singular verb "is."`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "Are" is a plural verb, but the subject "Each" is singular.`,
+      C: `Choice C is incorrect. "Were" is past tense; the sentence describes a current requirement, calling for present tense.`,
+      D: `Choice D is incorrect. "Have been" is present perfect plural, which does not agree with the singular subject "Each."`,
+    },
+  },
+
+  {
     id: 'rw2e-26',
     section: 'reading-writing',
     moduleId: 'rw-module-2-easy',
@@ -674,6 +518,158 @@ Text 2: While social media literacy programs sound appealing in principle, resea
       B: `Choice B is incorrect. A semicolon is used between two independent clauses, but "but also for his ability" is not an independent clause.`,
       C: `Choice C is incorrect. A comma before "but" is used in compound sentences joining two independent clauses, not in the "not only...but also" parallel structure.`,
       D: `Choice D is incorrect. A period would create a sentence fragment: "But also for his ability to explain complex scientific concepts" cannot stand alone.`,
+    },
+  },
+
+  {
+    id: 'rw2e-13',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
+    difficulty: 'easy',
+    stimulus: `The sandhill crane migrates thousands of miles each year between its wintering grounds in the southern United States and its breeding grounds in Canada and Alaska. _______, it returns to the same stopover sites along the Platte River in Nebraska year after year, often roosting within a few hundred meters of where it roosted the previous spring.`,
+    question: `Which choice completes the text with the most logical transition?`,
+    choices: [
+      { label: 'A', text: 'Therefore' },
+      { label: 'B', text: 'In contrast' },
+      { label: 'C', text: 'Remarkably' },
+      { label: 'D', text: 'As a result' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. The first sentence establishes that the sandhill crane travels thousands of miles. The second sentence reveals that despite covering such vast distances, it returns to precisely the same roosting spots each year. This precision amid such large-scale movement is surprising or noteworthy, which is exactly what "Remarkably" signals — it introduces a detail that the reader would find surprising given what was just stated.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "Therefore" signals a logical consequence, implying the second sentence follows as a result of the first. But the crane's site fidelity is not a consequence of migrating thousands of miles; it is an additional characteristic that is surprising given that migration.`,
+      B: `Choice B is incorrect. "In contrast" signals opposition or difference, but the second sentence does not contrast with the first — both describe aspects of the same migration behavior.`,
+      D: `Choice D is incorrect. "As a result" implies causation, suggesting the crane returns to the same spots because it migrates thousands of miles, which is not the logical relationship between the sentences.`,
+    },
+  },
+
+  {
+    id: 'rw2e-17',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
+    difficulty: 'easy',
+    stimulus: `Many athletes who compete at the highest levels report that mental preparation — visualization, focused breathing, and deliberate routine — is just as important as physical training. _______, sports psychologists have documented that elite performers who incorporate structured mental rehearsal show measurable improvements in consistency during high-pressure events.`,
+    question: `Which choice completes the text with the most logical transition?`,
+    choices: [
+      { label: 'A', text: 'However' },
+      { label: 'B', text: 'In contrast' },
+      { label: 'C', text: 'Accordingly' },
+      { label: 'D', text: 'Instead' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. The first sentence states that athletes view mental preparation as equally important to physical training. The second sentence provides research evidence supporting this view: structured mental rehearsal leads to measurable improvements. The second sentence follows logically from and confirms the first, making "Accordingly" — which signals a logical continuation or natural consequence — the best fit.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "However" signals a contrast or counterpoint, but the second sentence supports and validates the claim made in the first rather than contradicting it.`,
+      B: `Choice B is incorrect. "In contrast" introduces an opposing or different idea, but both sentences present aligned perspectives on mental preparation's value.`,
+      D: `Choice D is incorrect. "Instead" suggests a replacement or alternative, implying the second sentence offers something in place of what the first described, which is not the relationship here.`,
+    },
+  },
+
+  {
+    id: 'rw2e-23',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
+    difficulty: 'easy',
+    stimulus: `Many species of migratory birds navigate using the Earth's magnetic field, detecting it through specialized cells in their eyes. _______, some species also use the positions of stars and the angle of the setting sun as navigational cues.`,
+    question: `Which choice completes the text with the most logical transition?`,
+    choices: [
+      { label: 'A', text: 'Therefore' },
+      { label: 'B', text: 'As a result' },
+      { label: 'C', text: 'However' },
+      { label: 'D', text: 'In addition' },
+    ],
+    correctAnswer: 'D',
+    explanation: `Choice D is correct. The passage describes one navigational method (magnetic field) and then adds another (stars and sun). "In addition" signals the addition of a supplementary point, which is the relationship between the two sentences.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "Therefore" signals a logical conclusion drawn from the preceding statement, but the second sentence adds a different method rather than drawing a conclusion.`,
+      C: `Choice C is incorrect. "However" signals contrast, but using stars as a navigational cue does not contradict using magnetic fields.`,
+      B: `Choice B is incorrect. "As a result" signals causation, implying that magnetic field detection causes star navigation, which is illogical.`,
+    },
+  },
+
+  {
+    id: 'rw2e-24',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
+    difficulty: 'medium',
+    stimulus: `The original manuscript of Mary Shelley's Frankenstein shows extensive edits and corrections in a second handwriting, widely believed to be that of her husband Percy Bysshe Shelley. Some scholars interpret this collaboration as evidence that Percy co-authored the novel. _______, the bulk of the creative work, including the central ideas, narrative structure, and most of the prose, is generally attributed to Mary Shelley by scholars who have studied the manuscript carefully.`,
+    question: `Which choice completes the text with the most logical transition?`,
+    choices: [
+      { label: 'A', text: 'In addition' },
+      { label: 'B', text: 'For instance' },
+      { label: 'C', text: 'Nevertheless' },
+      { label: 'D', text: 'As a result' },
+    ],
+    correctAnswer: 'C',
+    explanation: `Choice C is correct. The second sentence concedes that some scholars see co-authorship, then introduces a contrasting position: most scholars still attribute primary authorship to Mary Shelley. "Nevertheless" correctly signals this contrast — acknowledging the preceding point while introducing a counterpoint.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. "In addition" would add a parallel point, but the second sentence introduces a contrast to the co-authorship interpretation.`,
+      B: `Choice B is incorrect. "For instance" introduces an example, but the final sentence is a counterargument, not an illustration.`,
+      D: `Choice D is incorrect. "As a result" indicates causation, implying Percy's edits caused Mary's primary authorship to be recognized, which is not the logical relationship between the sentences.`,
+    },
+  },
+
+  {
+    id: 'rw2e-21',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Expression of Ideas',
+    skill: 'Rhetorical Synthesis',
+    difficulty: 'easy',
+    stimulus: `A student is writing a report about the history of vaccines and has gathered the following notes:
+• Edward Jenner developed the smallpox vaccine in 1796 using cowpox material.
+• The polio vaccine, developed by Jonas Salk, was introduced in 1955 and led to a dramatic reduction in polio cases.
+• The measles vaccine, introduced in 1963, reduced annual U.S. measles cases from roughly 500,000 to under 100 within two decades.
+• mRNA vaccine technology, used in COVID-19 vaccines developed in 2020, represented a new approach that could be adapted quickly to emerging viruses.`,
+    question: `The student wants to write a sentence introducing the historical development of vaccines over time. Which choice most effectively uses the notes to accomplish this goal?`,
+    choices: [
+      { label: 'A', text: 'The smallpox vaccine was developed by Edward Jenner in 1796.' },
+      { label: 'B', text: 'mRNA vaccines represent the most innovative development in vaccine history.' },
+      { label: 'C', text: 'The measles vaccine reduced U.S. cases from approximately 500,000 to under 100 annually within two decades.' },
+      { label: 'D', text: 'Vaccines have evolved from Jenner\'s eighteenth-century smallpox preparation to twenty-first-century mRNA technology, achieving major reductions in disease along the way.' },
+    ],
+    correctAnswer: 'D',
+    explanation: `Choice D is correct. The student's goal is to introduce historical development over time. Only choice D spans the full historical range described in the notes (from 1796 to 2020) and captures the arc of progress, making it the most effective introductory sentence.`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. It covers only the earliest vaccine and does not introduce the broader historical development the student wants to describe.`,
+      C: `Choice C is incorrect. It covers only the measles vaccine detail and does not convey a historical trajectory.`,
+      B: `Choice B is incorrect. It makes an evaluative claim about mRNA vaccines without introducing the broader sweep of vaccine history.`,
+    },
+  },
+
+  {
+    id: 'rw2e-22',
+    section: 'reading-writing',
+    moduleId: 'rw-module-2-easy',
+    domain: 'Expression of Ideas',
+    skill: 'Rhetorical Synthesis',
+    difficulty: 'medium',
+    stimulus: `A student is preparing a presentation on the economic effects of remote work and has gathered the following notes:
+• Remote workers save an average of $4,000–$6,500 per year on commuting costs, work clothing, and lunches.
+• Employers who allow remote work report average annual savings of $11,000 per remote employee in reduced office space costs.
+• Cities with high concentrations of remote workers have seen increased spending in suburban commercial districts as workers frequent local businesses.
+• Some workers who moved to lower-cost areas during the pandemic reported increased purchasing power despite similar salaries.`,
+    question: `The student wants to highlight that remote work has produced economic benefits for multiple parties. Which choice most effectively uses the notes to accomplish this goal?`,
+    choices: [
+      { label: 'A', text: 'Remote workers can save thousands of dollars annually by eliminating commuting and related expenses.' },
+      { label: 'B', text: 'Remote work has generated economic benefits for individual workers, employers, and local communities.' },
+      { label: 'C', text: 'Employers save approximately $11,000 per year for each employee who works remotely.' },
+      { label: 'D', text: 'During the pandemic, many workers moved to lower-cost areas and experienced increased purchasing power.' },
+    ],
+    correctAnswer: 'B',
+    explanation: `Choice B is correct. The student wants to show that multiple parties benefit. Only choice B encompasses all three groups identified in the notes — workers (savings and purchasing power), employers (office cost savings), and communities (suburban commercial activity).`,
+    wrongAnswerExplanations: {
+      A: `Choice A is incorrect. It addresses only the benefits to individual workers, omitting employers and communities.`,
+      C: `Choice C is incorrect. It addresses only the benefits to employers.`,
+      D: `Choice D is incorrect. It addresses only one specific worker benefit and does not capture benefits for employers or communities.`,
     },
   },
 ]
