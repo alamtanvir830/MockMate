@@ -5,25 +5,25 @@ export const f5MathModule1Questions: MathQuestion[] = [
     id: 'sat-f5-math-m1-q01',
     section: 'math',
     moduleId: 'f5-math-module-1',
-    domain: 'Algebra',
-    skill: 'Linear equations in one variable',
-    difficulty: 'easy',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Circles',
+    difficulty: 'medium',
     type: 'multiple_choice',
     question:
-      'If 2x + 6 = 14, what is the value of x?',
+      'In the xy-plane, the points A(1, 3) and B(7, −1) are the endpoints of a diameter of a circle. Which of the following is the equation of the circle?',
     choices: [
-      { label: 'A', text: '3' },
-      { label: 'B', text: '4' },
-      { label: 'C', text: '5' },
-      { label: 'D', text: '10' },
+      { label: 'A', text: '(x − 4)² + (y − 1)² = 13' },
+      { label: 'B', text: '(x − 4)² + (y − 1)² = 52' },
+      { label: 'C', text: '(x − 3)² + (y − 1)² = 13' },
+      { label: 'D', text: '(x − 4)² + (y + 1)² = 13' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'A',
     explanation:
-      'Subtract 6 from both sides: 2x = 8. Divide both sides by 2: x = 4.',
+      'The center of the circle is the midpoint of the diameter: center = ((1 + 7)/2, (3 + (−1))/2) = (4, 1). The radius equals half the diameter length. Diameter length = √((7 − 1)² + (−1 − 3)²) = √(36 + 16) = √52. So r = √52 / 2, and r² = 52/4 = 13. The equation is (x − 4)² + (y − 1)² = 13.',
     wrongAnswerExplanations: {
-      A: 'Choice A is incorrect. 2(3) + 6 = 12, not 14.',
-      C: 'Choice C is incorrect. 2(5) + 6 = 16, not 14.',
-      D: 'Choice D is incorrect. 10 results from dividing 14 by 2 without first subtracting 6.',
+      B: 'Choice B uses r² = 52, which is the square of the full diameter length, not the radius squared. The radius is half the diameter, so r² = 52/4 = 13.',
+      C: 'Choice C uses an incorrect center. The midpoint of A(1, 3) and B(7, −1) is ((1+7)/2, (3+(−1))/2) = (4, 1), not (3, 1).',
+      D: 'Choice D uses y + 1 instead of y − 1, which would place the center at (4, −1). The correct center is (4, 1).',
     },
   },
 
@@ -33,23 +33,23 @@ export const f5MathModule1Questions: MathQuestion[] = [
     moduleId: 'f5-math-module-1',
     domain: 'Algebra',
     skill: 'Linear equations in two variables',
-    difficulty: 'easy',
+    difficulty: 'medium',
     type: 'multiple_choice',
     question:
-      'A line has the equation y = 3x + 5. What is the y-intercept of the line?',
+      'Line ℓ passes through the points (−2, 5) and (4, −1). Line m is perpendicular to line ℓ and passes through the point (3, 2). What is the y-intercept of line m?',
     choices: [
-      { label: 'A', text: '3' },
-      { label: 'B', text: '5' },
-      { label: 'C', text: '8' },
-      { label: 'D', text: '15' },
+      { label: 'A', text: '−1' },
+      { label: 'B', text: '0' },
+      { label: 'C', text: '−3' },
+      { label: 'D', text: '5' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'A',
     explanation:
-      'In slope-intercept form y = mx + b, the y-intercept is the constant term b. Here b = 5, so the y-intercept is 5.',
+      'First find the slope of line ℓ: m_ℓ = (−1 − 5) / (4 − (−2)) = −6 / 6 = −1. The slope of a line perpendicular to ℓ is the negative reciprocal: m_m = 1. Line m has slope 1 and passes through (3, 2): using point-slope form, y − 2 = 1(x − 3) → y = x − 1. The y-intercept is −1.',
     wrongAnswerExplanations: {
-      A: 'Choice A is incorrect. 3 is the slope (the coefficient of x), not the y-intercept.',
-      C: 'Choice C is incorrect. 8 is the sum of the slope and y-intercept, not the y-intercept itself.',
-      D: 'Choice D is incorrect. 15 results from multiplying the slope by the y-intercept, which has no meaning here.',
+      B: 'Choice B is incorrect. y = x would pass through the origin, but it does not pass through (3, 2) since 2 ≠ 3.',
+      C: 'Choice C is incorrect. A y-intercept of −3 would give y = x − 3. Checking the point (3, 2): 3 − 3 = 0 ≠ 2.',
+      D: 'Choice D is incorrect. A y-intercept of 5 would give y = x + 5, which has slope 1 but fails the point check: 3 + 5 = 8 ≠ 2.',
     },
   },
 
@@ -225,25 +225,25 @@ export const f5MathModule1Questions: MathQuestion[] = [
     moduleId: 'f5-math-module-1',
     domain: 'Problem-Solving and Data Analysis',
     skill: 'Data distributions and statistics',
-    difficulty: 'medium',
+    difficulty: 'hard',
     type: 'multiple_choice',
     stimulus:
-      'A teacher recorded the test scores of five students. The scores were 72, 85, 91, 68, and 84.',
+      'A data set of seven values is listed in increasing order: 14, 19, k, 27, 31, 38, 45, where k is an integer with 19 ≤ k ≤ 27.',
     question:
-      'What is the mean score of the five students?',
+      'A value of k is chosen so that when k is replaced by k + 8, the median increases but the mean does not change. Which of the following could be the value of k?',
     choices: [
-      { label: 'A', text: '78' },
-      { label: 'B', text: '80' },
-      { label: 'C', text: '84' },
-      { label: 'D', text: '85' },
+      { label: 'A', text: '19' },
+      { label: 'B', text: '23' },
+      { label: 'C', text: '26' },
+      { label: 'D', text: 'No such value of k exists.' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation:
-      'Sum of scores = 72 + 85 + 91 + 68 + 84 = 400. Mean = 400 / 5 = 80.',
+      'The mean of the seven values is (14 + 19 + k + 27 + 31 + 38 + 45) / 7 = (174 + k) / 7. If k is replaced by k + 8, the new mean is (174 + k + 8) / 7 = (182 + k) / 7. For the mean to remain unchanged, we need (182 + k) / 7 = (174 + k) / 7, which requires 182 + k = 174 + k → 182 = 174, a contradiction. So adding 8 to k always increases the mean by 8/7. There is no integer value of k in [19, 27] for which replacing k with k + 8 leaves the mean unchanged. The answer is D.',
     wrongAnswerExplanations: {
-      A: '78 × 5 = 390 ≠ 400. The sum of all five scores is 400.',
-      C: '84 is the fourth score in the list, not the mean.',
-      D: '85 is the second score in the list. The mean requires summing all scores and dividing by 5.',
+      A: 'Choice A is incorrect. If k = 19, replacing it with 27 shifts the mean by +8/7. The mean always changes when any data value changes.',
+      B: 'Choice B is incorrect. If k = 23, replacing it with 31 changes the mean from (174 + 23)/7 = 28.1 to (174 + 31)/7 = 29.3. The mean increases.',
+      C: 'Choice C is incorrect. If k = 26, replacing it with 34 changes the mean. In all cases, changing one data value changes the sum and therefore the mean.',
     },
   },
 
@@ -297,23 +297,25 @@ export const f5MathModule1Questions: MathQuestion[] = [
     moduleId: 'f5-math-module-1',
     domain: 'Advanced Math',
     skill: 'Nonlinear functions',
-    difficulty: 'medium',
+    difficulty: 'hard',
     type: 'multiple_choice',
+    stimulus:
+      'A radioactive substance decays so that the amount remaining is halved every 6 years. A sample initially contains 960 grams.',
     question:
-      'The function f(x) = −2x² + 8x − 3 has a graph that is a parabola. Which of the following best describes the parabola?',
+      'Which inequality can be used to find the number of complete 6-year periods, n, after which the remaining amount first falls below 20 grams?',
     choices: [
-      { label: 'A', text: 'Opens upward with a minimum value' },
-      { label: 'B', text: 'Opens downward with a maximum value' },
-      { label: 'C', text: 'Opens upward with a maximum value' },
-      { label: 'D', text: 'Opens downward with a minimum value' },
+      { label: 'A', text: '960 · (1/2)^n < 20' },
+      { label: 'B', text: '960 · (1/2)^n > 20' },
+      { label: 'C', text: '960 · 2^n < 20' },
+      { label: 'D', text: '960 − 6n < 20' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'A',
     explanation:
-      'The leading coefficient is −2, which is negative. A negative leading coefficient means the parabola opens downward, so it has a maximum value (at the vertex), not a minimum.',
+      'After each 6-year period, the amount is multiplied by 1/2. After n periods the amount is 960 · (1/2)^n. For this to fall below 20 grams, we need 960 · (1/2)^n < 20. Solving: (1/2)^n < 20/960 = 1/48, so 2^n > 48. Since 2⁵ = 32 < 48 and 2⁶ = 64 > 48, the smallest integer n is 6, meaning it first falls below 20 grams after 6 complete 6-year periods (i.e., after 36 years).',
     wrongAnswerExplanations: {
-      A: 'A parabola opens upward only when the leading coefficient is positive. Here it is −2.',
-      C: 'A parabola that opens upward has a minimum, not a maximum.',
-      D: 'A downward-opening parabola has a maximum value at the vertex, not a minimum.',
+      B: 'Choice B is incorrect. The inequality 960 · (1/2)^n > 20 would identify periods when the amount is still above 20 grams, not when it first falls below.',
+      C: 'Choice C is incorrect. 960 · 2^n grows over time (doubling), which does not model decay. A decaying quantity uses (1/2)^n, not 2^n.',
+      D: 'Choice D is incorrect. 960 − 6n is a linear model that decreases by 6 each period. Radioactive decay is exponential, not linear. This model would also predict negative amounts for large n.',
     },
   },
 
@@ -442,32 +444,6 @@ export const f5MathModule1Questions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f5-math-m1-q22',
-    section: 'math',
-    moduleId: 'f5-math-module-1',
-    domain: 'Geometry and Trigonometry',
-    skill: 'Area and volume',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question:
-      'A cylinder has a radius of r and a height equal to twice its radius. A cone has the same radius r and the same height as the cylinder. What fraction of the cylinder\'s volume is the cone\'s volume?',
-    choices: [
-      { label: 'A', text: '1/6' },
-      { label: 'B', text: '1/4' },
-      { label: 'C', text: '1/3' },
-      { label: 'D', text: '2/3' },
-    ],
-    correctAnswer: 'C',
-    explanation:
-      'Height of both shapes: h = 2r. Volume of cylinder: V_cyl = πr²h = πr²(2r) = 2πr³. Volume of cone: V_cone = (1/3)πr²h = (1/3)πr²(2r) = (2/3)πr³. Fraction = V_cone / V_cyl = (2πr³/3) / (2πr³) = 1/3.',
-    wrongAnswerExplanations: {
-      A: 'Choice A is incorrect. 1/6 would result from dividing the cone formula (1/3)πr²h by 2, but the denominator is the full cylinder volume 2πr³, not πr³.',
-      B: 'Choice B is incorrect. 1/4 does not correspond to either volume formula. The cone\'s volume is always 1/3 of the volume of a cylinder with the same base and height.',
-      D: 'Choice D is incorrect. 2/3 is the ratio of a sphere\'s volume to its circumscribed cylinder\'s volume — not the cone-to-cylinder ratio here.',
-    },
-  },
-
-  {
     id: 'sat-f5-math-m1-q07',
     section: 'math',
     moduleId: 'f5-math-module-1',
@@ -542,6 +518,32 @@ export const f5MathModule1Questions: MathQuestion[] = [
       A: '(x−3)/(x−3) = 1 for all valid x, which is not equivalent to the original expression.',
       C: 'The numerator after canceling is (x + 3), not (x − 3).',
       D: 'The denominator after canceling is (x + 2), not (x − 3).',
+    },
+  },
+
+  {
+    id: 'sat-f5-math-m1-q22',
+    section: 'math',
+    moduleId: 'f5-math-module-1',
+    domain: 'Geometry and Trigonometry',
+    skill: 'Area and volume',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question:
+      'A cylinder has a radius of r and a height equal to twice its radius. A cone has the same radius r and the same height as the cylinder. What fraction of the cylinder\'s volume is the cone\'s volume?',
+    choices: [
+      { label: 'A', text: '1/6' },
+      { label: 'B', text: '1/4' },
+      { label: 'C', text: '1/3' },
+      { label: 'D', text: '2/3' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      'Height of both shapes: h = 2r. Volume of cylinder: V_cyl = πr²h = πr²(2r) = 2πr³. Volume of cone: V_cone = (1/3)πr²h = (1/3)πr²(2r) = (2/3)πr³. Fraction = V_cone / V_cyl = (2πr³/3) / (2πr³) = 1/3.',
+    wrongAnswerExplanations: {
+      A: 'Choice A is incorrect. 1/6 would result from dividing the cone formula (1/3)πr²h by 2, but the denominator is the full cylinder volume 2πr³, not πr³.',
+      B: 'Choice B is incorrect. 1/4 does not correspond to either volume formula. The cone\'s volume is always 1/3 of the volume of a cylinder with the same base and height.',
+      D: 'Choice D is incorrect. 2/3 is the ratio of a sphere\'s volume to its circumscribed cylinder\'s volume — not the cone-to-cylinder ratio here.',
     },
   },
 ]
