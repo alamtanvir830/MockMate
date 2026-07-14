@@ -11,6 +11,7 @@ interface ModuleFeedbackBody {
   mathModule2Feedback: string
   rwModule2Path?: string
   mathModule2Path?: string
+  satPremiumInterestAnswer?: string
 }
 
 export async function POST(req: NextRequest) {
@@ -34,6 +35,14 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    const premiumAnswer = body.satPremiumInterestAnswer
+    if (premiumAnswer !== 'yes' && premiumAnswer !== 'no') {
+      return NextResponse.json(
+        { error: 'SAT Premium interest answer must be yes or no.' },
+        { status: 400 }
+      )
+    }
+
     const { user_name, user_email } = await resolveUserIdentity(supabase, user)
 
     const rw1 = (body.rwModule1Feedback as string).trim()
@@ -44,21 +53,23 @@ export async function POST(req: NextRequest) {
     const { error } = await supabase
       .from('sat_exam_module_feedback')
       .insert({
-        user_id:                  user.id,
+        user_id:                      user.id,
         user_email,
         user_name,
-        form_number:              body.formNumber,
-        local_attempt_id:         body.localAttemptId ?? null,
-        rw_module_1_feedback:     rw1,
-        rw_module_2_feedback:     rw2,
-        math_module_1_feedback:   m1,
-        math_module_2_feedback:   m2,
-        rw_module_2_path:         body.rwModule2Path ?? null,
-        math_module_2_path:       body.mathModule2Path ?? null,
-        rw_module_1_char_count:   rw1.length,
-        rw_module_2_char_count:   rw2.length,
-        math_module_1_char_count: m1.length,
-        math_module_2_char_count: m2.length,
+        form_number:                  body.formNumber,
+        local_attempt_id:             body.localAttemptId ?? null,
+        rw_module_1_feedback:         rw1,
+        rw_module_2_feedback:         rw2,
+        math_module_1_feedback:       m1,
+        math_module_2_feedback:       m2,
+        rw_module_2_path:             body.rwModule2Path ?? null,
+        math_module_2_path:           body.mathModule2Path ?? null,
+        rw_module_1_char_count:       rw1.length,
+        rw_module_2_char_count:       rw2.length,
+        math_module_1_char_count:     m1.length,
+        math_module_2_char_count:     m2.length,
+        sat_premium_interest_answer:  premiumAnswer,
+        interested_in_sat_premium:    premiumAnswer === 'yes',
       })
 
     if (error) {

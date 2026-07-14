@@ -1005,6 +1005,8 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
   const [feedbackMathM1, setFeedbackMathM1] = useState('')
   const [feedbackMathM2, setFeedbackMathM2] = useState('')
   const [feedbackTouched, setFeedbackTouched] = useState({ rwM1: false, rwM2: false, mathM1: false, mathM2: false })
+  const [feedbackPremiumInterest, setFeedbackPremiumInterest] = useState<'yes' | 'no' | null>(null)
+  const [feedbackPremiumTouched, setFeedbackPremiumTouched] = useState(false)
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false)
   const [feedbackError, setFeedbackError] = useState('')
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -1891,10 +1893,11 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     ]
 
     const isFieldValid = (v: string) => v.trim().length >= 50
-    const allFeedbackValid = feedbackFields.every(f => isFieldValid(f.value))
+    const allFeedbackValid = feedbackFields.every(f => isFieldValid(f.value)) && feedbackPremiumInterest !== null
 
     const handleFeedbackSubmit = async () => {
       setFeedbackTouched({ rwM1: true, rwM2: true, mathM1: true, mathM2: true })
+      setFeedbackPremiumTouched(true)
       if (!allFeedbackValid) return
       setFeedbackSubmitting(true)
       setFeedbackError('')
@@ -1905,13 +1908,14 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             formNumber,
-            localAttemptId:      attemptIdRef.current,
-            rwModule1Feedback:   feedbackRWM1.trim(),
-            rwModule2Feedback:   feedbackRWM2.trim(),
-            mathModule1Feedback: feedbackMathM1.trim(),
-            mathModule2Feedback: feedbackMathM2.trim(),
-            rwModule2Path:       rwM2Type,
-            mathModule2Path:     mathM2Type,
+            localAttemptId:            attemptIdRef.current,
+            rwModule1Feedback:         feedbackRWM1.trim(),
+            rwModule2Feedback:         feedbackRWM2.trim(),
+            mathModule1Feedback:       feedbackMathM1.trim(),
+            mathModule2Feedback:       feedbackMathM2.trim(),
+            rwModule2Path:             rwM2Type,
+            mathModule2Path:           mathM2Type,
+            satPremiumInterestAnswer:  feedbackPremiumInterest,
           }),
         })
         if (!res.ok) {
@@ -1972,6 +1976,40 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   </div>
                 )
               })}
+
+              {/* SAT Premium interest question */}
+              <div className="pt-2 border-t border-slate-100">
+                <p className="text-[13px] font-semibold text-slate-700 mb-3">
+                  Would you be interested in SAT Exam Forms 2 through 5 and a 600+ question bank with growing questions?
+                </p>
+                <div className="flex gap-4">
+                  {(['yes', 'no'] as const).map(opt => (
+                    <label key={opt} className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="satPremiumInterest"
+                        value={opt}
+                        checked={feedbackPremiumInterest === opt}
+                        onChange={() => setFeedbackPremiumInterest(opt)}
+                        className="accent-indigo-600"
+                      />
+                      <span className="text-[13px] text-slate-700 capitalize">{opt === 'yes' ? 'Yes' : 'No'}</span>
+                    </label>
+                  ))}
+                </div>
+                {feedbackPremiumTouched && feedbackPremiumInterest === null && (
+                  <p className="text-[11px] text-red-700 font-medium mt-1">Please select Yes or No.</p>
+                )}
+
+                {feedbackPremiumInterest === 'yes' && (
+                  <div className="mt-3 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 flex gap-2 items-start">
+                    <span className="text-amber-500 text-[16px] leading-none mt-0.5">★</span>
+                    <p className="text-[13px] text-amber-800 leading-relaxed">
+                      We will contact you about SAT Premium! If you cannot wait and want it right now, please click &quot;Get SAT Premium&quot; on the left-hand side.
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
 
             {feedbackError && (
@@ -1990,7 +2028,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   : 'bg-slate-100 text-slate-400 cursor-not-allowed'
               )}
             >
-              {feedbackSubmitting ? 'Submitting…' : 'Submit Feedback & View Results'}
+              {feedbackSubmitting ? 'Submitting…' : 'Get My SAT Score and Personalized Question Sets!!'}
             </button>
           </div>
         </div>

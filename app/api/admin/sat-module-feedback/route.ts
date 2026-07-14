@@ -16,7 +16,8 @@ export async function GET(req: NextRequest) {
       'user_email, user_name, form_number, local_attempt_id, created_at, ' +
       'rw_module_1_feedback, rw_module_2_feedback, math_module_1_feedback, math_module_2_feedback, ' +
       'rw_module_2_path, math_module_2_path, ' +
-      'rw_module_1_char_count, rw_module_2_char_count, math_module_1_char_count, math_module_2_char_count'
+      'rw_module_1_char_count, rw_module_2_char_count, math_module_1_char_count, math_module_2_char_count, ' +
+      'interested_in_sat_premium, sat_premium_interest_answer'
     )
     .order('created_at', { ascending: false })
 
