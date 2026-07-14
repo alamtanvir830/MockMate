@@ -10,8 +10,8 @@ export const rwModule2HardQuestions: RWQuestion[] = [
     domain: 'Craft and Structure',
     skill: 'Words in Context',
     difficulty: 'hard',
-    stimulus: `In epistemology, the problem of induction concerns whether repeated observations can ever logically justify a universal claim. David Hume argued that our habit of inferring future regularities from past experience is psychologically compelled but rationally unwarranted — a conclusion that has proven remarkably tractable to philosophers seeking a complete logical foundation for empirical science. No matter how many white swans one observes, strict deductive logic cannot preclude a black swan; the generalization remains, in principle, perpetually provisional.`,
-    question: `As used in the passage, "tractable" most nearly means`,
+    stimulus: `In epistemology, the problem of induction concerns whether repeated observations can ever logically justify a universal claim. David Hume argued that our habit of inferring future regularities from past experience is psychologically compelled but rationally unwarranted — a conclusion that has proven remarkably intractable to philosophers seeking a complete logical foundation for empirical science. No matter how many white swans one observes, strict deductive logic cannot preclude a black swan; the generalization remains, in principle, perpetually provisional.`,
+    question: `As used in the passage, "intractable" most nearly means`,
     choices: [
       { label: 'A', text: 'resistant and impervious to solution' },
       { label: 'B', text: 'capable of being managed or readily analyzed' },
@@ -19,11 +19,11 @@ export const rwModule2HardQuestions: RWQuestion[] = [
       { label: 'D', text: 'peripheral and of little concern' },
     ],
     correctAnswer: 'A',
-    explanation: `Choice A is correct. The passage states that Hume's conclusion "has proven remarkably tractable to philosophers seeking a complete logical foundation." The irony here is that the problem is described as tractable in the sense of being persistently difficult to get around — but the word's primary meaning in context is "amenable to being dealt with." However, the passage's framing — that no observation can deductively preclude a counterexample — implies the problem has not yielded to solution. "Tractable" here signals the problem's notorious resistance to the kind of logical resolution philosophers want. In this context, "resistant and impervious to solution" best captures the sense that philosophers have found the problem stubbornly unyielding, which is the meaning supported by the passage's conclusion that the generalization remains "perpetually provisional."`,
+    explanation: `Choice A is correct. The passage describes Hume's conclusion — that inductive reasoning is rationally unwarranted — as "remarkably intractable to philosophers seeking a complete logical foundation for empirical science." This means the conclusion has stubbornly resisted philosophers' efforts to overcome it. The final sentence reinforces this: the generalization "remains, in principle, perpetually provisional," confirming that the problem cannot be resolved by accumulating observations. "Resistant and impervious to solution" captures this meaning precisely.`,
     wrongAnswerExplanations: {
-      B: `Choice B is incorrect. While "tractable" can mean manageable in other contexts, the passage's structure — emphasizing perpetual provisionality and the inability of deductive logic to resolve the problem — signals that Hume's conclusion has not been successfully managed or resolved by subsequent philosophers.`,
-      C: `Choice C is incorrect. The passage does not describe Hume's conclusion as logically sound in the sense of providing a positive foundation; rather, it describes a conclusion that undermines the logical foundations of empirical science.`,
-      D: `Choice D is incorrect. Hume's problem of induction is treated by the passage as central and consequential to epistemology, not peripheral or minor.`,
+      B: `Choice B is incorrect. "Capable of being managed or readily analyzed" describes a tractable problem, which is the opposite of intractable. The passage emphasizes that the problem has not yielded to resolution.`,
+      C: `Choice C is incorrect. The passage does not describe Hume's conclusion as logically sound; it describes a conclusion that undermines the logical foundations of empirical science by showing that inductive reasoning cannot be rationally justified.`,
+      D: `Choice D is incorrect. Hume's problem of induction is treated by the passage as central and consequential to epistemology, not as peripheral or of little concern.`,
     },
   },
 
@@ -34,7 +34,7 @@ export const rwModule2HardQuestions: RWQuestion[] = [
     domain: 'Craft and Structure',
     skill: 'Words in Context',
     difficulty: 'hard',
-    stimulus: `In literary criticism, the term "precipitate" has acquired a range of applications that can confuse even careful readers. A critic might argue that an author's melodramatic ending precipitates a collapse in narrative coherence — meaning the ending causes or triggers that collapse. Yet in another register, a critic might describe the same ending as precipitate, meaning it arrives with unseemly haste, before the emotional logic of the story has been adequately prepared. In the passage below, a reviewer of a recent experimental novel writes: "The novel's final revelation is precipitate in the worst sense, arriving not as the culmination of carefully layered tension but as a blunt intrusion that forecloses the ambiguity the novel had so skillfully cultivated."`,
+    stimulus: `In literary criticism, "precipitate" can function as a verb meaning to cause something to happen abruptly, or as an adjective meaning arriving with undue haste before adequate preparation. A reviewer of a recent experimental novel writes: "The novel's final revelation is precipitate in the worst sense, arriving not as the culmination of carefully layered tension but as a blunt intrusion that forecloses the ambiguity the novel had so skillfully cultivated."`,
     question: `As used in the review, "precipitate" most nearly means`,
     choices: [
       { label: 'A', text: 'causing or triggering a sudden outcome' },
@@ -179,7 +179,7 @@ export const rwModule2HardQuestions: RWQuestion[] = [
     domain: 'Information and Ideas',
     skill: 'Central Ideas and Details',
     difficulty: 'hard',
-    stimulus: `The field of behavioral economics emerged from a striking empirical observation: human beings systematically deviate from the predictions of classical rational-choice theory in ways that are neither random nor idiosyncratic but remarkably consistent across populations and experimental settings. Researchers documented predictable patterns such as loss aversion — the tendency to weight losses more heavily than equivalent gains — and hyperbolic discounting, wherein people discount the near future at a higher rate than the distant future, making their intertemporal preferences inconsistent over time. These anomalies were initially framed as cognitive failures, implying that corrective intervention — "nudges" designed to steer people toward better choices — would improve welfare. Critics have since argued, however, that labeling departures from rational-choice theory as "failures" presupposes that the theory correctly describes what rationality requires, a premise that itself requires defense. Some departures, critics suggest, may reflect adaptive heuristics that perform well in ecologically realistic environments even if they appear irrational by the narrow standard of classical theory.`,
+    stimulus: `The field of behavioral economics emerged from a striking observation: human beings systematically deviate from classical rational-choice theory in ways that are consistent across populations and settings. Researchers documented predictable patterns such as loss aversion — the tendency to weight losses more heavily than equivalent gains — and preferences that shift inconsistently depending on when a reward is anticipated. These anomalies were initially framed as cognitive failures, implying that corrective "nudges" could steer people toward better choices. Critics have since argued, however, that labeling departures from rational-choice theory as "failures" presupposes that the theory correctly describes what rationality requires — a premise that itself needs defense. Some departures, critics suggest, may reflect adaptive heuristics that perform well in realistic environments even if they appear irrational by the narrow standard of classical theory.`,
     question: `Which of the following best states the central claim of the passage?`,
     choices: [
       { label: 'A', text: 'Behavioral economics has proven that human beings are fundamentally irrational and require institutional correction.' },

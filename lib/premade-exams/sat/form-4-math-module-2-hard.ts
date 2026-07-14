@@ -40,54 +40,6 @@ export const f4MathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f4-math-m2h-q16',
-    section: 'math',
-    moduleId: 'f4-math-module-2-hard',
-    domain: 'Problem-Solving and Data Analysis',
-    skill: 'Percentages',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question: 'A survey of 400 registered voters found that 55% supported a ballot measure. The survey has a margin of error of ±4 percentage points at the 95% confidence level. A political analyst claims that the true level of support among all registered voters is below 50%. Which of the following best evaluates the analyst\'s claim based on the survey results?',
-    choices: [
-      { label: 'A', text: 'The claim is supported because the margin of error is 4%, which is less than 5%.' },
-      { label: 'B', text: 'The claim cannot be supported because the entire confidence interval (51% to 59%) is above 50%.' },
-      { label: 'C', text: 'The claim is supported because the sample size of 400 is too small to draw any conclusions.' },
-      { label: 'D', text: 'The claim is plausible because the margin of error means the true support could be as low as 51%, which is close to 50%.' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The survey found 55% support with a margin of error of ±4 points. The 95% confidence interval is therefore 55% − 4% = 51% to 55% + 4% = 59%. Because the entire interval lies above 50%, the data do not support the claim that true support is below 50%; in fact, the results suggest with 95% confidence that a majority of registered voters support the measure.',
-    wrongAnswerExplanations: {
-      A: 'The size of the margin of error relative to 5% is irrelevant to whether support is below 50%. The interval must be examined, not the margin of error in isolation.',
-      C: 'A sample of 400 is a commonly used survey size and is sufficient to produce a meaningful confidence interval; dismissing it as too small is not statistically justified and does not address the analyst\'s specific claim.',
-      D: 'The lower bound of the confidence interval is 51%, not below 50%. The claim requires the interval to include values below 50%, but 51% is still above 50%, so the results do not support the claim.',
-    },
-  },
-
-  {
-    id: 'sat-f4-math-m2h-q08',
-    section: 'math',
-    moduleId: 'f4-math-module-2-hard',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear functions',
-    difficulty: 'hard',
-    type: 'multiple_choice',
-    question: 'The function h is defined by h(x) = ax² + b, where a and b are constants. If h(2) = 13 and h(−1) = 4, what is the value of h(3)?',
-    choices: [
-      { label: 'A', text: '22' },
-      { label: 'B', text: '25' },
-      { label: 'C', text: '28' },
-      { label: 'D', text: '31' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'Set up two equations: h(2) = 4a + b = 13 and h(−1) = a + b = 4. Subtract the second from the first: 3a = 9, so a = 3. Then b = 4 − 3 = 1. Therefore h(x) = 3x² + 1, and h(3) = 3(9) + 1 = 27 + 1 = 28.',
-    wrongAnswerExplanations: {
-      A: '22 results from finding a = 3 correctly but using b = 4 (forgetting to subtract a): h(3) = 27 − 5 = 22 is a sign error in computing b.',
-      B: '25 results from computing h(3) = 3(9) − 2 = 25, which uses b = −2, a common arithmetic mistake when solving the system.',
-      D: '31 results from using b = 4 unchanged without solving for it: 3(9) + 4 = 31.',
-    },
-  },
-
-  {
     id: 'sat-f4-math-m2h-q01',
     section: 'math',
     moduleId: 'f4-math-module-2-hard',
@@ -208,6 +160,30 @@ export const f4MathModule2HardQuestions: MathQuestion[] = [
   },
 
   {
+    id: 'sat-f4-math-m2h-q16',
+    section: 'math',
+    moduleId: 'f4-math-module-2-hard',
+    domain: 'Problem-Solving and Data Analysis',
+    skill: 'Percentages',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question: 'A survey of 400 registered voters found that 55% supported a ballot measure. The survey has a margin of error of ±4 percentage points at the 95% confidence level. A political analyst claims that the true level of support among all registered voters is below 50%. Which of the following best evaluates the analyst\'s claim based on the survey results?',
+    choices: [
+      { label: 'A', text: 'The claim is supported because the margin of error is 4%, which is less than 5%.' },
+      { label: 'B', text: 'The claim cannot be supported because the entire confidence interval (51% to 59%) is above 50%.' },
+      { label: 'C', text: 'The claim is supported because the sample size of 400 is too small to draw any conclusions.' },
+      { label: 'D', text: 'The claim is plausible because the margin of error means the true support could be as low as 51%, which is close to 50%.' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'The survey found 55% support with a margin of error of ±4 points. The 95% confidence interval is therefore 55% − 4% = 51% to 55% + 4% = 59%. Because the entire interval lies above 50%, the data do not support the claim that true support is below 50%; in fact, the results suggest with 95% confidence that a majority of registered voters support the measure.',
+    wrongAnswerExplanations: {
+      A: 'The size of the margin of error relative to 5% is irrelevant to whether support is below 50%. The interval must be examined, not the margin of error in isolation.',
+      C: 'A sample of 400 is a commonly used survey size and is sufficient to produce a meaningful confidence interval; dismissing it as too small is not statistically justified and does not address the analyst\'s specific claim.',
+      D: 'The lower bound of the confidence interval is 51%, not below 50%. The claim requires the interval to include values below 50%, but 51% is still above 50%, so the results do not support the claim.',
+    },
+  },
+
+  {
     id: 'sat-f4-math-m2h-q13',
     section: 'math',
     moduleId: 'f4-math-module-2-hard',
@@ -318,6 +294,30 @@ export const f4MathModule2HardQuestions: MathQuestion[] = [
       A: '1.5 would require a combined rate of 2/3 per hour, which is too fast.',
       C: '4.5 averages the two times, which does not model combined work.',
       D: '9 adds the two times, which is incorrect for simultaneous work.',
+    },
+  },
+
+  {
+    id: 'sat-f4-math-m2h-q08',
+    section: 'math',
+    moduleId: 'f4-math-module-2-hard',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear functions',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question: 'The function h is defined by h(x) = ax² + b, where a and b are constants. If h(2) = 13 and h(−1) = 4, what is the value of h(3)?',
+    choices: [
+      { label: 'A', text: '22' },
+      { label: 'B', text: '25' },
+      { label: 'C', text: '28' },
+      { label: 'D', text: '31' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Set up two equations: h(2) = 4a + b = 13 and h(−1) = a + b = 4. Subtract the second from the first: 3a = 9, so a = 3. Then b = 4 − 3 = 1. Therefore h(x) = 3x² + 1, and h(3) = 3(9) + 1 = 27 + 1 = 28.',
+    wrongAnswerExplanations: {
+      A: '22 results from finding a = 3 correctly but using b = 4 (forgetting to subtract a): h(3) = 27 − 5 = 22 is a sign error in computing b.',
+      B: '25 results from computing h(3) = 3(9) − 2 = 25, which uses b = −2, a common arithmetic mistake when solving the system.',
+      D: '31 results from using b = 4 unchanged without solving for it: 3(9) + 4 = 31.',
     },
   },
 
