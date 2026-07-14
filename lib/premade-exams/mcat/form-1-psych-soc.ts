@@ -31,7 +31,7 @@ A separate experiment examined spontaneous recovery: after extinction, rats were
           contentCategory: 'Learning and conditioning',
           foundationalConcept: 'FC 7: Biological, psychological, and socio-cultural factors influence behavior and behavior change.',
           scientificSkill: 'Skill 1',
-          difficulty: 'easy',
+          difficulty: 'medium',
           question: 'In the variable-ratio extinction experiment, the variable-ratio-trained rats showed greater resistance to extinction. This finding is best explained by:',
           choices: [
             { label: 'A', text: 'The partial reinforcement extinction effect: intermittent reinforcement makes it harder to detect that reinforcement has ceased' },
@@ -58,7 +58,7 @@ A separate experiment examined spontaneous recovery: after extinction, rats were
           contentCategory: 'Learning and conditioning',
           foundationalConcept: 'FC 7',
           scientificSkill: 'Skill 1',
-          difficulty: 'easy',
+          difficulty: 'medium',
           question: 'Spontaneous recovery was observed in both groups. This finding best supports which conclusion?',
           choices: [
             { label: 'A', text: 'Extinction inhibits rather than erases the learned association; the association is retained and can re-emerge.' },
@@ -288,7 +288,7 @@ Data from a longitudinal study of educational attainment found that students fro
           contentCategory: 'Social stratification',
           foundationalConcept: 'FC 9',
           scientificSkill: 'Skill 2',
-          difficulty: 'easy',
+          difficulty: 'medium',
           question: 'Based on the passage, which of the following would Bourdieu most likely argue about a child who grows up attending concerts, taking violin lessons, and visiting galleries?',
           choices: [
             { label: 'A', text: 'The child gains economic capital directly through these cultural activities.' },
@@ -546,7 +546,7 @@ To replicate LOP effects, researchers randomly assigned 90 undergraduates to enc
           contentCategory: 'Memory and cognition',
           foundationalConcept: 'FC 7',
           scientificSkill: 'Skill 2',
-          difficulty: 'easy',
+          difficulty: 'medium',
           question: 'A medical student reviews a drug name by repeating it silently 20 times while commuting, without thinking about its mechanism, side effects, or clinical use. Based on the passage, this strategy is best classified as:',
           choices: [
             { label: 'A', text: 'Elaborative rehearsal, because the student is actively rehearsing clinical material' },
@@ -708,7 +708,7 @@ Researchers analyzed national CVD mortality data across four groups defined by r
           contentCategory: 'Social determinants of health',
           foundationalConcept: 'FC 9',
           scientificSkill: 'Skill 1',
-          difficulty: 'easy',
+          difficulty: 'medium',
           question: 'A public health researcher argues that studying race and income as independent variables and adding their effects misses how their combination produces health experiences unique to Black women in poverty. Which theoretical framework from the passage does this argument reflect?',
           choices: [
             { label: 'A', text: 'Social exchange theory — individuals weigh the costs and benefits of social interactions' },

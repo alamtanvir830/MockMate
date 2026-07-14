@@ -137,7 +137,7 @@ The philosophical stakes of even the weak hypothesis are not trivial. If languag
           contentCategory: 'Foundations of Comprehension',
           foundationalConcept: 'FC 6',
           scientificSkill: 'Skill 1',
-          difficulty: 'easy',
+          difficulty: 'medium',
           question: 'According to the passage, the spatial reasoning evidence for the weak Sapir-Whorf hypothesis differs from its strong version in that the weak version:',
           choices: [
             { label: 'A', text: 'makes no predictions about cross-linguistic cognitive differences' },
@@ -176,7 +176,7 @@ Structural accounts, in contrast, point to the dramatic declines in union member
           contentCategory: 'Foundations of Comprehension',
           foundationalConcept: 'FC 6',
           scientificSkill: 'Skill 1',
-          difficulty: 'easy',
+          difficulty: 'medium',
           question: 'The passage\'s main argument is that:',
           choices: [
             { label: 'A', text: 'individual human capital is the most reliable predictor of wages and should be the focus of inequality policy' },
@@ -578,7 +578,7 @@ Critics of Mauss have argued that he projected Western preoccupations with recip
           contentCategory: 'Foundations of Comprehension',
           foundationalConcept: 'FC 6',
           scientificSkill: 'Skill 1',
-          difficulty: 'easy',
+          difficulty: 'medium',
           question: 'The author\'s conclusion that Mauss\'s insight "retains considerable analytical force" suggests the author:',
           choices: [
             { label: 'A', text: 'fully endorses Mauss\'s framework and rejects all criticisms of it' },
@@ -617,7 +617,7 @@ What remains available after this sobering revision is a chastened concept of pr
           contentCategory: 'Foundations of Comprehension',
           foundationalConcept: 'FC 6: Biological, psychological, and socio-cultural factors influence the way we think about ourselves and others.',
           scientificSkill: 'Skill 1',
-          difficulty: 'easy',
+          difficulty: 'medium',
           question: 'The central argument of the passage is best described as which of the following?',
           choices: [
             { label: 'A', text: 'Historical progress is a purely factual concept that historians have been slow to acknowledge.' },
@@ -764,7 +764,7 @@ This is not, however, an argument for abandoning documentary practice or dissolv
           contentCategory: 'Foundations of Comprehension',
           foundationalConcept: 'FC 6',
           scientificSkill: 'Skill 1',
-          difficulty: 'easy',
+          difficulty: 'medium',
           question: 'The central argument of the passage is best described as which of the following?',
           choices: [
             { label: 'A', text: 'Documentary photography is inherently dishonest and should be abandoned as a form of journalism.' },
@@ -791,7 +791,7 @@ This is not, however, an argument for abandoning documentary practice or dissolv
           contentCategory: 'Reasoning Within the Text',
           foundationalConcept: 'FC 6',
           scientificSkill: 'Skill 2',
-          difficulty: 'easy',
+          difficulty: 'medium',
           question: 'The author\'s attitude toward the "popular understanding" of documentary photography described in the first paragraph is best described as:',
           choices: [
             { label: 'A', text: 'Critical rejection followed by a constructive alternative, because the popular understanding obscures how photographs are actually made' },

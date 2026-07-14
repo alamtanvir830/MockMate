@@ -49,7 +49,7 @@ The titration data are shown in Table 1.`,
           discipline: 'General Chemistry',
           contentCategory: 'Intermolecular forces and properties of solutions',
           foundationalConcept: 'FC 5: The principles that govern chemical interactions and reactions.',
-          scientificSkill: 'Skill 1',
+          scientificSkill: 'Skill 2',
           difficulty: 'medium',
           question: 'Using the Henderson-Hasselbalch equation, what is the pH of normal blood plasma given [HCO₃⁻] = 24 mM and [CO₂] = 1.2 mM?',
           choices: [
@@ -368,7 +368,7 @@ Experiment: In an in vitro model, a tube of inner radius 3 mm was reduced to 1.5
           discipline: 'Physics',
           contentCategory: 'Fluid statics and dynamics',
           foundationalConcept: 'FC 4: Complex living organisms transport materials, sense their environment, process signals, and respond to changes using processes understood in terms of physical principles.',
-          scientificSkill: 'Skill 1',
+          scientificSkill: 'Skill 2',
           difficulty: 'medium',
           question: 'If the radius of an artery decreases from 3 mm to 1.5 mm due to plaque, by what factor does resistance to blood flow change?',
           choices: [
@@ -531,7 +531,7 @@ The Na⁺–K⁺ ATPase (sodium-potassium pump) actively transports three Na⁺ 
           discipline: 'Physics',
           contentCategory: 'Electrochemistry',
           foundationalConcept: 'FC 4: Complex living organisms transport materials, sense their environment, process signals, and respond to changes using processes understood in terms of physical principles.',
-          scientificSkill: 'Skill 1',
+          scientificSkill: 'Skill 2',
           difficulty: 'medium',
           question: 'Using the Nernst equation and the data in Table 1, what is the equilibrium potential for K⁺ (E_K) at 37°C?',
           choices: [
@@ -585,7 +585,7 @@ The Na⁺–K⁺ ATPase (sodium-potassium pump) actively transports three Na⁺ 
           discipline: 'Physics',
           contentCategory: 'Electrochemistry',
           foundationalConcept: 'FC 4',
-          scientificSkill: 'Skill 1',
+          scientificSkill: 'Skill 2',
           difficulty: 'medium',
           question: 'Using the Nernst equation and Table 1, calculate the equilibrium potential for Na⁺ (E_Na) at 37°C.',
           choices: [
@@ -868,7 +868,7 @@ A researcher constructs galvanic cells using various pairs of electrodes from Ta
           discipline: 'General Chemistry',
           contentCategory: 'Electrochemistry',
           foundationalConcept: 'FC 5',
-          scientificSkill: 'Skill 1',
+          scientificSkill: 'Skill 2',
           difficulty: 'easy',
           question: 'Using Table 1, what is the standard cell potential (E°cell) for a galvanic cell in which Zn is the anode and Cu²⁺ is reduced at the cathode?',
           choices: [
