@@ -3,6 +3,7 @@ import { mathQuestionsB1 } from './math-questions-b1'
 import { mathQuestionsB2 } from './math-questions-b2'
 import { mathQuestionsB3a } from './math-questions-b3a'
 import { mathQuestionsB3b } from './math-questions-b3b'
+import { mathQuestionsB4 } from './math-questions-b4'
 
 export const mathQuestions: QBQuestion[] = [
   // ─── Algebra: Linear equations in one variable ───────────────────────────
@@ -4349,4 +4350,5 @@ export const mathQuestions: QBQuestion[] = [
   ...mathQuestionsB2,
   ...mathQuestionsB3a,
   ...mathQuestionsB3b,
+  ...mathQuestionsB4,
 ]

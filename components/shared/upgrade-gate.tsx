@@ -18,7 +18,7 @@ interface UpgradeGateProps {
 const DEFAULT_FEATURES: FeatureItem[] = [
   { label: 'SAT Practice Test Forms 1, 2, 3, 4, and 5', subtext: 'Full-length adaptive SAT practice exams with score feedback' },
   { label: 'Unlimited lifetime usage', subtext: 'Retake available SAT forms anytime after upgrading' },
-  { label: 'SAT Question Bank access', subtext: '600+ targeted practice questions built from your weak areas' },
+  { label: 'SAT Question Bank access', subtext: '700+ targeted practice questions built from your weak areas' },
   { label: 'Personalized score reports', subtext: 'Review strengths, weaknesses, and recommended practice' },
 ]
 

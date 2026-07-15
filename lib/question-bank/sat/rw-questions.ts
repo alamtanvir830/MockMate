@@ -3,6 +3,7 @@ import { rwQuestionsB1 } from './rw-questions-b1'
 import { rwQuestionsB2 } from './rw-questions-b2'
 import { rwQuestionsB3a } from './rw-questions-b3a'
 import { rwQuestionsB3b } from './rw-questions-b3b'
+import { rwQuestionsB4 } from './rw-questions-b4'
 
 export const rwQuestions: QBQuestion[] = [
   // ─── Craft and Structure: Words in Context ───────────────────────────────
@@ -4533,4 +4534,5 @@ export const rwQuestions: QBQuestion[] = [
   ...rwQuestionsB2,
   ...rwQuestionsB3a,
   ...rwQuestionsB3b,
+  ...rwQuestionsB4,
 ]
