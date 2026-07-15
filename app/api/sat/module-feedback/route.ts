@@ -22,6 +22,14 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json() as ModuleFeedbackBody
 
+    const validFormNumbers = [1, 2, 3, 4, 5]
+    if (!validFormNumbers.includes(body.formNumber)) {
+      return NextResponse.json(
+        { error: 'form_number must be 1, 2, 3, 4, or 5.' },
+        { status: 400 }
+      )
+    }
+
     const validate = (s: unknown) => typeof s === 'string' && s.trim().length >= 50
     if (
       !validate(body.rwModule1Feedback) ||

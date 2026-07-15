@@ -53,3 +53,17 @@ export async function getUserIdByEmail(email: string): Promise<string | null> {
   const match = users.find(u => u.email === email)
   return match?.id ?? null
 }
+
+export async function grantSATPremiumManual(
+  userId: string,
+  source: 'manual_grant' | 'founder_grant' = 'manual_grant'
+): Promise<void> {
+  const admin = createAdminClient()
+  await admin.auth.admin.updateUserById(userId, {
+    user_metadata: {
+      sat_upgrade_unlocked: true,
+      sat_upgrade_unlocked_at: new Date().toISOString(),
+      sat_upgrade_source: source,
+    },
+  })
+}

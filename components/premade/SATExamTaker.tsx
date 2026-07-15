@@ -1980,7 +1980,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
               {/* SAT Premium interest question */}
               <div className="pt-2 border-t border-slate-100">
                 <p className="text-[13px] font-semibold text-slate-700 mb-3">
-                  Would you like to practice with all SAT Forms (2–5) and access our 600+ question practice bank?
+                  Would you be interested in SAT Exam Forms 2 through 5 and a 600+ question bank with growing questions?
                 </p>
                 <div className="flex gap-4">
                   {(['yes', 'no'] as const).map(opt => (
@@ -2028,7 +2028,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   : 'bg-slate-100 text-slate-400 cursor-not-allowed'
               )}
             >
-              {feedbackSubmitting ? 'Submitting…' : 'Get My Score and Practice Recommendations'}
+              {feedbackSubmitting ? 'Submitting…' : 'Get My SAT Score and Personalized Question Sets!!'}
             </button>
           </div>
         </div>
