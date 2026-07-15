@@ -1980,7 +1980,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
               {/* SAT Premium interest question */}
               <div className="pt-2 border-t border-slate-100">
                 <p className="text-[13px] font-semibold text-slate-700 mb-3">
-                  Would you be interested in SAT Exam Forms 2 through 5 and a 600+ question bank with growing questions?
+                  Would you like to practice with all SAT Forms (2–5) and access our 600+ question practice bank?
                 </p>
                 <div className="flex gap-4">
                   {(['yes', 'no'] as const).map(opt => (
@@ -2028,7 +2028,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   : 'bg-slate-100 text-slate-400 cursor-not-allowed'
               )}
             >
-              {feedbackSubmitting ? 'Submitting…' : 'Get My SAT Score and Personalized Question Sets!!'}
+              {feedbackSubmitting ? 'Submitting…' : 'Get My Score and Practice Recommendations'}
             </button>
           </div>
         </div>
@@ -2532,7 +2532,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
           <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100 p-6">
             <h2 className="text-lg font-bold text-slate-900 mb-1">Ready for the next exam?</h2>
             <p className="text-sm text-slate-600 mb-4">
-              {"You've completed your free SAT Form 1. Unlock lifetime SAT access to retake Form 1 and practice with Forms 2, 3, and 4."}
+              {"You've completed your free SAT Form 1. Unlock lifetime access to retake Form 1 and practice with Forms 2, 3, 4, and 5."}
             </p>
             <div className="flex flex-wrap gap-3">
               {satUpgradeUnlocked ? (
