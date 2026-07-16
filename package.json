@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "academy-video:validate": "node scripts/academy-video/validate.mjs",
+    "academy-video:narrate": "node scripts/academy-video/narrate.mjs",
+    "academy-video:publish": "node scripts/academy-video/publish.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.0",
