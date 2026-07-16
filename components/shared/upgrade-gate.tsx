@@ -144,6 +144,9 @@ export function UpgradeGate({
             Secure checkout powered by Stripe.
           </p>
           <p className="text-center text-[11px] text-slate-400">
+            Have a promotion code? Enter it securely during checkout.
+          </p>
+          <p className="text-center text-[11px] text-slate-400">
             Have questions?{' '}
             <Link href="mailto:ranvi.contact@gmail.com" className="text-amber-600 hover:underline">
               ranvi.contact@gmail.com
