@@ -6,7 +6,6 @@ import { cn } from '@/lib/utils'
 import { getSkill } from '@/lib/academy'
 import type { GuidedExample, DrillQuestion, AcademySkill } from '@/lib/academy/types'
 import type { AnswerLabel } from '@/lib/academy/types'
-import { LessonVideoSection } from '@/components/academy/LessonVideoSection'
 
 type Props = { params: Promise<{ skillSlug: string }> }
 type Tab = 'overview' | 'strategy' | 'traps' | 'examples' | 'drill' | 'mastery'
@@ -492,9 +491,6 @@ export default function LessonPage({ params }: Props) {
         <h1 className="text-2xl font-bold text-slate-900">{skill?.title ?? skillSlug}</h1>
         <p className="mt-1 text-sm text-slate-500">{section}</p>
       </div>
-
-      {/* Video lesson — shows only when a published video exists for this skill */}
-      <LessonVideoSection lessonSlug={skillSlug} />
 
       {/* Tab bar */}
       <div className="overflow-x-auto -mx-1 px-1">
