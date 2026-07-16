@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { AcademyNav } from '@/components/dashboard/AcademyNav'
 import { cn } from '@/lib/utils'
 import { allSkills } from '@/lib/academy'
 import type { DrillQuestion } from '@/lib/academy/types'
@@ -110,8 +109,7 @@ export default function ReviewQueuePage() {
   if (phase === 'loading') {
     return (
       <div className="space-y-6">
-        <AcademyNav />
-        <div className="space-y-3">
+                <div className="space-y-3">
           <div className="h-7 w-48 rounded-lg bg-slate-100 animate-pulse" />
           <div className="h-4 w-72 rounded-lg bg-slate-100 animate-pulse" />
         </div>
@@ -128,8 +126,7 @@ export default function ReviewQueuePage() {
   if (phase === 'empty') {
     return (
       <div className="space-y-6">
-        <AcademyNav />
-        <div>
+                <div>
           <h1 className="text-2xl font-bold text-slate-900">Review Queue</h1>
           <p className="mt-1 text-sm text-slate-500">Questions you&apos;ve missed, spaced for retention</p>
         </div>
@@ -159,8 +156,7 @@ export default function ReviewQueuePage() {
     const pct = items.length > 0 ? Math.round((score / items.length) * 100) : 0
     return (
       <div className="space-y-6">
-        <AcademyNav />
-        <div>
+                <div>
           <h1 className="text-2xl font-bold text-slate-900">Review Queue</h1>
           <p className="mt-1 text-sm text-slate-500">Session complete</p>
         </div>
@@ -191,8 +187,7 @@ export default function ReviewQueuePage() {
 
   return (
     <div className="space-y-6">
-      <AcademyNav />
-
+      
       <div>
         <h1 className="text-2xl font-bold text-slate-900">Review Queue</h1>
         <p className="mt-1 text-sm text-slate-500">Questions you&apos;ve missed, spaced for retention</p>

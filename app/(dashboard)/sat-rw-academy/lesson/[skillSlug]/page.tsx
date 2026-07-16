@@ -2,7 +2,6 @@
 
 import { use, useState, useCallback } from 'react'
 import Link from 'next/link'
-import { AcademyNav } from '@/components/dashboard/AcademyNav'
 import { cn } from '@/lib/utils'
 import { getSkill } from '@/lib/academy'
 import type { GuidedExample, DrillQuestion, AcademySkill } from '@/lib/academy/types'
@@ -472,8 +471,7 @@ export default function LessonPage({ params }: Props) {
 
   return (
     <div className="space-y-6">
-      <AcademyNav />
-
+      
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-xs text-slate-400">
         <Link href="/sat-rw-academy" className="hover:text-slate-600 transition-colors">SAT R&amp;W Academy</Link>

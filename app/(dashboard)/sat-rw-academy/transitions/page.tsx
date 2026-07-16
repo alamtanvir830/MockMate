@@ -1,7 +1,6 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { AcademyNav } from '@/components/dashboard/AcademyNav'
 import { cn } from '@/lib/utils'
 import {
   categories,
@@ -46,8 +45,7 @@ export default function TransitionsPage() {
 
   return (
     <div className="space-y-6">
-      <AcademyNav />
-
+      
       <div>
         <h1 className="text-2xl font-bold text-slate-900">Transition Trainer</h1>
         <p className="mt-1 text-sm text-slate-500">

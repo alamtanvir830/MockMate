@@ -2,7 +2,6 @@
 
 import { useState, useMemo, useCallback } from 'react'
 import Link from 'next/link'
-import { AcademyNav } from '@/components/dashboard/AcademyNav'
 import { cn } from '@/lib/utils'
 import { allSkills } from '@/lib/academy'
 import type { DrillQuestion, AnswerLabel } from '@/lib/academy/types'
@@ -56,8 +55,7 @@ interface SkillResult {
 function IntroScreen({ onStart }: { onStart: () => void }) {
   return (
     <div className="space-y-6">
-      <AcademyNav />
-      <div>
+            <div>
         <h1 className="text-2xl font-bold text-slate-900">Diagnostic</h1>
         <p className="mt-1 text-sm text-slate-500">Find your starting point across all 10 R&W skills.</p>
       </div>
@@ -154,8 +152,7 @@ function QuizScreen({
 
   return (
     <div className="space-y-5">
-      <AcademyNav />
-      <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between">
         <div>
           <h1 className="text-lg font-bold text-slate-900">Diagnostic</h1>
           <p className="text-xs text-slate-400 mt-0.5">Question {qIdx + 1} of {questions.length}</p>
@@ -285,8 +282,7 @@ function ResultsScreen({
 
   return (
     <div className="space-y-6">
-      <AcademyNav />
-      <div>
+            <div>
         <h1 className="text-2xl font-bold text-slate-900">Diagnostic Results</h1>
         <p className="mt-1 text-sm text-slate-500">Here&apos;s where to focus your Academy practice.</p>
       </div>

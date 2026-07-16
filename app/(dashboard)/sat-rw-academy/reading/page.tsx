@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { AcademyNav } from '@/components/dashboard/AcademyNav'
 
 const readingSkills = [
   {
@@ -39,8 +38,6 @@ const readingSkills = [
 export default function ReadingSkillsPage() {
   return (
     <div className="space-y-6">
-      <AcademyNav />
-
       <div>
         <h1 className="text-2xl font-bold text-slate-900">Reading Skills</h1>
         <p className="mt-1 text-sm text-slate-500">6 skills</p>

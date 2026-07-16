@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from 'react'
 import { vocabEntries, type VocabDifficulty, type VocabEntry } from '@/lib/academy/vocabulary'
-import { AcademyNav } from '@/components/dashboard/AcademyNav'
 import { cn } from '@/lib/utils'
 
 type DifficultyFilter = 'all' | VocabDifficulty
@@ -169,8 +168,6 @@ export default function VocabularyPage() {
 
   return (
     <div className="space-y-5">
-      <AcademyNav />
-
       <div>
         <h1 className="text-2xl font-bold text-slate-900">Vocabulary Trainer</h1>
         <p className="text-slate-500">120+ SAT-style academic words</p>
