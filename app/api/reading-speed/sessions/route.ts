@@ -15,6 +15,12 @@ interface SessionBody {
   completed: boolean
   qualifiesForDailyPractice: boolean
   clientLocalDate?: string
+  mode?: 'free' | 'academy'
+  academyPassageId?: string
+  comprehensionCorrect?: number
+  comprehensionTotal?: number
+  comprehensionAccuracy?: number
+  effectiveWpm?: number
 }
 
 export async function POST(req: NextRequest) {
@@ -59,6 +65,12 @@ export async function POST(req: NextRequest) {
         qualifies_for_daily_practice: body.qualifiesForDailyPractice ?? false,
         client_local_date: body.clientLocalDate ?? null,
         completed_at: body.completed ? new Date().toISOString() : null,
+        mode: body.mode ?? 'free',
+        academy_passage_id: body.academyPassageId ?? null,
+        comprehension_correct: body.comprehensionCorrect ?? null,
+        comprehension_total: body.comprehensionTotal ?? null,
+        comprehension_accuracy: body.comprehensionAccuracy ?? null,
+        effective_wpm: body.effectiveWpm ?? null,
       })
       .select('id')
       .single()
