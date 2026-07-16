@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Logo } from '@/components/shared/logo'
 import { Button } from '@/components/ui/button'
-import { StudentReviews } from '@/components/landing/StudentReviews'
+import { HeroReviewsPanel } from '@/components/landing/StudentReviews'
 
 export default function LandingPage() {
   return (
@@ -48,8 +48,8 @@ export default function LandingPage() {
           </div>
 
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            {/* Split hero: left copy, right image */}
-            <div className="flex flex-col lg:flex-row lg:items-center lg:gap-16">
+            {/* Split hero: left copy, right review cards */}
+            <div className="flex flex-col lg:flex-row lg:items-start lg:gap-14">
               {/* Left: copy */}
               <div className="lg:w-[52%] text-center lg:text-left">
                 {/* Eyebrow */}
@@ -100,24 +100,9 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              {/* Right: product image */}
-              <div className="lg:w-[48%] mt-10 lg:mt-0 flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-[520px]">
-                  <Image
-                    src="/flow.png"
-                    alt="How MockMate works"
-                    width={1200}
-                    height={420}
-                    className="w-full h-auto rounded-2xl shadow-lg border border-slate-100"
-                    priority
-                  />
-                  {/* Subtle glow */}
-                  <div
-                    aria-hidden
-                    className="absolute -inset-4 -z-10 rounded-3xl opacity-25 blur-2xl"
-                    style={{ background: 'linear-gradient(135deg, #6ee7b7, #10b981)' }}
-                  />
-                </div>
+              {/* Right: student review cards */}
+              <div className="lg:w-[48%] mt-10 lg:mt-0">
+                <HeroReviewsPanel />
               </div>
             </div>
           </div>
@@ -137,8 +122,19 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Student Reviews */}
-        <StudentReviews />
+        {/* How MockMate works — illustration */}
+        <section className="bg-white py-12 sm:py-16">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex justify-center">
+            <Image
+              src="/flow.png"
+              alt="How MockMate works — practice exam, instant score report, and targeted Q-Bank drilling"
+              width={1200}
+              height={420}
+              className="w-full h-auto object-contain"
+              style={{ maxWidth: '960px' }}
+            />
+          </div>
+        </section>
 
         {/* Value proposition strip */}
         <section style={{ backgroundColor: '#F5FBF8' }} className="border-y border-emerald-100 py-12">
