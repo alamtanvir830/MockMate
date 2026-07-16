@@ -1,7 +1,48 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { AcademyNav } from '@/components/dashboard/AcademyNav'
+import { cn } from '@/lib/utils'
+import { MASTERY_LABELS, MASTERY_BG, MASTERY_COLORS } from '@/lib/academy/mastery'
+import type { SkillMastery, MasteryStatus } from '@/lib/academy/mastery'
+
+const ALL_SLUGS = [
+  'words-in-context','central-ideas-details','text-structure-purpose',
+  'command-of-evidence','quantitative-evidence','inferences',
+  'boundaries','form-structure-sense','transitions','rhetorical-synthesis',
+]
+
+function MasteryPill({ status }: { status: MasteryStatus }) {
+  return (
+    <span className={cn(
+      'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium border border-current/10',
+      MASTERY_BG[status], MASTERY_COLORS[status],
+    )}>
+      {MASTERY_LABELS[status]}
+    </span>
+  )
+}
 
 export default function SatRwAcademyPage() {
+  const [mastery, setMastery] = useState<Record<string, SkillMastery>>({})
+
+  useEffect(() => {
+    fetch('/api/academy/attempts')
+      .then(r => r.ok ? r.json() : [])
+      .then((data: SkillMastery[]) => {
+        const map: Record<string, SkillMastery> = {}
+        for (const m of data) map[m.skillSlug] = m
+        setMastery(map)
+      })
+      .catch(() => {/* non-blocking */})
+  }, [])
+
+  const started = ALL_SLUGS.filter(s => mastery[s] && mastery[s].status !== 'not_started').length
+  const proficient = ALL_SLUGS.filter(s => mastery[s] && (mastery[s].status === 'proficient' || mastery[s].status === 'mastered')).length
+  const masterCount = ALL_SLUGS.filter(s => mastery[s]?.status === 'mastered').length
+  const hasAny = started > 0
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -14,6 +55,34 @@ export default function SatRwAcademyPage() {
 
       {/* Internal nav */}
       <AcademyNav />
+
+      {/* Progress summary — only shows once user has started */}
+      {hasAny && (
+        <div className="rounded-xl border border-slate-200 bg-white p-4">
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">Your Progress</p>
+          <div className="grid grid-cols-3 gap-4 mb-3">
+            <div className="text-center">
+              <p className="text-2xl font-bold text-slate-900">{started}</p>
+              <p className="text-xs text-slate-500">skills started</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-blue-600">{proficient}</p>
+              <p className="text-xs text-slate-500">proficient+</p>
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-emerald-600">{masterCount}</p>
+              <p className="text-xs text-slate-500">mastered</p>
+            </div>
+          </div>
+          <div className="w-full bg-slate-100 rounded-full h-2">
+            <div
+              className="bg-emerald-500 h-2 rounded-full transition-all"
+              style={{ width: `${Math.round((proficient / ALL_SLUGS.length) * 100)}%` }}
+            />
+          </div>
+          <p className="mt-1 text-right text-xs text-slate-400">{proficient} / {ALL_SLUGS.length} skills proficient or mastered</p>
+        </div>
+      )}
 
       {/* Course sections */}
       <div>
@@ -32,7 +101,14 @@ export default function SatRwAcademyPage() {
                   <p className="font-semibold text-slate-900">Reading Skills</p>
                   <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-xs font-medium text-emerald-700">6 skills</span>
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">Words in Context, Central Ideas, Text Structure, Command of Evidence, Quantitative Evidence, Inferences</p>
+                <p className="text-xs text-slate-500 leading-relaxed mb-2">Words in Context, Central Ideas, Text Structure, Command of Evidence, Quantitative Evidence, Inferences</p>
+                {hasAny && (
+                  <div className="flex flex-wrap gap-1">
+                    {['words-in-context','central-ideas-details','text-structure-purpose','command-of-evidence','quantitative-evidence','inferences'].map(slug => (
+                      <MasteryPill key={slug} status={mastery[slug]?.status ?? 'not_started'} />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </Link>
@@ -50,7 +126,14 @@ export default function SatRwAcademyPage() {
                   <p className="font-semibold text-slate-900">Writing Skills</p>
                   <span className="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-xs font-medium text-slate-600">4 skills</span>
                 </div>
-                <p className="text-xs text-slate-500 leading-relaxed">Boundaries, Form &amp; Structure, Transitions, Rhetorical Synthesis</p>
+                <p className="text-xs text-slate-500 leading-relaxed mb-2">Boundaries, Form &amp; Structure, Transitions, Rhetorical Synthesis</p>
+                {hasAny && (
+                  <div className="flex flex-wrap gap-1">
+                    {['boundaries','form-structure-sense','transitions','rhetorical-synthesis'].map(slug => (
+                      <MasteryPill key={slug} status={mastery[slug]?.status ?? 'not_started'} />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </Link>
@@ -61,7 +144,6 @@ export default function SatRwAcademyPage() {
       <div>
         <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-3">Tools</h2>
         <div className="grid gap-4 sm:grid-cols-3">
-          {/* Vocabulary Trainer */}
           <Link href="/sat-rw-academy/vocabulary" className="group block rounded-xl border border-slate-200 bg-white p-5 hover:shadow-md transition-shadow">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-50 text-violet-600 group-hover:bg-violet-100 transition-colors mb-3">
               <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
@@ -72,7 +154,6 @@ export default function SatRwAcademyPage() {
             <p className="text-xs text-slate-500">120+ academic words</p>
           </Link>
 
-          {/* Transition Trainer */}
           <Link href="/sat-rw-academy/transitions" className="group block rounded-xl border border-slate-200 bg-white p-5 hover:shadow-md transition-shadow">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-50 text-amber-600 group-hover:bg-amber-100 transition-colors mb-3">
               <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
@@ -80,10 +161,9 @@ export default function SatRwAcademyPage() {
               </svg>
             </div>
             <p className="font-semibold text-slate-900 text-sm mb-0.5">Transition Trainer</p>
-            <p className="text-xs text-slate-500">60+ original questions</p>
+            <p className="text-xs text-slate-500">63 original questions</p>
           </Link>
 
-          {/* Reading Speed */}
           <Link href="/sat-rw-academy/reading-speed" className="group block rounded-xl border border-slate-200 bg-white p-5 hover:shadow-md transition-shadow">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-50 text-sky-600 group-hover:bg-sky-100 transition-colors mb-3">
               <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
@@ -96,7 +176,6 @@ export default function SatRwAcademyPage() {
         </div>
       </div>
 
-      {/* Disclaimer */}
       <p className="text-xs text-slate-400 leading-relaxed">
         All MockMate academy content is independently created for practice purposes. MockMate is not affiliated with, endorsed by, or sponsored by College Board. SAT® is a trademark of College Board.
       </p>
