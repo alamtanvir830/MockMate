@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 
 const navTabs = [
   { label: 'Overview', href: '/sat-rw-academy' },
+  { label: 'Diagnostic', href: '/sat-rw-academy/diagnostic' },
   { label: 'Reading Skills', href: '/sat-rw-academy/reading' },
   { label: 'Writing Skills', href: '/sat-rw-academy/writing' },
   { label: 'Vocabulary', href: '/sat-rw-academy/vocabulary' },
