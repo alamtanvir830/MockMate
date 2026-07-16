@@ -5,6 +5,7 @@ import { textStructurePurpose } from './text-structure-purpose'
 import { commandOfEvidence } from './command-of-evidence'
 import { quantitativeEvidence } from './quantitative-evidence'
 import { inferences } from './inferences'
+import { crossTextConnections } from './cross-text-connections'
 
 export const readingSkills: AcademySkill[] = [
   wordsInContext,
@@ -13,6 +14,7 @@ export const readingSkills: AcademySkill[] = [
   commandOfEvidence,
   quantitativeEvidence,
   inferences,
+  crossTextConnections,
 ]
 
 export {
@@ -22,4 +24,5 @@ export {
   commandOfEvidence,
   quantitativeEvidence,
   inferences,
+  crossTextConnections,
 }

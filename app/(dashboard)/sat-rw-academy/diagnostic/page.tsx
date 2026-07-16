@@ -6,12 +6,12 @@ import { cn } from '@/lib/utils'
 import { allSkills } from '@/lib/academy'
 import type { DrillQuestion, AnswerLabel } from '@/lib/academy/types'
 
-// ─── Sample 2–3 questions per skill (24 total) ───────────────────────────────
-// Reading: 2 per skill × 6 = 12; Writing: 3 per skill × 4 = 12
+// ─── Sample 2–3 questions per skill (26 total) ───────────────────────────────
+// Reading: 2 per skill × 7 = 14; Writing: 3 per skill × 4 = 12
 
 const READING_SKILL_SLUGS = [
   'words-in-context', 'central-ideas-details', 'text-structure-purpose',
-  'command-of-evidence', 'quantitative-evidence', 'inferences',
+  'command-of-evidence', 'quantitative-evidence', 'inferences', 'cross-text-connections',
 ]
 const WRITING_SKILL_SLUGS = [
   'boundaries', 'form-structure-sense', 'transitions', 'rhetorical-synthesis',
@@ -57,13 +57,13 @@ function IntroScreen({ onStart }: { onStart: () => void }) {
     <div className="space-y-6">
             <div>
         <h1 className="text-2xl font-bold text-slate-900">Diagnostic</h1>
-        <p className="mt-1 text-sm text-slate-500">Find your starting point across all 10 R&W skills.</p>
+        <p className="mt-1 text-sm text-slate-500">Find your starting point across all 11 R&W skills.</p>
       </div>
       <div className="rounded-xl border border-slate-200 bg-white p-6 space-y-5">
         <div className="grid gap-3 sm:grid-cols-3">
           {[
-            { label: '24 questions', sub: '2–3 per skill' },
-            { label: '10 skills', sub: '6 reading + 4 writing' },
+            { label: '26 questions', sub: '2–3 per skill' },
+            { label: '11 skills', sub: '7 reading + 4 writing' },
             { label: '~20 minutes', sub: 'untimed, go at your pace' },
           ].map(({ label, sub }) => (
             <div key={label} className="rounded-lg bg-slate-50 border border-slate-200 p-4 text-center">

@@ -15,6 +15,16 @@ interface AttemptBody {
   sourceType: string
   sourceId: string
   responseTimeSeconds?: number
+  // New curriculum v2 fields
+  practiceMode?: string
+  domainSlug?: string
+  questionTypeIdentified?: string
+  questionTypeCorrect?: boolean
+  hintCount?: number
+  confidence?: number
+  timed?: boolean
+  errorCategory?: string
+  contentVersion?: number
 }
 
 export async function POST(req: NextRequest) {
@@ -56,6 +66,16 @@ export async function POST(req: NextRequest) {
         correct_answer: body.correctAnswer,
         is_correct: body.isCorrect,
         response_time_seconds: body.responseTimeSeconds ?? null,
+        // Curriculum v2 enrichment fields
+        practice_mode: body.practiceMode ?? null,
+        domain_slug: body.domainSlug ?? null,
+        question_type_identified: body.questionTypeIdentified ?? null,
+        question_type_correct: body.questionTypeCorrect ?? null,
+        hint_count: body.hintCount ?? 0,
+        confidence: body.confidence ?? null,
+        timed: body.timed ?? false,
+        error_category: body.errorCategory ?? null,
+        content_version: body.contentVersion ?? 1,
       })
       .select('id')
       .single()

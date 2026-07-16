@@ -1,11 +1,153 @@
 'use client'
 
-import { use, useState, useCallback } from 'react'
+import { use, useState, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { getSkill } from '@/lib/academy'
+import { getSkill, allSkills } from '@/lib/academy'
 import type { GuidedExample, DrillQuestion, AcademySkill } from '@/lib/academy/types'
 import type { AnswerLabel } from '@/lib/academy/types'
+
+// ─── Mixed Recognition Check ─────────────────────────────────────────────────
+
+function seededRandom(seed: number) {
+  let s = seed
+  return () => { s = (s * 1664525 + 1013904223) & 0xffffffff; return (s >>> 0) / 0xffffffff }
+}
+
+function MixedRecognitionCheck({ excludeSlug, onComplete }: { excludeSlug: string; onComplete: () => void }) {
+  const questions = useMemo(() => {
+    const rng = seededRandom(Date.now() % 0xffff)
+    const pool: (DrillQuestion & { fromSkill: string })[] = []
+    for (const skill of allSkills) {
+      if (skill.slug === excludeSlug) continue
+      for (const q of skill.drillQuestions) {
+        pool.push({ ...q, fromSkill: skill.title })
+      }
+    }
+    // Fisher-Yates shuffle, take 3
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]]
+    }
+    return pool.slice(0, 3)
+  }, [excludeSlug])
+
+  const [qIdx, setQIdx] = useState(0)
+  const [selected, setSelected] = useState<AnswerLabel | null>(null)
+  const [revealed, setRevealed] = useState(false)
+  const [correct, setCorrect] = useState(0)
+  const [done, setDone] = useState(false)
+
+  const q = questions[qIdx]
+
+  const handleReveal = () => {
+    if (!selected) return
+    const isCorrect = selected === q.correctAnswer
+    if (isCorrect) setCorrect((c) => c + 1)
+    setRevealed(true)
+  }
+
+  const handleNext = () => {
+    if (qIdx < questions.length - 1) {
+      setQIdx((i) => i + 1)
+      setSelected(null)
+      setRevealed(false)
+    } else {
+      setDone(true)
+    }
+  }
+
+  if (done) {
+    return (
+      <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-5 space-y-3">
+        <p className="text-xs font-semibold uppercase tracking-wider text-indigo-500">Mixed Recognition Check — Complete</p>
+        <p className="text-sm text-indigo-900 font-medium">{correct} of {questions.length} correct</p>
+        <p className="text-xs text-indigo-600 leading-relaxed">
+          Can you identify skill types quickly? This cross-skill fluency is what turns accuracy into speed on test day.
+        </p>
+        <button
+          onClick={onComplete}
+          className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 transition-colors"
+        >
+          Done →
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="rounded-lg border border-indigo-200 bg-indigo-50 px-4 py-3">
+        <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wider">Mixed Recognition Check</p>
+        <p className="text-[11px] text-indigo-500 mt-0.5">Identify the skill AFTER answering — no labels until you submit.</p>
+      </div>
+
+      <span className="text-xs text-slate-400">{qIdx + 1} / {questions.length}</span>
+
+      {q.stimulus && (
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+          <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{q.stimulus}</p>
+        </div>
+      )}
+
+      <p className="text-sm font-medium text-slate-900">{q.question}</p>
+
+      <div className="space-y-2">
+        {q.choices.map((choice) => {
+          const isSelected = selected === choice.label
+          const isCorrectChoice = choice.label === q.correctAnswer
+          let cls = 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 cursor-pointer'
+          if (revealed) {
+            if (isCorrectChoice) cls = 'border-emerald-500 bg-emerald-50 cursor-default'
+            else if (isSelected) cls = 'border-red-400 bg-red-50 cursor-default'
+            else cls = 'border-slate-200 bg-white opacity-40 cursor-default'
+          } else if (isSelected) {
+            cls = 'border-indigo-400 bg-indigo-50 cursor-pointer'
+          }
+          return (
+            <button
+              key={choice.label}
+              disabled={revealed}
+              onClick={() => !revealed && setSelected(choice.label)}
+              className={cn('w-full flex items-start gap-3 rounded-lg border p-3 text-left transition-colors', cls)}
+            >
+              <span className="flex-shrink-0 w-5 h-5 rounded-full border border-current text-xs font-bold flex items-center justify-center">{choice.label}</span>
+              <span className="text-sm text-slate-700">{choice.text}</span>
+            </button>
+          )
+        })}
+      </div>
+
+      {!revealed ? (
+        <button
+          disabled={!selected}
+          onClick={handleReveal}
+          className="rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-2.5 transition-colors"
+        >
+          Submit
+        </button>
+      ) : (
+        <div className="space-y-2">
+          <div className={cn('rounded-lg border p-4 space-y-1', selected === q.correctAnswer ? 'border-emerald-300 bg-emerald-50' : 'border-red-300 bg-red-50')}>
+            <p className={cn('text-xs font-bold uppercase tracking-wider', selected === q.correctAnswer ? 'text-emerald-600' : 'text-red-600')}>
+              {selected === q.correctAnswer ? 'Correct' : 'Incorrect — correct: ' + q.correctAnswer}
+            </p>
+            <p className="text-sm text-slate-700 leading-relaxed">{q.explanation}</p>
+            <p className="mt-1 text-xs font-semibold text-indigo-600">
+              Skill: <span className="text-indigo-800">{q.fromSkill}</span>
+            </p>
+          </div>
+          <button
+            onClick={handleNext}
+            className="rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-sm font-semibold px-5 py-2.5 transition-colors"
+          >
+            {qIdx < questions.length - 1 ? 'Next →' : 'See summary'}
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
 
 type Props = { params: Promise<{ skillSlug: string }> }
 type Tab = 'overview' | 'strategy' | 'traps' | 'examples' | 'drill' | 'mastery'
@@ -251,6 +393,8 @@ function DrillTab({ questions, skillSlug }: { questions: DrillQuestion[]; skillS
   const [revealed, setRevealed] = useState(false)
   const [score, setScore] = useState(0)
   const [done, setDone] = useState(false)
+  const [showMixed, setShowMixed] = useState(false)
+  const [mixedDone, setMixedDone] = useState(false)
   const [answers, setAnswers] = useState<{ correct: boolean }[]>([])
 
   const q = questions[qIdx]
@@ -288,6 +432,7 @@ function DrillTab({ questions, skillSlug }: { questions: DrillQuestion[]; skillS
   const handleNext = () => {
     if (isLast) {
       setDone(true)
+      setShowMixed(true)
     } else {
       setQIdx((i) => i + 1)
       setSelected(null)
@@ -295,8 +440,32 @@ function DrillTab({ questions, skillSlug }: { questions: DrillQuestion[]; skillS
     }
   }
 
+  const pct = Math.round((score / questions.length) * 100)
+
+  if (done && showMixed && !mixedDone) {
+    return (
+      <div className="space-y-5">
+        <h2 className="text-base font-semibold text-slate-900">Drill Complete</h2>
+        <div className="rounded-xl border border-slate-200 bg-white p-6 text-center space-y-2">
+          <div className={cn('text-5xl font-bold', pct >= 80 ? 'text-emerald-600' : pct >= 60 ? 'text-amber-500' : 'text-red-500')}>
+            {pct}%
+          </div>
+          <p className="text-slate-500 text-sm">{score} of {questions.length} correct</p>
+          <div className="flex gap-2 justify-center flex-wrap pt-1">
+            {answers.map((a, i) => (
+              <span key={i} className={cn('inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold', a.correct ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700')}>
+                {i + 1}
+              </span>
+            ))}
+          </div>
+        </div>
+        <p className="text-xs text-slate-500 px-1">Now test your cross-skill recognition — 3 questions from other skills, no skill labels shown until you answer.</p>
+        <MixedRecognitionCheck excludeSlug={skillSlug} onComplete={() => setMixedDone(true)} />
+      </div>
+    )
+  }
+
   if (done) {
-    const pct = Math.round((score / questions.length) * 100)
     return (
       <div className="space-y-5">
         <h2 className="text-base font-semibold text-slate-900">Drill Complete</h2>
@@ -316,7 +485,7 @@ function DrillTab({ questions, skillSlug }: { questions: DrillQuestion[]; skillS
             ))}
           </div>
           <button
-            onClick={() => { setQIdx(0); setSelected(null); setRevealed(false); setScore(0); setDone(false); setAnswers([]) }}
+            onClick={() => { setQIdx(0); setSelected(null); setRevealed(false); setScore(0); setDone(false); setShowMixed(false); setMixedDone(false); setAnswers([]) }}
             className="mt-6 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors"
           >
             Retake drill

@@ -7,6 +7,7 @@ import { MASTERY_LABELS, MASTERY_BG, MASTERY_COLORS } from '@/lib/academy/master
 import type { SkillMastery, MasteryStatus } from '@/lib/academy/mastery'
 import { transitionQuestions } from '@/lib/academy/transitions/questions'
 import { academyPassages } from '@/lib/academy/passages'
+import { glossaryTerms } from '@/lib/academy/glossary/terms'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -17,16 +18,8 @@ interface LessonProgress {
   completedAt: string | null
 }
 
-interface ReviewQueueItem {
-  id: string
-  questionId: string
-  sourceType: string
-  skillSlug: string
-  reviewStage: number
-}
-
 interface ReviewQueueResponse {
-  items: ReviewQueueItem[]
+  items: unknown[]
   totalDue: number
 }
 
@@ -35,10 +28,71 @@ interface ReviewQueueResponse {
 const WRITING_SLUGS = ['boundaries', 'form-structure-sense', 'transitions', 'rhetorical-synthesis']
 const READING_SLUGS = [
   'words-in-context', 'central-ideas-details', 'text-structure-purpose',
-  'command-of-evidence', 'quantitative-evidence', 'inferences',
+  'command-of-evidence', 'quantitative-evidence', 'inferences', 'cross-text-connections',
 ]
 const ALL_SLUGS = [...WRITING_SLUGS, ...READING_SLUGS]
-const TOTAL_SKILLS = ALL_SLUGS.length
+const TOTAL_SKILLS = ALL_SLUGS.length  // 11
+
+// ── Phases ─────────────────────────────────────────────────────────────────────
+
+const PHASES = [
+  {
+    number: 1,
+    label: 'Diagnose',
+    description: 'R&W Diagnostic',
+    href: '/sat-rw-academy/diagnostic',
+    color: 'bg-slate-100 text-slate-600 border-slate-200',
+    activeColor: 'bg-sky-100 text-sky-700 border-sky-300',
+  },
+  {
+    number: 2,
+    label: 'Learn Writing Rules',
+    description: 'Boundaries · Form, Structure & Sense · Transitions · Rhetorical Synthesis',
+    href: '/sat-rw-academy/writing',
+    color: 'bg-slate-100 text-slate-600 border-slate-200',
+    activeColor: 'bg-violet-50 text-violet-700 border-violet-300',
+  },
+  {
+    number: 3,
+    label: 'Build Vocabulary',
+    description: 'Daily vocabulary — runs concurrently throughout the course',
+    href: '/sat-rw-academy/vocabulary',
+    color: 'bg-slate-100 text-slate-600 border-slate-200',
+    activeColor: 'bg-amber-50 text-amber-700 border-amber-300',
+  },
+  {
+    number: 4,
+    label: 'Master Reading Strategies',
+    description: 'Words in Context · Central Ideas · Text Structure · Evidence · Inferences · Cross-Text Connections',
+    href: '/sat-rw-academy/reading',
+    color: 'bg-slate-100 text-slate-600 border-slate-200',
+    activeColor: 'bg-emerald-50 text-emerald-700 border-emerald-300',
+  },
+  {
+    number: 5,
+    label: 'Mix and Review',
+    description: 'Cumulative Review · Mixed Practice · Review Queue',
+    href: '/sat-rw-academy/mixed-practice',
+    color: 'bg-slate-100 text-slate-600 border-slate-200',
+    activeColor: 'bg-teal-50 text-teal-700 border-teal-300',
+  },
+  {
+    number: 6,
+    label: 'Practice Under Time',
+    description: 'Three 54-question R&W Capstones',
+    href: '/sat-rw-academy/capstones',
+    color: 'bg-slate-100 text-slate-600 border-slate-200',
+    activeColor: 'bg-orange-50 text-orange-700 border-orange-300',
+  },
+  {
+    number: 7,
+    label: 'Demonstrate Mastery',
+    description: 'Final R&W Mastery Check',
+    href: '/sat-rw-academy/mastery-check',
+    color: 'bg-slate-100 text-slate-600 border-slate-200',
+    activeColor: 'bg-rose-50 text-rose-700 border-rose-300',
+  },
+]
 
 // ── Small helpers ──────────────────────────────────────────────────────────────
 
@@ -87,9 +141,7 @@ function ModuleCard({ number, title, description, href, buttonLabel, badge, prog
         <div className="flex items-start justify-between gap-2 flex-wrap">
           <div>
             <p className="font-semibold text-slate-900 text-sm">{title}</p>
-            {badge && (
-              <span className="inline-block mt-0.5 text-[10px] text-slate-500">{badge}</span>
-            )}
+            {badge && <span className="inline-block mt-0.5 text-[10px] text-slate-500">{badge}</span>}
           </div>
           <Link
             href={href}
@@ -104,9 +156,7 @@ function ModuleCard({ number, title, description, href, buttonLabel, badge, prog
             {masteryPills.map((s, i) => <MasteryPill key={i} status={s} />)}
           </div>
         )}
-        {progress && (
-          <p className="mt-1.5 text-[11px] text-slate-400">{progress}</p>
-        )}
+        {progress && <p className="mt-1.5 text-[11px] text-slate-400">{progress}</p>}
       </div>
     </div>
   )
@@ -144,23 +194,28 @@ export default function SatRwAcademyPage() {
   const totalMastered = ALL_SLUGS.filter(s => mastery[s]?.status === 'mastered').length
   const lessonsCompleted = lessons.filter(l => l.status === 'completed').length
 
-  // Weakest skill with attempts
   const weakestSkill = ALL_SLUGS
     .filter(s => mastery[s] && mastery[s].attemptCount > 0)
     .sort((a, b) => (mastery[a]?.masteryScore ?? 100) - (mastery[b]?.masteryScore ?? 100))[0] ?? null
 
-  // Last opened lesson (most recent by completion)
   const lastLesson = lessons.length > 0
-    ? lessons.sort((a, b) => (b.completedAt ?? '').localeCompare(a.completedAt ?? ''))[0]
+    ? [...lessons].sort((a, b) => (b.completedAt ?? '').localeCompare(a.completedAt ?? ''))[0]
     : null
 
-  const writingMastery = WRITING_SLUGS.map(s => mastery[s]?.status ?? 'not_started' as MasteryStatus)
-  const readingMastery = READING_SLUGS.map(s => mastery[s]?.status ?? 'not_started' as MasteryStatus)
+  const writingMastery = WRITING_SLUGS.map(s => mastery[s]?.status ?? ('not_started' as MasteryStatus))
+  const readingMastery = READING_SLUGS.map(s => mastery[s]?.status ?? ('not_started' as MasteryStatus))
   const writingCompleted = WRITING_SLUGS.filter(s => lessons.some(l => l.lessonSlug === s && l.status === 'completed')).length
   const readingCompleted = READING_SLUGS.filter(s => lessons.some(l => l.lessonSlug === s && l.status === 'completed')).length
 
   const totalTransitions = transitionQuestions.length
   const totalPassages = academyPassages.length
+  const totalGlossaryTerms = glossaryTerms.length
+
+  // Determine current phase based on progress
+  const hasDiagnostic = ALL_SLUGS.some(s => mastery[s] && mastery[s].attemptCount > 0)
+  const writingDone = WRITING_SLUGS.every(s => mastery[s]?.status === 'proficient' || mastery[s]?.status === 'mastered')
+  const readingDone = READING_SLUGS.every(s => mastery[s]?.status === 'proficient' || mastery[s]?.status === 'mastered')
+  const currentPhase = !hasDiagnostic ? 1 : !writingDone ? 2 : !readingDone ? 4 : 5
 
   return (
     <div className="space-y-8 max-w-3xl">
@@ -175,32 +230,33 @@ export default function SatRwAcademyPage() {
           </div>
           <div>
             <h1 className="text-xl font-bold text-emerald-900">SAT R&W Academy</h1>
-            <p className="text-sm text-emerald-700 mt-0.5">Learn the rules, master the strategies, and strengthen your weakest skills.</p>
+            <p className="text-sm text-emerald-700 mt-0.5">
+              A structured, seven-phase curriculum covering all 11 SAT R&W skills from rule-learning to timed capstone practice.
+            </p>
           </div>
         </div>
       </div>
 
       {/* ── Welcome + Progress ─────────────────────────────────────────────── */}
       <div className="grid gap-6 lg:grid-cols-5">
-
-        {/* Welcome text */}
         <div className="lg:col-span-3 space-y-3">
           <h2 className="text-lg font-bold text-slate-900">Welcome to the SAT R&W Academy</h2>
           <p className="text-sm text-slate-600 leading-relaxed">
-            Welcome to the SAT R&W Academy, your complete course for building the Reading and Writing skills tested on the SAT. Work through the lessons in the recommended order, practice each skill with original questions, and use your results to focus on the areas that need the most improvement.
+            This academy covers every major SAT Reading and Writing skill through a seven-phase curriculum:
+            diagnose your baseline, secure predictable Writing points, build vocabulary,
+            develop Reading strategies, practice mixed questions, test under timed conditions, and demonstrate mastery.
           </p>
           <p className="text-sm text-slate-600 leading-relaxed">
-            Start with the R&W Diagnostic if you are new to the academy. It will identify your strongest and weakest skills and recommend where you should begin. You can also use the course menu to open any lesson, trainer, or review tool directly.
+            You can open any lesson, trainer, or tool directly from the sidebar — phases are recommended, not required.
+            Each skill has original guided examples, targeted drills, and a mixed recognition check.
           </p>
           <p className="text-sm text-slate-500 italic">
-            Begin with the diagnostic, then follow the recommended course path at your own pace.
+            All content is independently created by MockMate. Not affiliated with College Board.
           </p>
         </div>
 
-        {/* Progress card */}
         <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white p-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Your Academy Progress</p>
-
           {loading ? (
             <div className="space-y-2">
               <div className="h-4 w-3/4 animate-pulse rounded bg-slate-100" />
@@ -250,6 +306,45 @@ export default function SatRwAcademyPage() {
         </div>
       </div>
 
+      {/* ── Your Recommended Path ─────────────────────────────────────────── */}
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">Your Recommended Path</h2>
+          {hasAny && (
+            <span className="text-[11px] text-slate-400">Currently in Phase {currentPhase}</span>
+          )}
+        </div>
+        <div className="grid gap-2 sm:grid-cols-2">
+          {PHASES.map(phase => {
+            const isCurrentPhase = hasAny && phase.number === currentPhase
+            const isDone = hasAny && phase.number < currentPhase
+            return (
+              <Link
+                key={phase.number}
+                href={phase.href}
+                className={cn(
+                  'flex items-start gap-3 rounded-xl border p-3 transition-colors hover:shadow-sm',
+                  isCurrentPhase ? phase.activeColor : isDone ? 'bg-white border-slate-200' : 'bg-slate-50 border-slate-200',
+                )}
+              >
+                <div className={cn(
+                  'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-bold mt-0.5',
+                  isCurrentPhase ? 'bg-white' : isDone ? 'bg-emerald-100 text-emerald-700' : 'bg-white text-slate-500',
+                )}>
+                  {isDone ? '✓' : phase.number}
+                </div>
+                <div className="min-w-0">
+                  <p className={cn('text-[12px] font-semibold', isDone ? 'text-emerald-700' : isCurrentPhase ? '' : 'text-slate-600')}>
+                    Phase {phase.number}: {phase.label}
+                  </p>
+                  <p className="text-[11px] text-slate-500 mt-0.5 leading-relaxed">{phase.description}</p>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+
       {/* ── Start Here ────────────────────────────────────────────────────── */}
       <div>
         <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-3">Start Here</h2>
@@ -258,9 +353,9 @@ export default function SatRwAcademyPage() {
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-slate-900">R&W Diagnostic</p>
               <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                Take a short mixed assessment to identify your strongest and weakest Reading and Writing skills and receive a recommended starting path.
+                Identify your baseline across all 11 R&W skills and receive a recommended starting path.
               </p>
-              <p className="text-[11px] text-slate-400 mt-2">24 original SAT-style questions · Covers all 10 skills · ~15–20 min</p>
+              <p className="text-[11px] text-slate-400 mt-2">26 original SAT-style questions · All 11 skills · ~20 min</p>
             </div>
             <Link
               href="/sat-rw-academy/diagnostic"
@@ -276,17 +371,17 @@ export default function SatRwAcademyPage() {
       <div>
         <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-1">Course Modules</h2>
         <p className="text-xs text-slate-500 mb-4">
-          Follow these modules in order for a structured course experience, or use the academy menu to jump directly to a specific skill.
+          Follow these in order or use the sidebar to jump directly to any skill.
         </p>
         <div className="space-y-3">
 
           <ModuleCard
             number={1}
             title="Writing Skills"
-            description="Master grammar, sentence structure, punctuation, transitions, and rhetorical decision-making through focused lessons and targeted practice."
+            description="Learn punctuation rules, sentence structure, transitions, and rhetorical synthesis through focused lessons and targeted practice."
             href="/sat-rw-academy/writing"
             buttonLabel="Open Writing Skills"
-            badge={`4 lessons`}
+            badge="4 lessons · Boundaries · Form, Structure & Sense · Transitions · Rhetorical Synthesis"
             progress={hasAny ? `${writingCompleted} of 4 lessons completed` : undefined}
             masteryPills={hasAny ? writingMastery : undefined}
           />
@@ -294,67 +389,113 @@ export default function SatRwAcademyPage() {
           <ModuleCard
             number={2}
             title="Reading Skills"
-            description="Learn how to identify central ideas, analyze structure, use evidence, interpret data, understand words in context, and make supported inferences."
+            description="Master every SAT Reading skill: Words in Context, Central Ideas, Text Structure, Command of Evidence, Quantitative Evidence, Inferences, and Cross-Text Connections."
             href="/sat-rw-academy/reading"
             buttonLabel="Open Reading Skills"
-            badge={`6 lessons`}
-            progress={hasAny ? `${readingCompleted} of 6 lessons completed` : undefined}
+            badge="7 lessons · all Reading & Analysis domains"
+            progress={hasAny ? `${readingCompleted} of 7 lessons completed` : undefined}
             masteryPills={hasAny ? readingMastery : undefined}
           />
 
           <ModuleCard
             number={3}
             title="Vocabulary Trainer"
-            description="Build high-utility academic vocabulary and practice selecting the meaning that best fits each context."
+            description="Build high-utility academic vocabulary. Practice meaning-from-context and word-family recognition throughout the course."
             href="/sat-rw-academy/vocabulary"
             buttonLabel="Practice Vocabulary"
-            badge="120+ academic words · flashcard, multiple choice, fill-in-the-blank"
+            badge="300+ academic words · flashcard · multiple choice · fill-in-the-blank"
           />
 
           <ModuleCard
             number={4}
             title="Transition Trainer"
-            description="Learn the logical relationships behind transitions and practice choosing the connection that accurately links two ideas."
+            description="Practice identifying logical relationships before selecting transition words. Tracks relationship accuracy and answer accuracy separately."
             href="/sat-rw-academy/transitions"
             buttonLabel="Practice Transitions"
-            badge={`${totalTransitions} original questions across 9 categories`}
+            badge={`${totalTransitions} original questions · 9 logical categories`}
           />
 
           <ModuleCard
             number={5}
             title="Reading Speed"
-            description="Improve your reading pace while protecting comprehension through RSVP practice and original academy passages."
+            description="Improve reading pace without sacrificing comprehension through RSVP practice and original academy passages."
             href="/sat-rw-academy/reading-speed"
             buttonLabel="Start Reading Practice"
-            badge={`Paste your own text or choose from ${totalPassages} academy passages`}
+            badge={`${totalPassages} academy passages · paste your own text · comprehension tracking`}
           />
 
           <ModuleCard
             number={6}
             title="Review Queue"
-            description="Revisit missed and difficult questions at spaced intervals so weak skills are reinforced instead of forgotten."
+            description="Missed and difficult questions are scheduled for spaced review at 1 / 3 / 7 / 14 / 30-day intervals."
             href="/sat-rw-academy/review"
             buttonLabel={reviewsDue > 0 ? `Start Review (${reviewsDue} due)` : 'View Review Queue'}
-            badge="Spaced repetition · 1 / 3 / 7 / 14 / 30 day intervals"
+            badge="Spaced repetition · 5 stage intervals"
             progress={reviewsDue > 0 ? `${reviewsDue} question${reviewsDue !== 1 ? 's' : ''} due for review` : 'No reviews due right now'}
           />
 
           <ModuleCard
             number={7}
-            title="Study Plan"
-            description="Turn your weakest skills, due reviews, vocabulary practice, and reading sessions into a realistic weekly schedule."
-            href="/sat-rw-academy/study-plan"
-            buttonLabel={hasAny ? 'View Study Plan' : 'Create Study Plan'}
-            badge="Mon–Fri schedule · personalised to your mastery"
+            title="Mixed R&W Practice"
+            description="Questions from all four domains mixed together without skill labels. Available in 10-question, 27-question, and 54-question modes."
+            href="/sat-rw-academy/mixed-practice"
+            buttonLabel="Start Mixed Practice"
+            badge="Quick Mix · Standard Mix · Full R&W Practice · skill identification training"
           />
 
+          <ModuleCard
+            number={8}
+            title="R&W Academy Capstones"
+            description="Three 54-question timed assessments covering all four domains and all eleven skills. Detailed explanations after each module."
+            href="/sat-rw-academy/capstones"
+            buttonLabel="Open Capstones"
+            badge="3 capstones · 54 questions each · 2 modules of 27 · 32 min per module"
+          />
+
+          <ModuleCard
+            number={9}
+            title="R&W Glossary"
+            description="Searchable plain-language definitions for all technical terms used in the Academy — grammar, punctuation, rhetoric, logic, and analysis."
+            href="/sat-rw-academy/glossary"
+            buttonLabel="Open Glossary"
+            badge={`${totalGlossaryTerms > 0 ? totalGlossaryTerms : 35} terms · 5 categories · cross-referenced`}
+          />
+
+          <ModuleCard
+            number={10}
+            title="Study Plan"
+            description="A weekly schedule built from your mastery data. Prioritizes due reviews, weak skills, and vocabulary before adding new lessons."
+            href="/sat-rw-academy/study-plan"
+            buttonLabel={hasAny ? 'View Study Plan' : 'Create Study Plan'}
+            badge="Mon–Fri · personalised to your mastery level"
+          />
+
+        </div>
+      </div>
+
+      {/* ── Mastery Check callout ─────────────────────────────────────────── */}
+      <div className="rounded-xl border border-rose-200 bg-rose-50 p-5">
+        <div className="flex items-start justify-between gap-4 flex-wrap">
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold text-rose-900 text-sm">Final R&W Mastery Check</p>
+            <p className="text-xs text-rose-700 mt-1 leading-relaxed">
+              Complete this after finishing all three Capstones. Uses different questions from the diagnostic.
+              Shows your skill progress from start to finish.
+            </p>
+          </div>
+          <Link
+            href="/sat-rw-academy/mastery-check"
+            className="shrink-0 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold px-4 py-2 transition-colors whitespace-nowrap"
+          >
+            Take Mastery Check
+          </Link>
         </div>
       </div>
 
       {/* ── Quick Resources ───────────────────────────────────────────────── */}
       {(lastLesson || weakestSkill || reviewsDue > 0 || hasAny) && (
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-3">Quick Resources</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-3">Quick Access</h2>
           <div className="grid gap-2 sm:grid-cols-2">
 
             {lastLesson && (
@@ -409,7 +550,7 @@ export default function SatRwAcademyPage() {
       )}
 
       <p className="text-xs text-slate-400 leading-relaxed">
-        All MockMate academy content is independently created for practice purposes. MockMate is not affiliated with, endorsed by, or sponsored by College Board. SAT® is a trademark of College Board.
+        All MockMate Academy content is independently created for practice purposes. MockMate is not affiliated with, endorsed by, or sponsored by College Board. SAT® is a trademark of College Board, which is not affiliated with and does not endorse MockMate.
       </p>
     </div>
   )

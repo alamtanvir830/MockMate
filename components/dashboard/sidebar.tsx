@@ -299,6 +299,35 @@ export function Sidebar({ userEmail, userFullName, subscriptionTier = 'free' }: 
         })}
       </nav>
 
+      {/* ── Admin link (admin email only) ─────────────────────────────────── */}
+      {userEmail === 'ranvi.contact@gmail.com' && (
+        <div className={cn('pb-1', collapsed ? 'flex flex-col items-center px-2' : 'px-3')}>
+          {collapsed ? (
+            <NavTooltip label="Content Reports">
+              <Link
+                href="/admin/sat-rw-academy/content-reports"
+                aria-label="Content Reports"
+                className="flex h-10 w-10 items-center justify-center rounded-lg text-rose-400 hover:bg-rose-50 hover:text-rose-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400"
+              >
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+              </Link>
+            </NavTooltip>
+          ) : (
+            <Link
+              href="/admin/sat-rw-academy/content-reports"
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-rose-600 hover:bg-rose-50 hover:text-rose-700 transition-colors"
+            >
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0 text-rose-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
+              Content Reports
+            </Link>
+          )}
+        </div>
+      )}
+
       {/* ── Legal links (expanded only) ────────────────────────────────────── */}
       {!collapsed && (
         <div className="px-4 pb-2 flex flex-wrap gap-x-3 gap-y-1">
