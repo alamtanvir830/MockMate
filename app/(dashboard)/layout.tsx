@@ -4,6 +4,7 @@ import { Sidebar } from '@/components/dashboard/sidebar'
 import { MobileHeader } from '@/components/dashboard/mobile-header'
 import { SyncSatAttempts } from '@/components/premade/SyncSatAttempts'
 import { SyncQBHistory } from '@/components/question-bank/SyncQBHistory'
+import { AcademySidebarSlot } from '@/components/dashboard/AcademySidebarSlot'
 
 export default async function DashboardLayout({
   children,
@@ -22,6 +23,7 @@ export default async function DashboardLayout({
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden">
       <Sidebar userEmail={user.email} userFullName={fullName} />
+      <AcademySidebarSlot />
       <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
         <MobileHeader />
         <main className="flex-1 overflow-y-auto">
