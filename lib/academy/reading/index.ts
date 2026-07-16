@@ -1,0 +1,25 @@
+import type { AcademySkill } from '../types'
+import { wordsInContext } from './words-in-context'
+import { centralIdeasDetails } from './central-ideas-details'
+import { textStructurePurpose } from './text-structure-purpose'
+import { commandOfEvidence } from './command-of-evidence'
+import { quantitativeEvidence } from './quantitative-evidence'
+import { inferences } from './inferences'
+
+export const readingSkills: AcademySkill[] = [
+  wordsInContext,
+  centralIdeasDetails,
+  textStructurePurpose,
+  commandOfEvidence,
+  quantitativeEvidence,
+  inferences,
+]
+
+export {
+  wordsInContext,
+  centralIdeasDetails,
+  textStructurePurpose,
+  commandOfEvidence,
+  quantitativeEvidence,
+  inferences,
+}
