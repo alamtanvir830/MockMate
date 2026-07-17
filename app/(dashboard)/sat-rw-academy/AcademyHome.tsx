@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Fragment } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import type { SkillMastery } from '@/lib/academy/mastery'
@@ -53,6 +53,47 @@ interface CapstonesData {
   masteryCheckDone: boolean
 }
 
+type PathItemStatus =
+  | 'recommended'
+  | 'not_started'
+  | 'lesson_completed'
+  | 'practice_needed'
+  | 'locked'
+  | 'ready'
+  | 'review_required'
+  | 'completed'
+  | 'coming_soon'
+
+type PathItemType = 'skill' | 'capstone' | 'capstone_review' | 'mastery' | 'full_exam'
+
+interface PathItem {
+  id: string
+  type: PathItemType
+  rowNum: number
+  title: string
+  description: string
+  details?: string
+  category: string
+  categoryBadgeClass: string
+  status: PathItemStatus
+  statusLabel: string
+  statusBadgeClass: string
+  lockReason?: string
+  actionLabel: string
+  actionHref: string
+  actionEnabled: boolean
+  // skill-specific
+  diagnosticPct?: number | null
+  diagnosticScore?: string | null
+  sectionLabel?: string | null
+  sectionBadgeClass?: string
+  // milestone-specific
+  accuracy?: number | null
+  correctCount?: number | null
+  totalCount?: number | null
+  weakestSlugs?: string[]
+}
+
 // ── Constants ──────────────────────────────────────────────────────────────────
 
 const WRITING_SLUGS = ['boundaries', 'form-structure-sense', 'transitions', 'rhetorical-synthesis']
@@ -63,8 +104,11 @@ const READING_SLUGS = [
 const ALL_SLUGS = [...WRITING_SLUGS, ...READING_SLUGS]
 const TOTAL_SKILLS = ALL_SLUGS.length
 
-// Must match the key used in diagnostic/page.tsx
 const DIAGNOSTIC_STORAGE_KEY = 'sat_rw_diagnostic_progress'
+
+const CAPSTONE_BADGE_CLASS = 'bg-blue-50 text-blue-600 border-blue-200'
+const MASTERY_BADGE_CLASS = 'bg-rose-50 text-rose-500 border-rose-200'
+const FULL_SAT_BADGE_CLASS = 'bg-indigo-50 text-indigo-600 border-indigo-200'
 
 // ── computeNextStep ────────────────────────────────────────────────────────────
 
@@ -99,18 +143,15 @@ function computeNextStep(
 
     if (!lessonDone) {
       return {
-        type: 'lesson',
-        slug,
+        type: 'lesson', slug,
         href: `/sat-rw-academy/lesson/${slug}`,
         label: `Start ${name} Lesson`,
         reason: `Your diagnostic identified ${name} as a priority area. Begin with the lesson.`,
       }
     }
-
     if (!skillMastery || skillMastery.status === 'not_started' || skillMastery.status === 'learning' || skillMastery.status === 'developing') {
       return {
-        type: 'drill',
-        slug,
+        type: 'drill', slug,
         href: `/sat-rw-academy/lesson/${slug}`,
         label: `Practice ${name}`,
         reason: `You completed the ${name} lesson. Now build mastery with the targeted drill.`,
@@ -118,82 +159,87 @@ function computeNextStep(
     }
   }
 
-  // All skills covered — move to capstone progression
+  // All skills covered — advance through capstone progression
   if (capstonesData) {
     const cap1 = capstonesData.capstones.find(c => c.number === 1) ?? null
     const cap2 = capstonesData.capstones.find(c => c.number === 2) ?? null
     const cap3 = capstonesData.capstones.find(c => c.number === 3) ?? null
     const allLessonsDone = ALL_SLUGS.every(s => completedLessons.has(s))
 
+    const isProficientEnough = (slug: string) => {
+      const m = mastery[slug]
+      return m?.status === 'proficient' || m?.status === 'mastered'
+    }
+    const reviewComplete = (cap: CapstoneStatus | null) =>
+      (cap?.completed ?? false) &&
+      ((cap?.weakestSlugs ?? []).length === 0 || (cap?.weakestSlugs ?? []).every(isProficientEnough))
+
+    const cap1ReviewDone = reviewComplete(cap1)
+    const cap2ReviewDone = reviewComplete(cap2)
+    const cap3Available = cap3?.available ?? false
+    const cap3ReviewDone = cap3Available ? reviewComplete(cap3) : true
+
     if (!cap1?.completed) {
       if (allLessonsDone) {
         return {
-          type: 'capstone',
-          number: 1,
+          type: 'capstone', number: 1,
           href: '/sat-rw-academy/capstones/capstone-1',
           label: 'Take R&W Academy Capstone 1',
           reason: 'You have completed all 11 skill lessons. Apply everything in your first timed capstone assessment.',
         }
       }
-    } else if (!cap2?.completed) {
-      const needsDrill = cap1.weakestSlugs.find(slug => {
-        const m = mastery[slug]
-        return !m || !['proficient', 'mastered'].includes(m.status ?? '')
-      })
-      if (needsDrill) {
-        const name = SKILL_DISPLAY_NAMES[needsDrill] ?? needsDrill
+    } else if (!cap1ReviewDone) {
+      const weak = (cap1?.weakestSlugs ?? []).find(s => !isProficientEnough(s))
+      if (weak) {
         return {
-          type: 'drill',
-          slug: needsDrill,
-          href: `/sat-rw-academy/lesson/${needsDrill}`,
-          label: `Practice ${name}`,
-          reason: `Capstone 1 showed ${name} as a weak area. Build more mastery before Capstone 2.`,
+          type: 'drill', slug: weak,
+          href: `/sat-rw-academy/lesson/${weak}`,
+          label: `Practice ${SKILL_DISPLAY_NAMES[weak] ?? weak}`,
+          reason: `Capstone 1 showed ${SKILL_DISPLAY_NAMES[weak] ?? weak} as a weak area. Build mastery before Capstone 2.`,
         }
       }
+    } else if (!cap2?.completed) {
       return {
-        type: 'capstone',
-        number: 2,
+        type: 'capstone', number: 2,
         href: '/sat-rw-academy/capstones/capstone-2',
         label: 'Take R&W Academy Capstone 2',
-        reason: 'You have addressed your Capstone 1 weak areas. Continue with Capstone 2 to measure your progress.',
+        reason: 'You have addressed your Capstone 1 weak areas. Take Capstone 2 to measure your progress.',
+      }
+    } else if (!cap2ReviewDone) {
+      const weak = (cap2?.weakestSlugs ?? []).find(s => !isProficientEnough(s))
+      if (weak) {
+        return {
+          type: 'drill', slug: weak,
+          href: `/sat-rw-academy/lesson/${weak}`,
+          label: `Practice ${SKILL_DISPLAY_NAMES[weak] ?? weak}`,
+          reason: `Capstone 2 showed ${SKILL_DISPLAY_NAMES[weak] ?? weak} as a weak area. Strengthen it before Capstone 3.`,
+        }
+      }
+    } else if (cap3Available && !cap3?.completed) {
+      return {
+        type: 'capstone', number: 3,
+        href: '/sat-rw-academy/capstones/capstone-3',
+        label: 'Take R&W Academy Capstone 3',
+        reason: 'You have completed Capstone 2. Take the final capstone to complete your capstone series.',
+      }
+    } else if (cap3Available && !cap3ReviewDone) {
+      const weak = (cap3?.weakestSlugs ?? []).find(s => !isProficientEnough(s))
+      if (weak) {
+        return {
+          type: 'drill', slug: weak,
+          href: `/sat-rw-academy/lesson/${weak}`,
+          label: `Practice ${SKILL_DISPLAY_NAMES[weak] ?? weak}`,
+          reason: `Capstone 3 showed ${SKILL_DISPLAY_NAMES[weak] ?? weak} as a persistent weak area. Address it before the Final Mastery Check.`,
+        }
+      }
+    } else if (!capstonesData.masteryCheckDone) {
+      return {
+        type: 'mastery-check',
+        href: '/sat-rw-academy/mastery-check',
+        label: 'Take Final R&W Mastery Check',
+        reason: 'You have completed the capstone series. Measure your total R&W skill improvement from start to finish.',
       }
     } else {
-      const cap3Available = cap3?.available ?? false
-      const cap3Done = cap3?.completed ?? false
-
-      if (cap3Available && !cap3Done) {
-        const needsDrill = cap2.weakestSlugs.find(slug => {
-          const m = mastery[slug]
-          return !m || !['proficient', 'mastered'].includes(m.status ?? '')
-        })
-        if (needsDrill) {
-          const name = SKILL_DISPLAY_NAMES[needsDrill] ?? needsDrill
-          return {
-            type: 'drill',
-            slug: needsDrill,
-            href: `/sat-rw-academy/lesson/${needsDrill}`,
-            label: `Practice ${name}`,
-            reason: `Capstone 2 showed ${name} as a weak area. Strengthen it before your final capstone.`,
-          }
-        }
-        return {
-          type: 'capstone',
-          number: 3,
-          href: '/sat-rw-academy/capstones/capstone-3',
-          label: 'Take R&W Academy Capstone 3',
-          reason: 'You have completed Capstone 2. Take Capstone 3 to complete your capstone series.',
-        }
-      }
-
-      if (!capstonesData.masteryCheckDone) {
-        return {
-          type: 'mastery-check',
-          href: '/sat-rw-academy/mastery-check',
-          label: 'Take Final R&W Mastery Check',
-          reason: 'You have completed the capstone series. The Final Mastery Check shows your total skill improvement from start to finish.',
-        }
-      }
-
       return {
         type: 'sat-form-1',
         href: '/premade/sat/form-1',
@@ -211,7 +257,447 @@ function computeNextStep(
   }
 }
 
-// ── Small helpers ──────────────────────────────────────────────────────────────
+// ── buildPathItems ─────────────────────────────────────────────────────────────
+// Builds the unified ordered path array. Always includes all 19 items (11 skills
+// + 8 milestones). Milestones default to Locked when capstonesData is null.
+
+function buildPathItems(
+  diagnosticResult: DiagnosticResult,
+  mastery: Record<string, SkillMastery>,
+  lessons: LessonProgress[],
+  capstonesData: CapstonesData | null,
+  nextStep: ReturnType<typeof computeNextStep> | null,
+): PathItem[] {
+  const completedLessons = new Set(lessons.filter(l => l.status === 'completed').map(l => l.lessonSlug))
+  const allLessonsDone = ALL_SLUGS.every(s => completedLessons.has(s))
+
+  // ── Skill items (sorted by diagnostic accuracy, weakest first) ──────────────
+  const sortedSlugs = ACADEMY_SKILL_SLUGS
+    .filter(slug => diagnosticResult.skill_results[slug])
+    .sort((a, b) => (diagnosticResult.skill_results[a]?.pct ?? 100) - (diagnosticResult.skill_results[b]?.pct ?? 100))
+
+  const skillItems: PathItem[] = sortedSlugs.map((slug, i) => {
+    const skillResult = diagnosticResult.skill_results[slug]
+    const skillMastery = mastery[slug]
+    const lessonDone = completedLessons.has(slug)
+    const name = SKILL_DISPLAY_NAMES[slug] ?? slug
+    const isRecommended = nextStep?.slug === slug
+    const section = SKILL_SECTION[slug as keyof typeof SKILL_SECTION] ?? null
+
+    let status: PathItemStatus
+    let statusLabel: string
+    let statusBadgeClass: string
+    let actionLabel: string
+
+    if (isRecommended) {
+      status = 'recommended'; statusLabel = 'Recommended Next'
+      statusBadgeClass = 'bg-sky-100 text-sky-700 border-sky-300'
+      actionLabel = nextStep!.label
+    } else if (skillMastery?.status === 'mastered' || skillMastery?.status === 'proficient') {
+      status = 'completed'; statusLabel = 'Proficient+'
+      statusBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-300'
+      actionLabel = 'Review'
+    } else if (lessonDone) {
+      status = 'practice_needed'; statusLabel = 'Practice Needed'
+      statusBadgeClass = 'bg-amber-100 text-amber-700 border-amber-300'
+      actionLabel = 'Practice'
+    } else {
+      status = 'not_started'; statusLabel = 'Not Started'
+      statusBadgeClass = 'bg-slate-100 text-slate-500 border-slate-300'
+      actionLabel = 'Start Lesson'
+    }
+
+    return {
+      id: `skill-${slug}`,
+      type: 'skill',
+      rowNum: i + 1,
+      title: name,
+      description: '',
+      category: section === 'reading' ? 'Reading' : section === 'writing' ? 'Writing' : '',
+      categoryBadgeClass: section === 'reading'
+        ? 'bg-purple-50 text-purple-600 border-purple-200'
+        : 'bg-yellow-50 text-yellow-700 border-yellow-200',
+      status, statusLabel, statusBadgeClass,
+      actionLabel,
+      actionHref: isRecommended ? nextStep!.href : `/sat-rw-academy/lesson/${slug}`,
+      actionEnabled: true,
+      diagnosticPct: skillResult?.pct ?? null,
+      diagnosticScore: skillResult ? `${skillResult.correct}/${skillResult.total}` : null,
+    }
+  })
+
+  const base = sortedSlugs.length
+
+  // ── Capstone data (null-safe defaults) ──────────────────────────────────────
+  const cap1 = capstonesData?.capstones.find(c => c.number === 1) ?? null
+  const cap2 = capstonesData?.capstones.find(c => c.number === 2) ?? null
+  const cap3 = capstonesData?.capstones.find(c => c.number === 3) ?? null
+  const masteryCheckDone = capstonesData?.masteryCheckDone ?? false
+  const cap3Available = cap3?.available ?? false
+
+  const isProficientEnough = (slug: string) => {
+    const m = mastery[slug]
+    return m?.status === 'proficient' || m?.status === 'mastered'
+  }
+  const reviewComplete = (cap: CapstoneStatus | null) =>
+    (cap?.completed ?? false) &&
+    ((cap?.weakestSlugs ?? []).length === 0 || (cap?.weakestSlugs ?? []).every(isProficientEnough))
+
+  const cap1ReviewDone = reviewComplete(cap1)
+  const cap2ReviewDone = reviewComplete(cap2)
+  const cap3ReviewDone = cap3Available ? reviewComplete(cap3) : true
+  const allCapstonesAndReviewsDone = cap1ReviewDone && cap2ReviewDone && (!cap3Available || cap3ReviewDone)
+
+  function mkStatus(
+    done: boolean,
+    unlocked: boolean,
+    isRecommendedType: boolean,
+    lockMsg: string,
+    readyBadgeClass = 'bg-blue-100 text-blue-600 border-blue-200',
+  ): Pick<PathItem, 'status' | 'statusLabel' | 'statusBadgeClass' | 'lockReason'> {
+    if (done) return { status: 'completed', statusLabel: 'Completed', statusBadgeClass: 'bg-emerald-100 text-emerald-700 border-emerald-300' }
+    if (isRecommendedType) return { status: 'recommended', statusLabel: 'Recommended Next', statusBadgeClass: 'bg-sky-100 text-sky-700 border-sky-300' }
+    if (!unlocked) return { status: 'locked', statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-400 border-slate-200', lockReason: lockMsg }
+    return { status: 'ready', statusLabel: 'Ready', statusBadgeClass: readyBadgeClass }
+  }
+
+  function mkReviewStatus(
+    capCompleted: boolean,
+    reviewDone: boolean,
+    lockMsg: string,
+  ): Pick<PathItem, 'status' | 'statusLabel' | 'statusBadgeClass' | 'lockReason'> {
+    if (!capCompleted) return { status: 'locked', statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-400 border-slate-200', lockReason: lockMsg }
+    if (reviewDone) return { status: 'completed', statusLabel: 'Completed', statusBadgeClass: 'bg-emerald-100 text-emerald-700 border-emerald-300' }
+    return { status: 'review_required', statusLabel: 'Review Required', statusBadgeClass: 'bg-amber-100 text-amber-700 border-amber-300' }
+  }
+
+  // ── Capstone 1 ──────────────────────────────────────────────────────────────
+  const cap1s = mkStatus(
+    cap1?.completed ?? false,
+    allLessonsDone,
+    nextStep?.type === 'capstone' && nextStep.number === 1,
+    'Complete all 11 core skill lessons to unlock Capstone 1.',
+  )
+  const capstone1Item: PathItem = {
+    id: 'capstone-1', type: 'capstone', rowNum: base + 1,
+    title: 'R&W Academy Capstone 1',
+    description: 'Complete a full mixed Reading and Writing assessment covering all 11 academy skills.',
+    details: '54 questions • 2 timed modules • All 11 R&W skills',
+    category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+    ...cap1s,
+    actionLabel: cap1?.completed ? 'View Results' : allLessonsDone ? 'Take Capstone 1' : 'Complete Core Lessons First',
+    actionHref: '/sat-rw-academy/capstones/capstone-1',
+    actionEnabled: allLessonsDone && (cap1?.available !== false),
+    accuracy: cap1?.accuracy ?? null,
+    correctCount: cap1?.correctCount ?? null,
+    totalCount: cap1?.totalCount ?? null,
+  }
+
+  // ── Capstone 1 Review ────────────────────────────────────────────────────────
+  const cap1rs = mkReviewStatus(
+    cap1?.completed ?? false,
+    cap1ReviewDone,
+    'Complete Capstone 1 to unlock your personalized review.',
+  )
+  const capstone1ReviewItem: PathItem = {
+    id: 'capstone-1-review', type: 'capstone_review', rowNum: base + 2,
+    title: 'Capstone 1 Review',
+    description: cap1?.completed
+      ? 'Address your weak areas from Capstone 1 before moving to Capstone 2.'
+      : 'Complete Capstone 1 to unlock your personalized review.',
+    category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+    ...cap1rs,
+    actionLabel: cap1ReviewDone ? 'Reviewed' : 'Review Weak Areas',
+    actionHref: '/sat-rw-academy/capstones',
+    actionEnabled: cap1?.completed ?? false,
+    weakestSlugs: cap1?.weakestSlugs ?? [],
+  }
+
+  // ── Capstone 2 ──────────────────────────────────────────────────────────────
+  const cap2s = mkStatus(
+    cap2?.completed ?? false,
+    cap1ReviewDone,
+    nextStep?.type === 'capstone' && nextStep.number === 2,
+    'Complete your Capstone 1 Review to unlock Capstone 2.',
+  )
+  const capstone2Item: PathItem = {
+    id: 'capstone-2', type: 'capstone', rowNum: base + 3,
+    title: 'R&W Academy Capstone 2',
+    description: 'Apply your revised strategies in a second full assessment and measure improvement across all 11 skills.',
+    details: '54 new questions • 2 timed modules • All 11 R&W skills',
+    category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+    ...cap2s,
+    actionLabel: cap2?.completed ? 'View Results' : cap1ReviewDone ? 'Take Capstone 2' : 'Locked',
+    actionHref: '/sat-rw-academy/capstones/capstone-2',
+    actionEnabled: cap1ReviewDone,
+    accuracy: cap2?.accuracy ?? null,
+    correctCount: cap2?.correctCount ?? null,
+    totalCount: cap2?.totalCount ?? null,
+  }
+
+  // ── Capstone 2 Review ────────────────────────────────────────────────────────
+  const cap2rs = mkReviewStatus(
+    cap2?.completed ?? false,
+    cap2ReviewDone,
+    'Complete Capstone 2 to unlock your personalized review.',
+  )
+  const capstone2ReviewItem: PathItem = {
+    id: 'capstone-2-review', type: 'capstone_review', rowNum: base + 4,
+    title: 'Capstone 2 Review',
+    description: cap2?.completed
+      ? 'Address remaining weak areas from Capstone 2 before your final capstone.'
+      : 'Complete Capstone 2 to unlock your personalized review.',
+    category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+    ...cap2rs,
+    actionLabel: cap2ReviewDone ? 'Reviewed' : 'Review Weak Areas',
+    actionHref: '/sat-rw-academy/capstones',
+    actionEnabled: cap2?.completed ?? false,
+    weakestSlugs: cap2?.weakestSlugs ?? [],
+  }
+
+  // ── Capstone 3 ──────────────────────────────────────────────────────────────
+  const cap3Unlocked = cap2ReviewDone
+  const cap3Done = cap3?.completed ?? false
+  let cap3StatusOverride: Pick<PathItem, 'status' | 'statusLabel' | 'statusBadgeClass' | 'lockReason'> | null = null
+  if (!cap3Unlocked) {
+    cap3StatusOverride = { status: 'locked', statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-400 border-slate-200', lockReason: 'Complete your Capstone 2 Review to unlock Capstone 3.' }
+  } else if (!cap3Available) {
+    cap3StatusOverride = { status: 'coming_soon', statusLabel: 'Coming Soon', statusBadgeClass: 'bg-slate-100 text-slate-400 border-slate-200' }
+  }
+  const cap3s = cap3StatusOverride ?? mkStatus(
+    cap3Done,
+    cap3Unlocked,
+    nextStep?.type === 'capstone' && nextStep.number === 3,
+    'Complete your Capstone 2 Review to unlock Capstone 3.',
+  )
+  const capstone3Item: PathItem = {
+    id: 'capstone-3', type: 'capstone', rowNum: base + 5,
+    title: 'R&W Academy Capstone 3',
+    description: 'Complete the final full academy capstone and demonstrate consistent performance under timed conditions.',
+    details: '54 new questions • 2 timed modules • All 11 R&W skills',
+    category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+    ...cap3s,
+    actionLabel: cap3Done ? 'View Results' : cap3Unlocked && cap3Available ? 'Take Capstone 3' : 'Locked',
+    actionHref: '/sat-rw-academy/capstones/capstone-3',
+    actionEnabled: cap3Unlocked && cap3Available,
+    accuracy: cap3?.accuracy ?? null,
+    correctCount: cap3?.correctCount ?? null,
+    totalCount: cap3?.totalCount ?? null,
+  }
+
+  // ── Capstone 3 Review ────────────────────────────────────────────────────────
+  const cap3rsBase = mkReviewStatus(
+    cap3Done,
+    cap3ReviewDone,
+    'Complete Capstone 3 to unlock your personalized review.',
+  )
+  const cap3rsStatus = (!cap3Available && !cap3Done)
+    ? { status: 'locked' as PathItemStatus, statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-400 border-slate-200', lockReason: 'Complete Capstone 3 to unlock your personalized review.' }
+    : cap3rsBase
+  const capstone3ReviewItem: PathItem = {
+    id: 'capstone-3-review', type: 'capstone_review', rowNum: base + 6,
+    title: 'Capstone 3 Review',
+    description: cap3Done
+      ? 'Address any persistent weak areas before the Final Mastery Check.'
+      : 'Complete Capstone 3 to unlock your personalized review.',
+    category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+    ...cap3rsStatus,
+    actionLabel: cap3ReviewDone ? 'Reviewed' : 'Review Weak Areas',
+    actionHref: '/sat-rw-academy/capstones',
+    actionEnabled: cap3Done,
+    weakestSlugs: cap3?.weakestSlugs ?? [],
+  }
+
+  // ── Final Mastery Check ──────────────────────────────────────────────────────
+  const masteryUnlocked = allCapstonesAndReviewsDone
+  const masteryS = mkStatus(
+    masteryCheckDone,
+    masteryUnlocked,
+    nextStep?.type === 'mastery-check',
+    'Complete all three Capstones and their required reviews to unlock the Final Mastery Check.',
+    'bg-rose-100 text-rose-700 border-rose-200',
+  )
+  const masteryCheckItem: PathItem = {
+    id: 'mastery-check', type: 'mastery', rowNum: base + 7,
+    title: 'Final R&W Mastery Check',
+    description: 'Measure how your Reading and Writing performance changed since the original diagnostic using a new set of questions.',
+    details: '22 questions • All 11 skills • Compares to your diagnostic',
+    category: 'Mastery', categoryBadgeClass: MASTERY_BADGE_CLASS,
+    ...masteryS,
+    actionLabel: masteryCheckDone ? 'View Mastery Results' : masteryUnlocked ? 'Take Final Mastery Check' : 'Locked',
+    actionHref: '/sat-rw-academy/mastery-check',
+    actionEnabled: masteryUnlocked,
+  }
+
+  // ── SAT Form 1 ───────────────────────────────────────────────────────────────
+  const satS = mkStatus(
+    false,
+    masteryCheckDone,
+    nextStep?.type === 'sat-form-1',
+    'Complete the Final R&W Mastery Check to reach the final academy milestone.',
+    'bg-emerald-100 text-emerald-700 border-emerald-300',
+  )
+  const satForm1Item: PathItem = {
+    id: 'sat-form-1', type: 'full_exam', rowNum: base + 8,
+    title: 'Take SAT Form 1',
+    description: 'Apply your Reading and Writing progress in a full-length computer-adaptive SAT-style exam that also includes Math.',
+    details: 'Full-length exam • Reading and Writing + Math • MockMate estimated SAT score',
+    category: 'Full SAT Exam', categoryBadgeClass: FULL_SAT_BADGE_CLASS,
+    ...satS,
+    actionLabel: masteryCheckDone ? 'Take SAT Form 1' : 'Locked',
+    actionHref: '/premade/sat/form-1',
+    actionEnabled: masteryCheckDone,
+  }
+
+  return [
+    ...skillItems,
+    capstone1Item,
+    capstone1ReviewItem,
+    capstone2Item,
+    capstone2ReviewItem,
+    capstone3Item,
+    capstone3ReviewItem,
+    masteryCheckItem,
+    satForm1Item,
+  ]
+}
+
+// ── PathItemRow ────────────────────────────────────────────────────────────────
+
+function PathItemRow({
+  item,
+  mastery,
+}: {
+  item: PathItem
+  mastery: Record<string, SkillMastery>
+}) {
+  const isLocked = item.status === 'locked' || item.status === 'coming_soon'
+
+  if (item.type === 'skill') {
+    return (
+      <div className="flex items-center gap-3 flex-wrap rounded-lg border border-slate-200 bg-white px-4 py-3">
+        <span className="text-xs font-bold text-slate-300 w-4 shrink-0">{item.rowNum}</span>
+        <div className="flex-1 min-w-[8rem]">
+          <p className="text-sm font-semibold text-slate-900 truncate">{item.title}</p>
+          {item.diagnosticPct !== null && item.diagnosticPct !== undefined && (
+            <p className="text-[11px] text-slate-400 mt-0.5">
+              Diagnostic: {item.diagnosticPct}% ({item.diagnosticScore})
+            </p>
+          )}
+        </div>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <span className={cn('text-[11px] font-semibold px-2 py-0.5 rounded-full border', item.statusBadgeClass)}>
+            {item.statusLabel}
+          </span>
+          {item.category && (
+            <span className={cn('text-[11px] font-medium px-2 py-0.5 rounded-full border', item.categoryBadgeClass)}>
+              {item.category}
+            </span>
+          )}
+        </div>
+        <Link
+          href={item.actionHref}
+          className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
+        >
+          {item.actionLabel} →
+        </Link>
+      </div>
+    )
+  }
+
+  // Milestone rows (capstone, capstone_review, mastery, full_exam)
+  const borderClass = isLocked
+    ? 'border-slate-100 bg-slate-50'
+    : item.status === 'completed'
+      ? 'border-emerald-200 bg-emerald-50/40'
+      : item.status === 'recommended'
+        ? 'border-sky-200 bg-sky-50/40'
+        : item.status === 'review_required'
+          ? 'border-amber-200 bg-amber-50/40'
+          : 'border-blue-200 bg-blue-50/40'
+
+  // Capstone review rows: show weak skills inline
+  const showWeakSkills =
+    item.type === 'capstone_review' &&
+    item.status !== 'locked' &&
+    (item.weakestSlugs?.length ?? 0) > 0
+
+  return (
+    <div className={cn('rounded-lg border px-4 py-3', borderClass)}>
+      <div className="flex items-center gap-3 flex-wrap">
+        <div className="flex-1 min-w-[8rem]">
+          <p className={cn('text-sm font-semibold', isLocked ? 'text-slate-400' : 'text-slate-900')}>
+            {item.title}
+          </p>
+          <p className={cn('text-[12px] mt-0.5 leading-snug', isLocked ? 'text-slate-400' : 'text-slate-500')}>
+            {item.description}
+          </p>
+          {item.details && (
+            <p className="text-[11px] text-slate-400 mt-0.5">{item.details}</p>
+          )}
+          {item.accuracy !== null && item.accuracy !== undefined && (
+            <p className="text-[11px] text-emerald-600 mt-0.5">
+              Score: {item.correctCount}/{item.totalCount} ({item.accuracy}%)
+            </p>
+          )}
+          {item.lockReason && isLocked && (
+            <p className="text-[11px] text-slate-400 mt-1 italic">{item.lockReason}</p>
+          )}
+        </div>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <span className={cn('text-[11px] font-semibold px-2 py-0.5 rounded-full border', item.statusBadgeClass)}>
+            {item.statusLabel}
+          </span>
+          <span className={cn('text-[11px] font-medium px-2 py-0.5 rounded-full border', item.categoryBadgeClass)}>
+            {item.category}
+          </span>
+        </div>
+        {item.actionEnabled ? (
+          <Link
+            href={item.actionHref}
+            className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
+          >
+            {item.actionLabel} →
+          </Link>
+        ) : (
+          <span className="shrink-0 text-xs text-slate-300 whitespace-nowrap">{item.actionLabel}</span>
+        )}
+      </div>
+
+      {showWeakSkills && (
+        <div className="mt-2 pt-2 border-t border-slate-100 space-y-1.5">
+          <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">Weak areas to address</p>
+          {item.weakestSlugs!.map(slug => {
+            const m = mastery[slug]
+            const done = m?.status === 'proficient' || m?.status === 'mastered'
+            const name = SKILL_DISPLAY_NAMES[slug] ?? slug
+            return (
+              <div key={slug} className="flex items-center gap-2">
+                {done
+                  ? <span className="text-[11px] text-slate-400 line-through flex-1">{name}</span>
+                  : <span className="text-[11px] text-amber-700 flex-1">{name}</span>
+                }
+                {done
+                  ? <span className="text-[11px] text-emerald-600 shrink-0">Proficient</span>
+                  : (
+                    <Link
+                      href={`/sat-rw-academy/lesson/${slug}`}
+                      className="text-[11px] font-semibold text-sky-600 hover:text-sky-800 shrink-0"
+                    >
+                      Review →
+                    </Link>
+                  )
+                }
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── StatBox, PremiumNotice ─────────────────────────────────────────────────────
 
 function StatBox({ value, label, color = 'slate' }: { value: number; label: string; color?: 'slate' | 'emerald' | 'blue' }) {
   return (
@@ -302,33 +788,22 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
     ? [...lessons].sort((a, b) => (b.completedAt ?? '').localeCompare(a.completedAt ?? ''))[0]
     : null
 
-  const allLessonsDone = ALL_SLUGS.every(s => lessons.some(l => l.lessonSlug === s && l.status === 'completed'))
-  const cap1 = capstonesData?.capstones.find(c => c.number === 1) ?? null
-  const cap2 = capstonesData?.capstones.find(c => c.number === 2) ?? null
-  const cap3 = capstonesData?.capstones.find(c => c.number === 3) ?? null
-  const masteryCheckDone = capstonesData?.masteryCheckDone ?? false
-  const cap3Available = cap3?.available ?? false
-  const allCapstonesCompleted =
-    (cap1?.completed ?? false) &&
-    (cap2?.completed ?? false) &&
-    (cap3Available ? (cap3?.completed ?? false) : true)
+  const nextStep = isPremium && !loading
+    ? computeNextStep(diagnosticResult, mastery, lessons, capstonesData)
+    : null
 
-  const nextStep = isPremium && !loading ? computeNextStep(diagnosticResult, mastery, lessons, capstonesData) : null
-
-  // All assessed skills sorted weakest-first for the personalized path
-  const personalizedPath = diagnosticResult
-    ? ACADEMY_SKILL_SLUGS
-        .filter(slug => diagnosticResult.skill_results[slug])
-        .sort((a, b) => (diagnosticResult.skill_results[a]?.pct ?? 100) - (diagnosticResult.skill_results[b]?.pct ?? 100))
-    : []
+  // Unified path — always includes all 19 items when diagnostic is complete
+  const pathItems = diagnosticResult && !loading
+    ? buildPathItems(diagnosticResult, mastery, lessons, capstonesData, nextStep)
+    : null
 
   return (
     <div className="space-y-8 max-w-3xl">
 
-      {/* ── Premium notice (non-premium only) ──────────────────────────── */}
+      {/* ── Premium notice ───────────────────────────────────────────── */}
       {!isPremium && <PremiumNotice />}
 
-      {/* ── Course banner ───────────────────────────────────────────────── */}
+      {/* ── Course banner ───────────────────────────────────────────── */}
       <div className="rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white p-6">
         <div className="flex items-start gap-4">
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
@@ -347,7 +822,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
 
       {diagnosticResult !== null ? (
 
-        // ── POST-DIAGNOSTIC LAYOUT ───────────────────────────────────────
+        // ── POST-DIAGNOSTIC LAYOUT ───────────────────────────────────
         <>
           {/* Welcome + Progress card */}
           <div className="grid gap-6 lg:grid-cols-5">
@@ -447,328 +922,47 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
             </div>
           )}
 
-          {/* Personalized Learning Path */}
-          {personalizedPath.length > 0 && (
+          {/* ── Unified Personalized Learning Path ─────────────────────── */}
+          {pathItems && pathItems.length > 0 && (
             <div>
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-3">Your Personalized Learning Path</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-3">
+                Your Personalized Learning Path
+              </h2>
+
               <div className="space-y-2">
-                {personalizedPath.map((slug, i) => {
-                  const skillResult = diagnosticResult.skill_results[slug]
-                  const skillMastery = mastery[slug]
-                  const lessonDone = lessons.some(l => l.lessonSlug === slug && l.status === 'completed')
-                  const name = SKILL_DISPLAY_NAMES[slug] ?? slug
-                  const isRecommended = nextStep?.slug === slug
-                  const pct = skillResult ? skillResult.pct : null
-
-                  let statusLabel: string
-                  let badgeClass: string
-                  let actionHref: string
-                  let actionLabel: string
-
-                  if (isRecommended) {
-                    statusLabel = 'Recommended Next'
-                    badgeClass = 'bg-sky-100 text-sky-700 border-sky-300'
-                    actionHref = nextStep!.href
-                    actionLabel = nextStep!.label
-                  } else if (skillMastery?.status === 'mastered' || skillMastery?.status === 'proficient') {
-                    statusLabel = 'Proficient+'
-                    badgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-300'
-                    actionHref = `/sat-rw-academy/lesson/${slug}`
-                    actionLabel = 'Review'
-                  } else if (lessonDone) {
-                    statusLabel = 'Practice Needed'
-                    badgeClass = 'bg-amber-100 text-amber-700 border-amber-300'
-                    actionHref = `/sat-rw-academy/lesson/${slug}`
-                    actionLabel = 'Practice'
-                  } else {
-                    statusLabel = 'Not Started'
-                    badgeClass = 'bg-slate-100 text-slate-500 border-slate-300'
-                    actionHref = `/sat-rw-academy/lesson/${slug}`
-                    actionLabel = 'Start Lesson'
-                  }
-
-                  const section = SKILL_SECTION[slug as keyof typeof SKILL_SECTION] ?? null
-                  const sectionLabel = section === 'reading' ? 'Reading' : section === 'writing' ? 'Writing' : null
-                  const sectionBadgeClass = section === 'reading'
-                    ? 'bg-purple-50 text-purple-600 border-purple-200'
-                    : 'bg-yellow-50 text-yellow-700 border-yellow-200'
-
-                  return (
-                    <div key={slug} className="flex items-center gap-3 flex-wrap rounded-lg border border-slate-200 bg-white px-4 py-3">
-                      <span className="text-xs font-bold text-slate-300 w-4 shrink-0">{i + 1}</span>
-                      <div className="flex-1 min-w-[8rem]">
-                        <p className="text-sm font-semibold text-slate-900 truncate">{name}</p>
-                        {pct !== null && (
-                          <p className="text-[11px] text-slate-400 mt-0.5">
-                            Diagnostic: {pct}% ({skillResult!.correct}/{skillResult!.total})
-                          </p>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        <span className={cn('text-[11px] font-semibold px-2 py-0.5 rounded-full border', badgeClass)}>
-                          {statusLabel}
-                        </span>
-                        {sectionLabel && (
-                          <span className={cn('text-[11px] font-medium px-2 py-0.5 rounded-full border', sectionBadgeClass)}>
-                            {sectionLabel}
+                {pathItems.map((item, i) => (
+                  <Fragment key={item.id}>
+                    {/* Divider before first non-skill item */}
+                    {item.type !== 'skill' && (i === 0 || pathItems[i - 1].type === 'skill') && (
+                      <div className="pt-4">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="h-px flex-1 bg-slate-200" />
+                          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 whitespace-nowrap">
+                            Apply Everything You Learned
                           </span>
-                        )}
-                      </div>
-                      <Link
-                        href={actionHref}
-                        className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
-                      >
-                        {actionLabel} →
-                      </Link>
-                    </div>
-                  )
-                })}
-              </div>
-              <p className="text-[11px] text-slate-400 mt-2">Ranked by diagnostic performance · weakest skills first</p>
-
-              {/* ── Capstone milestones ──────────────────────────────────── */}
-              {capstonesData !== null && (
-                <>
-                  <div className="flex items-center gap-3 mt-6 mb-3">
-                    <div className="h-px flex-1 bg-slate-200" />
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 whitespace-nowrap">
-                      Apply Everything You Learned
-                    </span>
-                    <div className="h-px flex-1 bg-slate-200" />
-                  </div>
-                  <p className="text-xs text-slate-500 mb-3">
-                    Complete three timed R&amp;W Capstones applying all 11 skills in mixed practice.
-                    Review your results and strengthen any weak areas before moving forward.
-                  </p>
-
-                  <div className="space-y-2">
-                    {[1, 2, 3].map(num => {
-                      const cap = capstonesData.capstones.find(c => c.number === num) ?? null
-                      if (!cap) return null
-
-                      const href = `/sat-rw-academy/capstones/capstone-${num}`
-                      const isRecommendedCapstone = nextStep?.type === 'capstone' && nextStep.number === num
-
-                      if (!cap.available) {
-                        return (
-                          <div key={num} className="flex items-center gap-3 flex-wrap rounded-lg border border-slate-100 bg-slate-50 px-4 py-3">
-                            <div className="flex-1 min-w-[8rem]">
-                              <p className="text-sm font-semibold text-slate-400">R&amp;W Academy Capstone {num}</p>
-                              <p className="text-[11px] text-slate-400 mt-0.5">Content in development</p>
-                            </div>
-                            <span className="shrink-0 text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-slate-100 text-slate-400 border-slate-200">
-                              Coming Soon
-                            </span>
-                          </div>
-                        )
-                      }
-
-                      const locked =
-                        num === 1 ? !allLessonsDone :
-                        num === 2 ? !(cap1?.completed) :
-                        !(cap2?.completed)
-
-                      return (
-                        <div key={num}>
-                          <div className={cn(
-                            'flex items-center gap-3 flex-wrap rounded-lg border px-4 py-3',
-                            cap.completed
-                              ? 'border-emerald-200 bg-emerald-50'
-                              : isRecommendedCapstone
-                                ? 'border-sky-200 bg-sky-50'
-                                : locked
-                                  ? 'border-slate-100 bg-slate-50'
-                                  : 'border-blue-200 bg-blue-50',
-                          )}>
-                            <div className="flex-1 min-w-[8rem]">
-                              <p className={cn(
-                                'text-sm font-semibold',
-                                locked && !cap.completed ? 'text-slate-400' : 'text-slate-900',
-                              )}>
-                                R&amp;W Academy Capstone {num}
-                              </p>
-                              <p className="text-[11px] text-slate-400 mt-0.5">54 questions · All 11 skills · ~45 min</p>
-                              {cap.completed && cap.accuracy !== null && (
-                                <p className="text-[11px] text-emerald-600 mt-0.5">
-                                  Score: {cap.correctCount}/{cap.totalCount} ({cap.accuracy}%)
-                                </p>
-                              )}
-                            </div>
-                            <div className="flex items-center gap-1.5 shrink-0">
-                              {cap.completed ? (
-                                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-100 text-emerald-700 border-emerald-300">
-                                  Completed · {cap.accuracy}%
-                                </span>
-                              ) : isRecommendedCapstone ? (
-                                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-sky-100 text-sky-700 border-sky-300">
-                                  Recommended Next
-                                </span>
-                              ) : locked ? (
-                                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-slate-100 text-slate-400 border-slate-200">
-                                  {num === 1 ? 'Complete lessons first' : `Complete Capstone ${num - 1} first`}
-                                </span>
-                              ) : (
-                                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-blue-100 text-blue-600 border-blue-200">
-                                  Ready
-                                </span>
-                              )}
-                              <span className="text-[11px] font-medium px-2 py-0.5 rounded-full border bg-slate-50 text-slate-500 border-slate-200">
-                                Capstone
-                              </span>
-                            </div>
-                            {!locked && (
-                              <Link
-                                href={href}
-                                className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
-                              >
-                                {cap.completed ? 'Retake →' : 'Start →'}
-                              </Link>
-                            )}
-                          </div>
-
-                          {/* Remediation sub-rows for weak areas */}
-                          {cap.completed && cap.weakestSlugs.length > 0 && (
-                            <div className="ml-6 mt-1 space-y-1">
-                              {cap.weakestSlugs
-                                .filter(slug => {
-                                  const m = mastery[slug]
-                                  return !m || !['proficient', 'mastered'].includes(m.status ?? '')
-                                })
-                                .map(slug => {
-                                  const name = SKILL_DISPLAY_NAMES[slug] ?? slug
-                                  return (
-                                    <div key={slug} className="flex items-center gap-2 flex-wrap rounded-md border border-amber-100 bg-amber-50 px-3 py-2">
-                                      <span className="text-[11px] text-amber-700 flex-1 min-w-0">
-                                        Weak area from Capstone {num}: {name}
-                                      </span>
-                                      <Link
-                                        href={`/sat-rw-academy/lesson/${slug}`}
-                                        className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
-                                      >
-                                        Review →
-                                      </Link>
-                                    </div>
-                                  )
-                                })}
-                            </div>
-                          )}
+                          <div className="h-px flex-1 bg-slate-200" />
                         </div>
-                      )
-                    })}
-                  </div>
-
-                  {/* ── Final Assessment ─────────────────────────────────── */}
-                  <div className="flex items-center gap-3 mt-6 mb-3">
-                    <div className="h-px flex-1 bg-slate-200" />
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 whitespace-nowrap">
-                      Final Assessment
-                    </span>
-                    <div className="h-px flex-1 bg-slate-200" />
-                  </div>
-
-                  <div className="space-y-2">
-                    {/* Mastery Check */}
-                    <div className={cn(
-                      'flex items-center gap-3 flex-wrap rounded-lg border px-4 py-3',
-                      masteryCheckDone
-                        ? 'border-emerald-200 bg-emerald-50'
-                        : nextStep?.type === 'mastery-check'
-                          ? 'border-rose-200 bg-rose-50'
-                          : !allCapstonesCompleted
-                            ? 'border-slate-100 bg-slate-50'
-                            : 'border-rose-200 bg-rose-50',
-                    )}>
-                      <div className="flex-1 min-w-[8rem]">
-                        <p className={cn(
-                          'text-sm font-semibold',
-                          !allCapstonesCompleted && !masteryCheckDone ? 'text-slate-400' : 'text-slate-900',
-                        )}>
-                          Final R&amp;W Mastery Check
-                        </p>
-                        <p className="text-[11px] text-slate-400 mt-0.5">
-                          22 questions · All 11 skills · Compares to your diagnostic
+                        <p className="text-xs text-slate-500 mb-3">
+                          Complete three full R&amp;W Academy Capstones, review your remaining weaknesses, and finish with the Final Mastery Check before taking SAT Form 1.
                         </p>
                       </div>
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        {masteryCheckDone ? (
-                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-100 text-emerald-700 border-emerald-300">
-                            Completed
-                          </span>
-                        ) : nextStep?.type === 'mastery-check' ? (
-                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-sky-100 text-sky-700 border-sky-300">
-                            Recommended Next
-                          </span>
-                        ) : !allCapstonesCompleted ? (
-                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-slate-100 text-slate-400 border-slate-200">
-                            Complete capstones first
-                          </span>
-                        ) : (
-                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-rose-100 text-rose-700 border-rose-200">
-                            Ready
-                          </span>
-                        )}
-                        <span className="text-[11px] font-medium px-2 py-0.5 rounded-full border bg-rose-50 text-rose-500 border-rose-200">
-                          Mastery Check
-                        </span>
-                      </div>
-                      {allCapstonesCompleted && (
-                        <Link
-                          href="/sat-rw-academy/mastery-check"
-                          className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
-                        >
-                          {masteryCheckDone ? 'Retake →' : 'Start →'}
-                        </Link>
-                      )}
-                    </div>
+                    )}
+                    <PathItemRow item={item} mastery={mastery} />
+                  </Fragment>
+                ))}
+              </div>
 
-                    {/* SAT Form 1 */}
-                    <div className={cn(
-                      'flex items-center gap-3 flex-wrap rounded-lg border px-4 py-3',
-                      nextStep?.type === 'sat-form-1' ? 'border-sky-200 bg-sky-50' : 'border-indigo-100 bg-white',
-                    )}>
-                      <div className="flex-1 min-w-[8rem]">
-                        <p className="text-sm font-semibold text-slate-900">SAT Form 1</p>
-                        <p className="text-[11px] text-slate-400 mt-0.5">
-                          Full computer-adaptive SAT-style practice exam
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        {nextStep?.type === 'sat-form-1' ? (
-                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-sky-100 text-sky-700 border-sky-300">
-                            Recommended Next
-                          </span>
-                        ) : masteryCheckDone ? (
-                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-100 text-emerald-700 border-emerald-300">
-                            Ready
-                          </span>
-                        ) : (
-                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-slate-100 text-slate-500 border-slate-200">
-                            Available anytime
-                          </span>
-                        )}
-                        <span className="text-[11px] font-medium px-2 py-0.5 rounded-full border bg-indigo-50 text-indigo-600 border-indigo-200">
-                          Full SAT Exam
-                        </span>
-                      </div>
-                      <Link
-                        href="/premade/sat/form-1"
-                        className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
-                      >
-                        Take Exam →
-                      </Link>
-                    </div>
-                  </div>
-                </>
-              )}
+              <p className="text-[11px] text-slate-400 mt-3">
+                Skill rows ranked by diagnostic performance · weakest first · Capstone milestones always visible
+              </p>
             </div>
           )}
         </>
 
       ) : (
 
-        // ── PRE-DIAGNOSTIC LAYOUT ────────────────────────────────────────
+        // ── PRE-DIAGNOSTIC LAYOUT ────────────────────────────────────
         <>
-          {/* Welcome */}
           <div className="space-y-3">
             <h2 className="text-lg font-bold text-slate-900">Welcome to the SAT R&amp;W Academy</h2>
             <p className="text-sm text-slate-600 leading-relaxed">
@@ -781,7 +975,6 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
             </p>
           </div>
 
-          {/* Loading skeleton */}
           {loading && (
             <div className="space-y-2">
               <div className="h-4 w-3/4 animate-pulse rounded bg-slate-100" />
@@ -789,7 +982,6 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
             </div>
           )}
 
-          {/* Progress card — premium users who started lessons without a diagnostic */}
           {!loading && hasAny && (
             <div className="rounded-xl border border-slate-200 bg-white p-5">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Your Academy Progress</p>
@@ -823,7 +1015,6 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
             </div>
           )}
 
-          {/* Start / Resume Diagnostic */}
           {!loading && isPremium && (
             <div className="rounded-xl border-2 border-emerald-200 bg-white p-5">
               <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -849,7 +1040,6 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
             </div>
           )}
 
-          {/* Non-premium locked diagnostic CTA */}
           {!isPremium && (
             <div className="rounded-xl border border-slate-200 bg-white p-5">
               <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -871,7 +1061,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
         </>
       )}
 
-      {/* ── Disclaimer ──────────────────────────────────────────────────── */}
+      {/* ── Disclaimer ───────────────────────────────────────────────── */}
       <p className="text-xs text-slate-400 leading-relaxed">
         All MockMate Academy content is independently created for practice purposes. MockMate is not affiliated with, endorsed by, or sponsored by College Board. SAT® is a trademark of College Board, which is not affiliated with and does not endorse MockMate.
       </p>
