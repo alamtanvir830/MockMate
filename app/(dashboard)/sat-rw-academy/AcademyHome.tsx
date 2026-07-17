@@ -36,6 +36,23 @@ interface DiagnosticResult {
   completed_at: string
 }
 
+interface CapstoneStatus {
+  capstoneId: string
+  number: number
+  available: boolean
+  completed: boolean
+  accuracy: number | null
+  correctCount: number | null
+  totalCount: number | null
+  weakestSlugs: string[]
+  completedAt: string | null
+}
+
+interface CapstonesData {
+  capstones: CapstoneStatus[]
+  masteryCheckDone: boolean
+}
+
 // ── Constants ──────────────────────────────────────────────────────────────────
 
 const WRITING_SLUGS = ['boundaries', 'form-structure-sense', 'transitions', 'rhetorical-synthesis']
@@ -57,7 +74,8 @@ function computeNextStep(
   diagnosticResult: DiagnosticResult | null,
   mastery: Record<string, SkillMastery>,
   lessons: LessonProgress[],
-): { type: string; slug?: string; href: string; label: string; reason: string } {
+  capstonesData: CapstonesData | null,
+): { type: string; slug?: string; number?: number; href: string; label: string; reason: string } {
   const completedLessons = new Set(lessons.filter(l => l.status === 'completed').map(l => l.lessonSlug))
 
   if (!diagnosticResult) {
@@ -100,11 +118,96 @@ function computeNextStep(
     }
   }
 
+  // All skills covered — move to capstone progression
+  if (capstonesData) {
+    const cap1 = capstonesData.capstones.find(c => c.number === 1) ?? null
+    const cap2 = capstonesData.capstones.find(c => c.number === 2) ?? null
+    const cap3 = capstonesData.capstones.find(c => c.number === 3) ?? null
+    const allLessonsDone = ALL_SLUGS.every(s => completedLessons.has(s))
+
+    if (!cap1?.completed) {
+      if (allLessonsDone) {
+        return {
+          type: 'capstone',
+          number: 1,
+          href: '/sat-rw-academy/capstones/capstone-1',
+          label: 'Take R&W Academy Capstone 1',
+          reason: 'You have completed all 11 skill lessons. Apply everything in your first timed capstone assessment.',
+        }
+      }
+    } else if (!cap2?.completed) {
+      const needsDrill = cap1.weakestSlugs.find(slug => {
+        const m = mastery[slug]
+        return !m || !['proficient', 'mastered'].includes(m.status ?? '')
+      })
+      if (needsDrill) {
+        const name = SKILL_DISPLAY_NAMES[needsDrill] ?? needsDrill
+        return {
+          type: 'drill',
+          slug: needsDrill,
+          href: `/sat-rw-academy/lesson/${needsDrill}`,
+          label: `Practice ${name}`,
+          reason: `Capstone 1 showed ${name} as a weak area. Build more mastery before Capstone 2.`,
+        }
+      }
+      return {
+        type: 'capstone',
+        number: 2,
+        href: '/sat-rw-academy/capstones/capstone-2',
+        label: 'Take R&W Academy Capstone 2',
+        reason: 'You have addressed your Capstone 1 weak areas. Continue with Capstone 2 to measure your progress.',
+      }
+    } else {
+      const cap3Available = cap3?.available ?? false
+      const cap3Done = cap3?.completed ?? false
+
+      if (cap3Available && !cap3Done) {
+        const needsDrill = cap2.weakestSlugs.find(slug => {
+          const m = mastery[slug]
+          return !m || !['proficient', 'mastered'].includes(m.status ?? '')
+        })
+        if (needsDrill) {
+          const name = SKILL_DISPLAY_NAMES[needsDrill] ?? needsDrill
+          return {
+            type: 'drill',
+            slug: needsDrill,
+            href: `/sat-rw-academy/lesson/${needsDrill}`,
+            label: `Practice ${name}`,
+            reason: `Capstone 2 showed ${name} as a weak area. Strengthen it before your final capstone.`,
+          }
+        }
+        return {
+          type: 'capstone',
+          number: 3,
+          href: '/sat-rw-academy/capstones/capstone-3',
+          label: 'Take R&W Academy Capstone 3',
+          reason: 'You have completed Capstone 2. Take Capstone 3 to complete your capstone series.',
+        }
+      }
+
+      if (!capstonesData.masteryCheckDone) {
+        return {
+          type: 'mastery-check',
+          href: '/sat-rw-academy/mastery-check',
+          label: 'Take Final R&W Mastery Check',
+          reason: 'You have completed the capstone series. The Final Mastery Check shows your total skill improvement from start to finish.',
+        }
+      }
+
+      return {
+        type: 'sat-form-1',
+        href: '/premade/sat/form-1',
+        label: 'Take SAT Form 1',
+        reason: 'You have completed the full R&W Academy. Apply your skills in a complete SAT-style practice exam.',
+      }
+    }
+  }
+
   return {
     type: 'mixed',
     href: '/sat-rw-academy/mixed-practice',
     label: 'Start Mixed Practice',
-    reason: 'You have covered your priority skills. Practice with mixed questions to solidify your knowledge.',
+    reason: 'Practice with mixed questions across all skills to solidify your knowledge.',
   }
 }
 
@@ -154,6 +257,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
   const [lessons, setLessons] = useState<LessonProgress[]>([])
   const [reviewsDue, setReviewsDue] = useState(0)
   const [diagnosticResult, setDiagnosticResult] = useState<DiagnosticResult | null>(null)
+  const [capstonesData, setCapstonesData] = useState<CapstonesData | null>(null)
   const [loading, setLoading] = useState(isPremium)
   const [hasSavedProgress, setHasSavedProgress] = useState(false)
 
@@ -173,14 +277,16 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
       fetch('/api/academy/lesson-progress').then(r => r.ok ? r.json() : []) as Promise<LessonProgress[]>,
       fetch('/api/academy/review-queue').then(r => r.ok ? r.json() : { items: [], totalDue: 0 }) as Promise<ReviewQueueResponse>,
       fetch('/api/academy/diagnostic').then(r => r.ok ? r.json() : null) as Promise<DiagnosticResult | null>,
+      fetch('/api/academy/capstones').then(r => r.ok ? r.json() : null) as Promise<CapstonesData | null>,
     ])
-      .then(([masteryArr, lessonArr, queue, diag]) => {
+      .then(([masteryArr, lessonArr, queue, diag, capstones]) => {
         const map: Record<string, SkillMastery> = {}
         for (const m of masteryArr) map[m.skillSlug] = m
         setMastery(map)
         setLessons(lessonArr)
         setReviewsDue(queue.totalDue ?? queue.items?.length ?? 0)
         setDiagnosticResult(diag)
+        setCapstonesData(capstones)
       })
       .catch(() => {/* non-blocking */})
       .finally(() => setLoading(false))
@@ -196,7 +302,18 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
     ? [...lessons].sort((a, b) => (b.completedAt ?? '').localeCompare(a.completedAt ?? ''))[0]
     : null
 
-  const nextStep = isPremium && !loading ? computeNextStep(diagnosticResult, mastery, lessons) : null
+  const allLessonsDone = ALL_SLUGS.every(s => lessons.some(l => l.lessonSlug === s && l.status === 'completed'))
+  const cap1 = capstonesData?.capstones.find(c => c.number === 1) ?? null
+  const cap2 = capstonesData?.capstones.find(c => c.number === 2) ?? null
+  const cap3 = capstonesData?.capstones.find(c => c.number === 3) ?? null
+  const masteryCheckDone = capstonesData?.masteryCheckDone ?? false
+  const cap3Available = cap3?.available ?? false
+  const allCapstonesCompleted =
+    (cap1?.completed ?? false) &&
+    (cap2?.completed ?? false) &&
+    (cap3Available ? (cap3?.completed ?? false) : true)
+
+  const nextStep = isPremium && !loading ? computeNextStep(diagnosticResult, mastery, lessons, capstonesData) : null
 
   // All assessed skills sorted weakest-first for the personalized path
   const personalizedPath = diagnosticResult
@@ -408,26 +525,243 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                 })}
               </div>
               <p className="text-[11px] text-slate-400 mt-2">Ranked by diagnostic performance · weakest skills first</p>
+
+              {/* ── Capstone milestones ──────────────────────────────────── */}
+              {capstonesData !== null && (
+                <>
+                  <div className="flex items-center gap-3 mt-6 mb-3">
+                    <div className="h-px flex-1 bg-slate-200" />
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 whitespace-nowrap">
+                      Apply Everything You Learned
+                    </span>
+                    <div className="h-px flex-1 bg-slate-200" />
+                  </div>
+                  <p className="text-xs text-slate-500 mb-3">
+                    Complete three timed R&amp;W Capstones applying all 11 skills in mixed practice.
+                    Review your results and strengthen any weak areas before moving forward.
+                  </p>
+
+                  <div className="space-y-2">
+                    {[1, 2, 3].map(num => {
+                      const cap = capstonesData.capstones.find(c => c.number === num) ?? null
+                      if (!cap) return null
+
+                      const href = `/sat-rw-academy/capstones/capstone-${num}`
+                      const isRecommendedCapstone = nextStep?.type === 'capstone' && nextStep.number === num
+
+                      if (!cap.available) {
+                        return (
+                          <div key={num} className="flex items-center gap-3 flex-wrap rounded-lg border border-slate-100 bg-slate-50 px-4 py-3">
+                            <div className="flex-1 min-w-[8rem]">
+                              <p className="text-sm font-semibold text-slate-400">R&amp;W Academy Capstone {num}</p>
+                              <p className="text-[11px] text-slate-400 mt-0.5">Content in development</p>
+                            </div>
+                            <span className="shrink-0 text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-slate-100 text-slate-400 border-slate-200">
+                              Coming Soon
+                            </span>
+                          </div>
+                        )
+                      }
+
+                      const locked =
+                        num === 1 ? !allLessonsDone :
+                        num === 2 ? !(cap1?.completed) :
+                        !(cap2?.completed)
+
+                      return (
+                        <div key={num}>
+                          <div className={cn(
+                            'flex items-center gap-3 flex-wrap rounded-lg border px-4 py-3',
+                            cap.completed
+                              ? 'border-emerald-200 bg-emerald-50'
+                              : isRecommendedCapstone
+                                ? 'border-sky-200 bg-sky-50'
+                                : locked
+                                  ? 'border-slate-100 bg-slate-50'
+                                  : 'border-blue-200 bg-blue-50',
+                          )}>
+                            <div className="flex-1 min-w-[8rem]">
+                              <p className={cn(
+                                'text-sm font-semibold',
+                                locked && !cap.completed ? 'text-slate-400' : 'text-slate-900',
+                              )}>
+                                R&amp;W Academy Capstone {num}
+                              </p>
+                              <p className="text-[11px] text-slate-400 mt-0.5">54 questions · All 11 skills · ~45 min</p>
+                              {cap.completed && cap.accuracy !== null && (
+                                <p className="text-[11px] text-emerald-600 mt-0.5">
+                                  Score: {cap.correctCount}/{cap.totalCount} ({cap.accuracy}%)
+                                </p>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              {cap.completed ? (
+                                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-100 text-emerald-700 border-emerald-300">
+                                  Completed · {cap.accuracy}%
+                                </span>
+                              ) : isRecommendedCapstone ? (
+                                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-sky-100 text-sky-700 border-sky-300">
+                                  Recommended Next
+                                </span>
+                              ) : locked ? (
+                                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-slate-100 text-slate-400 border-slate-200">
+                                  {num === 1 ? 'Complete lessons first' : `Complete Capstone ${num - 1} first`}
+                                </span>
+                              ) : (
+                                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-blue-100 text-blue-600 border-blue-200">
+                                  Ready
+                                </span>
+                              )}
+                              <span className="text-[11px] font-medium px-2 py-0.5 rounded-full border bg-slate-50 text-slate-500 border-slate-200">
+                                Capstone
+                              </span>
+                            </div>
+                            {!locked && (
+                              <Link
+                                href={href}
+                                className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
+                              >
+                                {cap.completed ? 'Retake →' : 'Start →'}
+                              </Link>
+                            )}
+                          </div>
+
+                          {/* Remediation sub-rows for weak areas */}
+                          {cap.completed && cap.weakestSlugs.length > 0 && (
+                            <div className="ml-6 mt-1 space-y-1">
+                              {cap.weakestSlugs
+                                .filter(slug => {
+                                  const m = mastery[slug]
+                                  return !m || !['proficient', 'mastered'].includes(m.status ?? '')
+                                })
+                                .map(slug => {
+                                  const name = SKILL_DISPLAY_NAMES[slug] ?? slug
+                                  return (
+                                    <div key={slug} className="flex items-center gap-2 flex-wrap rounded-md border border-amber-100 bg-amber-50 px-3 py-2">
+                                      <span className="text-[11px] text-amber-700 flex-1 min-w-0">
+                                        Weak area from Capstone {num}: {name}
+                                      </span>
+                                      <Link
+                                        href={`/sat-rw-academy/lesson/${slug}`}
+                                        className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
+                                      >
+                                        Review →
+                                      </Link>
+                                    </div>
+                                  )
+                                })}
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  {/* ── Final Assessment ─────────────────────────────────── */}
+                  <div className="flex items-center gap-3 mt-6 mb-3">
+                    <div className="h-px flex-1 bg-slate-200" />
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 whitespace-nowrap">
+                      Final Assessment
+                    </span>
+                    <div className="h-px flex-1 bg-slate-200" />
+                  </div>
+
+                  <div className="space-y-2">
+                    {/* Mastery Check */}
+                    <div className={cn(
+                      'flex items-center gap-3 flex-wrap rounded-lg border px-4 py-3',
+                      masteryCheckDone
+                        ? 'border-emerald-200 bg-emerald-50'
+                        : nextStep?.type === 'mastery-check'
+                          ? 'border-rose-200 bg-rose-50'
+                          : !allCapstonesCompleted
+                            ? 'border-slate-100 bg-slate-50'
+                            : 'border-rose-200 bg-rose-50',
+                    )}>
+                      <div className="flex-1 min-w-[8rem]">
+                        <p className={cn(
+                          'text-sm font-semibold',
+                          !allCapstonesCompleted && !masteryCheckDone ? 'text-slate-400' : 'text-slate-900',
+                        )}>
+                          Final R&amp;W Mastery Check
+                        </p>
+                        <p className="text-[11px] text-slate-400 mt-0.5">
+                          22 questions · All 11 skills · Compares to your diagnostic
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {masteryCheckDone ? (
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-100 text-emerald-700 border-emerald-300">
+                            Completed
+                          </span>
+                        ) : nextStep?.type === 'mastery-check' ? (
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-sky-100 text-sky-700 border-sky-300">
+                            Recommended Next
+                          </span>
+                        ) : !allCapstonesCompleted ? (
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-slate-100 text-slate-400 border-slate-200">
+                            Complete capstones first
+                          </span>
+                        ) : (
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-rose-100 text-rose-700 border-rose-200">
+                            Ready
+                          </span>
+                        )}
+                        <span className="text-[11px] font-medium px-2 py-0.5 rounded-full border bg-rose-50 text-rose-500 border-rose-200">
+                          Mastery Check
+                        </span>
+                      </div>
+                      {allCapstonesCompleted && (
+                        <Link
+                          href="/sat-rw-academy/mastery-check"
+                          className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
+                        >
+                          {masteryCheckDone ? 'Retake →' : 'Start →'}
+                        </Link>
+                      )}
+                    </div>
+
+                    {/* SAT Form 1 */}
+                    <div className={cn(
+                      'flex items-center gap-3 flex-wrap rounded-lg border px-4 py-3',
+                      nextStep?.type === 'sat-form-1' ? 'border-sky-200 bg-sky-50' : 'border-indigo-100 bg-white',
+                    )}>
+                      <div className="flex-1 min-w-[8rem]">
+                        <p className="text-sm font-semibold text-slate-900">SAT Form 1</p>
+                        <p className="text-[11px] text-slate-400 mt-0.5">
+                          Full computer-adaptive SAT-style practice exam
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {nextStep?.type === 'sat-form-1' ? (
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-sky-100 text-sky-700 border-sky-300">
+                            Recommended Next
+                          </span>
+                        ) : masteryCheckDone ? (
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-emerald-100 text-emerald-700 border-emerald-300">
+                            Ready
+                          </span>
+                        ) : (
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-slate-100 text-slate-500 border-slate-200">
+                            Available anytime
+                          </span>
+                        )}
+                        <span className="text-[11px] font-medium px-2 py-0.5 rounded-full border bg-indigo-50 text-indigo-600 border-indigo-200">
+                          Full SAT Exam
+                        </span>
+                      </div>
+                      <Link
+                        href="/premade/sat/form-1"
+                        className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
+                      >
+                        Take Exam →
+                      </Link>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
-
-          {/* Mastery Check callout */}
-          <div className="rounded-xl border border-rose-200 bg-rose-50 p-5">
-            <div className="flex items-start justify-between gap-4 flex-wrap">
-              <div className="flex-1 min-w-0">
-                <p className="font-semibold text-rose-900 text-sm">Final R&amp;W Mastery Check</p>
-                <p className="text-xs text-rose-700 mt-1 leading-relaxed">
-                  Complete this after finishing all three Capstones. Uses different questions from the diagnostic and shows your skill progress from start to finish.
-                </p>
-              </div>
-              <Link
-                href="/sat-rw-academy/mastery-check"
-                className="shrink-0 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold px-4 py-2 transition-colors whitespace-nowrap"
-              >
-                Take Mastery Check
-              </Link>
-            </div>
-          </div>
         </>
 
       ) : (

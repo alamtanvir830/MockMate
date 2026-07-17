@@ -523,6 +523,31 @@ export default function CapstoneTestPage() {
     )
   }
 
+  if (capstone.module1Questions.length === 0) {
+    return (
+      <div className="p-4 sm:p-6 lg:p-8 max-w-xl">
+        <div className="rounded-xl border border-slate-200 bg-white p-6 space-y-4">
+          <div>
+            <h1 className="text-xl font-bold text-slate-900">{capstone.title}</h1>
+            <p className="text-sm text-slate-500 mt-1">{capstone.description}</p>
+          </div>
+          <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
+            <p className="font-semibold text-amber-800 text-sm">Content In Development</p>
+            <p className="text-xs text-amber-700 mt-1 leading-relaxed">
+              This capstone is currently being prepared. Check back soon — it will appear here once ready.
+            </p>
+          </div>
+          <a
+            href="/sat-rw-academy/capstones"
+            className="block text-sm text-sky-600 hover:underline"
+          >
+            ← Back to Capstones
+          </a>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       {phase === 'intro' && <IntroScreen capstone={capstone} onStart={() => setPhase('module1')} />}
