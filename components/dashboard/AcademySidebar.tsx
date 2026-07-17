@@ -129,6 +129,11 @@ const ICONS = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
     </svg>
   ),
+  lock: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-3.5 w-3.5 shrink-0 text-amber-400" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+    </svg>
+  ),
 }
 
 // ── Tooltip wrapper for collapsed mode ────────────────────────────────────────
@@ -157,11 +162,12 @@ function Tooltip({ label, children }: { label: string; children: React.ReactNode
 interface NavContentProps {
   pathname: string
   collapsed: boolean
+  isPremium?: boolean
   onNavigate?: () => void
   firstFocusRef?: React.RefObject<HTMLAnchorElement | null>
 }
 
-function NavContent({ pathname, collapsed, onNavigate, firstFocusRef }: NavContentProps) {
+function NavContent({ pathname, collapsed, isPremium = true, onNavigate, firstFocusRef }: NavContentProps) {
   const lessonMatch = pathname.match(/\/sat-rw-academy\/lesson\/([^/]+)/)
   const activeLesson = lessonMatch?.[1] ?? null
   const activeCategory = activeLesson ? lessonCategory(activeLesson) : null
@@ -190,39 +196,46 @@ function NavContent({ pathname, collapsed, onNavigate, firstFocusRef }: NavConte
   // ── Collapsed mode ───────────────────────────────────────────────────────────
   if (collapsed) {
     const items = [
-      { href: '/sat-rw-academy', label: 'Course Home', icon: ICONS.home, exact: true },
-      { href: '/sat-rw-academy/diagnostic', label: 'R&W Diagnostic', icon: ICONS.diagnostic },
-      { href: '/sat-rw-academy/writing', label: 'Writing Skills', icon: ICONS.writing, forceActive: isWritingRoute },
-      { href: '/sat-rw-academy/reading', label: 'Reading Skills', icon: ICONS.reading, forceActive: isReadingRoute },
-      { href: '/sat-rw-academy/vocabulary', label: 'Vocabulary Trainer', icon: ICONS.vocabulary },
-      { href: '/sat-rw-academy/transitions', label: 'Transition Trainer', icon: ICONS.transitions },
-      { href: '/sat-rw-academy/reading-speed', label: 'Reading Speed', icon: ICONS.speed },
-      { href: '/sat-rw-academy/review', label: 'Review Queue', icon: ICONS.review },
-      { href: '/sat-rw-academy/mixed-practice', label: 'Mixed Practice', icon: ICONS.mixed },
-      { href: '/sat-rw-academy/capstones', label: 'R&W Capstones', icon: ICONS.capstone },
-      { href: '/sat-rw-academy/mastery-check', label: 'Mastery Check', icon: ICONS.mastery },
-      { href: '/sat-rw-academy/glossary', label: 'R&W Glossary', icon: ICONS.glossary },
-      { href: '/sat-rw-academy/study-plan', label: 'Study Plan', icon: ICONS.plan },
+      { href: '/sat-rw-academy', label: 'Course Home', icon: ICONS.home, exact: true, protected: false },
+      { href: '/sat-rw-academy/diagnostic', label: 'R&W Diagnostic', icon: ICONS.diagnostic, protected: true },
+      { href: '/sat-rw-academy/writing', label: 'Writing Skills', icon: ICONS.writing, forceActive: isWritingRoute, protected: true },
+      { href: '/sat-rw-academy/reading', label: 'Reading Skills', icon: ICONS.reading, forceActive: isReadingRoute, protected: true },
+      { href: '/sat-rw-academy/vocabulary', label: 'Vocabulary Trainer', icon: ICONS.vocabulary, protected: true },
+      { href: '/sat-rw-academy/transitions', label: 'Transition Trainer', icon: ICONS.transitions, protected: true },
+      { href: '/sat-rw-academy/reading-speed', label: 'Reading Speed', icon: ICONS.speed, protected: true },
+      { href: '/sat-rw-academy/review', label: 'Review Queue', icon: ICONS.review, protected: true },
+      { href: '/sat-rw-academy/mixed-practice', label: 'Mixed Practice', icon: ICONS.mixed, protected: true },
+      { href: '/sat-rw-academy/capstones', label: 'R&W Capstones', icon: ICONS.capstone, protected: true },
+      { href: '/sat-rw-academy/mastery-check', label: 'Mastery Check', icon: ICONS.mastery, protected: true },
+      { href: '/sat-rw-academy/glossary', label: 'R&W Glossary', icon: ICONS.glossary, protected: true },
+      { href: '/sat-rw-academy/study-plan', label: 'Study Plan', icon: ICONS.plan, protected: true },
     ]
 
     return (
       <nav aria-label="SAT R&W Academy course navigation" className="flex flex-col gap-0.5">
-        {items.map(({ href, label, icon, exact, forceActive }) => {
-          const isActive = forceActive ?? active(href, exact)
+        {items.map(({ href, label, icon, exact, forceActive, protected: isProtected }) => {
+          const locked = isProtected && !isPremium
+          const dest = locked ? '/billing' : href
+          const tooltipLabel = locked ? `${label} — SAT Premium required` : label
+          const isActive = locked ? false : (forceActive ?? active(href, exact))
           return (
-            <Tooltip key={href} label={label}>
+            <Tooltip key={href} label={tooltipLabel}>
               <Link
-                href={href}
-                aria-label={label}
+                href={dest}
+                aria-label={tooltipLabel}
                 aria-current={isActive ? 'page' : undefined}
                 onClick={onNavigate}
                 className={cn(
                   linkBase,
-                  'h-10 w-10 justify-center',
+                  'h-10 w-10 justify-center relative',
                   isActive ? activeCls : inactiveCls,
+                  locked && 'opacity-60',
                 )}
               >
                 {icon}
+                {locked && (
+                  <span className="absolute -top-0.5 -right-0.5">{ICONS.lock}</span>
+                )}
               </Link>
             </Tooltip>
           )
@@ -232,37 +245,51 @@ function NavContent({ pathname, collapsed, onNavigate, firstFocusRef }: NavConte
   }
 
   // ── Expanded mode ────────────────────────────────────────────────────────────
-  const expandedLink = (href: string, label: string, icon: React.ReactNode, exact = false, forceActive?: boolean) => {
-    const isActive = forceActive ?? active(href, exact)
+  const expandedLink = (href: string, label: string, icon: React.ReactNode, exact = false, forceActive?: boolean, isProtected = true) => {
+    const locked = isProtected && !isPremium
+    const dest = locked ? '/billing' : href
+    const isActive = locked ? false : (forceActive ?? active(href, exact))
     return (
       <Link
-        href={href}
+        href={dest}
+        aria-label={locked ? `${label} — SAT Premium required` : label}
         aria-current={isActive ? 'page' : undefined}
         onClick={onNavigate}
-        className={cn(linkBase, 'gap-2.5 px-3 py-2 text-sm font-medium', isActive ? activeCls : inactiveCls)}
+        className={cn(
+          linkBase, 'gap-2.5 px-3 py-2 text-sm font-medium',
+          isActive ? activeCls : inactiveCls,
+          locked && 'opacity-60',
+        )}
         ref={href === '/sat-rw-academy' ? firstFocusRef as React.RefObject<HTMLAnchorElement> : undefined}
       >
         {icon}
-        <span>{label}</span>
+        <span className="flex-1 min-w-0 truncate">{label}</span>
+        {locked && ICONS.lock}
       </Link>
     )
   }
 
   const subLink = (slug: string, label: string) => {
-    const isActive = pathname === `/sat-rw-academy/lesson/${slug}`
+    const locked = !isPremium
+    const href = `/sat-rw-academy/lesson/${slug}`
+    const dest = locked ? '/billing' : href
+    const isActive = !locked && pathname === href
     return (
       <Link
         key={slug}
-        href={`/sat-rw-academy/lesson/${slug}`}
+        href={dest}
+        aria-label={locked ? `${label} — SAT Premium required` : label}
         aria-current={isActive ? 'page' : undefined}
         onClick={onNavigate}
         className={cn(
           'flex items-center gap-2 rounded-lg py-1.5 pl-10 pr-3 text-[13px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400',
           isActive ? 'text-emerald-700 font-medium bg-emerald-50/60' : 'text-sky-700 hover:text-sky-900 hover:bg-sky-100',
+          locked && 'opacity-60',
         )}
       >
         <span className={cn('h-1 w-1 rounded-full shrink-0', isActive ? 'bg-emerald-500' : 'bg-sky-300')} />
-        {label}
+        <span className="flex-1 min-w-0 truncate">{label}</span>
+        {locked && ICONS.lock}
       </Link>
     )
   }
@@ -270,25 +297,36 @@ function NavContent({ pathname, collapsed, onNavigate, firstFocusRef }: NavConte
   return (
     <nav aria-label="SAT R&W Academy course navigation" className="flex flex-col gap-0.5">
 
-      {expandedLink('/sat-rw-academy', 'Course Home', ICONS.home, true)}
+      {expandedLink('/sat-rw-academy', 'Course Home', ICONS.home, true, undefined, false)}
       {expandedLink('/sat-rw-academy/diagnostic', 'R&W Diagnostic', ICONS.diagnostic)}
 
       <div className="my-1 border-t border-sky-200/70" />
 
       {/* Writing Skills */}
       <div>
-        <button
-          onClick={() => setWritingOpen(p => !p)}
-          aria-expanded={writingOpen}
-          className={cn(
-            'flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400',
-            isWritingRoute ? activeCls : inactiveCls,
-          )}
-        >
-          <span className="flex items-center gap-2.5">{ICONS.writing}<span>Writing Skills</span></span>
-          <span className={cn('transition-transform', writingOpen && 'rotate-180')}>{ICONS.chevronDown}</span>
-        </button>
-        {writingOpen && (
+        {isPremium ? (
+          <button
+            onClick={() => setWritingOpen(p => !p)}
+            aria-expanded={writingOpen}
+            className={cn(
+              'flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400',
+              isWritingRoute ? activeCls : inactiveCls,
+            )}
+          >
+            <span className="flex items-center gap-2.5">{ICONS.writing}<span>Writing Skills</span></span>
+            <span className={cn('transition-transform', writingOpen && 'rotate-180')}>{ICONS.chevronDown}</span>
+          </button>
+        ) : (
+          <Link
+            href="/billing"
+            aria-label="Writing Skills — SAT Premium required"
+            className={cn('flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors opacity-60', inactiveCls)}
+          >
+            <span className="flex items-center gap-2.5">{ICONS.writing}<span>Writing Skills</span></span>
+            {ICONS.lock}
+          </Link>
+        )}
+        {isPremium && writingOpen && (
           <div className="mt-0.5 flex flex-col gap-0.5">
             {WRITING_LESSONS.map(l => subLink(l.slug, l.label))}
           </div>
@@ -297,18 +335,29 @@ function NavContent({ pathname, collapsed, onNavigate, firstFocusRef }: NavConte
 
       {/* Reading Skills */}
       <div>
-        <button
-          onClick={() => setReadingOpen(p => !p)}
-          aria-expanded={readingOpen}
-          className={cn(
-            'flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400',
-            isReadingRoute ? activeCls : inactiveCls,
-          )}
-        >
-          <span className="flex items-center gap-2.5">{ICONS.reading}<span>Reading Skills</span></span>
-          <span className={cn('transition-transform', readingOpen && 'rotate-180')}>{ICONS.chevronDown}</span>
-        </button>
-        {readingOpen && (
+        {isPremium ? (
+          <button
+            onClick={() => setReadingOpen(p => !p)}
+            aria-expanded={readingOpen}
+            className={cn(
+              'flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400',
+              isReadingRoute ? activeCls : inactiveCls,
+            )}
+          >
+            <span className="flex items-center gap-2.5">{ICONS.reading}<span>Reading Skills</span></span>
+            <span className={cn('transition-transform', readingOpen && 'rotate-180')}>{ICONS.chevronDown}</span>
+          </button>
+        ) : (
+          <Link
+            href="/billing"
+            aria-label="Reading Skills — SAT Premium required"
+            className={cn('flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors opacity-60', inactiveCls)}
+          >
+            <span className="flex items-center gap-2.5">{ICONS.reading}<span>Reading Skills</span></span>
+            {ICONS.lock}
+          </Link>
+        )}
+        {isPremium && readingOpen && (
           <div className="mt-0.5 flex flex-col gap-0.5">
             {READING_LESSONS.map(l => subLink(l.slug, l.label))}
           </div>
@@ -335,7 +384,7 @@ function NavContent({ pathname, collapsed, onNavigate, firstFocusRef }: NavConte
 
 // ── Desktop sidebar ────────────────────────────────────────────────────────────
 
-export function AcademySidebar() {
+export function AcademySidebar({ isPremium = true }: { isPremium?: boolean }) {
   const pathname = usePathname()
   const [collapsed, setCollapsed] = useState(false)
 
@@ -392,7 +441,7 @@ export function AcademySidebar() {
         'flex-1 overflow-y-auto overflow-x-visible py-2',
         collapsed ? 'flex flex-col items-center px-1 gap-0.5' : 'px-2',
       )}>
-        <NavContent pathname={pathname} collapsed={collapsed} />
+        <NavContent pathname={pathname} collapsed={collapsed} isPremium={isPremium} />
       </div>
     </aside>
   )
@@ -400,7 +449,7 @@ export function AcademySidebar() {
 
 // ── Mobile drawer ──────────────────────────────────────────────────────────────
 
-function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
+function MobileDrawer({ open, onClose, isPremium = true }: { open: boolean; onClose: () => void; isPremium?: boolean }) {
   const pathname = usePathname()
   const firstRef = useRef<HTMLAnchorElement | null>(null)
 
@@ -443,7 +492,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
           </button>
         </div>
         <div className="flex-1 overflow-y-auto p-3">
-          <NavContent pathname={pathname} collapsed={false} onNavigate={onClose} firstFocusRef={firstRef} />
+          <NavContent pathname={pathname} collapsed={false} isPremium={isPremium} onNavigate={onClose} firstFocusRef={firstRef} />
         </div>
       </div>
     </>
@@ -452,7 +501,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
 
 // ── Mobile menu button (used in academy layout) ────────────────────────────────
 
-export function AcademyMobileMenu() {
+export function AcademyMobileMenu({ isPremium = true }: { isPremium?: boolean }) {
   const [open, setOpen] = useState(false)
   return (
     <>
@@ -466,7 +515,7 @@ export function AcademyMobileMenu() {
           Academy Menu
         </button>
       </div>
-      <MobileDrawer open={open} onClose={() => setOpen(false)} />
+      <MobileDrawer open={open} onClose={() => setOpen(false)} isPremium={isPremium} />
     </>
   )
 }

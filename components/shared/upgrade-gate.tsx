@@ -17,14 +17,15 @@ interface UpgradeGateProps {
 
 const DEFAULT_FEATURES: FeatureItem[] = [
   { label: 'SAT Practice Test Forms 1, 2, 3, 4, and 5', subtext: 'Full-length adaptive SAT practice exams with score feedback' },
-  { label: 'Unlimited lifetime usage', subtext: 'Retake available SAT forms anytime after upgrading' },
+  { label: 'Complete SAT R&W Academy', subtext: '7-phase R&W curriculum with 11 skill lessons, drills, vocabulary, and timed capstones' },
+  { label: 'Unlimited lifetime usage', subtext: 'Retake available SAT forms and academy content anytime after upgrading' },
   { label: 'SAT Question Bank access', subtext: '700+ targeted practice questions built from your weak areas' },
   { label: 'Personalized score reports', subtext: 'Review strengths, weaknesses, and recommended practice' },
 ]
 
 export function UpgradeGate({
   title = 'Unlock Lifetime SAT Access',
-  description = 'Unlock SAT Forms 1, 2, 3, 4, and 5 plus the SAT Question Bank with unlimited lifetime access for a one-time payment.',
+  description = 'Unlock SAT Forms 1–5, the 700+ question bank, and the complete SAT R&W Academy with unlimited lifetime access for a one-time payment.',
   features = DEFAULT_FEATURES,
   compact = false,
 }: UpgradeGateProps) {

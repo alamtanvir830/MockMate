@@ -6,6 +6,8 @@ import { SyncSatAttempts } from '@/components/premade/SyncSatAttempts'
 import { SyncQBHistory } from '@/components/question-bank/SyncQBHistory'
 import { AcademySidebarSlot } from '@/components/dashboard/AcademySidebarSlot'
 
+const ADMIN_EMAIL = 'ranvi.contact@gmail.com'
+
 export default async function DashboardLayout({
   children,
 }: {
@@ -19,11 +21,14 @@ export default async function DashboardLayout({
   }
 
   const fullName = user.user_metadata?.full_name as string | undefined
+  const isPremium =
+    user.email === ADMIN_EMAIL ||
+    user.user_metadata?.sat_upgrade_unlocked === true
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden">
       <Sidebar userEmail={user.email} userFullName={fullName} />
-      <AcademySidebarSlot />
+      <AcademySidebarSlot isPremium={isPremium} />
       <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
         <MobileHeader />
         <main className="flex-1 overflow-y-auto">

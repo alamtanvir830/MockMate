@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 
 const PROTECTED = ['/dashboard', '/exams', '/groups', '/settings']
 const AUTH_ONLY = ['/login', '/signup']
+const ACADEMY_ADMIN_EMAIL = 'ranvi.contact@gmail.com'
 
 export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
@@ -46,6 +47,20 @@ export async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard'
     return NextResponse.redirect(url)
+  }
+
+  // SAT R&W Academy — sub-routes require SAT Premium (Course Home /sat-rw-academy is open for preview)
+  if (pathname.startsWith('/sat-rw-academy/')) {
+    if (!user) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/login'
+      return NextResponse.redirect(url)
+    }
+    if (user.email !== ACADEMY_ADMIN_EMAIL && user.user_metadata?.sat_upgrade_unlocked !== true) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/billing'
+      return NextResponse.redirect(url)
+    }
   }
 
   return supabaseResponse

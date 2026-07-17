@@ -4,6 +4,11 @@ import { resolveUserIdentity } from '@/lib/supabase/resolve-user-identity'
 import { computeMastery } from '@/lib/academy/mastery'
 import type { Difficulty } from '@/lib/academy/types'
 
+const ADMIN_EMAIL = 'ranvi.contact@gmail.com'
+function isPremiumUser(user: { email?: string | null; user_metadata?: Record<string, unknown> }): boolean {
+  return user.email === ADMIN_EMAIL || user.user_metadata?.sat_upgrade_unlocked === true
+}
+
 interface AttemptBody {
   questionId: string
   skillSlug: string
@@ -32,6 +37,7 @@ export async function POST(req: NextRequest) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
+    if (!isPremiumUser(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
 
     const body = await req.json() as AttemptBody
 
@@ -129,6 +135,7 @@ export async function GET() {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
+    if (!isPremiumUser(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
 
     // Fetch all attempts for this user, ordered by created_at
     const { data: attempts, error } = await supabase
