@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import type { SkillMastery } from '@/lib/academy/mastery'
-import { SKILL_DISPLAY_NAMES, ACADEMY_SKILL_SLUGS } from '@/lib/academy/skill-mapping'
+import { SKILL_DISPLAY_NAMES, SKILL_SECTION, ACADEMY_SKILL_SLUGS } from '@/lib/academy/skill-mapping'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -370,10 +370,16 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                     actionLabel = 'Start Lesson'
                   }
 
+                  const section = SKILL_SECTION[slug as keyof typeof SKILL_SECTION] ?? null
+                  const sectionLabel = section === 'reading' ? 'Reading' : section === 'writing' ? 'Writing' : null
+                  const sectionBadgeClass = section === 'reading'
+                    ? 'bg-purple-50 text-purple-600 border-purple-200'
+                    : 'bg-yellow-50 text-yellow-700 border-yellow-200'
+
                   return (
-                    <div key={slug} className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3">
+                    <div key={slug} className="flex items-center gap-3 flex-wrap rounded-lg border border-slate-200 bg-white px-4 py-3">
                       <span className="text-xs font-bold text-slate-300 w-4 shrink-0">{i + 1}</span>
-                      <div className="flex-1 min-w-0">
+                      <div className="flex-1 min-w-[8rem]">
                         <p className="text-sm font-semibold text-slate-900 truncate">{name}</p>
                         {pct !== null && (
                           <p className="text-[11px] text-slate-400 mt-0.5">
@@ -381,9 +387,16 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                           </p>
                         )}
                       </div>
-                      <span className={cn('shrink-0 text-[11px] font-semibold px-2 py-0.5 rounded-full border', badgeClass)}>
-                        {statusLabel}
-                      </span>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <span className={cn('text-[11px] font-semibold px-2 py-0.5 rounded-full border', badgeClass)}>
+                          {statusLabel}
+                        </span>
+                        {sectionLabel && (
+                          <span className={cn('text-[11px] font-medium px-2 py-0.5 rounded-full border', sectionBadgeClass)}>
+                            {sectionLabel}
+                          </span>
+                        )}
+                      </div>
                       <Link
                         href={actionHref}
                         className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"

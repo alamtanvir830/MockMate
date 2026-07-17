@@ -38,6 +38,20 @@ export const ACADEMY_SKILL_SLUGS = [
 
 export type AcademySkillSlug = typeof ACADEMY_SKILL_SLUGS[number]
 
+export const SKILL_SECTION: Record<AcademySkillSlug, 'reading' | 'writing'> = {
+  'boundaries':             'writing',
+  'form-structure-sense':   'writing',
+  'transitions':            'writing',
+  'rhetorical-synthesis':   'writing',
+  'words-in-context':       'reading',
+  'central-ideas-details':  'reading',
+  'text-structure-purpose': 'reading',
+  'command-of-evidence':    'reading',
+  'quantitative-evidence':  'reading',
+  'inferences':             'reading',
+  'cross-text-connections': 'reading',
+}
+
 export const SKILL_DISPLAY_NAMES: Record<string, string> = {
   'boundaries':             'Boundaries',
   'form-structure-sense':   'Form, Structure & Sense',
