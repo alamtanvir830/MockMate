@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import type { SkillMastery } from '@/lib/academy/mastery'
 import { SKILL_DISPLAY_NAMES, SKILL_SECTION, ACADEMY_SKILL_SLUGS } from '@/lib/academy/skill-mapping'
+import { SATFormSelectorModal } from '@/components/academy/SATFormSelectorModal'
+import type { SATFormInfo } from '@/components/academy/SATFormSelectorModal'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 
@@ -53,6 +55,22 @@ interface CapstonesData {
   masteryCheckDone: boolean
 }
 
+interface SATFormsData {
+  forms: SATFormInfo[]
+  satPremium: boolean
+  masteryCheckCompletedAt: string | null
+  finalMilestoneComplete: boolean
+  postMasteryForm: {
+    formNumber: number
+    attemptId: string
+    completedAt: string
+    totalScore: number | null
+    rwScore: number | null
+    mathScore: number | null
+  } | null
+  recommendedFormNumber: number
+}
+
 type PathItemStatus =
   | 'recommended'
   | 'not_started'
@@ -82,6 +100,7 @@ interface PathItem {
   actionLabel: string
   actionHref: string
   actionEnabled: boolean
+  isModal?: boolean
   // skill-specific
   diagnosticPct?: number | null
   diagnosticScore?: string | null
@@ -119,6 +138,7 @@ function computeNextStep(
   mastery: Record<string, SkillMastery>,
   lessons: LessonProgress[],
   capstonesData: CapstonesData | null,
+  satFormsData: SATFormsData | null,
 ): { type: string; slug?: string; number?: number; href: string; label: string; reason: string } {
   const completedLessons = new Set(lessons.filter(l => l.status === 'completed').map(l => l.lessonSlug))
 
@@ -240,11 +260,12 @@ function computeNextStep(
         reason: 'You have completed the capstone series. Measure your total R&W skill improvement from start to finish.',
       }
     } else {
+      const recForm = satFormsData?.recommendedFormNumber ?? 1
       return {
-        type: 'sat-form-1',
-        href: '/premade/sat/form-1',
-        label: 'Take SAT Form 1',
-        reason: 'You have completed the full R&W Academy. Apply your skills in a complete SAT-style practice exam.',
+        type: 'sat-full-exam',
+        href: '#sat-form-selector',
+        label: `Take SAT Form ${recForm}`,
+        reason: 'You have completed the full R&W Academy. Apply your skills in a complete full-length SAT-style practice exam.',
       }
     }
   }
@@ -266,6 +287,7 @@ function buildPathItems(
   mastery: Record<string, SkillMastery>,
   lessons: LessonProgress[],
   capstonesData: CapstonesData | null,
+  satFormsData: SATFormsData | null,
   nextStep: ReturnType<typeof computeNextStep> | null,
 ): PathItem[] {
   const completedLessons = new Set(lessons.filter(l => l.status === 'completed').map(l => l.lessonSlug))
@@ -529,24 +551,61 @@ function buildPathItems(
     actionEnabled: masteryUnlocked,
   }
 
-  // ── SAT Form 1 ───────────────────────────────────────────────────────────────
-  const satS = mkStatus(
-    false,
-    masteryCheckDone,
-    nextStep?.type === 'sat-form-1',
-    'Complete the Final R&W Mastery Check to reach the final academy milestone.',
-    'bg-emerald-100 text-emerald-700 border-emerald-300',
-  )
-  const satForm1Item: PathItem = {
-    id: 'sat-form-1', type: 'full_exam', rowNum: base + 8,
-    title: 'Take SAT Form 1',
+  // ── Full SAT Exam (choose any form) ─────────────────────────────────────────
+  const satMilestoneComplete = satFormsData?.finalMilestoneComplete ?? false
+  const satPostMasteryForm = satFormsData?.postMasteryForm ?? null
+  const satRecommendedForm = satFormsData?.recommendedFormNumber ?? 1
+  const isSatRecommended = nextStep?.type === 'sat-full-exam'
+
+  let satStatus: PathItemStatus
+  let satStatusLabel: string
+  let satStatusBadgeClass: string
+  let satLockReason: string | undefined
+  let satActionLabel: string
+  let satActionEnabled: boolean
+
+  if (satMilestoneComplete && satPostMasteryForm) {
+    satStatus = 'completed'
+    satStatusLabel = `Completed · SAT Form ${satPostMasteryForm.formNumber}`
+    satStatusBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-300'
+    satActionLabel = 'Choose SAT Form'
+    satActionEnabled = true
+    satLockReason = undefined
+  } else if (isSatRecommended) {
+    satStatus = 'recommended'
+    satStatusLabel = 'Recommended Next'
+    satStatusBadgeClass = 'bg-sky-100 text-sky-700 border-sky-300'
+    satActionLabel = `Take SAT Form ${satRecommendedForm}`
+    satActionEnabled = true
+    satLockReason = undefined
+  } else if (masteryCheckDone) {
+    satStatus = 'ready'
+    satStatusLabel = 'Ready'
+    satStatusBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-300'
+    satActionLabel = 'Choose SAT Form'
+    satActionEnabled = true
+    satLockReason = undefined
+  } else {
+    satStatus = 'locked'
+    satStatusLabel = 'Locked'
+    satStatusBadgeClass = 'bg-slate-100 text-slate-400 border-slate-200'
+    satActionLabel = 'Locked'
+    satActionEnabled = false
+    satLockReason = 'Complete the Final R&W Mastery Check to unlock your full-length SAT exam milestone.'
+  }
+
+  const satExamItem: PathItem = {
+    id: 'sat-full-exam', type: 'full_exam', rowNum: base + 8,
+    title: 'Take a Full-Length SAT Exam',
     description: 'Apply your Reading and Writing progress in a full-length computer-adaptive SAT-style exam that also includes Math.',
-    details: 'Full-length exam • Reading and Writing + Math • MockMate estimated SAT score',
+    details: 'Choose SAT Forms 1–5 · Reading and Writing + Math · MockMate estimated SAT score',
     category: 'Full SAT Exam', categoryBadgeClass: FULL_SAT_BADGE_CLASS,
-    ...satS,
-    actionLabel: masteryCheckDone ? 'Take SAT Form 1' : 'Locked',
-    actionHref: '/premade/sat/form-1',
-    actionEnabled: masteryCheckDone,
+    status: satStatus, statusLabel: satStatusLabel, statusBadgeClass: satStatusBadgeClass,
+    lockReason: satLockReason,
+    actionLabel: satActionLabel,
+    actionHref: '#sat-form-selector',
+    actionEnabled: satActionEnabled,
+    isModal: satActionEnabled,
   }
 
   return [
@@ -558,7 +617,7 @@ function buildPathItems(
     capstone3Item,
     capstone3ReviewItem,
     masteryCheckItem,
-    satForm1Item,
+    satExamItem,
   ]
 }
 
@@ -567,9 +626,11 @@ function buildPathItems(
 function PathItemRow({
   item,
   mastery,
+  onAction,
 }: {
   item: PathItem
   mastery: Record<string, SkillMastery>
+  onAction?: () => void
 }) {
   const isLocked = item.status === 'locked' || item.status === 'coming_soon'
 
@@ -653,12 +714,21 @@ function PathItemRow({
           </span>
         </div>
         {item.actionEnabled ? (
-          <Link
-            href={item.actionHref}
-            className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
-          >
-            {item.actionLabel} →
-          </Link>
+          onAction ? (
+            <button
+              onClick={onAction}
+              className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
+            >
+              {item.actionLabel} →
+            </button>
+          ) : (
+            <Link
+              href={item.actionHref}
+              className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
+            >
+              {item.actionLabel} →
+            </Link>
+          )
         ) : (
           <span className="shrink-0 text-xs text-slate-300 whitespace-nowrap">{item.actionLabel}</span>
         )}
@@ -744,6 +814,8 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
   const [reviewsDue, setReviewsDue] = useState(0)
   const [diagnosticResult, setDiagnosticResult] = useState<DiagnosticResult | null>(null)
   const [capstonesData, setCapstonesData] = useState<CapstonesData | null>(null)
+  const [satFormsData, setSatFormsData] = useState<SATFormsData | null>(null)
+  const [showSATSelector, setShowSATSelector] = useState(false)
   const [loading, setLoading] = useState(isPremium)
   const [hasSavedProgress, setHasSavedProgress] = useState(false)
 
@@ -764,8 +836,9 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
       fetch('/api/academy/review-queue').then(r => r.ok ? r.json() : { items: [], totalDue: 0 }) as Promise<ReviewQueueResponse>,
       fetch('/api/academy/diagnostic').then(r => r.ok ? r.json() : null) as Promise<DiagnosticResult | null>,
       fetch('/api/academy/capstones').then(r => r.ok ? r.json() : null) as Promise<CapstonesData | null>,
+      fetch('/api/academy/sat-forms').then(r => r.ok ? r.json() : null) as Promise<SATFormsData | null>,
     ])
-      .then(([masteryArr, lessonArr, queue, diag, capstones]) => {
+      .then(([masteryArr, lessonArr, queue, diag, capstones, satForms]) => {
         const map: Record<string, SkillMastery> = {}
         for (const m of masteryArr) map[m.skillSlug] = m
         setMastery(map)
@@ -773,6 +846,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
         setReviewsDue(queue.totalDue ?? queue.items?.length ?? 0)
         setDiagnosticResult(diag)
         setCapstonesData(capstones)
+        setSatFormsData(satForms)
       })
       .catch(() => {/* non-blocking */})
       .finally(() => setLoading(false))
@@ -789,12 +863,12 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
     : null
 
   const nextStep = isPremium && !loading
-    ? computeNextStep(diagnosticResult, mastery, lessons, capstonesData)
+    ? computeNextStep(diagnosticResult, mastery, lessons, capstonesData, satFormsData)
     : null
 
   // Unified path — always includes all 19 items when diagnostic is complete
   const pathItems = diagnosticResult && !loading
-    ? buildPathItems(diagnosticResult, mastery, lessons, capstonesData, nextStep)
+    ? buildPathItems(diagnosticResult, mastery, lessons, capstonesData, satFormsData, nextStep)
     : null
 
   return (
@@ -887,12 +961,21 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                 )}
 
                 {nextStep && nextStep.type !== 'diagnostic' && (
-                  <Link
-                    href={nextStep.href}
-                    className="block w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors"
-                  >
-                    {nextStep.label}
-                  </Link>
+                  nextStep.type === 'sat-full-exam' ? (
+                    <button
+                      onClick={() => setShowSATSelector(true)}
+                      className="block w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors"
+                    >
+                      {nextStep.label}
+                    </button>
+                  ) : (
+                    <Link
+                      href={nextStep.href}
+                      className="block w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors"
+                    >
+                      {nextStep.label}
+                    </Link>
+                  )
                 )}
               </div>
             </div>
@@ -907,12 +990,21 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                   <p className="font-semibold text-sky-900 text-sm">{nextStep.label}</p>
                   <p className="text-xs text-sky-700 mt-1 leading-relaxed">{nextStep.reason}</p>
                 </div>
-                <Link
-                  href={nextStep.href}
-                  className="shrink-0 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold px-4 py-2.5 transition-colors whitespace-nowrap"
-                >
-                  {nextStep.label}
-                </Link>
+                {nextStep.type === 'sat-full-exam' ? (
+                  <button
+                    onClick={() => setShowSATSelector(true)}
+                    className="shrink-0 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold px-4 py-2.5 transition-colors whitespace-nowrap"
+                  >
+                    {nextStep.label}
+                  </button>
+                ) : (
+                  <Link
+                    href={nextStep.href}
+                    className="shrink-0 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold px-4 py-2.5 transition-colors whitespace-nowrap"
+                  >
+                    {nextStep.label}
+                  </Link>
+                )}
               </div>
               <p className="mt-3 pt-3 border-t border-sky-200">
                 <Link href="/sat-rw-academy/diagnostic" className="text-[11px] text-sky-600 hover:underline">
@@ -943,11 +1035,15 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                           <div className="h-px flex-1 bg-slate-200" />
                         </div>
                         <p className="text-xs text-slate-500 mb-3">
-                          Complete three full R&amp;W Academy Capstones, review your remaining weaknesses, and finish with the Final Mastery Check before taking SAT Form 1.
+                          Complete three full R&amp;W Academy Capstones, review your remaining weaknesses, and finish with the Final Mastery Check before taking a full-length SAT exam.
                         </p>
                       </div>
                     )}
-                    <PathItemRow item={item} mastery={mastery} />
+                    <PathItemRow
+                      item={item}
+                      mastery={mastery}
+                      onAction={item.isModal ? () => setShowSATSelector(true) : undefined}
+                    />
                   </Fragment>
                 ))}
               </div>
@@ -1065,6 +1161,15 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
       <p className="text-xs text-slate-400 leading-relaxed">
         All MockMate Academy content is independently created for practice purposes. MockMate is not affiliated with, endorsed by, or sponsored by College Board. SAT® is a trademark of College Board, which is not affiliated with and does not endorse MockMate.
       </p>
+
+      {/* ── SAT Form Selector Modal ───────────────────────────────────── */}
+      {showSATSelector && satFormsData && (
+        <SATFormSelectorModal
+          forms={satFormsData.forms}
+          recommendedFormNumber={satFormsData.recommendedFormNumber}
+          onClose={() => setShowSATSelector(false)}
+        />
+      )}
 
     </div>
   )
