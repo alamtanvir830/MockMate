@@ -9,6 +9,8 @@ import { transitionQuestions } from '@/lib/academy/transitions/questions'
 import { academyPassages } from '@/lib/academy/passages'
 import { glossaryTerms } from '@/lib/academy/glossary/terms'
 
+import { SKILL_DISPLAY_NAMES, ACADEMY_SKILL_SLUGS } from '@/lib/academy/skill-mapping'
+
 // ── Types ──────────────────────────────────────────────────────────────────────
 
 interface LessonProgress {
@@ -21,6 +23,21 @@ interface LessonProgress {
 interface ReviewQueueResponse {
   items: unknown[]
   totalDue: number
+}
+
+interface DiagnosticResult {
+  id: string
+  correct_count: number
+  incorrect_count: number
+  omitted_count: number
+  total_questions: number
+  accuracy_percentage: number
+  skill_results: Record<string, { correct: number; total: number; pct: number; section: string; title: string }>
+  domain_results: Record<string, { correct: number; total: number; pct: number; title: string }>
+  strongest_skill_slugs: string[]
+  weakest_skill_slugs: string[]
+  recommended_skill_slug: string | null
+  completed_at: string
 }
 
 // ── Constants ──────────────────────────────────────────────────────────────────
@@ -155,10 +172,72 @@ function PremiumNotice() {
 
 // ── Main component ─────────────────────────────────────────────────────────────
 
+// Ordered list of priority skills for personalized path
+const PRIORITY_ORDER = [...ACADEMY_SKILL_SLUGS]
+
+function computeNextStep(
+  diagnosticResult: DiagnosticResult | null,
+  mastery: Record<string, SkillMastery>,
+  lessons: LessonProgress[],
+): { type: string; slug?: string; href: string; label: string; reason: string } {
+  const completedLessons = new Set(lessons.filter(l => l.status === 'completed').map(l => l.lessonSlug))
+
+  if (!diagnosticResult) {
+    return {
+      type: 'diagnostic',
+      href: '/sat-rw-academy/diagnostic',
+      label: 'Start R&W Diagnostic',
+      reason: 'Identify your starting point across all 11 R&W skills.',
+    }
+  }
+
+  // Work through weakest skills from diagnostic
+  const targetSlugs = [
+    ...diagnosticResult.weakest_skill_slugs,
+    ...PRIORITY_ORDER.filter(s => !diagnosticResult.weakest_skill_slugs.includes(s)),
+  ]
+
+  for (const slug of targetSlugs) {
+    const skillMastery = mastery[slug]
+    const lessonDone = completedLessons.has(slug)
+    const name = SKILL_DISPLAY_NAMES[slug] ?? slug
+
+    if (!lessonDone) {
+      return {
+        type: 'lesson',
+        slug,
+        href: `/sat-rw-academy/lesson/${slug}`,
+        label: `Start ${name} Lesson`,
+        reason: `Your diagnostic identified ${name} as a priority area. Begin with the lesson.`,
+      }
+    }
+
+    // Lesson done — check if drill mastery is sufficient
+    if (!skillMastery || skillMastery.status === 'not_started' || skillMastery.status === 'learning' || skillMastery.status === 'developing') {
+      return {
+        type: 'drill',
+        slug,
+        href: `/sat-rw-academy/lesson/${slug}`,
+        label: `Practice ${name}`,
+        reason: `You completed the ${name} lesson. Now build mastery with the targeted drill.`,
+      }
+    }
+    // This skill is proficient+, move to next
+  }
+
+  return {
+    type: 'mixed',
+    href: '/sat-rw-academy/mixed-practice',
+    label: 'Start Mixed Practice',
+    reason: 'You have covered your priority skills. Practice with mixed questions to solidify your knowledge.',
+  }
+}
+
 export function AcademyHome({ isPremium }: { isPremium: boolean }) {
   const [mastery, setMastery] = useState<Record<string, SkillMastery>>({})
   const [lessons, setLessons] = useState<LessonProgress[]>([])
   const [reviewsDue, setReviewsDue] = useState(0)
+  const [diagnosticResult, setDiagnosticResult] = useState<DiagnosticResult | null>(null)
   const [loading, setLoading] = useState(isPremium)
 
   useEffect(() => {
@@ -167,13 +246,15 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
       fetch('/api/academy/attempts').then(r => r.ok ? r.json() : []) as Promise<SkillMastery[]>,
       fetch('/api/academy/lesson-progress').then(r => r.ok ? r.json() : []) as Promise<LessonProgress[]>,
       fetch('/api/academy/review-queue').then(r => r.ok ? r.json() : { items: [], totalDue: 0 }) as Promise<ReviewQueueResponse>,
+      fetch('/api/academy/diagnostic').then(r => r.ok ? r.json() : null) as Promise<DiagnosticResult | null>,
     ])
-      .then(([masteryArr, lessonArr, queue]) => {
+      .then(([masteryArr, lessonArr, queue, diag]) => {
         const map: Record<string, SkillMastery> = {}
         for (const m of masteryArr) map[m.skillSlug] = m
         setMastery(map)
         setLessons(lessonArr)
         setReviewsDue(queue.totalDue ?? queue.items?.length ?? 0)
+        setDiagnosticResult(diag)
       })
       .catch(() => {/* non-blocking */})
       .finally(() => setLoading(false))
@@ -204,10 +285,11 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
   const totalPassages = academyPassages.length
   const totalGlossaryTerms = glossaryTerms.length
 
-  const hasDiagnostic = ALL_SLUGS.some(s => mastery[s] && mastery[s].attemptCount > 0)
+  const hasDiagnostic = diagnosticResult !== null || ALL_SLUGS.some(s => mastery[s] && mastery[s].attemptCount > 0)
   const writingDone = WRITING_SLUGS.every(s => mastery[s]?.status === 'proficient' || mastery[s]?.status === 'mastered')
   const readingDone = READING_SLUGS.every(s => mastery[s]?.status === 'proficient' || mastery[s]?.status === 'mastered')
   const currentPhase = !hasDiagnostic ? 1 : !writingDone ? 2 : !readingDone ? 4 : 5
+  const nextStep = isPremium && !loading ? computeNextStep(diagnosticResult, mastery, lessons) : null
 
   return (
     <div className="space-y-8 max-w-3xl">
@@ -272,7 +354,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
               <div className="h-4 w-3/4 animate-pulse rounded bg-slate-100" />
               <div className="h-4 w-1/2 animate-pulse rounded bg-slate-100" />
             </div>
-          ) : !hasAny ? (
+          ) : !hasAny && diagnosticResult === null ? (
             <div className="space-y-3">
               <p className="text-xs text-slate-500 leading-relaxed">
                 Your progress will appear here after you complete the diagnostic or begin your first lesson.
@@ -286,35 +368,157 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="grid grid-cols-3 gap-3">
-                <StatBox value={totalStarted} label="started" />
-                <StatBox value={totalProficient} label="proficient+" color="blue" />
-                <StatBox value={totalMastered} label="mastered" color="emerald" />
-              </div>
-              <div>
-                <div className="w-full bg-slate-100 rounded-full h-1.5 mb-1">
-                  <div
-                    className="bg-emerald-500 h-1.5 rounded-full transition-all"
-                    style={{ width: `${Math.round((totalProficient / TOTAL_SKILLS) * 100)}%` }}
-                  />
+              {diagnosticResult && (
+                <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-3 space-y-1">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-semibold text-emerald-800">Diagnostic: Completed</p>
+                    <Link href="/sat-rw-academy/diagnostic" className="text-[11px] text-emerald-600 hover:underline">View results</Link>
+                  </div>
+                  <p className="text-xs text-emerald-700">
+                    Score: <strong>{diagnosticResult.correct_count}/{diagnosticResult.total_questions}</strong>
+                    {' · '}Accuracy: <strong>{Math.round(diagnosticResult.accuracy_percentage)}%</strong>
+                  </p>
+                  {diagnosticResult.recommended_skill_slug && (
+                    <p className="text-[11px] text-emerald-700">
+                      Priority skill: {SKILL_DISPLAY_NAMES[diagnosticResult.recommended_skill_slug] ?? diagnosticResult.recommended_skill_slug}
+                    </p>
+                  )}
                 </div>
-                <p className="text-[11px] text-slate-400 text-right">{totalProficient}/{TOTAL_SKILLS} proficient+</p>
-              </div>
+              )}
+              {hasAny && (
+                <>
+                  <div className="grid grid-cols-3 gap-3">
+                    <StatBox value={totalStarted} label="started" />
+                    <StatBox value={totalProficient} label="proficient+" color="blue" />
+                    <StatBox value={totalMastered} label="mastered" color="emerald" />
+                  </div>
+                  <div>
+                    <div className="w-full bg-slate-100 rounded-full h-1.5 mb-1">
+                      <div
+                        className="bg-emerald-500 h-1.5 rounded-full transition-all"
+                        style={{ width: `${Math.round((totalProficient / TOTAL_SKILLS) * 100)}%` }}
+                      />
+                    </div>
+                    <p className="text-[11px] text-slate-400 text-right">{totalProficient}/{TOTAL_SKILLS} proficient+</p>
+                  </div>
+                </>
+              )}
               {reviewsDue > 0 && (
                 <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2">
                   <p className="text-xs font-semibold text-amber-700">{reviewsDue} review{reviewsDue !== 1 ? 's' : ''} due</p>
                 </div>
               )}
-              <Link
-                href={lastLesson ? `/sat-rw-academy/lesson/${lastLesson.lessonSlug}` : '/sat-rw-academy/diagnostic'}
-                className="block w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors"
-              >
-                Continue Learning
-              </Link>
+              {nextStep && nextStep.type !== 'diagnostic' ? (
+                <Link
+                  href={nextStep.href}
+                  className="block w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors"
+                >
+                  {nextStep.label}
+                </Link>
+              ) : (
+                <Link
+                  href={lastLesson ? `/sat-rw-academy/lesson/${lastLesson.lessonSlug}` : '/sat-rw-academy/diagnostic'}
+                  className="block w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors"
+                >
+                  Continue Learning
+                </Link>
+              )}
             </div>
           )}
         </div>
       </div>
+
+      {/* ── Your Recommended Next Step ───────────────────────────────── */}
+      {isPremium && !loading && nextStep && nextStep.type !== 'diagnostic' && (
+        <div className="rounded-xl border border-sky-200 bg-sky-50 p-5">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div className="flex-1 min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-sky-500 mb-1">Recommended Next Step</p>
+              <p className="font-semibold text-sky-900 text-sm">{nextStep.label}</p>
+              <p className="text-xs text-sky-700 mt-1 leading-relaxed">{nextStep.reason}</p>
+            </div>
+            <Link
+              href={nextStep.href}
+              className="shrink-0 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold px-4 py-2.5 transition-colors whitespace-nowrap"
+            >
+              {nextStep.label}
+            </Link>
+          </div>
+          {diagnosticResult && (
+            <p className="mt-3 pt-3 border-t border-sky-200">
+              <Link href="/sat-rw-academy/diagnostic" className="text-[11px] text-sky-600 hover:underline">
+                View Diagnostic Results →
+              </Link>
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* ── Your Personalized Learning Path ──────────────────────────── */}
+      {isPremium && !loading && diagnosticResult !== null && diagnosticResult.weakest_skill_slugs.length > 0 && (
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-3">Your Personalized Learning Path</h2>
+          <div className="space-y-2">
+            {diagnosticResult.weakest_skill_slugs.slice(0, 5).map((slug, i) => {
+              const skillResult = diagnosticResult.skill_results[slug]
+              const skillMastery = mastery[slug]
+              const lessonDone = lessons.some(l => l.lessonSlug === slug && l.status === 'completed')
+              const name = SKILL_DISPLAY_NAMES[slug] ?? slug
+              const isRecommended = nextStep?.slug === slug
+              const pct = skillResult ? skillResult.pct : null
+
+              let statusLabel: string
+              let badgeClass: string
+              let actionHref: string
+              let actionLabel: string
+
+              if (isRecommended) {
+                statusLabel = 'Recommended Next'
+                badgeClass = 'bg-sky-100 text-sky-700 border-sky-300'
+                actionHref = nextStep!.href
+                actionLabel = nextStep!.label
+              } else if (!lessonDone) {
+                statusLabel = 'Not Started'
+                badgeClass = 'bg-slate-100 text-slate-500 border-slate-300'
+                actionHref = `/sat-rw-academy/lesson/${slug}`
+                actionLabel = 'Start Lesson'
+              } else if (!skillMastery || skillMastery.status === 'not_started' || skillMastery.status === 'learning' || skillMastery.status === 'developing') {
+                statusLabel = 'Practice Needed'
+                badgeClass = 'bg-amber-100 text-amber-700 border-amber-300'
+                actionHref = `/sat-rw-academy/lesson/${slug}`
+                actionLabel = 'Practice'
+              } else {
+                statusLabel = 'Proficient+'
+                badgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-300'
+                actionHref = `/sat-rw-academy/lesson/${slug}`
+                actionLabel = 'Review'
+              }
+
+              return (
+                <div key={slug} className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3">
+                  <span className="text-xs font-bold text-slate-300 w-4 shrink-0">{i + 1}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-slate-900 truncate">{name}</p>
+                    {pct !== null && (
+                      <p className="text-[11px] text-slate-400 mt-0.5">Diagnostic: {pct}% ({skillResult!.correct}/{skillResult!.total})</p>
+                    )}
+                  </div>
+                  <span className={cn('shrink-0 text-[11px] font-semibold px-2 py-0.5 rounded-full border', badgeClass)}>
+                    {statusLabel}
+                  </span>
+                  <Link
+                    href={actionHref}
+                    className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
+                  >
+                    {actionLabel} →
+                  </Link>
+                </div>
+              )
+            })}
+          </div>
+          <p className="text-[11px] text-slate-400 mt-2">Ranked by diagnostic performance · weakest skills first</p>
+        </div>
+      )}
 
       {/* ── Your Recommended Path ─────────────────────────────────────── */}
       <div>
@@ -382,7 +586,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                 isPremium ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-amber-500 hover:bg-amber-600',
               )}
             >
-              {isPremium ? (hasAny ? 'Retake Diagnostic' : 'Start Diagnostic') : 'Get SAT Premium'}
+              {isPremium ? (diagnosticResult !== null || hasAny ? 'Retake Diagnostic' : 'Start Diagnostic') : 'Get SAT Premium'}
             </Link>
           </div>
         </div>
