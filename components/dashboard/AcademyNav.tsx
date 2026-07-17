@@ -13,7 +13,6 @@ const navTabs = [
   { label: 'Transitions', href: '/sat-rw-academy/transitions' },
   { label: 'Reading Speed', href: '/sat-rw-academy/reading-speed' },
   { label: 'Review Queue', href: '/sat-rw-academy/review' },
-  { label: 'Study Plan', href: '/sat-rw-academy/study-plan' },
 ]
 
 export function AcademyNav() {

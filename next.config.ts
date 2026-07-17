@@ -6,6 +6,15 @@ const nextConfig: NextConfig = {
   // bundles it. Marking it as a server external forces Next.js to require() it at
   // runtime instead, which works correctly in the Node.js serverless environment.
   serverExternalPackages: ['pdf-parse'],
+  async redirects() {
+    return [
+      {
+        source: '/sat-rw-academy/study-plan',
+        destination: '/sat-rw-academy',
+        permanent: false,
+      },
+    ]
+  },
 };
 
 export default nextConfig;

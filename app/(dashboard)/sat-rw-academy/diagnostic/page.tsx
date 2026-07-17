@@ -360,12 +360,6 @@ function ResultsScreen({
 
       {/* Actions */}
       <div className="flex flex-wrap gap-3">
-        <Link
-          href="/sat-rw-academy/study-plan"
-          className="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors"
-        >
-          View personalized study plan →
-        </Link>
         <button
           onClick={onRetake}
           className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-sm font-semibold px-5 py-2.5 transition-colors"

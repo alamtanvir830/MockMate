@@ -79,11 +79,6 @@ const ICONS = {
       <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
     </svg>
   ),
-  plan: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-    </svg>
-  ),
   mixed: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0">
       <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
@@ -208,7 +203,6 @@ function NavContent({ pathname, collapsed, isPremium = true, onNavigate, firstFo
       { href: '/sat-rw-academy/capstones', label: 'R&W Capstones', icon: ICONS.capstone, protected: true },
       { href: '/sat-rw-academy/mastery-check', label: 'Mastery Check', icon: ICONS.mastery, protected: true },
       { href: '/sat-rw-academy/glossary', label: 'R&W Glossary', icon: ICONS.glossary, protected: true },
-      { href: '/sat-rw-academy/study-plan', label: 'Study Plan', icon: ICONS.plan, protected: true },
     ]
 
     return (
@@ -377,7 +371,6 @@ function NavContent({ pathname, collapsed, isPremium = true, onNavigate, firstFo
       {expandedLink('/sat-rw-academy/capstones', 'R&W Capstones', ICONS.capstone)}
       {expandedLink('/sat-rw-academy/mastery-check', 'Mastery Check', ICONS.mastery)}
       {expandedLink('/sat-rw-academy/glossary', 'R&W Glossary', ICONS.glossary)}
-      {expandedLink('/sat-rw-academy/study-plan', 'Study Plan', ICONS.plan)}
     </nav>
   )
 }

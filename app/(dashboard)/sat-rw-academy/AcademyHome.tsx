@@ -139,7 +139,7 @@ function PremiumNotice() {
         <div className="flex-1 min-w-0">
           <h2 className="text-sm font-bold text-amber-900">Unlock the Complete SAT R&amp;W Academy</h2>
           <p className="text-xs text-amber-800 mt-1 leading-relaxed">
-            SAT Premium includes every academy lesson, the R&W Diagnostic, targeted drills, vocabulary and transition practice, Reading Speed, personalized review, and study planning.
+            SAT Premium includes every academy lesson, the R&W Diagnostic, targeted drills, vocabulary and transition practice, Reading Speed, and personalized spaced review.
           </p>
         </div>
         <Link
@@ -493,16 +493,6 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
             isPremium={isPremium}
           />
 
-          <ModuleCard
-            number={10}
-            title="Study Plan"
-            description="A weekly schedule built from your mastery data. Prioritizes due reviews, weak skills, and vocabulary before adding new lessons."
-            href="/sat-rw-academy/study-plan"
-            buttonLabel={isPremium && hasAny ? 'View Study Plan' : 'Create Study Plan'}
-            badge="Mon–Fri · personalised to your mastery level"
-            isPremium={isPremium}
-          />
-
         </div>
       </div>
 
@@ -571,16 +561,6 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                 <span className="ml-auto text-[11px] font-semibold bg-amber-200 text-amber-800 rounded-full px-2 py-0.5">{reviewsDue}</span>
               </Link>
             )}
-
-            <Link
-              href="/sat-rw-academy/study-plan"
-              className="flex items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-colors"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4 shrink-0 text-sky-500">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-              </svg>
-              {hasAny ? "View This Week's Plan" : 'Create Study Plan'}
-            </Link>
 
           </div>
         </div>
