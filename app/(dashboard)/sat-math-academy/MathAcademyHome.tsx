@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import {
   MATH_SKILL_DISPLAY_NAMES,
-  MATH_SKILL_DOMAIN,
   MATH_DOMAIN_DISPLAY,
   MATH_DOMAIN_BADGE_CLASS,
   ALGEBRA_SKILL_SLUGS,
@@ -20,13 +19,6 @@ interface MathAcademyHomeProps {
 }
 
 // ── Domain color map ───────────────────────────────────────────────────────────
-
-const DOMAIN_ICON_BG: Record<MathDomainSlug, string> = {
-  'algebra': 'bg-blue-100 text-blue-700',
-  'advanced-math': 'bg-purple-100 text-purple-700',
-  'problem-solving-data-analysis': 'bg-green-100 text-green-700',
-  'geometry-trigonometry': 'bg-orange-100 text-orange-700',
-}
 
 const DOMAIN_HOVER_BG: Record<MathDomainSlug, string> = {
   'algebra': 'hover:bg-blue-50',
@@ -54,7 +46,6 @@ function DomainSection({
   isPremium: boolean
 }) {
   const badgeClass = MATH_DOMAIN_BADGE_CLASS[domain]
-  const iconBg = DOMAIN_ICON_BG[domain]
   const hoverBg = DOMAIN_HOVER_BG[domain]
   const ringClass = DOMAIN_RING[domain]
   const displayName = MATH_DOMAIN_DISPLAY[domain]
@@ -250,15 +241,38 @@ export default function MathAcademyHome({ isPremium }: MathAcademyHomeProps) {
               </svg>
             }
           />
-          <ComingSoonCard
-            title="Mixed Practice"
-            description="Adaptive drills pulling from all domains, weighted toward your weak areas."
-            icon={
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
-              </svg>
-            }
-          />
+          {isPremium ? (
+            <Link
+              href="/sat-math-academy/mixed-practice"
+              className="flex items-start gap-3.5 rounded-xl border border-indigo-100 bg-indigo-50 px-4 py-4 hover:bg-indigo-100 transition-colors"
+            >
+              <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-indigo-900">Mixed Practice</p>
+                <p className="mt-0.5 text-xs text-indigo-600">Questions from all domains mixed without labels — build recognition speed.</p>
+              </div>
+            </Link>
+          ) : (
+            <Link
+              href="/billing"
+              className="flex items-start gap-3.5 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4 opacity-70"
+            >
+              <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-200 text-slate-400">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-slate-500">Mixed Practice</p>
+                <p className="mt-0.5 text-xs text-slate-400">Questions from all domains mixed without labels — build recognition speed.</p>
+                <span className="mt-1.5 inline-block rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-600">SAT Premium</span>
+              </div>
+            </Link>
+          )}
           <ComingSoonCard
             title="Math Capstones"
             description="Four timed, mixed-domain assessments. Unlock after building skill mastery."
