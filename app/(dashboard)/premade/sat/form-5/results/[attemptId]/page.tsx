@@ -6,11 +6,13 @@ import Link from 'next/link'
 import SATExamTaker from '@/components/premade/SATExamTaker'
 import { satForm5 } from '@/lib/premade-exams/sat/form-5'
 import { loadAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
+import { useEntitlements } from '@/hooks/use-entitlements'
 
 export default function SATForm5ResultsPage() {
   const params = useParams()
   const attemptId = typeof params.attemptId === 'string' ? params.attemptId : ''
   const [attempt, setAttempt] = useState<PremadeAttempt | null | 'loading'>('loading')
+  const { satUpgradeUnlocked } = useEntitlements()
 
   useEffect(() => {
     setAttempt(loadAttempt(attemptId))
@@ -45,5 +47,5 @@ export default function SATForm5ResultsPage() {
     )
   }
 
-  return <SATExamTaker form={satForm5} initialAttempt={attempt} />
+  return <SATExamTaker form={satForm5} initialAttempt={attempt} satUpgradeUnlocked={satUpgradeUnlocked} />
 }
