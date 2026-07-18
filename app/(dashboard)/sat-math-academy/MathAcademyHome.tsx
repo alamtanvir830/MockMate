@@ -232,15 +232,38 @@ export default function MathAcademyHome({ isPremium }: MathAcademyHomeProps) {
       <div>
         <h2 className="mb-4 text-base font-semibold text-slate-800">More Tools</h2>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <ComingSoonCard
-            title="Desmos Mastery Lessons"
-            description="Step-by-step lessons on using the SAT graphing calculator effectively."
-            icon={
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
-              </svg>
-            }
-          />
+            {isPremium ? (
+            <Link
+              href="/sat-math-academy/desmos-mastery"
+              className="flex items-start gap-3.5 rounded-xl border border-indigo-100 bg-indigo-50 px-4 py-4 hover:bg-indigo-100 transition-colors"
+            >
+              <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-indigo-900">Desmos Mastery Lessons</p>
+                <p className="mt-0.5 text-xs text-indigo-600">Step-by-step lessons on using the SAT graphing calculator effectively.</p>
+              </div>
+            </Link>
+          ) : (
+            <Link
+              href="/billing"
+              className="flex items-start gap-3.5 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4 opacity-70"
+            >
+              <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-200 text-slate-400">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-slate-500">Desmos Mastery Lessons</p>
+                <p className="mt-0.5 text-xs text-slate-400">Step-by-step lessons on using the SAT graphing calculator effectively.</p>
+                <span className="mt-1.5 inline-block rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-600">SAT Premium</span>
+              </div>
+            </Link>
+          )}
           {isPremium ? (
             <Link
               href="/sat-math-academy/mixed-practice"
