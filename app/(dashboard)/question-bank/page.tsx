@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { getQBAccess } from '@/lib/question-bank/access'
+import { SAT_PREMIUM_FEATURES } from '@/lib/sat-premium-features'
 import Link from 'next/link'
 import { QuestionBankClient } from './QuestionBankClient'
 
@@ -33,19 +34,14 @@ export default async function QuestionBankPage() {
 
           <div className="px-6 py-5">
             <ul className="space-y-3 mb-6">
-              {[
-                { label: 'SAT Question Bank — 700+ targeted questions', sub: 'Practice every R&W and Math skill with personalized sets built from your weak areas' },
-                { label: 'Personalized Practice Path', sub: 'Automatically targeted to the exact skills you missed on any SAT practice exam' },
-                { label: 'SAT Practice Test Forms 1–5', sub: 'Full-length adaptive SAT practice exams with score feedback' },
-                { label: 'Unlimited lifetime access', sub: 'Retake forms and practice sets anytime — one payment, no subscription' },
-              ].map((f, i) => (
-                <li key={i} className="flex items-start gap-3">
+              {SAT_PREMIUM_FEATURES.map((f) => (
+                <li key={f.id} className="flex items-start gap-3">
                   <svg fill="none" viewBox="0 0 20 20" stroke="currentColor" strokeWidth={2.5} className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5l4 4 7.5-8" />
                   </svg>
                   <div>
-                    <p className="text-[13px] font-medium text-slate-800">{f.label}</p>
-                    <p className="text-[11px] text-slate-500 mt-0.5">{f.sub}</p>
+                    <p className="text-[13px] font-medium text-slate-800">{f.title}</p>
+                    <p className="text-[11px] text-slate-500 mt-0.5">{f.description}</p>
                   </div>
                 </li>
               ))}

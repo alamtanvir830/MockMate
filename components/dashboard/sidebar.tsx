@@ -96,6 +96,15 @@ const navItems: NavItem[] = [
     ),
   },
   {
+    href: '/sat-math-academy',
+    label: 'SAT Math Academy',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4.745 3A23.933 23.933 0 003 12c0 3.183.62 6.22 1.745 9M19.255 3A23.933 23.933 0 0121 12c0 3.183-.62 6.22-1.745 9M8.25 8.885l1.444-.89a.75.75 0 011.105.402l2.402 7.206a.75.75 0 001.104.401l1.445-.889m-8.25.75l.213.09a1.687 1.687 0 002.062-.617l4.45-6.676a1.688 1.688 0 012.062-.618l.213.09" />
+      </svg>
+    ),
+  },
+  {
     href: '/notes',
     label: 'Personal Notes',
     icon: (
@@ -228,10 +237,11 @@ export function Sidebar({ userEmail, userFullName, subscriptionTier = 'free' }: 
           const isActive = exact
             ? pathname === href
             : pathname === href || pathname.startsWith(href + '/')
-          // SAT R&W Academy: active on any nested route
-          const effectiveActive = href === '/sat-rw-academy'
-            ? pathname.startsWith('/sat-rw-academy')
-            : isActive
+          // Academy routes: active on any nested path
+          const effectiveActive =
+            href === '/sat-rw-academy' ? pathname.startsWith('/sat-rw-academy') :
+            href === '/sat-math-academy' ? pathname.startsWith('/sat-math-academy') :
+            isActive
 
           if (collapsed) {
             return (

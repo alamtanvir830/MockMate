@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { SAT_PREMIUM_FEATURES } from '@/lib/sat-premium-features'
 
 interface FeatureItem {
   label: string
@@ -15,13 +16,10 @@ interface UpgradeGateProps {
   compact?: boolean
 }
 
-const DEFAULT_FEATURES: FeatureItem[] = [
-  { label: 'SAT Practice Test Forms 1, 2, 3, 4, and 5', subtext: 'Full-length adaptive SAT practice exams with score feedback' },
-  { label: 'Complete SAT R&W Academy', subtext: '7-phase R&W curriculum with 11 skill lessons, drills, vocabulary, and timed capstones' },
-  { label: 'Unlimited lifetime usage', subtext: 'Retake available SAT forms and academy content anytime after upgrading' },
-  { label: 'SAT Question Bank access', subtext: '700+ targeted practice questions built from your weak areas' },
-  { label: 'Personalized score reports', subtext: 'Review strengths, weaknesses, and recommended practice' },
-]
+const DEFAULT_FEATURES: FeatureItem[] = SAT_PREMIUM_FEATURES.map(f => ({
+  label: f.title,
+  subtext: f.description,
+}))
 
 export function UpgradeGate({
   title = 'Unlock Lifetime SAT Access',

@@ -5,6 +5,7 @@ import { MobileHeader } from '@/components/dashboard/mobile-header'
 import { SyncSatAttempts } from '@/components/premade/SyncSatAttempts'
 import { SyncQBHistory } from '@/components/question-bank/SyncQBHistory'
 import { AcademySidebarSlot } from '@/components/dashboard/AcademySidebarSlot'
+import { MathAcademySidebarSlot } from '@/components/dashboard/MathAcademySidebarSlot'
 
 const ADMIN_EMAIL = 'ranvi.contact@gmail.com'
 
@@ -29,6 +30,7 @@ export default async function DashboardLayout({
     <div className="flex h-screen bg-slate-50 overflow-hidden">
       <Sidebar userEmail={user.email} userFullName={fullName} />
       <AcademySidebarSlot isPremium={isPremium} />
+      <MathAcademySidebarSlot isPremium={isPremium} />
       <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
         <MobileHeader />
         <main className="flex-1 overflow-y-auto">
