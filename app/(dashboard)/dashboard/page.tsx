@@ -349,7 +349,7 @@ export default async function DashboardPage() {
               {satForm1State.tag === 'expired' && (
                 <>
                   <p className="mt-1 text-xs text-red-500 font-medium">Free SAT Form 1 access expired</p>
-                  <p className="mt-1 text-xs text-slate-400">Get unlimited access to all SAT forms and 500+ Question Bank questions.</p>
+                  <p className="mt-1 text-xs text-slate-400">Get SAT Premium for unlimited access to all SAT forms and the 700+ question SAT Premium Question Bank.</p>
                 </>
               )}
               <p className="mt-2 text-xs text-slate-400">Adaptive · Full length · 98 questions · 2 hr 14 min</p>

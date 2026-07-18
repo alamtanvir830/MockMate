@@ -2333,25 +2333,44 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
 
         {/* 4. Personalized Practice Path card */}
         {attemptIdRef.current && (
-          <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-xl p-5 flex items-center justify-between gap-4">
+          <div className={cn(
+            'rounded-xl p-5 flex items-center justify-between gap-4',
+            satUpgradeUnlocked || isAdmin
+              ? 'bg-gradient-to-r from-indigo-600 to-indigo-700'
+              : 'bg-gradient-to-r from-slate-700 to-slate-800'
+          )}>
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4 text-indigo-200">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
                 </svg>
-                <span className="text-[10px] font-bold text-indigo-200 uppercase tracking-widest">Question Bank</span>
+                <span className="text-[10px] font-bold text-indigo-200 uppercase tracking-widest">SAT Premium Question Bank</span>
+                {!(satUpgradeUnlocked || isAdmin) && (
+                  <span className="text-[10px] font-bold text-amber-300 bg-amber-800/40 border border-amber-500/40 px-1.5 py-0.5 rounded-full uppercase tracking-widest">
+                    Premium
+                  </span>
+                )}
               </div>
-              <p className="text-white font-bold text-[15px] mb-0.5">Go to Personalized Practice Path</p>
+              <p className="text-white font-bold text-[15px] mb-0.5">Personalized Practice Path</p>
               <p className="text-indigo-200 text-[12px]">
                 4 targeted sets built from your weakest domains in this exam.
               </p>
             </div>
-            <Link
-              href={`/question-bank/sat/personalized/${attemptIdRef.current}`}
-              className="shrink-0 bg-white text-indigo-700 font-semibold text-[13px] px-4 py-2.5 rounded-lg hover:bg-indigo-50 transition-colors whitespace-nowrap"
-            >
-              Start practicing →
-            </Link>
+            {satUpgradeUnlocked || isAdmin ? (
+              <Link
+                href={`/question-bank/sat/personalized/${attemptIdRef.current}`}
+                className="shrink-0 bg-white text-indigo-700 font-semibold text-[13px] px-4 py-2.5 rounded-lg hover:bg-indigo-50 transition-colors whitespace-nowrap"
+              >
+                Start practicing →
+              </Link>
+            ) : (
+              <Link
+                href="/billing"
+                className="shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-semibold text-[13px] px-4 py-2.5 rounded-lg transition-colors whitespace-nowrap"
+              >
+                Get SAT Premium →
+              </Link>
+            )}
           </div>
         )}
 
