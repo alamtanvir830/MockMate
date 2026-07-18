@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { SAT_FORM_1_FREE_ACCESS_MS } from '@/lib/premade-exams/sat/form1-access'
 
 // POST /api/admin/backfill-sat-form-1-access
 // Header: Authorization: Bearer <SUPABASE_SERVICE_ROLE_KEY>
 //
 // Inserts a sat_form_1_access row for every auth user that doesn't already have one.
-// New rows get 3 days from the current time (they'll be fine-tuned on first dashboard visit).
+// New rows get 48 hours from the current time (they'll be fine-tuned on first dashboard visit).
 export async function POST(req: NextRequest) {
   const token = (req.headers.get('authorization') ?? '').replace('Bearer ', '').trim()
   if (!token || token !== process.env.SUPABASE_SERVICE_ROLE_KEY) {
@@ -13,9 +14,8 @@ export async function POST(req: NextRequest) {
   }
 
   const supabase = createAdminClient()
-  const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000
   const now = Date.now()
-  const accessExpiresAt = new Date(now + THREE_DAYS_MS).toISOString()
+  const accessExpiresAt = new Date(now + SAT_FORM_1_FREE_ACCESS_MS).toISOString()
   const accessStartedAt = new Date(now).toISOString()
 
   const { data: existingRows, error: existingErr } = await supabase
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
           email: u.email ?? null,
           access_started_at: accessStartedAt,
           access_expires_at: accessExpiresAt,
-          reason: 'backfill_3_day_window',
+          reason: 'backfill_48h_window',
         })
       }
     }

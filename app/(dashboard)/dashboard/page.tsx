@@ -102,7 +102,7 @@ export default async function DashboardPage() {
     } else if (satUpgradeUnlocked) {
       satForm1State = { tag: 'upgraded' }
     } else {
-      // For free users: create/update the 3-day access row on dashboard visit
+      // For free users: create/update the 48-hour access row on first dashboard visit
       const [completedResult, access] = await Promise.all([
         supabase
           .from('standardized_exam_attempts')

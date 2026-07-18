@@ -1,6 +1,9 @@
 import type { SupabaseClient, User } from '@supabase/supabase-js'
 
-const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000
+// Single source of truth for the SAT Form 1 free-access window.
+// All calculations derive from this constant — do not duplicate it elsewhere.
+export const SAT_FORM_1_FREE_ACCESS_HOURS = 48
+export const SAT_FORM_1_FREE_ACCESS_MS = SAT_FORM_1_FREE_ACCESS_HOURS * 60 * 60 * 1000
 
 export interface Form1AccessRow {
   user_id: string
@@ -14,7 +17,7 @@ export function isForm1Expired(access: Pick<Form1AccessRow, 'access_expires_at'>
   return new Date(access.access_expires_at) <= new Date()
 }
 
-// Returns a detailed countdown string, e.g. "2 days and 14 hours", "5 hours", "less than 1 hour"
+// Returns a detailed countdown string, e.g. "47 hours and 59 minutes", "5 hours", "less than 1 hour"
 export function formatCountdown(access: Pick<Form1AccessRow, 'access_expires_at'>): string {
   const msLeft = new Date(access.access_expires_at).getTime() - Date.now()
   if (msLeft <= 0) return 'expired'
@@ -33,10 +36,10 @@ export function formatCountdown(access: Pick<Form1AccessRow, 'access_expires_at'
 // Gets the access row for a user, creating or reducing it as needed.
 //
 // Rules:
-// - No row → create with access_started_at = now, access_expires_at = now + 3 days
+// - No row → create with access_started_at = now, access_expires_at = now + 48 hours
 // - Row exists, already expired → return as-is (do not extend)
-// - Row exists, expires_at <= now + 3 days → return as-is (within window, do not shorten further)
-// - Row exists, expires_at > now + 3 days → reduce to now + 3 days
+// - Row exists, expires_at <= now + 48 hours → return as-is (within window, do not shorten further)
+// - Row exists, expires_at > now + 48 hours → reduce to now + 48 hours
 //
 // Uses the user's own Supabase client (respects RLS).
 export async function getOrCreateForm1Access(
@@ -50,33 +53,33 @@ export async function getOrCreateForm1Access(
     .maybeSingle()
 
   const now = Date.now()
-  const threeFromNow = new Date(now + THREE_DAYS_MS).toISOString()
+  const fortyEightFromNow = new Date(now + SAT_FORM_1_FREE_ACCESS_MS).toISOString()
 
   if (existing) {
     const row = existing as Form1AccessRow
     const expiresTs = new Date(row.access_expires_at).getTime()
 
-    // Expired or already within the 3-day window → leave untouched
-    if (expiresTs <= now || expiresTs <= now + THREE_DAYS_MS) {
+    // Expired or already within the 48-hour window → leave untouched
+    if (expiresTs <= now || expiresTs <= now + SAT_FORM_1_FREE_ACCESS_MS) {
       return row
     }
 
-    // More than 3 days remaining → reduce to now + 3 days
+    // More than 48 hours remaining → reduce to now + 48 hours
     await supabase
       .from('sat_form_1_access')
-      .update({ access_expires_at: threeFromNow, reason: 'reduced_to_3_day_window' })
+      .update({ access_expires_at: fortyEightFromNow, reason: 'reduced_to_48h_window' })
       .eq('user_id', user.id)
 
-    return { ...row, access_expires_at: threeFromNow, reason: 'reduced_to_3_day_window' }
+    return { ...row, access_expires_at: fortyEightFromNow, reason: 'reduced_to_48h_window' }
   }
 
-  // No row yet — first dashboard view: start the 3-day clock now
+  // No row yet — first dashboard visit: start the 48-hour clock now
   const newRow: Form1AccessRow = {
     user_id: user.id,
     email: user.email ?? null,
     access_started_at: new Date(now).toISOString(),
-    access_expires_at: threeFromNow,
-    reason: 'dashboard_first_seen_3_day_window',
+    access_expires_at: fortyEightFromNow,
+    reason: 'dashboard_first_seen_48h_window',
   }
 
   // ignoreDuplicates guards against a rare race where two requests arrive simultaneously
