@@ -34,7 +34,13 @@ export async function GET() {
 
     const rows = (attempts ?? []) as AttemptRow[]
 
-    const capstones = [1, 2].map(num => {
+    const MATH_CAPSTONE_AVAILABLE: Record<number, boolean> = {
+      1: true,
+      2: true,
+      3: false, // content pending
+    }
+
+    const capstones = [1, 2, 3].map(num => {
       const capPrefix = `mc${num}-`
       const m2Prefix = `mc${num}-m2-`
       const all = rows.filter(r => r.question_id.startsWith(capPrefix) && r.practice_mode === 'capstone')
@@ -75,7 +81,7 @@ export async function GET() {
       return {
         capstoneId: `math-capstone-${num}`,
         number: num,
-        available: true,
+        available: MATH_CAPSTONE_AVAILABLE[num] ?? false,
         completed,
         accuracy,
         correctCount,
