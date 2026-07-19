@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { StimulusRenderer } from '@/components/exam/StimulusRenderer'
 import { SATGraph } from '@/components/exam/SATGraph'
+import SatCalculatorPanel from '@/components/exam/calculator/SatCalculatorPanel'
 import type {
   SATForm,
   SATModule,
@@ -1150,6 +1151,13 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     return () => window.removeEventListener('keydown', handler)
   }, [phase, handleNext, handleBack, calcOpen, refOpen])
 
+  // Close calculator when leaving Math question phase
+  useEffect(() => {
+    if (phase.tag !== 'question' || phase.section !== 'math') {
+      setCalcOpen(false)
+    }
+  }, [phase])
+
   // ── Answers & bookmarks ────────────────────────────────────────────────────
   const setAnswer = useCallback((qId: string, value: string) => {
     setAnswers(prev => ({ ...prev, [qId]: value }))
@@ -1613,9 +1621,9 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
 
     return (
       <ExamWrapper>
-        {calcOpen && <CalculatorModal onClose={() => setCalcOpen(false)} />}
         {refOpen && <ReferenceModal onClose={() => setRefOpen(false)} />}
-        <div className="flex flex-col h-full">
+        <div className="flex flex-1 min-h-0 overflow-hidden">
+          <div className="flex flex-col flex-1 min-w-0">
           <NavBar
             canGoBack={phase.qIdx > 0}
             onBack={handleBack}
@@ -1627,7 +1635,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
             isBookmarked={bookmarked}
             onBookmark={() => toggleBookmark(q.id)}
             showMathTools={phase.section === 'math'}
-            onCalc={() => setCalcOpen(true)}
+            onCalc={() => setCalcOpen(c => !c)}
             onRef={() => setRefOpen(true)}
           />
 
@@ -1758,7 +1766,15 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
               })}
             </div>
           </div>
-        </div>
+          </div>{/* end flex-col question area */}
+          {phase.section === 'math' && (
+            <SatCalculatorPanel
+              open={calcOpen}
+              onClose={() => setCalcOpen(false)}
+              moduleKey={`${phase.section}-${phase.slot}`}
+            />
+          )}
+        </div>{/* end flex row */}
       </ExamWrapper>
     )
   }
