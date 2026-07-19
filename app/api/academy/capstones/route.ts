@@ -7,11 +7,10 @@ function isPremiumUser(user: { email?: string | null; user_metadata?: Record<str
   return user.email === ADMIN_EMAIL || user.user_metadata?.sat_upgrade_unlocked === true
 }
 
-// capstone-3 has no questions yet
 const CAPSTONE_AVAILABLE: Record<string, boolean> = {
   'capstone-1': true,
   'capstone-2': true,
-  'capstone-3': false,
+  'capstone-3': true,
 }
 
 export async function GET() {

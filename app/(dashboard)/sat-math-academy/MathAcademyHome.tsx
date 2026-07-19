@@ -123,24 +123,6 @@ function UpgradeBanner() {
   )
 }
 
-// ── Coming-soon card ───────────────────────────────────────────────────────────
-
-function ComingSoonCard({ title, description, icon }: { title: string; description: string; icon: React.ReactNode }) {
-  return (
-    <div className="flex items-start gap-3.5 rounded-xl border border-slate-100 bg-slate-50 px-4 py-4">
-      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-slate-200 text-slate-400">
-        {icon}
-      </div>
-      <div>
-        <p className="text-sm font-semibold text-slate-500">{title}</p>
-        <p className="mt-0.5 text-xs text-slate-400">{description}</p>
-        <span className="mt-1.5 inline-block rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-medium text-slate-400">
-          Coming soon
-        </span>
-      </div>
-    </div>
-  )
-}
 
 // ── Main component ─────────────────────────────────────────────────────────────
 
