@@ -69,16 +69,28 @@ export default function LandingPage() {
                 </h1>
 
                 <p className="mt-6 text-base sm:text-lg text-slate-500 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                  Take realistic SAT, MCAT, and SHSAT-style practice exams with high-quality questions reviewed by students, former test takers, and high scorers.
+                  Take realistic SAT-style practice exams and targeted practice with high-quality questions reviewed by students, former test takers, and high scorers.
                 </p>
 
-                {/* Pricing value line */}
-                <p className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-4 py-1.5">
-                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  SAT Premium is a fraction of the cost of major test prep — up to 96% cheaper.
-                </p>
+                {/* SAT Premium value block */}
+                <div className="mt-5 rounded-2xl border border-emerald-100 bg-emerald-50 px-5 py-4 max-w-xl mx-auto lg:mx-0">
+                  <p className="flex items-center gap-2 text-sm font-semibold text-emerald-700 mb-3">
+                    <svg className="h-4 w-4 shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                    </svg>
+                    SAT Premium is 96% cheaper than major test prep companies
+                  </p>
+                  <ul className="space-y-1.5">
+                    {satPremiumFeatures.map((f) => (
+                      <li key={f} className="flex items-center gap-2 text-sm text-emerald-800">
+                        <svg className="h-3.5 w-3.5 shrink-0 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
                 <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
                   <Link href="/signup">
@@ -265,6 +277,15 @@ export default function LandingPage() {
   )
 }
 
+const satPremiumFeatures = [
+  '5 full-length adaptive SAT exams',
+  '700+ question bank',
+  'SAT Reading and Writing Academy',
+  'SAT Math & Desmos Academy',
+  'Personalized score reports',
+  'Unlimited use',
+]
+
 const badges = [
   {
     label: '700+ SAT Question Bank',
@@ -350,12 +371,22 @@ const features = [
     ),
   },
   {
-    title: 'MCAT & SHSAT prep',
+    title: 'SAT Reading & Writing Academy',
     description:
-      'Beyond SAT: practice full-length MCAT-style exams and SHSAT-style problems — all under one roof without switching platforms.',
+      'A structured learning path through all 11 SAT R&W skills — vocabulary, grammar, rhetoric, and more — with trainers, milestones, and a capstone exam.',
     icon: (
       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+      </svg>
+    ),
+  },
+  {
+    title: 'SAT Math & Desmos Academy',
+    description:
+      'Master every SAT Math skill — from algebra to advanced functions — with guided lessons, Desmos tool training, and adaptive practice sets.',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008zm0 2.25h.008v.008H8.25V13.5zm0 2.25h.008v.008H8.25v-.008zm0 2.25h.008v.008H8.25V18zm2.498-6.75h.007v.008h-.007v-.008zm0 2.25h.007v.008h-.007V13.5zm0 2.25h.007v.008h-.007v-.008zm0 2.25h.007v.008h-.007V18zm2.504-6.75h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V13.5zm0 2.25h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V18zm2.498-6.75h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V13.5zM8.25 6h7.5v2.25h-7.5V6zM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 002.25 2.25h10.5a2.25 2.25 0 002.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0012 2.25z" />
       </svg>
     ),
   },
@@ -392,8 +423,8 @@ const steps = [
   },
   {
     number: '4',
-    title: 'Drill your weak areas',
+    title: 'Strengthen your weak areas',
     description:
-      'Use the 700+ question Q-Bank to target exactly the skills and domains where you lost the most points.',
+      'Target the skills holding back your score with the 700+ question Q-Bank, the SAT Reading & Writing Academy, and the SAT Math & Desmos Academy — all in one place.',
   },
 ]
