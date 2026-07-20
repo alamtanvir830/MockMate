@@ -24,7 +24,7 @@ const DEFAULT_FEATURES: FeatureItem[] = SAT_PREMIUM_FEATURES.map(f => ({
 
 export function UpgradeGate({
   title = 'Get SAT Premium',
-  description = 'Subscribe to unlock SAT Forms 1–5, the 700+ question bank, and both SAT Academies for $10/month.',
+  description = 'Subscribe to unlock SAT Forms 1–5, the 700+ question bank, and both SAT Academies for $9.99/month.',
   features = DEFAULT_FEATURES,
   compact = false,
 }: UpgradeGateProps) {

@@ -42,6 +42,33 @@ export async function POST(_req: NextRequest) {
 
     const stripe = getStripe()
 
+    // ── 5b. Validate the Stripe Price matches expected config ──────────────
+    // Prevents charging $10 while displaying $9.99 if the env var points to
+    // a mis-configured price. Only the amount and recurrence are checked here;
+    // the price ID itself comes exclusively from the server-side env var.
+    try {
+      const price = await stripe.prices.retrieve(priceId)
+      const EXPECTED_CENTS = 999
+      if (
+        price.unit_amount !== EXPECTED_CENTS ||
+        price.currency !== 'usd' ||
+        price.type !== 'recurring' ||
+        price.recurring?.interval !== 'month'
+      ) {
+        console.error(
+          '[checkout] STRIPE_SAT_PREMIUM_MONTHLY_PRICE_ID price mismatch',
+          { unit_amount: price.unit_amount, currency: price.currency, type: price.type, interval: price.recurring?.interval }
+        )
+        return Response.json(
+          { error: 'Subscription pricing configuration error. Please contact support.' },
+          { status: 500 }
+        )
+      }
+    } catch (priceErr) {
+      console.error('[checkout] failed to retrieve Stripe price for validation', priceErr)
+      return Response.json({ error: 'Unable to verify subscription pricing. Please try again.' }, { status: 500 })
+    }
+
     // ── 6. Get or create the Stripe Customer ──────────────────────────────
     let stripeCustomerId = meta.stripe_customer_id as string | undefined
 
