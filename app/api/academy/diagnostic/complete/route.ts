@@ -4,11 +4,7 @@ import { resolveUserIdentity } from '@/lib/supabase/resolve-user-identity'
 import { getDiagnosticRegistry, DIAGNOSTIC_VERSION } from '@/lib/academy/diagnostic-questions'
 import { SKILL_DISPLAY_NAMES, ACADEMY_SKILL_SLUGS } from '@/lib/academy/skill-mapping'
 import { allSkills } from '@/lib/academy'
-
-const ADMIN_EMAIL = 'ranvi.contact@gmail.com'
-function isPremiumUser(user: { email?: string | null; user_metadata?: Record<string, unknown> }): boolean {
-  return user.email === ADMIN_EMAIL || user.user_metadata?.sat_upgrade_unlocked === true
-}
+import { hasSatPremium } from '@/lib/auth/server'
 
 interface ResponseItem {
   questionId: string
@@ -76,7 +72,7 @@ export async function POST(req: NextRequest) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
-    if (!isPremiumUser(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
+    if (!hasSatPremium(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
 
     const body = await req.json() as { responses: ResponseItem[]; clientToken?: string }
     const { responses, clientToken } = body

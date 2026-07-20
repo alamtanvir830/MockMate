@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { isMockMateAdmin } from '@/lib/auth/admin'
+import { hasSatPremium } from '@/lib/auth/server'
 
 const SAT_FORM_NUMBERS = [1, 2, 3, 4, 5] as const
 
@@ -39,8 +39,7 @@ export async function GET() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
 
-    const isAdmin = isMockMateAdmin(user)
-    const satPremium = isAdmin || user.user_metadata?.sat_upgrade_unlocked === true
+    const satPremium = hasSatPremium(user)
 
     // Fetch all completed SAT form attempts for this user
     const [attemptsResult, masteryResult] = await Promise.all([
@@ -73,7 +72,7 @@ export async function GET() {
       const latest = formRows[0] ?? null
 
       // Form 1 is accessible to all (free window or premium); Forms 2-5 require premium
-      const accessible = isAdmin || satPremium || formNumber === 1
+      const accessible = satPremium || formNumber === 1
 
       return {
         formNumber,

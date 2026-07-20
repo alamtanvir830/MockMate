@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-
-const ADMIN_EMAIL = 'ranvi.contact@gmail.com'
-function isPremiumUser(user: { email?: string | null; user_metadata?: Record<string, unknown> }): boolean {
-  return user.email === ADMIN_EMAIL || user.user_metadata?.sat_upgrade_unlocked === true
-}
+import { hasSatPremium } from '@/lib/auth/server'
 
 interface ReviewResultBody {
   queueItemId: string
@@ -25,7 +21,7 @@ export async function GET() {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
-    if (!isPremiumUser(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
+    if (!hasSatPremium(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
 
     const { data, error, count } = await supabase
       .from('sat_rw_review_queue')
@@ -60,7 +56,7 @@ export async function POST(req: NextRequest) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
-    if (!isPremiumUser(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
+    if (!hasSatPremium(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
 
     const body = await req.json() as ReviewResultBody
 

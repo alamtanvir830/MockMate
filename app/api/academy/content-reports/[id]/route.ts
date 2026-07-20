@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
-import { resolveUserIdentity } from '@/lib/supabase/resolve-user-identity'
 import { createClient as createServiceClient } from '@supabase/supabase-js'
-
-const ADMIN_EMAIL = 'ranvi.contact@gmail.com'
+import { isAdminUser } from '@/lib/auth/server'
 
 const VALID_STATUSES = ['open', 'reviewing', 'confirmed', 'corrected', 'rejected', 'archived']
 
@@ -17,8 +15,7 @@ export async function PATCH(
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
 
-    const { user_email } = await resolveUserIdentity(supabase, user)
-    if (user_email !== ADMIN_EMAIL) {
+    if (!isAdminUser(user)) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 

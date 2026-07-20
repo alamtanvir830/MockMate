@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { getStripe } from '@/lib/stripe/client'
+import { hasSatPremium } from '@/lib/auth/server'
 
 export async function POST(req: NextRequest) {
   try {
@@ -11,7 +12,7 @@ export async function POST(req: NextRequest) {
       return Response.json({ error: 'You must be logged in to purchase.' }, { status: 401 })
     }
 
-    if (user.user_metadata?.sat_upgrade_unlocked === true) {
+    if (hasSatPremium(user)) {
       return Response.json({ error: 'You already have the SAT Upgrade.' }, { status: 400 })
     }
 

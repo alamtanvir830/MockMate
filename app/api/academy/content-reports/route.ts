@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { resolveUserIdentity } from '@/lib/supabase/resolve-user-identity'
-
-const ADMIN_EMAIL = 'ranvi.contact@gmail.com'
+import { isAdminUser } from '@/lib/auth/server'
 
 const VALID_ISSUE_CATEGORIES = [
   'wrong_answer', 'unclear_wording', 'explanation_problem',
@@ -67,8 +66,7 @@ export async function GET(req: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
 
-    const { user_email } = await resolveUserIdentity(supabase, user)
-    const isAdmin = user_email === ADMIN_EMAIL
+    const isAdmin = isAdminUser(user)
 
     const url = new URL(req.url)
     const page = Math.max(1, parseInt(url.searchParams.get('page') ?? '1'))
