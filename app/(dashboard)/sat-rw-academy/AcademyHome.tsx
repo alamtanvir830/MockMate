@@ -82,7 +82,7 @@ type PathItemStatus =
   | 'completed'
   | 'coming_soon'
 
-type PathItemType = 'skill' | 'capstone' | 'capstone_review' | 'mastery' | 'full_exam'
+type PathItemType = 'skill' | 'trainer' | 'capstone' | 'capstone_review' | 'mastery' | 'full_exam'
 
 interface PathItem {
   id: string
@@ -101,6 +101,7 @@ interface PathItem {
   actionHref: string
   actionEnabled: boolean
   isModal?: boolean
+  premiumLocked?: boolean      // true → free preview; renders amber upgrade link
   // skill-specific
   diagnosticPct?: number | null
   diagnosticScore?: string | null
@@ -128,6 +129,143 @@ const DIAGNOSTIC_STORAGE_KEY = 'sat_rw_diagnostic_progress'
 const CAPSTONE_BADGE_CLASS = 'bg-blue-50 text-blue-600 border-blue-200'
 const MASTERY_BADGE_CLASS = 'bg-rose-50 text-rose-500 border-rose-200'
 const FULL_SAT_BADGE_CLASS = 'bg-indigo-50 text-indigo-600 border-indigo-200'
+const TRAINER_BADGE_CLASS = 'bg-emerald-50 text-emerald-700 border-emerald-200'
+
+const PREMIUM_LOCKED: Pick<PathItem, 'status' | 'statusLabel' | 'statusBadgeClass'> = {
+  status: 'locked',
+  statusLabel: 'SAT Premium Required',
+  statusBadgeClass: 'bg-amber-50 text-amber-700 border-amber-200',
+}
+
+const RW_TRAINERS_META = [
+  { id: 'vocabulary', title: 'Vocabulary Trainer', description: 'Build vocabulary-in-context skills using targeted practice and spaced review.' },
+  { id: 'transitions', title: 'Transition Trainer', description: 'Master transition word categories and their precise meanings in context.' },
+  { id: 'reading-speed', title: 'Reading Speed', description: 'Build active reading speed and comprehension across different passage types.' },
+  { id: 'review-queue', title: 'Review Queue', description: 'Revisit questions you answered incorrectly using spaced repetition.' },
+  { id: 'mixed-practice', title: 'Mixed Practice', description: 'Test yourself across multiple skills in a single adaptive practice session.' },
+]
+
+// ── buildFreePreviewItems ──────────────────────────────────────────────────────
+// Returns the full R&W curriculum in locked "SAT Premium Required" state for
+// authenticated free users. Uses default Writing-first ordering (no diagnostic).
+
+function buildFreePreviewItems(): PathItem[] {
+  const defaultSlugs = [...WRITING_SLUGS, ...READING_SLUGS]
+
+  const skillItems: PathItem[] = defaultSlugs.map((slug, i) => {
+    const name = SKILL_DISPLAY_NAMES[slug] ?? slug
+    const section = SKILL_SECTION[slug as keyof typeof SKILL_SECTION] ?? null
+    return {
+      id: `skill-${slug}`,
+      type: 'skill',
+      rowNum: i + 1,
+      title: name,
+      description: 'Unlock SAT Premium to access this lesson and build mastery with targeted drills.',
+      category: section === 'reading' ? 'Reading' : section === 'writing' ? 'Writing' : '',
+      categoryBadgeClass: section === 'reading'
+        ? 'bg-purple-50 text-purple-600 border-purple-200'
+        : 'bg-yellow-50 text-yellow-700 border-yellow-200',
+      ...PREMIUM_LOCKED,
+      actionLabel: 'Get SAT Premium',
+      actionHref: '/billing',
+      actionEnabled: true,
+      premiumLocked: true,
+      diagnosticPct: null,
+      diagnosticScore: null,
+    }
+  })
+
+  const trainerItems: PathItem[] = RW_TRAINERS_META.map(t => ({
+    id: `trainer-${t.id}`,
+    type: 'trainer' as const,
+    rowNum: 0,
+    title: t.title,
+    description: t.description,
+    category: 'Trainer',
+    categoryBadgeClass: TRAINER_BADGE_CLASS,
+    ...PREMIUM_LOCKED,
+    actionLabel: 'Get SAT Premium',
+    actionHref: '/billing',
+    actionEnabled: true,
+    premiumLocked: true,
+  }))
+
+  const base = defaultSlugs.length
+
+  const milestoneItems: PathItem[] = [
+    {
+      id: 'capstone-1', type: 'capstone', rowNum: base + 1,
+      title: 'R&W Academy Capstone 1',
+      description: 'Complete a full mixed Reading and Writing assessment covering all 11 academy skills.',
+      details: '54 questions • 2 timed modules • All 11 R&W skills',
+      category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+      ...PREMIUM_LOCKED,
+      actionLabel: 'Get SAT Premium', actionHref: '/billing', actionEnabled: true, premiumLocked: true,
+    },
+    {
+      id: 'capstone-1-review', type: 'capstone_review', rowNum: base + 2,
+      title: 'Capstone 1 Review',
+      description: 'Address your weak areas from Capstone 1 before moving to Capstone 2.',
+      category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+      ...PREMIUM_LOCKED,
+      actionLabel: 'Get SAT Premium', actionHref: '/billing', actionEnabled: true, premiumLocked: true,
+    },
+    {
+      id: 'capstone-2', type: 'capstone', rowNum: base + 3,
+      title: 'R&W Academy Capstone 2',
+      description: 'Apply your revised strategies in a second full assessment and measure improvement across all 11 skills.',
+      details: '54 new questions • 2 timed modules • All 11 R&W skills',
+      category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+      ...PREMIUM_LOCKED,
+      actionLabel: 'Get SAT Premium', actionHref: '/billing', actionEnabled: true, premiumLocked: true,
+    },
+    {
+      id: 'capstone-2-review', type: 'capstone_review', rowNum: base + 4,
+      title: 'Capstone 2 Review',
+      description: 'Address remaining weak areas from Capstone 2 before your final capstone.',
+      category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+      ...PREMIUM_LOCKED,
+      actionLabel: 'Get SAT Premium', actionHref: '/billing', actionEnabled: true, premiumLocked: true,
+    },
+    {
+      id: 'capstone-3', type: 'capstone', rowNum: base + 5,
+      title: 'R&W Academy Capstone 3',
+      description: 'Complete the final full academy capstone and demonstrate consistent performance under timed conditions.',
+      details: '54 new questions • 2 timed modules • All 11 R&W skills',
+      category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+      ...PREMIUM_LOCKED,
+      actionLabel: 'Get SAT Premium', actionHref: '/billing', actionEnabled: true, premiumLocked: true,
+    },
+    {
+      id: 'capstone-3-review', type: 'capstone_review', rowNum: base + 6,
+      title: 'Capstone 3 Review',
+      description: 'Address any persistent weak areas before the Final Mastery Check.',
+      category: 'Capstone', categoryBadgeClass: CAPSTONE_BADGE_CLASS,
+      ...PREMIUM_LOCKED,
+      actionLabel: 'Get SAT Premium', actionHref: '/billing', actionEnabled: true, premiumLocked: true,
+    },
+    {
+      id: 'mastery-check', type: 'mastery', rowNum: base + 7,
+      title: 'Final R&W Mastery Check',
+      description: 'Measure how your Reading and Writing performance changed since the original diagnostic using a new set of questions.',
+      details: '22 questions • All 11 skills • Compares to your diagnostic',
+      category: 'Mastery', categoryBadgeClass: MASTERY_BADGE_CLASS,
+      ...PREMIUM_LOCKED,
+      actionLabel: 'Get SAT Premium', actionHref: '/billing', actionEnabled: true, premiumLocked: true,
+    },
+    {
+      id: 'sat-full-exam', type: 'full_exam', rowNum: base + 8,
+      title: 'Take a Full-Length SAT Exam',
+      description: 'Apply your Reading and Writing progress in a full-length computer-adaptive SAT-style exam that also includes Math.',
+      details: 'Choose SAT Forms 1–5 · Reading and Writing + Math · MockMate estimated SAT score',
+      category: 'Full SAT Exam', categoryBadgeClass: FULL_SAT_BADGE_CLASS,
+      ...PREMIUM_LOCKED,
+      actionLabel: 'Get SAT Premium', actionHref: '/billing', actionEnabled: true, premiumLocked: true,
+    },
+  ]
+
+  return [...skillItems, ...trainerItems, ...milestoneItems]
+}
 
 // ── computeNextStep ────────────────────────────────────────────────────────────
 
@@ -634,17 +772,46 @@ function PathItemRow({
 }) {
   const isLocked = item.status === 'locked' || item.status === 'coming_soon'
 
+  if (item.type === 'trainer') {
+    return (
+      <div className="rounded-lg border border-slate-100 bg-slate-50 px-4 py-3">
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex-1 min-w-[8rem]">
+            <p className="text-sm font-semibold text-slate-500">{item.title}</p>
+            <p className="text-[12px] text-slate-400 mt-0.5 leading-snug">{item.description}</p>
+          </div>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <span className={cn('text-[11px] font-semibold px-2 py-0.5 rounded-full border', item.statusBadgeClass)}>
+              {item.statusLabel}
+            </span>
+            <span className={cn('text-[11px] font-medium px-2 py-0.5 rounded-full border', item.categoryBadgeClass)}>
+              {item.category}
+            </span>
+          </div>
+          <Link href="/billing" className="shrink-0 text-xs font-semibold text-amber-600 hover:text-amber-800 whitespace-nowrap">
+            {item.actionLabel} →
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
   if (item.type === 'skill') {
     return (
-      <div className="flex items-center gap-3 flex-wrap rounded-lg border border-slate-200 bg-white px-4 py-3">
+      <div className={cn(
+        'flex items-center gap-3 flex-wrap rounded-lg border px-4 py-3',
+        item.premiumLocked ? 'border-slate-100 bg-slate-50' : 'border-slate-200 bg-white',
+      )}>
         <span className="text-xs font-bold text-slate-300 w-4 shrink-0">{item.rowNum}</span>
         <div className="flex-1 min-w-[8rem]">
-          <p className="text-sm font-semibold text-slate-900 truncate">{item.title}</p>
-          {item.diagnosticPct !== null && item.diagnosticPct !== undefined && (
+          <p className={cn('text-sm font-semibold truncate', item.premiumLocked ? 'text-slate-500' : 'text-slate-900')}>{item.title}</p>
+          {item.premiumLocked ? (
+            <p className="text-[11px] text-slate-400 mt-0.5">Not Assessed</p>
+          ) : item.diagnosticPct !== null && item.diagnosticPct !== undefined ? (
             <p className="text-[11px] text-slate-400 mt-0.5">
               Diagnostic: {item.diagnosticPct}% ({item.diagnosticScore})
             </p>
-          )}
+          ) : null}
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
           <span className={cn('text-[11px] font-semibold px-2 py-0.5 rounded-full border', item.statusBadgeClass)}>
@@ -656,12 +823,18 @@ function PathItemRow({
             </span>
           )}
         </div>
-        <Link
-          href={item.actionHref}
-          className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
-        >
-          {item.actionLabel} →
-        </Link>
+        {item.premiumLocked ? (
+          <Link href="/billing" className="shrink-0 text-xs font-semibold text-amber-600 hover:text-amber-800 whitespace-nowrap">
+            {item.actionLabel} →
+          </Link>
+        ) : (
+          <Link
+            href={item.actionHref}
+            className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap"
+          >
+            {item.actionLabel} →
+          </Link>
+        )}
       </div>
     )
   }
@@ -713,7 +886,11 @@ function PathItemRow({
             {item.category}
           </span>
         </div>
-        {item.actionEnabled ? (
+        {item.premiumLocked ? (
+          <Link href="/billing" className="shrink-0 text-xs font-semibold text-amber-600 hover:text-amber-800 whitespace-nowrap">
+            {item.actionLabel} →
+          </Link>
+        ) : item.actionEnabled ? (
           onAction ? (
             <button
               onClick={onAction}
@@ -866,9 +1043,14 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
     ? computeNextStep(diagnosticResult, mastery, lessons, capstonesData, satFormsData)
     : null
 
-  // Unified path — always includes all 19 items when diagnostic is complete
-  const pathItems = diagnosticResult && !loading
+  // Unified path — all 19 items when premium + diagnostic complete
+  const pathItems = isPremium && diagnosticResult && !loading
     ? buildPathItems(diagnosticResult, mastery, lessons, capstonesData, satFormsData, nextStep)
+    : null
+
+  // Free preview — full curriculum in locked state (no API data needed)
+  const freePreviewItems = !isPremium && !loading
+    ? buildFreePreviewItems()
     : null
 
   return (
@@ -1066,9 +1248,6 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
               diagnose your baseline, learn Writing rules, build vocabulary, develop Reading strategies,
               practice mixed questions, test under timed conditions, and demonstrate mastery.
             </p>
-            <p className="text-sm text-slate-600 leading-relaxed">
-              You can open any lesson, trainer, or tool directly from the sidebar at any time.
-            </p>
           </div>
 
           {loading && (
@@ -1078,7 +1257,8 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
             </div>
           )}
 
-          {!loading && hasAny && (
+          {/* ── Premium user: progress card ─────────────────────────────── */}
+          {!loading && isPremium && hasAny && (
             <div className="rounded-xl border border-slate-200 bg-white p-5">
               <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Your Academy Progress</p>
               <div className="space-y-4">
@@ -1111,6 +1291,28 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
             </div>
           )}
 
+          {/* ── Free user: Recommended Next Step ────────────────────────── */}
+          {!loading && !isPremium && (
+            <div className="rounded-xl border border-amber-200 bg-amber-50 p-5">
+              <div className="flex items-start justify-between gap-4 flex-wrap">
+                <div className="flex-1 min-w-0">
+                  <p className="text-[11px] font-semibold uppercase tracking-wide text-amber-600 mb-1">Recommended Next Step</p>
+                  <p className="font-semibold text-amber-900 text-sm">Unlock the R&amp;W Diagnostic</p>
+                  <p className="text-xs text-amber-800 mt-1 leading-relaxed">
+                    Complete the diagnostic to personalize all 11 Reading and Writing skills around your weakest areas and receive a recommended learning path.
+                  </p>
+                </div>
+                <Link
+                  href="/billing"
+                  className="shrink-0 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-4 py-2.5 transition-colors whitespace-nowrap"
+                >
+                  Get SAT Premium
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {/* ── Premium user: Diagnostic card ──────────────────────────── */}
           {!loading && isPremium && (
             <div className="rounded-xl border-2 border-emerald-200 bg-white p-5">
               <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -1136,14 +1338,21 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
             </div>
           )}
 
-          {!isPremium && (
+          {/* ── Free user: Locked R&W Diagnostic card ──────────────────── */}
+          {!loading && !isPremium && (
             <div className="rounded-xl border border-slate-200 bg-white p-5">
               <div className="flex items-start justify-between gap-4 flex-wrap">
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-slate-900">R&amp;W Diagnostic</p>
+                  <div className="flex items-center gap-2 mb-1">
+                    <p className="font-semibold text-slate-900">R&amp;W Diagnostic</p>
+                    <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full border bg-amber-50 text-amber-700 border-amber-200">
+                      SAT Premium Required
+                    </span>
+                  </div>
                   <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                    Available with SAT Premium. Identify your baseline across all 11 R&W skills and receive a personalized learning path.
+                    Identify your baseline across all 11 R&W skills and receive a personalized learning path.
                   </p>
+                  <p className="text-[11px] text-slate-400 mt-2">26 original SAT-style questions · All 11 skills · ~20 min</p>
                 </div>
                 <Link
                   href="/billing"
@@ -1152,6 +1361,70 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                   Get SAT Premium
                 </Link>
               </div>
+            </div>
+          )}
+
+          {/* ── Free user: Full locked preview of the learning path ─────── */}
+          {freePreviewItems && freePreviewItems.length > 0 && (
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+                  Your R&amp;W Academy Learning Path
+                </h2>
+                <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-semibold text-slate-500">
+                  Default Order
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 mb-3">
+                Complete the R&W Diagnostic with SAT Premium to personalize the order around your weakest skills.
+              </p>
+
+              <div className="space-y-2">
+                {freePreviewItems.map((item, i) => {
+                  const prev = i > 0 ? freePreviewItems[i - 1] : null
+                  const isFirstTrainer = item.type === 'trainer' && prev?.type === 'skill'
+                  const isFirstMilestone = (item.type === 'capstone' || item.type === 'capstone_review' || item.type === 'mastery' || item.type === 'full_exam')
+                    && prev !== null && (prev.type === 'skill' || prev.type === 'trainer')
+
+                  return (
+                    <Fragment key={item.id}>
+                      {isFirstTrainer && (
+                        <div className="pt-4">
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="h-px flex-1 bg-slate-200" />
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 whitespace-nowrap">
+                              Trainers &amp; Practice Tools
+                            </span>
+                            <div className="h-px flex-1 bg-slate-200" />
+                          </div>
+                          <p className="text-xs text-slate-500 mb-3">
+                            Vocabulary building, transition mastery, reading speed, spaced review, and mixed practice — all included with SAT Premium.
+                          </p>
+                        </div>
+                      )}
+                      {isFirstMilestone && (
+                        <div className="pt-4">
+                          <div className="flex items-center gap-3 mb-2">
+                            <div className="h-px flex-1 bg-slate-200" />
+                            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 whitespace-nowrap">
+                              Apply Everything You Learned
+                            </span>
+                            <div className="h-px flex-1 bg-slate-200" />
+                          </div>
+                          <p className="text-xs text-slate-500 mb-3">
+                            Complete three full R&amp;W Academy Capstones, review your remaining weaknesses, and finish with the Final Mastery Check before taking a full-length SAT exam.
+                          </p>
+                        </div>
+                      )}
+                      <PathItemRow item={item} mastery={{}} />
+                    </Fragment>
+                  )
+                })}
+              </div>
+
+              <p className="text-[11px] text-slate-400 mt-3">
+                Default curriculum order · Complete the R&W Diagnostic with SAT Premium to personalize
+              </p>
             </div>
           )}
         </>

@@ -119,6 +119,7 @@ interface PathItem {
   actionHref: string
   actionEnabled: boolean
   isModal?: boolean
+  premiumLocked?: boolean      // true → free-user preview; show amber upgrade link
   assessed?: boolean           // false → show "Not assessed yet" instead of diagnostic score
   diagnosticPct?: number | null
   diagnosticScore?: string | null
@@ -613,11 +614,16 @@ function PathItemRow({
 
   if (item.type === 'skill') {
     return (
-      <div className="flex items-center gap-3 flex-wrap rounded-lg border border-slate-200 bg-white px-4 py-3">
+      <div className={cn(
+        'flex items-center gap-3 flex-wrap rounded-lg border px-4 py-3',
+        item.premiumLocked ? 'border-slate-100 bg-slate-50' : 'border-slate-200 bg-white',
+      )}>
         <span className="text-xs font-bold text-slate-300 w-5 shrink-0 text-right">{item.rowNum}</span>
         <div className="flex-1 min-w-[8rem]">
-          <p className="text-sm font-semibold text-slate-900 truncate">{item.title}</p>
-          {item.assessed === false ? (
+          <p className={cn('text-sm font-semibold truncate', item.premiumLocked ? 'text-slate-500' : 'text-slate-900')}>{item.title}</p>
+          {item.premiumLocked ? (
+            <p className="text-[11px] text-slate-400 mt-0.5">Not Assessed</p>
+          ) : item.assessed === false ? (
             <p className="text-[11px] text-slate-400 mt-0.5">Not assessed yet</p>
           ) : item.diagnosticPct !== null && item.diagnosticPct !== undefined ? (
             <p className="text-[11px] text-slate-400 mt-0.5">Diagnostic: {item.diagnosticPct}% ({item.diagnosticScore})</p>
@@ -633,19 +639,28 @@ function PathItemRow({
             </span>
           )}
         </div>
-        <Link href={item.actionHref} className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap">
-          {item.actionLabel} →
-        </Link>
+        {item.premiumLocked ? (
+          <Link href="/billing" className="shrink-0 text-xs font-semibold text-amber-600 hover:text-amber-800 whitespace-nowrap">
+            {item.actionLabel} →
+          </Link>
+        ) : (
+          <Link href={item.actionHref} className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap">
+            {item.actionLabel} →
+          </Link>
+        )}
       </div>
     )
   }
 
   if (item.type === 'desmos_lesson') {
     return (
-      <div className="flex items-center gap-3 flex-wrap rounded-lg border border-violet-100 bg-violet-50/30 px-4 py-3">
-        <span className="text-xs font-bold text-violet-300 w-5 shrink-0 text-right">{item.rowNum}</span>
+      <div className={cn(
+        'flex items-center gap-3 flex-wrap rounded-lg border px-4 py-3',
+        item.premiumLocked ? 'border-slate-100 bg-slate-50' : 'border-violet-100 bg-violet-50/30',
+      )}>
+        <span className={cn('text-xs font-bold w-5 shrink-0 text-right', item.premiumLocked ? 'text-slate-300' : 'text-violet-300')}>{item.rowNum}</span>
         <div className="flex-1 min-w-[8rem]">
-          <p className="text-sm font-semibold text-slate-800 truncate">{item.title}</p>
+          <p className={cn('text-sm font-semibold truncate', item.premiumLocked ? 'text-slate-500' : 'text-slate-800')}>{item.title}</p>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
           <span className={cn('text-[11px] font-semibold px-2 py-0.5 rounded-full border', item.statusBadgeClass)}>
@@ -655,20 +670,29 @@ function PathItemRow({
             {item.category}
           </span>
         </div>
-        <Link href={item.actionHref} className="shrink-0 text-xs font-semibold text-violet-600 hover:text-violet-800 whitespace-nowrap">
-          {item.actionLabel} →
-        </Link>
+        {item.premiumLocked ? (
+          <Link href="/billing" className="shrink-0 text-xs font-semibold text-amber-600 hover:text-amber-800 whitespace-nowrap">
+            {item.actionLabel} →
+          </Link>
+        ) : (
+          <Link href={item.actionHref} className="shrink-0 text-xs font-semibold text-violet-600 hover:text-violet-800 whitespace-nowrap">
+            {item.actionLabel} →
+          </Link>
+        )}
       </div>
     )
   }
 
   if (item.type === 'desmos_tool') {
     return (
-      <div className="rounded-lg border border-violet-200 bg-violet-50/50 px-4 py-3">
+      <div className={cn(
+        'rounded-lg border px-4 py-3',
+        item.premiumLocked ? 'border-slate-100 bg-slate-50' : 'border-violet-200 bg-violet-50/50',
+      )}>
         <div className="flex items-center gap-3 flex-wrap">
           <div className="flex-1 min-w-[8rem]">
-            <p className="text-sm font-semibold text-violet-900">{item.title}</p>
-            <p className="text-[12px] text-violet-700 mt-0.5 leading-snug">{item.description}</p>
+            <p className={cn('text-sm font-semibold', item.premiumLocked ? 'text-slate-500' : 'text-violet-900')}>{item.title}</p>
+            <p className={cn('text-[12px] mt-0.5 leading-snug', item.premiumLocked ? 'text-slate-400' : 'text-violet-700')}>{item.description}</p>
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <span className={cn('text-[11px] font-semibold px-2 py-0.5 rounded-full border', item.statusBadgeClass)}>
@@ -678,9 +702,15 @@ function PathItemRow({
               {item.category}
             </span>
           </div>
-          <Link href={item.actionHref} className="shrink-0 text-xs font-semibold text-violet-600 hover:text-violet-800 whitespace-nowrap">
-            {item.actionLabel} →
-          </Link>
+          {item.premiumLocked ? (
+            <Link href="/billing" className="shrink-0 text-xs font-semibold text-amber-600 hover:text-amber-800 whitespace-nowrap">
+              {item.actionLabel} →
+            </Link>
+          ) : (
+            <Link href={item.actionHref} className="shrink-0 text-xs font-semibold text-violet-600 hover:text-violet-800 whitespace-nowrap">
+              {item.actionLabel} →
+            </Link>
+          )}
         </div>
       </div>
     )
@@ -722,7 +752,11 @@ function PathItemRow({
             {item.category}
           </span>
         </div>
-        {item.actionEnabled ? (
+        {item.premiumLocked ? (
+          <Link href="/billing" className="shrink-0 text-xs font-semibold text-amber-600 hover:text-amber-800 whitespace-nowrap">
+            {item.actionLabel} →
+          </Link>
+        ) : item.actionEnabled ? (
           onAction ? (
             <button onClick={onAction} className="shrink-0 text-xs font-semibold text-sky-600 hover:text-sky-800 whitespace-nowrap">
               {item.actionLabel} →
@@ -850,13 +884,30 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
   }).length
   const totalProficient = ALL_MATH_SLUGS.filter(s => completedLessonsSet.has(s) && (attemptMap[s]?.recentAccuracy ?? 0) >= 80).length
 
-  const nextStep = !loading
+  const nextStep = isPremium && !loading
     ? computeNextStep(diagnostic, lessons, capstonesData, attemptMap, satFormsData)
     : null
 
-  // Path renders as soon as loading completes — before or after diagnostic
-  const pathItems = !loading
+  // Path renders as soon as loading completes — before or after diagnostic.
+  // For free users every item is remapped to a locked premium-preview state.
+  const pathItemsRaw = !loading
     ? buildPathItems(diagnostic, lessons, capstonesData, attemptMap, satFormsData, nextStep)
+    : null
+
+  const pathItems = pathItemsRaw
+    ? (!isPremium
+      ? pathItemsRaw.map(item => ({
+          ...item,
+          status: 'locked' as const,
+          statusLabel: 'SAT Premium Required',
+          statusBadgeClass: 'bg-amber-50 text-amber-700 border-amber-200',
+          actionLabel: 'Get SAT Premium',
+          actionHref: '/billing',
+          actionEnabled: true,
+          premiumLocked: true as const,
+          lockReason: undefined,
+        }))
+      : pathItemsRaw)
     : null
 
   const isDiagnosticDone = diagnostic !== null
@@ -976,12 +1027,19 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
                       <StatBox value={totalStarted} label="skills started" />
                     </div>
                   )}
-                  {isPremium && (
+                  {isPremium ? (
                     <Link
                       href="/sat-math-academy/diagnostic"
                       className="block w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors"
                     >
                       {hasSavedProgress ? 'Resume Diagnostic →' : 'Start Math Diagnostic →'}
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/billing"
+                      className="block w-full rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors"
+                    >
+                      Get SAT Premium →
                     </Link>
                   )}
                 </div>
@@ -999,7 +1057,7 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
       )}
 
       {/* ── Recommended Next Step ──────────────────────────────────────── */}
-      {!loading && nextStep && (
+      {!loading && isPremium && nextStep && (
         <div className="rounded-xl border border-sky-200 bg-sky-50 p-5">
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div className="flex-1 min-w-0">
@@ -1022,6 +1080,27 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
               <Link href="/sat-math-academy/diagnostic" className="text-[11px] text-sky-600 hover:underline">View Diagnostic Results →</Link>
             </p>
           )}
+        </div>
+      )}
+
+      {/* ── Free-user: Recommended Next Step (locked) ─────────────────── */}
+      {!loading && !isPremium && (
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-5">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div className="flex-1 min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-amber-600 mb-1">Recommended Next Step</p>
+              <p className="font-semibold text-amber-900 text-sm">Unlock the Math Diagnostic</p>
+              <p className="text-xs text-amber-800 mt-1 leading-relaxed">
+                Complete the diagnostic to personalize all 21 Math and Desmos lessons around your weakest skills and receive a recommended learning order.
+              </p>
+            </div>
+            <Link
+              href="/billing"
+              className="shrink-0 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-4 py-2.5 transition-colors whitespace-nowrap"
+            >
+              Get SAT Premium
+            </Link>
+          </div>
         </div>
       )}
 
