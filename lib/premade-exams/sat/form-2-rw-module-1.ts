@@ -31,7 +31,7 @@ export const f2RwModule1Questions: RWQuestion[] = [
     moduleId: 'f2-rw-module-1',
     domain: 'Craft and Structure',
     skill: 'Words in Context',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'In the deep ocean, bioluminescent organisms produce light through chemical reactions. Unlike sunlight, which illuminates entire ecosystems, the glow of a single anglerfish is _______ — visible only within a few meters and fading almost instantly when the creature retreats into darkness.',
     question: 'Which choice completes the text with the most logical and precise word or phrase?',
     choices: [
@@ -55,7 +55,7 @@ export const f2RwModule1Questions: RWQuestion[] = [
     moduleId: 'f2-rw-module-1',
     domain: 'Craft and Structure',
     skill: 'Words in Context',
-    difficulty: 'medium',
+    difficulty: 'hard',
     stimulus: 'Early cartographers produced maps that were more _______ than precise: their drawings emphasized the relative positions of landmarks and trade routes rather than measured distances, functioning as navigational guides rather than accurate geometric representations of the landscape.',
     question: 'Which choice completes the text with the most logical and precise word or phrase?',
     choices: [
@@ -79,7 +79,7 @@ export const f2RwModule1Questions: RWQuestion[] = [
     moduleId: 'f2-rw-module-1',
     domain: 'Craft and Structure',
     skill: 'Words in Context',
-    difficulty: 'medium',
+    difficulty: 'hard',
     stimulus: 'Museum directors face ongoing pressure to _______ their institutions\' online presence: rather than simply digitizing existing collections, they must select, arrange, and present artifacts in ways that engage visitors who may never physically enter the building.',
     question: 'Which choice completes the text with the most logical and precise word or phrase?',
     choices: [
@@ -103,7 +103,7 @@ export const f2RwModule1Questions: RWQuestion[] = [
     moduleId: 'f2-rw-module-1',
     domain: 'Information and Ideas',
     skill: 'Central Ideas and Details',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'The Silk Road was not a single road but a network of overland and maritime trade routes connecting China to the Mediterranean world. While merchants traded silk, spices, and precious metals along these routes, the exchange of ideas, religions, technologies, and artistic traditions was equally transformative. Buddhism spread from India to Central Asia and China; Islam later traveled from the Arabian Peninsula to Southeast Asia; and papermaking, printing, and gunpowder technologies diffused westward over centuries. Historians today emphasize that the Silk Road functioned as much as a conduit for cultural transmission as for commercial exchange.',
     question: 'What is the central idea of this passage?',
     choices: [
@@ -379,7 +379,7 @@ export const f2RwModule1Questions: RWQuestion[] = [
     moduleId: 'f2-rw-module-1',
     domain: 'Standard English Conventions',
     skill: 'Form, Structure, and Sense',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'The committee reviewing the city\'s water infrastructure _______ published its final report after three years of study, recommending the replacement of all lead pipes by 2030.',
     question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
@@ -403,7 +403,7 @@ export const f2RwModule1Questions: RWQuestion[] = [
     moduleId: 'f2-rw-module-1',
     domain: 'Standard English Conventions',
     skill: 'Boundaries',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'Mathematician Emmy Noether made groundbreaking contributions to abstract algebra, her theorem connecting symmetry and conservation laws is now a cornerstone of modern physics.',
     question: 'Which choice best corrects the boundary error in the sentence?',
     choices: [
@@ -427,7 +427,7 @@ export const f2RwModule1Questions: RWQuestion[] = [
     moduleId: 'f2-rw-module-1',
     domain: 'Standard English Conventions',
     skill: 'Boundaries',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'Brasília was constructed in just 41 months, it became Brazil\'s capital in 1960, replacing Rio de Janeiro in one of the most ambitious urban planning projects of the twentieth century.',
     question: 'Which choice best corrects the boundary error in the sentence?',
     choices: [

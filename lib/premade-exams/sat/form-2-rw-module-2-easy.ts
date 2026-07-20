@@ -152,7 +152,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Information and Ideas',
     skill: 'Central Ideas and Details',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'Many animals migrate seasonally to take advantage of resources that vary by location and time of year. Monarch butterflies travel up to 3,000 miles from Canada and the United States to their wintering grounds in central Mexico. Arctic terns make the longest migration of any animal, flying from the Arctic to the Antarctic and back each year — a round trip of approximately 44,000 miles. These journeys, undertaken without maps or GPS, rely on internal compasses sensitive to Earth\'s magnetic field, the position of the sun, and even the pattern of stars.',
     question: 'According to the passage, what enables animals to navigate during migration?',
     choices: [
@@ -176,7 +176,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Information and Ideas',
     skill: 'Central Ideas and Details',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'Photosynthesis is the process by which plants, algae, and certain bacteria convert sunlight, water, and carbon dioxide into glucose and oxygen. Chlorophyll, the green pigment in plant cells, absorbs light energy and uses it to drive chemical reactions that build sugar molecules. The oxygen released during photosynthesis is a byproduct of these reactions and is the source of almost all the oxygen in Earth\'s atmosphere. Without photosynthesis, most life on Earth as we know it could not exist.',
     question: 'What is the central idea of this passage?',
     choices: [
@@ -248,7 +248,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'A marine ecologist studying coral reef health argues that water temperature is a stronger predictor of coral bleaching events than water acidity. She cites data showing that bleaching events occur almost exclusively when water temperatures exceed 29°C and that bleaching has occurred even in areas with relatively stable pH levels.',
     question: 'Which finding would most directly support the ecologist\'s argument?',
     choices: [
@@ -272,7 +272,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'A school nutritionist claims that students who eat breakfast perform better on morning assessments than students who skip it. The nutritionist gathered data from 400 students over one semester:',
     graphData: {
       type: 'table',
@@ -330,7 +330,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Information and Ideas',
     skill: 'Inferences',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'When the city of Pompeii was buried by the eruption of Mount Vesuvius in 79 CE, it was preserved almost exactly as it was on that day. Buildings, household objects, food still in ovens, and even the outlines of bodies were sealed under meters of volcanic ash. When excavations began in the eighteenth century, archaeologists found not just architecture but an entire snapshot of daily Roman life — shops, homes, gardens, and graffiti on walls.',
     question: 'What can be most reasonably inferred from the passage about Pompeii\'s value to archaeologists?',
     choices: [
@@ -354,7 +354,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Information and Ideas',
     skill: 'Inferences',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'In the early days of cinema, films were silent and theaters hired pianists or organists to play live music that matched the mood of each scene. When "talkies" — films with synchronized sound — became standard in the late 1920s, most of these musicians lost their jobs overnight. Theater owners, happy to reduce payroll, embraced the new technology enthusiastically.',
     question: 'What can be most reasonably inferred from the passage about theater owners\' motivation for adopting sound film?',
     choices: [
@@ -378,7 +378,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Standard English Conventions',
     skill: 'Form, Structure, and Sense',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'Neither the students nor their teacher _______ prepared for the fire drill that interrupted the chemistry lab.',
     question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
@@ -402,7 +402,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Standard English Conventions',
     skill: 'Form, Structure, and Sense',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'By the end of next year, the construction company _______ the new community center, which has been under development for three years.',
     question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
@@ -426,7 +426,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Standard English Conventions',
     skill: 'Boundaries',
-    difficulty: 'easy',
+    difficulty: 'hard',
     stimulus: 'The tallest mountain in Africa. Mount Kilimanjaro rises 5,895 meters above sea level in Tanzania.',
     question: 'Which choice best corrects the sentence?',
     choices: [
@@ -522,7 +522,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Expression of Ideas',
     skill: 'Transitions',
-    difficulty: 'easy',
+    difficulty: 'hard',
     stimulus: 'Bamboo grows faster than almost any other plant on Earth, with some species gaining nearly a meter of height in a single day. _______ it has been used for centuries in construction, furniture-making, and textile production across Asia.',
     question: 'Which choice completes the text with the most logical transition?',
     choices: [
@@ -546,7 +546,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Expression of Ideas',
     skill: 'Transitions',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'Exercise has well-documented benefits for physical health, reducing the risk of heart disease, diabetes, and obesity. _______ recent research suggests that regular physical activity also significantly improves mood, reduces anxiety, and may slow cognitive decline in older adults.',
     question: 'Which choice completes the text with the most logical transition?',
     choices: [
@@ -570,7 +570,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Expression of Ideas',
     skill: 'Transitions',
-    difficulty: 'easy',
+    difficulty: 'hard',
     stimulus: 'The first successful powered airplane flight, made by the Wright brothers at Kitty Hawk in 1903, lasted only 12 seconds and covered 120 feet. _______ within 66 years, humans had landed on the moon.',
     question: 'Which choice completes the text with the most logical transition?',
     choices: [
@@ -594,7 +594,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Expression of Ideas',
     skill: 'Rhetorical Synthesis',
-    difficulty: 'easy',
+    difficulty: 'medium',
     stimulus: 'A student is writing a brief article about ocean plastic pollution. The student has gathered the following notes:\n\n• An estimated 8 million metric tons of plastic enter the ocean each year.\n• Plastic debris has been found in the deepest known ocean trench, the Mariana Trench, at approximately 11 km below sea level.\n• Seabirds and marine mammals frequently ingest plastic, mistaking it for food, which can cause starvation and internal injury.\n• Organizations in over 100 countries have organized beach cleanup events, collectively removing thousands of tons of plastic from coastlines annually.',
     question: 'The student wants to open the article with a sentence that conveys the seriousness of ocean plastic pollution. Which choice best accomplishes this goal?',
     choices: [
@@ -618,7 +618,7 @@ export const f2RwModule2EasyQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-easy',
     domain: 'Expression of Ideas',
     skill: 'Rhetorical Synthesis',
-    difficulty: 'easy',
+    difficulty: 'hard',
     stimulus: 'A student is preparing a presentation arguing that public libraries remain essential in the digital age. The student has gathered the following notes:\n\n• Over 1.3 billion people visit public libraries in the United States annually, more than attend Major League Baseball, NBA, and NFL games combined.\n• Libraries provide free internet access and computer terminals to people who cannot afford home connections.\n• Libraries offer free literacy programs, job-search assistance, and early childhood reading events.\n• Many library systems have expanded to lend items beyond books, including tools, seeds, and musical instruments.',
     question: 'The student wants to emphasize that libraries serve people with limited financial resources. Which choice best accomplishes this goal?',
     choices: [

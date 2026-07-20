@@ -283,7 +283,7 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-hard',
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
-    difficulty: 'hard',
+    difficulty: 'medium',
     stimulus: 'Researchers studying language acquisition claim that children exposed to a richer vocabulary in early childhood develop stronger reading comprehension skills in adolescence. They cite a longitudinal study that followed 800 children from age 3 to age 15.',
     question: 'A student wants to use this research to argue: "Early childhood vocabulary programs should be mandatory in all preschools." Which quotation from the study, if genuine, would most strongly support this policy argument?',
     choices: [
@@ -307,7 +307,7 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-hard',
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
-    difficulty: 'hard',
+    difficulty: 'medium',
     stimulus: 'An economist studying consumer spending patterns across five income brackets collected data on the percentage of income spent on housing, food, and discretionary purchases. The economist claims: "As income rises, households spend a smaller share of their income on necessities and a larger share on discretionary purchases."',
     graphData: {
       type: 'table',
@@ -343,7 +343,7 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-hard',
     domain: 'Information and Ideas',
     skill: 'Inferences',
-    difficulty: 'hard',
+    difficulty: 'medium',
     stimulus: 'Anthropologists studying gift exchange in non-market societies have observed that gifts rarely function as simple transfers of goodwill. Among the Kwakwaka\'wakw peoples of the Pacific Northwest, potlatch ceremonies involve elaborate gift-giving in which chiefs distribute or even destroy vast quantities of goods. The generosity displayed is not purely altruistic: it asserts social rank, creates obligations of reciprocity in recipients, and converts material wealth into social capital. A chief who gives more than his rivals gains prestige precisely because his rivals cannot easily match the gesture.',
     question: 'What can be most reasonably inferred from the passage about the relationship between generosity and power in potlatch ceremonies?',
     choices: [
@@ -391,7 +391,7 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-hard',
     domain: 'Standard English Conventions',
     skill: 'Form, Structure, and Sense',
-    difficulty: 'hard',
+    difficulty: 'medium',
     stimulus: 'Neither the lead investigator nor the three graduate students who conducted the fieldwork _______ able to explain why the sediment cores from the western transect produced readings so dramatically inconsistent with those from the eastern sites.',
     question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
@@ -415,7 +415,7 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-hard',
     domain: 'Standard English Conventions',
     skill: 'Form, Structure, and Sense',
-    difficulty: 'hard',
+    difficulty: 'medium',
     stimulus: 'The selection committee had narrowed the candidates to three finalists; _______ of whom had the technical expertise the position required, but only one had both the experience and the interpersonal skills the team considered essential.',
     question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
@@ -439,7 +439,7 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-hard',
     domain: 'Standard English Conventions',
     skill: 'Form, Structure, and Sense',
-    difficulty: 'hard',
+    difficulty: 'medium',
     stimulus: 'When the research team first _______ the anomalous readings in the dataset, they assumed a calibration error; only after repeating the experiment under controlled conditions did they conclude that the results were genuine.',
     question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
@@ -463,7 +463,7 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-hard',
     domain: 'Standard English Conventions',
     skill: 'Boundaries',
-    difficulty: 'hard',
+    difficulty: 'medium',
     stimulus: 'The expedition\'s lead geologist, having spent fourteen months mapping the canyon system and identifying the stratigraphic anomalies that suggested ancient volcanic activity, presented her findings to the review panel, however, several panel members questioned whether the thin ash layers she had identified were of volcanic origin or merely the result of windblown mineral deposits from adjacent desert formations.',
     question: 'Which choice best corrects the punctuation error in the sentence?',
     choices: [
@@ -487,7 +487,7 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
     moduleId: 'f2-rw-module-2-hard',
     domain: 'Standard English Conventions',
     skill: 'Boundaries',
-    difficulty: 'hard',
+    difficulty: 'medium',
     stimulus: 'The architect\'s design was groundbreaking, incorporating sustainable materials and passive cooling techniques that had never before been used in a commercial building of this scale, nevertheless, the city planning board rejected it on the grounds that it did not conform to the neighborhood\'s historical aesthetic guidelines.',
     question: 'Which choice best corrects the punctuation in the sentence?',
     choices: [
