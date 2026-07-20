@@ -400,7 +400,7 @@ export default async function DashboardPage() {
               </div>
             </div>
             <div className="flex-1">
-              <p className="font-semibold text-slate-900 text-sm leading-snug">If you're taking the MCAT, take your first MCAT exam</p>
+              <p className="font-semibold text-slate-900 text-sm leading-snug">If you&apos;re taking the MCAT, take your first MCAT exam</p>
               <p className="mt-1 text-xs text-slate-500">Begin with MCAT Form 1 and get section-by-section feedback and scoring.</p>
               <p className="mt-1.5 text-xs text-slate-400">AAMC-style structure · Full length</p>
             </div>

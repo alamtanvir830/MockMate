@@ -1492,7 +1492,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
           </div>
           <div className="bg-amber-50 border border-amber-100 rounded-lg p-4 text-[12px] text-amber-800 mb-6">
             <p className="font-semibold mb-1">Grid-in answers</p>
-            <p>Enter fractions as "3/4", decimals as ".75" or "0.75". You cannot enter mixed numbers — convert to improper fractions.</p>
+            <p>{'Enter fractions as "3/4", decimals as ".75" or "0.75". You cannot enter mixed numbers — convert to improper fractions.'}</p>
           </div>
           <button
             onClick={() => { startTimer(mathSection.modules[0].timeMinutes); setPhase({ tag: 'question', section: 'math', slot: 'm1', qIdx: 0 }) }}

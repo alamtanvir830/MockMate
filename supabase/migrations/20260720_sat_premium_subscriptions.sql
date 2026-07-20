@@ -32,7 +32,10 @@ create table if not exists sat_premium_subscriptions (
 -- policy, those operations are denied for all non-service-role callers.
 alter table sat_premium_subscriptions enable row level security;
 
-create policy "users_read_own_subscription"
+drop policy if exists users_read_own_subscription on sat_premium_subscriptions;
+drop policy if exists "users_read_own_subscription" on sat_premium_subscriptions;
+
+create policy users_read_own_subscription
   on sat_premium_subscriptions
   for select
   using (auth.uid() = user_id);
