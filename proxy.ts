@@ -56,7 +56,13 @@ export async function proxy(request: NextRequest) {
       url.pathname = '/login'
       return NextResponse.redirect(url)
     }
-    if (user.email !== ACADEMY_ADMIN_EMAIL && user.user_metadata?.sat_upgrade_unlocked !== true) {
+    const subStatus = user.user_metadata?.sat_subscription_status as string | undefined
+    const hasActiveSub = subStatus === 'active' || subStatus === 'past_due' || subStatus === 'trialing'
+    const hasPremium =
+      user.email === ACADEMY_ADMIN_EMAIL ||
+      user.user_metadata?.sat_upgrade_unlocked === true ||
+      hasActiveSub
+    if (!hasPremium) {
       const url = request.nextUrl.clone()
       url.pathname = '/billing'
       return NextResponse.redirect(url)

@@ -77,7 +77,7 @@ export default function LandingPage() {
                   <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  SAT Premium is a one-time $9.99 payment — up to 96% cheaper than major test prep options.
+                  SAT Premium is a fraction of the cost of major test prep — up to 96% cheaper.
                 </p>
 
                 <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
@@ -227,7 +227,7 @@ export default function LandingPage() {
               </Link>
               <Link href="/pricing">
                 <Button size="lg" variant="outline" className="border-slate-600 text-slate-300 hover:border-emerald-500 hover:text-white bg-transparent">
-                  View SAT Premium — $9.99
+                  View SAT Premium
                 </Button>
               </Link>
             </div>
@@ -283,7 +283,7 @@ const badges = [
     ),
   },
   {
-    label: 'One-time $9.99 SAT Premium',
+    label: 'SAT Premium — affordable monthly plan',
     icon: (
       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

@@ -1,13 +1,12 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { hasSatPremium } from '@/lib/auth/server'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { MobileHeader } from '@/components/dashboard/mobile-header'
 import { SyncSatAttempts } from '@/components/premade/SyncSatAttempts'
 import { SyncQBHistory } from '@/components/question-bank/SyncQBHistory'
 import { AcademySidebarSlot } from '@/components/dashboard/AcademySidebarSlot'
 import { MathAcademySidebarSlot } from '@/components/dashboard/MathAcademySidebarSlot'
-
-const ADMIN_EMAIL = 'ranvi.contact@gmail.com'
 
 export default async function DashboardLayout({
   children,
@@ -22,9 +21,7 @@ export default async function DashboardLayout({
   }
 
   const fullName = user.user_metadata?.full_name as string | undefined
-  const isPremium =
-    user.email === ADMIN_EMAIL ||
-    user.user_metadata?.sat_upgrade_unlocked === true
+  const isPremium = hasSatPremium(user)
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden">

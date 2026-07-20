@@ -9,6 +9,7 @@ import { daysUntil, isExamLocked } from '@/lib/utils'
 import { seedDemoExam, seedDemoGroupExam } from '@/lib/demo/seed-demo-exam'
 import { QBHistorySection } from '@/components/dashboard/QBHistorySection'
 import { isMockMateAdmin } from '@/lib/auth/admin'
+import { hasSatPremium, isLegacyLifetimeUser } from '@/lib/auth/server'
 import { EmailVerificationBanner } from '@/components/auth/EmailVerificationBanner'
 import { getOrCreateForm1Access } from '@/lib/premade-exams/sat/form1-access'
 import { SatForm1BannerCountdown, SatForm1BadgeCountdown } from '@/components/sat/SatForm1Countdown'
@@ -93,13 +94,16 @@ export default async function DashboardPage() {
 
   // SAT Form 1 card state
   const isAdminUser = isMockMateAdmin(user)
-  const satUpgradeUnlocked = (user?.user_metadata?.sat_upgrade_unlocked ?? false) === true
+  // Use freshly-read metadata so subscription users get immediate access after webhook fires
+  const freshUserForChecks = { email: user?.email, user_metadata: currentMeta }
+  const hasPremium = hasSatPremium(freshUserForChecks)
+  const isLegacyLifetime = isLegacyLifetimeUser(freshUserForChecks)
   let satForm1State: SatForm1CardState = { tag: 'default' }
 
   if (user) {
     if (isAdminUser) {
       satForm1State = { tag: 'admin' }
-    } else if (satUpgradeUnlocked) {
+    } else if (hasPremium) {
       satForm1State = { tag: 'upgraded' }
     } else {
       // For free users: create/update the 48-hour access row on first dashboard visit
@@ -182,8 +186,8 @@ export default async function DashboardPage() {
         <EmailVerificationBanner email={user.email} />
       )}
 
-      {/* SAT Form 1 access banner — top of page, free non-admin non-upgraded users only */}
-      {user && !isAdminUser && !satUpgradeUnlocked && (
+      {/* SAT Form 1 access banner — top of page, free non-admin non-premium users only */}
+      {user && !isAdminUser && !hasPremium && (
         satForm1State.tag === 'active' ? (
           <div className="rounded-xl bg-red-50 border border-red-200 p-5">
             <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -309,7 +313,9 @@ export default async function DashboardPage() {
                   <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-xs font-semibold text-amber-700">Admin</span>
                 )}
                 {satForm1State.tag === 'upgraded' && (
-                  <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-200 px-2 py-0.5 text-xs font-semibold text-indigo-700">Lifetime</span>
+                  <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-200 px-2 py-0.5 text-xs font-semibold text-indigo-700">
+                    {isLegacyLifetime ? 'Lifetime' : 'Premium'}
+                  </span>
                 )}
                 {satForm1State.tag === 'expired' && (
                   <span className="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-xs font-semibold text-slate-500">Expired</span>
@@ -325,13 +331,17 @@ export default async function DashboardPage() {
 
             <div className="flex-1">
               <p className={`font-bold text-base leading-snug ${satForm1State.tag === 'expired' ? 'text-slate-400' : 'text-slate-900'}`}>
-                {satForm1State.tag === 'upgraded' ? 'SAT Practice Forms — lifetime access' : 'Take your first free SAT exam'}
+                {satForm1State.tag === 'upgraded'
+                  ? isLegacyLifetime ? 'SAT Practice Forms — lifetime access' : 'SAT Practice Forms — active subscription'
+                  : 'Take your first free SAT exam'}
               </p>
               {satForm1State.tag === 'admin' && (
                 <p className="mt-1 text-xs text-amber-600">Admin testing mode: timer disabled</p>
               )}
               {satForm1State.tag === 'upgraded' && (
-                <p className="mt-1 text-xs text-indigo-600 font-medium">Lifetime SAT access unlocked — all forms available</p>
+                <p className="mt-1 text-xs text-indigo-600 font-medium">
+                  {isLegacyLifetime ? 'Lifetime SAT access unlocked — all forms available' : 'SAT Premium active — all forms available'}
+                </p>
               )}
               {satForm1State.tag === 'completed' && (
                 <p className="mt-1 text-xs text-emerald-600 font-medium">Free SAT Form 1 completed</p>

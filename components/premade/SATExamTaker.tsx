@@ -2514,7 +2514,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
           <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100 p-6">
             <h2 className="text-lg font-bold text-slate-900 mb-1">Ready for the next exam?</h2>
             <p className="text-sm text-slate-600 mb-4">
-              {"You've completed your free SAT Form 1. Unlock lifetime access to retake Form 1 and practice with Forms 2, 3, 4, and 5."}
+              {"You've completed your free SAT Form 1. Subscribe to SAT Premium to retake Form 1 and practice with Forms 2, 3, 4, and 5."}
             </p>
             <div className="flex flex-wrap gap-3">
               {satUpgradeUnlocked ? (
@@ -2538,7 +2538,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                     href="/billing"
                     className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
                   >
-                    Unlock Lifetime SAT Access
+                    Get SAT Premium
                   </a>
                   <a
                     href="/premade/sat"

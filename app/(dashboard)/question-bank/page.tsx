@@ -51,9 +51,9 @@ export default async function QuestionBankPage() {
               href="/billing"
               className="block w-full text-center bg-amber-500 hover:bg-amber-600 text-white font-bold text-[15px] py-3 rounded-xl transition-colors"
             >
-              Get SAT Premium — $9.99
+              Start SAT Premium — $10/month
             </Link>
-            <p className="text-center text-[11px] text-slate-400 mt-2">One-time payment · Secure checkout via Stripe</p>
+            <p className="text-center text-[11px] text-slate-400 mt-2">Billed monthly · Cancel anytime · Secure checkout via Stripe</p>
           </div>
         </div>
 

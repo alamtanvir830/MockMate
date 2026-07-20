@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { SAT_PREMIUM_FEATURES } from '@/lib/sat-premium-features'
+import { SAT_PREMIUM_PRICING } from '@/lib/pricing'
 
 interface FeatureItem {
   label: string
@@ -22,8 +23,8 @@ const DEFAULT_FEATURES: FeatureItem[] = SAT_PREMIUM_FEATURES.map(f => ({
 }))
 
 export function UpgradeGate({
-  title = 'Unlock Lifetime SAT Access',
-  description = 'Unlock SAT Forms 1–5, the 700+ question bank, and the complete SAT R&W Academy with unlimited lifetime access for a one-time payment.',
+  title = 'Get SAT Premium',
+  description = 'Subscribe to unlock SAT Forms 1–5, the 700+ question bank, and both SAT Academies for $10/month.',
   features = DEFAULT_FEATURES,
   compact = false,
 }: UpgradeGateProps) {
@@ -31,7 +32,7 @@ export function UpgradeGate({
   const [error, setError] = useState<string | null>(null)
   const [acknowledged, setAcknowledged] = useState(false)
 
-  async function handleUnlock() {
+  async function handleSubscribe() {
     setLoading(true)
     setError(null)
     try {
@@ -61,11 +62,11 @@ export function UpgradeGate({
         </div>
         <div className="flex flex-col items-end gap-1 shrink-0">
           <button
-            onClick={handleUnlock}
+            onClick={handleSubscribe}
             disabled={loading}
             className="bg-amber-500 hover:bg-amber-600 disabled:opacity-60 text-white font-semibold text-[13px] px-4 py-2 rounded-lg transition-colors whitespace-nowrap"
           >
-            {loading ? 'Redirecting…' : 'Unlock SAT Access for $9.99'}
+            {loading ? 'Redirecting…' : `Start SAT Premium — ${SAT_PREMIUM_PRICING.displayFull}`}
           </button>
           <p className="text-[10px] text-amber-500">Secure checkout powered by Stripe.</p>
         </div>
@@ -112,9 +113,13 @@ export function UpgradeGate({
         {/* Price + CTA */}
         <div className="px-6 pb-6 space-y-3">
           <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="text-3xl font-bold text-slate-900">$9.99</span>
-            <span className="text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200 rounded-full px-2.5 py-0.5">One-time early access price</span>
+            <span className="text-3xl font-bold text-slate-900">{SAT_PREMIUM_PRICING.displayPrice}</span>
+            <span className="text-base font-medium text-slate-500">{SAT_PREMIUM_PRICING.displayInterval}</span>
+            <span className="text-[10px] font-semibold bg-amber-50 text-amber-700 border border-amber-200 rounded-full px-2.5 py-0.5">
+              {SAT_PREMIUM_PRICING.badgeText}
+            </span>
           </div>
+          <p className="text-[11px] text-slate-500">{SAT_PREMIUM_PRICING.billingDisclosure}</p>
           {error && (
             <p className="text-[12px] text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>
           )}
@@ -130,11 +135,11 @@ export function UpgradeGate({
             </span>
           </label>
           <button
-            onClick={handleUnlock}
+            onClick={handleSubscribe}
             disabled={loading || !acknowledged}
             className="w-full bg-amber-500 hover:bg-amber-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-[15px] py-3 rounded-xl transition-colors"
           >
-            {loading ? 'Redirecting to Stripe…' : 'Unlock Lifetime SAT Access for $9.99'}
+            {loading ? 'Redirecting to Stripe…' : SAT_PREMIUM_PRICING.checkoutLabel}
           </button>
           <p className="text-center text-[11px] text-slate-400 flex items-center justify-center gap-1.5">
             <svg fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth={1.5} className="h-3.5 w-3.5">

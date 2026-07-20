@@ -33,7 +33,9 @@ export function getQBAccess(
   }
 
   const isAdmin = user.email === 'ranvi.contact@gmail.com'
-  const hasPremium = isAdmin || user.user_metadata?.sat_upgrade_unlocked === true
+  const subStatus = user.user_metadata?.sat_subscription_status as string | undefined
+  const hasActiveSub = subStatus === 'active' || subStatus === 'past_due' || subStatus === 'trialing'
+  const hasPremium = isAdmin || user.user_metadata?.sat_upgrade_unlocked === true || hasActiveSub
 
   return {
     hasPremiumAccess: hasPremium,

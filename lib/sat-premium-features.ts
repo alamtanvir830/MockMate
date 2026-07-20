@@ -7,7 +7,7 @@ export interface SATFeature {
 export const SAT_PREMIUM_FEATURES: SATFeature[] = [
   {
     id: 'sat-forms',
-    title: 'SAT Practice Test Forms 1, 2, 3, 4, and 5',
+    title: 'SAT Practice Test Forms 1–5',
     description: 'Full-length computer-adaptive SAT practice exams with detailed score feedback.',
   },
   {
@@ -15,6 +15,12 @@ export const SAT_PREMIUM_FEATURES: SATFeature[] = [
     title: 'Complete SAT R&W Academy',
     description:
       'Structured lessons, targeted drills, vocabulary training, mixed practice, timed capstones, and personalized review across all 11 Reading and Writing skills.',
+  },
+  {
+    id: 'math-academy',
+    title: 'Complete SAT Math & Desmos Academy',
+    description:
+      'Guided lessons, drills, Desmos practice, mixed sets, and capstones across every Math domain tested on the SAT.',
   },
   {
     id: 'question-bank',
@@ -29,9 +35,9 @@ export const SAT_PREMIUM_FEATURES: SATFeature[] = [
       'Review your strengths, weaknesses, pacing, skill performance, and recommended next practice.',
   },
   {
-    id: 'lifetime-access',
-    title: 'Unlimited Lifetime Access',
+    id: 'subscription-access',
+    title: 'Full Access While Subscribed',
     description:
-      'Retake available SAT forms, use the Question Bank, and access academy content anytime with one payment and no subscription.',
+      'Use available SAT forms, the Question Bank, and both SAT Academies throughout your active subscription.',
   },
 ]

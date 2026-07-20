@@ -11,8 +11,8 @@ export default function Form1ExpiredScreen() {
         </div>
         <h1 className="text-[18px] font-bold text-slate-900 mb-2">Your Free SAT Form 1 Access Has Ended</h1>
         <p className="text-[13px] text-slate-500 leading-relaxed mb-6">
-          Your 48-hour access window has ended. Upgrade to SAT Premium for lifetime access to
-          SAT Forms 1–5, the SAT Question Bank, and the complete SAT R&W Academy.
+          Your 48-hour access window has ended. Subscribe to SAT Premium for access to
+          SAT Forms 1–5, the SAT Question Bank, and both SAT Academies.
         </p>
         <div className="flex flex-col gap-3">
           <Link
