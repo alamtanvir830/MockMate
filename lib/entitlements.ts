@@ -67,3 +67,17 @@ export async function grantSATPremiumManual(
     },
   })
 }
+
+export async function revokeSATPremium(
+  userId: string,
+  reason = 'manual_access_revocation'
+): Promise<void> {
+  const admin = createAdminClient()
+  await admin.auth.admin.updateUserById(userId, {
+    user_metadata: {
+      sat_upgrade_unlocked: false,
+      sat_upgrade_revoked_at: new Date().toISOString(),
+      sat_upgrade_revoked_reason: reason,
+    },
+  })
+}
