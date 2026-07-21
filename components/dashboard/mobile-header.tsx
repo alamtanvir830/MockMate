@@ -8,13 +8,14 @@ import { cn } from '@/lib/utils'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard' },
-  { href: '/premade', label: 'Premade Exams (SAT)' },
-  { href: '/exams/create', label: 'Create New Exam' },
-  { href: '/exams', label: 'Exam History' },
+  { href: '/premade', label: 'Exam Forms (SAT)' },
+  { href: '/sat-rw-academy', label: 'SAT R&W Academy' },
+  { href: '/sat-math-academy', label: 'SAT Math Academy' },
   { href: '/question-bank', label: 'Question Bank' },
+  { href: '/exams', label: 'Exam History' },
+  { href: '/notes', label: 'Personal Notes' },
   { href: '/groups', label: 'My Groups' },
   { href: '/performance', label: 'Performance' },
-  { href: '/notes', label: 'Personal Notes' },
   { href: '/billing', label: 'Get SAT Premium', premium: true },
   { href: '/settings', label: 'Settings' },
 ]
