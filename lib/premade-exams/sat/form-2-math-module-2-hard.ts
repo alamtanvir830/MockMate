@@ -99,7 +99,7 @@ export const f2MathModule2HardQuestions: MathQuestion[] = [
     ],
     correctAnswer: 'A',
     explanation:
-      'Center = (3, −1), radius = √49 = 7. The highest point is at y = center_y + radius = −1 + 7 = 6. A horizontal tangent line at the top has equation y = 6.',
+      'Center = (3, −1), radius = √49 = 7. The highest point is at y = center_y + radius = −1 + 7 = 6. A horizontal tangent line at the top has equation y = 6.\n\nDesmos method: Enter (x − 3)² + (y + 1)² = 49 to graph the circle, then add y = k with a slider for k. Raise the slider until the horizontal line just touches the top of the circle at a single point — the slider reads k = 6.',
     wrongAnswerExplanations: {
       B: '7 is the radius, not the y-coordinate of the top of the circle.',
       C: '8 = 1 + 7 uses +1 instead of −1 for the center y-coordinate.',
@@ -243,7 +243,7 @@ export const f2MathModule2HardQuestions: MathQuestion[] = [
     correctAnswer: '4',
     acceptableAnswers: ['4'],
     explanation:
-      'f(1) = 1 + b + c = 7 → b + c = 6. f(−1) = 1 − b + c = 3 → −b + c = 2. Adding: 2c = 8 → c = 4. Then b = 2. f(0) = 0 + 0 + c = 4.',
+      'f(1) = 1 + b + c = 7 → b + c = 6. f(−1) = 1 − b + c = 3 → −b + c = 2. Adding: 2c = 8 → c = 4. Then b = 2. f(0) = 0 + 0 + c = 4.\n\nDesmos method: Enter y = x² + bx + c and add sliders for b and c. Drag the sliders until the curve passes through both (1, 7) and (−1, 3). Read the y-intercept of the graph directly — it equals f(0) = 4.',
     scoringNotes: 'The answer is 4.',
   },
 

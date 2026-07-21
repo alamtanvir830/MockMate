@@ -210,7 +210,7 @@ export const f2RwModule2HardQuestions: RWQuestion[] = [
       { label: 'D', text: 'The Younger Dryas was a rapid cooling period roughly 12,000 years ago, linked to oceanic circulation disruption, whose effects included societal collapse and megafaunal extinction' },
     ],
     correctAnswer: 'D',
-    explanation: 'The passage describes the Younger Dryas as a rapid cooling period (not warming), identifies its cause as disrupted thermohaline circulation, and links it to civilizational collapse and megafaunal extinction. Choice B accurately synthesizes all these elements.',
+    explanation: 'The passage describes the Younger Dryas as a rapid cooling period (not warming), identifies its cause as disrupted thermohaline circulation, and links it to civilizational collapse and megafaunal extinction. Choice D accurately synthesizes all these elements.',
     wrongAnswerExplanations: {
       A: 'The passage describes a cooling event, not a warming event.',
       C: 'The passage makes no comparison between the Younger Dryas and modern climate change.',

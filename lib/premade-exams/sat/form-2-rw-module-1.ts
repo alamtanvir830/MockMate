@@ -653,7 +653,7 @@ export const f2RwModule1Questions: RWQuestion[] = [
       { label: 'D', text: 'Although assisted evolution offers higher thermal-stress survival rates, coral gardening is favored in low-income communities because it requires only basic training and standard diving equipment rather than specialized laboratories and large financial investment.' },
     ],
     correctAnswer: 'D',
-    explanation: 'The question asks specifically why low-income communities favor coral gardening. Choice B acknowledges assisted evolution\'s advantage while correctly identifying the resource and cost barriers as the deciding factors for low-income settings.',
+    explanation: 'The question asks specifically why low-income communities favor coral gardening. Choice D acknowledges assisted evolution\'s advantage while correctly identifying the resource and cost barriers (basic training and standard equipment versus specialized laboratories and large investment) as the deciding factors for low-income settings.',
     wrongAnswerExplanations: {
       A: 'This mentions only survival rate and ignores the resource-access factors most relevant to the question.',
       C: 'The notes say "some ecologists warn" — they don\'t establish that risks are unacceptable, and the passage doesn\'t claim assisted evolution should be avoided everywhere.',

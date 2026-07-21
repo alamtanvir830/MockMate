@@ -350,7 +350,7 @@ export const f2MathModule1Questions: MathQuestion[] = [
     ],
     correctAnswer: 'B',
     explanation:
-      'Divide the first equation by 2: 3x − 2y = 5. The second equation is 3x − ky = 7. For no solution the lines must be parallel: equal slopes but different y-intercepts. The slope of 3x − 2y = 5 is 3/2, and the slope of 3x − ky = 7 is 3/k. Setting 3/k = 3/2 gives k = 2. Check: with k = 2, the equations become 3x − 2y = 5 and 3x − 2y = 7, which are parallel and distinct — no solution ✓.',
+      'Divide the first equation by 2: 3x − 2y = 5. The second equation is 3x − ky = 7. For no solution the lines must be parallel: equal slopes but different y-intercepts. The slope of 3x − 2y = 5 is 3/2, and the slope of 3x − ky = 7 is 3/k. Setting 3/k = 3/2 gives k = 2. Check: with k = 2, the equations become 3x − 2y = 5 and 3x − 2y = 7, which are parallel and distinct — no solution ✓.\n\nDesmos method: Enter y = (6x − 10)/4 and y = (3x − 7)/k using a slider for k. Increase k from 1. At k = 2 the two lines become parallel — they appear side by side with no intersection point, confirming the system has no solution.',
     wrongAnswerExplanations: {
       A: 'k = 1 gives slopes 3/2 and 3/1 = 3 — the lines intersect at one point.',
       C: 'k = 3 gives slopes 3/2 and 1 — the lines intersect at one point.',
@@ -419,7 +419,7 @@ export const f2MathModule1Questions: MathQuestion[] = [
     ],
     correctAnswer: 'B',
     explanation:
-      'The vertex of f(x) = a(x − 3)² + k is at (3, k). Since a > 0, the minimum value is k = −5. Substituting into f(5) = 3: a(5 − 3)² + (−5) = 3 → 4a − 5 = 3 → 4a = 8 → a = 2.',
+      'The vertex of f(x) = a(x − 3)² + k is at (3, k). Since a > 0, the minimum value is k = −5. Substituting into f(5) = 3: a(5 − 3)² + (−5) = 3 → 4a − 5 = 3 → 4a = 8 → a = 2.\n\nDesmos method: Enter y = a(x − 3)² − 5 and add a slider for a. Adjust a until the parabola passes through the point (5, 3); the vertex stays fixed at (3, −5). The slider reads a = 2.',
     wrongAnswerExplanations: {
       A: 'a = 1 gives f(5) = 4(1) − 5 = −1 ≠ 3.',
       C: 'a = 3 gives f(5) = 4(3) − 5 = 7 ≠ 3.',
@@ -445,7 +445,7 @@ export const f2MathModule1Questions: MathQuestion[] = [
     ],
     correctAnswer: 'C',
     explanation:
-      'Exactly one real solution requires discriminant = 0: k² − 4(2)(8) = 0 → k² − 64 = 0 → k² = 64 → k = ±8. The positive value is k = 8.',
+      'Exactly one real solution requires discriminant = 0: k² − 4(2)(8) = 0 → k² − 64 = 0 → k² = 64 → k = ±8. The positive value is k = 8.\n\nDesmos method: Enter y = 2x² + kx + 8 and add a slider for k. Increase k from 0. When k < 8 the parabola stays above the x-axis (no real solutions); at k = 8 it becomes tangent to the x-axis at exactly one point; for k > 8 it crosses the x-axis twice.',
     wrongAnswerExplanations: {
       A: 'k = 4: discriminant = 16 − 64 = −48 < 0 — no real solutions.',
       B: 'k = 6: discriminant = 36 − 64 = −28 < 0 — no real solutions.',

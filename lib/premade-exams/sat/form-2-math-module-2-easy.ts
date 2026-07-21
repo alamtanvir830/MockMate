@@ -327,7 +327,7 @@ export const f2MathModule2EasyQuestions: MathQuestion[] = [
     ],
     correctAnswer: 'C',
     explanation:
-      '3(x + k) = 3x + 3k, so the equation becomes 3x + 6 = 3x + 3k → 6 = 3k → k = 2. With k = 2, both sides are identical for every x.',
+      '3(x + k) = 3x + 3k, so the equation becomes 3x + 6 = 3x + 3k → 6 = 3k → k = 2. With k = 2, both sides are identical for every x.\n\nDesmos method: Enter y = 3x + 6 and y = 3(x + k) with a slider for k. The two lines coincide (lie exactly on top of each other, giving infinitely many solutions) only when the slider reaches k = 2.',
     wrongAnswerExplanations: {
       A: 'k = 0 gives 3x + 6 = 3x, which simplifies to 6 = 0 — no solution.',
       B: 'k = 1 gives 6 = 3 — no solution.',
