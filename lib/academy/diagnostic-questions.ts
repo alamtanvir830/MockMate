@@ -4,8 +4,24 @@
 import { allSkills } from './index'
 import type { DrillQuestion } from './types'
 import { getDomainForSkill } from './types'
+import {
+  DIAGNOSTIC_M1_QUESTIONS,
+  DIAGNOSTIC_M2_EASY_QUESTIONS,
+  DIAGNOSTIC_M2_HARD_QUESTIONS,
+} from './diagnostic-questions-v2'
 
 export const DIAGNOSTIC_VERSION = 1
+
+// Re-export the v2 adaptive-diagnostic API so callers can import everything from
+// this single module. The v1 exports above remain unchanged.
+export {
+  DIAGNOSTIC_V2_VERSION,
+  M1_ROUTING_THRESHOLD,
+  buildDiagnosticM1Questions,
+  buildDiagnosticM2EasyQuestions,
+  buildDiagnosticM2HardQuestions,
+  routeToM2Branch,
+} from './diagnostic-questions-v2'
 
 const READING_SKILL_SLUGS = [
   'words-in-context',
@@ -74,4 +90,30 @@ export function getDiagnosticRegistry(): Map<string, DiagnosticQuestionMeta> {
     })
   }
   return _registry
+}
+
+// Built once on first call, then cached in module scope.
+// Includes every v2 question across Module 1 and both Module 2 branches so the
+// server can grade any submitted v2 response by ID.
+let _registryV2: Map<string, DiagnosticQuestionMeta> | null = null
+
+export function getDiagnosticV2Registry(): Map<string, DiagnosticQuestionMeta> {
+  if (_registryV2) return _registryV2
+  _registryV2 = new Map()
+  const all: DrillQuestion[] = [
+    ...DIAGNOSTIC_M1_QUESTIONS,
+    ...DIAGNOSTIC_M2_EASY_QUESTIONS,
+    ...DIAGNOSTIC_M2_HARD_QUESTIONS,
+  ]
+  for (const q of all) {
+    const skill = allSkills.find(s => s.slug === q.skillSlug)
+    _registryV2.set(q.id, {
+      correctAnswer: q.correctAnswer,
+      skillSlug: q.skillSlug,
+      difficulty: q.difficulty,
+      domainSlug: getDomainForSkill(q.skillSlug),
+      section: skill?.section ?? 'reading',
+    })
+  }
+  return _registryV2
 }
