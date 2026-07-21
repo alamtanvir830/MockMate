@@ -54,14 +54,8 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // Validate referral fields
-    const referredByFriend = body.referredByFriend
-    if (typeof referredByFriend !== 'boolean') {
-      return NextResponse.json(
-        { error: 'referredByFriend must be true or false.' },
-        { status: 400 }
-      )
-    }
+    // Normalize referral field — legacy payloads omit it; undefined/null defaults to false
+    const referredByFriend = body.referredByFriend === true
     let referrerFullName: string | null = null
     let referrerEmail: string | null = null
     if (referredByFriend) {
