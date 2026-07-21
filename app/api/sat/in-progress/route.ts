@@ -86,6 +86,24 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid localAttemptId' }, { status: 400 })
   }
 
+  // Resolve identity server-side — never trust client-supplied name/email.
+  // profiles.full_name is authoritative; fall back to user_metadata, then null.
+  const user_email = user.email ?? null
+  let user_name: string | null = null
+  try {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('full_name')
+      .eq('id', user.id)
+      .single()
+    const raw = (profile as { full_name?: string | null } | null)?.full_name?.trim()
+    user_name = raw || null
+  } catch { /* ignore — table or row may not exist */ }
+  if (!user_name) {
+    const meta = user.user_metadata as Record<string, string> | null
+    user_name = meta?.full_name?.trim() || meta?.name?.trim() || null
+  }
+
   // Compute module_deadline_at from secsLeft
   let moduleDeadlineAt: string | null = null
   if (body.timerRunning && typeof body.secsLeft === 'number' && body.secsLeft > 0) {
@@ -100,6 +118,8 @@ export async function POST(req: NextRequest) {
         user_id: user.id,
         form_number: body.formNumber,
         local_attempt_id: body.localAttemptId,
+        user_name,
+        user_email,
         answers: body.answers,
         bookmarks: body.bookmarks,
         strikeouts: body.strikeouts,
