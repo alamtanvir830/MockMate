@@ -4,7 +4,9 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { getStripe } from '@/lib/stripe/client'
 import { isAdminUser } from '@/lib/auth/server'
 
-export async function POST(_req: NextRequest) {
+const ALLOWED_RETURN_PATHS = new Set(['/billing', '/settings'])
+
+export async function POST(req: NextRequest) {
   try {
     // ── 1. Authenticate ────────────────────────────────────────────────────
     const supabase = await createClient()
@@ -12,6 +14,13 @@ export async function POST(_req: NextRequest) {
     if (!user) {
       return Response.json({ error: 'You must be signed in.' }, { status: 401 })
     }
+
+    // ── 1b. Optional return path (validated server-side allowlist) ─────────
+    const body = await req.json().catch(() => ({})) as { returnPath?: unknown }
+    const returnPath =
+      typeof body.returnPath === 'string' && ALLOWED_RETURN_PATHS.has(body.returnPath)
+        ? body.returnPath
+        : '/billing'
 
     if (isAdminUser(user)) {
       return Response.json({ error: 'Admin accounts do not have a billing portal.' }, { status: 400 })
@@ -37,7 +46,7 @@ export async function POST(_req: NextRequest) {
 
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: stripeCustomerId,
-      return_url: `${appUrl}/billing`,
+      return_url: `${appUrl}${returnPath}`,
     })
 
     return Response.json({ url: portalSession.url })
