@@ -17,7 +17,18 @@ function resultsLink(attempt: PremadeAttempt): string {
   return `/premade/sat/form-${formNum}/results/${attempt.id}`
 }
 
-export function PremadeAttemptsSection() {
+interface InProgressRow {
+  local_attempt_id: string
+  form_number: number
+  answers: Record<string, string>
+  started_at: string
+  last_saved_at: string
+  current_phase_tag: string | null
+  rw_m2_type: string | null
+  math_m2_type: string | null
+}
+
+export function PremadeAttemptsSection({ inProgressAttempts = [] }: { inProgressAttempts?: InProgressRow[] }) {
   const [attempts, setAttempts] = useState<PremadeAttempt[]>([])
   const [loaded, setLoaded] = useState(false)
   const [syncing, setSyncing] = useState(false)
@@ -80,6 +91,40 @@ export function PremadeAttemptsSection() {
           </div>
         )}
       </div>
+
+      {inProgressAttempts.length > 0 && (
+        <div className="mb-4">
+          <h3 className="text-sm font-semibold text-slate-700 mb-2">In Progress</h3>
+          <div className="bg-white rounded-xl border border-amber-200 overflow-hidden">
+            {inProgressAttempts.map((row) => {
+              const formNum = row.form_number
+              const answeredCount = Object.values(row.answers ?? {}).filter(v => v?.trim()).length
+              const resumeHref = `/premade/sat/form-${formNum}`
+              return (
+                <div key={row.local_attempt_id} className="flex items-center gap-4 px-6 py-5">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <p className="font-semibold text-slate-900 truncate">SAT Practice — Form {formNum}</p>
+                      <span className="shrink-0 inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-xs font-medium text-amber-700">
+                        In Progress
+                      </span>
+                    </div>
+                    <p className="text-sm text-slate-400 mt-0.5">
+                      {answeredCount} answers saved · Last saved {formatDate(row.last_saved_at)}
+                    </p>
+                  </div>
+                  <Link
+                    href={resumeHref}
+                    className="shrink-0 text-sm font-semibold text-[#1d4ed8] hover:text-[#1e40af] transition-colors"
+                  >
+                    Resume →
+                  </Link>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
         {attempts.length === 0 ? (

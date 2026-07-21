@@ -907,6 +907,22 @@ function NumberedList({ text, className }: { text: string; className?: string })
   return <p className={className}>{text}</p>
 }
 
+// ─── In-progress data shape (from /api/sat/in-progress GET) ──────────────────
+interface InProgressData {
+  localAttemptId: string
+  answers: Record<string, string>
+  bookmarks: string[]
+  strikeouts: Record<string, string[]>
+  rwM2Type: 'easy' | 'hard'
+  mathM2Type: 'easy' | 'hard'
+  currentPhaseTag: string
+  currentSection: string | null
+  currentModule: string | null
+  currentQuestionIdx: number | null
+  moduleDeadlineAt: string | null
+  startedAt: string
+}
+
 // ─── Main component ────────────────────────────────────────────────────────────
 export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, isAdmin = false, allowRetake = true, showUnlockCTA = false, satUpgradeUnlocked = false, countdownText }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean; isAdmin?: boolean; allowRetake?: boolean; showUnlockCTA?: boolean; satUpgradeUnlocked?: boolean; countdownText?: string }) {
   const isHistoryView = !!initialAttempt
@@ -949,6 +965,10 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const attemptIdRef = useRef<string>(initialAttempt?.id ?? '')
   const completedAtRef = useRef<string>(initialAttempt?.completedAt ?? '')
+  const autosaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const lastSavedAnswersRef = useRef<string>('')
+  const [inProgressAttempt, setInProgressAttempt] = useState<InProgressData | null>(null)
+  const [showResumePrompt, setShowResumePrompt] = useState(false)
 
   const rwSection = form.sections[0]
   const mathSection = form.sections[1]
@@ -1004,6 +1024,176 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     setTimerRunning(false)
     if (timerRef.current) clearInterval(timerRef.current)
   }, [])
+
+  // ── Autosave to server ─────────────────────────────────────────────────────
+  const saveToServer = useCallback(async (overrideSecsLeft?: number, overrideTimerRunning?: boolean) => {
+    if (!attemptIdRef.current || isHistoryView) return
+    const formNumber = parseInt(form.id.replace('sat-form-', ''), 10)
+    if (isNaN(formNumber) || formNumber < 1 || formNumber > 5) return
+
+    const phaseTag = phase.tag
+    const sec = phase.tag === 'question' ? phase.section : null
+    const mod = phase.tag === 'question' ? phase.slot : null
+    const qIdx = phase.tag === 'question' ? phase.qIdx : null
+    const currentSecsLeft = overrideSecsLeft !== undefined ? overrideSecsLeft : secsLeft
+    const currentTimerRunning = overrideTimerRunning !== undefined ? overrideTimerRunning : timerRunning
+
+    await fetch('/api/sat/in-progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        formNumber,
+        localAttemptId: attemptIdRef.current,
+        answers,
+        bookmarks: [...bookmarks],
+        strikeouts: Object.fromEntries(Object.entries(strikeouts).map(([k, v]) => [k, [...v]])),
+        rwM2Type,
+        mathM2Type,
+        currentPhaseTag: phaseTag,
+        currentSection: sec,
+        currentModule: mod,
+        currentQuestionIdx: qIdx,
+        secsLeft: currentTimerRunning ? currentSecsLeft : null,
+        timerRunning: currentTimerRunning,
+      }),
+    }).catch(() => { /* silent — localStorage is source of truth until completion */ })
+  }, [form.id, isHistoryView, phase, answers, bookmarks, strikeouts, rwM2Type, mathM2Type, secsLeft, timerRunning])
+
+  // Debounced autosave on answer changes
+  useEffect(() => {
+    if (!attemptIdRef.current || isHistoryView) return
+    const key = JSON.stringify(answers)
+    if (key === lastSavedAnswersRef.current) return
+    lastSavedAnswersRef.current = key
+    if (autosaveTimerRef.current) clearTimeout(autosaveTimerRef.current)
+    autosaveTimerRef.current = setTimeout(() => {
+      saveToServer()
+    }, 500)
+    return () => {
+      if (autosaveTimerRef.current) clearTimeout(autosaveTimerRef.current)
+    }
+  }, [answers, saveToServer, isHistoryView])
+
+  // Save on phase transitions (immediate, not debounced)
+  useEffect(() => {
+    if (!attemptIdRef.current || isHistoryView) return
+    const activePhaseTags = ['rw_directions', 'question', 'rw_break', 'section_break', 'math_directions', 'math_break', 'module_review']
+    if (!activePhaseTags.includes(phase.tag)) return
+    saveToServer()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, isHistoryView])
+
+  // sendBeacon on page unload
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (!attemptIdRef.current || isHistoryView) return
+      const formNumber = parseInt(form.id.replace('sat-form-', ''), 10)
+      if (isNaN(formNumber) || formNumber < 1 || formNumber > 5) return
+      const phaseTag = phase.tag
+      const activePhaseTags = ['rw_directions', 'question', 'rw_break', 'section_break', 'math_directions', 'math_break', 'module_review']
+      if (!activePhaseTags.includes(phaseTag)) return
+      const sec = phaseTag === 'question' ? (phase as { section: string }).section : null
+      const modSlot = phaseTag === 'question' ? (phase as { slot: string }).slot : null
+      const qIdx = phaseTag === 'question' ? (phase as { qIdx: number }).qIdx : null
+      const payload = JSON.stringify({
+        formNumber,
+        localAttemptId: attemptIdRef.current,
+        answers,
+        bookmarks: [...bookmarks],
+        strikeouts: Object.fromEntries(Object.entries(strikeouts).map(([k, v]) => [k, [...v]])),
+        rwM2Type,
+        mathM2Type,
+        currentPhaseTag: phaseTag,
+        currentSection: sec,
+        currentModule: modSlot,
+        currentQuestionIdx: qIdx,
+        secsLeft: timerRunning ? secsLeft : null,
+        timerRunning,
+      })
+      navigator.sendBeacon('/api/sat/in-progress', new Blob([payload], { type: 'application/json' }))
+    }
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [form.id, isHistoryView, phase, answers, bookmarks, strikeouts, rwM2Type, mathM2Type, secsLeft, timerRunning])
+
+  // Check for in-progress attempt on mount
+  useEffect(() => {
+    if (isHistoryView) return
+    const formNumber = parseInt(form.id.replace('sat-form-', ''), 10)
+    if (isNaN(formNumber)) return
+    fetch(`/api/sat/in-progress?formNumber=${formNumber}`)
+      .then(r => r.json())
+      .then((data: { attempt: InProgressData | null }) => {
+        if (data.attempt) {
+          setInProgressAttempt(data.attempt)
+          setShowResumePrompt(true)
+        }
+      })
+      .catch(() => {})
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleResume = useCallback(() => {
+    if (!inProgressAttempt) return
+
+    // Restore all state
+    attemptIdRef.current = inProgressAttempt.localAttemptId
+    setAnswers(inProgressAttempt.answers)
+    setBookmarks(new Set(inProgressAttempt.bookmarks))
+    setStrikeouts(inProgressAttempt.strikeouts as Record<string, ChoiceLabel[]>)
+    setRwM2Type(inProgressAttempt.rwM2Type)
+    setMathM2Type(inProgressAttempt.mathM2Type)
+
+    // Restore phase
+    const phaseTag = inProgressAttempt.currentPhaseTag as SATPhase['tag']
+    let restoredPhase: SATPhase
+    if (phaseTag === 'question' && inProgressAttempt.currentSection && inProgressAttempt.currentModule) {
+      restoredPhase = {
+        tag: 'question',
+        section: inProgressAttempt.currentSection as 'rw' | 'math',
+        slot: inProgressAttempt.currentModule as 'm1' | 'm2',
+        qIdx: inProgressAttempt.currentQuestionIdx ?? 0,
+      }
+    } else if (['rw_directions', 'rw_break', 'section_break', 'math_directions', 'math_break'].includes(phaseTag)) {
+      restoredPhase = { tag: phaseTag } as SATPhase
+    } else if (phaseTag === 'module_review' && inProgressAttempt.currentSection && inProgressAttempt.currentModule) {
+      restoredPhase = {
+        tag: 'module_review',
+        section: inProgressAttempt.currentSection as 'rw' | 'math',
+        slot: inProgressAttempt.currentModule as 'm1' | 'm2',
+      }
+    } else {
+      restoredPhase = { tag: 'rw_directions' }
+    }
+
+    // Compute timer from deadline
+    if (inProgressAttempt.moduleDeadlineAt && phaseTag === 'question') {
+      const deadlineMs = new Date(inProgressAttempt.moduleDeadlineAt).getTime()
+      const nowMs = Date.now()
+      const remainingSecs = Math.max(0, Math.floor((deadlineMs - nowMs) / 1000))
+      if (remainingSecs <= 0) {
+        // Timer expired — advance to module review
+        const section = inProgressAttempt.currentSection as 'rw' | 'math'
+        const slot = inProgressAttempt.currentModule as 'm1' | 'm2'
+        restoredPhase = { tag: 'module_review', section, slot }
+      } else {
+        setSecsLeft(remainingSecs)
+        setTimerRunning(true)
+      }
+    }
+
+    setPhase(restoredPhase)
+    setShowResumePrompt(false)
+    setInProgressAttempt(null)
+  }, [inProgressAttempt])
+
+  const handleStartFresh = useCallback(() => {
+    if (!inProgressAttempt) return
+    const formNumber = parseInt(form.id.replace('sat-form-', ''), 10)
+    fetch(`/api/sat/in-progress?formNumber=${formNumber}`, { method: 'DELETE' }).catch(() => {})
+    setShowResumePrompt(false)
+    setInProgressAttempt(null)
+  }, [inProgressAttempt, form.id])
 
   // ── Routing ────────────────────────────────────────────────────────────────
   const handleRWM1Complete = useCallback(() => {
@@ -1203,8 +1393,11 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     }
     saveAttempt(attempt)
 
-    // Fire-and-forget: persist to Supabase (non-blocking, failures are silent)
+    // Delete in-progress record now that the attempt is complete
     const formNumber = parseInt(form.id.replace('sat-form-', ''), 10)
+    fetch(`/api/sat/in-progress?formNumber=${formNumber}`, { method: 'DELETE' }).catch(() => {})
+
+    // Fire-and-forget: persist to Supabase (non-blocking, failures are silent)
     const rwSkillBreakdown = buildSkillBreakdown([rwM1Module, rwM2Module], answers)
     const mathSkillBreakdown = buildSkillBreakdown([mathM1Module, mathM2Module], answers)
     const weakSkills = [
@@ -1358,6 +1551,38 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   </div>
                 </div>
               </div>
+              {showResumePrompt && inProgressAttempt && (
+                <div className="border-t border-amber-100 bg-amber-50 px-8 py-5">
+                  <div className="flex items-start gap-3">
+                    <div className="shrink-0 mt-0.5 h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center">
+                      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4 text-amber-600">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-slate-900 text-[14px]">Resume your previous attempt?</p>
+                      <p className="text-[12px] text-slate-500 mt-0.5">
+                        Started {new Date(inProgressAttempt.startedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}{' '}
+                        · {Object.keys(inProgressAttempt.answers).length} answers saved
+                      </p>
+                      <div className="flex items-center gap-3 mt-3">
+                        <button
+                          onClick={handleResume}
+                          className="bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+                        >
+                          Resume Attempt
+                        </button>
+                        <button
+                          onClick={handleStartFresh}
+                          className="text-slate-500 hover:text-slate-700 text-[13px] font-medium transition-colors"
+                        >
+                          Start Fresh
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
               <div className="px-8 pb-6 space-y-3 border-t border-slate-100 pt-5">
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
@@ -1388,7 +1613,10 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                 <div className="flex items-center justify-between pt-2">
                   <p className="text-[10px] text-slate-400">Tip: Use ← → to move between questions</p>
                   <button
-                    onClick={() => setPhase({ tag: 'rw_directions' })}
+                    onClick={() => {
+                      attemptIdRef.current = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
+                      setPhase({ tag: 'rw_directions' })
+                    }}
                     disabled={!consentTerms || !consentAge}
                     className="bg-[#1d4ed8] hover:bg-[#1e40af] disabled:opacity-40 disabled:cursor-not-allowed text-white text-[14px] font-semibold px-6 py-2.5 rounded-lg transition-colors"
                   >
@@ -1732,7 +1960,6 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
 
     const handleContinue = () => {
       if (isFinal) {
-        attemptIdRef.current = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
         completedAtRef.current = new Date().toISOString()
         setPhase({ tag: 'feedback' })
       } else if (phase.section === 'rw' && phase.slot === 'm1') {
