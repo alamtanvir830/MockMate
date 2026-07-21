@@ -938,6 +938,12 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
   const [feedbackTouched, setFeedbackTouched] = useState({ rwM1: false, rwM2: false, mathM1: false, mathM2: false })
   const [feedbackPremiumInterest, setFeedbackPremiumInterest] = useState<'yes' | 'no' | null>(null)
   const [feedbackPremiumTouched, setFeedbackPremiumTouched] = useState(false)
+  const [feedbackReferredByFriend, setFeedbackReferredByFriend] = useState<boolean | null>(null)
+  const [feedbackReferralTouched, setFeedbackReferralTouched] = useState(false)
+  const [feedbackReferrerName, setFeedbackReferrerName] = useState('')
+  const [feedbackReferrerEmail, setFeedbackReferrerEmail] = useState('')
+  const [feedbackReferrerNameTouched, setFeedbackReferrerNameTouched] = useState(false)
+  const [feedbackReferrerEmailTouched, setFeedbackReferrerEmailTouched] = useState(false)
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false)
   const [feedbackError, setFeedbackError] = useState('')
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -1839,16 +1845,38 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     ]
 
     const isFieldValid = (v: string) => v.trim().length >= 50
-    const allFeedbackValid = feedbackFields.every(f => isFieldValid(f.value)) && feedbackPremiumInterest !== null
+    const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
+
+    const referralNameValid = feedbackReferredByFriend !== true || feedbackReferrerName.trim().length > 0
+    const referralEmailValid = feedbackReferrerEmail.trim() === '' || isValidEmail(feedbackReferrerEmail.trim())
+
+    const allFeedbackValid = (
+      feedbackFields.every(f => isFieldValid(f.value)) &&
+      feedbackPremiumInterest !== null &&
+      feedbackReferredByFriend !== null &&
+      referralNameValid &&
+      referralEmailValid
+    )
 
     const handleFeedbackSubmit = async () => {
       setFeedbackTouched({ rwM1: true, rwM2: true, mathM1: true, mathM2: true })
       setFeedbackPremiumTouched(true)
+      setFeedbackReferralTouched(true)
+      if (feedbackReferredByFriend === true) {
+        setFeedbackReferrerNameTouched(true)
+        setFeedbackReferrerEmailTouched(true)
+      }
       if (!allFeedbackValid) return
       setFeedbackSubmitting(true)
       setFeedbackError('')
       try {
         const formNumber = parseInt(form.id.replace('sat-form-', ''), 10)
+        const referrerFullName = (feedbackReferredByFriend === true && feedbackReferrerName.trim())
+          ? feedbackReferrerName.trim()
+          : null
+        const referrerEmail = (feedbackReferredByFriend === true && feedbackReferrerEmail.trim())
+          ? feedbackReferrerEmail.trim().toLowerCase()
+          : null
         const res = await fetch('/api/sat/module-feedback', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1862,6 +1890,9 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
             rwModule2Path:             rwM2Type,
             mathModule2Path:           mathM2Type,
             satPremiumInterestAnswer:  feedbackPremiumInterest,
+            referredByFriend:          feedbackReferredByFriend,
+            referrerFullName,
+            referrerEmail,
           }),
         })
         if (!res.ok) {
@@ -1876,6 +1907,14 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
         setFeedbackSubmitting(false)
       }
     }
+
+    const SAT_PREMIUM_FEATURES = [
+      'SAT Exam Forms 1–5',
+      '700+ question bank',
+      'SAT Reading & Writing Academy',
+      'SAT Math & Desmos Academy',
+      'Unlimited access while subscribed',
+    ]
 
     return (
       <div className="min-h-screen bg-slate-50 flex items-start justify-center py-12 px-4">
@@ -1894,15 +1933,18 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                 const invalid = touched && count < 50
                 return (
                   <div key={field.key}>
-                    <label className="block text-[13px] font-semibold text-slate-700 mb-1.5">
+                    <label htmlFor={`feedback-${field.key}`} className="block text-[13px] font-semibold text-slate-700 mb-1.5">
                       {field.label}
                     </label>
                     <textarea
+                      id={`feedback-${field.key}`}
                       value={field.value}
                       onChange={e => field.setter(e.target.value)}
                       onBlur={() => setFeedbackTouched(p => ({ ...p, [field.key]: true }))}
                       placeholder="How accurate, clear, difficult, or confusing did this module feel?"
                       rows={3}
+                      aria-describedby={invalid ? `feedback-${field.key}-error` : undefined}
+                      aria-invalid={invalid || undefined}
                       className={cn(
                         'w-full rounded-lg border px-3 py-2.5 text-[13px] text-slate-800 resize-none focus:outline-none focus:ring-2 transition-colors',
                         invalid
@@ -1912,7 +1954,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                     />
                     <div className="flex items-center justify-between mt-1">
                       {invalid
-                        ? <span className="text-[11px] text-red-700 font-medium">Minimum 50 characters required.</span>
+                        ? <span id={`feedback-${field.key}-error`} role="alert" className="text-[11px] text-red-700 font-medium">Minimum 50 characters required.</span>
                         : <span />
                       }
                       <span className={cn('text-[11px] ml-auto', count >= 50 ? 'text-green-600' : 'text-slate-400')}>
@@ -1923,36 +1965,153 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                 )
               })}
 
-              {/* SAT Premium interest question */}
-              <div className="pt-2 border-t border-slate-100">
-                <p className="text-[13px] font-semibold text-slate-700 mb-3">
-                  Would you be interested in SAT Exam Forms 2 through 5 and a 700+ question bank with growing questions?
-                </p>
-                <div className="flex gap-4">
-                  {(['yes', 'no'] as const).map(opt => (
-                    <label key={opt} className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="satPremiumInterest"
-                        value={opt}
-                        checked={feedbackPremiumInterest === opt}
-                        onChange={() => setFeedbackPremiumInterest(opt)}
-                        className="accent-indigo-600"
-                      />
-                      <span className="text-[13px] text-slate-700 capitalize">{opt === 'yes' ? 'Yes' : 'No'}</span>
-                    </label>
-                  ))}
+              {/* SAT Premium interest — gold-styled card */}
+              <div className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <svg
+                    className="h-5 w-5 shrink-0 text-amber-500"
+                    fill="white"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.8}
+                    aria-hidden="true"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                  </svg>
+                  <p id="premium-question" className="text-[14px] font-semibold text-slate-800">
+                    Would you be interested in{' '}
+                    <span className="text-amber-600 font-bold">SAT Premium</span>?
+                  </p>
                 </div>
-                {feedbackPremiumTouched && feedbackPremiumInterest === null && (
-                  <p className="text-[11px] text-red-700 font-medium mt-1">Please select Yes or No.</p>
-                )}
 
-                {feedbackPremiumInterest === 'yes' && (
-                  <div className="mt-3 bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 flex gap-2 items-start">
-                    <span className="text-amber-500 text-[16px] leading-none mt-0.5">★</span>
-                    <p className="text-[13px] text-amber-800 leading-relaxed">
-                      We will contact you about SAT Premium! If you cannot wait and want it right now, please click &quot;Get SAT Premium&quot; on the left-hand side.
-                    </p>
+                <p className="text-[12px] font-semibold text-amber-700 mb-2">SAT Premium includes:</p>
+                <ul className="space-y-1.5 mb-4">
+                  {SAT_PREMIUM_FEATURES.map(feature => (
+                    <li key={feature} className="flex items-center gap-2 text-[12px] text-amber-800">
+                      <svg className="h-3.5 w-3.5 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                      </svg>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <div role="group" aria-labelledby="premium-question">
+                  <div className="flex gap-5">
+                    {(['yes', 'no'] as const).map(opt => (
+                      <label key={opt} className="flex items-center gap-2 cursor-pointer select-none">
+                        <input
+                          type="radio"
+                          name="satPremiumInterest"
+                          value={opt}
+                          checked={feedbackPremiumInterest === opt}
+                          onChange={() => setFeedbackPremiumInterest(opt)}
+                          className="accent-amber-600 h-4 w-4"
+                        />
+                        <span className="text-[13px] text-slate-700 font-medium">{opt === 'yes' ? 'Yes' : 'No'}</span>
+                      </label>
+                    ))}
+                  </div>
+                  {feedbackPremiumTouched && feedbackPremiumInterest === null && (
+                    <p role="alert" className="text-[11px] text-red-700 font-medium mt-1.5">Please select Yes or No.</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Friend referral question */}
+              <div className="pt-4 border-t border-slate-100">
+                <fieldset>
+                  <legend className="block text-[13px] font-semibold text-slate-700 mb-3">
+                    Did a friend refer you to MockMate?
+                  </legend>
+                  <div className="flex gap-5">
+                    {([true, false] as const).map(val => (
+                      <label key={String(val)} className="flex items-center gap-2 cursor-pointer select-none">
+                        <input
+                          type="radio"
+                          name="referredByFriend"
+                          value={String(val)}
+                          checked={feedbackReferredByFriend === val}
+                          onChange={() => {
+                            setFeedbackReferredByFriend(val)
+                            if (!val) {
+                              setFeedbackReferrerName('')
+                              setFeedbackReferrerEmail('')
+                              setFeedbackReferrerNameTouched(false)
+                              setFeedbackReferrerEmailTouched(false)
+                            }
+                          }}
+                          className="accent-indigo-600 h-4 w-4"
+                        />
+                        <span className="text-[13px] text-slate-700 font-medium">{val ? 'Yes' : 'No'}</span>
+                      </label>
+                    ))}
+                  </div>
+                  {feedbackReferralTouched && feedbackReferredByFriend === null && (
+                    <p role="alert" className="text-[11px] text-red-700 font-medium mt-1.5">Please select Yes or No.</p>
+                  )}
+                </fieldset>
+
+                {feedbackReferredByFriend === true && (
+                  <div className="mt-4 space-y-4">
+                    <div>
+                      <label htmlFor="referrer-name" className="block text-[13px] font-semibold text-slate-700 mb-1.5">
+                        Friend&apos;s full name
+                        <span className="text-red-500 ml-0.5" aria-hidden="true">*</span>
+                      </label>
+                      <input
+                        id="referrer-name"
+                        type="text"
+                        value={feedbackReferrerName}
+                        onChange={e => setFeedbackReferrerName(e.target.value.slice(0, 150))}
+                        onBlur={() => setFeedbackReferrerNameTouched(true)}
+                        placeholder="Enter your friend's full name"
+                        maxLength={150}
+                        aria-required="true"
+                        aria-describedby={feedbackReferrerNameTouched && !referralNameValid ? 'referrer-name-error' : undefined}
+                        aria-invalid={feedbackReferrerNameTouched && !referralNameValid || undefined}
+                        className={cn(
+                          'w-full rounded-lg border px-3 py-2.5 text-[13px] text-slate-800 focus:outline-none focus:ring-2 transition-colors',
+                          feedbackReferrerNameTouched && !referralNameValid
+                            ? 'bg-red-50 border-red-200 focus:ring-red-200'
+                            : 'bg-white border-slate-200 focus:ring-indigo-200'
+                        )}
+                      />
+                      {feedbackReferrerNameTouched && !referralNameValid && (
+                        <p id="referrer-name-error" role="alert" className="text-[11px] text-red-700 font-medium mt-1">
+                          Please enter the full name of the friend who referred you.
+                        </p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label htmlFor="referrer-email" className="block text-[13px] font-semibold text-slate-700 mb-1.5">
+                        Friend&apos;s email address{' '}
+                        <span className="text-slate-400 font-normal">(optional)</span>
+                      </label>
+                      <input
+                        id="referrer-email"
+                        type="email"
+                        value={feedbackReferrerEmail}
+                        onChange={e => setFeedbackReferrerEmail(e.target.value.slice(0, 254))}
+                        onBlur={() => setFeedbackReferrerEmailTouched(true)}
+                        placeholder="friend@example.com"
+                        maxLength={254}
+                        aria-describedby={feedbackReferrerEmailTouched && !referralEmailValid ? 'referrer-email-error' : undefined}
+                        aria-invalid={feedbackReferrerEmailTouched && !referralEmailValid || undefined}
+                        className={cn(
+                          'w-full rounded-lg border px-3 py-2.5 text-[13px] text-slate-800 focus:outline-none focus:ring-2 transition-colors',
+                          feedbackReferrerEmailTouched && !referralEmailValid
+                            ? 'bg-red-50 border-red-200 focus:ring-red-200'
+                            : 'bg-white border-slate-200 focus:ring-indigo-200'
+                        )}
+                      />
+                      {feedbackReferrerEmailTouched && !referralEmailValid && (
+                        <p id="referrer-email-error" role="alert" className="text-[11px] text-red-700 font-medium mt-1">
+                          Please enter a valid email address or leave this field blank.
+                        </p>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>

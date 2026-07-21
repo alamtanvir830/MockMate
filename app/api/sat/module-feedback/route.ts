@@ -12,6 +12,9 @@ interface ModuleFeedbackBody {
   rwModule2Path?: string
   mathModule2Path?: string
   satPremiumInterestAnswer?: string
+  referredByFriend?: boolean
+  referrerFullName?: string | null
+  referrerEmail?: string | null
 }
 
 export async function POST(req: NextRequest) {
@@ -51,6 +54,44 @@ export async function POST(req: NextRequest) {
       )
     }
 
+    // Validate referral fields
+    const referredByFriend = body.referredByFriend
+    if (typeof referredByFriend !== 'boolean') {
+      return NextResponse.json(
+        { error: 'referredByFriend must be true or false.' },
+        { status: 400 }
+      )
+    }
+    let referrerFullName: string | null = null
+    let referrerEmail: string | null = null
+    if (referredByFriend) {
+      const rawName = typeof body.referrerFullName === 'string' ? body.referrerFullName.trim() : ''
+      if (!rawName) {
+        return NextResponse.json(
+          { error: 'referrerFullName is required when referredByFriend is true.' },
+          { status: 400 }
+        )
+      }
+      if (rawName.length > 150) {
+        return NextResponse.json(
+          { error: 'referrerFullName must be 150 characters or fewer.' },
+          { status: 400 }
+        )
+      }
+      referrerFullName = rawName
+
+      const rawEmail = typeof body.referrerEmail === 'string' ? body.referrerEmail.trim() : ''
+      if (rawEmail) {
+        if (rawEmail.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rawEmail)) {
+          return NextResponse.json(
+            { error: 'referrerEmail must be a valid email address.' },
+            { status: 400 }
+          )
+        }
+        referrerEmail = rawEmail.toLowerCase()
+      }
+    }
+
     const { user_name, user_email } = await resolveUserIdentity(supabase, user)
 
     const rw1 = (body.rwModule1Feedback as string).trim()
@@ -78,6 +119,9 @@ export async function POST(req: NextRequest) {
         math_module_2_char_count:     m2.length,
         sat_premium_interest_answer:  premiumAnswer,
         interested_in_sat_premium:    premiumAnswer === 'yes',
+        referred_by_friend:           referredByFriend,
+        referrer_full_name:           referrerFullName,
+        referrer_email:               referrerEmail,
       })
 
     if (error) {

@@ -19,6 +19,9 @@ interface FeedbackRow {
   math_module_2_char_count: number | null
   interested_in_sat_premium: boolean | null
   sat_premium_interest_answer: string | null
+  referred_by_friend: boolean | null
+  referrer_full_name: string | null
+  referrer_email: string | null
 }
 
 interface AttemptScores {
@@ -45,7 +48,8 @@ export async function GET(req: NextRequest) {
       'rw_module_1_feedback, rw_module_2_feedback, math_module_1_feedback, math_module_2_feedback, ' +
       'rw_module_2_path, math_module_2_path, ' +
       'rw_module_1_char_count, rw_module_2_char_count, math_module_1_char_count, math_module_2_char_count, ' +
-      'interested_in_sat_premium, sat_premium_interest_answer'
+      'interested_in_sat_premium, sat_premium_interest_answer, ' +
+      'referred_by_friend, referrer_full_name, referrer_email'
     )
     .order('created_at', { ascending: false })
 
