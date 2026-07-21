@@ -54,6 +54,12 @@ export default async function ExamsPage() {
     for (const a of myAttempts ?? []) completedSharedIds.add(a.exam_id)
   }
 
+  // In-progress SAT attempts
+  const { data: inProgressRows } = await supabase
+    .from('sat_in_progress_attempts')
+    .select('local_attempt_id, form_number, answers, started_at, last_saved_at, current_phase_tag, rw_m2_type, math_m2_type')
+    .order('last_saved_at', { ascending: false })
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -150,7 +156,7 @@ export default async function ExamsPage() {
       </Card>
 
       {/* Premade Exams */}
-      <PremadeAttemptsSection />
+      <PremadeAttemptsSection inProgressAttempts={inProgressRows ?? []} />
 
       {/* Shared with you */}
       {sharedExams.length > 0 && (
