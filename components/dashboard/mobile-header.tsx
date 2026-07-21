@@ -16,6 +16,7 @@ const navItems = [
   { href: '/notes', label: 'Personal Notes' },
   { href: '/groups', label: 'My Groups' },
   { href: '/performance', label: 'Performance' },
+  { href: '/exams/create', label: 'Create My Own Exam' },
   { href: '/billing', label: 'Get SAT Premium', premium: true },
   { href: '/settings', label: 'Settings' },
 ]

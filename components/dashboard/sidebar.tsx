@@ -105,6 +105,15 @@ const navItems: NavItem[] = [
     ),
   },
   {
+    href: '/exams/create',
+    label: 'Create My Own Exam',
+    icon: (
+      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+  },
+  {
     href: '/billing',
     label: 'Get SAT Premium',
     premium: true,
