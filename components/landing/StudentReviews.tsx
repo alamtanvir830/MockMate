@@ -133,8 +133,9 @@ export async function HeroReviewsPanel() {
   return (
     <div className="w-full">
       <div className="mb-4">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-600 mb-1">
-          Student Feedback After Taking MockMate&apos;s SAT Practice Exam
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-600 mb-1 leading-snug">
+          Student Feedback After Taking{' '}
+          <span className="text-slate-900">Mock</span><span>Mate</span>&apos;s SAT Practice Exam
         </p>
         <p className="text-sm font-semibold text-slate-700">
           Reviewed by high scorers and former test takers
