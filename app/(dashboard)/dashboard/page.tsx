@@ -11,11 +11,11 @@ import { QBHistorySection } from '@/components/dashboard/QBHistorySection'
 import { isMockMateAdmin } from '@/lib/auth/admin'
 import { hasSatPremium, isLegacyLifetimeUser } from '@/lib/auth/server'
 import { EmailVerificationBanner } from '@/components/auth/EmailVerificationBanner'
-import { getOrCreateForm1Access } from '@/lib/premade-exams/sat/form1-access'
-import { SatForm1BannerCountdown, SatForm1BadgeCountdown } from '@/components/sat/SatForm1Countdown'
+import { getOrCreateFreeExamAccess, isFreeExamExpired } from '@/lib/premade-exams/sat/free-exam-access'
+import { SatFreeExamBannerCountdown, SatFreeExamBadgeCountdown } from '@/components/sat/SatFreeExamCountdown'
 import type { Exam } from '@/types'
 
-type SatForm1CardState =
+type SatCardState =
   | { tag: 'admin' }
   | { tag: 'upgraded' }
   | { tag: 'completed'; attemptId: string }
@@ -92,44 +92,44 @@ export default async function DashboardPage() {
   const fullName = user?.user_metadata?.full_name as string | undefined
   const displayName = fullName ?? user?.email?.split('@')[0] ?? 'there'
 
-  // SAT Form 1 card state
+  // SAT card state (tracks Form 2 free access after migration)
   const isAdminUser = isMockMateAdmin(user)
   // Use freshly-read metadata so subscription users get immediate access after webhook fires
   const freshUserForChecks = { email: user?.email, user_metadata: currentMeta }
   const hasPremium = hasSatPremium(freshUserForChecks)
   const isLegacyLifetime = isLegacyLifetimeUser(freshUserForChecks)
-  let satForm1State: SatForm1CardState = { tag: 'default' }
+  let satCardState: SatCardState = { tag: 'default' }
 
   if (user) {
     if (isAdminUser) {
-      satForm1State = { tag: 'admin' }
+      satCardState = { tag: 'admin' }
     } else if (hasPremium) {
-      satForm1State = { tag: 'upgraded' }
+      satCardState = { tag: 'upgraded' }
     } else {
-      // For free users: create/update the 48-hour access row on first dashboard visit
+      // For free users: create/update the 48-hour Form 2 access row on first dashboard visit
       const [completedResult, access] = await Promise.all([
         supabase
           .from('standardized_exam_attempts')
           .select('local_attempt_id')
           .eq('user_id', user.id)
           .eq('exam_type', 'SAT')
-          .eq('form_number', 1)
+          .eq('form_number', 2)
           .not('completed_at', 'is', null)
           .order('completed_at', { ascending: false })
           .limit(1)
           .maybeSingle(),
-        getOrCreateForm1Access(supabase, user),
+        getOrCreateFreeExamAccess(supabase, user),
       ])
 
       const attemptId = completedResult.data?.local_attempt_id ?? null
       const expiresAt = access.access_expires_at
 
       if (attemptId) {
-        satForm1State = { tag: 'completed', attemptId }
-      } else if (new Date(expiresAt) <= new Date()) {
-        satForm1State = { tag: 'expired' }
+        satCardState = { tag: 'completed', attemptId }
+      } else if (isFreeExamExpired({ access_expires_at: expiresAt })) {
+        satCardState = { tag: 'expired' }
       } else {
-        satForm1State = { tag: 'active', expiresAt }
+        satCardState = { tag: 'active', expiresAt }
       }
     }
   }
@@ -186,34 +186,34 @@ export default async function DashboardPage() {
         <EmailVerificationBanner email={user.email} />
       )}
 
-      {/* SAT Form 1 access banner — top of page, free non-admin non-premium users only */}
+      {/* SAT Form 2 access banner — top of page, free non-admin non-premium users only */}
       {user && !isAdminUser && !hasPremium && (
-        satForm1State.tag === 'active' ? (
+        satCardState.tag === 'active' ? (
           <div className="rounded-xl bg-red-50 border border-red-200 p-5">
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div className="min-w-0">
                 <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-1">Limited Time</p>
                 <p className="text-[17px] font-bold text-red-900 leading-snug mb-1">
-                  <SatForm1BannerCountdown expiresAt={satForm1State.expiresAt} />
+                  <SatFreeExamBannerCountdown expiresAt={satCardState.expiresAt} />
                 </p>
                 <p className="text-[12px] text-red-700 leading-relaxed">
-                  Your free SAT Form 1 access is limited-time. Complete the exam before the timer expires to keep your results.
+                  Your free SAT Form 2 access is limited-time. Complete the exam before the timer expires to keep your results.
                 </p>
               </div>
-              <Link href="/premade/sat/form-1" className="shrink-0">
+              <Link href="/premade/sat/form-2" className="shrink-0">
                 <button className="rounded-lg bg-red-600 hover:bg-red-700 text-white text-sm font-bold px-5 py-2.5 transition-colors whitespace-nowrap">
-                  Start SAT Form 1
+                  Start SAT Form 2
                 </button>
               </Link>
             </div>
           </div>
-        ) : satForm1State.tag === 'expired' ? (
+        ) : satCardState.tag === 'expired' ? (
           <div className="rounded-xl bg-red-50 border border-red-200 p-5">
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div className="min-w-0">
                 <p className="text-[10px] font-bold text-red-400 uppercase tracking-widest mb-1">Access Expired</p>
                 <p className="text-[17px] font-bold text-red-900 leading-snug mb-1">
-                  Your free access to SAT Form 1 has expired
+                  Your free access to SAT Form 2 has expired
                 </p>
                 <p className="text-[12px] text-red-700 leading-relaxed">
                   If you would like unlimited access, click Get Unlimited Access below.
@@ -226,16 +226,16 @@ export default async function DashboardPage() {
               </Link>
             </div>
           </div>
-        ) : satForm1State.tag === 'completed' ? (
+        ) : satCardState.tag === 'completed' ? (
           <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-5">
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div className="min-w-0">
                 <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest mb-1">Completed</p>
-                <p className="text-[15px] font-bold text-emerald-900 leading-snug mb-1">SAT Form 1 completed</p>
+                <p className="text-[15px] font-bold text-emerald-900 leading-snug mb-1">SAT Form 2 completed</p>
                 <p className="text-[12px] text-emerald-700">Your results are saved and available anytime.</p>
               </div>
               <div className="flex gap-2 shrink-0 flex-wrap">
-                <Link href={`/premade/sat/form-1/results/${satForm1State.attemptId}`}>
+                <Link href={`/premade/sat/form-2/results/${satCardState.attemptId}`}>
                   <button className="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2 transition-colors whitespace-nowrap">
                     View Results
                   </button>
@@ -298,29 +298,29 @@ export default async function DashboardPage() {
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           {/* SAT card — primary CTA */}
-          <div className={`rounded-xl border-2 bg-white p-5 flex flex-col gap-3 shadow-sm ${satForm1State.tag === 'expired' ? 'border-slate-200' : 'border-blue-200 shadow-blue-50'}`}>
+          <div className={`rounded-xl border-2 bg-white p-5 flex flex-col gap-3 shadow-sm ${satCardState.tag === 'expired' ? 'border-slate-200' : 'border-blue-200 shadow-blue-50'}`}>
             <div className="flex items-start justify-between gap-3">
-              <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${satForm1State.tag === 'expired' ? 'bg-slate-100 text-slate-400' : 'bg-blue-100 text-blue-600'}`}>
+              <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${satCardState.tag === 'expired' ? 'bg-slate-100 text-slate-400' : 'bg-blue-100 text-blue-600'}`}>
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                 </svg>
               </div>
               <div className="flex gap-1.5 shrink-0 flex-wrap justify-end">
-                {satForm1State.tag === 'completed' && (
+                {satCardState.tag === 'completed' && (
                   <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-xs font-semibold text-emerald-700">Completed</span>
                 )}
-                {satForm1State.tag === 'admin' && (
+                {satCardState.tag === 'admin' && (
                   <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-xs font-semibold text-amber-700">Admin</span>
                 )}
-                {satForm1State.tag === 'upgraded' && (
+                {satCardState.tag === 'upgraded' && (
                   <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-200 px-2 py-0.5 text-xs font-semibold text-indigo-700">
                     {isLegacyLifetime ? 'Lifetime' : 'Premium'}
                   </span>
                 )}
-                {satForm1State.tag === 'expired' && (
+                {satCardState.tag === 'expired' && (
                   <span className="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-xs font-semibold text-slate-500">Expired</span>
                 )}
-                {(satForm1State.tag === 'active' || satForm1State.tag === 'default') && (
+                {(satCardState.tag === 'active' || satCardState.tag === 'default') && (
                   <>
                     <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-xs font-semibold text-emerald-700">Free</span>
                     <span className="inline-flex items-center rounded-full bg-blue-50 border border-blue-200 px-2 py-0.5 text-xs font-medium text-blue-600">Pre-made</span>
@@ -330,49 +330,49 @@ export default async function DashboardPage() {
             </div>
 
             <div className="flex-1">
-              <p className={`font-bold text-base leading-snug ${satForm1State.tag === 'expired' ? 'text-slate-400' : 'text-slate-900'}`}>
-                {satForm1State.tag === 'upgraded'
+              <p className={`font-bold text-base leading-snug ${satCardState.tag === 'expired' ? 'text-slate-400' : 'text-slate-900'}`}>
+                {satCardState.tag === 'upgraded'
                   ? isLegacyLifetime ? 'SAT Practice Forms — lifetime access' : 'SAT Practice Forms — active subscription'
                   : 'Take your first free SAT exam'}
               </p>
-              {satForm1State.tag === 'admin' && (
+              {satCardState.tag === 'admin' && (
                 <p className="mt-1 text-xs text-amber-600">Admin testing mode: timer disabled</p>
               )}
-              {satForm1State.tag === 'upgraded' && (
+              {satCardState.tag === 'upgraded' && (
                 <p className="mt-1 text-xs text-indigo-600 font-medium">
                   {isLegacyLifetime ? 'Lifetime SAT access unlocked — all forms available' : 'SAT Premium active — all forms available'}
                 </p>
               )}
-              {satForm1State.tag === 'completed' && (
-                <p className="mt-1 text-xs text-emerald-600 font-medium">Free SAT Form 1 completed</p>
+              {satCardState.tag === 'completed' && (
+                <p className="mt-1 text-xs text-emerald-600 font-medium">Free SAT Form 2 completed</p>
               )}
-              {satForm1State.tag === 'active' && (
+              {satCardState.tag === 'active' && (
                 <div className="mt-2 flex items-start gap-1.5 rounded-lg bg-red-50 border border-red-200 px-2.5 py-2">
                   <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 text-red-500 shrink-0 mt-0.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
                   </svg>
                   <p className="text-xs font-semibold text-red-700 leading-snug">
-                    Limited time: <SatForm1BadgeCountdown expiresAt={satForm1State.expiresAt} /> to complete your free SAT Form 1
+                    Limited time: <SatFreeExamBadgeCountdown expiresAt={satCardState.expiresAt} /> to complete your free SAT Form 2
                   </p>
                 </div>
               )}
-              {satForm1State.tag === 'expired' && (
+              {satCardState.tag === 'expired' && (
                 <>
-                  <p className="mt-1 text-xs text-red-500 font-medium">Free SAT Form 1 access expired</p>
+                  <p className="mt-1 text-xs text-red-500 font-medium">Free SAT Form 2 access expired</p>
                   <p className="mt-1 text-xs text-slate-400">Get SAT Premium for unlimited access to all SAT forms and the 700+ question SAT Premium Question Bank.</p>
                 </>
               )}
               <p className="mt-2 text-xs text-slate-400">Adaptive · Full length · 98 questions · 2 hr 14 min</p>
-              <p className="mt-0.5 text-xs text-slate-400">Forms 1–5 available — start free with Form 1.</p>
+              <p className="mt-0.5 text-xs text-slate-400">Forms 1–5 available — start free with Form 2.</p>
             </div>
 
-            {satForm1State.tag === 'completed' ? (
-              <Link href={`/premade/sat/form-1/results/${satForm1State.attemptId}`}>
+            {satCardState.tag === 'completed' ? (
+              <Link href={`/premade/sat/form-2/results/${satCardState.attemptId}`}>
                 <button className="w-full rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold px-4 py-2.5 transition-colors">
                   View Results →
                 </button>
               </Link>
-            ) : satForm1State.tag === 'expired' ? (
+            ) : satCardState.tag === 'expired' ? (
               <Link href="/billing">
                 <button className="w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2.5 transition-colors">
                   Get Unlimited Access

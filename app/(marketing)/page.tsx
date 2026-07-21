@@ -99,7 +99,7 @@ export default function LandingPage() {
                       size="lg"
                       className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700"
                     >
-                      Start Free SAT Form 1
+                      Start Free SAT Form 2
                       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                       </svg>
@@ -235,7 +235,7 @@ export default function LandingPage() {
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/signup">
                 <Button size="lg" className="bg-emerald-600 hover:bg-emerald-500">
-                  Start Free SAT Form 1
+                  Start Free SAT Form 2
                 </Button>
               </Link>
               <Link href="/pricing">
@@ -408,7 +408,7 @@ const steps = [
     number: '1',
     title: 'Create a free account',
     description:
-      'Sign up in under 30 seconds. No credit card required to start SAT Form 1.',
+      'Sign up in under 30 seconds. No credit card required to start SAT Form 2.',
   },
   {
     number: '2',
