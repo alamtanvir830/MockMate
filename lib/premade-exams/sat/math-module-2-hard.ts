@@ -20,7 +20,7 @@ export const mathModule2HardQuestions: MathQuestion[] = [
       { label: 'D', text: '9' },
     ],
     correctAnswer: 'B',
-    explanation: 'Divide the second equation by 3: 3x − 4y = 6. For no solution, the lines must be parallel (same slope, different constants). The first line 3x − ky = 8 has slope 3/k; the second has slope 3/4. Setting 3/k = 3/4 gives k = 4. With k = 4: the equations are 3x − 4y = 8 and 3x − 4y = 6 — parallel with different constants, confirming no solution.',
+    explanation: 'Divide the second equation by 3: 3x − 4y = 6. For no solution, the lines must be parallel (same slope, different constants). The first line 3x − ky = 8 has slope 3/k; the second has slope 3/4. Setting 3/k = 3/4 gives k = 4. With k = 4: the equations are 3x − 4y = 8 and 3x − 4y = 6 — parallel with different constants, confirming no solution.\n\nDesmos method: Enter y = (3x − 8)/k and y = (9x − 18)/12 using a slider for k. Increase k from 1. At k = 4 both lines become parallel — you can see them side by side with no intersection point.',
     wrongAnswerExplanations: {
       A: 'If k = 3, slope of first line = 1 ≠ 3/4 — the lines intersect (one solution).',
       C: 'If k = 6, slope of first line = 1/2 ≠ 3/4 — the lines intersect.',
@@ -290,23 +290,14 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-hard',
     domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
+    skill: 'Nonlinear functions',
     difficulty: 'hard',
-    type: 'multiple_choice',
-    question: 'For x ≠ 2 and x ≠ −3, which expression is equivalent to (x² + x − 6)/(x² − 4)?',
-    choices: [
-      { label: 'A', text: '(x + 3)/(x + 2)' },
-      { label: 'B', text: '(x − 3)/(x − 2)' },
-      { label: 'C', text: '(x + 3)/(x − 2)' },
-      { label: 'D', text: '(x − 2)/(x + 2)' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Factor the numerator: x² + x − 6 = (x + 3)(x − 2). Factor the denominator: x² − 4 = (x + 2)(x − 2). Cancel the common factor (x − 2): result is (x + 3)/(x + 2).',
-    wrongAnswerExplanations: {
-      B: '(x − 3)(x − 2) = x² − 5x + 6, not x² + x − 6; the sign on 3 is wrong.',
-      C: 'Cancels (x + 2) instead of (x − 2) — both factors must be identified correctly.',
-      D: 'This is the reciprocal of the factor that was cancelled; the numerator is wrong.',
-    },
+    type: 'grid_in',
+    question: 'The function g(x) = −x² + kx + m has a maximum value of 11, and this maximum occurs at x = 3. What is the value of g(0)?',
+    correctAnswer: '2',
+    acceptableAnswers: ['2'],
+    explanation: 'The vertex of g(x) = −x² + kx + m is at x = k/2 = 3, so k = 6. The maximum value is g(3): g(3) = −9 + 6(3) + m = 9 + m = 11, so m = 2. Therefore g(0) = −0 + 0 + 2 = 2.\n\nDesmos method: Enter y = −x² + kx + m and add sliders for k and m. Drag the sliders until the peak of the parabola lands exactly at (3, 11). Read the y-intercept of the graph directly — it equals g(0) = 2. You can also evaluate y at x = 0 using the Desmos table feature.',
+    scoringNotes: 'Answer must be 2.',
   },
 
   {
@@ -344,7 +335,7 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     question: 'The line y = 2x − k is tangent to the parabola y = x² − 4x + 5 (intersects it at exactly one point). What is the value of k?',
     correctAnswer: '4',
     acceptableAnswers: ['4'],
-    explanation: 'Set the equations equal: x² − 4x + 5 = 2x − k → x² − 6x + (5 + k) = 0. For exactly one intersection, the discriminant equals zero: (−6)² − 4(1)(5 + k) = 0 → 36 − 20 − 4k = 0 → 16 = 4k → k = 4.',
+    explanation: 'Set the equations equal: x² − 4x + 5 = 2x − k → x² − 6x + (5 + k) = 0. For exactly one intersection, the discriminant equals zero: (−6)² − 4(1)(5 + k) = 0 → 36 − 20 − 4k = 0 → 16 = 4k → k = 4.\n\nDesmos method: Enter y = x² − 4x + 5 and y = 2x − k, then add a slider for k. Adjust k until the straight line is tangent to the parabola — exactly one intersection point appears. At k = 4 the line y = 2x − 4 touches the parabola at the single point (3, 2).',
     scoringNotes: 'Only 4 is acceptable.',
   },
 

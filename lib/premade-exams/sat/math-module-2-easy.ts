@@ -276,7 +276,7 @@ export const mathModule2EasyQuestions: MathQuestion[] = [
       { label: 'D', text: '25' },
     ],
     correctAnswer: 'B',
-    explanation: 'For exactly one real solution, the discriminant equals zero: b² − 4(1)(25) = 0 → b² = 100 → b = 10 (taking the positive value).',
+    explanation: 'For exactly one real solution, the discriminant equals zero: b² − 4(1)(25) = 0 → b² = 100 → b = 10 (taking the positive value).\n\nDesmos method: Enter y = x² + bx + 25 and add a slider for b. Increase b from 0. When b = 10 the parabola just touches the x-axis at one point (tangent); for b < 10 there are no x-intercepts, and for b > 10 there are two.',
     wrongAnswerExplanations: {
       A: 'b = 5: discriminant = 25 − 100 = −75 < 0 — no real solutions.',
       C: 'b = 20: discriminant = 400 − 100 = 300 > 0 — two real solutions.',
@@ -385,13 +385,23 @@ export const mathModule2EasyQuestions: MathQuestion[] = [
     section: 'math',
     moduleId: 'math-module-2-easy',
     domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
+    skill: 'Nonlinear functions',
     difficulty: 'medium',
-    type: 'grid_in',
-    question: 'If (x + 3)(x − 3) = x² + kx − 9 for all values of x, what is the value of k?',
-    correctAnswer: '0',
-    acceptableAnswers: ['0'],
-    explanation: 'Expand: (x + 3)(x − 3) = x² − 3x + 3x − 9 = x² − 9. The coefficient of x is 0, so k = 0.',
+    type: 'multiple_choice',
+    question: 'The function g(x) = k · 2^x passes through the point (3, 24). What is the value of k?',
+    choices: [
+      { label: 'A', text: '2' },
+      { label: 'B', text: '3' },
+      { label: 'C', text: '4' },
+      { label: 'D', text: '6' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Substitute x = 3 and g(3) = 24: k · 2³ = 24 → 8k = 24 → k = 3.\n\nDesmos method: Enter y = k · 2^x and add a slider for k. Adjust k until the graph passes through the point (3, 24). The slider confirms k = 3.',
+    wrongAnswerExplanations: {
+      A: 'k = 2 gives g(3) = 2 · 8 = 16, not 24.',
+      C: 'k = 4 gives g(3) = 4 · 8 = 32, not 24.',
+      D: 'k = 6 gives g(3) = 6 · 8 = 48, not 24.',
+    },
   },
 
   {

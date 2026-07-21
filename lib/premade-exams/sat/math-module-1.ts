@@ -270,7 +270,7 @@ export const mathModule1Questions: MathQuestion[] = [
       { label: 'D', text: '7' },
     ],
     correctAnswer: 'A',
-    explanation: 'Complete the square: f(x) = (x − 3)² + (k − 9). The minimum value is k − 9. Setting k − 9 = 4 gives k = 13.',
+    explanation: 'Complete the square: f(x) = (x − 3)² + (k − 9). The minimum value occurs at the vertex: k − 9 = 4, so k = 13.\n\nDesmos method: Enter y = x² − 6x + k and add a slider for k. Drag k until the lowest point of the parabola (the vertex) sits exactly at y = 4 on the graph. The slider value reads k = 13.',
     wrongAnswerExplanations: {
       B: '10 = 6 + 4 — adding the coefficient and minimum instead of using the vertex formula.',
       C: '4 is the minimum value of f, not the value of k.',
@@ -468,7 +468,7 @@ export const mathModule1Questions: MathQuestion[] = [
       { label: 'D', text: '4' },
     ],
     correctAnswer: 'C',
-    explanation: 'Exactly one real solution requires discriminant = 0: b² − 4ac = (−6)² − 4(3)(k) = 36 − 12k = 0 → k = 3.',
+    explanation: 'For exactly one real solution, the discriminant must equal zero: b² − 4ac = (−6)² − 4(3)(k) = 36 − 12k = 0 → k = 3.\n\nDesmos method: Enter y = 3x² − 6x + k and add a slider for k. When k < 3 the parabola crosses the x-axis at two points; when k > 3 it never touches the x-axis. At k = 3 the parabola is tangent to the x-axis — exactly one real solution.',
     wrongAnswerExplanations: {
       A: 'If k = 1: discriminant = 36 − 12 = 24 > 0 — two real solutions.',
       B: 'If k = 2: discriminant = 36 − 24 = 12 > 0 — two real solutions.',
