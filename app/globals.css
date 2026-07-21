@@ -9,6 +9,31 @@
   box-sizing: border-box;
 }
 
+/* ── Testimonial carousel ─────────────────────────────────────────────── */
+@keyframes mm-scroll-up {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+.mm-testimonial-track {
+  animation: mm-scroll-up 45s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-testimonial-track {
+    animation: none !important;
+  }
+}
+
+/* Hide scrollbar, keep scroll functionality */
+.mm-no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.mm-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 html {
   scroll-behavior: smooth;
 }
