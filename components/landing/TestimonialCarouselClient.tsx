@@ -8,59 +8,86 @@ export interface Testimonial {
   quote: string
 }
 
-export function TestimonialCarouselClient({ testimonials }: { testimonials: Testimonial[] }) {
+interface Props {
+  testimonials: Testimonial[]
+  /** Total animation duration for one full loop in seconds */
+  durationSeconds: number
+}
+
+export function TestimonialCarouselClient({ testimonials, durationSeconds }: Props) {
   const [isPaused, setIsPaused] = useState(false)
 
   if (testimonials.length === 0) return null
 
+  // Duplicate the list once — translateY(-50%) moves exactly one full set,
+  // so the loop resets seamlessly back to the first card.
   const doubled = [...testimonials, ...testimonials]
+
+  const trackStyle = {
+    '--mm-scroll-duration': `${durationSeconds}s`,
+    animationPlayState: isPaused ? 'paused' : 'running',
+  } as React.CSSProperties
 
   return (
     <>
-      {/* Screen-reader list — always accessible regardless of visual layout */}
+      {/* ── Screen-reader list — single authoritative source for AT ──────── */}
       <ul className="sr-only" aria-label="Student testimonials">
         {testimonials.map((t) => (
           <li key={t.initials}>{`"${t.quote}" — ${t.initials}, ${t.score} scorer`}</li>
         ))}
       </ul>
 
-      {/* ── Desktop: vertical infinite scroll ─────────────────────────── */}
+      {/* ── Desktop ───────────────────────────────────────────────────────── */}
       <div
         aria-hidden="true"
-        className="hidden lg:block relative overflow-hidden"
-        style={{ height: '460px' }}
+        className="hidden lg:block"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         onFocus={() => setIsPaused(true)}
         onBlur={() => setIsPaused(false)}
       >
-        {/* Top fade mask */}
-        <div
-          className="absolute inset-x-0 top-0 h-14 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, white 0%, transparent 100%)' }}
-        />
-        {/* Bottom fade mask */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-14 z-10 pointer-events-none"
-          style={{ background: 'linear-gradient(to top, white 0%, transparent 100%)' }}
-        />
-
         {/*
-          Animated track — translateY(-50%) moves the track up by exactly the
-          height of the first (original) set of cards. The duplicate set below
-          is identical, so the loop is seamless.
+          Animated version — shown by default, hidden when
+          prefers-reduced-motion: reduce is active (CSS class toggle).
         */}
         <div
-          className="mm-testimonial-track flex flex-col gap-3 py-1"
-          style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
+          className="mm-animated-section relative overflow-hidden"
+          style={{ height: '460px' }}
         >
-          {doubled.map((t, i) => (
+          {/* Top fade */}
+          <div
+            className="absolute inset-x-0 top-0 h-14 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to bottom, white 0%, transparent 100%)' }}
+          />
+          {/* Bottom fade */}
+          <div
+            className="absolute inset-x-0 bottom-0 h-14 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to top, white 0%, transparent 100%)' }}
+          />
+
+          <div className="mm-testimonial-track flex flex-col gap-3 py-1" style={trackStyle}>
+            {doubled.map((t, i) => (
+              <Card key={i} t={t} />
+            ))}
+          </div>
+        </div>
+
+        {/*
+          Static scrollable version — only visible when
+          prefers-reduced-motion: reduce is active. Shows every qualifying
+          testimonial exactly once, no duplicates.
+        */}
+        <div
+          className="mm-static-section overflow-y-auto mm-no-scrollbar flex flex-col gap-3 py-1"
+          style={{ height: '460px' }}
+        >
+          {testimonials.map((t, i) => (
             <Card key={i} t={t} />
           ))}
         </div>
       </div>
 
-      {/* ── Mobile: horizontal snap carousel ──────────────────────────── */}
+      {/* ── Mobile: horizontal snap carousel ─────────────────────────────── */}
       <div
         aria-hidden="true"
         className="lg:hidden flex gap-3 pb-2 overflow-x-auto mm-no-scrollbar snap-x snap-mandatory"
@@ -70,7 +97,6 @@ export function TestimonialCarouselClient({ testimonials }: { testimonials: Test
             <Card t={t} />
           </div>
         ))}
-        {/* trailing spacer so last card snap-centers correctly */}
         <div className="shrink-0 w-2" aria-hidden="true" />
       </div>
     </>

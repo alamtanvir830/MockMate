@@ -15,14 +15,18 @@
   100% { transform: translateY(-50%); }
 }
 
+/* Duration controlled via --mm-scroll-duration set inline on the track element */
 .mm-testimonial-track {
-  animation: mm-scroll-up 45s linear infinite;
+  animation: mm-scroll-up var(--mm-scroll-duration, 50s) linear infinite;
 }
 
+/* animated section visible by default; static section hidden */
+.mm-animated-section { display: block; }
+.mm-static-section   { display: none; }
+
 @media (prefers-reduced-motion: reduce) {
-  .mm-testimonial-track {
-    animation: none !important;
-  }
+  .mm-animated-section { display: none !important; }
+  .mm-static-section   { display: block !important; }
 }
 
 /* Hide scrollbar, keep scroll functionality */
