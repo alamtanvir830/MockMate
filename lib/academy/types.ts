@@ -1,5 +1,6 @@
 export type Difficulty = 'easy' | 'medium' | 'hard'
 export type AnswerLabel = 'A' | 'B' | 'C' | 'D'
+export type SkillLevel = 'foundation' | 'sat-application' | 'advanced' | 'challenge'
 
 export type PracticeMode =
   | 'diagnostic'
@@ -13,6 +14,7 @@ export type PracticeMode =
   | 'mastery_check'
   | 'vocabulary'
   | 'transition_trainer'
+  | 'knowledge_check'
 
 export type Domain =
   | 'information-and-ideas'
@@ -24,7 +26,7 @@ export interface DomainInfo {
   slug: Domain
   title: string
   abbreviation: string
-  skills: string[]  // skill slugs
+  skills: string[]
 }
 
 export const DOMAINS: DomainInfo[] = [
@@ -58,7 +60,6 @@ export function getDomainForSkill(skillSlug: string): Domain | null {
   for (const d of DOMAINS) {
     if (d.skills.includes(skillSlug)) return d.slug
   }
-  // quantitative-evidence is a subskill of command-of-evidence
   if (skillSlug === 'quantitative-evidence') return 'information-and-ideas'
   return null
 }
@@ -73,16 +74,17 @@ export interface GuidedStep {
   content: string
 }
 
-// Optional Desmos-calculator guidance attached to a worked example (Math Academy).
-// Absent on R&W examples and on math examples where a calculator adds no value.
 export interface DesmosGuidance {
   recommendation: 'recommended' | 'optional' | 'not_recommended'
-  entry: string   // exact syntax to type into Desmos, e.g. "y=2x-1 and 3x+y=14"
-  note: string    // when/why to use it, and when traditional is faster
+  entry: string
+  note: string
 }
 
 export interface GuidedExample {
   id: string
+  level?: SkillLevel
+  subskill?: string
+  hints?: string[]           // broad → specific; last hint should not give away the answer
   stimulus?: string
   question: string
   steps: GuidedStep[]
@@ -90,6 +92,7 @@ export interface GuidedExample {
   correctAnswer: AnswerLabel
   explanation: string
   wrongAnswerExplanations: Partial<Record<AnswerLabel, string>>
+  coachTakeaway?: string     // rule to remember + trap to avoid + fastest test-day method
   desmos?: DesmosGuidance
 }
 
@@ -97,7 +100,9 @@ export interface DrillQuestion {
   id: string
   skillSlug: string
   subskill?: string
+  level?: SkillLevel
   difficulty: Difficulty
+  errorCategory?: string     // e.g. 'clause-identification', 'comma-splice', 'conjunctive-adverb'
   stimulus?: string
   question: string
   choices: AcademyChoice[]
@@ -105,13 +110,31 @@ export interface DrillQuestion {
   explanation: string
   wrongAnswerExplanations: Partial<Record<AnswerLabel, string>>
   teachingPoint: string
-  contentVersion?: number  // defaults to 1
+  contentVersion?: number
 }
 
 export interface CommonTrap {
   title: string
   description: string
   avoidance: string
+  miniExample?: string       // one-line example showing the trap in context
+  category?: 'clause' | 'punctuation' | 'connecting-word' | 'meaning'
+}
+
+export interface KnowledgeCheck {
+  id: string
+  afterSection: 'overview' | 'strategy' | 'traps'
+  question: string
+  choices: AcademyChoice[]
+  correctAnswer: AnswerLabel
+  explanation: string
+}
+
+export interface RuleTableRow {
+  situation: string
+  valid: string
+  example: string
+  invalid: string
 }
 
 export interface AcademySkill {
@@ -119,20 +142,42 @@ export interface AcademySkill {
   title: string
   section: 'reading' | 'writing'
   domain?: Domain
+  objective?: string          // one-sentence "By the end of this lesson, you will be able to…"
+  estimatedMinutes?: number   // typical completion time for the full lesson
+  subskills?: string[]        // internal subskill names for this skill
   overview: {
     whatItTests: string
     howItAppears: string
     whyStudentsMissIt: string
     whatToLookFor: string
+    skillAnatomy?: string[]   // components the student must identify (bullet list)
+    quickCheckQuestion?: {    // one-minute orientation example (does not count toward mastery)
+      stimulus?: string
+      question: string
+      choices: AcademyChoice[]
+      correctAnswer: AnswerLabel
+      explanation: string
+    }
   }
   strategy: {
+    intro?: string            // 1–2 sentence framing of the method
     steps: string[]
+    ruleTable?: RuleTableRow[]
     timeSavingTip: string
     whenNotToOverthink: string
+    tryItQuestion?: {         // supported question immediately after the method
+      stimulus?: string
+      question: string
+      choices: AcademyChoice[]
+      correctAnswer: AnswerLabel
+      explanation: string
+    }
   }
   commonTraps: CommonTrap[]
-  guidedExamples: GuidedExample[]  // at least 3; target 5
-  drillQuestions: DrillQuestion[]  // at least 10
+  guidedExamples: GuidedExample[]
+  drillQuestions: DrillQuestion[]
+  masteryQuestions?: DrillQuestion[]  // separate pool for the Mastery assessment tab
+  knowledgeChecks?: KnowledgeCheck[]
 }
 
 export interface MixedPracticeQuestion extends DrillQuestion {

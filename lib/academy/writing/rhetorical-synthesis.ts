@@ -4,6 +4,20 @@ export const rhetoricalSynthesis: AcademySkill = {
   slug: 'rhetorical-synthesis',
   title: 'Rhetorical Synthesis',
   section: 'writing',
+  objective:
+    'By the end of this lesson, you will be able to select the sentence that most effectively accomplishes a specified writing goal by accurately using only the information provided in the student\'s notes.',
+  estimatedMinutes: 20,
+  subskills: [
+    'Identifying the Writing Goal',
+    'Selecting Relevant Information',
+    'Emphasizing Similarities',
+    'Emphasizing Differences',
+    'Explaining Causes',
+    'Presenting Evidence',
+    'Introducing Counterarguments',
+    'Avoiding Unsupported Claims',
+    'Accurate Synthesis',
+  ],
   overview: {
     whatItTests:
       'Using provided notes or bullet points to construct a sentence that best accomplishes a specific writing goal.',

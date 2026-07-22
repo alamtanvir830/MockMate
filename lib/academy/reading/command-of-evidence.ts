@@ -3,6 +3,9 @@ import type { AcademySkill } from '../types'
 export const commandOfEvidence: AcademySkill = {
   slug: 'command-of-evidence',
   title: 'Command of Evidence',
+  objective: 'By the end of this lesson, you will be able to select the textual evidence that most effectively supports a given claim and explain precisely why the other choices fail to do so.',
+  estimatedMinutes: 24,
+  subskills: ['Supporting a Specific Claim', 'Strengthening an Argument', 'Weakening an Argument', 'Distinguishing Relevant from Tangential Evidence', 'Literary Evidence', 'Scientific Evidence', 'Connecting Evidence to Conclusions'],
   section: 'reading',
   overview: {
     whatItTests:

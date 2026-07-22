@@ -3,6 +3,9 @@ import type { AcademySkill } from '../types'
 export const crossTextConnections: AcademySkill = {
   slug: 'cross-text-connections',
   title: 'Cross-Text Connections',
+  objective: 'By the end of this lesson, you will be able to compare how two authors approach a shared topic and determine the precise relationship between their claims, methods, or conclusions.',
+  estimatedMinutes: 26,
+  subskills: ['Agreement Between Texts', 'Disagreement Between Texts', 'Comparison of Methods', 'Comparison of Conclusions', 'How One Text Responds to Another', 'Use of Evidence Across Texts', 'Inference About One Author Given the Other'],
   section: 'reading',
   overview: {
     whatItTests:

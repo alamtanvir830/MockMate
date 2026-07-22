@@ -4,6 +4,18 @@ export const wordsInContext: AcademySkill = {
   slug: 'words-in-context',
   title: 'Words in Context',
   section: 'reading',
+  objective:
+    'By the end of this lesson, you will be able to select the word or phrase that most precisely captures the author\'s intended meaning based on how the word functions in its local and broader context.',
+  estimatedMinutes: 20,
+  subskills: [
+    'Local Context Clues',
+    'Broader Passage Context',
+    'Connotation and Tone',
+    'Degree and Intensity',
+    'Part-of-Speech Precision',
+    'Near-Synonym Distinctions',
+    'High-Utility Academic Vocabulary',
+  ],
   overview: {
     whatItTests:
       'How words function in specific contexts, not just their dictionary definitions.',
@@ -59,6 +71,14 @@ export const wordsInContext: AcademySkill = {
   guidedExamples: [
     {
       id: 'wic-ex-1',
+      level: 'sat-application',
+      hints: [
+        'Look at the transition word that connects this sentence to the one before it.',
+        'The following sentences describe how the members actually spoke. What tone do those descriptions suggest?',
+        'The word "heated" in the first sentence is the opposite of what you are looking for.',
+      ],
+      coachTakeaway:
+        'Contrast transitions ("but," "however") nearly always signal that the target word must oppose the idea before them. On test day, circle that transition first, then predict the opposite of the nearby adjective.',
       stimulus:
         'The committee had expected the new policy to spark heated debate, but the discussion proved surprisingly [TEMPERATE]. Members raised concerns calmly, and no one interrupted or raised a voice. By the end of the meeting, even the members who disagreed most strongly had spoken with measured politeness.',
       question: 'As used in the passage, the word [TEMPERATE] most nearly means',
@@ -101,6 +121,14 @@ export const wordsInContext: AcademySkill = {
     },
     {
       id: 'wic-ex-2',
+      level: 'sat-application',
+      hints: [
+        'List the specific requirements the passage describes. What single adjective covers all of them?',
+        'Think about the difference between accurate (correctness of a result) and demanding (amount required of a person).',
+        'The passage is describing her standards — what she requires — not what the students produce.',
+      ],
+      coachTakeaway:
+        'When a passage lists detailed requirements, the target word usually names the intensity of those demands. Distinguish between words that describe results ("accurate") and words that describe how much is asked ("demanding").',
       stimulus:
         'Dr. Okafor was known for her [EXACTING] standards in the laboratory. She required students to record every measurement to the correct decimal place, repeat each experiment three times, and label every sample by hand. Sloppy work was returned without comment, to be done again.',
       question: 'As used in the passage, the word [EXACTING] most nearly means',
@@ -143,6 +171,14 @@ export const wordsInContext: AcademySkill = {
     },
     {
       id: 'wic-ex-3',
+      level: 'advanced',
+      hints: [
+        'What did the critics accuse the novelist of doing? Focus on the phrase "borrowed from earlier... authors."',
+        'Notice that the passage later uses "originality" as a contrast. What must the target word mean if "originality" is its opposite here?',
+        'Eliminate any choice that describes style or quality rather than the relationship to earlier works.',
+      ],
+      coachTakeaway:
+        'Hard items often use a word\'s secondary sense. When a passage contrasts the target word with "originality," you know the word means the absence of originality. Use internal contrasts as your compass.',
       stimulus:
         'Early critics dismissed the novelist\'s later work as [DERIVATIVE], claiming that every plot twist and character type had been borrowed from earlier, more famous authors. Only decades later did readers begin to see originality in the way she reassembled these familiar pieces.',
       question: 'As used in the passage, the word [DERIVATIVE] most nearly means',
@@ -188,7 +224,9 @@ export const wordsInContext: AcademySkill = {
     {
       id: 'wic-d-001',
       skillSlug: 'words-in-context',
+      level: 'foundation',
       difficulty: 'easy',
+      errorCategory: 'local-context-clue',
       stimulus:
         'The hikers were grateful for the [ABUNDANT] water along the trail; every mile or two they passed another clear stream where they could refill their bottles.',
       question: 'As used in the passage, the word [ABUNDANT] most nearly means',
@@ -212,7 +250,9 @@ export const wordsInContext: AcademySkill = {
     {
       id: 'wic-d-002',
       skillSlug: 'words-in-context',
+      level: 'foundation',
       difficulty: 'easy',
+      errorCategory: 'local-context-clue',
       stimulus:
         'After weeks of practice, the young pianist gave a [FLAWLESS] performance; she did not miss a single note, and the audience rose to its feet.',
       question: 'As used in the passage, the word [FLAWLESS] most nearly means',
@@ -236,7 +276,9 @@ export const wordsInContext: AcademySkill = {
     {
       id: 'wic-d-003',
       skillSlug: 'words-in-context',
+      level: 'foundation',
       difficulty: 'easy',
+      errorCategory: 'local-context-clue',
       stimulus:
         'The manager gave [CONCISE] instructions before the shift began, listing only the three tasks that mattered most and nothing else.',
       question: 'As used in the passage, the word [CONCISE] most nearly means',
@@ -260,7 +302,9 @@ export const wordsInContext: AcademySkill = {
     {
       id: 'wic-d-004',
       skillSlug: 'words-in-context',
+      level: 'sat-application',
       difficulty: 'medium',
+      errorCategory: 'contrast-clue',
       stimulus:
         'The senator was praised for her [CANDID] remarks; while other speakers avoided the difficult question, she answered it directly and admitted what she did not yet know.',
       question: 'As used in the passage, the word [CANDID] most nearly means',
@@ -284,7 +328,9 @@ export const wordsInContext: AcademySkill = {
     {
       id: 'wic-d-005',
       skillSlug: 'words-in-context',
+      level: 'sat-application',
       difficulty: 'medium',
+      errorCategory: 'broader-passage-context',
       stimulus:
         'The report\'s conclusions were [TENTATIVE]; the authors stressed that their sample was small and that further study could easily change the results.',
       question: 'As used in the passage, the word [TENTATIVE] most nearly means',
@@ -308,7 +354,9 @@ export const wordsInContext: AcademySkill = {
     {
       id: 'wic-d-006',
       skillSlug: 'words-in-context',
+      level: 'sat-application',
       difficulty: 'medium',
+      errorCategory: 'contrast-clue',
       stimulus:
         'Although the city council had promised swift action, its response to the flooding proved [SLUGGISH]; forms took weeks to process, and repairs did not begin until the following season.',
       question: 'As used in the passage, the word [SLUGGISH] most nearly means',
@@ -332,7 +380,9 @@ export const wordsInContext: AcademySkill = {
     {
       id: 'wic-d-007',
       skillSlug: 'words-in-context',
+      level: 'sat-application',
       difficulty: 'medium',
+      errorCategory: 'near-synonym-distinction',
       stimulus:
         'The essay makes a [COMPELLING] case for planting trees in cities: it cites cooler temperatures, cleaner air, and lower energy bills, and by the final page few readers remain unconvinced.',
       question: 'As used in the passage, the word [COMPELLING] most nearly means',
@@ -356,7 +406,9 @@ export const wordsInContext: AcademySkill = {
     {
       id: 'wic-d-008',
       skillSlug: 'words-in-context',
+      level: 'advanced',
       difficulty: 'hard',
+      errorCategory: 'secondary-meaning',
       stimulus:
         'The diplomat\'s language was deliberately [GUARDED]. She acknowledged that talks had occurred but refused to confirm any specific agreement, choosing each phrase so that it revealed as little as possible.',
       question: 'As used in the passage, the word [GUARDED] most nearly means',
@@ -380,7 +432,9 @@ export const wordsInContext: AcademySkill = {
     {
       id: 'wic-d-009',
       skillSlug: 'words-in-context',
+      level: 'advanced',
       difficulty: 'hard',
+      errorCategory: 'secondary-meaning',
       stimulus:
         'Where earlier biographers had treated the inventor as a lone genius, this new study takes a more [MEASURED] view, giving equal weight to the collaborators and rivals who shaped his ideas.',
       question: 'As used in the passage, the word [MEASURED] most nearly means',
@@ -404,7 +458,9 @@ export const wordsInContext: AcademySkill = {
     {
       id: 'wic-d-010',
       skillSlug: 'words-in-context',
+      level: 'advanced',
       difficulty: 'hard',
+      errorCategory: 'secondary-meaning',
       stimulus:
         'The critic argued that the film\'s special effects, however impressive, ultimately [ECLIPSED] its story, leaving audiences dazzled by the images yet unable to recall what the characters had wanted.',
       question: 'As used in the passage, the word [ECLIPSED] most nearly means',
@@ -424,6 +480,346 @@ export const wordsInContext: AcademySkill = {
       },
       teachingPoint:
         '"Eclipsed" figuratively means to overshadow, when one thing becomes so prominent it hides another.',
+    },
+    {
+      id: 'wic-d-011',
+      skillSlug: 'words-in-context',
+      level: 'sat-application',
+      difficulty: 'medium',
+      errorCategory: 'connotation',
+      stimulus:
+        'When the laboratory published its findings, the lead researcher offered only a [RESTRAINED] comment to the press. She acknowledged the result was interesting but declined to celebrate, noting that replication by other teams was still needed.',
+      question: 'As used in the passage, the word [RESTRAINED] most nearly means',
+      choices: [
+        { label: 'A', text: 'measured' },
+        { label: 'B', text: 'silent' },
+        { label: 'C', text: 'enthusiastic' },
+        { label: 'D', text: 'dismissive' },
+      ],
+      correctAnswer: 'A',
+      explanation:
+        'The researcher spoke but kept her excitement in check, declining to celebrate. "Measured" captures this deliberately moderate, controlled tone, whereas "silent" overstates how little she said and "enthusiastic" contradicts her caution.',
+      wrongAnswerExplanations: {
+        B: '"Silent" is too extreme; she did speak, she just held back her enthusiasm.',
+        C: '"Enthusiastic" contradicts the passage; she deliberately declined to celebrate.',
+        D: '"Dismissive" implies she rejected the result, but she called it "interesting" — she was cautious, not dismissive.',
+      },
+      teachingPoint:
+        'Positive near-synonyms can differ in intensity. "Measured" conveys controlled moderation, while "restrained" and "measured" share a connotation of deliberate self-control.',
+    },
+    {
+      id: 'wic-d-012',
+      skillSlug: 'words-in-context',
+      level: 'advanced',
+      difficulty: 'hard',
+      errorCategory: 'degree-and-intensity',
+      stimulus:
+        'The new conservation policy did not eliminate the threat to the wetland entirely; it merely [DIMINISHED] it, reducing the rate of drainage without halting it. Environmentalists welcomed the change but cautioned that the habitat remained vulnerable.',
+      question: 'As used in the passage, the word [DIMINISHED] most nearly means',
+      choices: [
+        { label: 'A', text: 'ended' },
+        { label: 'B', text: 'reduced' },
+        { label: 'C', text: 'ignored' },
+        { label: 'D', text: 'reversed' },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'The passage explicitly contrasts "not eliminate" with what the policy actually achieved — "reducing the rate" without halting drainage. "Reduced" matches that partial improvement, making it clearly the correct degree.',
+      wrongAnswerExplanations: {
+        A: '"Ended" is synonymous with "eliminate," which the passage says the policy did not do.',
+        C: '"Ignored" means the threat was overlooked, but the policy actively acted on it, just partially.',
+        D: '"Reversed" implies the drainage was undone entirely, which overstates the policy\'s effect.',
+      },
+      teachingPoint:
+        'When a passage says something was "not eliminated" but only partly changed, the target word must reflect partial reduction, not full removal.',
+    },
+    {
+      id: 'wic-d-013',
+      skillSlug: 'words-in-context',
+      level: 'sat-application',
+      difficulty: 'medium',
+      errorCategory: 'part-of-speech-precision',
+      stimulus:
+        'The committee chair acted as a [MODERATOR] during the heated session, keeping each speaker to a strict time limit and steering the discussion away from personal attacks.',
+      question: 'As used in the passage, the word [MODERATOR] most nearly means',
+      choices: [
+        { label: 'A', text: 'a person who manages and controls discussion' },
+        { label: 'B', text: 'a person who presents an argument' },
+        { label: 'C', text: 'a person who takes sides in a debate' },
+        { label: 'D', text: 'a person who records the minutes of a meeting' },
+      ],
+      correctAnswer: 'A',
+      explanation:
+        'The chair kept speakers to time limits and steered discussion — active management and control of the session. "A person who manages and controls discussion" captures both functions the passage describes.',
+      wrongAnswerExplanations: {
+        B: 'Presenting an argument is a participant\'s role, not the role of the person imposing time limits and steering the group.',
+        C: 'Taking sides contradicts the neutral, controlling function described; a moderator does not advocate.',
+        D: 'Recording minutes is a clerical task; the chair here is actively controlling the session, not just transcribing it.',
+      },
+      teachingPoint:
+        'When a noun describes a role, look at the actions attributed to it in the passage and match the choice that names those actions.',
+    },
+    {
+      id: 'wic-d-014',
+      skillSlug: 'words-in-context',
+      level: 'foundation',
+      difficulty: 'easy',
+      errorCategory: 'academic-vocabulary',
+      stimulus:
+        'The chemical reaction was [REVERSIBLE]: when the scientists cooled the mixture back to room temperature, the two substances separated and returned to their original forms.',
+      question: 'As used in the passage, the word [REVERSIBLE] most nearly means',
+      choices: [
+        { label: 'A', text: 'able to be undone' },
+        { label: 'B', text: 'extremely fast' },
+        { label: 'C', text: 'difficult to observe' },
+        { label: 'D', text: 'producing heat' },
+      ],
+      correctAnswer: 'A',
+      explanation:
+        'The passage shows the reaction going backward: cooling the mixture caused the substances to separate and return to their original forms. "Able to be undone" precisely captures this ability to return to the starting state.',
+      wrongAnswerExplanations: {
+        B: '"Extremely fast" describes speed, but nothing in the passage comments on how quickly the reaction occurred.',
+        C: '"Difficult to observe" contradicts the passage, which describes what the scientists directly observed happening.',
+        D: '"Producing heat" describes one type of reaction but is not what the passage says; it describes the ability to reverse, not heat production.',
+      },
+      teachingPoint:
+        'In science passages, the sentence after the target word often demonstrates its meaning. Use that demonstration as your definition.',
+    },
+    {
+      id: 'wic-d-015',
+      skillSlug: 'words-in-context',
+      level: 'challenge',
+      difficulty: 'hard',
+      errorCategory: 'broader-passage-context',
+      stimulus:
+        'The architect\'s early sketches were straightforward, but as the project evolved, the plans became increasingly [LABYRINTHINE]. The finished building confused visitors who expected a clear path from entrance to exit; instead, corridors folded back on themselves and stairways arrived unexpectedly at dead ends.',
+      question: 'As used in the passage, the word [LABYRINTHINE] most nearly means',
+      choices: [
+        { label: 'A', text: 'elaborate and deliberately confusing' },
+        { label: 'B', text: 'large and impressive' },
+        { label: 'C', text: 'carefully organized' },
+        { label: 'D', text: 'symmetrical and geometric' },
+      ],
+      correctAnswer: 'A',
+      explanation:
+        'The broader context — corridors folding back, stairways leading to dead ends, visitors unable to find a clear path — shows the building\'s layout was both complex and disorienting. "Elaborate and deliberately confusing" captures both the complexity and the resulting confusion.',
+      wrongAnswerExplanations: {
+        B: '"Large and impressive" describes scale but says nothing about the disorienting layout that the passage emphasizes.',
+        C: '"Carefully organized" is the opposite of what the passage shows; the corridors and stairways confuse rather than guide.',
+        D: '"Symmetrical and geometric" implies order and predictability, whereas the passage describes unexpected dead ends and folding corridors.',
+      },
+      teachingPoint:
+        'When the broader context describes an effect (visitors confused, corridors folding back), the target word\'s meaning must account for that effect, not just describe the object\'s appearance.',
+    },
+  ],
+  masteryQuestions: [
+    {
+      id: 'wic-m-001',
+      skillSlug: 'words-in-context',
+      level: 'foundation',
+      difficulty: 'easy',
+      errorCategory: 'local-context-clue',
+      stimulus:
+        'The puppy was [TIMID] around strangers; it hid behind its owner\'s legs and would not take a treat from an unfamiliar hand.',
+      question: 'As used in the passage, the word [TIMID] most nearly means',
+      choices: [
+        { label: 'A', text: 'shy' },
+        { label: 'B', text: 'aggressive' },
+        { label: 'C', text: 'playful' },
+        { label: 'D', text: 'sleepy' },
+      ],
+      correctAnswer: 'A',
+      explanation:
+        'The puppy hid and refused a treat from strangers, showing fear and shyness. "Shy" fits this context precisely.',
+      wrongAnswerExplanations: {
+        B: '"Aggressive" means threatening behavior, which is the opposite of hiding and avoiding contact.',
+        C: '"Playful" would suggest the puppy wanted interaction, but it avoided strangers.',
+        D: '"Sleepy" describes tiredness, which is never mentioned in the passage.',
+      },
+      teachingPoint:
+        'Behaviors like hiding and refusing contact are local clues that point to shyness.',
+    },
+    {
+      id: 'wic-m-002',
+      skillSlug: 'words-in-context',
+      level: 'foundation',
+      difficulty: 'easy',
+      errorCategory: 'local-context-clue',
+      stimulus:
+        'The old bridge was declared [HAZARDOUS] after inspectors found cracked supports and a leaning guardrail. Drivers were immediately rerouted to a safer crossing.',
+      question: 'As used in the passage, the word [HAZARDOUS] most nearly means',
+      choices: [
+        { label: 'A', text: 'crowded' },
+        { label: 'B', text: 'dangerous' },
+        { label: 'C', text: 'expensive' },
+        { label: 'D', text: 'historic' },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Cracked supports and a leaning guardrail caused drivers to be rerouted, showing the bridge posed a safety risk. "Dangerous" fits.',
+      wrongAnswerExplanations: {
+        A: '"Crowded" describes too many people, not structural defects.',
+        C: '"Expensive" describes cost, which the passage never discusses.',
+        D: '"Historic" describes age or significance, which is unrelated to the safety problem described.',
+      },
+      teachingPoint:
+        'Structural defects followed by a rerouting are clear local clues that the word means dangerous.',
+    },
+    {
+      id: 'wic-m-003',
+      skillSlug: 'words-in-context',
+      level: 'sat-application',
+      difficulty: 'medium',
+      errorCategory: 'connotation',
+      stimulus:
+        'The professor\'s feedback was frank but never [HARSH]. She identified every weakness in the paper, yet her phrasing always suggested a path forward rather than a verdict of failure.',
+      question: 'As used in the passage, the word [HARSH] most nearly means',
+      choices: [
+        { label: 'A', text: 'thorough' },
+        { label: 'B', text: 'cruel or hurtful' },
+        { label: 'C', text: 'lengthy' },
+        { label: 'D', text: 'informal' },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'The passage contrasts "frank but never" something with phrasing that "suggested a path forward." The contrast shows the professor avoided feedback that wounds or demeans, so "cruel or hurtful" fits.',
+      wrongAnswerExplanations: {
+        A: '"Thorough" describes completeness, but the passage emphasizes tone, not whether she covered every detail.',
+        C: '"Lengthy" describes how long the feedback was, which the passage does not address.',
+        D: '"Informal" describes register or style, not the emotional quality the passage contrasts with kindness.',
+      },
+      teachingPoint:
+        'When a passage says feedback was honest "but never" something, that something names the negative emotional extreme the author avoids.',
+    },
+    {
+      id: 'wic-m-004',
+      skillSlug: 'words-in-context',
+      level: 'sat-application',
+      difficulty: 'medium',
+      errorCategory: 'connotation',
+      stimulus:
+        'The historian\'s prose was [VIVID]: her descriptions of the battlefield placed the reader squarely in the smoke and noise, making abstract events feel immediate and real.',
+      question: 'As used in the passage, the word [VIVID] most nearly means',
+      choices: [
+        { label: 'A', text: 'colorful and lifelike' },
+        { label: 'B', text: 'brief and efficient' },
+        { label: 'C', text: 'technically precise' },
+        { label: 'D', text: 'emotionally restrained' },
+      ],
+      correctAnswer: 'A',
+      explanation:
+        'The descriptions "placed the reader squarely" in the scene and made events feel "immediate and real," showing the prose was lifelike and richly detailed. "Colorful and lifelike" fits.',
+      wrongAnswerExplanations: {
+        B: '"Brief and efficient" describes conciseness, but the passage emphasizes sensory richness and immediacy.',
+        C: '"Technically precise" suggests scientific accuracy, not the kind of sensory immersion the passage describes.',
+        D: '"Emotionally restrained" is the opposite of prose that makes readers feel present in the smoke and noise.',
+      },
+      teachingPoint:
+        'When a passage describes writing that places readers inside an experience, "vivid" means lifelike and richly sensory.',
+    },
+    {
+      id: 'wic-m-005',
+      skillSlug: 'words-in-context',
+      level: 'advanced',
+      difficulty: 'hard',
+      errorCategory: 'near-synonym-distinction',
+      stimulus:
+        'The two proposals were superficially [ANALOGOUS]: both called for a tax on fuel and both directed revenue to public transit. But they differed profoundly in scope, with one targeting only commercial vehicles and the other applying to all drivers.',
+      question: 'As used in the passage, the word [ANALOGOUS] most nearly means',
+      choices: [
+        { label: 'A', text: 'identical in all respects' },
+        { label: 'B', text: 'similar in certain features' },
+        { label: 'C', text: 'opposing in purpose' },
+        { label: 'D', text: 'unrelated to each other' },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'The adverb "superficially" signals the similarity is limited, and the passage immediately shows the proposals differ profoundly. "Similar in certain features" captures a partial, surface-level resemblance.',
+      wrongAnswerExplanations: {
+        A: '"Identical in all respects" contradicts the passage, which emphasizes the proposals\' profound differences in scope.',
+        C: '"Opposing in purpose" goes too far; the passage says the proposals share structural similarities even if they differ in scope.',
+        D: '"Unrelated to each other" contradicts the shared features the passage describes.',
+      },
+      teachingPoint:
+        '"Analogous" means similar in relevant ways, not identical. The word "superficially" limits the similarity and is a key modifier to notice.',
+    },
+    {
+      id: 'wic-m-006',
+      skillSlug: 'words-in-context',
+      level: 'advanced',
+      difficulty: 'hard',
+      errorCategory: 'near-synonym-distinction',
+      stimulus:
+        'Critics called the new regulations [ONEROUS], arguing that the reporting requirements demanded so much time and documentation that small businesses would struggle to comply without hiring additional staff.',
+      question: 'As used in the passage, the word [ONEROUS] most nearly means',
+      choices: [
+        { label: 'A', text: 'burdensome' },
+        { label: 'B', text: 'unfair' },
+        { label: 'C', text: 'unnecessary' },
+        { label: 'D', text: 'vague' },
+      ],
+      correctAnswer: 'A',
+      explanation:
+        'The critics point to the demands on time, documentation, and staffing as making compliance difficult — these are burdens. "Burdensome" precisely names the weight of these demands.',
+      wrongAnswerExplanations: {
+        B: '"Unfair" implies a judgment about justice, but the critics focus on the practical burden of compliance, not on whether the regulations are just.',
+        C: '"Unnecessary" claims the regulations serve no purpose, but the passage does not argue that; it argues they are too demanding.',
+        D: '"Vague" suggests the requirements are unclear, but the passage implies the requirements are very specific — just overwhelming.',
+      },
+      teachingPoint:
+        '"Onerous" means burdensome in terms of effort or difficulty; it does not mean unjust or vague. Use the passage\'s evidence about time and staffing to confirm.',
+    },
+    {
+      id: 'wic-m-007',
+      skillSlug: 'words-in-context',
+      level: 'challenge',
+      difficulty: 'hard',
+      errorCategory: 'broader-passage-context',
+      stimulus:
+        'Throughout the novel, the narrator presents herself as a [DISINTERESTED] observer of the family\'s conflicts, never taking sides and always reporting each person\'s grievances with equal care. Only in the final chapter does the reader discover that she is the illegitimate daughter of the household\'s patriarch, which reframes her careful neutrality as something far more complex.',
+      question: 'As used in the passage, the word [DISINTERESTED] most nearly means',
+      choices: [
+        { label: 'A', text: 'unbiased and impartial' },
+        { label: 'B', text: 'bored and inattentive' },
+        { label: 'C', text: 'uninvolved with the family' },
+        { label: 'D', text: 'dishonest about her motives' },
+      ],
+      correctAnswer: 'A',
+      explanation:
+        'The narrator presents herself as never taking sides and reporting all grievances "with equal care" — the hallmarks of an impartial observer. "Unbiased and impartial" captures this presented neutrality, which the final chapter reveals to be complicated but does not negate as the narrator\'s own self-presentation.',
+      wrongAnswerExplanations: {
+        B: '"Bored and inattentive" confuses "disinterested" with "uninterested." The narrator is highly attentive; she reports every grievance with care.',
+        C: '"Uninvolved with the family" contradicts the revelation that she is the patriarch\'s daughter; she is deeply connected to the family.',
+        D: '"Dishonest about her motives" may be implied by the ending, but it is not what "disinterested" means as used here; the word describes her presented stance, not her concealment.',
+      },
+      teachingPoint:
+        '"Disinterested" means impartial, not uninterested. The common confusion between these two is itself a classic SAT trap.',
+    },
+    {
+      id: 'wic-m-008',
+      skillSlug: 'words-in-context',
+      level: 'challenge',
+      difficulty: 'hard',
+      errorCategory: 'broader-passage-context',
+      stimulus:
+        'Early in the expedition, the geologist described the rock formation as [ANOMALOUS], noting that its mineral composition did not match the surrounding strata and could not be explained by the volcanic history of the region. Her team spent three days collecting samples before concluding that the formation had been carried there by an ancient glacier.',
+      question: 'As used in the passage, the word [ANOMALOUS] most nearly means',
+      choices: [
+        { label: 'A', text: 'difficult to reach' },
+        { label: 'B', text: 'deviating from what is expected or typical' },
+        { label: 'C', text: 'composed of unusual minerals' },
+        { label: 'D', text: 'recently formed by volcanic activity' },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'The formation did not match the surrounding strata and could not be explained by the region\'s volcanic history — it fell outside what the geological context would predict. "Deviating from what is expected or typical" captures this mismatch with the norm.',
+      wrongAnswerExplanations: {
+        A: '"Difficult to reach" describes accessibility; the passage never says the formation was hard to get to, and the team collected samples from it.',
+        C: '"Composed of unusual minerals" is a specific detail the passage mentions, but it is the evidence for anomalousness, not the definition of the word itself.',
+        D: '"Recently formed by volcanic activity" contradicts the passage, which says the volcanic history could not explain the formation.',
+      },
+      teachingPoint:
+        'The definition of "anomalous" must be broader than any one detail. Use the full context — mineral mismatch, unexplained by local history, ultimately explained by glaciation — to confirm that the word means "departing from the expected pattern."',
     },
   ],
 }

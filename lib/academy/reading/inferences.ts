@@ -3,6 +3,9 @@ import type { AcademySkill } from '../types'
 export const inferences: AcademySkill = {
   slug: 'inferences',
   title: 'Inferences',
+  objective: 'By the end of this lesson, you will be able to identify the most defensible conclusion a passage supports — one grounded in the text without relying on outside knowledge or going beyond what the author actually states.',
+  estimatedMinutes: 24,
+  subskills: ['Supported vs. Possible Inferences', 'Combining Multiple Clues', 'Cautious Language in Answers', 'Avoiding Unsupported Assumptions', 'Literary Inference', 'Scientific Inference', 'Multi-Step Inference'],
   section: 'reading',
   overview: {
     whatItTests:
