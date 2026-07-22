@@ -374,7 +374,7 @@ export const mathModule2HardQuestions: MathQuestion[] = [
         { kind: 'point', x: 0, y: 0 },
       ],
     },
-    question: 'A circle has a radius of 10. A central angle of 72° intercepts an arc. What is the area of the sector formed by this central angle, in terms of π?',
+    question: 'In a circle of radius 10, a central angle measuring 72° cuts off a sector (the region bounded by the two radii and the intercepted arc). What is the area of that sector, in terms of π?',
     choices: [
       { label: 'A', text: '4π' },
       { label: 'B', text: '20π' },
@@ -450,7 +450,7 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     skill: 'Lines, angles, and triangles',
     difficulty: 'hard',
     type: 'multiple_choice',
-    question: 'In triangle PQR, angle Q = 90°, PQ = 7, and QR = 24. Point S is the foot of the perpendicular from Q to hypotenuse PR. What is the length of PS?',
+    question: 'In right triangle PQR, the right angle is at Q, PQ = 7, and QR = 24, so PR is the hypotenuse. The perpendicular segment drawn from Q meets the hypotenuse PR at point S. What is the length of PS, the part of the hypotenuse between vertex P and point S?',
     choices: [
       { label: 'A', text: '7/5' },
       { label: 'B', text: '49/25' },
@@ -498,7 +498,7 @@ export const mathModule2HardQuestions: MathQuestion[] = [
     skill: 'Lines, angles, and triangles',
     difficulty: 'hard',
     type: 'grid_in',
-    question: 'The two legs of a right triangle have lengths a and b where a + b = 17. The hypotenuse of the triangle has length 13. What is the value of ab?',
+    question: 'The two legs of a right triangle have lengths a and b, and the hypotenuse has length 13. If the two leg lengths satisfy a + b = 17, what is the value of the product ab?',
     correctAnswer: '60',
     acceptableAnswers: ['60'],
     explanation: 'By the Pythagorean theorem: a² + b² = 13² = 169. Expand (a + b)²: a² + 2ab + b² = 17² = 289. Substitute: 169 + 2ab = 289 → 2ab = 120 → ab = 60.',

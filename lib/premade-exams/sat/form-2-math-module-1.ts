@@ -64,20 +64,20 @@ export const f2MathModule1Questions: MathQuestion[] = [
     difficulty: 'medium',
     type: 'multiple_choice',
     question:
-      'The system below has solution (x, y). What is the value of x − y?\n\n3x − 2y = 13\n2x + y = 11',
+      'The system below has solution (x, y). What is the value of 4x − 3y?\n\n3x − 2y = 13\n2x + y = 11',
     choices: [
-      { label: 'A', text: '2' },
-      { label: 'B', text: '4' },
-      { label: 'C', text: '6' },
-      { label: 'D', text: '8' },
+      { label: 'A', text: '11' },
+      { label: 'B', text: '17' },
+      { label: 'C', text: '20' },
+      { label: 'D', text: '23' },
     ],
     correctAnswer: 'B',
     explanation:
-      'From the second equation: y = 11 − 2x. Substitute into the first: 3x − 2(11 − 2x) = 13 → 3x − 22 + 4x = 13 → 7x = 35 → x = 5. Then y = 11 − 10 = 1. Therefore x − y = 5 − 1 = 4.',
+      'From the second equation: y = 11 − 2x. Substitute into the first: 3x − 2(11 − 2x) = 13 → 3x − 22 + 4x = 13 → 7x = 35 → x = 5. Then y = 11 − 10 = 1. The target expression is 4x − 3y = 4(5) − 3(1) = 20 − 3 = 17.',
     wrongAnswerExplanations: {
-      A: 'x − y = 2 would require x = 3, y = 1, but 2(3) + 1 = 7 ≠ 11.',
-      C: 'x − y = 6 would require x = 7, y = 1, but 2(7) + 1 = 15 ≠ 11.',
-      D: 'x − y = 8 would require x = 9, y = 1, but 2(9) + 1 = 19 ≠ 11.',
+      A: '11 = 2x + y is the value of the second equation\'s left side, not 4x − 3y.',
+      C: '20 = 4x uses only the 4x term and forgets to subtract 3y = 3.',
+      D: '23 results from a sign error, computing 4x + 3y = 20 + 3 instead of 4x − 3y.',
     },
   },
 
@@ -341,20 +341,20 @@ export const f2MathModule1Questions: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'For what value of k does the system below have no solution?\n\n6x − 4y = 10\n3x − ky = 7',
+      'In the system below, c and k are constants. The system has no solution when k has a particular value and c is any value except one specific number. What is the value of k + c, where c is the excluded value of the constant (the value of c that would instead make the system have infinitely many solutions)?\n\n6x − 4y = 10\n3x − ky = c',
     choices: [
-      { label: 'A', text: '1' },
-      { label: 'B', text: '2' },
-      { label: 'C', text: '3' },
-      { label: 'D', text: '4' },
+      { label: 'A', text: '5' },
+      { label: 'B', text: '7' },
+      { label: 'C', text: '9' },
+      { label: 'D', text: '11' },
     ],
     correctAnswer: 'B',
     explanation:
-      'Divide the first equation by 2: 3x − 2y = 5. The second equation is 3x − ky = 7. For no solution the lines must be parallel: equal slopes but different y-intercepts. The slope of 3x − 2y = 5 is 3/2, and the slope of 3x − ky = 7 is 3/k. Setting 3/k = 3/2 gives k = 2. Check: with k = 2, the equations become 3x − 2y = 5 and 3x − 2y = 7, which are parallel and distinct — no solution ✓.\n\nDesmos method: Enter y = (6x − 10)/4 and y = (3x − 7)/k using a slider for k. Increase k from 1. At k = 2 the two lines become parallel — they appear side by side with no intersection point, confirming the system has no solution.',
+      'Divide the first equation by 2: 3x − 2y = 5. For the second equation 3x − ky = c to be parallel to the first, the x- and y-coefficients must be proportional: since the x-coefficients already match (both 3), we need k = 2 so the y-coefficients match too. With k = 2 the equations are 3x − 2y = 5 and 3x − 2y = c. These have NO solution whenever c ≠ 5 (parallel, distinct lines), and INFINITELY many solutions when c = 5 (identical lines). So the excluded value is c = 5, and k + c = 2 + 5 = 7.',
     wrongAnswerExplanations: {
-      A: 'k = 1 gives slopes 3/2 and 3/1 = 3 — the lines intersect at one point.',
-      C: 'k = 3 gives slopes 3/2 and 1 — the lines intersect at one point.',
-      D: 'k = 4 gives slopes 3/2 and 3/4 — the lines intersect at one point.',
+      A: '5 is the value of c alone (the excluded value), not k + c.',
+      C: '9 would result from using k = 4; but matching the y-coefficient to 3x − 2y = 5 requires k = 2, giving k + c = 7.',
+      D: '11 double-counts, for example adding k to twice c or using the wrong reduced constant.',
     },
   },
 
@@ -367,11 +367,11 @@ export const f2MathModule1Questions: MathQuestion[] = [
     difficulty: 'hard',
     type: 'grid_in',
     question:
-      'The line with equation ax + 3y = 12 has x-intercept 4 and passes through the point (2, b). What is the value of b?',
+      'In the xy-plane, the line with equation ax + 3y = 12 has x-intercept 4. A second line, perpendicular to the first, passes through the point (2, b) that lies on the first line. If the perpendicular line has a y-intercept of 0 (that is, it passes through the origin), what is the value of b?',
     correctAnswer: '2',
     acceptableAnswers: ['2'],
     explanation:
-      'The x-intercept is 4, meaning the line passes through (4, 0): a(4) + 3(0) = 12 → 4a = 12 → a = 3. The equation is 3x + 3y = 12, or x + y = 4. Substituting (2, b): 2 + b = 4 → b = 2.',
+      'The x-intercept of the first line is 4, so (4, 0) lies on it: a(4) + 3(0) = 12 → 4a = 12 → a = 3. The first line is 3x + 3y = 12, i.e. x + y = 4, with slope −1. Its perpendicular has slope 1, and passing through the origin gives y = x. The point (2, b) lies on BOTH lines: on x + y = 4 it satisfies 2 + b = 4 → b = 2, and this is consistent with y = x since (2, 2) lies on y = x. Therefore b = 2. The extra perpendicular-through-origin condition must be checked for consistency, adding a verification step.',
     scoringNotes: 'The answer is 2.',
   },
 

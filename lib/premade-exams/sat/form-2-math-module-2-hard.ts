@@ -368,11 +368,11 @@ export const f2MathModule2HardQuestions: MathQuestion[] = [
     difficulty: 'hard',
     type: 'grid_in',
     question:
-      'A geometric sequence has first term 3 and positive common ratio r. If the third term of the sequence is 48, what is the fourth term?',
+      'A geometric sequence has first term 3 and positive common ratio r. The third term of the sequence exceeds the second term by 36. What is the fourth term?',
     correctAnswer: '192',
     acceptableAnswers: ['192'],
     explanation:
-      'Third term = 3r² = 48 → r² = 16 → r = 4. Fourth term = 3r³ = 3(64) = 192.',
+      'The second term is 3r and the third term is 3r². "The third term exceeds the second term by 36" means 3r² − 3r = 36, so 3r² − 3r − 36 = 0 → r² − r − 12 = 0 → (r − 4)(r + 3) = 0 → r = 4 or r = −3. Since r is positive, r = 4. Check: terms are 3, 12, 48, and 48 − 12 = 36 ✓. The fourth term is 3r³ = 3(64) = 192.',
     scoringNotes: 'The answer is 192.',
   },
 
@@ -437,12 +437,12 @@ export const f2MathModule2HardQuestions: MathQuestion[] = [
     difficulty: 'hard',
     type: 'grid_in',
     question:
-      'A parallelogram has vertices at (0, 0), (4, 0), (5, 3), and (1, 3). What is the area of the parallelogram?',
-    correctAnswer: '12',
-    acceptableAnswers: ['12'],
+      'A parallelogram has consecutive vertices A(1, 1), B(6, 3), C(8, 8), and D(3, 6). What is the area of the parallelogram?',
+    correctAnswer: '21',
+    acceptableAnswers: ['21'],
     explanation:
-      'The base lies along the x-axis from (0, 0) to (4, 0), so base = 4. The height is the perpendicular distance between the two horizontal sides (y = 0 and y = 3), which is 3. Area = base × height = 4 × 3 = 12.',
-    scoringNotes: 'The answer is 12.',
+      'No side is horizontal or vertical, so use the vectors of two adjacent sides from vertex A. Side vector AB = (6 − 1, 3 − 1) = (5, 2). Side vector AD = (3 − 1, 6 − 1) = (2, 5). The area of a parallelogram spanned by two vectors equals the absolute value of their cross product: |AB × AD| = |(5)(5) − (2)(2)| = |25 − 4| = 21. (You can confirm with the shoelace formula on all four vertices, which also gives 21.)',
+    scoringNotes: 'The answer is 21.',
   },
 
   {

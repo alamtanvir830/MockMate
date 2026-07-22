@@ -484,14 +484,14 @@ export const rwModule2HardQuestions: RWQuestion[] = [
     choices: [
       { label: 'A', text: '; the' },
       { label: 'B', text: ': the' },
-      { label: 'C', text: ', the tiny wobble; which is' },
+      { label: 'C', text: ', the' },
       { label: 'D', text: ' the' },
     ],
     correctAnswer: 'B',
     explanation: `Choice B is correct. The words before the blank form a complete independent clause ending in "a single measurable clue," and what follows is a noun phrase that names and specifies that clue. A colon is the correct mark to introduce an explanatory or defining element after a complete clause.`,
     wrongAnswerExplanations: {
       A: `Choice A is incorrect. A semicolon must join two independent clauses, but "the tiny wobble that a planet's gravity induces in the motion of its host star" is a noun phrase, not an independent clause.`,
-      C: `Choice C is incorrect. Inserting a semicolon before "which is" splits the sentence incorrectly and creates a fragment; a semicolon cannot precede the dependent relative clause "which is."`,
+      C: `Choice C is incorrect. A comma is too weak to introduce the specifying noun phrase that names the "single measurable clue"; joining a complete independent clause to a defining noun phrase with only a comma is not conventional, whereas a colon correctly signals the explanatory relationship.`,
       D: `Choice D is incorrect. Omitting punctuation entirely runs the independent clause directly into the noun phrase, producing an unpunctuated, ungrammatical construction.`,
     },
   },
