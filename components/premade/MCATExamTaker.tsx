@@ -14,6 +14,7 @@ import type {
 } from '@/lib/premade-exams/mcat/types'
 import { saveMCATAttempt, updateMCATAttempt } from '@/lib/premade-exams/mcat/attempt-store'
 import { computeMCATScores, MCAT_SCORE_DISCLAIMER, getApproximatePercentile } from '@/lib/premade-exams/mcat/mcat-score-conversion'
+import { ExamSaveStatus, type SaveStatus } from '@/components/premade/ExamSaveStatus'
 
 // ─── Phase machine ─────────────────────────────────────────────────────────────
 type MCATPhase =
@@ -111,6 +112,7 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
   const [breakSecsLeft, setBreakSecsLeft] = useState(0)
   const [timerActive, setTimerActive] = useState(false)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
 
   const attempt = initialAttempt ?? null
   const [liveAttempt, setLiveAttempt] = useState<MCATAttempt | null>(null)
@@ -154,6 +156,27 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
   }, [timerActive, phase]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function startTimer() { setTimerActive(true) }
+
+  // Save in-progress state to localStorage after every answer or bookmark change.
+  // This is a localStorage save (not server-side), so it resolves synchronously.
+  // A brief 300ms delay creates a visible "Saving… → Saved" UX without being misleading.
+  useEffect(() => {
+    if (isReview) return
+    if (!Object.keys(answers).length && !bookmarks.size) return
+    setSaveStatus('saving')
+    const timer = setTimeout(() => {
+      try {
+        localStorage.setItem(
+          `mcat_progress_${attemptId}`,
+          JSON.stringify({ answers: { ...answers }, bookmarks: [...bookmarks], savedAt: Date.now() }),
+        )
+        setSaveStatus('saved')
+      } catch {
+        setSaveStatus('error')
+      }
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [answers, bookmarks, attemptId, isReview])
 
   function goToNextAfterSection(sIdx: number) {
     const sec = form.sections[sIdx]
@@ -395,6 +418,7 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              {!isReview && <ExamSaveStatus status={saveStatus} />}
               <div className={cn(
                 'text-sm font-mono font-semibold px-3 py-1 rounded',
                 secsLeft < 300 ? 'bg-red-800/50 text-red-200' : 'bg-emerald-800/50 text-emerald-100'

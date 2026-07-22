@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { ExamHistoryNotice } from '@/components/premade/ExamHistoryNotice'
 
 const PASSWORD = 'downstate123'
 const SESSION_KEY = 'mcat_unlocked'
@@ -102,6 +103,8 @@ export default function MCATPage() {
           ))}
         </ul>
       </div>
+
+      <ExamHistoryNotice />
 
       {/* Form cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

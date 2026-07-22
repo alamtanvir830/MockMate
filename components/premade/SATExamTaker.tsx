@@ -25,6 +25,7 @@ import {
   roundSATScore,
 } from '@/lib/premade-exams/sat/sat-score-conversion'
 import type { SATAIFeedback } from '@/app/api/sat-feedback/route'
+import { ExamSaveStatus, type SaveStatus } from '@/components/premade/ExamSaveStatus'
 
 // ─── Phase state machine ───────────────────────────────────────────────────────
 type SATPhase =
@@ -809,13 +810,14 @@ function DirectionsLayout({ title, children }: { title: string; children: React.
 // ─── NavBar ───────────────────────────────────────────────────────────────────
 function NavBar({
   onBack, onNext, canGoBack, centerLabel, timerEl, onReview, showReview,
-  isBookmarked, onBookmark, showMathTools, onCalc, onRef,
+  isBookmarked, onBookmark, showMathTools, onCalc, onRef, saveStatusEl,
 }: {
   onBack: () => void; onNext: () => void; canGoBack: boolean
   centerLabel: React.ReactNode; timerEl?: React.ReactNode
   onReview?: () => void; showReview?: boolean
   isBookmarked?: boolean; onBookmark?: () => void
   showMathTools?: boolean; onCalc?: () => void; onRef?: () => void
+  saveStatusEl?: React.ReactNode
 }) {
   return (
     <header className="shrink-0 h-11 bg-[#1b3a5c] flex items-center px-3 text-white select-none gap-2">
@@ -841,6 +843,7 @@ function NavBar({
         {centerLabel}
       </div>
       <div className="flex items-center gap-1.5 shrink-0">
+        {saveStatusEl}
         {timerEl}
         {showMathTools && onCalc && (
           <button onClick={onCalc} title="Calculator" className="text-[11px] font-semibold px-2 py-1 rounded border border-white/30 hover:bg-white/10 transition-colors flex items-center gap-1">
@@ -962,11 +965,16 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
   const [feedbackReferrerEmailTouched, setFeedbackReferrerEmailTouched] = useState(false)
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false)
   const [feedbackError, setFeedbackError] = useState('')
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const attemptIdRef = useRef<string>(initialAttempt?.id ?? '')
   const completedAtRef = useRef<string>(initialAttempt?.completedAt ?? '')
   const autosaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const lastSavedAnswersRef = useRef<string>('')
+  const saveRetryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const saveRetryCountRef = useRef(0)
+  // Always holds the latest saveToServer so retry callbacks stay current after re-renders.
+  const saveToServerRef = useRef<(() => Promise<void>) | null>(null)
   const [inProgressAttempt, setInProgressAttempt] = useState<InProgressData | null>(null)
   const [showResumePrompt, setShowResumePrompt] = useState(false)
 
@@ -1031,6 +1039,10 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     const formNumber = parseInt(form.id.replace('sat-form-', ''), 10)
     if (isNaN(formNumber) || formNumber < 1 || formNumber > 5) return
 
+    if (!navigator.onLine) { setSaveStatus('offline'); return }
+
+    setSaveStatus('saving')
+
     const phaseTag = phase.tag
     const sec = phase.tag === 'question' ? phase.section : null
     const mod = phase.tag === 'question' ? phase.slot : null
@@ -1038,26 +1050,65 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     const currentSecsLeft = overrideSecsLeft !== undefined ? overrideSecsLeft : secsLeft
     const currentTimerRunning = overrideTimerRunning !== undefined ? overrideTimerRunning : timerRunning
 
-    await fetch('/api/sat/in-progress', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        formNumber,
-        localAttemptId: attemptIdRef.current,
-        answers,
-        bookmarks: [...bookmarks],
-        strikeouts: Object.fromEntries(Object.entries(strikeouts).map(([k, v]) => [k, [...v]])),
-        rwM2Type,
-        mathM2Type,
-        currentPhaseTag: phaseTag,
-        currentSection: sec,
-        currentModule: mod,
-        currentQuestionIdx: qIdx,
-        secsLeft: currentTimerRunning ? currentSecsLeft : null,
-        timerRunning: currentTimerRunning,
-      }),
-    }).catch(() => { /* silent — localStorage is source of truth until completion */ })
+    try {
+      const res = await fetch('/api/sat/in-progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formNumber,
+          localAttemptId: attemptIdRef.current,
+          answers,
+          bookmarks: [...bookmarks],
+          strikeouts: Object.fromEntries(Object.entries(strikeouts).map(([k, v]) => [k, [...v]])),
+          rwM2Type,
+          mathM2Type,
+          currentPhaseTag: phaseTag,
+          currentSection: sec,
+          currentModule: mod,
+          currentQuestionIdx: qIdx,
+          secsLeft: currentTimerRunning ? currentSecsLeft : null,
+          timerRunning: currentTimerRunning,
+        }),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      setSaveStatus('saved')
+      saveRetryCountRef.current = 0
+    } catch {
+      if (!navigator.onLine) {
+        setSaveStatus('offline')
+      } else {
+        setSaveStatus('error')
+        const attempt = saveRetryCountRef.current
+        saveRetryCountRef.current = attempt + 1
+        if (attempt < 4) {
+          const delay = Math.min(3000 * (2 ** attempt), 30_000)
+          if (saveRetryTimerRef.current) clearTimeout(saveRetryTimerRef.current)
+          saveRetryTimerRef.current = setTimeout(() => {
+            saveToServerRef.current?.()
+          }, delay)
+        }
+      }
+    }
   }, [form.id, isHistoryView, phase, answers, bookmarks, strikeouts, rwM2Type, mathM2Type, secsLeft, timerRunning])
+
+  // Keep saveToServerRef in sync so retry callbacks always call the latest version.
+  useEffect(() => { saveToServerRef.current = saveToServer }, [saveToServer])
+
+  // Online/offline — update indicator and re-try on reconnect (uses ref to avoid
+  // re-registering listeners every time saveToServer updates its closure).
+  useEffect(() => {
+    function handleOffline() { setSaveStatus('offline') }
+    function handleOnline() {
+      setSaveStatus('saving')
+      saveToServerRef.current?.()
+    }
+    window.addEventListener('offline', handleOffline)
+    window.addEventListener('online', handleOnline)
+    return () => {
+      window.removeEventListener('offline', handleOffline)
+      window.removeEventListener('online', handleOnline)
+    }
+  }, [])
 
   // Debounced autosave on answer changes
   useEffect(() => {
@@ -1065,6 +1116,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     const key = JSON.stringify(answers)
     if (key === lastSavedAnswersRef.current) return
     lastSavedAnswersRef.current = key
+    setSaveStatus('saving')  // immediate visual feedback before the debounce fires
     if (autosaveTimerRef.current) clearTimeout(autosaveTimerRef.current)
     autosaveTimerRef.current = setTimeout(() => {
       saveToServer()
@@ -1800,6 +1852,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
             showMathTools={phase.section === 'math'}
             onCalc={() => setCalcOpen(c => !c)}
             onRef={() => setRefOpen(true)}
+            saveStatusEl={!isHistoryView ? <ExamSaveStatus status={saveStatus} /> : undefined}
           />
 
           <div className="flex-1 overflow-y-auto">
@@ -1992,7 +2045,8 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
               </svg>
               Back
             </button>
-            <span className="text-white text-[13px] font-semibold">{headerLabel}</span>
+            <span className="flex-1 text-white text-[13px] font-semibold">{headerLabel}</span>
+            {!isHistoryView && <ExamSaveStatus status={saveStatus} />}
           </div>
           <div className="flex-1 overflow-y-auto p-6">
             <div className="max-w-2xl mx-auto">
