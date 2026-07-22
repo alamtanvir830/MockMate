@@ -33,7 +33,7 @@ export async function GET() {
     const MATH_CAPSTONE_AVAILABLE: Record<number, boolean> = {
       1: true,
       2: true,
-      3: false, // content pending
+      3: true,
     }
 
     const capstones = [1, 2, 3].map(num => {

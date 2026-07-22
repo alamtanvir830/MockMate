@@ -12,6 +12,10 @@ export async function loadMathCapstone(id: string): Promise<MathCapstoneInfo | n
       const mod = await import('./math-capstone-2')
       return mod.mathCapstone2
     }
+    if (id === 'math-capstone-3') {
+      const mod = await import('./math-capstone-3')
+      return mod.mathCapstone3
+    }
     return null
   } catch {
     return null

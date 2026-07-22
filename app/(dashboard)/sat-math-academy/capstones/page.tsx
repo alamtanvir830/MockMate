@@ -9,7 +9,7 @@ const CAPSTONE_META = [
     description: 'A full 44-question math assessment covering all four domains and all twenty-one skills.',
     module1Label: 'Module 1 · 22 questions',
     module2Label: 'Module 2 · 22 questions',
-    badge: 'Capstone 1 of 2',
+    badge: 'Capstone 1 of 3',
   },
   {
     id: 'math-capstone-2',
@@ -17,7 +17,15 @@ const CAPSTONE_META = [
     description: 'A second full-length assessment using a different question set from Capstone 1.',
     module1Label: 'Module 1 · 22 questions',
     module2Label: 'Module 2 · 22 questions',
-    badge: 'Capstone 2 of 2',
+    badge: 'Capstone 2 of 3',
+  },
+  {
+    id: 'math-capstone-3',
+    title: 'Math Academy Capstone 3',
+    description: 'A third full-length assessment with a completely new question set across all domains.',
+    module1Label: 'Module 1 · 22 questions',
+    module2Label: 'Module 2 · 22 questions',
+    badge: 'Capstone 3 of 3',
   },
 ]
 
