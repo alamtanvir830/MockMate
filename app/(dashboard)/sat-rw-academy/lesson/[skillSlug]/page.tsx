@@ -161,25 +161,82 @@ const TABS: { id: Tab; label: string }[] = [
   { id: 'mastery', label: 'Mastery' },
 ]
 
+// ─── Stimulus renderer (handles bullet notes and writing goals) ───────────────
+
+function StimulusBlock({ text }: { text: string }) {
+  type Seg = { type: 'text' | 'bullets' | 'goal'; lines: string[] }
+  const segments: Seg[] = []
+  const textBuf: string[] = []
+  const bulletBuf: string[] = []
+
+  const flushText = () => {
+    const joined = textBuf.splice(0).join(' ').trim()
+    if (joined) segments.push({ type: 'text', lines: [joined] })
+  }
+  const flushBullets = () => {
+    if (bulletBuf.length) segments.push({ type: 'bullets', lines: bulletBuf.splice(0) })
+  }
+
+  for (const raw of text.split('\n')) {
+    const line = raw.trim()
+    if (!line) { flushBullets(); flushText(); continue }
+    if (/^[•\-\*]\s/.test(line)) {
+      flushText()
+      bulletBuf.push(line.replace(/^[•\-\*]\s*/, ''))
+    } else if (/^(the student wants|the student needs|which choice|the writer wants)/i.test(line)) {
+      flushBullets(); flushText()
+      segments.push({ type: 'goal', lines: [line] })
+    } else {
+      flushBullets()
+      textBuf.push(line)
+    }
+  }
+  flushBullets(); flushText()
+
+  return (
+    <div className="space-y-3">
+      {segments.map((seg, i) => {
+        if (seg.type === 'bullets') return (
+          <ul key={i} className="space-y-1.5 ml-1">
+            {seg.lines.map((line, j) => (
+              <li key={j} className="flex items-start gap-2 text-sm text-slate-700 leading-relaxed">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true" />
+                {line}
+              </li>
+            ))}
+          </ul>
+        )
+        if (seg.type === 'goal') return (
+          <p key={i} className="text-sm font-medium text-slate-800 leading-relaxed pt-1">{seg.lines[0]}</p>
+        )
+        return <p key={i} className="text-sm text-slate-700 leading-relaxed">{seg.lines[0]}</p>
+      })}
+    </div>
+  )
+}
+
 // ─── Overview tab ────────────────────────────────────────────────────────────
 
 function OverviewTab({ skill }: { skill: AcademySkill }) {
   const o = skill.overview
   return (
-    <div className="space-y-5">
+    <div className="space-y-8 max-w-2xl">
       <h2 className="text-base font-semibold text-slate-900">Overview</h2>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {[
-          { label: 'What it tests', value: o.whatItTests },
-          { label: 'How it appears', value: o.howItAppears },
-          { label: 'Why students miss it', value: o.whyStudentsMissIt },
-          { label: 'What to look for', value: o.whatToLookFor },
-        ].map(({ label, value }) => (
-          <div key={label} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">{label}</p>
-            <p className="text-sm text-slate-700 leading-relaxed">{value}</p>
-          </div>
-        ))}
+      <div className="space-y-2">
+        <h3 className="text-sm font-semibold text-slate-800">What this skill tests</h3>
+        <p className="text-sm text-slate-600 leading-relaxed">{o.whatItTests}</p>
+      </div>
+      <div className="space-y-2">
+        <h3 className="text-sm font-semibold text-slate-800">How it appears on the SAT</h3>
+        <p className="text-sm text-slate-600 leading-relaxed">{o.howItAppears}</p>
+      </div>
+      <div className="space-y-2">
+        <h3 className="text-sm font-semibold text-slate-800">Why students miss these questions</h3>
+        <p className="text-sm text-slate-600 leading-relaxed">{o.whyStudentsMissIt}</p>
+      </div>
+      <div className="border-l-2 border-emerald-400 pl-4 py-3 pr-4 rounded-r-lg bg-emerald-50/70">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-600 mb-1.5">Key takeaway</p>
+        <p className="text-sm text-emerald-900 leading-relaxed">{o.whatToLookFor}</p>
       </div>
     </div>
   )
@@ -280,19 +337,19 @@ function GuidedExamplesTab({ examples }: { examples: GuidedExample[] }) {
         </div>
       </div>
 
-      {/* Stimulus */}
+      {/* Stimulus / Notes */}
       {ex.stimulus && (
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-2">Passage</p>
-          <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{ex.stimulus}</p>
+        <div className="rounded-lg border border-slate-200 bg-slate-50 px-5 py-4 space-y-2">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Passage / Notes</p>
+          <StimulusBlock text={ex.stimulus} />
         </div>
       )}
 
       {/* Question */}
-      <p className="text-sm font-medium text-slate-900">{ex.question}</p>
+      <p className="text-sm font-medium text-slate-900 pt-1">{ex.question}</p>
 
       {/* Choices */}
-      <div className="space-y-2">
+      <div className="space-y-2.5">
         {ex.choices.map((choice) => {
           const isSelected = selectedAnswer === choice.label
           const isCorrect = choice.label === ex.correctAnswer
@@ -309,26 +366,26 @@ function GuidedExamplesTab({ examples }: { examples: GuidedExample[] }) {
               key={choice.label}
               disabled={revealed}
               onClick={() => !revealed && setSelectedAnswer(choice.label)}
-              className={cn('w-full flex items-start gap-3 rounded-lg border p-3 text-left transition-colors', cls)}
+              className={cn('w-full flex items-start gap-3 rounded-lg border p-3.5 text-left transition-colors', cls)}
             >
-              <span className="flex-shrink-0 w-5 h-5 rounded-full border border-current text-xs font-bold flex items-center justify-center">
+              <span className="flex-shrink-0 w-5 h-5 rounded-full border border-current text-xs font-bold flex items-center justify-center mt-px">
                 {choice.label}
               </span>
-              <span className="text-sm text-slate-700">{choice.text}</span>
+              <span className="text-sm text-slate-700 leading-relaxed">{choice.text}</span>
             </button>
           )
         })}
       </div>
 
       {/* Steps */}
-      <div className="space-y-3">
+      <div className="space-y-4 pt-2">
         <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
           Step-by-step walkthrough — {stepIdx + 1} of {totalSteps}
         </p>
-        <div className="space-y-2">
+        <div className="space-y-3">
           {ex.steps.slice(0, stepIdx + 1).map((step, i) => (
-            <div key={i} className={cn('rounded-lg border p-3', i === stepIdx ? 'border-emerald-300 bg-emerald-50' : 'border-slate-200 bg-slate-50')}>
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">
+            <div key={i} className={cn('rounded-lg border px-4 py-3.5 space-y-1.5', i === stepIdx ? 'border-emerald-300 bg-emerald-50' : 'border-slate-200 bg-slate-50')}>
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
                 Step {i + 1}: {step.instruction}
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">{step.content}</p>
@@ -336,11 +393,11 @@ function GuidedExamplesTab({ examples }: { examples: GuidedExample[] }) {
           ))}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2 pt-1">
           {stepIdx < totalSteps - 1 && (
             <button
               onClick={() => setStepIdx(stepIdx + 1)}
-              className="rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 transition-colors"
+              className="rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 transition-colors"
             >
               Next step →
             </button>
@@ -348,7 +405,7 @@ function GuidedExamplesTab({ examples }: { examples: GuidedExample[] }) {
           {stepIdx === totalSteps - 1 && !revealed && (
             <button
               onClick={() => setRevealed(true)}
-              className="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 transition-colors"
+              className="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2.5 transition-colors"
             >
               Reveal answer
             </button>
@@ -358,23 +415,33 @@ function GuidedExamplesTab({ examples }: { examples: GuidedExample[] }) {
 
       {/* Explanation */}
       {revealed && (
-        <div className="rounded-lg border border-emerald-300 bg-emerald-50 p-4 space-y-3">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600">Explanation</p>
-          <p className="text-sm text-slate-700 leading-relaxed">{ex.explanation}</p>
+        <div className="space-y-4 pt-2">
+          <div className="rounded-lg border border-emerald-300 bg-emerald-50 px-5 py-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <svg className="h-4 w-4 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+              <p className="text-sm font-semibold text-emerald-700">Correct answer: {ex.correctAnswer}</p>
+            </div>
+            <p className="text-sm text-slate-700 leading-relaxed">{ex.explanation}</p>
+          </div>
+
           {ex.wrongAnswerExplanations && Object.keys(ex.wrongAnswerExplanations).length > 0 && (
-            <div className="space-y-2 border-t border-emerald-200 pt-3">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Why the others are wrong</p>
+            <div className="space-y-3">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Why the other choices don&apos;t work</p>
               {(Object.entries(ex.wrongAnswerExplanations) as [AnswerLabel, string][]).map(([label, text]) => (
-                <p key={label} className="text-xs text-slate-600 leading-relaxed">
-                  <span className="font-bold text-slate-700">({label})</span> {text}
-                </p>
+                <div key={label} className="flex items-start gap-3">
+                  <span className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-red-100 text-red-600 text-xs font-bold flex items-center justify-center">{label}</span>
+                  <p className="text-sm text-slate-600 leading-relaxed">{text}</p>
+                </div>
               ))}
             </div>
           )}
+
           {exIdx < examples.length - 1 && (
             <button
               onClick={() => goToExample(exIdx + 1)}
-              className="mt-1 rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 transition-colors"
+              className="rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 transition-colors"
             >
               Next example →
             </button>

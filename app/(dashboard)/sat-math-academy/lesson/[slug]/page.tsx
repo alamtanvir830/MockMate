@@ -132,6 +132,54 @@ function MathRecognitionCheck({ excludeSlug, onComplete }: { excludeSlug: string
   )
 }
 
+// ── Stimulus renderer ──────────────────────────────────────────────────────────
+
+function StimulusBlock({ text }: { text: string }) {
+  type Seg = { type: 'text' | 'bullets'; lines: string[] }
+  const segments: Seg[] = []
+  const textBuf: string[] = []
+  const bulletBuf: string[] = []
+
+  const flushText = () => {
+    const joined = textBuf.splice(0).join(' ').trim()
+    if (joined) segments.push({ type: 'text', lines: [joined] })
+  }
+  const flushBullets = () => {
+    if (bulletBuf.length) segments.push({ type: 'bullets', lines: bulletBuf.splice(0) })
+  }
+
+  for (const raw of text.split('\n')) {
+    const line = raw.trim()
+    if (!line) { flushBullets(); flushText(); continue }
+    if (/^[•\-\*]\s/.test(line)) {
+      flushText()
+      bulletBuf.push(line.replace(/^[•\-\*]\s*/, ''))
+    } else {
+      flushBullets()
+      textBuf.push(line)
+    }
+  }
+  flushBullets(); flushText()
+
+  return (
+    <div className="space-y-3">
+      {segments.map((seg, i) => {
+        if (seg.type === 'bullets') return (
+          <ul key={i} className="space-y-1.5 ml-1">
+            {seg.lines.map((line, j) => (
+              <li key={j} className="flex items-start gap-2 text-sm text-slate-700 leading-relaxed">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400" aria-hidden="true" />
+                {line}
+              </li>
+            ))}
+          </ul>
+        )
+        return <p key={i} className="text-sm text-slate-700 leading-relaxed">{seg.lines[0]}</p>
+      })}
+    </div>
+  )
+}
+
 // ── Tab types ──────────────────────────────────────────────────────────────────
 
 type Tab = 'overview' | 'strategy' | 'traps' | 'examples' | 'drill' | 'mastery'
@@ -150,20 +198,23 @@ const TABS: { id: Tab; label: string }[] = [
 function OverviewTab({ skill }: { skill: MathAcademySkill }) {
   const o = skill.overview
   return (
-    <div className="space-y-5">
+    <div className="space-y-8 max-w-2xl">
       <h2 className="text-base font-semibold text-slate-900">Overview</h2>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {[
-          { label: 'What it tests', value: o.whatItTests },
-          { label: 'How it appears', value: o.howItAppears },
-          { label: 'Why students miss it', value: o.whyStudentsMissIt },
-          { label: 'What to look for', value: o.whatToLookFor },
-        ].map(({ label, value }) => (
-          <div key={label} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">{label}</p>
-            <p className="text-sm text-slate-700 leading-relaxed">{value}</p>
-          </div>
-        ))}
+      <div className="space-y-2">
+        <h3 className="text-sm font-semibold text-slate-800">What this skill tests</h3>
+        <p className="text-sm text-slate-600 leading-relaxed">{o.whatItTests}</p>
+      </div>
+      <div className="space-y-2">
+        <h3 className="text-sm font-semibold text-slate-800">How it appears on the SAT</h3>
+        <p className="text-sm text-slate-600 leading-relaxed">{o.howItAppears}</p>
+      </div>
+      <div className="space-y-2">
+        <h3 className="text-sm font-semibold text-slate-800">Why students miss these questions</h3>
+        <p className="text-sm text-slate-600 leading-relaxed">{o.whyStudentsMissIt}</p>
+      </div>
+      <div className="border-l-2 border-indigo-400 pl-4 py-3 pr-4 rounded-r-lg bg-indigo-50/70">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-indigo-600 mb-1.5">Key takeaway</p>
+        <p className="text-sm text-indigo-900 leading-relaxed">{o.whatToLookFor}</p>
       </div>
     </div>
   )
@@ -254,15 +305,15 @@ function GuidedExamplesTab({ examples }: { examples: GuidedExample[] }) {
       </div>
 
       {ex.stimulus && (
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-2">Context</p>
-          <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{ex.stimulus}</p>
+        <div className="rounded-lg border border-slate-200 bg-slate-50 px-5 py-4 space-y-2">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Context / Notes</p>
+          <StimulusBlock text={ex.stimulus} />
         </div>
       )}
 
-      <p className="text-sm font-medium text-slate-900">{ex.question}</p>
+      <p className="text-sm font-medium text-slate-900 pt-1">{ex.question}</p>
 
-      <div className="space-y-2">
+      <div className="space-y-2.5">
         {ex.choices.map(choice => {
           const isSelected = selectedAnswer === choice.label
           const isCorrect = choice.label === ex.correctAnswer
@@ -276,57 +327,67 @@ function GuidedExamplesTab({ examples }: { examples: GuidedExample[] }) {
           }
           return (
             <button key={choice.label} disabled={revealed} onClick={() => !revealed && setSelectedAnswer(choice.label as AnswerLabel)}
-              className={cn('w-full flex items-start gap-3 rounded-lg border p-3 text-left transition-colors', cls)}
+              className={cn('w-full flex items-start gap-3 rounded-lg border p-3.5 text-left transition-colors', cls)}
             >
-              <span className="flex-shrink-0 w-5 h-5 rounded-full border border-current text-xs font-bold flex items-center justify-center">{choice.label}</span>
-              <span className="text-sm text-slate-700">{choice.text}</span>
+              <span className="flex-shrink-0 w-5 h-5 rounded-full border border-current text-xs font-bold flex items-center justify-center mt-px">{choice.label}</span>
+              <span className="text-sm text-slate-700 leading-relaxed">{choice.text}</span>
             </button>
           )
         })}
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-4 pt-2">
         <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">
           Step-by-step — {stepIdx + 1} of {totalSteps}
         </p>
-        <div className="space-y-2">
+        <div className="space-y-3">
           {ex.steps.slice(0, stepIdx + 1).map((step, i) => (
-            <div key={i} className={cn('rounded-lg border p-3', i === stepIdx ? 'border-indigo-300 bg-indigo-50' : 'border-slate-200 bg-slate-50')}>
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1">Step {i + 1}: {step.instruction}</p>
+            <div key={i} className={cn('rounded-lg border px-4 py-3.5 space-y-1.5', i === stepIdx ? 'border-indigo-300 bg-indigo-50' : 'border-slate-200 bg-slate-50')}>
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Step {i + 1}: {step.instruction}</p>
               <p className="text-sm text-slate-700 leading-relaxed">{step.content}</p>
             </div>
           ))}
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 pt-1">
           {stepIdx < totalSteps - 1 && (
             <button onClick={() => setStepIdx(stepIdx + 1)}
-              className="rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 transition-colors"
+              className="rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 transition-colors"
             >Next step →</button>
           )}
           {stepIdx === totalSteps - 1 && !revealed && (
             <button onClick={() => setRevealed(true)}
-              className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 transition-colors"
+              className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2.5 transition-colors"
             >Reveal answer</button>
           )}
         </div>
       </div>
 
       {revealed && (
-        <div className="rounded-lg border border-indigo-300 bg-indigo-50 p-4 space-y-3">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-indigo-600">Explanation</p>
-          <p className="text-sm text-slate-700 leading-relaxed">{ex.explanation}</p>
+        <div className="space-y-4 pt-2">
+          <div className="rounded-lg border border-indigo-300 bg-indigo-50 px-5 py-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <svg className="h-4 w-4 text-indigo-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5} aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+              <p className="text-sm font-semibold text-indigo-700">Correct answer: {ex.correctAnswer}</p>
+            </div>
+            <p className="text-sm text-slate-700 leading-relaxed">{ex.explanation}</p>
+          </div>
+
           {ex.wrongAnswerExplanations && Object.keys(ex.wrongAnswerExplanations).length > 0 && (
-            <div className="space-y-2 border-t border-indigo-200 pt-3">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Why the others are wrong</p>
+            <div className="space-y-3">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Why the other choices don&apos;t work</p>
               {(Object.entries(ex.wrongAnswerExplanations) as [AnswerLabel, string][]).map(([label, text]) => (
-                <p key={label} className="text-xs text-slate-600 leading-relaxed">
-                  <span className="font-bold text-slate-700">({label})</span> {text}
-                </p>
+                <div key={label} className="flex items-start gap-3">
+                  <span className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-red-100 text-red-600 text-xs font-bold flex items-center justify-center">{label}</span>
+                  <p className="text-sm text-slate-600 leading-relaxed">{text}</p>
+                </div>
               ))}
             </div>
           )}
+
           {ex.desmos && (
-            <div className="space-y-2 border-t border-indigo-200 pt-3">
+            <div className="rounded-lg border border-teal-200 bg-teal-50 px-4 py-3.5 space-y-2.5">
               <div className="flex items-center gap-2">
                 <p className="text-[11px] font-semibold uppercase tracking-wider text-teal-600">Desmos method</p>
                 <span className={cn(
@@ -339,16 +400,17 @@ function GuidedExamplesTab({ examples }: { examples: GuidedExample[] }) {
                     : ex.desmos.recommendation === 'optional' ? 'Optional' : 'Not recommended'}
                 </span>
               </div>
-              <div className="rounded-md border border-teal-200 bg-teal-50 px-3 py-2">
+              <div className="rounded-md border border-teal-200 bg-white/70 px-3 py-2">
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-teal-500 mb-0.5">Type into Desmos</p>
                 <p className="text-xs font-mono text-teal-900 leading-relaxed">{ex.desmos.entry}</p>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">{ex.desmos.note}</p>
             </div>
           )}
+
           {exIdx < examples.length - 1 && (
             <button onClick={() => goToExample(exIdx + 1)}
-              className="mt-1 rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 transition-colors"
+              className="rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 transition-colors"
             >Next example →</button>
           )}
         </div>
