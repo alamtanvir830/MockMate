@@ -357,6 +357,11 @@ export const algebraSkills: MathAcademySkill[] = [
           A: 'A $200 increase per mile would mean 200 is the slope (coefficient of m), not the constant term.',
           D: 'To find pay at 200 miles, you would substitute m = 200 into the equation, giving P = 0.30(200) + 200 = 260, not 200.',
         },
+        desmos: {
+          recommendation: 'optional',
+          entry: 'Type y=0.3x+200 and read where the line crosses the y-axis (x=0): the point (0, 200).',
+          note: 'Interpretation questions are usually answered faster by reading the equation directly (b is the y-intercept). Graphing can confirm the intercept if you are unsure, but the algebra here is quicker.',
+        },
       },
       {
         id: 'linear-equations-two-variables-ex-2',
@@ -611,6 +616,11 @@ export const algebraSkills: MathAcademySkill[] = [
         wrongAnswerExplanations: {
           B: 'This comes from computing 5(−2) = −10, then subtracting 3 incorrectly as adding 3 to get −7.',
           C: 'This comes from treating 5(−2) as −10 but then writing f(−2) = 10 − 3 = 7 (dropping the negative).',
+        },
+        desmos: {
+          recommendation: 'optional',
+          entry: 'Define the function, then evaluate: type f(x)=5x-3 on one line and f(-2) on the next; Desmos prints -13.',
+          note: 'Defining f and typing f(-2) guarantees the sign handling is correct. For a single substitution like this, careful mental arithmetic is usually just as fast — use Desmos to double-check when negatives are involved.',
         },
       },
       {
@@ -887,6 +897,11 @@ export const algebraSkills: MathAcademySkill[] = [
           A: 'Substituting x = 2 into y = 2x − 1 gives y = 3, and 3(2) + 3 = 9 ≠ 14, so x = 2 is wrong.',
           D: 'This is the value of y, not x — the question asked for x.',
         },
+        desmos: {
+          recommendation: 'recommended',
+          entry: 'Type each equation on its own line: y=2x-1  then  3x+y=14. Click the intersection point Desmos marks; it reads (3, 5).',
+          note: 'For systems, graphing both lines and clicking the intersection is fast and eliminates substitution/arithmetic errors. Read the x-coordinate for "what is x". If the point shows a decimal, verify it is exact before choosing an answer.',
+        },
       },
       {
         id: 'systems-of-equations-ex-2',
@@ -1152,6 +1167,11 @@ export const algebraSkills: MathAcademySkill[] = [
         wrongAnswerExplanations: {
           A: 'This comes from correctly dividing by −4 but forgetting to flip the inequality, giving x ≤ −3.',
           D: 'This comes from dividing 12 by 4 (ignoring the negative) to get x ≥ 3.',
+        },
+        desmos: {
+          recommendation: 'recommended',
+          entry: 'Type the inequality exactly: -4x+3<=15 (use <= for ≤). Desmos shades the solution region; on a number-line reading it shades x ≥ -3.',
+          note: 'Graphing the inequality removes the classic mistake of forgetting to flip the sign when dividing by a negative — the shaded region shows the true solution set. To match answer choices, read the boundary value (−3) and which side is shaded.',
         },
       },
       {

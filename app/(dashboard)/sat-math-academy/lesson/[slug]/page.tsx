@@ -325,6 +325,27 @@ function GuidedExamplesTab({ examples }: { examples: GuidedExample[] }) {
               ))}
             </div>
           )}
+          {ex.desmos && (
+            <div className="space-y-2 border-t border-indigo-200 pt-3">
+              <div className="flex items-center gap-2">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-teal-600">Desmos method</p>
+                <span className={cn(
+                  'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold',
+                  ex.desmos.recommendation === 'recommended' ? 'bg-teal-100 text-teal-700'
+                    : ex.desmos.recommendation === 'optional' ? 'bg-amber-100 text-amber-700'
+                    : 'bg-slate-100 text-slate-500',
+                )}>
+                  {ex.desmos.recommendation === 'recommended' ? 'Recommended'
+                    : ex.desmos.recommendation === 'optional' ? 'Optional' : 'Not recommended'}
+                </span>
+              </div>
+              <div className="rounded-md border border-teal-200 bg-teal-50 px-3 py-2">
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-teal-500 mb-0.5">Type into Desmos</p>
+                <p className="text-xs font-mono text-teal-900 leading-relaxed">{ex.desmos.entry}</p>
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">{ex.desmos.note}</p>
+            </div>
+          )}
           {exIdx < examples.length - 1 && (
             <button onClick={() => goToExample(exIdx + 1)}
               className="mt-1 rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2 transition-colors"

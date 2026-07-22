@@ -73,6 +73,14 @@ export interface GuidedStep {
   content: string
 }
 
+// Optional Desmos-calculator guidance attached to a worked example (Math Academy).
+// Absent on R&W examples and on math examples where a calculator adds no value.
+export interface DesmosGuidance {
+  recommendation: 'recommended' | 'optional' | 'not_recommended'
+  entry: string   // exact syntax to type into Desmos, e.g. "y=2x-1 and 3x+y=14"
+  note: string    // when/why to use it, and when traditional is faster
+}
+
 export interface GuidedExample {
   id: string
   stimulus?: string
@@ -82,6 +90,7 @@ export interface GuidedExample {
   correctAnswer: AnswerLabel
   explanation: string
   wrongAnswerExplanations: Partial<Record<AnswerLabel, string>>
+  desmos?: DesmosGuidance
 }
 
 export interface DrillQuestion {
