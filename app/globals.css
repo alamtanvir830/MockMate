@@ -33,6 +33,22 @@
   .mm-static-section   { display: block !important; }
 }
 
+/* ── Social proof badge ──────────────────────────────────────────────── */
+@keyframes mm-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mm-social-proof {
+  animation: mm-fade-in 0.5s ease-out 0.3s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-social-proof {
+    animation: none;
+  }
+}
+
 /* Hide scrollbar, keep scroll functionality */
 .mm-no-scrollbar {
   -ms-overflow-style: none;
