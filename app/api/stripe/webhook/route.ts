@@ -9,7 +9,10 @@ import {
   getUserIdByEmail,
   getUserIdBySubscriptionId,
   getUserIdByStripeCustomerId,
+  recordOneTimePurchase,
+  refundOneTimePurchase,
 } from '@/lib/entitlements'
+import { SAT_PREMIUM_PLANS, isOneTimePlanKey } from '@/lib/stripe/sat-premium-plans'
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -86,6 +89,79 @@ async function handleLegacyCheckout(session: Stripe.Checkout.Session): Promise<v
   })
 
   console.log(`[webhook] legacy SAT upgrade unlocked for user ${userId}`)
+}
+
+/**
+ * One-time SAT Premium purchase completed (mode: 'payment', plan three_month
+ * or lifetime). Verifies the paid line item matches the trusted server Price ID
+ * for the server-assigned plan_type, computes calendar expiry for three_month,
+ * and records the purchase idempotently.
+ */
+async function handleOneTimeCheckout(session: Stripe.Checkout.Session, stripe: Stripe): Promise<void> {
+  if (session.payment_status !== 'paid') {
+    console.warn(`[webhook] one-time checkout ${session.id} not paid — skipped`)
+    return
+  }
+
+  const planType = session.metadata?.plan_type
+  if (!isOneTimePlanKey(planType)) {
+    console.error('[webhook] one-time checkout: invalid plan_type', session.id, planType)
+    return
+  }
+
+  const userId = session.metadata?.mockmate_user_id ?? session.metadata?.user_id
+  if (!userId) {
+    console.error('[webhook] one-time checkout: no user id in metadata', session.id)
+    return
+  }
+
+  // Verify the paid Price matches the trusted server Price ID for this plan.
+  const expectedPriceId = SAT_PREMIUM_PLANS[planType].priceId
+  if (!expectedPriceId) {
+    console.error(`[webhook] one-time checkout: price ID for "${planType}" not configured`)
+    return
+  }
+  try {
+    const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 10 })
+    const priceMatches = lineItems.data.some(li => li.price?.id === expectedPriceId)
+    if (!priceMatches) {
+      console.error(`[webhook] one-time checkout ${session.id} price mismatch for plan "${planType}" — skipped`)
+      return
+    }
+  } catch (err) {
+    console.error('[webhook] one-time checkout: failed to list line items', session.id, err)
+    return
+  }
+
+  const paymentIntentId = resolveId(session.payment_intent)
+  const customerId = resolveId(session.customer)
+
+  // Calendar-accurate expiry for three_month; null (no expiry) for lifetime.
+  const accessStartedAt = new Date()
+  let accessExpiresAt: Date | null = null
+  if (planType === 'three_month') {
+    const expiry = new Date(accessStartedAt)
+    expiry.setMonth(expiry.getMonth() + 3)
+    accessExpiresAt = expiry
+  }
+
+  try {
+    const recorded = await recordOneTimePurchase(userId, {
+      planType,
+      stripeCustomerId: customerId ?? undefined,
+      stripeCheckoutSessionId: session.id,
+      stripePaymentIntentId: paymentIntentId ?? undefined,
+      accessStartedAt,
+      accessExpiresAt,
+    })
+    if (recorded) {
+      console.log(`[webhook] one-time ${planType} purchase recorded for user ${userId}`)
+    } else {
+      console.log(`[webhook] one-time checkout ${session.id} already processed — idempotent skip`)
+    }
+  } catch (err) {
+    console.error('[webhook] one-time checkout: failed to record purchase', session.id, err)
+  }
 }
 
 /** New subscription checkout completed — store the subscription immediately. */
@@ -234,6 +310,24 @@ async function handleInvoicePaymentFailed(invoice: Stripe.Invoice): Promise<void
   console.warn(`[webhook] invoice.payment_failed for subscription ${subscriptionId ?? 'unknown'} — Stripe will retry`)
 }
 
+/**
+ * Handles charge.refunded for one-time purchases. Finds the purchase by payment
+ * intent and marks it refunded, revoking access if it was the active purchase.
+ */
+async function handleChargeRefunded(charge: Stripe.Charge): Promise<void> {
+  const paymentIntentId = resolveId(charge.payment_intent)
+  if (!paymentIntentId) {
+    console.warn('[webhook] charge.refunded with no payment_intent — skipped')
+    return
+  }
+  try {
+    await refundOneTimePurchase(paymentIntentId)
+    console.log(`[webhook] refund processed for payment intent ${paymentIntentId}`)
+  } catch (err) {
+    console.error('[webhook] charge.refunded handler error', paymentIntentId, err)
+  }
+}
+
 // ── Main handler ─────────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
@@ -279,6 +373,12 @@ export async function POST(req: NextRequest) {
         const session = event.data.object as Stripe.Checkout.Session
         if (session.mode === 'payment' && session.metadata?.product === 'sat_upgrade_999') {
           await handleLegacyCheckout(session)
+        } else if (
+          session.mode === 'payment' &&
+          session.metadata?.product_key === 'sat_premium' &&
+          isOneTimePlanKey(session.metadata?.plan_type)
+        ) {
+          await handleOneTimeCheckout(session, stripe)
         } else if (session.mode === 'subscription' && session.metadata?.product_key === 'sat_premium') {
           await handleSubscriptionCheckout(session, stripe)
         }
@@ -309,6 +409,13 @@ export async function POST(req: NextRequest) {
       case 'invoice.payment_failed': {
         const invoice = event.data.object as Stripe.Invoice
         await handleInvoicePaymentFailed(invoice)
+        break
+      }
+
+      // ── One-time purchase refunds ─────────────────────────────────────
+      case 'charge.refunded': {
+        const charge = event.data.object as Stripe.Charge
+        await handleChargeRefunded(charge)
         break
       }
 

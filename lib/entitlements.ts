@@ -17,6 +17,10 @@ export interface EntitlementData {
   satSubscriptionId?: string
   satSubscriptionPeriodEnd?: string
   satCancelAtPeriodEnd?: boolean
+  /** One-time purchase fields (three_month / lifetime) */
+  satPurchasePlanType?: 'three_month' | 'lifetime'
+  satPurchaseStatus?: string
+  satPurchaseExpiresAt?: string
 }
 
 export async function getEntitlements(): Promise<EntitlementData> {
@@ -44,6 +48,9 @@ export async function getEntitlements(): Promise<EntitlementData> {
       satSubscriptionId: meta.sat_subscription_id as string | undefined,
       satSubscriptionPeriodEnd: meta.sat_subscription_period_end as string | undefined,
       satCancelAtPeriodEnd: meta.sat_cancel_at_period_end === true,
+      satPurchasePlanType: meta.sat_purchase_plan_type as 'three_month' | 'lifetime' | undefined,
+      satPurchaseStatus: meta.sat_purchase_status as string | undefined,
+      satPurchaseExpiresAt: meta.sat_purchase_expires_at as string | undefined,
     }
   } catch {
     return { satUpgradeUnlocked: false, isLegacyLifetime: false }
@@ -70,6 +77,122 @@ export async function unlockSATUpgrade(
       stripe_payment_intent_id: data.stripePaymentIntentId,
     },
   })
+}
+
+// ── One-time purchase fulfillment (three_month / lifetime) ───────────────────
+
+export interface OneTimePurchaseData {
+  planType: 'three_month' | 'lifetime'
+  stripeCustomerId?: string
+  stripeCheckoutSessionId: string
+  stripePaymentIntentId?: string
+  accessStartedAt: Date
+  /** null for lifetime (no expiration). */
+  accessExpiresAt: Date | null
+}
+
+/**
+ * Records a verified one-time SAT Premium purchase.
+ *
+ * 1. Inserts an audit row into sat_premium_purchases. The stripe_checkout_session_id
+ *    unique constraint makes this idempotent: a replayed webhook inserts nothing new.
+ *    Returns false when the row already existed (so the caller can skip the
+ *    metadata write and avoid clobbering a later/refunded state).
+ * 2. On a genuinely new insert, syncs quick-access flags to user_metadata so the
+ *    synchronous hasSatPremium() gate stays fast everywhere.
+ */
+export async function recordOneTimePurchase(
+  userId: string,
+  data: OneTimePurchaseData
+): Promise<boolean> {
+  const admin = createAdminClient()
+
+  // Insert audit row. Duplicate session id → unique violation (23505) → already processed.
+  const { error: insertErr } = await admin
+    .from('sat_premium_purchases')
+    .insert({
+      user_id: userId,
+      plan_type: data.planType,
+      status: 'active',
+      stripe_customer_id: data.stripeCustomerId ?? null,
+      stripe_checkout_session_id: data.stripeCheckoutSessionId,
+      stripe_payment_intent_id: data.stripePaymentIntentId ?? null,
+      access_started_at: data.accessStartedAt.toISOString(),
+      access_expires_at: data.accessExpiresAt?.toISOString() ?? null,
+    })
+
+  if (insertErr) {
+    if (insertErr.code === '23505') {
+      // Idempotent replay — the purchase was already recorded.
+      return false
+    }
+    throw new Error(`recordOneTimePurchase insert failed: ${insertErr.message}`)
+  }
+
+  // Sync quick-access flags for the synchronous gate.
+  await admin.auth.admin.updateUserById(userId, {
+    user_metadata: {
+      sat_purchase_plan_type: data.planType,
+      sat_purchase_status: 'active',
+      sat_purchase_expires_at: data.accessExpiresAt?.toISOString() ?? null,
+      sat_purchase_started_at: data.accessStartedAt.toISOString(),
+      stripe_customer_id: data.stripeCustomerId ?? undefined,
+    },
+  })
+
+  return true
+}
+
+/** Looks up user_id from sat_premium_purchases by Stripe payment intent (refunds). */
+export async function getUserIdByPaymentIntentId(
+  stripePaymentIntentId: string
+): Promise<{ userId: string; planType: string } | null> {
+  const admin = createAdminClient()
+  const { data } = await admin
+    .from('sat_premium_purchases')
+    .select('user_id, plan_type')
+    .eq('stripe_payment_intent_id', stripePaymentIntentId)
+    .maybeSingle()
+  if (!data) return null
+  return { userId: data.user_id as string, planType: data.plan_type as string }
+}
+
+/**
+ * Marks a one-time purchase refunded and revokes the fast-access metadata flag.
+ * Only clears metadata when the refunded row is the user's currently-active
+ * one-time purchase, so a refund of an old purchase can't strip access granted
+ * by a newer one.
+ */
+export async function refundOneTimePurchase(
+  stripePaymentIntentId: string
+): Promise<void> {
+  const admin = createAdminClient()
+
+  const { data: row } = await admin
+    .from('sat_premium_purchases')
+    .select('user_id')
+    .eq('stripe_payment_intent_id', stripePaymentIntentId)
+    .maybeSingle()
+
+  await admin
+    .from('sat_premium_purchases')
+    .update({ status: 'refunded', updated_at: new Date().toISOString() })
+    .eq('stripe_payment_intent_id', stripePaymentIntentId)
+
+  if (!row?.user_id) return
+  const userId = row.user_id as string
+
+  const { data: freshData } = await admin.auth.admin.getUserById(userId)
+  const meta = (freshData?.user?.user_metadata ?? {}) as Record<string, unknown>
+
+  // Only revoke if this refunded purchase is the one currently granting access.
+  if (meta.sat_purchase_status === 'active') {
+    await admin.auth.admin.updateUserById(userId, {
+      user_metadata: {
+        sat_purchase_status: 'refunded',
+      },
+    })
+  }
 }
 
 // ── Monthly subscription fulfillment ────────────────────────────────────────

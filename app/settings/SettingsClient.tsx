@@ -58,8 +58,19 @@ interface PlanBadgeProps {
   cancelDate: string | null
 }
 
+function badgeIsThreeMonthActive(e: EntitlementData): boolean {
+  if (e.satPurchasePlanType !== 'three_month' || e.satPurchaseStatus !== 'active') return false
+  if (!e.satPurchaseExpiresAt) return false
+  const expiry = new Date(e.satPurchaseExpiresAt).getTime()
+  return !Number.isNaN(expiry) && expiry > Date.now()
+}
+
+function badgeIsLifetimeActive(e: EntitlementData): boolean {
+  return e.satPurchasePlanType === 'lifetime' && e.satPurchaseStatus === 'active'
+}
+
 function PlanBadge({ isAdmin, entitlements, cancelDate }: PlanBadgeProps) {
-  const { satUpgradeUnlocked, isLegacyLifetime, satCancelAtPeriodEnd } = entitlements
+  const { satUpgradeUnlocked, isLegacyLifetime, satSubscriptionStatus, satCancelAtPeriodEnd } = entitlements
 
   if (isAdmin) {
     return (
@@ -91,7 +102,35 @@ function PlanBadge({ isAdmin, entitlements, cancelDate }: PlanBadgeProps) {
     )
   }
 
-  if (satUpgradeUnlocked && satCancelAtPeriodEnd && cancelDate) {
+  if (badgeIsLifetimeActive(entitlements)) {
+    return (
+      <div className="rounded-xl border border-amber-200 bg-amber-50 p-5 flex items-center gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100">
+          <PremiumStar className="h-5 w-5" />
+        </div>
+        <div>
+          <p className="text-[14px] font-bold text-amber-800">SAT Premium — Lifetime Access</p>
+          <p className="text-[12px] text-amber-700 mt-0.5">One-time payment. No expiration.</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (badgeIsThreeMonthActive(entitlements)) {
+    return (
+      <div className="rounded-xl border border-amber-200 bg-amber-50 p-5 flex items-center gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100">
+          <PremiumStar className="h-5 w-5" />
+        </div>
+        <div>
+          <p className="text-[14px] font-bold text-amber-800">SAT Premium — 3-Month Access</p>
+          <p className="text-[12px] text-amber-700 mt-0.5">One-time payment. Does not renew.</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (satUpgradeUnlocked && satSubscriptionStatus && satCancelAtPeriodEnd && cancelDate) {
     return (
       <div className="rounded-xl border border-amber-200 bg-amber-50 p-5 flex items-center gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100">
@@ -105,14 +144,14 @@ function PlanBadge({ isAdmin, entitlements, cancelDate }: PlanBadgeProps) {
     )
   }
 
-  if (satUpgradeUnlocked) {
+  if (satUpgradeUnlocked && satSubscriptionStatus) {
     return (
       <div className="rounded-xl border border-amber-200 bg-amber-50 p-5 flex items-center gap-3">
         <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100">
           <PremiumStar className="h-5 w-5" />
         </div>
         <div>
-          <p className="text-[14px] font-bold text-amber-800">SAT Premium Plan</p>
+          <p className="text-[14px] font-bold text-amber-800">SAT Premium — Monthly</p>
           <p className="text-[12px] text-amber-700 mt-0.5">Full access to all SAT Premium features</p>
         </div>
       </div>
@@ -270,11 +309,13 @@ function BillingSection({
   entitlements,
   cancelDate,
   periodEndDate,
+  purchaseExpiryDate,
 }: {
   isAdmin: boolean
   entitlements: EntitlementData
   cancelDate: string | null
   periodEndDate: string | null
+  purchaseExpiryDate: string | null
 }) {
   const { satUpgradeUnlocked, isLegacyLifetime, satSubscriptionStatus, satCancelAtPeriodEnd, stripeCustomerId } = entitlements
   const isPastDue = satSubscriptionStatus === 'past_due'
@@ -301,6 +342,42 @@ function BillingSection({
           <CheckIcon className="text-emerald-500" />
           No recurring payment
         </p>
+      </div>
+    )
+  }
+
+  if (badgeIsLifetimeActive(entitlements)) {
+    return (
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <PremiumStar />
+          <span className="text-[13px] font-semibold text-amber-800">SAT Premium — Lifetime Access</span>
+        </div>
+        <p className="text-[13px] text-slate-500 leading-relaxed">
+          One-time payment. No expiration. You have permanent access to all SAT Premium features.
+        </p>
+        <p className="inline-flex items-center gap-1.5 text-[12px] text-emerald-700 font-medium">
+          <CheckIcon className="text-emerald-500" />
+          No recurring payment
+        </p>
+      </div>
+    )
+  }
+
+  if (badgeIsThreeMonthActive(entitlements)) {
+    return (
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <PremiumStar />
+          <span className="text-[13px] font-semibold text-amber-800">SAT Premium — 3-Month Access</span>
+        </div>
+        <div className="space-y-1 text-[13px] text-slate-600">
+          <p><span className="font-medium text-slate-700">Plan:</span> SAT Premium — 3-Month Access</p>
+          {purchaseExpiryDate && (
+            <p><span className="font-medium text-slate-700">Access expires on:</span> {purchaseExpiryDate}</p>
+          )}
+        </div>
+        <p className="text-[12px] text-slate-500">One-time payment. Does not renew.</p>
       </div>
     )
   }
@@ -345,7 +422,7 @@ function BillingSection({
             <span className="font-medium text-slate-700">Plan:</span>{' '}
             <span className="inline-flex items-center gap-1">
               <PremiumStar className="h-3.5 w-3.5" />
-              SAT Premium Plan
+              SAT Premium — Monthly
             </span>
           </p>
           <p><span className="font-medium text-slate-700">Price:</span> $9.99/month</p>
@@ -457,6 +534,20 @@ export interface SettingsClientProps {
   entitlements: EntitlementData
   cancelDate: string | null
   periodEndDate: string | null
+  purchaseExpiryDate: string | null
+}
+
+/** Returns true for an active, non-expired 3-Month Access purchase. */
+function isThreeMonthActive(e: EntitlementData): boolean {
+  if (e.satPurchasePlanType !== 'three_month' || e.satPurchaseStatus !== 'active') return false
+  if (!e.satPurchaseExpiresAt) return false
+  const expiry = new Date(e.satPurchaseExpiresAt).getTime()
+  return !Number.isNaN(expiry) && expiry > Date.now()
+}
+
+/** Returns true for an active new Lifetime Access purchase (not legacy). */
+function isLifetimeActive(e: EntitlementData): boolean {
+  return e.satPurchasePlanType === 'lifetime' && e.satPurchaseStatus === 'active'
 }
 
 export default function SettingsClient({
@@ -468,14 +559,19 @@ export default function SettingsClient({
   entitlements,
   cancelDate,
   periodEndDate,
+  purchaseExpiryDate,
 }: SettingsClientProps) {
-  const { satUpgradeUnlocked, isLegacyLifetime, satCancelAtPeriodEnd } = entitlements
+  const { satUpgradeUnlocked, isLegacyLifetime, satSubscriptionStatus, satCancelAtPeriodEnd } = entitlements
+  const lifetimeActive = isLifetimeActive(entitlements)
+  const threeMonthActive = isThreeMonthActive(entitlements)
 
   const planLabel = (() => {
     if (isAdmin) return 'Admin Account'
     if (isLegacyLifetime) return 'Legacy Lifetime Access'
-    if (satUpgradeUnlocked && satCancelAtPeriodEnd && cancelDate) return `SAT Premium — Cancels on ${cancelDate}`
-    if (satUpgradeUnlocked) return 'SAT Premium Plan'
+    if (lifetimeActive) return 'SAT Premium — Lifetime Access'
+    if (threeMonthActive) return 'SAT Premium — 3-Month Access'
+    if (satUpgradeUnlocked && satSubscriptionStatus && satCancelAtPeriodEnd && cancelDate) return `SAT Premium — Cancels on ${cancelDate}`
+    if (satUpgradeUnlocked && satSubscriptionStatus) return 'SAT Premium — Monthly'
     return 'Free Plan'
   })()
 
@@ -574,6 +670,7 @@ export default function SettingsClient({
             entitlements={entitlements}
             cancelDate={cancelDate}
             periodEndDate={periodEndDate}
+            purchaseExpiryDate={purchaseExpiryDate}
           />
         </div>
       </section>

@@ -138,6 +138,7 @@ export default async function SettingsPage() {
 
   const cancelDate = fmt(entitlements.satSubscriptionPeriodEnd ?? undefined)
   const periodEndDate = fmt(entitlements.satSubscriptionPeriodEnd ?? undefined)
+  const purchaseExpiryDate = fmt(entitlements.satPurchaseExpiresAt ?? undefined)
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden">
@@ -158,6 +159,7 @@ export default async function SettingsPage() {
               entitlements={entitlements}
               cancelDate={cancelDate}
               periodEndDate={periodEndDate}
+              purchaseExpiryDate={purchaseExpiryDate}
             />
           </div>
         </main>
