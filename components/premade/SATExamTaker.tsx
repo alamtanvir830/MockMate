@@ -2614,28 +2614,24 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   {/* Reading & Writing column */}
                   <div className="bg-slate-50 rounded-lg p-4 space-y-3">
                     <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Reading &amp; Writing</p>
-                    {aiFeedback.rwStrengths?.length > 0 && (
-                      <div>
-                        <p className="text-[11px] font-semibold text-green-600 mb-1">Strengths</p>
-                        <ul className="list-disc list-inside space-y-0.5">
-                          {aiFeedback.rwStrengths.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
-                        </ul>
-                      </div>
-                    )}
-                    {(aiFeedback.rwWeaknesses?.slice(0, 2) ?? []).length > 0 && (
-                      <div>
-                        <p className="text-[11px] font-semibold text-red-500 mb-1">Weak Areas</p>
-                        <ul className="list-disc list-inside space-y-0.5">
-                          {aiFeedback.rwWeaknesses.slice(0, 2).map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
-                        </ul>
-                      </div>
-                    )}
                     {satUpgradeUnlocked || isAdmin ? (
+                      /* Premium / admin: full R&W breakdown */
                       <>
-                        {aiFeedback.rwWeaknesses?.slice(2).length > 0 && (
-                          <ul className="list-disc list-inside space-y-0.5">
-                            {aiFeedback.rwWeaknesses.slice(2).map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
-                          </ul>
+                        {aiFeedback.rwStrengths?.length > 0 && (
+                          <div>
+                            <p className="text-[11px] font-semibold text-green-600 mb-1">Strengths</p>
+                            <ul className="list-disc list-inside space-y-0.5">
+                              {aiFeedback.rwStrengths.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                            </ul>
+                          </div>
+                        )}
+                        {aiFeedback.rwWeaknesses?.length > 0 && (
+                          <div>
+                            <p className="text-[11px] font-semibold text-red-500 mb-1">Weak Areas</p>
+                            <ul className="list-disc list-inside space-y-0.5">
+                              {aiFeedback.rwWeaknesses.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                            </ul>
+                          </div>
                         )}
                         {aiFeedback.rwReviewTopics?.length > 0 && (
                           <div>
@@ -2649,51 +2645,71 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                         )}
                       </>
                     ) : (
-                      <div className="relative pt-2">
-                        <div className="space-y-1.5 blur-sm pointer-events-none select-none" aria-hidden="true">
-                          {[1,2,3].map(i => <div key={i} className="h-3.5 bg-slate-200 rounded w-full" />)}
-                          <div className="h-3.5 bg-slate-200 rounded w-4/5" />
-                          <div className="flex gap-1 mt-2 flex-wrap">
-                            {[1,2,3].map(i => <div key={i} className="h-5 w-20 bg-amber-200 rounded-full" />)}
+                      /* Free user: one preview item then blur + lock.
+                         The API already returns only the first weakness/strength,
+                         so nothing hidden here is in the HTML payload. */
+                      <>
+                        {(aiFeedback.rwWeaknesses?.length > 0 || aiFeedback.rwStrengths?.length > 0) && (
+                          <div>
+                            {aiFeedback.rwWeaknesses?.length > 0 ? (
+                              <>
+                                <p className="text-[11px] font-semibold text-red-500 mb-1">Weak Areas</p>
+                                <ul className="list-disc list-inside">
+                                  <li className="text-[12px]">{aiFeedback.rwWeaknesses[0]}</li>
+                                </ul>
+                              </>
+                            ) : (
+                              <>
+                                <p className="text-[11px] font-semibold text-green-600 mb-1">Strengths</p>
+                                <ul className="list-disc list-inside">
+                                  <li className="text-[12px]">{aiFeedback.rwStrengths[0]}</li>
+                                </ul>
+                              </>
+                            )}
+                          </div>
+                        )}
+                        <div className="relative pt-1">
+                          <div className="space-y-1.5 blur-sm pointer-events-none select-none" aria-hidden="true">
+                            {[1,2,3].map(i => <div key={i} className="h-3.5 bg-slate-200 rounded w-full" />)}
+                            <div className="h-3.5 bg-slate-200 rounded w-4/5" />
+                            <div className="flex gap-1 mt-2 flex-wrap">
+                              {[1,2,3].map(i => <div key={i} className="h-5 w-20 bg-amber-200 rounded-full" />)}
+                            </div>
+                          </div>
+                          <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 bg-gradient-to-t from-slate-50 via-slate-50/80 to-transparent p-3">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5 text-slate-400" aria-hidden="true">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                            </svg>
+                            <p className="text-[11px] font-bold text-slate-700">See the rest of your R&amp;W breakdown</p>
+                            <Link href="/billing" className="text-[11px] font-bold bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
+                              Get SAT Premium
+                            </Link>
                           </div>
                         </div>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 bg-gradient-to-t from-slate-50 via-slate-50/80 to-transparent p-3">
-                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5 text-slate-400">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                          </svg>
-                          <p className="text-[11px] font-bold text-slate-700">See the rest of your R&amp;W breakdown</p>
-                          <Link href="/billing" className="text-[11px] font-bold bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg transition-colors">
-                            Get SAT Premium
-                          </Link>
-                        </div>
-                      </div>
+                      </>
                     )}
                   </div>
                   {/* Math column */}
                   <div className="bg-slate-50 rounded-lg p-4 space-y-3">
                     <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Math</p>
-                    {aiFeedback.mathStrengths?.length > 0 && (
-                      <div>
-                        <p className="text-[11px] font-semibold text-green-600 mb-1">Strengths</p>
-                        <ul className="list-disc list-inside space-y-0.5">
-                          {aiFeedback.mathStrengths.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
-                        </ul>
-                      </div>
-                    )}
-                    {(aiFeedback.mathWeaknesses?.slice(0, 2) ?? []).length > 0 && (
-                      <div>
-                        <p className="text-[11px] font-semibold text-red-500 mb-1">Weak Areas</p>
-                        <ul className="list-disc list-inside space-y-0.5">
-                          {aiFeedback.mathWeaknesses.slice(0, 2).map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
-                        </ul>
-                      </div>
-                    )}
                     {satUpgradeUnlocked || isAdmin ? (
+                      /* Premium / admin: full Math breakdown */
                       <>
-                        {aiFeedback.mathWeaknesses?.slice(2).length > 0 && (
-                          <ul className="list-disc list-inside space-y-0.5">
-                            {aiFeedback.mathWeaknesses.slice(2).map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
-                          </ul>
+                        {aiFeedback.mathStrengths?.length > 0 && (
+                          <div>
+                            <p className="text-[11px] font-semibold text-green-600 mb-1">Strengths</p>
+                            <ul className="list-disc list-inside space-y-0.5">
+                              {aiFeedback.mathStrengths.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                            </ul>
+                          </div>
+                        )}
+                        {aiFeedback.mathWeaknesses?.length > 0 && (
+                          <div>
+                            <p className="text-[11px] font-semibold text-red-500 mb-1">Weak Areas</p>
+                            <ul className="list-disc list-inside space-y-0.5">
+                              {aiFeedback.mathWeaknesses.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                            </ul>
+                          </div>
                         )}
                         {aiFeedback.mathReviewTopics?.length > 0 && (
                           <div>
@@ -2707,24 +2723,46 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                         )}
                       </>
                     ) : (
-                      <div className="relative pt-2">
-                        <div className="space-y-1.5 blur-sm pointer-events-none select-none" aria-hidden="true">
-                          {[1,2,3].map(i => <div key={i} className="h-3.5 bg-slate-200 rounded w-full" />)}
-                          <div className="h-3.5 bg-slate-200 rounded w-4/5" />
-                          <div className="flex gap-1 mt-2 flex-wrap">
-                            {[1,2,3].map(i => <div key={i} className="h-5 w-20 bg-amber-200 rounded-full" />)}
+                      /* Free user: one preview item then blur + lock */
+                      <>
+                        {(aiFeedback.mathWeaknesses?.length > 0 || aiFeedback.mathStrengths?.length > 0) && (
+                          <div>
+                            {aiFeedback.mathWeaknesses?.length > 0 ? (
+                              <>
+                                <p className="text-[11px] font-semibold text-red-500 mb-1">Weak Areas</p>
+                                <ul className="list-disc list-inside">
+                                  <li className="text-[12px]">{aiFeedback.mathWeaknesses[0]}</li>
+                                </ul>
+                              </>
+                            ) : (
+                              <>
+                                <p className="text-[11px] font-semibold text-green-600 mb-1">Strengths</p>
+                                <ul className="list-disc list-inside">
+                                  <li className="text-[12px]">{aiFeedback.mathStrengths[0]}</li>
+                                </ul>
+                              </>
+                            )}
+                          </div>
+                        )}
+                        <div className="relative pt-1">
+                          <div className="space-y-1.5 blur-sm pointer-events-none select-none" aria-hidden="true">
+                            {[1,2,3].map(i => <div key={i} className="h-3.5 bg-slate-200 rounded w-full" />)}
+                            <div className="h-3.5 bg-slate-200 rounded w-4/5" />
+                            <div className="flex gap-1 mt-2 flex-wrap">
+                              {[1,2,3].map(i => <div key={i} className="h-5 w-20 bg-amber-200 rounded-full" />)}
+                            </div>
+                          </div>
+                          <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 bg-gradient-to-t from-slate-50 via-slate-50/80 to-transparent p-3">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5 text-slate-400" aria-hidden="true">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                            </svg>
+                            <p className="text-[11px] font-bold text-slate-700">Unlock your full Math breakdown</p>
+                            <Link href="/billing" className="text-[11px] font-bold bg-amber-500 hover:bg-amber-600 text-white px-3 py-1.5 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
+                              Get SAT Premium
+                            </Link>
                           </div>
                         </div>
-                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 bg-gradient-to-t from-slate-50 via-slate-50/80 to-transparent p-3">
-                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5 text-slate-400">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                          </svg>
-                          <p className="text-[11px] font-bold text-slate-700">Unlock full Math breakdown &amp; skill-specific feedback</p>
-                          <Link href="/billing" className="text-[11px] font-bold bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg transition-colors">
-                            Get SAT Premium
-                          </Link>
-                        </div>
-                      </div>
+                      </>
                     )}
                   </div>
                 </div>
@@ -2873,7 +2911,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   </p>
                   <Link
                     href="/billing"
-                    className="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                   >
                     Get SAT Premium
                   </Link>
@@ -3053,7 +3091,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                             <p className="text-[13px] font-semibold text-slate-700 mb-0.5">Unlock detailed explanations with SAT Premium</p>
                             <p className="text-[11px] text-slate-400">See why each answer is right or wrong, with full stimulus passages and step-by-step reasoning.</p>
                           </div>
-                          <Link href="/billing" className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[13px] px-4 py-2 rounded-lg transition-colors">
+                          <Link href="/billing" className="bg-amber-500 hover:bg-amber-600 text-white font-semibold text-[13px] px-4 py-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400">
                             Get SAT Premium
                           </Link>
                         </div>
@@ -3093,7 +3131,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                 <>
                   <a
                     href="/billing"
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-amber-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
                   >
                     Get SAT Premium
                   </a>

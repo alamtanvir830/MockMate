@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
+import { createClient } from '@/lib/supabase/server'
+import { hasSatPremium, isAdminUser } from '@/lib/auth/server'
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
@@ -36,6 +38,13 @@ interface SATFeedbackInput {
 
 export async function POST(req: NextRequest) {
   try {
+    // Resolve caller's access level server-side
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    const isPremium = user ? hasSatPremium(user) : false
+    const isAdmin = user ? isAdminUser(user) : false
+    const hasFullAccess = isPremium || isAdmin
+
     const input = (await req.json()) as SATFeedbackInput
 
     const rwTotal = input.rwM1Total + input.rwM2Total
@@ -106,7 +115,30 @@ Provide honest, specific, actionable SAT coaching. Return valid JSON only:
     if (!content) throw new Error('Empty response from OpenAI')
 
     const feedback = JSON.parse(content) as SATAIFeedback
-    return NextResponse.json(feedback)
+
+    if (hasFullAccess) {
+      // Return complete feedback to Premium / admin users
+      return NextResponse.json(feedback)
+    }
+
+    // Free users: return only summary fields + first weakness/strength per section.
+    // The full breakdown is not transmitted — the client renders a lock overlay.
+    const freeResponse: SATAIFeedback = {
+      whatWentWell: '',
+      overallAssessment: feedback.overallAssessment,
+      rwStrengths: feedback.rwWeaknesses?.length ? [] : feedback.rwStrengths?.slice(0, 1) ?? [],
+      rwWeaknesses: feedback.rwWeaknesses?.slice(0, 1) ?? [],
+      mathStrengths: feedback.mathWeaknesses?.length ? [] : feedback.mathStrengths?.slice(0, 1) ?? [],
+      mathWeaknesses: feedback.mathWeaknesses?.slice(0, 1) ?? [],
+      carelessErrors: null,
+      adaptivePathInsight: feedback.adaptivePathInsight,
+      rwReviewTopics: [],
+      mathReviewTopics: [],
+      practiceRecommendations: '',
+      mockMateNextSteps: '',
+    }
+
+    return NextResponse.json(freeResponse)
   } catch (err) {
     console.error('sat-feedback error:', err)
     return NextResponse.json({ error: 'Failed to generate feedback' }, { status: 500 })
