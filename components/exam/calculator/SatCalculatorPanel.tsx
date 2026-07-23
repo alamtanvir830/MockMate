@@ -111,7 +111,9 @@ export default function SatCalculatorPanel({ open, onClose, moduleKey }: SatCalc
   useEffect(() => {
     if (!open || scriptStatus === 'ready') return
     if (scriptStatus === 'loading') return
-    setScriptStatus('loading')
+    // Defer the state transition out of the effect body so it does not trigger
+    // a synchronous cascading render; behaviour is otherwise identical.
+    queueMicrotask(() => setScriptStatus('loading'))
     loadDesmosScript(
       () => setScriptStatus('ready'),
       () => setScriptStatus('error'),
@@ -131,10 +133,13 @@ export default function SatCalculatorPanel({ open, onClose, moduleKey }: SatCalc
   useEffect(() => {
     if (scriptStatus !== 'ready' || !open || !window.Desmos) return
 
-    // Module change: reset both calculators
+    // Module change: reset both calculators. Tear down the Desmos instances
+    // synchronously, but defer the state reset so we do not call setState in the
+    // effect body (which would cause a cascading render).
     if (prevModuleKey.current !== moduleKey) {
       prevModuleKey.current = moduleKey
-      destroyCalcs()
+      queueMicrotask(destroyCalcs)
+      return
     }
 
     if (initialized) return
@@ -163,11 +168,38 @@ export default function SatCalculatorPanel({ open, onClose, moduleKey }: SatCalc
           qwertyKeyboard: false,
         })
       }
+      // Desmos measures its container at construction time. If the panel was
+      // still laying out (zero/partial width) at that moment, the graph renders
+      // blank or clipped until a resize() is forced. Fire one immediately so the
+      // calculator is usable the instant it appears — no manual nav-away needed.
+      try { graphingCalc.current?.resize() } catch { /* ignore */ }
+      try { scientificCalc.current?.resize() } catch { /* ignore */ }
       setInitialized(true)
     })
 
     return () => cancelAnimationFrame(rafId)
   }, [scriptStatus, open, moduleKey, initialized, destroyCalcs])
+
+  // Keep Desmos in sync with the ACTUAL rendered size of its container.
+  // A ResizeObserver catches every case the effect-deps below cannot: the flex
+  // layout settling one frame after mount, the panel opening/closing, browser
+  // window resizes, and returning from the review page. Without this, a graph
+  // initialised at the wrong size stays broken until manually re-triggered.
+  useEffect(() => {
+    if (!initialized) return
+    if (typeof ResizeObserver === 'undefined') return
+    const targets = [graphingRef.current, scientificRef.current].filter(
+      (el): el is HTMLDivElement => el !== null
+    )
+    if (targets.length === 0) return
+
+    const ro = new ResizeObserver(() => {
+      try { graphingCalc.current?.resize() } catch { /* ignore */ }
+      try { scientificCalc.current?.resize() } catch { /* ignore */ }
+    })
+    for (const el of targets) ro.observe(el)
+    return () => ro.disconnect()
+  }, [initialized])
 
   // Notify Desmos of resize when panel width or mode changes
   useEffect(() => {

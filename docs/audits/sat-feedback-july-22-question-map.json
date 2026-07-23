@@ -1,0 +1,110 @@
+{
+  "generatedFor": "SAT feedback rows after 2026-07-21 22:33:50.470682+00",
+  "note": "Maps each substantive attempt to the module IDs and the exact question IDs (from the lib/premade-exams/sat/*.ts files) the student was served, based on the reported adaptive branch. user_id / email intentionally excluded.",
+  "routingThresholds": {
+    "form1": { "rwHardWhenCorrectGte": 14, "mathHardWhenCorrectGte": 11 },
+    "form2": { "rwHardWhenCorrectGte": 17, "mathHardWhenCorrectGte": 14 }
+  },
+  "attempts": [
+    {
+      "feedbackId": "97912176",
+      "reporter": "Moyosoreoluwa",
+      "form": 1,
+      "localAttemptId": "1784680500326-l1xo7ud",
+      "branches": { "rwM2Type": "hard", "mathM2Type": "hard" },
+      "modules": {
+        "rwM1": {
+          "moduleId": "rw-module-1",
+          "questionIds": ["rw1-01","rw1-02","rw1-03","rw1-09","rw1-06","rw1-11","rw1-07","rw1-12","rw1-08","rw1-14","rw1-15","rw1-16","rw1-10","rw1-18","rw1-19","rw1-04","rw1-05","rw1-27","rw1-13","rw1-17","rw1-20","rw1-23","rw1-25","rw1-24","rw1-26","rw1-21","rw1-22"]
+        },
+        "rwM2": {
+          "moduleId": "rw-module-2-hard",
+          "questionIds": ["rw2h-01","rw2h-02","rw2h-03","rw2h-09","rw2h-06","rw2h-07","rw2h-08","rw2h-11","rw2h-12","rw2h-10","rw2h-14","rw2h-15","rw2h-16","rw2h-18","rw2h-19","rw2h-04","rw2h-05","rw2h-27","rw2h-25","rw2h-13","rw2h-17","rw2h-20","rw2h-26","rw2h-23","rw2h-24","rw2h-21","rw2h-22"]
+        },
+        "mathM1": {
+          "moduleId": "math-module-1",
+          "questionIds": ["m1-02","m1-03","m1-04","m1-05","m1-06","m1-15","m1-16","m1-17","m1-18","m1-08","m1-09","m1-10","m1-11","m1-12","m1-01","m1-19","m1-20","m1-21","m1-07","m1-13","m1-14","m1-22"]
+        },
+        "mathM2": {
+          "moduleId": "math-module-2-hard",
+          "questionIds": ["m2h-01","m2h-02","m2h-04","m2h-05","m2h-15","m2h-16","m2h-17","m2h-18","m2h-06","m2h-08","m2h-09","m2h-10","m2h-11","m2h-12","m2h-13","m2h-14","m2h-03","m2h-07","m2h-19","m2h-20","m2h-21","m2h-22"]
+        }
+      }
+    },
+    {
+      "feedbackId": "5e191921",
+      "reporter": "c",
+      "form": 2,
+      "localAttemptId": "1784748296186-qtrglw7",
+      "branches": { "rwM2Type": "hard", "mathM2Type": "hard" },
+      "modules": {
+        "rwM1": {
+          "moduleId": "f2-rw-module-1",
+          "questionIds": ["sat2-rw-m1-002","sat2-rw-m1-001","sat2-rw-m1-003","sat2-rw-m1-004","sat2-rw-m1-009","sat2-rw-m1-005","sat2-rw-m1-010","sat2-rw-m1-006","sat2-rw-m1-008","sat2-rw-m1-011","sat2-rw-m1-012","sat2-rw-m1-007","sat2-rw-m1-013","sat2-rw-m1-014","sat2-rw-m1-015","sat2-rw-m1-025","sat2-rw-m1-021","sat2-rw-m1-022","sat2-rw-m1-026","sat2-rw-m1-023","sat2-rw-m1-027","sat2-rw-m1-019","sat2-rw-m1-020","sat2-rw-m1-024","sat2-rw-m1-016","sat2-rw-m1-017","sat2-rw-m1-018"]
+        },
+        "rwM2": {
+          "moduleId": "f2-rw-module-2-hard",
+          "questionIds": ["sat2-rw-m2h-004","sat2-rw-m2h-002","sat2-rw-m2h-003","sat2-rw-m2h-001","sat2-rw-m2h-005","sat2-rw-m2h-006","sat2-rw-m2h-008","sat2-rw-m2h-010","sat2-rw-m2h-009","sat2-rw-m2h-011","sat2-rw-m2h-012","sat2-rw-m2h-013","sat2-rw-m2h-014","sat2-rw-m2h-015","sat2-rw-m2h-016","sat2-rw-m2h-025","sat2-rw-m2h-027","sat2-rw-m2h-026","sat2-rw-m2h-022","sat2-rw-m2h-023","sat2-rw-m2h-024","sat2-rw-m2h-007","sat2-rw-m2h-020","sat2-rw-m2h-021","sat2-rw-m2h-019","sat2-rw-m2h-017","sat2-rw-m2h-018"]
+        },
+        "mathM1": {
+          "moduleId": "f2-math-module-1",
+          "questionIds": ["sat2-math-m1-e01","sat2-math-m1-m01","sat2-math-m1-m02","sat2-math-m1-m03","sat2-math-m1-m04","sat2-math-m1-m05","sat2-math-m1-m06","sat2-math-m1-m07","sat2-math-m1-m08","sat2-math-m1-m09","sat2-math-m1-m10","sat2-math-m1-m11","sat2-math-m1-h01","sat2-math-m1-h02","sat2-math-m1-h03","sat2-math-m1-h04","sat2-math-m1-h05","sat2-math-m1-h06","sat2-math-m1-h07","sat2-math-m1-h08","sat2-math-m1-h09","sat2-math-m1-h10"]
+        },
+        "mathM2": {
+          "moduleId": "f2-math-module-2-hard",
+          "questionIds": ["sat2-math-m2h-m01","sat2-math-m2h-m02","sat2-math-m2h-m03","sat2-math-m2h-m04","sat2-math-m2h-m05","sat2-math-m2h-m06","sat2-math-m2h-h01","sat2-math-m2h-h02","sat2-math-m2h-h03","sat2-math-m2h-h04","sat2-math-m2h-h05","sat2-math-m2h-h06","sat2-math-m2h-h07","sat2-math-m2h-h08","sat2-math-m2h-h09","sat2-math-m2h-h10","sat2-math-m2h-h11","sat2-math-m2h-h12","sat2-math-m2h-h13","sat2-math-m2h-h14","sat2-math-m2h-h15","sat2-math-m2h-h16"]
+        }
+      }
+    },
+    {
+      "feedbackId": "54f877dc",
+      "reporter": "Agustya",
+      "form": 2,
+      "localAttemptId": "1784754397848-9f1ms1z",
+      "branches": { "rwM2Type": "easy", "mathM2Type": "easy" },
+      "modules": {
+        "rwM1": {
+          "moduleId": "f2-rw-module-1",
+          "questionIds": ["sat2-rw-m1-002","sat2-rw-m1-001","sat2-rw-m1-003","sat2-rw-m1-004","sat2-rw-m1-009","sat2-rw-m1-005","sat2-rw-m1-010","sat2-rw-m1-006","sat2-rw-m1-008","sat2-rw-m1-011","sat2-rw-m1-012","sat2-rw-m1-007","sat2-rw-m1-013","sat2-rw-m1-014","sat2-rw-m1-015","sat2-rw-m1-025","sat2-rw-m1-021","sat2-rw-m1-022","sat2-rw-m1-026","sat2-rw-m1-023","sat2-rw-m1-027","sat2-rw-m1-019","sat2-rw-m1-020","sat2-rw-m1-024","sat2-rw-m1-016","sat2-rw-m1-017","sat2-rw-m1-018"]
+        },
+        "rwM2": {
+          "moduleId": "f2-rw-module-2-easy",
+          "questionIds": ["sat2-rw-m2e-002","sat2-rw-m2e-003","sat2-rw-m2e-004","sat2-rw-m2e-001","sat2-rw-m2e-005","sat2-rw-m2e-006","sat2-rw-m2e-009","sat2-rw-m2e-010","sat2-rw-m2e-008","sat2-rw-m2e-007","sat2-rw-m2e-011","sat2-rw-m2e-012","sat2-rw-m2e-013","sat2-rw-m2e-014","sat2-rw-m2e-015","sat2-rw-m2e-025","sat2-rw-m2e-026","sat2-rw-m2e-022","sat2-rw-m2e-027","sat2-rw-m2e-024","sat2-rw-m2e-023","sat2-rw-m2e-021","sat2-rw-m2e-019","sat2-rw-m2e-020","sat2-rw-m2e-016","sat2-rw-m2e-017","sat2-rw-m2e-018"]
+        },
+        "mathM1": {
+          "moduleId": "f2-math-module-1",
+          "questionIds": ["sat2-math-m1-e01","sat2-math-m1-m01","sat2-math-m1-m02","sat2-math-m1-m03","sat2-math-m1-m04","sat2-math-m1-m05","sat2-math-m1-m06","sat2-math-m1-m07","sat2-math-m1-m08","sat2-math-m1-m09","sat2-math-m1-m10","sat2-math-m1-m11","sat2-math-m1-h01","sat2-math-m1-h02","sat2-math-m1-h03","sat2-math-m1-h04","sat2-math-m1-h05","sat2-math-m1-h06","sat2-math-m1-h07","sat2-math-m1-h08","sat2-math-m1-h09","sat2-math-m1-h10"]
+        },
+        "mathM2": {
+          "moduleId": "f2-math-module-2-easy",
+          "questionIds": ["sat2-math-m2e-e01","sat2-math-m2e-e02","sat2-math-m2e-e03","sat2-math-m2e-e04","sat2-math-m2e-e05","sat2-math-m2e-e06","sat2-math-m2e-m01","sat2-math-m2e-m02","sat2-math-m2e-m03","sat2-math-m2e-m04","sat2-math-m2e-m05","sat2-math-m2e-m06","sat2-math-m2e-m07","sat2-math-m2e-m08","sat2-math-m2e-m09","sat2-math-m2e-m10","sat2-math-m2e-m11","sat2-math-m2e-m12","sat2-math-m2e-m13","sat2-math-m2e-h01","sat2-math-m2e-h02","sat2-math-m2e-h03"]
+        }
+      }
+    },
+    {
+      "feedbackId": "58ffeaab",
+      "reporter": "Kathy",
+      "form": 2,
+      "localAttemptId": "1784756260871-2btjlw2",
+      "branches": { "rwM2Type": "easy", "mathM2Type": "easy" },
+      "modules": {
+        "rwM1": {
+          "moduleId": "f2-rw-module-1",
+          "questionIds": ["sat2-rw-m1-002","sat2-rw-m1-001","sat2-rw-m1-003","sat2-rw-m1-004","sat2-rw-m1-009","sat2-rw-m1-005","sat2-rw-m1-010","sat2-rw-m1-006","sat2-rw-m1-008","sat2-rw-m1-011","sat2-rw-m1-012","sat2-rw-m1-007","sat2-rw-m1-013","sat2-rw-m1-014","sat2-rw-m1-015","sat2-rw-m1-025","sat2-rw-m1-021","sat2-rw-m1-022","sat2-rw-m1-026","sat2-rw-m1-023","sat2-rw-m1-027","sat2-rw-m1-019","sat2-rw-m1-020","sat2-rw-m1-024","sat2-rw-m1-016","sat2-rw-m1-017","sat2-rw-m1-018"]
+        },
+        "rwM2": {
+          "moduleId": "f2-rw-module-2-easy",
+          "questionIds": ["sat2-rw-m2e-002","sat2-rw-m2e-003","sat2-rw-m2e-004","sat2-rw-m2e-001","sat2-rw-m2e-005","sat2-rw-m2e-006","sat2-rw-m2e-009","sat2-rw-m2e-010","sat2-rw-m2e-008","sat2-rw-m2e-007","sat2-rw-m2e-011","sat2-rw-m2e-012","sat2-rw-m2e-013","sat2-rw-m2e-014","sat2-rw-m2e-015","sat2-rw-m2e-025","sat2-rw-m2e-026","sat2-rw-m2e-022","sat2-rw-m2e-027","sat2-rw-m2e-024","sat2-rw-m2e-023","sat2-rw-m2e-021","sat2-rw-m2e-019","sat2-rw-m2e-020","sat2-rw-m2e-016","sat2-rw-m2e-017","sat2-rw-m2e-018"]
+        },
+        "mathM1": {
+          "moduleId": "f2-math-module-1",
+          "questionIds": ["sat2-math-m1-e01","sat2-math-m1-m01","sat2-math-m1-m02","sat2-math-m1-m03","sat2-math-m1-m04","sat2-math-m1-m05","sat2-math-m1-m06","sat2-math-m1-m07","sat2-math-m1-m08","sat2-math-m1-m09","sat2-math-m1-m10","sat2-math-m1-m11","sat2-math-m1-h01","sat2-math-m1-h02","sat2-math-m1-h03","sat2-math-m1-h04","sat2-math-m1-h05","sat2-math-m1-h06","sat2-math-m1-h07","sat2-math-m1-h08","sat2-math-m1-h09","sat2-math-m1-h10"]
+        },
+        "mathM2": {
+          "moduleId": "f2-math-module-2-easy",
+          "questionIds": ["sat2-math-m2e-e01","sat2-math-m2e-e02","sat2-math-m2e-e03","sat2-math-m2e-e04","sat2-math-m2e-e05","sat2-math-m2e-e06","sat2-math-m2e-m01","sat2-math-m2e-m02","sat2-math-m2e-m03","sat2-math-m2e-m04","sat2-math-m2e-m05","sat2-math-m2e-m06","sat2-math-m2e-m07","sat2-math-m2e-m08","sat2-math-m2e-m09","sat2-math-m2e-m10","sat2-math-m2e-m11","sat2-math-m2e-m12","sat2-math-m2e-m13","sat2-math-m2e-h01","sat2-math-m2e-h02","sat2-math-m2e-h03"]
+        }
+      }
+    }
+  ]
+}

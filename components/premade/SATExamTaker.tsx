@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { StimulusRenderer } from '@/components/exam/StimulusRenderer'
+import { MathText } from '@/components/exam/MathText'
 import { SATGraph } from '@/components/exam/SATGraph'
 import SatCalculatorPanel from '@/components/exam/calculator/SatCalculatorPanel'
 import type {
@@ -1882,7 +1883,9 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                     </span>
                   )}
                 </div>
-                <p className="text-[14px] text-slate-900 font-medium leading-snug mb-5">{q.question}</p>
+                <p className="text-[14px] text-slate-900 font-medium leading-snug mb-5">
+                  {phase.section === 'math' ? <MathText text={q.question} /> : q.question}
+                </p>
 
                 {choices && (
                   <div className="space-y-2">
@@ -1916,7 +1919,9 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                             )}>
                               {choice.label}
                             </span>
-                            <span className={cn('leading-snug', struckOut && 'line-through')}>{choice.text}</span>
+                            <span className={cn('leading-snug', struckOut && 'line-through')}>
+                              {phase.section === 'math' ? <MathText text={choice.text} /> : choice.text}
+                            </span>
                           </button>
                         </div>
                       )
@@ -2847,7 +2852,9 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                           </span>
                           {bookmarks.has(q.id) && <span className="text-[10px] text-amber-500 font-semibold">★ Marked</span>}
                         </div>
-                        <p className="text-[12px] text-slate-700 truncate mt-0.5">{q.question}</p>
+                        <p className="text-[12px] text-slate-700 truncate mt-0.5">
+                          {q.section === 'math' ? <MathText text={q.question} /> : q.question}
+                        </p>
                       </div>
                       <div className="shrink-0 text-right text-[11px] text-slate-400 hidden sm:block">
                         {answered ? (
@@ -2880,7 +2887,9 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                                 'bg-white border border-slate-100'
                               )}>
                                 <span className="shrink-0 font-bold">{c.label}.</span>
-                                <span className="flex-1">{c.text}</span>
+                                <span className="flex-1">
+                                  {q.section === 'math' ? <MathText text={c.text} /> : c.text}
+                                </span>
                                 {isCorrectChoice && <span className="shrink-0 text-green-600 font-bold text-[10px]">✓ CORRECT</span>}
                                 {isUserChoice && !isCorrectChoice && <span className="shrink-0 text-red-600 font-bold text-[10px]">✗ YOUR ANSWER</span>}
                               </div>
