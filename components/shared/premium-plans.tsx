@@ -17,13 +17,8 @@ function CheckIcon({ className }: { className?: string }) {
 export function PremiumPlans() {
   const [loadingKey, setLoadingKey] = useState<SatPremiumPlanKey | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const [acknowledged, setAcknowledged] = useState(false)
 
   async function handleCheckout(planKey: SatPremiumPlanKey) {
-    if (!acknowledged) {
-      setError('Please acknowledge the notice below before continuing.')
-      return
-    }
     setLoadingKey(planKey)
     setError(null)
     try {
@@ -43,7 +38,7 @@ export function PremiumPlans() {
         throw new Error('Could not start checkout. Please try again.')
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
       setLoadingKey(null)
     }
   }
@@ -67,7 +62,6 @@ export function PremiumPlans() {
       <div className="grid gap-5 md:grid-cols-3 items-stretch">
         {SAT_PREMIUM_PLAN_CARDS.map(plan => {
           const isLoading = loadingKey === plan.key
-          const anyLoading = loadingKey !== null
           return (
             <div
               key={plan.key}
@@ -118,7 +112,8 @@ export function PremiumPlans() {
 
               <button
                 onClick={() => handleCheckout(plan.key)}
-                disabled={anyLoading || !acknowledged}
+                disabled={isLoading}
+                aria-busy={isLoading}
                 className={cn(
                   'mt-6 w-full rounded-xl py-2.5 text-[14px] font-bold transition-colors disabled:opacity-60 disabled:cursor-not-allowed',
                   plan.featured
@@ -126,26 +121,14 @@ export function PremiumPlans() {
                     : 'bg-indigo-600 hover:bg-indigo-700 text-white'
                 )}
               >
-                {isLoading ? 'Redirecting…' : plan.buttonLabel}
+                {isLoading ? 'Opening checkout…' : plan.buttonLabel}
               </button>
             </div>
           )
         })}
       </div>
 
-      <label className="mt-6 flex items-start gap-2.5 cursor-pointer rounded-lg bg-slate-50 border border-slate-200 px-3 py-2.5 max-w-2xl mx-auto">
-        <input
-          type="checkbox"
-          checked={acknowledged}
-          onChange={e => { setAcknowledged(e.target.checked); if (e.target.checked) setError(null) }}
-          className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-amber-500"
-        />
-        <span className="text-[11px] text-slate-600 leading-relaxed">
-          I understand that MockMate is an independent SAT-style practice platform and is not affiliated with, endorsed by, or sponsored by College Board.
-        </span>
-      </label>
-
-      <div className="mt-4 text-center space-y-1">
+      <div className="mt-6 text-center space-y-1">
         <p className="text-[11px] text-slate-400 flex items-center justify-center gap-1.5">
           <svg fill="none" viewBox="0 0 16 16" stroke="currentColor" strokeWidth={1.5} className="h-3.5 w-3.5" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M11 7V5a3 3 0 00-6 0v2M4 7h8a1 1 0 011 1v5a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 011-1z" />
