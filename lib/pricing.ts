@@ -47,7 +47,7 @@ export const SAT_PREMIUM_PLAN_CARDS: SatPremiumPlanDisplay[] = [
     title: 'Monthly',
     price: '$9.99',
     cadence: 'per month',
-    supporting: 'Billed monthly. Automatically renews until canceled.',
+    supporting: 'Billed monthly and automatically renews. Cancel any time.',
     savingsLabel: 'Flexible',
     buttonLabel: 'Choose Monthly',
   },
