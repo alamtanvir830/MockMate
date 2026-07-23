@@ -24,7 +24,7 @@ export default async function DashboardLayout({
   const isPremium = hasSatPremium(user)
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden">
+    <div className="flex h-dvh bg-slate-50 overflow-hidden">
       <Sidebar userEmail={user.email} userFullName={fullName} />
       <AcademySidebarSlot isPremium={isPremium} />
       <MathAcademySidebarSlot isPremium={isPremium} />

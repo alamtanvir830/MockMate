@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 export interface Testimonial {
   initials: string
@@ -10,23 +10,41 @@ export interface Testimonial {
 
 interface Props {
   testimonials: Testimonial[]
-  /** Total animation duration for one full loop in seconds */
+  /** Total animation duration for one full loop in seconds (desktop) */
   durationSeconds: number
 }
 
+// Target comfortable reading speed for mobile vertical scroll
+const MOBILE_PX_PER_SECOND = 35
+
 export function TestimonialCarouselClient({ testimonials, durationSeconds }: Props) {
-  const [isPaused, setIsPaused] = useState(false)
+  const [desktopPaused, setDesktopPaused] = useState(false)
+  const [mobilePaused, setMobilePaused] = useState(false)
+  // null until measured — keeps animation paused until we know the correct speed
+  const [mobileDuration, setMobileDuration] = useState<number | null>(null)
+  const mobileTrackRef = useRef<HTMLDivElement>(null)
+
+  const measure = useCallback(() => {
+    const track = mobileTrackRef.current
+    if (!track) return
+    // scrollHeight gives total height including clipped portion (doubled content)
+    const halfHeight = track.scrollHeight / 2
+    if (halfHeight > 20) {
+      setMobileDuration(Math.max(18, halfHeight / MOBILE_PX_PER_SECOND))
+    }
+  }, [])
+
+  useEffect(() => {
+    measure()
+    const ro = new ResizeObserver(measure)
+    if (mobileTrackRef.current) ro.observe(mobileTrackRef.current)
+    return () => ro.disconnect()
+  }, [measure])
 
   if (testimonials.length === 0) return null
 
-  // Duplicate the list once — translateY(-50%) moves exactly one full set,
-  // so the loop resets seamlessly back to the first card.
+  // Duplicate once — translateY(-50%) moves exactly one full set for a seamless loop
   const doubled = [...testimonials, ...testimonials]
-
-  const trackStyle = {
-    '--mm-scroll-duration': `${durationSeconds}s`,
-    animationPlayState: isPaused ? 'paused' : 'running',
-  } as React.CSSProperties
 
   return (
     <>
@@ -37,46 +55,42 @@ export function TestimonialCarouselClient({ testimonials, durationSeconds }: Pro
         ))}
       </ul>
 
-      {/* ── Desktop ───────────────────────────────────────────────────────── */}
+      {/* ── Desktop: vertical animated loop ──────────────────────────────── */}
       <div
         aria-hidden="true"
         className="hidden lg:block"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        onFocus={() => setIsPaused(true)}
-        onBlur={() => setIsPaused(false)}
+        onMouseEnter={() => setDesktopPaused(true)}
+        onMouseLeave={() => setDesktopPaused(false)}
+        onFocus={() => setDesktopPaused(true)}
+        onBlur={() => setDesktopPaused(false)}
       >
-        {/*
-          Animated version — shown by default, hidden when
-          prefers-reduced-motion: reduce is active (CSS class toggle).
-        */}
+        {/* Animated version — hidden when prefers-reduced-motion: reduce */}
         <div
           className="mm-animated-section relative overflow-hidden"
           style={{ height: '460px' }}
         >
-          {/* Top fade */}
           <div
             className="absolute inset-x-0 top-0 h-14 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to bottom, white 0%, transparent 100%)' }}
           />
-          {/* Bottom fade */}
           <div
             className="absolute inset-x-0 bottom-0 h-14 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to top, white 0%, transparent 100%)' }}
           />
-
-          <div className="mm-testimonial-track flex flex-col gap-3 py-1" style={trackStyle}>
+          <div
+            className="mm-testimonial-track flex flex-col gap-3 py-1"
+            style={{
+              '--mm-scroll-duration': `${durationSeconds}s`,
+              animationPlayState: desktopPaused ? 'paused' : 'running',
+            } as React.CSSProperties}
+          >
             {doubled.map((t, i) => (
               <Card key={i} t={t} />
             ))}
           </div>
         </div>
 
-        {/*
-          Static scrollable version — only visible when
-          prefers-reduced-motion: reduce is active. Shows every qualifying
-          testimonial exactly once, no duplicates.
-        */}
+        {/* Static version — only shown when prefers-reduced-motion: reduce */}
         <div
           className="mm-static-section overflow-y-auto mm-no-scrollbar flex flex-col gap-3 py-1"
           style={{ height: '460px' }}
@@ -87,17 +101,56 @@ export function TestimonialCarouselClient({ testimonials, durationSeconds }: Pro
         </div>
       </div>
 
-      {/* ── Mobile: horizontal snap carousel ─────────────────────────────── */}
+      {/* ── Mobile: single-column vertical animated loop ──────────────────── */}
+      {/*
+        Uses the same CSS animation as desktop but with a measured duration so
+        speed stays approximately constant regardless of how much text wraps.
+        Touch-hold pauses the animation. Normal page scrolling is unaffected
+        because the animated content is inside overflow-hidden — the page itself
+        scrolls normally outside this container.
+      */}
       <div
         aria-hidden="true"
-        className="lg:hidden flex gap-3 pb-2 overflow-x-auto mm-no-scrollbar snap-x snap-mandatory"
+        className="lg:hidden"
+        onPointerDown={() => setMobilePaused(true)}
+        onPointerUp={() => setMobilePaused(false)}
+        onPointerCancel={() => setMobilePaused(false)}
+        onPointerLeave={() => setMobilePaused(false)}
       >
-        {testimonials.map((t, i) => (
-          <div key={i} className="snap-center shrink-0 w-[82vw] max-w-[300px]">
-            <Card t={t} />
+        {/* Animated version */}
+        <div
+          className="mm-animated-section relative overflow-hidden"
+          style={{ height: 'clamp(300px, 55svh, 380px)' }}
+        >
+          <div
+            className="absolute inset-x-0 top-0 h-10 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to bottom, white 0%, transparent 100%)' }}
+          />
+          <div
+            className="absolute inset-x-0 bottom-0 h-10 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to top, white 0%, transparent 100%)' }}
+          />
+          <div
+            ref={mobileTrackRef}
+            className="mm-testimonial-track flex flex-col gap-3 py-1"
+            style={{
+              '--mm-scroll-duration': `${mobileDuration ?? durationSeconds}s`,
+              // Keep paused until we have an accurate measurement to avoid racing
+              animationPlayState: mobilePaused || mobileDuration === null ? 'paused' : 'running',
+            } as React.CSSProperties}
+          >
+            {doubled.map((t, i) => (
+              <Card key={i} t={t} />
+            ))}
           </div>
-        ))}
-        <div className="shrink-0 w-2" aria-hidden="true" />
+        </div>
+
+        {/* Static version for prefers-reduced-motion users */}
+        <div className="mm-static-section flex flex-col gap-3 py-1">
+          {testimonials.map((t, i) => (
+            <Card key={i} t={t} />
+          ))}
+        </div>
       </div>
     </>
   )

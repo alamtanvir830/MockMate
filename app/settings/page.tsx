@@ -141,7 +141,7 @@ export default async function SettingsPage() {
   const purchaseExpiryDate = fmt(entitlements.satPurchaseExpiresAt ?? undefined)
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden">
+    <div className="flex h-dvh bg-slate-50 overflow-hidden">
       <Sidebar userEmail={user.email} userFullName={fullName || undefined} />
       {/* These slots render nothing on /settings since the path doesn't match their prefixes */}
       <AcademySidebarSlot isPremium={isPremium} />

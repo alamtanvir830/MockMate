@@ -15,9 +15,13 @@
   100% { transform: translateY(-50%); }
 }
 
-/* Duration controlled via --mm-scroll-duration set inline on the track element */
+/* Duration controlled via --mm-scroll-duration set inline on the track element.
+   GPU-accelerated via translateY — no layout properties modified during animation. */
 .mm-testimonial-track {
   animation: mm-scroll-up var(--mm-scroll-duration, 50s) linear infinite;
+  will-change: transform;
+  /* Allow the page to scroll vertically through the animation region on touch */
+  touch-action: pan-y;
 }
 
 /* animated section visible by default; static section hidden */
@@ -38,8 +42,12 @@
   display: none;
 }
 
+/* ── Global ──────────────────────────────────────────────────────────── */
+
 html {
   scroll-behavior: smooth;
+  /* Prevent accidental horizontal overflow from being silently swallowed */
+  overflow-x: hidden;
 }
 
 body {
@@ -48,4 +56,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #0f172a;
   background-color: #ffffff;
+  /* Ensure content respects iPhone safe areas */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
+
+/* ── Mobile safe-area utilities ───────────────────────────────────────── */
+
+/* Bottom-fixed elements (e.g. action bars) should clear the home indicator */
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+/* Fixed drawers that extend to inset edges */
+.pl-safe { padding-left: env(safe-area-inset-left); }
+.pr-safe { padding-right: env(safe-area-inset-right); }
