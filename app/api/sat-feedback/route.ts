@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
       .map((q, i) => `${i + 1}. [${q.section} | ${q.module} | ${q.skill} | ${q.difficulty}]\n   Q: ${q.question.slice(0, 120)}\n   User: ${q.userAnswer || 'skipped'}  Correct: ${q.correctAnswer}`)
       .join('\n\n')
 
-    const prompt = `You are an expert SAT prep coach. A student just completed SAT Practice Test 1.
+    const prompt = `You are a direct, no-fluff SAT performance coach. Return ONLY valid JSON. Be specific — name actual skills and use actual numbers from the data. Do NOT say things like "your readiness is low", "you showed commendable effort", "your current level indicates", or other vague filler. If a student missed all questions in a domain, say so directly. Do not fabricate positivity.
 
 SCORES
 • Reading & Writing: ${input.rwScaled}/800 — ${rwCorrect}/${rwTotal} correct
@@ -78,18 +78,18 @@ ${missedLines || 'None — perfect score!'}
 
 Provide honest, specific, actionable SAT coaching. Return valid JSON only:
 {
-  "whatWentWell": "2–3 specific sentences praising genuine strengths based on the data, not generic praise",
-  "overallAssessment": "1–2 sentences on overall SAT readiness and score trajectory",
-  "rwStrengths": ["skill name", "skill name"],
-  "rwWeaknesses": ["skill name: one-line reason based on missed questions", "..."],
-  "mathStrengths": ["skill name", "skill name"],
-  "mathWeaknesses": ["skill name: one-line reason", "..."],
-  "carelessErrors": "If you see a careless-error pattern (wrong operation, misread question), name it — else null",
-  "adaptivePathInsight": "What the student's second-module difficulty (${input.rwM2Type} for Reading & Writing, ${input.mathM2Type} for Math) suggests about their current skill level and what to focus on next. Use plain student-friendly language. Do NOT use the word 'routing'. Instead say things like 'Because your second module was easier/harder, this means...' or 'Your results suggest...'.",
-  "rwReviewTopics": ["specific topic", "specific topic", "specific topic"],
-  "mathReviewTopics": ["specific topic", "specific topic", "specific topic"],
-  "practiceRecommendations": "4–5 specific, concrete next-step practice recommendations. Format as a numbered list: 1. Start with your Personalized Practice Path. 2. [R&W weak areas]. 3. [Math weak areas]. 4. [Review strategy]. 5. [Retake/progress tip].",
-  "mockMateNextSteps": "5 specific steps for using MockMate next. Format as a numbered list: 1. Click Personalized Practice Path below. 2. [Practice sets step]. 3. [Review explanations step]. 4. [Question Bank step]. 5. [Retake step when ready]."
+  "whatWentWell": "If there are genuine strengths based on the data, name them specifically with numbers. If the student performed poorly in every area, say 'There were no clear standout strengths on this attempt' and pivot directly to what to fix.",
+  "overallAssessment": "1–2 sentences on performance. Reference the actual score and what it means. E.g. 'A 1020 puts you below the national average — your Math and R&W gaps are roughly equal and both need significant work.' Be direct.",
+  "rwStrengths": ["specific skill name where they got most right", "..."],
+  "rwWeaknesses": ["Skill name: specific observation — e.g. 'Words in Context: missed 7 of 8 questions across both modules'", "Boundaries: missed all 4 questions — likely a fundamental gap in punctuation rules", "..."],
+  "mathStrengths": ["skill name with evidence", "..."],
+  "mathWeaknesses": ["Nonlinear Functions: 0/5 correct — no quadratic or exponential questions answered correctly", "..."],
+  "carelessErrors": "Name specific careless-error pattern if visible (wrong sign, misread question, arithmetic mistake) — else null. Do not invent one.",
+  "adaptivePathInsight": "What the student's adaptive module routing tells us. Say: 'Your second module was [easier/harder], which means...' Use plain student-friendly language. Do NOT use the word 'routing'.",
+  "rwReviewTopics": ["Words in Context", "Boundaries", "..."],
+  "mathReviewTopics": ["Nonlinear Functions", "Circles", "..."],
+  "practiceRecommendations": "4–5 specific, concrete next-step recommendations as a numbered list.",
+  "mockMateNextSteps": "5 specific steps for using MockMate next as a numbered list."
 }`
 
     const response = await openai.chat.completions.create({

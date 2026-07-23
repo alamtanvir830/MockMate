@@ -2446,9 +2446,6 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
       }))
     )
 
-    const hasMisses = allFlat.some(x => !x.answered || !x.correct)
-    const practicePrompts = buildPracticePrompts(allFlat)
-
     const filterTabs: { key: AnswerFilter; label: string }[] = [
       { key: 'all', label: 'All' },
       { key: 'incorrect', label: 'Incorrect' },
@@ -2586,10 +2583,10 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
           </button>
         </div>
 
-        {/* 3. AI Feedback */}
+        {/* 3. Performance Analysis */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
-            <h2 className="text-[15px] font-bold text-slate-900">AI Performance Feedback</h2>
+            <h2 className="text-[15px] font-bold text-slate-900">Performance Analysis</h2>
             {!aiFeedback && !aiFeedbackLoading && (
               <button onClick={fetchAIFeedback} className="text-[12px] text-[#1d4ed8] hover:underline font-medium">Generate</button>
             )}
@@ -2608,26 +2605,15 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
             {aiFeedback && (
               <div className="space-y-5 text-[13px] text-slate-700 leading-relaxed">
                 {aiFeedback.overallAssessment && (
-                  <div>
-                    <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Overall Assessment</p>
-                    <p>{aiFeedback.overallAssessment}</p>
-                  </div>
-                )}
-                {aiFeedback.whatWentWell && (
-                  <div>
-                    <p className="text-[11px] font-semibold text-green-600 uppercase tracking-widest mb-1">What You Did Well</p>
-                    <p>{aiFeedback.whatWentWell}</p>
-                  </div>
+                  <p className="text-[13px] text-slate-700 leading-relaxed">{aiFeedback.overallAssessment}</p>
                 )}
                 {aiFeedback.adaptivePathInsight && (
-                  <div>
-                    <p className="text-[11px] font-semibold text-blue-600 uppercase tracking-widest mb-1">What Your Module Difficulty Means</p>
-                    <p>{aiFeedback.adaptivePathInsight}</p>
-                  </div>
+                  <p className="text-[12px] text-slate-500 leading-relaxed">{aiFeedback.adaptivePathInsight}</p>
                 )}
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="bg-slate-50 rounded-lg p-4 space-y-2">
-                    <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">Reading &amp; Writing</p>
+                  {/* Reading & Writing column */}
+                  <div className="bg-slate-50 rounded-lg p-4 space-y-3">
+                    <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Reading &amp; Writing</p>
                     {aiFeedback.rwStrengths?.length > 0 && (
                       <div>
                         <p className="text-[11px] font-semibold text-green-600 mb-1">Strengths</p>
@@ -2636,27 +2622,56 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                         </ul>
                       </div>
                     )}
-                    {aiFeedback.rwWeaknesses?.length > 0 && (
+                    {(aiFeedback.rwWeaknesses?.slice(0, 2) ?? []).length > 0 && (
                       <div>
-                        <p className="text-[11px] font-semibold text-red-500 mb-1">To Improve</p>
+                        <p className="text-[11px] font-semibold text-red-500 mb-1">Weak Areas</p>
                         <ul className="list-disc list-inside space-y-0.5">
-                          {aiFeedback.rwWeaknesses.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                          {aiFeedback.rwWeaknesses.slice(0, 2).map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
                         </ul>
                       </div>
                     )}
-                    {aiFeedback.rwReviewTopics?.length > 0 && (
-                      <div>
-                        <p className="text-[11px] font-semibold text-amber-600 mb-1">Skills to Review</p>
-                        <div className="flex flex-wrap gap-1">
-                          {aiFeedback.rwReviewTopics.map((t, i) => (
-                            <span key={i} className="text-[10px] bg-amber-50 border border-amber-200 text-amber-700 px-2 py-0.5 rounded-full">{t}</span>
-                          ))}
+                    {satUpgradeUnlocked || isAdmin ? (
+                      <>
+                        {aiFeedback.rwWeaknesses?.slice(2).length > 0 && (
+                          <ul className="list-disc list-inside space-y-0.5">
+                            {aiFeedback.rwWeaknesses.slice(2).map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                          </ul>
+                        )}
+                        {aiFeedback.rwReviewTopics?.length > 0 && (
+                          <div>
+                            <p className="text-[11px] font-semibold text-amber-600 mb-1">Skills to Review</p>
+                            <div className="flex flex-wrap gap-1">
+                              {aiFeedback.rwReviewTopics.map((t, i) => (
+                                <span key={i} className="text-[10px] bg-amber-50 border border-amber-200 text-amber-700 px-2 py-0.5 rounded-full">{t}</span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="relative pt-2">
+                        <div className="space-y-1.5 blur-sm pointer-events-none select-none" aria-hidden="true">
+                          {[1,2,3].map(i => <div key={i} className="h-3.5 bg-slate-200 rounded w-full" />)}
+                          <div className="h-3.5 bg-slate-200 rounded w-4/5" />
+                          <div className="flex gap-1 mt-2 flex-wrap">
+                            {[1,2,3].map(i => <div key={i} className="h-5 w-20 bg-amber-200 rounded-full" />)}
+                          </div>
+                        </div>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 bg-gradient-to-t from-slate-50 via-slate-50/80 to-transparent p-3">
+                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5 text-slate-400">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                          </svg>
+                          <p className="text-[11px] font-bold text-slate-700">See the rest of your R&amp;W breakdown</p>
+                          <Link href="/billing" className="text-[11px] font-bold bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg transition-colors">
+                            Get SAT Premium
+                          </Link>
                         </div>
                       </div>
                     )}
                   </div>
-                  <div className="bg-slate-50 rounded-lg p-4 space-y-2">
-                    <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">Math</p>
+                  {/* Math column */}
+                  <div className="bg-slate-50 rounded-lg p-4 space-y-3">
+                    <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest">Math</p>
                     {aiFeedback.mathStrengths?.length > 0 && (
                       <div>
                         <p className="text-[11px] font-semibold text-green-600 mb-1">Strengths</p>
@@ -2665,63 +2680,118 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                         </ul>
                       </div>
                     )}
-                    {aiFeedback.mathWeaknesses?.length > 0 && (
+                    {(aiFeedback.mathWeaknesses?.slice(0, 2) ?? []).length > 0 && (
                       <div>
-                        <p className="text-[11px] font-semibold text-red-500 mb-1">To Improve</p>
+                        <p className="text-[11px] font-semibold text-red-500 mb-1">Weak Areas</p>
                         <ul className="list-disc list-inside space-y-0.5">
-                          {aiFeedback.mathWeaknesses.map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                          {aiFeedback.mathWeaknesses.slice(0, 2).map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
                         </ul>
                       </div>
                     )}
-                    {aiFeedback.mathReviewTopics?.length > 0 && (
-                      <div>
-                        <p className="text-[11px] font-semibold text-amber-600 mb-1">Skills to Review</p>
-                        <div className="flex flex-wrap gap-1">
-                          {aiFeedback.mathReviewTopics.map((t, i) => (
-                            <span key={i} className="text-[10px] bg-amber-50 border border-amber-200 text-amber-700 px-2 py-0.5 rounded-full">{t}</span>
-                          ))}
+                    {satUpgradeUnlocked || isAdmin ? (
+                      <>
+                        {aiFeedback.mathWeaknesses?.slice(2).length > 0 && (
+                          <ul className="list-disc list-inside space-y-0.5">
+                            {aiFeedback.mathWeaknesses.slice(2).map((s, i) => <li key={i} className="text-[12px]">{s}</li>)}
+                          </ul>
+                        )}
+                        {aiFeedback.mathReviewTopics?.length > 0 && (
+                          <div>
+                            <p className="text-[11px] font-semibold text-amber-600 mb-1">Skills to Review</p>
+                            <div className="flex flex-wrap gap-1">
+                              {aiFeedback.mathReviewTopics.map((t, i) => (
+                                <span key={i} className="text-[10px] bg-amber-50 border border-amber-200 text-amber-700 px-2 py-0.5 rounded-full">{t}</span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="relative pt-2">
+                        <div className="space-y-1.5 blur-sm pointer-events-none select-none" aria-hidden="true">
+                          {[1,2,3].map(i => <div key={i} className="h-3.5 bg-slate-200 rounded w-full" />)}
+                          <div className="h-3.5 bg-slate-200 rounded w-4/5" />
+                          <div className="flex gap-1 mt-2 flex-wrap">
+                            {[1,2,3].map(i => <div key={i} className="h-5 w-20 bg-amber-200 rounded-full" />)}
+                          </div>
+                        </div>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-2 bg-gradient-to-t from-slate-50 via-slate-50/80 to-transparent p-3">
+                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5 text-slate-400">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                          </svg>
+                          <p className="text-[11px] font-bold text-slate-700">Unlock full Math breakdown &amp; skill-specific feedback</p>
+                          <Link href="/billing" className="text-[11px] font-bold bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg transition-colors">
+                            Get SAT Premium
+                          </Link>
                         </div>
                       </div>
                     )}
                   </div>
                 </div>
-                {aiFeedback.carelessErrors && (
+                {(satUpgradeUnlocked || isAdmin) && aiFeedback.carelessErrors && (
                   <div className="bg-orange-50 border border-orange-100 rounded-lg p-3">
                     <p className="text-[11px] font-semibold text-orange-600 uppercase tracking-widest mb-1">Careless Error Pattern</p>
                     <p className="text-[12px]">{aiFeedback.carelessErrors}</p>
                   </div>
                 )}
-                <div className="space-y-3">
-                  <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest">Recommended Next Steps</p>
-                  <p className="text-[13px] text-slate-700 leading-relaxed">
-                    <span className="font-semibold">First,</span> scroll down to the answer key and explanations. Look closely at the questions you missed, read why the correct answer is right, and make sure you understand the mistake before practicing more.
-                  </p>
-                  <p className="text-[13px] text-slate-700 leading-relaxed">
-                    After reviewing your mistakes, use your <span className="font-semibold">Personalized Practice Path</span> to practice the exact weak areas from this exam.
-                  </p>
-                  <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-2">
-                    <p className="text-[11px] font-semibold text-indigo-700 uppercase tracking-widest">What is the Personalized Practice Path?</p>
-                    <p className="text-[12px] text-indigo-900 leading-relaxed">
-                      Your Personalized Practice Path is made of targeted question sets picked from MockMate&apos;s 700+ SAT-style Question Bank. These sets are chosen based on the skills you missed on this exam, so you can practice the areas that need the most work.
-                    </p>
-                    <p className="text-[12px] text-indigo-900 leading-relaxed">
-                      MockMate creates 4 targeted sets: 2 focused on Reading &amp; Writing weaknesses and 2 focused on Math weaknesses when both sections need review.
-                    </p>
-                    <p className="text-[12px] text-indigo-800 font-semibold">
-                      Click below to start your 4 personalized practice sets.
-                    </p>
-                  </div>
-                </div>
               </div>
             )}
             {!aiFeedback && !aiFeedbackLoading && !aiFeedbackError && (
-              <p className="text-[13px] text-slate-400 italic">AI feedback will generate automatically.</p>
+              <p className="text-[13px] text-slate-400 italic">Personalized performance analysis will generate automatically when you complete an exam.</p>
             )}
             <p className="mt-4 text-[11px] text-slate-400 italic">AI-assisted feedback may be incomplete or inaccurate. Use it as a study aid, not as a final authority.</p>
           </div>
         </div>
 
-        {/* 4. Personalized Practice Path card */}
+        {/* 4. Recommended Next Steps */}
+        <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <h2 className="text-[18px] font-bold text-slate-900 mb-5">Recommended Next Steps</h2>
+          <div className="space-y-5">
+            <div className="flex gap-4">
+              <div className="shrink-0 h-8 w-8 rounded-full bg-[#1b3a5c] flex items-center justify-center">
+                <span className="text-white text-[13px] font-bold">1</span>
+              </div>
+              <p className="text-[14px] font-bold text-slate-900 leading-snug pt-1">
+                First, scroll down to the answer key and explanations. Look closely at the questions you missed, read why the correct answer is right, and make sure you understand the mistake before practicing more.
+              </p>
+            </div>
+            <div className="flex gap-4">
+              <div className="shrink-0 h-8 w-8 rounded-full bg-[#1b3a5c] flex items-center justify-center">
+                <span className="text-white text-[13px] font-bold">2</span>
+              </div>
+              <p className="text-[13px] text-slate-700 leading-relaxed pt-1">
+                {rwScaled < 700 && mathScaled < 700 ? (
+                  <><span className="font-bold text-slate-900">Both your Reading &amp; Writing and Math need work.</span> Use the <Link href="/sat-rw-academy" className="text-[#1d4ed8] font-semibold hover:underline">SAT Reading &amp; Writing Academy</Link> and the <Link href="/sat-math-academy" className="text-[#1d4ed8] font-semibold hover:underline">SAT Math &amp; Desmos Academy</Link> to rebuild weak areas before doing more mixed practice.</>
+                ) : rwScaled < 700 ? (
+                  <><span className="font-bold text-slate-900">Your Reading &amp; Writing needs work.</span> Use the <Link href="/sat-rw-academy" className="text-[#1d4ed8] font-semibold hover:underline">SAT Reading &amp; Writing Academy</Link> to strengthen the exact skills that held your score down.</>
+                ) : mathScaled < 700 ? (
+                  <><span className="font-bold text-slate-900">Your Math needs work.</span> Use the <Link href="/sat-math-academy" className="text-[#1d4ed8] font-semibold hover:underline">SAT Math &amp; Desmos Academy</Link> to rebuild weak concepts and improve speed.</>
+                ) : (
+                  <><span className="font-bold text-slate-900">Both sections are above 700.</span> Focus on pushing your weakest domains higher — the Academies and Question Bank will help you reach the next score band.</>
+                )}
+              </p>
+            </div>
+            <div className="flex gap-4">
+              <div className="shrink-0 h-8 w-8 rounded-full bg-[#1b3a5c] flex items-center justify-center">
+                <span className="text-white text-[13px] font-bold">3</span>
+              </div>
+              <div className="flex-1 pt-1">
+                <p className="text-[13px] text-slate-700 leading-relaxed mb-3">
+                  After reviewing your mistakes, use your <span className="font-bold">Personalized Practice Path</span> — it creates targeted question sets from your weakest areas on this specific exam so you practice smarter, not randomly.
+                </p>
+                <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-1.5">
+                  <p className="text-[11px] font-bold text-indigo-700 uppercase tracking-widest">What is the Personalized Practice Path?</p>
+                  <p className="text-[12px] text-indigo-900 leading-relaxed">
+                    Your Personalized Practice Path pulls targeted sets from MockMate&apos;s 700+ SAT Question Bank, chosen based on the skills you missed on this exam. It targets your weaknesses — not random topics — so every practice question counts.
+                  </p>
+                  <p className="text-[12px] text-indigo-800 font-semibold">Scroll down to start your personalized sets.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 5. Personalized Practice Path card */}
         {attemptIdRef.current && (
           <div className={cn(
             'rounded-xl p-5 flex items-center justify-between gap-4',
@@ -2743,7 +2813,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
               </div>
               <p className="text-white font-bold text-[15px] mb-0.5">Personalized Practice Path</p>
               <p className="text-indigo-200 text-[12px]">
-                4 targeted sets built from your weakest domains in this exam.
+                Targeted sets built from your weakest skills on this exam — not random practice.
               </p>
             </div>
             {satUpgradeUnlocked || isAdmin ? (
@@ -2764,34 +2834,56 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
           </div>
         )}
 
-        {/* Full Answer Key — Form 1 only */}
+        {/* 6. Full Answer Key PDF — Form 1 only */}
         {form.id === 'sat-form-1' && attemptIdRef.current && (
-          <div className="bg-white rounded-xl border border-slate-200 p-5 flex items-start justify-between gap-4 flex-wrap">
-            <div>
-              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Full Answer Key</p>
-              <p className="text-[15px] font-bold text-slate-900 mb-1">Download Full Form 1 Answer Key PDF</p>
-              <p className="text-[12px] text-slate-500">
-                All 147 questions across every SAT Form 1 module — both adaptive Module 2 paths, correct answers, explanations, and visuals. Print dialog opens automatically.
-              </p>
-            </div>
-            <a
-              href={`/premade/sat/form-1/answer-key/${attemptIdRef.current}`}
-              target="_blank"
-              rel="noreferrer"
-              className="shrink-0 flex items-center gap-1.5 bg-slate-900 hover:bg-slate-700 text-white text-[13px] font-semibold px-4 py-2.5 rounded-lg transition-colors whitespace-nowrap"
-            >
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-              </svg>
-              Download Full Form 1 Answer Key PDF
-            </a>
+          <div className="bg-white rounded-xl border border-slate-200 p-5">
+            {satUpgradeUnlocked || isAdmin ? (
+              <div className="flex items-start justify-between gap-4 flex-wrap">
+                <div>
+                  <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Full Answer Key</p>
+                  <p className="text-[15px] font-bold text-slate-900 mb-1">Download Full Form 1 Answer Key PDF</p>
+                  <p className="text-[12px] text-slate-500">
+                    All 147 questions across every SAT Form 1 module — both adaptive Module 2 paths, correct answers, explanations, and visuals. Print dialog opens automatically.
+                  </p>
+                </div>
+                <a
+                  href={`/premade/sat/form-1/answer-key/${attemptIdRef.current}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="shrink-0 flex items-center gap-1.5 bg-slate-900 hover:bg-slate-700 text-white text-[13px] font-semibold px-4 py-2.5 rounded-lg transition-colors whitespace-nowrap"
+                >
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                  </svg>
+                  Download Full Form 1 Answer Key PDF
+                </a>
+              </div>
+            ) : (
+              <div className="flex items-start gap-4">
+                <div className="shrink-0 h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5 text-slate-400">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                  </svg>
+                </div>
+                <div className="flex-1">
+                  <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1">Full Answer Key</p>
+                  <p className="text-[15px] font-bold text-slate-900 mb-1">Unlock the Full Answer Key PDF with SAT Premium</p>
+                  <p className="text-[12px] text-slate-500 mb-3">
+                    Includes every question, correct answers, explanations, and both adaptive Module 2 paths.
+                  </p>
+                  <Link
+                    href="/billing"
+                    className="inline-flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[13px] font-semibold px-4 py-2 rounded-lg transition-colors"
+                  >
+                    Get SAT Premium
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         )}
 
-        {/* 5. Practice Prompts */}
-        <PracticePromptsSection prompts={practicePrompts} hasMisses={hasMisses} />
-
-        {/* 6. Answer Key */}
+        {/* 7. Answer Key */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-5 py-4 border-b border-slate-200">
             <h2 className="text-[15px] font-bold text-slate-900 mb-3">Answer Key</h2>
@@ -2867,90 +2959,106 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                       </svg>
                     </summary>
 
-                    <div className="px-5 pb-5 pt-2 bg-slate-50 border-t border-slate-100 space-y-4 text-[13px]">
-                      {stimulus && (
-                        <div className="bg-white border border-slate-200 rounded-lg p-3 text-[12px] text-slate-700 leading-relaxed">
-                          <StimulusRenderer text={stimulus} underlineTargets={qUnderlineTargets} />
-                        </div>
-                      )}
-                      {qGraphData && <SATGraph data={qGraphData} className="bg-white border border-slate-200 rounded-lg p-3" />}
-
-                      {choices && (
-                        <div className="space-y-1.5">
-                          {choices.map(c => {
-                            const isCorrectChoice = c.label === correctAns
-                            const isUserChoice = c.label === userAns
-                            return (
-                              <div key={c.label} className={cn('flex items-start gap-2 px-3 py-2 rounded-lg text-[12px]',
-                                isCorrectChoice ? 'bg-green-50 border border-green-200' :
-                                isUserChoice && !isCorrectChoice ? 'bg-red-50 border border-red-200' :
-                                'bg-white border border-slate-100'
-                              )}>
-                                <span className="shrink-0 font-bold">{c.label}.</span>
-                                <span className="flex-1">
-                                  {q.section === 'math' ? <MathText text={c.text} /> : c.text}
-                                </span>
-                                {isCorrectChoice && <span className="shrink-0 text-green-600 font-bold text-[10px]">✓ CORRECT</span>}
-                                {isUserChoice && !isCorrectChoice && <span className="shrink-0 text-red-600 font-bold text-[10px]">✗ YOUR ANSWER</span>}
-                              </div>
-                            )
-                          })}
-                        </div>
-                      )}
-
-                      {isGridIn && (
-                        <div className="flex items-center gap-4 text-[12px]">
-                          <span><span className="font-semibold text-slate-600">Your Answer:</span> <span className={answered && correct ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'}>{userAns}</span></span>
-                          <span><span className="font-semibold text-slate-600">Correct Answer:</span> <span className="text-green-600 font-semibold">{correctAns}</span></span>
-                        </div>
-                      )}
-
-                      <div className="space-y-2">
-                        <div className="bg-green-50 border border-green-100 rounded-lg p-3">
-                          <p className="text-[11px] font-semibold text-green-700 uppercase tracking-widest mb-1">Correct Answer: {correctAns}</p>
-                          <p className="text-[12px] text-slate-700 leading-relaxed">{explanation}</p>
-                        </div>
+                    {satUpgradeUnlocked || isAdmin ? (
+                      <div className="px-5 pb-5 pt-2 bg-slate-50 border-t border-slate-100 space-y-4 text-[13px]">
+                        {stimulus && (
+                          <div className="bg-white border border-slate-200 rounded-lg p-3 text-[12px] text-slate-700 leading-relaxed">
+                            <StimulusRenderer text={stimulus} underlineTargets={qUnderlineTargets} />
+                          </div>
+                        )}
+                        {qGraphData && <SATGraph data={qGraphData} className="bg-white border border-slate-200 rounded-lg p-3" />}
 
                         {choices && (
                           <div className="space-y-1.5">
-                            <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Why the other choices are wrong</p>
-                            {choices.filter(c => c.label !== correctAns).map(c => {
-                              const exp = (wrongExps as Record<string, string>)[c.label] || FALLBACK_WRONG
+                            {choices.map(c => {
+                              const isCorrectChoice = c.label === correctAns
+                              const isUserChoice = c.label === userAns
                               return (
-                                <div key={c.label} className="bg-white border border-slate-200 rounded-lg p-3">
-                                  <p className="text-[11px] font-semibold text-red-600 mb-1">Choice {c.label} is incorrect</p>
-                                  <p className="text-[12px] text-slate-600 leading-relaxed">{exp}</p>
+                                <div key={c.label} className={cn('flex items-start gap-2 px-3 py-2 rounded-lg text-[12px]',
+                                  isCorrectChoice ? 'bg-green-50 border border-green-200' :
+                                  isUserChoice && !isCorrectChoice ? 'bg-red-50 border border-red-200' :
+                                  'bg-white border border-slate-100'
+                                )}>
+                                  <span className="shrink-0 font-bold">{c.label}.</span>
+                                  <span className="flex-1">
+                                    {q.section === 'math' ? <MathText text={c.text} /> : c.text}
+                                  </span>
+                                  {isCorrectChoice && <span className="shrink-0 text-green-600 font-bold text-[10px]">✓ CORRECT</span>}
+                                  {isUserChoice && !isCorrectChoice && <span className="shrink-0 text-red-600 font-bold text-[10px]">✗ YOUR ANSWER</span>}
                                 </div>
                               )
                             })}
                           </div>
                         )}
 
-                        {isGridIn && (q as MathGridInQuestion).scoringNotes && (
-                          <div className="bg-amber-50 border border-amber-100 rounded-lg p-3">
-                            <p className="text-[11px] font-semibold text-amber-700 uppercase tracking-widest mb-1">Scoring Notes</p>
-                            <p className="text-[12px] text-slate-700">{(q as MathGridInQuestion).scoringNotes}</p>
+                        {isGridIn && (
+                          <div className="flex items-center gap-4 text-[12px]">
+                            <span><span className="font-semibold text-slate-600">Your Answer:</span> <span className={answered && correct ? 'text-green-600 font-semibold' : 'text-red-600 font-semibold'}>{userAns}</span></span>
+                            <span><span className="font-semibold text-slate-600">Correct Answer:</span> <span className="text-green-600 font-semibold">{correctAns}</span></span>
                           </div>
                         )}
 
-                        {/* Review This Skill — R&W questions only */}
-                        {q.section === 'reading-writing' && (() => {
-                          const slug = rwSkillToAcademySlug(skill)
-                          if (!slug) return null
-                          return (
-                            <a
-                              href={`/sat-rw-academy/lesson/${slug}`}
-                              className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-700 hover:bg-emerald-100 transition-colors"
-                            >
-                              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3 w-3">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
-                              </svg>
-                              Review This Skill: {skill}
-                            </a>
-                          )
-                        })()}
+                        <div className="space-y-2">
+                          <div className="bg-green-50 border border-green-100 rounded-lg p-3">
+                            <p className="text-[11px] font-semibold text-green-700 uppercase tracking-widest mb-1">Correct Answer: {correctAns}</p>
+                            <p className="text-[12px] text-slate-700 leading-relaxed">{explanation}</p>
+                          </div>
+
+                          {choices && (
+                            <div className="space-y-1.5">
+                              <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">Why the other choices are wrong</p>
+                              {choices.filter(c => c.label !== correctAns).map(c => {
+                                const exp = (wrongExps as Record<string, string>)[c.label] || FALLBACK_WRONG
+                                return (
+                                  <div key={c.label} className="bg-white border border-slate-200 rounded-lg p-3">
+                                    <p className="text-[11px] font-semibold text-red-600 mb-1">Choice {c.label} is incorrect</p>
+                                    <p className="text-[12px] text-slate-600 leading-relaxed">{exp}</p>
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          )}
+
+                          {isGridIn && (q as MathGridInQuestion).scoringNotes && (
+                            <div className="bg-amber-50 border border-amber-100 rounded-lg p-3">
+                              <p className="text-[11px] font-semibold text-amber-700 uppercase tracking-widest mb-1">Scoring Notes</p>
+                              <p className="text-[12px] text-slate-700">{(q as MathGridInQuestion).scoringNotes}</p>
+                            </div>
+                          )}
+
+                          {q.section === 'reading-writing' && (() => {
+                            const slug = rwSkillToAcademySlug(skill)
+                            if (!slug) return null
+                            return (
+                              <a
+                                href={`/sat-rw-academy/lesson/${slug}`}
+                                className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-700 hover:bg-emerald-100 transition-colors"
+                              >
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3 w-3">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+                                </svg>
+                                Review This Skill: {skill}
+                              </a>
+                            )
+                          })()}
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="px-5 py-5 bg-slate-50 border-t border-slate-100">
+                        <div className="flex flex-col items-center text-center gap-3 py-3">
+                          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-6 w-6 text-slate-300">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                          </svg>
+                          <div>
+                            <p className="text-[13px] font-semibold text-slate-700 mb-0.5">Unlock detailed explanations with SAT Premium</p>
+                            <p className="text-[11px] text-slate-400">See why each answer is right or wrong, with full stimulus passages and step-by-step reasoning.</p>
+                          </div>
+                          <Link href="/billing" className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[13px] px-4 py-2 rounded-lg transition-colors">
+                            Get SAT Premium
+                          </Link>
+                        </div>
+                      </div>
+                    )}
                   </details>
                 )
               })}
