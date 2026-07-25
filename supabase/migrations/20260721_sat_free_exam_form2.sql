@@ -22,15 +22,15 @@ CREATE INDEX idx_sat_free_exam_access_expires
 -- Row-level security: users can only read/write their own row
 ALTER TABLE sat_free_exam_access ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Users can read their own free exam access"
+CREATE POLICY sat_free_exam_access_select
   ON sat_free_exam_access FOR SELECT
   USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can insert their own free exam access"
+CREATE POLICY sat_free_exam_access_insert
   ON sat_free_exam_access FOR INSERT
   WITH CHECK (auth.uid() = user_id);
 
-CREATE POLICY "Users can update their own free exam access"
+CREATE POLICY sat_free_exam_access_update
   ON sat_free_exam_access FOR UPDATE
   USING (auth.uid() = user_id);
 

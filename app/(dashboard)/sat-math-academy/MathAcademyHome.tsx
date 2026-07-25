@@ -25,10 +25,13 @@ interface MathLessonProgress {
   completed_at: string | null
 }
 
+type MasteryStatus = 'not_started' | 'learning' | 'developing' | 'proficient' | 'mastered'
+
 interface MathAttemptData {
   skillSlug: string
   attemptCount: number
-  recentAccuracy: number
+  masteryPct: number
+  masteryStatus: MasteryStatus
   lastAttemptAt: string | null
 }
 
@@ -201,15 +204,15 @@ function computeNextStep(
         reason: `Your diagnostic identified ${name} as a priority area. Begin with the lesson.`,
       }
     }
-    const accuracy = d?.recentAccuracy ?? 0
+    const masteryPct = d?.masteryPct ?? 0
     const hasAttempts = (d?.attemptCount ?? 0) > 0
-    if (!hasAttempts || accuracy < 70) {
+    if (!hasAttempts || masteryPct < 70) {
       return {
         type: 'drill', slug,
         href: `/sat-math-academy/lesson/${slug}`,
         label: `Practice ${name}`,
         reason: hasAttempts
-          ? `Your accuracy on ${name} is ${accuracy}%. Practice more to build mastery before moving on.`
+          ? `Your mastery on ${name} is ${masteryPct}%. Practice more to build mastery before moving on.`
           : `You completed the ${name} lesson. Now practice to build mastery.`,
       }
     }
@@ -222,7 +225,7 @@ function computeNextStep(
     const allLessonsDone = ALL_MATH_SLUGS.every(s => completedLessons.has(s))
     const cap3Available = cap3?.available ?? false
 
-    const isAdequate = (slug: string) => (attemptMap[slug]?.recentAccuracy ?? 0) >= 60
+    const isAdequate = (slug: string) => (attemptMap[slug]?.masteryPct ?? 0) >= 60
     const reviewComplete = (cap: MathCapstoneStatus | null) =>
       (cap?.completed ?? false) &&
       ((cap?.weakestSlugs ?? []).length === 0 || (cap?.weakestSlugs ?? []).every(isAdequate))
@@ -306,7 +309,8 @@ function buildPathItems(
     const name = MATH_SKILL_DISPLAY_NAMES[slug] ?? slug
     const domain = MATH_SKILL_DOMAIN[slug]
     const isRecommended = isDiagnosticDone && nextStep?.slug === slug
-    const accuracy = d?.recentAccuracy ?? 0
+    const masteryPct = d?.masteryPct ?? 0
+    const masteryStatus = d?.masteryStatus ?? 'not_started'
     const hasAttempts = (d?.attemptCount ?? 0) > 0
 
     let status: PathItemStatus
@@ -318,12 +322,16 @@ function buildPathItems(
       status = 'recommended'; statusLabel = 'Recommended Next'
       statusBadgeClass = 'bg-sky-100 text-sky-700 border-sky-300'
       actionLabel = nextStep!.label
-    } else if (lessonDone && hasAttempts && accuracy >= 80) {
-      status = 'completed'; statusLabel = 'Proficient'
+    } else if (masteryStatus === 'mastered') {
+      status = 'completed'; statusLabel = `Mastered · ${masteryPct}%`
       statusBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-300'
       actionLabel = 'Review'
-    } else if (lessonDone && hasAttempts && accuracy >= 60) {
-      status = 'practice_needed'; statusLabel = 'Improving'
+    } else if (masteryStatus === 'proficient') {
+      status = 'completed'; statusLabel = `Proficient · ${masteryPct}%`
+      statusBadgeClass = 'bg-emerald-100 text-emerald-700 border-emerald-300'
+      actionLabel = 'Review'
+    } else if (lessonDone && hasAttempts && masteryPct >= 60) {
+      status = 'practice_needed'; statusLabel = `Improving · ${masteryPct}%`
       statusBadgeClass = 'bg-blue-100 text-blue-700 border-blue-300'
       actionLabel = 'Practice More'
     } else if (lessonDone) {
@@ -399,7 +407,7 @@ function buildPathItems(
   const masteryCheckDone = capstonesData?.masteryCheckDone ?? false
   const cap3Available = cap3?.available ?? false
 
-  const isAdequate = (slug: string) => (attemptMap[slug]?.recentAccuracy ?? 0) >= 60
+  const isAdequate = (slug: string) => (attemptMap[slug]?.masteryPct ?? 0) >= 60
   const reviewComplete = (cap: MathCapstoneStatus | null) =>
     (cap?.completed ?? false) &&
     ((cap?.weakestSlugs ?? []).length === 0 || (cap?.weakestSlugs ?? []).every(isAdequate))
@@ -775,7 +783,7 @@ function PathItemRow({
         <div className="mt-2 pt-2 border-t border-slate-100 space-y-1.5">
           <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">Weak areas to address</p>
           {item.weakestSlugs!.map(slug => {
-            const adequate = (attemptMap[slug]?.recentAccuracy ?? 0) >= 60
+            const adequate = (attemptMap[slug]?.masteryPct ?? 0) >= 60
             const name = MATH_SKILL_DISPLAY_NAMES[slug as MathSkillSlug] ?? slug
             return (
               <div key={slug} className="flex items-center gap-2">
@@ -841,6 +849,7 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
   const [capstonesData, setCapstonesData] = useState<MathCapstonesData | null>(null)
   const [satFormsData, setSatFormsData] = useState<SATFormsData | null>(null)
   const [showSATSelector, setShowSATSelector] = useState(false)
+  const [reviewDue, setReviewDue] = useState(0)
   const [loading, setLoading] = useState(isPremium)
   const [hasSavedProgress, setHasSavedProgress] = useState(false)
 
@@ -858,16 +867,18 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
     Promise.all([
       fetch('/api/academy/math-diagnostic').then(r => r.ok ? r.json() : null) as Promise<MathDiagnosticResult | null>,
       fetch('/api/academy/math-lesson-progress').then(r => r.ok ? r.json() : []) as Promise<MathLessonProgress[]>,
-      fetch('/api/academy/math-attempts').then(r => r.ok ? r.json() : []) as Promise<MathAttemptData[]>,
+      fetch('/api/academy/math-attempts').then(r => r.ok ? r.json() : { skills: [], reviewDue: 0 }) as Promise<{ skills: MathAttemptData[]; reviewDue: number }>,
       fetch('/api/academy/math-capstones').then(r => r.ok ? r.json() : null) as Promise<MathCapstonesData | null>,
       fetch('/api/academy/sat-forms').then(r => r.ok ? r.json() : null) as Promise<SATFormsData | null>,
     ])
-      .then(([diag, lessonArr, attemptsArr, capstones, satForms]) => {
+      .then(([diag, lessonArr, attemptsData, capstones, satForms]) => {
         setDiagnostic(diag)
         setLessons(lessonArr)
         const map: Record<string, MathAttemptData> = {}
-        if (Array.isArray(attemptsArr)) { for (const a of attemptsArr) map[a.skillSlug] = a }
+        const skillsArr = attemptsData?.skills ?? []
+        for (const a of skillsArr) map[a.skillSlug] = a
         setAttemptMap(map)
+        setReviewDue(attemptsData?.reviewDue ?? 0)
         setCapstonesData(capstones)
         setSatFormsData(satForms)
       })
@@ -880,9 +891,11 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
   const lessonsCompleted = completedLessonsSet.size
   const totalStarted = ALL_MATH_SLUGS.filter(s => completedLessonsSet.has(s) || (attemptMap[s]?.attemptCount ?? 0) > 0).length
   const totalImproving = ALL_MATH_SLUGS.filter(s => {
-    const acc = attemptMap[s]?.recentAccuracy ?? 0; return completedLessonsSet.has(s) && acc >= 60 && acc < 80
+    const status = attemptMap[s]?.masteryStatus; return completedLessonsSet.has(s) && (status === 'developing' || status === 'learning')
   }).length
-  const totalProficient = ALL_MATH_SLUGS.filter(s => completedLessonsSet.has(s) && (attemptMap[s]?.recentAccuracy ?? 0) >= 80).length
+  const totalProficient = ALL_MATH_SLUGS.filter(s => {
+    const status = attemptMap[s]?.masteryStatus; return completedLessonsSet.has(s) && (status === 'proficient' || status === 'mastered')
+  }).length
 
   const nextStep = isPremium && !loading
     ? computeNextStep(diagnostic, lessons, capstonesData, attemptMap, satFormsData)
@@ -946,9 +959,17 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
                 <p className="text-sm text-slate-600 leading-relaxed">
                   Your diagnostic results shape the learning path below. Follow the recommended order, or use the academy menu to open any lesson or practice tool directly.
                 </p>
-                {lessonsCompleted > 0 && (
-                  <p className="text-xs text-slate-500">{lessonsCompleted} lesson{lessonsCompleted !== 1 ? 's' : ''} completed</p>
-                )}
+                <div className="flex items-center gap-2 flex-wrap">
+                  {lessonsCompleted > 0 && (
+                    <p className="text-xs text-slate-500">{lessonsCompleted} lesson{lessonsCompleted !== 1 ? 's' : ''} completed</p>
+                  )}
+                  {reviewDue > 0 && (
+                    <Link href="/sat-math-academy/review" className="inline-flex items-center gap-1 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold text-amber-700 hover:bg-amber-100 transition-colors">
+                      <span className="h-1.5 w-1.5 rounded-full bg-amber-500 shrink-0" />
+                      {reviewDue} review{reviewDue !== 1 ? 's' : ''} due
+                    </Link>
+                  )}
+                </div>
               </div>
 
               <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white p-5">
