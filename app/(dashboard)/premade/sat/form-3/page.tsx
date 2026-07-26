@@ -4,12 +4,11 @@ import { getEntitlements } from '@/lib/entitlements'
 import { redirect } from 'next/navigation'
 import { UpgradeGate } from '@/components/shared/upgrade-gate'
 import SATExamTakerClient from './SATExamTakerClient'
-import { activateForm3PromotionIfNeeded } from '@/lib/premade-exams/sat/form3-activate'
 import {
-  getForm3Promotion,
-  isPromotionWindowActive,
+  getForm3FreeWindow,
   resolveForm3Access,
-} from '@/lib/premade-exams/sat/form3-promotion-access'
+} from '@/lib/premade-exams/sat/form3-access'
+import type { Form3AttemptStatus } from '@/lib/premade-exams/sat/form3-access'
 
 export const dynamic = 'force-dynamic'
 
@@ -21,53 +20,63 @@ export default async function SATForm3Page() {
     redirect('/login')
   }
 
-  // Ensure the global promotion has started (idempotent, no-op if already active)
-  await activateForm3PromotionIfNeeded()
-
   const isAdmin = isMockMateAdmin(user)
-
-  // Admin bypasses all checks — still fetch promotion so the countdown shows
-  if (isAdmin) {
-    const promotion = await getForm3Promotion(supabase)
-    const promotionEndsAt = promotion && isPromotionWindowActive(promotion) ? promotion.endsAt : null
-    return <SATExamTakerClient isAdmin={true} promotionEndsAt={promotionEndsAt} />
-  }
-
   const { satUpgradeUnlocked } = await getEntitlements()
 
-  // Premium users get full access — still show countdown while promotion is live
-  if (satUpgradeUnlocked) {
-    const promotion = await getForm3Promotion(supabase)
-    const promotionEndsAt = promotion && isPromotionWindowActive(promotion) ? promotion.endsAt : null
-    return <SATExamTakerClient isAdmin={false} promotionEndsAt={promotionEndsAt} />
-  }
-
-  // Fetch promotion and in-progress state in parallel
-  const [promotion, inProgressRow] = await Promise.all([
-    getForm3Promotion(supabase),
+  const [freeWindow, inProgressRow, completedRow] = await Promise.all([
+    getForm3FreeWindow(supabase, user.id),
     supabase
       .from('sat_in_progress_attempts')
-      .select('local_attempt_id')
+      .select('local_attempt_id, started_at')
       .eq('user_id', user.id)
       .eq('form_number', 3)
       .maybeSingle(),
+    supabase
+      .from('standardized_exam_attempts')
+      .select('local_attempt_id, ai_feedback')
+      .eq('user_id', user.id)
+      .eq('exam_type', 'SAT')
+      .eq('form_number', 3)
+      .not('completed_at', 'is', null)
+      .order('completed_at', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
   ])
 
-  const hasInProgress = !!inProgressRow.data
+  const attemptId =
+    completedRow.data?.local_attempt_id ?? inProgressRow.data?.local_attempt_id ?? null
+
+  const hasFeedback = !!completedRow.data?.ai_feedback
+
+  const attemptStatus: Form3AttemptStatus =
+    completedRow.data
+      ? hasFeedback
+        ? 'completed'
+        : 'feedback-required'
+      : inProgressRow.data
+        ? 'in-progress'
+        : 'none'
 
   const access = resolveForm3Access({
-    user,
-    isAdmin: false,
-    isPremium: false,
-    promotion,
-    hasInProgress,
+    isAdmin,
+    isPremium: satUpgradeUnlocked,
+    freeWindow,
+    attemptStatus,
+    attemptId,
+    inProgressStartedAt: inProgressRow.data?.started_at ?? null,
   })
 
-  if (access.canStart || access.canResume) {
+  if (
+    access.canStart ||
+    access.canResume ||
+    access.canViewResult ||
+    access.canCompleteFeedback
+  ) {
     return (
       <SATExamTakerClient
-        isAdmin={false}
-        promotionEndsAt={access.promotionEndsAt}
+        isAdmin={isAdmin}
+        freeWindowExpiresAt={access.freeWindowExpiresAt}
+        showCountdown={access.accessSource === 'free-window'}
       />
     )
   }
@@ -75,8 +84,8 @@ export default async function SATForm3Page() {
   // No access — show upgrade gate
   return (
     <UpgradeGate
-      title="SAT Form 3 — Limited Time Access Ended"
-      description="The free promotional window for SAT Form 3 has ended. Subscribe to SAT Premium to access all 5 SAT practice forms, the 700+ question bank, and both SAT Academies."
+      title="SAT Form 3 — Free Access Window Ended"
+      description="Your 48-hour free access window for SAT Form 3 has ended. Subscribe to SAT Premium to access all 5 SAT practice forms, the 700+ question bank, and both SAT Academies."
     />
   )
 }

@@ -2,7 +2,9 @@
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { activateForm3PromotionIfNeeded } from '@/lib/premade-exams/sat/form3-activate'
+import { ensureForm3FreeWindow } from '@/lib/premade-exams/sat/form3-access'
+import { hasSatPremium } from '@/lib/auth/server'
+import { isMockMateAdmin } from '@/lib/auth/admin'
 
 export type AuthState = { error?: string; message?: string } | null
 
@@ -42,8 +44,12 @@ export async function login(
     return { error: error.message }
   }
 
-  // Start the global Form 3 promotion on first successful login.
-  await activateForm3PromotionIfNeeded()
+  // Initialize the per-user 48-hour Form 3 free window on first login.
+  // Skip for admin and premium users — they don't need the timer.
+  const { data: { user: loggedInUser } } = await supabase.auth.getUser()
+  if (loggedInUser && !isMockMateAdmin(loggedInUser) && !hasSatPremium(loggedInUser)) {
+    await ensureForm3FreeWindow(loggedInUser.id)
+  }
 
   redirect('/dashboard')
 }
@@ -81,7 +87,10 @@ export async function signup(
 
   // With email confirmation OFF, session is returned immediately.
   if (data.session) {
-    await activateForm3PromotionIfNeeded()
+    // Initialize the per-user 48-hour Form 3 free window for new signups.
+    if (data.user && !isMockMateAdmin(data.user) && !hasSatPremium(data.user)) {
+      await ensureForm3FreeWindow(data.user.id)
+    }
     redirect('/dashboard')
   }
 

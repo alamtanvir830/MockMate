@@ -3,9 +3,9 @@ import { getEntitlements } from '@/lib/entitlements'
 import { isMockMateAdmin } from '@/lib/auth/admin'
 import { redirect } from 'next/navigation'
 import {
-  getForm3Promotion,
+  getForm3FreeWindow,
   resolveForm3Access,
-} from '@/lib/premade-exams/sat/form3-promotion-access'
+} from '@/lib/premade-exams/sat/form3-access'
 import SATForm3ResultsClient from './SATForm3ResultsClient'
 
 export const dynamic = 'force-dynamic'
@@ -32,8 +32,8 @@ export default async function SATForm3ResultsPage({
     return <SATForm3ResultsClient attemptId={attemptId} satUpgradeUnlocked={satUpgradeUnlocked} />
   }
 
-  // Non-premium: check if they have a completed Form 3 attempt (promotional access)
-  // Any user who completed the exam via the promotion may view their results
+  // Non-premium: check if they have a completed Form 3 attempt
+  // Any user who completed the exam may view their results
   const { data: completedAttempt } = await supabase
     .from('standardized_exam_attempts')
     .select('local_attempt_id')
@@ -49,23 +49,24 @@ export default async function SATForm3ResultsPage({
     return <SATForm3ResultsClient attemptId={attemptId} satUpgradeUnlocked={false} />
   }
 
-  // Check promotion access for in-progress context
-  const [promotion, inProgressRow] = await Promise.all([
-    getForm3Promotion(supabase),
+  // Also allow if they have a valid free window access (in-progress attempt)
+  const [freeWindow, inProgressRow] = await Promise.all([
+    getForm3FreeWindow(supabase, user.id),
     supabase
       .from('sat_in_progress_attempts')
-      .select('local_attempt_id')
+      .select('local_attempt_id, started_at')
       .eq('user_id', user.id)
       .eq('form_number', 3)
       .maybeSingle(),
   ])
 
   const access = resolveForm3Access({
-    user,
     isAdmin: false,
     isPremium: false,
-    promotion,
-    hasInProgress: !!inProgressRow.data,
+    freeWindow,
+    attemptStatus: inProgressRow.data ? 'in-progress' : 'none',
+    attemptId: inProgressRow.data?.local_attempt_id ?? null,
+    inProgressStartedAt: inProgressRow.data?.started_at ?? null,
   })
 
   if (access.canStart || access.canResume) {

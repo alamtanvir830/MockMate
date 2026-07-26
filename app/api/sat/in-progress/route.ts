@@ -2,10 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { isMockMateAdmin } from '@/lib/auth/admin'
 import { getEntitlements } from '@/lib/entitlements'
-import {
-  getForm3Promotion,
-  isPromotionWindowActive,
-} from '@/lib/premade-exams/sat/form3-promotion-access'
 
 interface InProgressBody {
   formNumber: number
@@ -103,27 +99,15 @@ export async function POST(req: NextRequest) {
   }
 
   // Form 3: admin or Premium may always autosave.
-  // Non-premium users may autosave during an active promotion window,
+  // Non-premium users may autosave during an active free window,
   // or if they already have an in-progress row (continuation after expiry).
   if (body.formNumber === 3 && !isAdmin) {
     const { satUpgradeUnlocked } = await getEntitlements()
     if (!satUpgradeUnlocked) {
-      const promotion = await getForm3Promotion(supabase)
-      const windowActive = promotion ? isPromotionWindowActive(promotion) : false
-
-      if (!windowActive) {
-        // Check if user has an existing in-progress row (allow continuation after expiry)
-        const { data: existing } = await supabase
-          .from('sat_in_progress_attempts')
-          .select('local_attempt_id')
-          .eq('user_id', user.id)
-          .eq('form_number', 3)
-          .maybeSingle()
-
-        const isExistingAttempt = existing?.local_attempt_id === body.localAttemptId
-        if (!isExistingAttempt) {
-          return NextResponse.json({ error: 'SAT Form 3 promotional window has ended.' }, { status: 403 })
-        }
+      const { canNonPremiumAccessForm3Api } = await import('@/lib/premade-exams/sat/form3-access')
+      const allowed = await canNonPremiumAccessForm3Api(supabase, user.id, body.localAttemptId)
+      if (!allowed) {
+        return NextResponse.json({ error: 'SAT Form 3 free access has expired.' }, { status: 403 })
       }
     }
   }

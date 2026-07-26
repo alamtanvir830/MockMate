@@ -5,12 +5,12 @@ import { isForm1Expired } from '@/lib/premade-exams/sat/form1-access'
 import { getEntitlements } from '@/lib/entitlements'
 import { SatForm1BadgeCountdown } from '@/components/sat/SatForm1Countdown'
 import { ExamHistoryNotice } from '@/components/premade/ExamHistoryNotice'
-import { Form3CountdownBadge } from '@/components/sat/Form3CountdownBadge'
+import { Form3CountdownBanner, Form3CountdownBadge } from '@/components/sat/Form3Countdown'
 import {
-  getForm3Promotion,
-  isPromotionWindowActive,
+  getForm3FreeWindow,
   resolveForm3Access,
-} from '@/lib/premade-exams/sat/form3-promotion-access'
+} from '@/lib/premade-exams/sat/form3-access'
+import type { Form3AttemptStatus } from '@/lib/premade-exams/sat/form3-access'
 
 export const dynamic = 'force-dynamic'
 
@@ -40,15 +40,9 @@ export default async function SATPremadePage() {
   let form3ResultsAttemptId: string | null = null
   let form3HasInProgress = false
   let form3FeedbackRequired = false
-
-  // Start the global Form 3 promotion on first authenticated page visit (idempotent)
-  if (user) {
-    const { activateForm3PromotionIfNeeded } = await import('@/lib/premade-exams/sat/form3-activate')
-    await activateForm3PromotionIfNeeded()
-  }
-
-  // Form 3 promotion state (fetched outside user block — needed for listing regardless)
-  const promotion = await getForm3Promotion(supabase)
+  let form3InProgressAttemptId: string | null = null
+  let form3InProgressStartedAt: string | null = null
+  let form3FreeWindow = null as Awaited<ReturnType<typeof getForm3FreeWindow>>
 
   if (user) {
     const [
@@ -59,6 +53,7 @@ export default async function SATPremadePage() {
       form3Completed,
       form3InProgress,
       form3FeedbackRow,
+      form3Window,
     ] = await Promise.all([
       supabase
         .from('standardized_exam_attempts')
@@ -83,12 +78,13 @@ export default async function SATPremadePage() {
         .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
       supabase
         .from('sat_in_progress_attempts')
-        .select('local_attempt_id').eq('user_id', user.id).eq('form_number', 3).maybeSingle(),
+        .select('local_attempt_id, started_at').eq('user_id', user.id).eq('form_number', 3).maybeSingle(),
       supabase
         .from('standardized_exam_attempts')
         .select('local_attempt_id, ai_feedback')
         .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 3)
         .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
+      getForm3FreeWindow(supabase, user.id),
     ])
 
     form1ResultsAttemptId = form1Completed.data?.local_attempt_id ?? null
@@ -100,6 +96,9 @@ export default async function SATPremadePage() {
     form2HasInProgress = !!form2InProgress.data
     form3ResultsAttemptId = form3Completed.data?.local_attempt_id ?? null
     form3HasInProgress = !!form3InProgress.data
+    form3InProgressAttemptId = form3InProgress.data?.local_attempt_id ?? null
+    form3InProgressStartedAt = form3InProgress.data?.started_at ?? null
+    form3FreeWindow = form3Window
 
     // Feedback required: completed but no ai_feedback yet
     const f3row = form3FeedbackRow.data as { local_attempt_id: string; ai_feedback: unknown } | null
@@ -112,19 +111,24 @@ export default async function SATPremadePage() {
   const form1HasLegacyWindow = !!form1LegacyExpiresAt
   const form3Completed = !!form3ResultsAttemptId
 
-  // Resolve Form 3 promotion access for listing display
+  // Compute Form 3 access
+  const form3AttemptStatus: Form3AttemptStatus =
+    form3FeedbackRequired ? 'feedback-required'
+    : form3Completed ? 'completed'
+    : form3HasInProgress ? 'in-progress'
+    : 'none'
+
+  const form3AttemptId =
+    form3ResultsAttemptId ?? form3InProgressAttemptId ?? null
+
   const form3Access = resolveForm3Access({
-    user: user ?? null,
     isAdmin,
     isPremium: satUpgradeUnlocked,
-    promotion,
-    hasInProgress: form3HasInProgress,
+    freeWindow: form3FreeWindow,
+    attemptStatus: form3AttemptStatus,
+    attemptId: form3AttemptId,
+    inProgressStartedAt: form3InProgressStartedAt,
   })
-
-  // Show countdown for all users (including admin/premium) while the window is live
-  const form3CountdownEndsAt =
-    form3Access.promotionEndsAt ??
-    (promotion && isPromotionWindowActive(promotion) ? promotion.endsAt : null)
 
   return (
     <div className="max-w-5xl mx-auto py-10 px-4">
@@ -174,17 +178,9 @@ export default async function SATPremadePage() {
         <Link href="/sat-disclaimer" className="hover:underline">SAT Disclaimer</Link>
       </p>
 
-      {/* Form 3 global promotion banner — shown to all authenticated users while active */}
-      {form3CountdownEndsAt && (
-        <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3">
-          <div className="flex-1 min-w-0">
-            <p className="font-semibold text-amber-900 text-sm">SAT Form 3 is free for 48 hours</p>
-            <p className="text-xs text-amber-700 mt-0.5">The global countdown has started. Begin Form 3 before time runs out.</p>
-          </div>
-          <div className="shrink-0">
-            <Form3CountdownBadge endsAt={form3CountdownEndsAt} />
-          </div>
-        </div>
+      {/* Form 3 per-user countdown banner — shown when the free window is active */}
+      {form3Access.freeWindowExpiresAt && form3Access.accessSource === 'free-window' && (
+        <Form3CountdownBanner expiresAt={form3Access.freeWindowExpiresAt} />
       )}
 
       <ExamHistoryNotice />
@@ -375,8 +371,9 @@ export default async function SATPremadePage() {
           </div>
         )}
 
-        {/* ── Form 3 — promotion-gated ───────────────────────────────────── */}
-        {form3FeedbackRequired && form3ResultsAttemptId ? (
+        {/* ── Form 3 — per-user 48-hour free window ─────────────────────── */}
+        {form3Access.canCompleteFeedback && form3Access.attemptId ? (
+          /* Feedback required */
           <div className="rounded-xl border border-amber-200 bg-white p-6 flex flex-col">
             <div className="flex items-start justify-between mb-4">
               <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
@@ -393,11 +390,12 @@ export default async function SATPremadePage() {
                 </li>
               ))}
             </ul>
-            <Link href={`/premade/sat/form-3/results/${form3ResultsAttemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
+            <Link href={`/premade/sat/form-3/results/${form3Access.attemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
               Complete Feedback →
             </Link>
           </div>
-        ) : form3Completed ? (
+        ) : form3Access.canViewResult && form3Access.attemptId ? (
+          /* Completed */
           <div className="rounded-xl border border-emerald-200 bg-white p-6 flex flex-col">
             <div className="flex items-start justify-between mb-4">
               <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
@@ -414,11 +412,12 @@ export default async function SATPremadePage() {
                 </li>
               ))}
             </ul>
-            <Link href={`/premade/sat/form-3/results/${form3ResultsAttemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors">
+            <Link href={`/premade/sat/form-3/results/${form3Access.attemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors">
               View Results →
             </Link>
           </div>
-        ) : form3Access.canResume && form3HasInProgress ? (
+        ) : form3Access.canResume ? (
+          /* In progress */
           <Link href="/premade/sat/form-3" className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-4">
               <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
@@ -438,22 +437,22 @@ export default async function SATPremadePage() {
               Resume SAT Form 3 →
             </span>
           </Link>
-        ) : form3Access.canStart ? (
-          /* Active promotion window — start free */
+        ) : form3Access.canStart && form3Access.accessSource === 'free-window' ? (
+          /* Active free window — start free */
           <Link href="/premade/sat/form-3" className="rounded-xl border border-amber-200 bg-white p-6 hover:border-amber-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-9 w-9 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-amber-600">3</span>
               </div>
-              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Free for a Limited Time</span>
+              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Free for 48 Hours</span>
             </div>
-            {form3CountdownEndsAt && (
+            {form3Access.freeWindowExpiresAt && (
               <div className="mb-2">
-                <Form3CountdownBadge endsAt={form3CountdownEndsAt} />
+                <Form3CountdownBadge expiresAt={form3Access.freeWindowExpiresAt} />
               </div>
             )}
             <h2 className="font-semibold text-slate-900 group-hover:text-amber-700 transition-colors mb-1">Form 3</h2>
-            <p className="text-[11px] text-amber-700 mb-3">SAT Form 3 is free until the countdown ends.</p>
+            <p className="text-[11px] text-amber-700 mb-3">SAT Form 3 is available during your free access window.</p>
             <ul className="space-y-1.5 mb-4">
               {cardDetails.map((d) => (
                 <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
@@ -464,6 +463,24 @@ export default async function SATPremadePage() {
             <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-amber-600 transition-colors">
               Start Free SAT Form 3 →
             </span>
+          </Link>
+        ) : form3Access.canStart && (isAdmin || satUpgradeUnlocked) ? (
+          /* Admin or Premium — normal access card */
+          <Link href="/premade/sat/form-3" className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+            <div className="flex items-start justify-between mb-4">
+              <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-indigo-600">3</span>
+              </div>
+              {isAdmin && <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Admin</span>}
+            </div>
+            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-3">Form 3</h2>
+            <ul className="space-y-1.5 mt-auto">
+              {cardDetails.map((d) => (
+                <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
+                  <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />{d}
+                </li>
+              ))}
+            </ul>
           </Link>
         ) : !user ? (
           /* Not logged in — show sign-up prompt */
@@ -488,7 +505,7 @@ export default async function SATPremadePage() {
             </Link>
           </div>
         ) : (
-          /* No access — promotion expired, non-premium */
+          /* No access — free window expired, non-premium */
           <div className="rounded-xl border border-slate-200 bg-slate-50 p-6 flex flex-col opacity-80">
             <div className="flex items-start justify-between mb-4">
               <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
