@@ -28,6 +28,9 @@ export interface MathAcademySkill {
   estimatedMinutes?: number    // typical full-lesson completion time
   subskills?: string[]         // internal subskill names used for mastery breakdown
   desmosClassification?: DesmosClassification
+  coachTakeaway?: string        // one-sentence coach tip for this skill
+  miniExample?: { problem: string; solution: string }  // brief worked example shown at a glance
+  hints?: string[]              // 3–5 progressive hints for approaching problems in this skill
 
   // ── Lesson stages ───────────────────────────────────────────────────────────
   overview: {
