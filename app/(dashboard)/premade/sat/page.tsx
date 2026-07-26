@@ -3,9 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { isMockMateAdmin } from '@/lib/auth/admin'
 import { isForm1Expired } from '@/lib/premade-exams/sat/form1-access'
 import { getEntitlements } from '@/lib/entitlements'
-import { getForm3Promotion, resolveForm3Access } from '@/lib/premade-exams/sat/form3-promotion-access'
 import { SatForm1BadgeCountdown } from '@/components/sat/SatForm1Countdown'
-import { Form3CountdownBadge } from '@/components/sat/Form3CountdownBadge'
 import { ExamHistoryNotice } from '@/components/premade/ExamHistoryNotice'
 
 export const dynamic = 'force-dynamic'
@@ -28,22 +26,24 @@ export default async function SATPremadePage() {
   let form1ResultsAttemptId: string | null = null
   let form1LegacyExpiresAt: string | null = null
 
-  // Form 2 completed results
+  // Form 2 state
   let form2ResultsAttemptId: string | null = null
+  let form2HasInProgress = false
 
   // Form 3 state
   let form3ResultsAttemptId: string | null = null
-  let form3Access = resolveForm3Access({ user: null, isAdmin: false, isPremium: false, promotion: null, hasInProgress: false })
-  let promotion = null as Awaited<ReturnType<typeof getForm3Promotion>>
+  let form3HasInProgress = false
+  let form3FeedbackRequired = false
 
   if (user) {
     const [
       form1Completed,
       form1AccessRow,
       form2Completed,
+      form2InProgress,
       form3Completed,
       form3InProgress,
-      promoRow,
+      form3FeedbackRow,
     ] = await Promise.all([
       supabase
         .from('standardized_exam_attempts')
@@ -59,6 +59,9 @@ export default async function SATPremadePage() {
         .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 2)
         .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
       supabase
+        .from('sat_in_progress_attempts')
+        .select('local_attempt_id').eq('user_id', user.id).eq('form_number', 2).maybeSingle(),
+      supabase
         .from('standardized_exam_attempts')
         .select('local_attempt_id')
         .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 3)
@@ -66,7 +69,11 @@ export default async function SATPremadePage() {
       supabase
         .from('sat_in_progress_attempts')
         .select('local_attempt_id').eq('user_id', user.id).eq('form_number', 3).maybeSingle(),
-      getForm3Promotion(supabase),
+      supabase
+        .from('standardized_exam_attempts')
+        .select('local_attempt_id, ai_feedback')
+        .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 3)
+        .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
     ])
 
     form1ResultsAttemptId = form1Completed.data?.local_attempt_id ?? null
@@ -75,16 +82,15 @@ export default async function SATPremadePage() {
       form1LegacyExpiresAt = f1Row.access_expires_at
     }
     form2ResultsAttemptId = form2Completed.data?.local_attempt_id ?? null
+    form2HasInProgress = !!form2InProgress.data
     form3ResultsAttemptId = form3Completed.data?.local_attempt_id ?? null
-    promotion = promoRow
+    form3HasInProgress = !!form3InProgress.data
 
-    form3Access = resolveForm3Access({
-      user,
-      isAdmin,
-      isPremium: satUpgradeUnlocked,
-      promotion,
-      hasInProgress: !!form3InProgress.data,
-    })
+    // Feedback required: completed but no ai_feedback yet
+    const f3row = form3FeedbackRow.data as { local_attempt_id: string; ai_feedback: unknown } | null
+    if (f3row && !f3row.ai_feedback) {
+      form3FeedbackRequired = true
+    }
   }
 
   const form1Completed = !!form1ResultsAttemptId
@@ -140,16 +146,6 @@ export default async function SATPremadePage() {
       </p>
 
       <ExamHistoryNotice />
-
-      {/* Form 3 promo notice — visible only when active + eligible */}
-      {form3Access.accessSource === 'promotion-new' && promotion?.endsAt && (
-        <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4">
-          <p className="text-sm font-semibold text-amber-900 mb-0.5">SAT Form 3 is temporarily free for your account</p>
-          <p className="text-xs text-amber-800 leading-relaxed">
-            SAT Form 3 is temporarily available to eligible accounts created on July 24. The promotional window closes when the countdown reaches zero.
-          </p>
-        </div>
-      )}
 
       {/* Form cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
@@ -292,14 +288,17 @@ export default async function SATPremadePage() {
               ))}
             </ul>
           </Link>
-        ) : satUpgradeUnlocked ? (
-          <Link href="/premade/sat/form-2" className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+        ) : form2HasInProgress ? (
+          /* In-progress: saved attempt preserved but unavailable */
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-6 flex flex-col opacity-80">
             <div className="flex items-start justify-between mb-4">
-              <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">2</span>
+              <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-slate-400">2</span>
               </div>
+              <span className="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-[10px] font-semibold text-slate-500">Unavailable</span>
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-3">Form 2</h2>
+            <h2 className="font-semibold text-slate-500 mb-1">Form 2</h2>
+            <p className="text-xs text-slate-400 mb-4">Your saved attempt has been preserved, but Form 2 is currently unavailable.</p>
             <ul className="space-y-1.5 mt-auto">
               {cardDetails.map((d) => (
                 <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
@@ -307,31 +306,44 @@ export default async function SATPremadePage() {
                 </li>
               ))}
             </ul>
-          </Link>
+          </div>
         ) : (
-          /* Non-premium, non-admin: SAT Premium required */
+          /* Everyone else (including Premium) — locked/unavailable */
           <div className="rounded-xl border border-slate-200 bg-slate-50 p-6 flex flex-col opacity-80">
             <div className="flex items-start justify-between mb-4">
               <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-slate-400">2</span>
               </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-2.5 w-2.5 shrink-0">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                </svg>
-                SAT Premium
-              </span>
+              <span className="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-[10px] font-semibold text-slate-500">Unavailable</span>
             </div>
             <h2 className="font-semibold text-slate-500 mb-1">Form 2</h2>
-            <p className="text-xs text-slate-400 mb-4">SAT Premium required to access this form.</p>
-            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
-              Get SAT Premium
-            </Link>
+            <p className="text-xs text-slate-400">SAT Form 2 is currently unavailable.</p>
           </div>
         )}
 
-        {/* ── Form 3 ────────────────────────────────────────────────────── */}
-        {form3Completed ? (
+        {/* ── Form 3 — free for all authenticated users ─────────────────── */}
+        {form3FeedbackRequired && form3ResultsAttemptId ? (
+          <div className="rounded-xl border border-amber-200 bg-white p-6 flex flex-col">
+            <div className="flex items-start justify-between mb-4">
+              <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-indigo-600">3</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Feedback</span>
+            </div>
+            <h2 className="font-semibold text-slate-900 mb-1">Form 3</h2>
+            <p className="text-xs text-slate-400 mb-3">Complete your feedback to unlock full results.</p>
+            <ul className="space-y-1.5 mb-4">
+              {cardDetails.map((d) => (
+                <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
+                  <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />{d}
+                </li>
+              ))}
+            </ul>
+            <Link href={`/premade/sat/form-3/results/${form3ResultsAttemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
+              Complete Feedback →
+            </Link>
+          </div>
+        ) : form3Completed ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-6 flex flex-col">
             <div className="flex items-start justify-between mb-4">
               <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
@@ -352,81 +364,68 @@ export default async function SATPremadePage() {
               View Results →
             </Link>
           </div>
-        ) : isAdmin ? (
+        ) : form3HasInProgress ? (
           <Link href="/premade/sat/form-3" className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-4">
               <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-indigo-600">3</span>
               </div>
-              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Admin</span>
+              <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-200 px-2 py-0.5 text-[10px] font-semibold text-indigo-700">In Progress</span>
             </div>
             <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-3">Form 3</h2>
-            <ul className="space-y-1.5 mt-auto">
+            <ul className="space-y-1.5 mb-4">
               {cardDetails.map((d) => (
                 <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
                   <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />{d}
                 </li>
               ))}
             </ul>
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-indigo-700 transition-colors">
+              Resume Exam →
+            </span>
           </Link>
-        ) : form3Access.accessSource === 'premium' ? (
-          <Link href="/premade/sat/form-3" className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+        ) : user ? (
+          /* Any authenticated user — Form 3 is free */
+          <Link href="/premade/sat/form-3" className="rounded-xl border border-emerald-200 bg-white p-6 hover:border-emerald-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-4">
-              <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">3</span>
+              <div className="h-9 w-9 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-emerald-600">3</span>
               </div>
+              <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Free</span>
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-3">Form 3</h2>
-            <ul className="space-y-1.5 mt-auto">
+            <h2 className="font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors mb-1">Form 3</h2>
+            <p className="text-[11px] text-emerald-700 mb-3">Available to all MockMate users.</p>
+            <ul className="space-y-1.5 mb-4">
               {cardDetails.map((d) => (
                 <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
                   <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />{d}
                 </li>
               ))}
             </ul>
-          </Link>
-        ) : form3Access.canStart || form3Access.canResume ? (
-          /* Promotional access — eligible July 24 account */
-          <Link href="/premade/sat/form-3" className="rounded-xl border border-amber-200 bg-white p-6 hover:border-amber-400 hover:shadow-sm transition-all group flex flex-col">
-            <div className="flex items-start justify-between mb-4">
-              <div className="h-9 w-9 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-amber-700">3</span>
-              </div>
-              {form3Access.promotionEndsAt ? (
-                <Form3CountdownBadge endsAt={form3Access.promotionEndsAt} />
-              ) : (
-                <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
-                  Free for a Limited Time
-                </span>
-              )}
-            </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-amber-700 transition-colors mb-1">Form 3</h2>
-            <p className="text-[11px] text-amber-700 mb-3">MockMate's hardest practice form — free for your account today.</p>
-            <ul className="space-y-1.5 mt-auto">
-              {cardDetails.map((d) => (
-                <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
-                  <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />{d}
-                </li>
-              ))}
-            </ul>
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-emerald-700 transition-colors">
+              Start Exam →
+            </span>
           </Link>
         ) : (
-          <div className="rounded-xl border border-slate-200 bg-slate-50 p-6 flex flex-col opacity-80">
+          /* Not logged in */
+          <div className="rounded-xl border border-emerald-200 bg-white p-6 flex flex-col">
             <div className="flex items-start justify-between mb-4">
-              <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-slate-400">3</span>
+              <div className="h-9 w-9 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-emerald-600">3</span>
               </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-2.5 w-2.5 shrink-0">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
-                </svg>
-                SAT Premium
-              </span>
+              <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Free</span>
             </div>
-            <h2 className="font-semibold text-slate-500 mb-1">Form 3</h2>
-            <p className="text-xs text-slate-400 mb-4">SAT Premium required to access this form.</p>
-            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
-              Get SAT Premium
+            <h2 className="font-semibold text-slate-900 mb-1">Form 3</h2>
+            <p className="text-[11px] text-emerald-700 mb-3">Available to all MockMate users.</p>
+            <ul className="space-y-1.5 mb-4">
+              {cardDetails.map((d) => (
+                <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
+                  <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />{d}
+                </li>
+              ))}
+            </ul>
+            <Link href="/signup" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors">
+              Sign up to Start →
             </Link>
           </div>
         )}

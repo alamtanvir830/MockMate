@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { isMockMateAdmin } from '@/lib/auth/admin'
-import { getEntitlements } from '@/lib/entitlements'
-import { getForm3Promotion, isUserEligibleForPromotion, isPromotionWindowActive } from '@/lib/premade-exams/sat/form3-promotion-access'
 
 interface InProgressBody {
   formNumber: number
@@ -91,42 +89,12 @@ export async function POST(req: NextRequest) {
 
   const isAdmin = isMockMateAdmin(user)
 
-  // Form 2: requires admin or SAT Premium
+  // Form 2: admin-only — all other users (including Premium) are blocked
   if (body.formNumber === 2 && !isAdmin) {
-    const { satUpgradeUnlocked } = await getEntitlements()
-    if (!satUpgradeUnlocked) {
-      return NextResponse.json({ error: 'SAT Form 2 requires SAT Premium.' }, { status: 403 })
-    }
+    return NextResponse.json({ error: 'SAT Form 2 is currently unavailable.' }, { status: 403 })
   }
 
-  // Form 3: non-admin, non-premium users need active promotion window to autosave
-  // Exception: if they have an existing in-progress row with the SAME localAttemptId,
-  // allow continuation autosave even after the promotion window closes.
-  if (body.formNumber === 3 && !isAdmin) {
-    const { satUpgradeUnlocked } = await getEntitlements()
-    if (!satUpgradeUnlocked) {
-      const [promotion, existingRow] = await Promise.all([
-        getForm3Promotion(supabase),
-        supabase
-          .from('sat_in_progress_attempts')
-          .select('local_attempt_id')
-          .eq('user_id', user.id)
-          .eq('form_number', 3)
-          .maybeSingle(),
-      ])
-
-      const eligible = promotion ? isUserEligibleForPromotion(user, promotion) : false
-      const active   = promotion ? isPromotionWindowActive(promotion) : false
-
-      // Allow if: window is active + eligible, OR continuing an already-started attempt
-      const continuingExisting = existingRow.data?.local_attempt_id === body.localAttemptId
-      const canAutosave = (eligible && active) || (eligible && continuingExisting)
-
-      if (!canAutosave) {
-        return NextResponse.json({ error: 'Form 3 promotional access has expired.' }, { status: 403 })
-      }
-    }
-  }
+  // Form 3: any authenticated user may autosave — no Premium or promotion check needed
 
   // Resolve identity server-side — never trust client-supplied name/email.
   // profiles.full_name is authoritative; fall back to user_metadata, then null.
@@ -195,12 +163,9 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid formNumber' }, { status: 400 })
   }
 
-  // Form 2 non-admin, non-premium: preserve in-progress data
+  // Form 2 non-admin: preserve in-progress data (Form 2 is unavailable, data must not be lost)
   if (formNumber === 2 && !isMockMateAdmin(user)) {
-    const { satUpgradeUnlocked } = await getEntitlements()
-    if (!satUpgradeUnlocked) {
-      return NextResponse.json({ ok: true, skipped: 'form2-locked' })
-    }
+    return NextResponse.json({ ok: true, skipped: 'form2-locked' })
   }
 
   const { error } = await supabase
