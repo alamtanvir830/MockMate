@@ -8,6 +8,7 @@ import { ExamHistoryNotice } from '@/components/premade/ExamHistoryNotice'
 import { Form3CountdownBadge } from '@/components/sat/Form3CountdownBadge'
 import {
   getForm3Promotion,
+  isPromotionWindowActive,
   resolveForm3Access,
 } from '@/lib/premade-exams/sat/form3-promotion-access'
 
@@ -113,6 +114,11 @@ export default async function SATPremadePage() {
     promotion,
     hasInProgress: form3HasInProgress,
   })
+
+  // Show countdown for all users (including admin/premium) while the window is live
+  const form3CountdownEndsAt =
+    form3Access.promotionEndsAt ??
+    (promotion && isPromotionWindowActive(promotion) ? promotion.endsAt : null)
 
   return (
     <div className="max-w-5xl mx-auto py-10 px-4">
@@ -422,9 +428,9 @@ export default async function SATPremadePage() {
               </div>
               <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Free for 47 Hours</span>
             </div>
-            {form3Access.promotionEndsAt && (
+            {form3CountdownEndsAt && (
               <div className="mb-2">
-                <Form3CountdownBadge endsAt={form3Access.promotionEndsAt} />
+                <Form3CountdownBadge endsAt={form3CountdownEndsAt} />
               </div>
             )}
             <h2 className="font-semibold text-slate-900 group-hover:text-amber-700 transition-colors mb-1">Form 3</h2>

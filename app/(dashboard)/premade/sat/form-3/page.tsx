@@ -6,6 +6,7 @@ import { UpgradeGate } from '@/components/shared/upgrade-gate'
 import SATExamTakerClient from './SATExamTakerClient'
 import {
   getForm3Promotion,
+  isPromotionWindowActive,
   resolveForm3Access,
 } from '@/lib/premade-exams/sat/form3-promotion-access'
 
@@ -21,16 +22,20 @@ export default async function SATForm3Page() {
 
   const isAdmin = isMockMateAdmin(user)
 
-  // Admin bypasses all checks
+  // Admin bypasses all checks — still fetch promotion so the countdown shows
   if (isAdmin) {
-    return <SATExamTakerClient isAdmin={true} />
+    const promotion = await getForm3Promotion(supabase)
+    const promotionEndsAt = promotion && isPromotionWindowActive(promotion) ? promotion.endsAt : null
+    return <SATExamTakerClient isAdmin={true} promotionEndsAt={promotionEndsAt} />
   }
 
   const { satUpgradeUnlocked } = await getEntitlements()
 
-  // Premium users get full access
+  // Premium users get full access — still show countdown while promotion is live
   if (satUpgradeUnlocked) {
-    return <SATExamTakerClient isAdmin={false} />
+    const promotion = await getForm3Promotion(supabase)
+    const promotionEndsAt = promotion && isPromotionWindowActive(promotion) ? promotion.endsAt : null
+    return <SATExamTakerClient isAdmin={false} promotionEndsAt={promotionEndsAt} />
   }
 
   // Fetch promotion and in-progress state in parallel
