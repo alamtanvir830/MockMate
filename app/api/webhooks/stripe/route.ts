@@ -1,10 +1,23 @@
 import { headers } from 'next/headers'
 import type Stripe from 'stripe'
-import { getStripe, tierFromPriceId } from '@/lib/stripe'
+import { getStripe } from '@/lib/stripe/client'
 import { createAdminClient } from '@/lib/supabase/admin'
+import {
+  syncSubscription,
+  unlockSATUpgrade,
+  recordOneTimePurchase,
+  getUserIdBySubscriptionId,
+  getUserIdByStripeCustomerId,
+} from '@/lib/entitlements'
+import { SAT_PREMIUM_PLANS, isOneTimePlanKey } from '@/lib/stripe/sat-premium-plans'
+
+// Legacy endpoint — kept so existing Stripe webhook configurations continue to work.
+// Uses the same entitlement functions as /api/stripe/webhook to ensure user_metadata
+// is always updated correctly regardless of which URL Stripe fires at.
+// The processed_stripe_events idempotency guard prevents double-processing if both
+// endpoints are registered.
 
 export async function POST(request: Request) {
-  // Stripe is not yet configured — return early without crashing
   if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
     return new Response('Stripe not configured', { status: 503 })
   }
@@ -29,91 +42,148 @@ export async function POST(request: Request) {
     )
   }
 
-  const supabase = createAdminClient()
+  // Idempotency — same guard as /api/stripe/webhook. Both endpoints share the same
+  // processed_stripe_events table so a replayed or double-delivered event is a no-op.
+  const admin = createAdminClient()
+  const { error: insertErr } = await admin
+    .from('processed_stripe_events')
+    .insert({ stripe_event_id: event.id, event_type: event.type })
+
+  if (insertErr) {
+    if (insertErr.code === '23505') {
+      console.log(`[webhooks/stripe] duplicate event ignored: ${event.id}`)
+      return new Response('ok', { status: 200 })
+    }
+    console.error('[webhooks/stripe] failed to record event', event.id, insertErr.message)
+  }
+
+  function resolveId(obj: string | { id: string } | null | undefined): string | null {
+    if (!obj) return null
+    return typeof obj === 'string' ? obj : obj.id
+  }
+
+  function toDate(unix: number | null | undefined): Date | null {
+    return unix ? new Date(unix * 1000) : null
+  }
+
+  async function resolveUserId(sub: Stripe.Subscription): Promise<string | null> {
+    if (sub.metadata?.mockmate_user_id) return sub.metadata.mockmate_user_id
+    if (sub.metadata?.user_id) return sub.metadata.user_id
+    const subUserId = await getUserIdBySubscriptionId(sub.id)
+    if (subUserId) return subUserId
+    const customerId = resolveId(sub.customer)
+    if (customerId) {
+      const byCustomer = await getUserIdByStripeCustomerId(customerId)
+      if (byCustomer) return byCustomer
+    }
+    return null
+  }
 
   try {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session
-        const userId = session.metadata?.user_id
-        if (!userId || !session.subscription) break
+        const userId =
+          session.metadata?.mockmate_user_id ??
+          session.metadata?.user_id ??
+          null
+        if (!userId) break
 
-        const subscription = await stripe.subscriptions.retrieve(
-          session.subscription as string,
-        )
-        const priceId = subscription.items.data[0]?.price.id ?? ''
-        const tier = tierFromPriceId(priceId)
+        if (session.mode === 'payment' && session.metadata?.product === 'sat_upgrade_999') {
+          // Legacy one-time payment
+          await unlockSATUpgrade(userId, {
+            stripeCustomerId: resolveId(session.customer) ?? undefined,
+            stripeCheckoutSessionId: session.id,
+            stripePaymentIntentId: resolveId(session.payment_intent) ?? undefined,
+          })
+        } else if (
+          session.mode === 'payment' &&
+          session.metadata?.product_key === 'sat_premium' &&
+          isOneTimePlanKey(session.metadata?.plan_type)
+        ) {
+          // One-time SAT Premium purchase
+          const planType = session.metadata.plan_type as 'three_month' | 'lifetime'
+          const expectedPriceId = SAT_PREMIUM_PLANS[planType]?.priceId
+          if (expectedPriceId) {
+            try {
+              const lineItems = await stripe.checkout.sessions.listLineItems(session.id, { limit: 10 })
+              if (!lineItems.data.some(li => li.price?.id === expectedPriceId)) break
+            } catch { break }
+          }
 
-        await supabase.from('profiles').upsert(
-          {
-            id: userId,
-            stripe_customer_id: session.customer as string,
-            stripe_subscription_id: subscription.id,
-            subscription_status: 'active',
-            subscription_tier: tier,
-          },
-          { onConflict: 'id' },
-        )
+          const accessStartedAt = new Date()
+          let accessExpiresAt: Date | null = null
+          if (planType === 'three_month') {
+            accessExpiresAt = new Date(accessStartedAt)
+            accessExpiresAt.setMonth(accessExpiresAt.getMonth() + 3)
+          }
+
+          await recordOneTimePurchase(userId, {
+            planType,
+            stripeCustomerId: resolveId(session.customer) ?? undefined,
+            stripeCheckoutSessionId: session.id,
+            stripePaymentIntentId: resolveId(session.payment_intent) ?? undefined,
+            accessStartedAt,
+            accessExpiresAt,
+          })
+        } else if (session.mode === 'subscription' && session.metadata?.product_key === 'sat_premium') {
+          // Subscription checkout
+          const subscriptionId = resolveId(session.subscription)
+          const customerId = resolveId(session.customer)
+          if (!subscriptionId || !customerId) break
+
+          const sub = await stripe.subscriptions.retrieve(subscriptionId)
+          await syncSubscription(userId, {
+            stripeCustomerId: customerId,
+            stripeSubscriptionId: sub.id,
+            stripePriceId: sub.items.data[0]?.price?.id ?? undefined,
+            status: sub.status,
+            cancelAtPeriodEnd: sub.cancel_at_period_end,
+            canceledAt: toDate(sub.canceled_at),
+            endedAt: toDate(sub.ended_at),
+          })
+        }
         break
       }
 
+      case 'customer.subscription.created':
       case 'customer.subscription.updated': {
-        const subscription = event.data.object as Stripe.Subscription
-        const userId = await resolveUserId(subscription, supabase)
+        const sub = event.data.object as Stripe.Subscription
+        const userId = await resolveUserId(sub)
         if (!userId) break
 
-        const priceId = subscription.items.data[0]?.price.id ?? ''
-        const tier =
-          subscription.status === 'active' ? tierFromPriceId(priceId) : 'free'
-
-        await supabase
-          .from('profiles')
-          .update({
-            subscription_status: subscription.status,
-            subscription_tier: tier,
-            stripe_subscription_id: subscription.id,
-          })
-          .eq('id', userId)
+        await syncSubscription(userId, {
+          stripeCustomerId: resolveId(sub.customer) ?? '',
+          stripeSubscriptionId: sub.id,
+          stripePriceId: sub.items.data[0]?.price?.id ?? undefined,
+          status: sub.status,
+          cancelAtPeriodEnd: sub.cancel_at_period_end,
+          canceledAt: toDate(sub.canceled_at),
+          endedAt: toDate(sub.ended_at),
+        })
         break
       }
 
       case 'customer.subscription.deleted': {
-        const subscription = event.data.object as Stripe.Subscription
-        const userId = await resolveUserId(subscription, supabase)
+        const sub = event.data.object as Stripe.Subscription
+        const userId = await resolveUserId(sub)
         if (!userId) break
 
-        await supabase
-          .from('profiles')
-          .update({
-            subscription_status: 'canceled',
-            subscription_tier: 'free',
-            stripe_subscription_id: null,
-          })
-          .eq('id', userId)
+        await syncSubscription(userId, {
+          stripeCustomerId: resolveId(sub.customer) ?? '',
+          stripeSubscriptionId: sub.id,
+          status: 'canceled',
+          cancelAtPeriodEnd: false,
+          canceledAt: toDate(sub.canceled_at) ?? new Date(),
+          endedAt: toDate(sub.ended_at) ?? new Date(),
+        })
         break
       }
     }
   } catch (err) {
-    console.error('Webhook handler error:', err)
+    console.error('[webhooks/stripe] handler error:', err)
     return new Response('Internal error', { status: 500 })
   }
 
   return new Response('ok', { status: 200 })
-}
-
-// Resolve user_id from subscription metadata, falling back to stripe_customer_id lookup
-async function resolveUserId(
-  subscription: Stripe.Subscription,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: any,
-): Promise<string | null> {
-  if (subscription.metadata?.user_id) return subscription.metadata.user_id
-
-  const { data } = await supabase
-    .from('profiles')
-    .select('id')
-    .eq('stripe_customer_id', subscription.customer as string)
-    .single()
-
-  return data?.id ?? null
 }
