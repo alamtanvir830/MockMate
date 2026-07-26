@@ -41,6 +41,12 @@ export default async function SATPremadePage() {
   let form3HasInProgress = false
   let form3FeedbackRequired = false
 
+  // Start the global Form 3 promotion on first authenticated page visit (idempotent)
+  if (user) {
+    const { activateForm3PromotionIfNeeded } = await import('@/lib/premade-exams/sat/form3-activate')
+    await activateForm3PromotionIfNeeded()
+  }
+
   // Form 3 promotion state (fetched outside user block — needed for listing regardless)
   const promotion = await getForm3Promotion(supabase)
 
