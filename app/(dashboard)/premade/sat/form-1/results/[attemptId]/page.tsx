@@ -1,7 +1,11 @@
 import { createClient } from '@/lib/supabase/server'
 import { getEntitlements } from '@/lib/entitlements'
 import { isMockMateAdmin } from '@/lib/auth/admin'
+import { redirect } from 'next/navigation'
+import { UpgradeGate } from '@/components/shared/upgrade-gate'
 import SATForm1ResultsClient from './SATForm1ResultsClient'
+
+export const dynamic = 'force-dynamic'
 
 export default async function SATForm1ResultsPage({
   params,
@@ -12,8 +16,22 @@ export default async function SATForm1ResultsPage({
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect('/login')
+  }
+
   const isAdmin = isMockMateAdmin(user)
   const { satUpgradeUnlocked } = await getEntitlements()
+
+  if (!isAdmin && !satUpgradeUnlocked) {
+    return (
+      <UpgradeGate
+        title="SAT Premium required to view results"
+        description="Subscribe to SAT Premium to access your SAT Form 1 results, detailed score breakdowns, and AI feedback."
+      />
+    )
+  }
 
   return (
     <SATForm1ResultsClient

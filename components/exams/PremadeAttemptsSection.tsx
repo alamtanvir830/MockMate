@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { loadAllAttempts, deleteAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
 import { syncLocalSatAttemptsToSupabase, type SyncResult } from '@/lib/premade-exams/sat/sync-to-supabase'
+import { useEntitlements } from '@/hooks/use-entitlements'
 
 function formatDate(iso: string): string {
   const d = new Date(iso)
@@ -15,6 +16,16 @@ function resultsLink(attempt: PremadeAttempt): string {
   const m = attempt.examId?.match(/sat-form-(\d+)/)
   const formNum = m ? m[1] : '1'
   return `/premade/sat/form-${formNum}/results/${attempt.id}`
+}
+
+function getFormNumber(attempt: PremadeAttempt): number {
+  const m = attempt.examId?.match(/sat-form-(\d+)/)
+  return m ? parseInt(m[1], 10) : 0
+}
+
+function requiresPremiumForResults(formNum: number): boolean {
+  // Forms 1 and 2 require Premium to view results
+  return formNum === 1 || formNum === 2
 }
 
 interface InProgressRow {
@@ -34,6 +45,7 @@ export function PremadeAttemptsSection({ inProgressAttempts = [] }: { inProgress
   const [syncing, setSyncing] = useState(false)
   const [syncResult, setSyncResult] = useState<SyncResult | null>(null)
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null)
+  const { satUpgradeUnlocked } = useEntitlements()
 
   function handleDelete(id: string) {
     deleteAttempt(id)
@@ -202,12 +214,21 @@ export function PremadeAttemptsSection({ inProgressAttempts = [] }: { inProgress
                   </div>
                 ) : (
                   <div className="flex items-center gap-3 shrink-0">
-                    <Link
-                      href={resultsLink(attempt)}
-                      className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors"
-                    >
-                      View results
-                    </Link>
+                    {requiresPremiumForResults(getFormNumber(attempt)) && !satUpgradeUnlocked ? (
+                      <Link
+                        href="/billing"
+                        className="text-xs font-semibold text-amber-600 hover:text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-lg transition-colors"
+                      >
+                        Get SAT Premium
+                      </Link>
+                    ) : (
+                      <Link
+                        href={resultsLink(attempt)}
+                        className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors"
+                      >
+                        View results
+                      </Link>
+                    )}
                     <button
                       onClick={() => setConfirmDeleteId(attempt.id)}
                       aria-label="Delete attempt"
