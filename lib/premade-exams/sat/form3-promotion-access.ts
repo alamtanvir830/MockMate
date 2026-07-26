@@ -116,10 +116,12 @@ export function resolveForm3Access(opts: {
   }
 
   if (promotion) {
-    const eligible = isUserEligibleForPromotion(user, promotion)
-    const active   = isPromotionWindowActive(promotion)
+    const active = isPromotionWindowActive(promotion)
 
-    if (eligible && active) {
+    // During the active window every authenticated user may start or resume.
+    // The eligibility signup-date window was a legacy cohort restriction that
+    // has been superseded — all authenticated users are now eligible.
+    if (active) {
       const secs = getPromotionRemainingSeconds(promotion)
       return {
         canStart:         true,
@@ -132,7 +134,7 @@ export function resolveForm3Access(opts: {
     }
 
     // Promotion expired but user had already started → allow resume only
-    if (eligible && !active && hasInProgress && promotion.endsAt) {
+    if (!active && hasInProgress && promotion.endsAt) {
       return {
         canStart:         false,
         canResume:        true,
