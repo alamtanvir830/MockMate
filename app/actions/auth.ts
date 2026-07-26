@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { activateForm3PromotionIfNeeded } from '@/lib/premade-exams/sat/form3-activate'
 
 export type AuthState = { error?: string; message?: string } | null
 
@@ -41,6 +42,9 @@ export async function login(
     return { error: error.message }
   }
 
+  // Start the global Form 3 promotion on first successful login.
+  await activateForm3PromotionIfNeeded()
+
   redirect('/dashboard')
 }
 
@@ -77,6 +81,7 @@ export async function signup(
 
   // With email confirmation OFF, session is returned immediately.
   if (data.session) {
+    await activateForm3PromotionIfNeeded()
     redirect('/dashboard')
   }
 

@@ -168,6 +168,19 @@ export default async function SATPremadePage() {
         <Link href="/sat-disclaimer" className="hover:underline">SAT Disclaimer</Link>
       </p>
 
+      {/* Form 3 global promotion banner — shown to all authenticated users while active */}
+      {form3CountdownEndsAt && (
+        <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3">
+          <div className="flex-1 min-w-0">
+            <p className="font-semibold text-amber-900 text-sm">SAT Form 3 is free for 48 hours</p>
+            <p className="text-xs text-amber-700 mt-0.5">The global countdown has started. Begin Form 3 before time runs out.</p>
+          </div>
+          <div className="shrink-0">
+            <Form3CountdownBadge endsAt={form3CountdownEndsAt} />
+          </div>
+        </div>
+      )}
+
       <ExamHistoryNotice />
 
       {/* Form cards */}
@@ -426,7 +439,7 @@ export default async function SATPremadePage() {
               <div className="h-9 w-9 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-amber-600">3</span>
               </div>
-              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Free for 47 Hours</span>
+              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Free for a Limited Time</span>
             </div>
             {form3CountdownEndsAt && (
               <div className="mb-2">
@@ -434,7 +447,7 @@ export default async function SATPremadePage() {
               </div>
             )}
             <h2 className="font-semibold text-slate-900 group-hover:text-amber-700 transition-colors mb-1">Form 3</h2>
-            <p className="text-[11px] text-amber-700 mb-3">Free for all MockMate users for a limited time.</p>
+            <p className="text-[11px] text-amber-700 mb-3">SAT Form 3 is free until the countdown ends.</p>
             <ul className="space-y-1.5 mb-4">
               {cardDetails.map((d) => (
                 <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">

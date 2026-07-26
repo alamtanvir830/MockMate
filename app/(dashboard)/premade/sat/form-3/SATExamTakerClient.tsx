@@ -17,7 +17,7 @@ export default function SATExamTakerClient({ isAdmin, promotionEndsAt }: Props) 
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 text-amber-600 shrink-0">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
           </svg>
-          <span className="text-[12px] font-semibold text-amber-700">SAT Form 3 is free for a limited time —</span>
+          <span className="text-[12px] font-semibold text-amber-700">SAT Form 3 is free until the countdown ends —</span>
           <Form3CountdownBadge endsAt={promotionEndsAt} />
         </div>
       )}

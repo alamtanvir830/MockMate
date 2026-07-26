@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import type { EmailOtpType } from '@supabase/supabase-js'
+import { activateForm3PromotionIfNeeded } from '@/lib/premade-exams/sat/form3-activate'
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
@@ -38,6 +39,7 @@ export async function GET(request: NextRequest) {
   if (code) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
+      await activateForm3PromotionIfNeeded()
       return NextResponse.redirect(new URL(next, origin))
     }
     console.error('[auth/callback] PKCE exchange failed:', error.message)
@@ -54,6 +56,7 @@ export async function GET(request: NextRequest) {
       if (type === 'recovery') {
         return NextResponse.redirect(new URL('/reset-password', origin))
       }
+      await activateForm3PromotionIfNeeded()
       return NextResponse.redirect(new URL(next, origin))
     }
     console.error('[auth/callback] OTP verify failed:', error.message)
