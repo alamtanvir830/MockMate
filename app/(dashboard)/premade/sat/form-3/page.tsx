@@ -4,6 +4,7 @@ import { getEntitlements } from '@/lib/entitlements'
 import { redirect } from 'next/navigation'
 import { UpgradeGate } from '@/components/shared/upgrade-gate'
 import SATExamTakerClient from './SATExamTakerClient'
+import { activateForm3PromotionIfNeeded } from '@/lib/premade-exams/sat/form3-activate'
 import {
   getForm3Promotion,
   isPromotionWindowActive,
@@ -19,6 +20,9 @@ export default async function SATForm3Page() {
   if (!user) {
     redirect('/login')
   }
+
+  // Ensure the global promotion has started (idempotent, no-op if already active)
+  await activateForm3PromotionIfNeeded()
 
   const isAdmin = isMockMateAdmin(user)
 
