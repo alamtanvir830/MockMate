@@ -6,12 +6,14 @@ import Link from 'next/link'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { login } from '@/app/actions/auth'
+import { GoogleButton } from '@/components/auth/google-button'
 
 export function LoginForm() {
   const [state, action, pending] = useActionState(login, null)
 
   const searchParams = useSearchParams()
   const urlError = searchParams.get('error')
+  const next = searchParams.get('next')
 
   const bannerError =
     urlError === 'link_expired'
@@ -28,6 +30,19 @@ export function LoginForm() {
           </Link>
         </div>
       )}
+
+      <GoogleButton next={next} />
+
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+          <span className="w-full border-t border-slate-200" />
+        </div>
+        <div className="relative flex justify-center text-xs">
+          <span className="bg-white px-3 text-slate-400 uppercase tracking-wide">
+            or continue with email
+          </span>
+        </div>
+      </div>
 
       <form action={action} className="space-y-4">
         <Input

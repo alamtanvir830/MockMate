@@ -94,7 +94,7 @@ export default function LandingPage() {
                 </div>
 
                 <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
-                  <Link href="/signup">
+                  <Link href="/signup?next=/premade/sat">
                     <Button
                       size="lg"
                       className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700"
@@ -257,7 +257,7 @@ export default function LandingPage() {
               Practice with 5 full-length SAT-style forms, get instant score feedback, and drill your weak areas with personalized question sets — all before test day.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/signup">
+              <Link href="/signup?next=/premade/sat">
                 <Button size="lg" className="bg-emerald-600 hover:bg-emerald-500">
                   Start Free SAT Practice
                 </Button>

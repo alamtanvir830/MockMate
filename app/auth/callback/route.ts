@@ -6,12 +6,25 @@ import { ensureForm3FreeWindow } from '@/lib/premade-exams/sat/form3-access'
 import { hasSatPremium } from '@/lib/auth/server'
 import { isMockMateAdmin } from '@/lib/auth/admin'
 
+/**
+ * Validates that a redirect destination is a safe relative path to prevent open redirects.
+ * Rejects absolute URLs, protocol-relative URLs, and scheme-like patterns.
+ */
+function safeRedirect(next: string | null): string {
+  if (!next) return '/dashboard'
+  // Must be a relative path starting with / but not //
+  if (!next.startsWith('/') || next.startsWith('//')) return '/dashboard'
+  // Reject anything resembling a URI scheme (e.g. javascript:, data:, https:)
+  if (/[a-zA-Z][a-zA-Z0-9+\-.]*:/.test(next)) return '/dashboard'
+  return next
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
   const code      = searchParams.get('code')
   const tokenHash = searchParams.get('token_hash')
   const type      = searchParams.get('type') as EmailOtpType | null
-  const next      = searchParams.get('next') ?? '/dashboard'
+  const next      = safeRedirect(searchParams.get('next'))
   const hasError  = searchParams.get('error')
 
   // Is this a password-reset callback? (type=recovery OR next was set to /reset-password)
