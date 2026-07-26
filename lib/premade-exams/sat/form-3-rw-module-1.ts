@@ -1,6 +1,7 @@
 import type { RWQuestion } from './types'
 
 export const f3RwModule1Questions: RWQuestion[] = [
+  // ─── Q01 · Craft and Structure · Words in Context · easy ─────────────────────
   {
     id: 'sat-f3-rw-m1-q01',
     section: 'reading-writing',
@@ -8,143 +9,167 @@ export const f3RwModule1Questions: RWQuestion[] = [
     domain: 'Craft and Structure',
     skill: 'Words in Context',
     difficulty: 'easy',
-    stimulus: 'Coral reefs worldwide have suffered repeated bleaching events as ocean temperatures rise. Scientists describe the reefs\' response as _______ : individual colonies recover temporarily between thermal stress episodes, only to face increasingly frequent and severe events that prevent full recuperation.',
-    question: 'Which choice completes the text with the most logical and precise word or phrase?',
+    stimulus:
+      'Biomimicry engineers study living organisms not merely as curiosities but as _______ for novel design solutions: the microscopic hooks on a burdock seed that inspired hook-and-loop fasteners, or the hexagonal geometry of a honeycomb that now underpins lightweight structural panels used in aircraft.',
+    question:
+      'Which choice completes the text with the most logical and precise word or phrase?',
     choices: [
-      { label: 'A', text: 'cyclical' },
-      { label: 'B', text: 'spontaneous' },
-      { label: 'C', text: 'permanent' },
-      { label: 'D', text: 'unprecedented' },
+      { label: 'A', text: 'blueprints' },
+      { label: 'B', text: 'obstacles' },
+      { label: 'C', text: 'substitutes' },
+      { label: 'D', text: 'curiosities' },
     ],
     correctAnswer: 'A',
-    explanation: '"Cyclical" means recurring in cycles, which fits the pattern of temporary recovery followed by repeated bleaching events described in the passage.',
+    explanation:
+      '"Blueprints" means detailed plans or models used as a basis for design. The passage describes organisms as sources of inspiration that directly guide engineering solutions — exactly what blueprints provide.',
     wrongAnswerExplanations: {
-      B: '"Spontaneous" means occurring without apparent cause, which does not describe the predictable pattern of thermal stress and partial recovery.',
-      C: '"Permanent" contradicts the description of temporary recovery between events.',
-      D: '"Unprecedented" means without prior example; the passage describes repeated events, not something novel.',
+      B: '"Obstacles" means hindrances; the passage presents organisms as useful, not problematic.',
+      C: '"Substitutes" means replacements for something else, but organisms are the originals, not stand-ins.',
+      D: 'The passage explicitly says organisms are studied "not merely as curiosities," so repeating that word creates a logical contradiction.',
     },
   },
 
+  // ─── Q02 · Craft and Structure · Words in Context · medium ──────────────────
   {
     id: 'sat-f3-rw-m1-q02',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Craft and Structure',
     skill: 'Words in Context',
-    difficulty: 'easy',
-    stimulus: 'Archival historians working with eighteenth-century merchant ledgers must contend with _______ records: pages degraded by moisture, ink faded beyond legibility, and binding glue that crumbles when a volume is opened, making each consultation a test of patience.',
-    question: 'Which choice completes the text with the most logical and precise word or phrase?',
+    difficulty: 'medium',
+    stimulus:
+      'The diplomat\'s address at the summit was deliberately _______ : rather than committing her government to specific timetables or binding targets, she spoke in broad aspirational language that gave allies room to interpret the remarks favorably while giving opponents little concrete language to challenge.',
+    question:
+      'Which choice completes the text with the most logical and precise word or phrase?',
     choices: [
-      { label: 'A', text: 'fragile' },
-      { label: 'B', text: 'abundant' },
-      { label: 'C', text: 'meticulous' },
-      { label: 'D', text: 'coherent' },
+      { label: 'A', text: 'ambiguous' },
+      { label: 'B', text: 'inflammatory' },
+      { label: 'C', text: 'prescriptive' },
+      { label: 'D', text: 'candid' },
     ],
     correctAnswer: 'A',
-    explanation: '"Fragile" means easily damaged or broken, which precisely describes records with degraded pages, faded ink, and crumbling binding.',
+    explanation:
+      '"Ambiguous" means open to multiple interpretations. The passage describes remarks designed to avoid specifics so that different audiences could interpret them as they wished — a deliberate strategy of ambiguity.',
     wrongAnswerExplanations: {
-      B: '"Abundant" means plentiful; the passage says nothing about quantity, only about the physical condition of the documents.',
-      C: '"Meticulous" means very careful, a quality of the historian rather than the records themselves.',
-      D: '"Coherent" means logically consistent or clear, which contradicts the description of degraded, illegible pages.',
+      B: '"Inflammatory" means provoking anger or hostility; the passage describes language designed to avoid controversy, not provoke it.',
+      C: '"Prescriptive" means providing specific rules or directions, which is the opposite of what the diplomat avoided.',
+      D: '"Candid" means direct and forthright, which contradicts the deliberate vagueness the passage describes.',
     },
   },
 
+  // ─── Q03 · Expression of Ideas · Rhetorical Synthesis · medium ──────────────
   {
     id: 'sat-f3-rw-m1-q03',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
-    domain: 'Craft and Structure',
-    skill: 'Words in Context',
+    domain: 'Expression of Ideas',
+    skill: 'Rhetorical Synthesis',
     difficulty: 'medium',
-    stimulus: 'Early autonomous vehicle researchers assumed that teaching a machine to drive required _______ a complete set of traffic rules into the system. Experience proved otherwise: environments too complex for exhaustive codification required vehicles that could learn from exposure to real-world driving rather than from handcrafted rule libraries.',
-    question: 'Which choice completes the text with the most logical and precise word or phrase?',
+    stimulus:
+      'A student is writing a report on light pollution for an astronomy club newsletter. The student has gathered the following notes:\n• Artificial light at night has increased global sky brightness by approximately 10% per year over the past two decades.\n• The Milky Way is no longer visible to more than one-third of humanity, including nearly 80% of North Americans.\n• Migratory birds navigate using star patterns; excess artificial light disorients them, causing millions of collision deaths annually.\n• Sea turtle hatchlings instinctively move toward the brightest horizon, which in nature is the ocean; beachfront lighting redirects them inland, where they die.\n• Exposure to artificial light at night suppresses melatonin production in humans and has been linked to increased rates of sleep disorders and certain cancers.',
+    question:
+      'The student wants to emphasize that light pollution harms multiple species, not just humans. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
     choices: [
-      { label: 'A', text: 'encoding' },
-      { label: 'B', text: 'simulating' },
-      { label: 'C', text: 'negotiating' },
-      { label: 'D', text: 'discarding' },
+      { label: 'A', text: 'Artificial light at night has grown by roughly 10% per year globally and now prevents more than a third of people worldwide from seeing the Milky Way.' },
+      { label: 'B', text: 'Light pollution disrupts migratory birds\' star-based navigation and redirects sea turtle hatchlings away from the ocean, demonstrating its lethal consequences for wildlife beyond the human health impacts already documented.' },
+      { label: 'C', text: 'Sea turtle hatchlings rely on horizon brightness to find the ocean, but beachfront lighting causes them to move inland instead, resulting in high mortality rates.' },
+      { label: 'D', text: 'Suppressed melatonin production linked to artificial light at night has been associated with sleep disorders and cancer risk in humans, making light pollution a significant public health issue.' },
     ],
-    correctAnswer: 'A',
-    explanation: '"Encoding" means converting rules into a form a system can process, which fits the idea of programming traffic rules directly into a vehicle\'s software.',
+    correctAnswer: 'B',
+    explanation:
+      'Choice B accomplishes the goal by citing two non-human species (migratory birds and sea turtles) and explicitly framing their harms as evidence that light pollution affects wildlife beyond its human health impacts — directly making the "multiple species, not just humans" argument.',
     wrongAnswerExplanations: {
-      B: '"Simulating" means imitating or modeling, which relates to testing rather than to the programming approach being described.',
-      C: '"Negotiating" means reaching agreement through discussion, which does not apply to programming a machine.',
-      D: '"Discarding" means throwing away, which is opposite to the act of loading rules into a system.',
+      A: 'This choice covers the scale of sky brightness loss and human loss of the Milky Way, but neither addresses wildlife impacts nor makes a multi-species argument.',
+      C: 'This choice discusses only sea turtles and does not mention any other species or contrast wildlife effects with human effects — it does not make the "multiple species" argument.',
+      D: 'This choice focuses exclusively on human health (melatonin, sleep disorders, cancer) and does not address wildlife at all, directly contradicting the goal.',
     },
   },
 
+  // ─── Q04 · Expression of Ideas · Rhetorical Synthesis · hard ────────────────
   {
     id: 'sat-f3-rw-m1-q04',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
-    domain: 'Craft and Structure',
-    skill: 'Words in Context',
-    difficulty: 'medium',
-    stimulus: 'Economists who study the effects of trade sanctions note that their impact is rarely _______ : while sanctions are intended to penalize the targeted government, the costs are often distributed unevenly, with ordinary citizens and vulnerable populations bearing the greatest economic hardship.',
-    question: 'Which choice completes the text with the most logical and precise word or phrase?',
+    domain: 'Expression of Ideas',
+    skill: 'Rhetorical Synthesis',
+    difficulty: 'hard',
+    stimulus:
+      'A student is writing an argumentative essay for a political science class on the limits of economic sanctions as a foreign policy tool. The student has gathered the following notes:\n• A 2019 meta-analysis of 174 sanctions episodes found that sanctions achieved their stated political objectives in fewer than 30% of cases.\n• Sanctions against Cuba, Iran, and North Korea have remained in place for decades without producing the leadership changes or policy reversals their architects intended.\n• Humanitarian organizations report that sanctions disproportionately harm civilian populations through shortages of medicine and food rather than the ruling elites they target.\n• Some economists argue that sanctions can accelerate domestic import-substitution industries in targeted countries, reducing long-term economic dependence on sanctioning states.\n• Targeted "smart sanctions" — asset freezes and travel bans aimed at specific officials — have shown higher success rates in recent case studies than broad trade embargoes.',
+    question:
+      'The student wants to concede that not all sanctions are equally ineffective while maintaining the overall argument that broad sanctions frequently fail to achieve their goals. Which choice most effectively accomplishes this?',
     choices: [
-      { label: 'A', text: 'temporary' },
-      { label: 'B', text: 'intentional' },
-      { label: 'C', text: 'targeted' },
-      { label: 'D', text: 'visible' },
+      { label: 'A', text: 'Although broad trade sanctions against Cuba, Iran, and North Korea have not achieved their intended political outcomes after decades of implementation, smart sanctions targeting specific officials have shown more promising results in recent case studies.' },
+      { label: 'B', text: 'Economic sanctions are a flawed foreign policy instrument: a meta-analysis found success in fewer than 30% of cases, and humanitarian organizations have documented their tendency to harm civilian populations rather than ruling elites.' },
+      { label: 'C', text: 'Some economists note that sanctions can inadvertently strengthen targeted economies by stimulating import-substitution industries, suggesting that the tool may produce outcomes opposite to those intended.' },
+      { label: 'D', text: 'Smart sanctions such as asset freezes and travel bans succeed more often than broad embargoes, demonstrating that precision in sanction design largely eliminates the ineffectiveness problem.' },
     ],
-    correctAnswer: 'C',
-    explanation: '"Targeted" means directed precisely at a specific group. The passage explains that while sanctions aim at the government, the harm spreads to the general population — meaning the impact is not as precisely targeted as intended.',
+    correctAnswer: 'A',
+    explanation:
+      'Choice A accomplishes both tasks: it concedes a genuine exception (smart sanctions\' higher success rates) while keeping the focus on broad sanctions\' persistent failures (Cuba, Iran, North Korea) — maintaining the overall argument without overgeneralizing.',
     wrongAnswerExplanations: {
-      B: '"Intentional" means deliberate; the passage is not questioning whether sanctions are deliberate but whether their effects are precise.',
-      A: '"Temporary" relates to duration, but the passage focuses on distribution of harm, not its length.',
-      D: '"Visible" relates to observability, which is not the contrast the passage draws.',
+      B: 'This choice supports the overall argument but makes no concession; it does not acknowledge any form of sanctions that work more effectively, so it does not "concede" as the goal requires.',
+      C: 'This choice introduces an economic counter-argument about import substitution but does not address whether any type of sanction is effective — it does not concede effectiveness of smart sanctions.',
+      D: 'This choice overconcedes: by saying precision "largely eliminates the ineffectiveness problem," it undermines rather than maintains the overall argument that broad sanctions frequently fail.',
     },
   },
 
+  // ─── Q05 · Craft and Structure · Words in Context · hard ─────────────────────
   {
-    id: 'sat-f3-rw-m1-q11',
+    id: 'sat-f3-rw-m1-q05',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Central Ideas and Details',
-    difficulty: 'easy',
-    stimulus: 'The human gut contains trillions of microorganisms — bacteria, viruses, and fungi — collectively called the microbiome. Far from passive residents, these microbes actively participate in digestion, synthesizing vitamins and breaking down fiber into compounds the gut cannot process alone. Disruptions to the microbiome, whether through antibiotic use or dietary changes, are increasingly linked to conditions ranging from inflammatory bowel disease to anxiety disorders, suggesting that these microorganisms influence far more than digestion.',
-    question: 'What is the central idea of this passage?',
+    domain: 'Craft and Structure',
+    skill: 'Words in Context',
+    difficulty: 'hard',
+    stimulus:
+      'The historian cautioned against reading modern democratic expectations back into medieval political thought. Medieval theorists did not consider popular sovereignty a _______ of legitimate rule; authority derived from divine sanction, hereditary right, and customary law, none of which required the governed to actively confer legitimacy.',
+    question:
+      'Which choice completes the text with the most logical and precise word or phrase?',
     choices: [
-      { label: 'A', text: 'Antibiotic use is the leading cause of microbiome disruption and should be avoided when possible' },
-      { label: 'B', text: 'Anxiety disorders are primarily caused by imbalances in the gut microbiome' },
-      { label: 'C', text: 'Bacteria in the gut produce every vitamin the human body requires' },
-      { label: 'D', text: 'The gut microbiome is an active community of microorganisms with wide-ranging effects on human health' },
+      { label: 'A', text: 'prerequisite' },
+      { label: 'B', text: 'consequence' },
+      { label: 'C', text: 'corollary' },
+      { label: 'D', text: 'compromise' },
     ],
-    correctAnswer: 'D',
-    explanation: 'The passage introduces the microbiome, explains its active role in digestion and vitamin synthesis, and notes its links to various health conditions — all supporting the idea that it has wide-ranging effects on human health.',
+    correctAnswer: 'A',
+    explanation:
+      '"Prerequisite" means a condition required before something can exist or be valid. The passage argues that medieval thinkers did not consider popular consent a required condition for legitimate rule — exactly what "prerequisite" captures.',
     wrongAnswerExplanations: {
-      A: 'The passage mentions antibiotics as one source of disruption but does not argue they are the leading cause or advocate avoiding them.',
-      C: 'The passage says microbes synthesize vitamins, not that they produce every vitamin the body requires.',
-      B: 'The passage mentions a link between microbiome disruption and anxiety but does not claim the microbiome is the primary cause of anxiety disorders.',
+      B: '"Consequence" means a result or effect; popular sovereignty as a result of legitimate rule would be a different claim than popular sovereignty as a necessary condition for it.',
+      C: '"Corollary" means a proposition that follows directly from a proven one; it implies derivation, not necessity — subtly different from the required-condition meaning the passage needs.',
+      D: '"Compromise" means a settlement reached by mutual concession, which does not fit the logical relationship being described between popular consent and legitimate rule.',
     },
   },
 
+  // ─── Q06 · Craft and Structure · Text Structure and Purpose · easy ────────────
   {
     id: 'sat-f3-rw-m1-q06',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Craft and Structure',
     skill: 'Text Structure and Purpose',
-    difficulty: 'medium',
-    stimulus: 'When photography emerged in the 1840s, portrait painters initially dismissed it as a mechanical craft with no claim to artistic status. Within a generation, however, many painters had quietly incorporated photographic reference material into their own practice — using photographs to study light, document poses, and capture expressions their sitters could not hold for the hours required by traditional portraiture. The very medium they had dismissed became an indispensable tool.',
-    question: 'Which choice best describes the overall structure of the passage?',
+    difficulty: 'easy',
+    stimulus:
+      'Traditional ceramic glazes derive their colors from metal oxides fired at high temperatures: copper produces greens and turquoises, iron yields browns and blacks, and cobalt creates the deep blues that have defined Chinese porcelain for centuries. Contemporary studio potters have largely preserved these formulas, though some now blend synthetic mineral pigments to extend the available palette beyond what naturally occurring oxides can achieve.',
+    question:
+      'Which choice best describes the overall structure of the passage?',
     choices: [
-      { label: 'A', text: 'It presents a problem, identifies its cause, and proposes a solution' },
-      { label: 'B', text: 'It introduces an initial attitude, describes how practice changed it, and notes the irony of the outcome' },
-      { label: 'C', text: 'It makes a claim and then provides statistical evidence to support it' },
-      { label: 'D', text: 'It describes a historical event and evaluates its long-term consequences' },
+      { label: 'A', text: 'It presents a criticism of traditional techniques and advocates for modern alternatives' },
+      { label: 'B', text: 'It provides background on a traditional practice and then notes a contemporary development within it' },
+      { label: 'C', text: 'It poses a question about ceramic production and then answers it with experimental evidence' },
+      { label: 'D', text: 'It describes a historical decline in traditional ceramics and predicts its eventual replacement' },
     ],
     correctAnswer: 'B',
-    explanation: 'The passage opens with painters\' dismissal of photography, explains how they came to use it, and ends by noting the irony: the rejected medium became essential. This matches option B.',
+    explanation:
+      'The first sentence explains the principle behind traditional glazes with examples; the second sentence describes what contemporary potters do — largely preserving traditions while extending them. This is a background-then-development structure.',
     wrongAnswerExplanations: {
-      A: 'The passage identifies no problem to be solved; it traces a shift in attitude.',
-      C: 'No statistical evidence is presented; the passage relies on historical narrative.',
-      D: 'The passage does not evaluate long-term consequences; it ends with an observation about irony.',
+      A: 'The passage does not criticize traditional techniques; it describes them neutrally and notes a complementary development.',
+      C: 'No question is posed, and no experimental evidence is provided.',
+      D: 'The passage describes continuity and extension of traditional practice, not decline or replacement.',
     },
   },
 
+  // ─── Q07 · Craft and Structure · Text Structure and Purpose · medium ──────────
   {
     id: 'sat-f3-rw-m1-q07',
     section: 'reading-writing',
@@ -152,501 +177,582 @@ export const f3RwModule1Questions: RWQuestion[] = [
     domain: 'Craft and Structure',
     skill: 'Text Structure and Purpose',
     difficulty: 'medium',
-    stimulus: 'Public health campaigns often rely on fear-based messaging — graphic images of diseased lungs on cigarette packaging, or stark warnings about the consequences of drunk driving. Research on behavior change, however, suggests that excessive fear can lead to defensive avoidance rather than action: when a threat feels overwhelming and uncontrollable, audiences disengage rather than adopt the recommended behavior. Effective campaigns must therefore pair warnings with clear, achievable protective actions.',
-    question: 'What is the main purpose of the second sentence ("Research on behavior change . . . recommended behavior")?',
+    stimulus:
+      'Ecologists once assumed that species diversity was the primary driver of ecosystem stability: more species meant more redundancy and thus greater resilience to disturbance. Subsequent research complicated this picture. Microcosm experiments showed that diverse assemblages were indeed more stable on average, but also more variable in outcome — some diverse systems collapsed while species-poor systems persisted. The relationship, it turned out, depended far more on the specific functional traits of species present than on their raw number.',
+    question:
+      'What is the main purpose of the third sentence ("Microcosm experiments . . . systems persisted")?',
     choices: [
-      { label: 'A', text: 'To introduce evidence that complicates the assumption implied by the first sentence' },
-      { label: 'B', text: 'To provide an example that illustrates the effectiveness of fear-based campaigns' },
-      { label: 'C', text: 'To argue that public health campaigns should be eliminated' },
-      { label: 'D', text: 'To summarize the findings of a specific research study about smoking' },
+      { label: 'A', text: 'To provide the evidence that led ecologists to revise the original assumption described in the first sentence' },
+      { label: 'B', text: 'To summarize the conclusion that the research ultimately reached about functional traits' },
+      { label: 'C', text: 'To illustrate that ecosystem stability cannot be studied in laboratory conditions' },
+      { label: 'D', text: 'To argue that microcosm experiments are methodologically superior to field studies' },
     ],
     correctAnswer: 'A',
-    explanation: 'The first sentence describes the common use of fear-based messaging. The second sentence introduces research showing that excessive fear can backfire — complicating the assumption that fear-based approaches are effective.',
+    explanation:
+      'The third sentence presents the experimental findings — diverse systems were more stable on average but also more variable, with some collapsing — that justified the "complicated picture" introduced in the second sentence and ultimately led to the revised conclusion in the fourth.',
     wrongAnswerExplanations: {
-      B: 'The sentence describes a limitation of fear-based campaigns, not an example of their effectiveness.',
-      C: 'The passage does not advocate eliminating campaigns; it advocates improving them.',
-      D: 'The sentence generalizes across behavior change research; it does not summarize a specific study about smoking.',
+      B: 'The conclusion about functional traits appears in the fourth sentence, not the third; the third sentence provides the conflicting evidence that necessitates that conclusion.',
+      C: 'The passage does not question the validity of microcosm experiments; it uses them as evidence.',
+      D: 'The passage makes no comparison between microcosm experiments and field studies.',
     },
   },
 
-  {
-    id: 'sat-f3-rw-m1-q12',
-    section: 'reading-writing',
-    moduleId: 'f3-rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Central Ideas and Details',
-    difficulty: 'medium',
-    stimulus: 'The Great Wall of China was not built as a single unified project but was assembled over more than a thousand years by successive dynasties with different goals. The earliest sections, built during the Warring States period, were earthen ramparts designed to protect individual kingdoms from one another. Later dynasties linked and extended these walls primarily to deter northern nomadic peoples. The famous stone and brick sections that tourists visit today date largely from the Ming dynasty, built between the fourteenth and seventeenth centuries — the most recent major phase of construction.',
-    question: 'According to the passage, which of the following best describes the Great Wall?',
-    choices: [
-      { label: 'A', text: 'A single engineering project completed during the Ming dynasty' },
-      { label: 'B', text: 'A series of structures built across centuries, serving evolving defensive purposes' },
-      { label: 'C', text: 'An earthen rampart originally built to repel northern nomadic peoples' },
-      { label: 'D', text: 'A monument constructed primarily for cultural and symbolic rather than military purposes' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'The passage explicitly states the wall was built over more than a thousand years by different dynasties with different goals — from protecting kingdoms against each other to deterring nomadic peoples.',
-    wrongAnswerExplanations: {
-      A: 'The Ming dynasty built the most famous sections, but the Wall was built across many centuries and dynasties.',
-      C: 'The earliest sections protected individual kingdoms from each other; later sections targeted northern nomadic peoples.',
-      D: 'The passage describes the Wall\'s defensive military purposes, not cultural or symbolic ones.',
-    },
-  },
-
+  // ─── Q08 · Craft and Structure · Cross-Text Connections · hard ───────────────
   {
     id: 'sat-f3-rw-m1-q08',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Craft and Structure',
-    skill: 'Text Structure and Purpose',
+    skill: 'Cross-Text Connections',
     difficulty: 'hard',
-    stimulus: 'Zora Neale Hurston trained as an anthropologist under Franz Boas at Columbia University, and her fieldwork collecting African American folklore in the 1930s south reflected rigorous ethnographic methodology. Yet literary critics have often placed her in the tradition of creative writers, focusing on her novel Their Eyes Were Watching God at the expense of works like Mules and Men. Hurston herself resisted this bifurcation, arguing that her fiction and her anthropology were unified by a single project: preserving and celebrating a culture that dominant society had long devalued.',
-    underlineTargets: ['this bifurcation'],
-    question: 'As used in the passage, what does the underlined phrase "this bifurcation" refer to?',
+    stimulus:
+      'Text 1: Sociologist Mara Lindqvist argues that remote work fundamentally disrupts the informal mentorship networks that arise from proximity. When junior employees cannot observe senior colleagues navigating ambiguity in real time, they lose access to tacit knowledge — the kind that cannot be codified in onboarding documents. Lindqvist warns that remote-first organizations will produce technically skilled but professionally underdeveloped workers.\n\nText 2: Organizational researcher Devon Okafor examined three companies that transitioned to fully remote work and tracked employee career trajectories over five years. Okafor found that junior employees who received structured mentorship programs — regular video check-ins, documented feedback cycles, and assigned project collaborations — advanced at the same rate as peers at comparable in-person firms.',
+    question:
+      'Based on the two texts, how would Okafor most likely respond to Lindqvist\'s argument?',
     choices: [
-      { label: 'A', text: 'The separation of African American folklore from mainstream American literary traditions' },
-      { label: 'B', text: 'The gap between the critical reception of Hurston\'s work during her lifetime and after her death' },
-      { label: 'C', text: 'The methodological difference between Boas\'s anthropology and Hurston\'s fieldwork approach' },
-      { label: 'D', text: 'The division between Hurston\'s identity as an anthropologist and her identity as a creative writer' },
+      { label: 'A', text: 'By contending that Lindqvist\'s concern about informal mentorship is valid but applies only to large organizations where hierarchies are rigid' },
+      { label: 'B', text: 'By arguing that the loss of proximity-based mentorship Lindqvist describes can be compensated for through deliberate structural substitutes' },
+      { label: 'C', text: 'By agreeing that remote work produces professionally underdeveloped workers and recommending hybrid arrangements' },
+      { label: 'D', text: 'By claiming that tacit knowledge is overrated and that formal onboarding documents are sufficient for professional development' },
     ],
-    correctAnswer: 'D',
-    explanation: '"This bifurcation" refers to the split just described: literary critics categorizing Hurston as a creative writer while her anthropological work goes underappreciated — the division between her two roles that she herself rejected.',
+    correctAnswer: 'B',
+    explanation:
+      'Okafor\'s research shows that structured mentorship programs in remote environments produce comparable career outcomes to in-person settings. This is a direct response to Lindqvist\'s concern: the problem Lindqvist identifies can be addressed through deliberate program design rather than physical proximity.',
     wrongAnswerExplanations: {
-      A: 'The passage discusses the separation of Hurston\'s own roles, not the separation of African American folklore from American literature broadly.',
-      C: 'No methodological difference between Boas and Hurston is described.',
-      B: 'The passage does not discuss Hurston\'s reception during versus after her lifetime.',
+      A: 'Okafor\'s study examined companies of varying scales and drew no distinction based on organizational hierarchy or size.',
+      C: 'Okafor\'s findings contradict the conclusion that remote work produces underdeveloped workers and do not advocate for hybrid arrangements.',
+      D: 'Okafor does not address tacit knowledge or onboarding documents; the structured programs in the study include mentorship check-ins, not documentation.',
     },
   },
 
+  // ─── Q09 · Craft and Structure · Cross-Text Connections · hard ───────────────
+  {
+    id: 'sat-f3-rw-m1-q09',
+    section: 'reading-writing',
+    moduleId: 'f3-rw-module-1',
+    domain: 'Craft and Structure',
+    skill: 'Cross-Text Connections',
+    difficulty: 'hard',
+    stimulus:
+      'Text 1: Historian Priya Mehta contends that the Green Revolution\'s legacy is inseparable from its geopolitical context. American-led agricultural aid in the 1960s and 1970s was designed not merely to increase crop yields but to forestall communist insurgencies by demonstrating that capitalist development could meet the food security needs of newly independent nations. Yield statistics, Mehta argues, cannot be understood apart from these strategic imperatives.\n\nText 2: Agricultural economist Jonas Frisch acknowledges the Green Revolution\'s political origins but insists that evaluating it primarily through that lens distorts the historical record. Whatever the motivations of donor governments, the technical interventions — high-yield seed varieties, irrigation expansion, and fertilizer access — produced documented reductions in famine mortality across South Asia and sub-Saharan Africa.',
+    question:
+      'Which statement best describes the relationship between Mehta\'s and Frisch\'s arguments?',
+    choices: [
+      { label: 'A', text: 'Frisch disputes the factual accuracy of the yield statistics that Mehta uses as her primary evidence' },
+      { label: 'B', text: 'Both scholars agree that the Green Revolution was primarily a geopolitical project with negligible agricultural benefits' },
+      { label: 'C', text: 'Frisch accepts Mehta\'s historical claim about political origins but argues that this context should not govern how we assess outcomes' },
+      { label: 'D', text: 'Mehta and Frisch disagree about which crops were most affected by the Green Revolution\'s interventions' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      'Frisch explicitly acknowledges the political origins Mehta describes ("acknowledges the Green Revolution\'s political origins") but argues that evaluating outcomes through that lens alone distorts the record — he separates the assessment of motivations from the assessment of results.',
+    wrongAnswerExplanations: {
+      A: 'Frisch does not challenge Mehta\'s yield statistics; he disputes the interpretive framework, not the data.',
+      B: 'Frisch does not characterize the agricultural benefits as negligible — he cites documented reductions in famine mortality as real benefits.',
+      D: 'Neither scholar discusses specific crops; the disagreement is about how to interpret the program\'s legacy, not about which crops were affected.',
+    },
+  },
+
+  // ─── Q10 · Information and Ideas · Central Ideas and Details · easy ───────────
+  {
+    id: 'sat-f3-rw-m1-q10',
+    section: 'reading-writing',
+    moduleId: 'f3-rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'easy',
+    stimulus:
+      'Tardigrades — microscopic animals sometimes called "water bears" — have been found in every major biome on Earth, from deep-ocean sediments to high-altitude glaciers. They survive conditions lethal to virtually all other animals by entering a state called cryptobiosis, in which metabolism slows to near zero and the organism can withstand extreme temperatures, desiccation, radiation, and even the vacuum of space. When favorable conditions return, tardigrades revive within hours and resume normal activity.',
+    question: 'What is the central idea of this passage?',
+    choices: [
+      { label: 'A', text: 'Tardigrades are the smallest animals ever discovered by scientists' },
+      { label: 'B', text: 'Tardigrades survive extreme conditions through a metabolic shutdown state that allows them to live across virtually all environments' },
+      { label: 'C', text: 'Cryptobiosis is a process that will eventually be replicated in human medicine to allow surgeons to pause patients\' metabolism' },
+      { label: 'D', text: 'Tardigrades cannot survive permanent vacuum exposure and must be returned to favorable conditions within 24 hours' },
+    ],
+    correctAnswer: 'B',
+    explanation:
+      'The passage introduces tardigrades, explains the mechanism (cryptobiosis) by which they survive extreme conditions, and notes their resulting universal distribution — all supporting the central idea that cryptobiosis enables survival across virtually all environments.',
+    wrongAnswerExplanations: {
+      A: 'The passage calls tardigrades "microscopic" but does not make any claim about them being the smallest animals ever discovered.',
+      C: 'Human medical applications of cryptobiosis are never mentioned in the passage.',
+      D: 'The passage says tardigrades can survive the vacuum of space, which contradicts the claim that they cannot survive permanent vacuum exposure.',
+    },
+  },
+
+  // ─── Q11 · Information and Ideas · Central Ideas and Details · medium ─────────
+  {
+    id: 'sat-f3-rw-m1-q11',
+    section: 'reading-writing',
+    moduleId: 'f3-rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Central Ideas and Details',
+    difficulty: 'medium',
+    stimulus:
+      'When the Meiji government transformed Japan between 1868 and 1912, its leaders explicitly rejected gradual adaptation in favor of rapid, state-directed industrialization. Officials traveled abroad to study Western legal codes, military organization, and manufacturing processes, then selectively adopted those elements judged compatible with maintaining central authority. Foreign advisors were hired and then systematically replaced once domestic expertise reached parity. The result was not Westernization but a distinctively Japanese modernity that absorbed foreign techniques while preserving the imperial structure through which the state managed social change.',
+    question:
+      'According to the passage, which of the following best characterizes the Meiji government\'s approach to modernization?',
+    choices: [
+      { label: 'A', text: 'A passive imitation of Western models that gradually eroded traditional Japanese institutions' },
+      { label: 'B', text: 'A deliberate, selective adoption of foreign practices in service of a state-controlled transformation that preserved imperial authority' },
+      { label: 'C', text: 'A grassroots movement in which ordinary citizens demanded Western-style reforms from an unwilling government' },
+      { label: 'D', text: 'An exchange program in which Japanese officials permanently relocated to Western nations to learn manufacturing techniques' },
+    ],
+    correctAnswer: 'B',
+    explanation:
+      'The passage describes officials who studied Western systems and "selectively adopted" compatible elements, replaced foreign advisors once domestic expertise developed, and ultimately produced a distinctive modernity that preserved the imperial structure — all markers of deliberate, state-controlled selective adoption.',
+    wrongAnswerExplanations: {
+      A: 'The passage explicitly calls the process "state-directed" and says the result preserved, not eroded, imperial structure — the opposite of passive or erosive.',
+      C: 'The passage describes government officials as the active agents of change, not ordinary citizens demanding reform.',
+      D: 'Officials traveled abroad temporarily to study; the passage describes them returning and replacing foreign advisors with domestic expertise, not permanent relocation.',
+    },
+  },
+
+  // ─── Q12 · Information and Ideas · Command of Evidence · easy ─────────────────
+  {
+    id: 'sat-f3-rw-m1-q12',
+    section: 'reading-writing',
+    moduleId: 'f3-rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'easy',
+    stimulus:
+      'A nutritional scientist studying dietary fiber and cardiovascular health analyzed data from a 15-year cohort study of 9,000 adults. Participants reported fiber intake annually and underwent cardiovascular assessments at five-year intervals. The scientist found that participants who consumed at least 25 grams of fiber per day had a 28% lower incidence of cardiovascular events compared to those consuming fewer than 10 grams per day, even after controlling for smoking, exercise, and body mass index.',
+    question:
+      'Which statement most accurately describes what the scientist\'s findings indicate?',
+    choices: [
+      { label: 'A', text: 'Dietary fiber prevents cardiovascular disease in all adults who consume 25 or more grams per day' },
+      { label: 'B', text: 'Higher fiber consumption is associated with reduced cardiovascular event rates after accounting for key confounding variables' },
+      { label: 'C', text: 'Adults who exercise regularly and do not smoke have a 28% lower risk of cardiovascular events than those who do neither' },
+      { label: 'D', text: 'Consuming fewer than 10 grams of fiber per day causes cardiovascular disease within 15 years' },
+    ],
+    correctAnswer: 'B',
+    explanation:
+      'The study found an association between higher fiber intake and lower cardiovascular event incidence while controlling for smoking, exercise, and BMI — exactly what option B states. The language "associated with" correctly reflects the observational, correlational nature of cohort data.',
+    wrongAnswerExplanations: {
+      A: 'The study is observational, not experimental; it establishes association, not proof of prevention for all individuals.',
+      C: 'The 28% figure refers to the difference between high and low fiber groups, not between exercisers and non-exercisers — this misattributes the statistic.',
+      D: 'An observational study cannot establish that low fiber "causes" cardiovascular disease; it also does not specify a 15-year timeline for causation.',
+    },
+  },
+
+  // ─── Q13 · Information and Ideas · Command of Evidence · medium ───────────────
+  {
+    id: 'sat-f3-rw-m1-q13',
+    section: 'reading-writing',
+    moduleId: 'f3-rw-module-1',
+    domain: 'Information and Ideas',
+    skill: 'Command of Evidence',
+    difficulty: 'medium',
+    stimulus:
+      'A linguist studying language contact in border regions compiled vocabulary data from four communities:\n\nCommunity | Years of bilingual contact | Percentage of loanwords in daily speech\nAlberton | 12 | 8%\nBrackfield | 35 | 22%\nCrestwood | 58 | 31%\nDunmore | 71 | 29%\n\nThe linguist hypothesized that the longer a community has maintained bilingual contact, the higher the percentage of loanwords in daily speech.',
+    question:
+      'Which choice best evaluates the linguist\'s hypothesis given the data?',
+    choices: [
+      { label: 'A', text: 'The hypothesis is fully supported: every community with more years of contact has a strictly higher loanword percentage than every community with fewer years' },
+      { label: 'B', text: 'The hypothesis is partially supported: loanword percentages generally increase with contact duration, but Dunmore has slightly fewer loanwords than Crestwood despite longer contact' },
+      { label: 'C', text: 'The hypothesis is unsupported because Alberton has the fewest loanwords and the shortest contact period, making it an outlier' },
+      { label: 'D', text: 'The hypothesis is fully refuted: the data show no relationship between contact duration and loanword percentage' },
+    ],
+    correctAnswer: 'B',
+    explanation:
+      'The data show a general upward trend (8%, 22%, 31%), but Dunmore (71 years) has 29% — slightly lower than Crestwood\'s (58 years) 31%. This is a minor exception to the otherwise positive trend, making the hypothesis partially but not fully supported.',
+    wrongAnswerExplanations: {
+      A: 'The Dunmore/Crestwood pair violates strict monotonic increase, so the hypothesis is not fully supported without exception.',
+      C: 'Alberton having the shortest contact and fewest loanwords is consistent with the hypothesis, not an outlier.',
+      D: 'The overall trend is clearly positive; only one pair deviates slightly, so the hypothesis is not fully refuted.',
+    },
+  },
+
+  // ─── Q14 · Information and Ideas · Command of Evidence · hard ────────────────
   {
     id: 'sat-f3-rw-m1-q14',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
-    difficulty: 'medium',
-    stimulus: 'A researcher studying urban green spaces and mental health surveyed 1,200 residents across three cities. Participants reported their weekly time in parks or gardens and completed a validated stress inventory. The researcher found that residents who spent at least two hours per week in green spaces scored significantly lower on the stress inventory than those who spent no time in natural settings, even after controlling for income and employment status.',
-    question: 'Which finding, if true, would most directly support the researcher\'s claim that green space exposure reduces stress independently of socioeconomic factors?',
+    difficulty: 'hard',
+    stimulus:
+      'A psychologist studying the "spacing effect" — the finding that distributed study sessions yield better long-term retention than massed practice — designed an experiment in which 240 college students studied the same list of 40 vocabulary items under three conditions: massed (one 60-minute session), moderately spaced (three 20-minute sessions over three days), or highly spaced (six 10-minute sessions over six days). A retention test was administered one week after the final study session. Mean accuracy was 54% for the massed group, 71% for the moderately spaced group, and 68% for the highly spaced group.',
+    question:
+      'A critic argues that the psychologist\'s data do not support the common recommendation to "space practice as widely as possible." Which finding from the data most directly supports this critique?',
     choices: [
-      { label: 'A', text: 'Wealthier residents in the study visited parks more frequently than lower-income residents' },
-      { label: 'B', text: 'Residents who exercised regularly reported lower stress than those who did not, regardless of green space use' },
-      { label: 'C', text: 'The stress reduction associated with green space was consistent across all income brackets in the study' },
-      { label: 'D', text: 'Some parks in the study cities were located in wealthier neighborhoods' },
+      { label: 'A', text: 'The massed group performed substantially worse than both spaced groups, confirming that any spacing is better than massing' },
+      { label: 'B', text: 'The highly spaced group outperformed the massed group by 14 percentage points' },
+      { label: 'C', text: 'The moderately spaced group outperformed the highly spaced group, suggesting that optimal spacing may not be maximal spacing' },
+      { label: 'D', text: 'All three groups performed below 80%, indicating that the vocabulary list may have been too difficult for accurate measurement' },
     ],
     correctAnswer: 'C',
-    explanation: 'If the stress-reduction benefit appeared consistently across all income levels, this would confirm that the effect holds independently of socioeconomic status, directly supporting the researcher\'s claim.',
+    explanation:
+      'The critic\'s argument is that "maximum spacing" is not the best prescription. The data show the moderately spaced group (71%) actually outperformed the highly spaced group (68%), meaning more spacing did not produce better retention. This directly supports the critique that the recommendation should not be to maximize spacing.',
     wrongAnswerExplanations: {
-      A: 'If wealthier residents visited parks more, this would raise concerns about confounding rather than support independence from socioeconomic factors.',
-      B: 'Regular exercise as an alternative explanation would undermine rather than support the green space hypothesis.',
-      D: 'Park locations in wealthier neighborhoods would suggest a socioeconomic confound, weakening rather than supporting the claim.',
+      A: 'This finding confirms that spacing is better than massing — it supports spacing in general, not the critique that maximum spacing is suboptimal.',
+      B: 'The 14-point advantage of the highly spaced group over massing also supports the value of spacing generally, not the critique about maximizing it.',
+      D: 'The absolute performance levels do not address whether more spacing always produces better outcomes; this is irrelevant to the critic\'s specific argument.',
     },
   },
 
+  // ─── Q15 · Information and Ideas · Inferences · medium ───────────────────────
   {
     id: 'sat-f3-rw-m1-q15',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Information and Ideas',
-    skill: 'Command of Evidence',
+    skill: 'Inferences',
     difficulty: 'medium',
-    stimulus: 'Reading researchers debate whether comprehension is primarily driven by decoding skill or vocabulary breadth. One study tracked 800 third-graders over four years. Among students with strong decoding skills, those with large vocabularies showed significantly higher reading comprehension by seventh grade than those with limited vocabularies, suggesting vocabulary plays a critical independent role even when decoding is controlled.',
-    question: 'Which choice best states the main finding reported in the passage?',
+    stimulus:
+      'Mangrove forests line tropical and subtropical coastlines, their tangled root systems trapping sediment and building land over decades. Unlike most trees, mangroves tolerate salt water by either excreting salt through specialized leaf glands or excluding it at the root membrane. Satellite imagery from the past forty years documents a 35% reduction in global mangrove cover, primarily driven by conversion to aquaculture ponds and coastal development. The loss has accelerated coastal erosion rates in affected regions by a factor of three to five compared to areas where mangrove cover remains intact.',
+    question:
+      'Based on the passage, what can most reasonably be inferred about regions that have lost significant mangrove cover?',
     choices: [
-      { label: 'A', text: 'Decoding skill is more important than vocabulary for reading comprehension in early grades' },
-      { label: 'B', text: 'Among students with comparable decoding ability, vocabulary size predicted later reading comprehension' },
-      { label: 'C', text: 'Reading comprehension does not improve significantly between third and seventh grade' },
-      { label: 'D', text: 'Students who receive vocabulary instruction consistently outperform students who do not' },
+      { label: 'A', text: 'They are located exclusively in subtropical rather than tropical zones' },
+      { label: 'B', text: 'They are experiencing faster land loss and reduced coastal stability than regions where mangroves remain' },
+      { label: 'C', text: 'Their aquaculture industries have become more productive since mangrove removal began' },
+      { label: 'D', text: 'They have adopted salt-tolerant crop varieties to compensate for increased soil salinity' },
     ],
     correctAnswer: 'B',
-    explanation: 'Among students with strong decoding, those with large vocabularies outperformed those with limited vocabularies in comprehension by seventh grade — showing vocabulary\'s independent predictive role when decoding is held constant.',
+    explanation:
+      'The passage states that mangrove loss has accelerated coastal erosion three to five times compared to intact areas. Since mangroves build land by trapping sediment and roots stabilize coastlines, regions with mangrove loss can reasonably be inferred to have faster land loss and reduced coastal stability.',
     wrongAnswerExplanations: {
-      A: 'The study held decoding constant and found vocabulary mattered, not that decoding was more important.',
-      C: 'The passage discusses growth in comprehension across that period, not stagnation.',
-      D: 'The passage describes a correlational study tracking students, not an instructional intervention study.',
+      A: 'The passage describes mangroves as lining "tropical and subtropical" coastlines and notes their global loss — it gives no basis to infer losses are exclusive to subtropical zones.',
+      C: 'The passage identifies aquaculture as a driver of mangrove conversion but says nothing about the productivity of the resulting ponds.',
+      D: 'Soil salinity and crop adaptation are never discussed in the passage.',
     },
   },
 
+  // ─── Q16 · Information and Ideas · Inferences · hard ────────────────────────
   {
     id: 'sat-f3-rw-m1-q16',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Information and Ideas',
-    skill: 'Command of Evidence',
-    difficulty: 'hard',
-    stimulus: 'An environmental scientist studying urban tree canopy coverage collected the following data:\n\nDistrict | Tree Canopy Coverage | Average Summer Temperature\nNorth | 42% | 27°C\nEast | 18% | 31°C\nWest | 35% | 28°C\nSouth | 9% | 34°C\n\nThe scientist concluded that districts with greater tree canopy coverage experience lower average summer temperatures.',
-    question: 'Which choice best evaluates the strength of the scientist\'s conclusion?',
-    choices: [
-      { label: 'A', text: 'The conclusion is strongly supported: every district with higher canopy coverage shows a lower average temperature than every district with lower canopy coverage' },
-      { label: 'B', text: 'The conclusion is weakened by the fact that the East district has both lower canopy coverage and lower temperatures than the South district' },
-      { label: 'C', text: 'The conclusion is unsupported because the scientist did not measure precipitation levels in each district' },
-      { label: 'D', text: 'The conclusion is weakened because the South district has both the lowest canopy coverage and the highest temperature, making it an outlier' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'Examining the data: North (42%, 27°C), West (35%, 28°C), East (18%, 31°C), South (9%, 34°C). Each district with higher canopy coverage shows a lower temperature, with no exceptions — this consistently supports the conclusion.',
-    wrongAnswerExplanations: {
-      B: 'The East (18%, 31°C) has higher temperatures than the South (9%, 34°C) — the claim is false, which means this choice misreads the data.',
-      C: 'While precipitation could be a confounding factor, the question asks about the strength of the conclusion given the data provided, not about alternative explanations.',
-      D: 'The South having the lowest canopy and highest temperature actually confirms the trend rather than being an outlier.',
-    },
-  },
-
-  {
-    id: 'sat-f3-rw-m1-q17',
-    section: 'reading-writing',
-    moduleId: 'f3-rw-module-1',
-    domain: 'Information and Ideas',
-    skill: 'Command of Evidence',
-    difficulty: 'hard',
-    stimulus: 'A sociologist examining internal migration in a country collected data from five regions over twenty years. She observed that regions with the fastest-growing technology sectors saw the largest net population inflows, while regions with declining manufacturing employment saw consistent net outflows. She concluded that economic opportunity, specifically in high-growth industries, is the primary driver of internal migration patterns.',
-    question: 'Which of the following, if true, would most weaken the sociologist\'s conclusion?',
-    choices: [
-      { label: 'A', text: 'Migrants who moved to technology hubs reported that lower housing costs were their primary motivation' },
-      { label: 'B', text: 'Regions with the largest population inflows also had the most universities and colleges' },
-      { label: 'C', text: 'The technology sector grew fastest in regions that were already the most densely populated' },
-      { label: 'D', text: 'Both of the above choices would individually weaken the conclusion' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'If regions with technology growth also had the most universities, the migration could be driven by educational access rather than industry employment, undermining the conclusion that technology-sector growth is the primary driver.',
-    wrongAnswerExplanations: {
-      A: 'Lower housing costs would be a competing explanation for migration to technology hubs — this also weakens the conclusion, but option B is more directly relevant to testing a causal alternative.',
-      C: 'Existing population density is correlated with the finding but does not present an alternative explanation for what drives migration.',
-      D: 'Option A does weaken the conclusion, but the question asks which single choice most effectively weakens it — option B provides a more direct causal alternative.',
-    },
-  },
-
-  {
-    id: 'sat-f3-rw-m1-q18',
-    section: 'reading-writing',
-    moduleId: 'f3-rw-module-1',
-    domain: 'Information and Ideas',
     skill: 'Inferences',
     difficulty: 'hard',
-    stimulus: 'Genetic genealogy databases now contain DNA profiles from tens of millions of people. Law enforcement agencies have used these databases to identify suspects by uploading crime scene DNA and searching for partial matches with distant relatives. Several high-profile cold cases have been solved through this method. Privacy advocates, however, note that individuals who contribute their DNA to recreational genealogy services effectively enroll their biological relatives — who may never have consented — into a searchable database accessible to law enforcement.',
-    question: 'Based on the passage, which of the following can most reasonably be inferred?',
+    stimulus:
+      'The philosopher of science Thomas Kuhn distinguished between "normal science" — problem-solving activity conducted within an accepted framework of assumptions — and "revolutionary science," the disorienting process by which an anomaly accumulates to the point where the entire framework collapses and is replaced. Kuhn was careful to note that revolutionary transitions are not purely rational events: scientists who have invested careers in the old paradigm resist the change, and the new framework is often adopted first by younger researchers with less professional stake in the prior consensus.',
+    question:
+      'Based on Kuhn\'s framework as described in the passage, which of the following scenarios best illustrates a "revolutionary" rather than "normal" science episode?',
     choices: [
-      { label: 'A', text: 'All genetic genealogy companies voluntarily share their databases with law enforcement agencies' },
-      { label: 'B', text: 'Genetic genealogy databases are less accurate than traditional forensic DNA testing methods' },
-      { label: 'C', text: 'Privacy advocates oppose all forensic uses of DNA evidence in criminal investigations' },
-      { label: 'D', text: 'A person who has never used a genetic genealogy service may still be identifiable through a relative\'s DNA submission' },
+      { label: 'A', text: 'A chemist uses established spectroscopy protocols to identify a previously uncharacterized mineral compound' },
+      { label: 'B', text: 'A physics department adopts a revised textbook because a new edition clarifies notation conventions' },
+      { label: 'C', text: 'Younger geologists champion plate tectonics against the resistance of senior colleagues who had built careers on the theory of continental fixity' },
+      { label: 'D', text: 'A biologist applies evolutionary theory to explain the distribution of a newly discovered insect species' },
     ],
-    correctAnswer: 'D',
-    explanation: 'The passage states that submitting DNA enrolls biological relatives who may not have consented. This directly implies that non-users can become identifiable through a relative\'s submission.',
+    correctAnswer: 'C',
+    explanation:
+      'Kuhn defines revolutionary science as a framework-replacing transition in which the old paradigm collapses amid resistance from established scientists and adoption by younger researchers. The plate tectonics scenario exactly matches this: an entire framework (continental fixity) replaced by a new one (plate tectonics), championed by younger scientists against senior resistance.',
     wrongAnswerExplanations: {
-      A: 'The passage says databases are "accessible to law enforcement" via searching, but does not state all companies voluntarily share.',
-      C: 'Privacy advocates\' objection is about consent and enrollment of non-participants, not a blanket opposition to DNA evidence.',
-      B: 'Accuracy is never compared between genetic genealogy and traditional forensic methods.',
+      A: 'Applying established spectroscopy protocols to identify a new compound is normal science — problem-solving within an accepted framework.',
+      B: 'A textbook revision that clarifies notation is an incremental refinement within normal science, not a framework replacement.',
+      D: 'Applying evolutionary theory to explain a newly discovered species is normal science — using an accepted framework to solve a puzzle within it.',
     },
   },
 
+  // ─── Q17 · Standard English Conventions · Boundaries · easy ──────────────────
   {
-    id: 'sat-f3-rw-m1-q21',
+    id: 'sat-f3-rw-m1-q17',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Standard English Conventions',
     skill: 'Boundaries',
     difficulty: 'easy',
-    stimulus: 'The festival attracted visitors from eleven countries _______ organizers had not expected such an international turnout in only its second year.',
-    question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
+    stimulus:
+      'The restored manuscript attracted scholars from four continents _______ the archive had kept its existence confidential for decades while conservators stabilized its fragile parchment.',
+    question:
+      'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
-      { label: 'A', text: ',' },
-      { label: 'B', text: '; however,' },
-      { label: 'C', text: ': however,' },
-      { label: 'D', text: 'and' },
+      { label: 'A', text: ', because' },
+      { label: 'B', text: '; because' },
+      { label: 'C', text: ': because' },
+      { label: 'D', text: '. Because' },
     ],
-    correctAnswer: 'B',
-    explanation: 'A semicolon correctly joins two independent clauses. "However" signals contrast and is a conjunctive adverb, correctly placed after the semicolon and followed by a comma.',
+    correctAnswer: 'A',
+    explanation:
+      'A subordinating conjunction ("because") introduces a dependent clause. A single comma before a subordinating conjunction joining a dependent clause to an independent clause is the correct Standard English convention.',
     wrongAnswerExplanations: {
-      A: 'A comma alone between two independent clauses is a comma splice.',
-      C: 'A colon introduces explanatory content; it does not connect two clauses showing contrast with "however."',
-      D: '"And" as a conjunction without a comma before it does not correctly signal the contrast between the clauses.',
+      B: 'A semicolon joins two independent clauses; "because" makes the second clause dependent, so a semicolon is incorrect here.',
+      C: 'A colon introduces a list or explanation that follows an independent clause; using it before a dependent "because" clause is nonstandard.',
+      D: 'A period creates two separate sentences, but the second would begin with "Because," forming a sentence fragment.',
     },
   },
 
+  // ─── Q18 · Standard English Conventions · Boundaries · medium ────────────────
   {
-    id: 'sat-f3-rw-m1-q13',
+    id: 'sat-f3-rw-m1-q18',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Standard English Conventions',
-    skill: 'Form, Structure, and Sense',
+    skill: 'Boundaries',
     difficulty: 'medium',
-    stimulus: `In 1846, the astronomer Urbain Le Verrier predicted the location of an unknown planet by studying irregularities in the orbit of Uranus. He mailed his calculations to an observatory in Berlin, where a young astronomer pointed a telescope at the exact region Le Verrier had specified. Within an hour, the astronomer ______ Neptune, almost precisely where the mathematics said it would be.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    stimulus:
+      'The budget committee approved the infrastructure proposal _______ the transportation subcommittee, citing cost overruns in previous projects, had recommended deferring the vote by at least one fiscal quarter.',
+    question:
+      'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
-      { label: 'A', text: 'spots' },
-      { label: 'B', text: 'spotted' },
-      { label: 'C', text: 'will spot' },
-      { label: 'D', text: 'is spotting' },
+      { label: 'A', text: ', even though' },
+      { label: 'B', text: '; even though' },
+      { label: 'C', text: ': even though' },
+      { label: 'D', text: ', and' },
     ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. This item tests verb tense consistency within a narrative. The surrounding sentences establish a past-tense account of events in 1846 ("predicted," "mailed," "pointed"). The verb in the blank describes another completed action in that same sequence, so the simple past "spotted" keeps the narrative consistent.`,
+    correctAnswer: 'A',
+    explanation:
+      '"Even though" is a subordinating conjunction that introduces a dependent concessive clause. A comma before a subordinating conjunction is the correct way to join a dependent clause to a preceding independent clause. The intervening non-restrictive phrase ("citing cost overruns in previous projects") is correctly set off by its own commas within the dependent clause.',
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The present-tense "spots" breaks the past-tense narrative established by "predicted," "mailed," and "pointed," producing an inconsistent shift in time.`,
-      C: `Choice C is incorrect. The future-tense "will spot" is illogical, since the discovery being described occurred in 1846 and is narrated entirely in the past.`,
-      D: `Choice D is incorrect. The present progressive "is spotting" both shifts to the present and implies an ongoing action, neither of which fits the completed past event in this narrative.`,
+      B: 'A semicolon precedes independent clauses or conjunctive adverbs, not subordinating conjunctions that introduce dependent clauses.',
+      C: 'A colon introduces an explanation or list after an independent clause, not a concessive dependent clause.',
+      D: '"And" would join two independent clauses and imply addition rather than concession; it also changes the logical relationship between the approval and the subcommittee\'s recommendation.',
     },
   },
 
+  // ─── Q19 · Standard English Conventions · Boundaries · medium ───────────────
   {
     id: 'sat-f3-rw-m1-q19',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Standard English Conventions',
-    skill: 'Form, Structure, and Sense',
+    skill: 'Boundaries',
     difficulty: 'medium',
-    stimulus: `Tidal marshes are among the most productive ecosystems on Earth. The dense network of grasses and channels that lines these coastal wetlands ______ habitat for fish, shellfish, and migratory birds while also buffering shorelines against storm surges. Ecologists warn that rising sea levels threaten to submerge many of these marshes faster than they can migrate inland.`,
-    question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
+    stimulus:
+      'Dr. Vasquez presented three counter-arguments in her rebuttal _______ the proposal\'s projected timeline was unverifiable given current satellite data, the cost model relied on outdated infrastructure pricing, and the risk assessment excluded secondary seismic events entirely.',
+    question:
+      'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
-      { label: 'A', text: 'provide' },
-      { label: 'B', text: 'provides' },
-      { label: 'C', text: 'have provided' },
-      { label: 'D', text: 'were providing' },
+      { label: 'A', text: '; specifically,' },
+      { label: 'B', text: ', specifically' },
+      { label: 'C', text: ': specifically,' },
+      { label: 'D', text: '— specifically' },
     ],
-    correctAnswer: 'B',
-    explanation: `Choice B is correct. This item tests subject-verb agreement. The grammatical subject of the sentence is the singular noun "network," not the nearby plural nouns "grasses and channels" inside the modifying phrase "that lines these coastal wetlands." A singular subject requires the singular present-tense verb "provides."`,
+    correctAnswer: 'C',
+    explanation:
+      'A colon after an independent clause introduces an enumeration or explanation. "Specifically" is an adverb that clarifies what follows, and after the colon it is followed by a comma. The first clause ("Dr. Vasquez presented three counter-arguments in her rebuttal") is complete and the list that follows specifies what those arguments are — the colon-plus-adverb construction is both grammatically and rhetorically appropriate.',
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Provide" is the plural form; it mistakenly agrees with the intervening plural nouns "grasses and channels" rather than with the true singular subject "network."`,
-      C: `Choice C is incorrect. The plural "have provided" fails to agree with the singular subject "network" and also shifts the sentence out of the present tense used to describe an ongoing function.`,
-      D: `Choice D is incorrect. The past progressive "were providing" is both plural and past tense, disagreeing in number with "network" and clashing with the present-tense description of what marshes do.`,
+      A: 'A semicolon joins two independent clauses of equal grammatical weight; the material after the blank is an explanatory list that elaborates on the first clause, making a colon the correct punctuation.',
+      B: 'A comma alone before an explanatory list that follows a complete independent clause is insufficient to signal the elaborative relationship; a colon is required.',
+      D: 'An em dash can introduce a list or explanation, but pairing it with "specifically" without a following comma produces a construction less clear than the colon with the adverbial comma.',
     },
   },
 
+  // ─── Q20 · Standard English Conventions · Form, Structure, and Sense · easy ───
   {
-    id: 'sat-f3-rw-m1-q24',
+    id: 'sat-f3-rw-m1-q20',
+    section: 'reading-writing',
+    moduleId: 'f3-rw-module-1',
+    domain: 'Standard English Conventions',
+    skill: 'Form, Structure, and Sense',
+    difficulty: 'easy',
+    stimulus:
+      'When the museum reopened after its two-year renovation, visitors _______ in lines that stretched around the block. The new wing, featuring interactive installations on climate science, drew three times the attendance that curators had projected.',
+    question:
+      'Which choice completes the text so that it conforms to the conventions of Standard English?',
+    choices: [
+      { label: 'A', text: 'wait' },
+      { label: 'B', text: 'waited' },
+      { label: 'C', text: 'are waiting' },
+      { label: 'D', text: 'will have waited' },
+    ],
+    correctAnswer: 'B',
+    explanation:
+      'The passage narrates a completed past event: the museum "reopened" and curators "had projected." The verb in the blank describes another completed action in this same past-tense sequence, so the simple past "waited" is the correct form.',
+    wrongAnswerExplanations: {
+      A: 'The present tense "wait" is inconsistent with the past-tense narrative established by "reopened" and "had projected."',
+      C: 'The present progressive "are waiting" both shifts to the present tense and implies an ongoing action, neither of which fits a completed past event.',
+      D: 'The future perfect "will have waited" is illogical in a narrative about events that have already occurred.',
+    },
+  },
+
+  // ─── Q21 · Standard English Conventions · Form, Structure, and Sense · medium ─
+  {
+    id: 'sat-f3-rw-m1-q21',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Standard English Conventions',
     skill: 'Form, Structure, and Sense',
     difficulty: 'medium',
-    stimulus: 'The committee of regional directors _______ meeting quarterly to review infrastructure priorities, a schedule that participants say allows enough time to analyze data between sessions without losing momentum on ongoing projects.',
-    question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
+    stimulus:
+      'The constellation of factors driving urban heat island effects — dark pavement that absorbs sunlight, reduced vegetation that would otherwise provide shade, and waste heat from vehicles and air-conditioning units — _______ more pronounced as cities grow denser and taller buildings trap more longwave radiation.',
+    question:
+      'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
-      { label: 'A', text: 'have been' },
-      { label: 'B', text: 'has been' },
-      { label: 'C', text: 'were' },
-      { label: 'D', text: 'are' },
+      { label: 'A', text: 'become' },
+      { label: 'B', text: 'becomes' },
+      { label: 'C', text: 'have become' },
+      { label: 'D', text: 'are becoming' },
     ],
     correctAnswer: 'B',
-    explanation: 'The subject is "committee," a singular collective noun, so it takes a singular verb. "Has been" is the correct singular present perfect form, consistent with the ongoing nature described.',
+    explanation:
+      'The grammatical subject is "constellation," a singular noun, despite the intervening plural items listed in the em-dash phrase. A singular subject requires the singular present-tense verb "becomes," which is consistent with the general-truth framing of the sentence.',
     wrongAnswerExplanations: {
-      A: '"Have been" is plural, but the head noun "committee" is singular.',
-      C: '"Were" is past tense, but the passage describes a continuing practice.',
-      D: '"Are" is present tense but lacks the continuity implied by the context and does not pair correctly with "meeting" in this construction.',
+      A: '"Become" is the plural form and mistakenly agrees with the plural items inside the interruptive phrase rather than with the true singular subject "constellation."',
+      C: '"Have become" is also plural and additionally implies a completed change rather than a general ongoing truth.',
+      D: '"Are becoming" fails to agree with the singular subject "constellation" and emphasizes ongoing action rather than the general condition described.',
     },
   },
 
+  // ─── Q22 · Standard English Conventions · Form, Structure, and Sense · medium ─
   {
     id: 'sat-f3-rw-m1-q22',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Standard English Conventions',
-    skill: 'Boundaries',
+    skill: 'Form, Structure, and Sense',
     difficulty: 'medium',
-    stimulus: 'The chef described her philosophy of cooking _______ simplicity above novelty, seasonal ingredients above imported ones, and technique above technology.',
-    question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
+    stimulus:
+      'Having mapped the glacier\'s retreat over fourteen field seasons, _______ prepared a comprehensive report documenting the accelerating ice loss and projecting complete disappearance of the lower tongue by mid-century.',
+    question:
+      'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
-      { label: 'A', text: '; she valued' },
-      { label: 'B', text: ', she valued' },
-      { label: 'C', text: ': she valued' },
-      { label: 'D', text: '— and she valued' },
+      { label: 'A', text: 'the research team' },
+      { label: 'B', text: 'the findings' },
+      { label: 'C', text: 'a report was' },
+      { label: 'D', text: 'it was the data that' },
     ],
-    correctAnswer: 'C',
-    explanation: 'A colon is used after an independent clause to introduce a list or explanation. The first clause ("The chef described her philosophy of cooking") is complete, and the colon correctly introduces the enumerated values that follow.',
+    correctAnswer: 'A',
+    explanation:
+      'The participial phrase "Having mapped the glacier\'s retreat over fourteen field seasons" must modify the grammatical subject of the main clause. Only the research team could have done the mapping, so "the research team" is the correct subject to avoid a dangling modifier.',
     wrongAnswerExplanations: {
-      B: 'A comma alone between two independent clauses creates a comma splice.',
-      A: 'A semicolon joins two independent clauses of roughly equal weight; here, the second clause functions as an explanation of the first, making a colon more appropriate.',
-      D: 'Adding "and" implies a simple addition rather than an explanatory elaboration; the colon more precisely signals that what follows defines the philosophy.',
+      B: '"The findings" cannot have mapped the glacier\'s retreat; findings do not perform research, making this a dangling modifier.',
+      C: '"A report was" creates a passive construction in which the report maps the glacier, which is logically incoherent.',
+      D: '"It was the data that" is a cleft construction that still does not give the participle a logical subject — data cannot map a glacier.',
     },
   },
 
+  // ─── Q23 · Standard English Conventions · Form, Structure, and Sense · hard ───
   {
     id: 'sat-f3-rw-m1-q23',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Standard English Conventions',
-    skill: 'Boundaries',
-    difficulty: 'medium',
-    stimulus: 'The observatory\'s new telescope can detect light from stars more than twelve billion light-years away _______ it is sensitive enough to distinguish objects separated by less than one arc-second in the sky.',
-    question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
+    skill: 'Form, Structure, and Sense',
+    difficulty: 'hard',
+    stimulus:
+      'The board of trustees, along with the university\'s senior administrative council, _______ scheduled a joint session to address the audit committee\'s findings before the end of the fiscal year.',
+    question:
+      'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
-      { label: 'A', text: ',' },
-      { label: 'B', text: '. Furthermore,' },
-      { label: 'C', text: ': furthermore,' },
-      { label: 'D', text: '; furthermore,' },
+      { label: 'A', text: 'have' },
+      { label: 'B', text: 'has' },
+      { label: 'C', text: 'were' },
+      { label: 'D', text: 'are' },
     ],
-    correctAnswer: 'D',
-    explanation: 'A semicolon joins two independent clauses; "furthermore" is a conjunctive adverb that adds related information and is followed by a comma. This is the standard construction for linking two closely related independent clauses.',
+    correctAnswer: 'B',
+    explanation:
+      'When a singular subject is joined to additional noun phrases by "along with," "as well as," or similar expressions, the subject remains singular. "The board of trustees" is the head noun and governs agreement. The singular present perfect auxiliary "has" is correct.',
     wrongAnswerExplanations: {
-      A: 'A comma alone between two independent clauses creates a comma splice.',
-      C: 'A colon before "furthermore" is nonstandard; colons introduce explanations or lists, not additive transitions.',
-      B: 'Starting a new sentence with "Furthermore" is grammatically acceptable but unnecessarily separates two closely related ideas; the semicolon construction is the preferred standard form.',
+      A: '"Have" is the plural auxiliary, but the head subject "board of trustees" is singular; the "along with" phrase does not create a compound subject requiring plurality.',
+      C: '"Were" is both plural and past tense; neither number nor tense is appropriate here.',
+      D: '"Are" is plural and present tense but omits the auxiliary needed to complete the present perfect construction "scheduled," leaving the tense aspect incomplete.',
     },
   },
 
+  // ─── Q24 · Expression of Ideas · Transitions · easy ─────────────────────────
+  {
+    id: 'sat-f3-rw-m1-q24',
+    section: 'reading-writing',
+    moduleId: 'f3-rw-module-1',
+    domain: 'Expression of Ideas',
+    skill: 'Transitions',
+    difficulty: 'easy',
+    stimulus:
+      'Researchers confirmed that the ancient harbor walls were built using a type of volcanic ash concrete that hardens when exposed to seawater, not weaker over time. _______, modern civil engineers have begun studying the formula in hopes of developing more durable marine infrastructure.',
+    question:
+      'Which choice completes the text with the most logical transition?',
+    choices: [
+      { label: 'A', text: 'In contrast' },
+      { label: 'B', text: 'Nevertheless' },
+      { label: 'C', text: 'As a result' },
+      { label: 'D', text: 'For instance' },
+    ],
+    correctAnswer: 'C',
+    explanation:
+      '"As a result" signals a cause-and-effect relationship: because researchers confirmed the concrete\'s durability properties, engineers began studying the formula. This causal link is the logical connection between the two sentences.',
+    wrongAnswerExplanations: {
+      A: '"In contrast" introduces an opposing or contrasting point, but both sentences describe positive outcomes related to the same discovery.',
+      B: '"Nevertheless" introduces a concession or qualification, implying that engineers studied the formula despite something — no such obstacle is described.',
+      D: '"For instance" introduces an example of a previously stated general claim, but the second sentence is a result, not an example.',
+    },
+  },
+
+  // ─── Q25 · Expression of Ideas · Transitions · medium ────────────────────────
   {
     id: 'sat-f3-rw-m1-q25',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
-    domain: 'Standard English Conventions',
-    skill: 'Form, Structure, and Sense',
-    difficulty: 'hard',
-    stimulus: 'Winning three consecutive research grants, _______ enabled the laboratory to expand its facilities and hire six additional postdoctoral researchers.',
-    question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
-    choices: [
-      { label: 'A', text: 'the laboratory\'s success' },
-      { label: 'B', text: 'they' },
-      { label: 'C', text: 'it was the laboratory' },
-      { label: 'D', text: 'the grants had' },
-    ],
-    correctAnswer: 'A',
-    explanation: 'The participial phrase "Winning three consecutive research grants" modifies the subject of the main clause. The subject must be the entity that won the grants. "The laboratory\'s success" correctly identifies the laboratory as that entity, and the structure avoids a dangling modifier.',
-    wrongAnswerExplanations: {
-      B: '"They" refers to the grants rather than to the laboratory, creating a dangling modifier — the grants did not "win" themselves.',
-      C: '"It was the laboratory" creates an awkward construction and still leaves the participial phrase dangling.',
-      D: '"The grants had" would mean the grants won themselves, which is logically incoherent.',
-    },
-  },
-
-  {
-    id: 'sat-f3-rw-m1-q09',
-    section: 'reading-writing',
-    moduleId: 'f3-rw-module-1',
     domain: 'Expression of Ideas',
     skill: 'Transitions',
     difficulty: 'medium',
-    stimulus: 'The city\'s new composting program diverts thousands of tons of organic waste from landfills each month. _______, it has created an unexpected logistical challenge: collection trucks must now follow separate routes on alternating days, doubling the number of early-morning passes through residential streets.',
-    question: 'Which choice completes the text with the most logical transition?',
+    stimulus:
+      'Classical economists argued that free markets, left unregulated, would naturally reach an equilibrium that maximizes aggregate welfare. _______, empirical studies of actual market behavior have repeatedly documented persistent inefficiencies: information asymmetries, externalities, and coordination failures that markets do not self-correct without intervention.',
+    question:
+      'Which choice completes the text with the most logical transition?',
     choices: [
-      { label: 'A', text: 'Therefore' },
-      { label: 'B', text: 'That said' },
-      { label: 'C', text: 'In addition' },
-      { label: 'D', text: 'Similarly' },
-    ],
-    correctAnswer: 'B',
-    explanation: '"That said" acknowledges the prior positive point (waste diversion) while signaling a qualification or complication — which is precisely what the second sentence introduces: an unexpected drawback of the program.',
-    wrongAnswerExplanations: {
-      A: '"Therefore" would imply the logistical challenge is a logical result or conclusion drawn from the waste diversion, but the challenge is an unexpected side effect, not a deduction.',
-      C: '"In addition" signals that the second sentence adds a further benefit or parallel point, but the second sentence describes a drawback rather than an additional advantage.',
-      D: '"Similarly" signals that the second sentence presents a parallel or analogous situation, but a logistical challenge is not parallel to waste diversion success.',
-    },
-  },
-
-  {
-    id: 'sat-f3-rw-m1-q20',
-    section: 'reading-writing',
-    moduleId: 'f3-rw-module-1',
-    domain: 'Expression of Ideas',
-    skill: 'Transitions',
-    difficulty: 'medium',
-    stimulus: 'The renovation project finished two months ahead of schedule. _______, the final budget came in under the contractor\'s original estimate, sparing the city council a difficult vote on supplemental funding.',
-    question: 'Which choice completes the text with the most logical transition?',
-    choices: [
-      { label: 'A', text: 'However' },
+      { label: 'A', text: 'Furthermore' },
       { label: 'B', text: 'In other words' },
-      { label: 'C', text: 'As a result' },
-      { label: 'D', text: 'In addition' },
+      { label: 'C', text: 'By extension' },
+      { label: 'D', text: 'In practice' },
     ],
     correctAnswer: 'D',
-    explanation: '"In addition" signals that the second sentence adds another positive development alongside the first — both the early completion and the lower-than-expected cost are separate but parallel good outcomes.',
+    explanation:
+      '"In practice" signals a contrast between what theory predicts and what empirical observation shows. The first sentence describes theoretical expectations; the second describes what actually occurs — precisely the contrast that "in practice" introduces.',
     wrongAnswerExplanations: {
-      A: '"However" signals contrast or qualification, but the second sentence presents another positive result rather than a complication or contradiction.',
-      B: '"In other words" signals a restatement or clarification of the preceding sentence, but the budget news is a distinct new fact, not a restatement of the schedule news.',
-      C: '"As a result" implies the under-budget outcome was caused by finishing early, but the passage does not establish that causal link; both outcomes may be independent successes.',
+      A: '"Furthermore" adds a consistent or reinforcing point; the second sentence contradicts the first rather than adding to it.',
+      B: '"In other words" signals a restatement or clarification of what preceded; the second sentence presents contrary evidence, not a paraphrase.',
+      C: '"By extension" draws a logical inference from what was just stated, but the second sentence contradicts rather than extends the prior claim.',
     },
   },
 
-  {
-    id: 'sat-f3-rw-m1-q27',
-    section: 'reading-writing',
-    moduleId: 'f3-rw-module-1',
-    domain: 'Expression of Ideas',
-    skill: 'Transitions',
-    difficulty: 'medium',
-    stimulus: 'Early astronomers explained the motion of planets by placing Earth at the center of the universe and charting elaborate cycles within cycles to account for planetary movement. These models made reasonable predictions. _______, they required increasingly complex adjustments as observations improved, and the underlying geometry grew so unwieldy that astronomers searched for a simpler alternative.',
-    question: 'Which choice completes the text with the most logical transition?',
-    choices: [
-      { label: 'A', text: 'Therefore' },
-      { label: 'B', text: 'Similarly' },
-      { label: 'C', text: 'However' },
-      { label: 'D', text: 'Consequently' },
-    ],
-    correctAnswer: 'C',
-    explanation: '"However" signals a contrast: the models made reasonable predictions (positive), but they required increasingly complex adjustments (negative). This contrast is the logical relationship between the sentences.',
-    wrongAnswerExplanations: {
-      A: '"Therefore" signals a conclusion or result, but the complexity of the models is not a result of their predictive success.',
-      B: '"Similarly" signals that the same relationship applies; there is no parallel being drawn here.',
-      D: '"Consequently" signals that what follows results from what preceded; the need for adjustments is not a consequence of making reasonable predictions.',
-    },
-  },
-
-  {
-    id: 'sat-f3-rw-m1-q10',
-    section: 'reading-writing',
-    moduleId: 'f3-rw-module-1',
-    domain: 'Expression of Ideas',
-    skill: 'Transitions',
-    difficulty: 'hard',
-    stimulus: 'Historians have documented that the printing press dramatically accelerated the spread of both religious reform and scientific thought in sixteenth-century Europe. _______, many of the ideas that circulated most widely through print were sensationalist pamphlets and astrological almanacs rather than scholarly treatises.',
-    question: 'Which choice completes the text with the most logical transition?',
-    choices: [
-      { label: 'A', text: 'As a result' },
-      { label: 'B', text: 'By contrast' },
-      { label: 'C', text: 'Furthermore' },
-      { label: 'D', text: 'Nevertheless' },
-    ],
-    correctAnswer: 'D',
-    explanation: '"Nevertheless" acknowledges the validity of the prior point (the press accelerated serious intellectual movements) while introducing a complication: the most widely circulated content was actually popular, non-scholarly material. This concessive relationship is precisely what "nevertheless" captures.',
-    wrongAnswerExplanations: {
-      A: '"As a result" signals that the second sentence follows as a consequence of the first, but pamphlets and almanacs circulating widely is not a consequence of the press accelerating scholarly ideas — it is a qualifying observation.',
-      B: '"By contrast" sets up a direct opposition between two different subjects or situations, but the sentence is not contrasting a different subject — it is qualifying the first sentence by noting what else happened alongside the intellectual acceleration.',
-      C: '"Furthermore" signals that the second sentence adds a point consistent with and reinforcing the first, but the prevalence of sensationalist content complicates rather than supports the prior claim.',
-    },
-  },
-
-  {
-    id: 'sat-f3-rw-m1-q05',
-    section: 'reading-writing',
-    moduleId: 'f3-rw-module-1',
-    domain: 'Expression of Ideas',
-    skill: 'Rhetorical Synthesis',
-    difficulty: 'easy',
-    stimulus: 'A student is writing a paragraph about wetland conservation for an environmental science class. The student has gathered the following notes:\n• Wetlands cover roughly 6% of Earth\'s land surface but store an estimated 20–30% of global soil carbon.\n• Wetland drainage for agriculture has accelerated in the past century, with more than half of the world\'s wetlands lost since 1900.\n• Wetlands filter pollutants from water, reducing the nitrogen and phosphorus that cause algal blooms in rivers and lakes.\n• Coastal wetlands such as mangroves buffer inland areas from storm surges and hurricane-force winds.\n• Wetlands support roughly 40% of the world\'s plant and animal species despite their small total area.',
-    question: 'The student wants to argue that wetlands provide benefits that extend well beyond their small geographic footprint. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
-    choices: [
-      { label: 'A', text: 'Wetlands have been significantly reduced since 1900 due to agricultural drainage, raising concerns about their long-term survival.' },
-      { label: 'B', text: 'Although wetlands occupy only a small fraction of Earth\'s surface, they store a disproportionate share of global soil carbon, host roughly 40% of the world\'s species, and provide water filtration and coastal storm protection.' },
-      { label: 'C', text: 'Wetlands store carbon and filter pollutants, making them important for climate and water quality, and they have been threatened by agricultural drainage for more than a century.' },
-      { label: 'D', text: 'Coastal mangroves protect communities from storm surges, while inland wetlands filter nitrogen and phosphorus from waterways, preventing algal blooms.' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'Choice B directly addresses the goal by contrasting wetlands\' small geographic area with their disproportionately large contributions across multiple categories — carbon storage, biodiversity, water filtration, and storm protection — making the "beyond their footprint" argument explicitly.',
-    wrongAnswerExplanations: {
-      A: 'Choice A focuses on the loss of wetlands rather than on the benefits they provide, so it does not accomplish the stated goal of arguing for their outsized value.',
-      C: 'Choice C includes some benefits but also shifts focus to the threat of drainage, muddying the argument; it does not emphasize the disproportion between small area and large benefit as clearly as Choice B.',
-      D: 'Choice D describes only two specific benefits (storm protection and water filtration) and does not make the broader argument about benefits exceeding the geographic footprint.',
-    },
-  },
-
+  // ─── Q26 · Expression of Ideas · Transitions · hard ─────────────────────────
   {
     id: 'sat-f3-rw-m1-q26',
     section: 'reading-writing',
     moduleId: 'f3-rw-module-1',
     domain: 'Expression of Ideas',
-    skill: 'Rhetorical Synthesis',
-    difficulty: 'medium',
-    stimulus: 'A student is writing a report on the relationship between sleep duration and academic performance. She has compiled the following notes:\n• A study of 1,500 high school students found that students who slept fewer than six hours per night scored an average of 12 points lower on standardized tests than students who slept eight or more hours.\n• Researchers found that sleep-deprived students showed impaired working memory and slower reaction times on cognitive tasks.\n• Students who maintained consistent sleep schedules — even if total hours varied — performed better than students with irregular sleep patterns.\n• School districts that shifted start times later to allow more sleep reported higher attendance rates and fewer disciplinary incidents.',
-    question: 'The student wants to emphasize that inadequate sleep affects both cognitive performance and school-level outcomes. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
+    skill: 'Transitions',
+    difficulty: 'hard',
+    stimulus:
+      'The scientific case for anthropogenic climate change rests on multiple independent lines of evidence: instrumental temperature records, ice core data, ocean heat content measurements, and satellite observations of outgoing infrared radiation. _______, the same basic warming trend emerges regardless of which dataset or measurement technique is applied, substantially reducing the likelihood that the signal reflects methodological artifacts.',
+    question:
+      'Which choice completes the text with the most logical transition?',
     choices: [
-      { label: 'A', text: 'Sleep deprivation reduces scores by 12 points, impairs working memory, and slows reaction times, making it the primary cause of academic underperformance in high schools.' },
-      { label: 'B', text: 'Students who sleep fewer than six hours score lower on standardized tests and show impaired working memory, suggesting that sleep duration is the most important factor in academic success.' },
-      { label: 'C', text: 'Consistent sleep schedules are associated with better performance, and school districts that shifted start times later saw improvements in attendance.' },
-      { label: 'D', text: 'Insufficient sleep impairs working memory and reduces standardized test scores, while later school start times — which allow more sleep — have been linked to higher attendance and fewer disciplinary problems.' },
+      { label: 'A', text: 'Therefore' },
+      { label: 'B', text: 'Strikingly' },
+      { label: 'C', text: 'By contrast' },
+      { label: 'D', text: 'As a caveat' },
     ],
-    correctAnswer: 'D',
-    explanation: 'Choice A draws on two categories of evidence: cognitive effects (working memory, standardized test scores) and school-level outcomes (attendance, discipline). This directly fulfills the goal of addressing both types of impact.',
+    correctAnswer: 'B',
+    explanation:
+      '"Strikingly" introduces the second sentence as a noteworthy observation about what the multiple evidence lines show. The logical relationship here is that despite coming from different measurement methods, all converge — a convergence the writer frames as remarkable and significant. "Strikingly" captures both the additive and the emphatic quality of that observation.',
     wrongAnswerExplanations: {
-      B: 'This choice focuses only on cognitive/test performance and makes an unsupported claim that sleep is "the most important factor in academic success."',
-      C: 'This choice focuses on schedule consistency and attendance — omitting the cognitive performance dimension the goal requires.',
-      A: 'This choice focuses only on cognitive and test impacts while asserting sleep is "the primary cause" of underperformance, an overstatement not in the notes.',
+      A: '"Therefore" implies the convergence is a logical deduction or result from the first sentence\'s list, but convergence across independent datasets is an empirical observation, not a conclusion derived by logic from listing them.',
+      C: '"By contrast" introduces an opposing point, but the second sentence reinforces and extends the first rather than opposing it.',
+      D: '"As a caveat" introduces a qualification or limitation, but the second sentence strengthens the evidence for warming rather than qualifying it.',
+    },
+  },
+
+  // ─── Q27 · Expression of Ideas · Rhetorical Synthesis · easy ─────────────────
+  {
+    id: 'sat-f3-rw-m1-q27',
+    section: 'reading-writing',
+    moduleId: 'f3-rw-module-1',
+    domain: 'Expression of Ideas',
+    skill: 'Rhetorical Synthesis',
+    difficulty: 'easy',
+    stimulus:
+      'A student is writing an essay about urban heat island mitigation for a city-planning seminar. The student has gathered the following notes:\n• White or reflective roofing materials can reduce rooftop surface temperatures by up to 30°C compared to conventional dark roofing.\n• Green roofs — thin layers of vegetation planted on building tops — reduce stormwater runoff and provide insulation that lowers heating and cooling costs.\n• Street-level tree canopy in cities reduces ambient air temperature by 2–8°C through shading and evapotranspiration.\n• Cool pavement coatings reflect more solar radiation than traditional asphalt, reducing surface temperatures by 10–15°C.\n• Increasing urban vegetation at multiple scales — ground level, mid-height, and rooftop — amplifies each strategy\'s individual cooling effect through combined evapotranspiration.',
+    question:
+      'The student wants to argue that multiple complementary strategies can reduce urban heat island effects across different surfaces. Which choice most effectively uses relevant information from the notes to accomplish this goal?',
+    choices: [
+      { label: 'A', text: 'Green roofs can lower heating and cooling costs and also help manage stormwater, making them a financially attractive option for building owners.' },
+      { label: 'B', text: 'Reflective roofing reduces surface temperatures dramatically, while tree canopy lowers ambient air temperature, and cool pavements reduce surface heat — together addressing heat across rooftop, air, and ground-level surfaces.' },
+      { label: 'C', text: 'Urban heat island effects are caused by dark surfaces, reduced vegetation, and waste heat, and addressing any one of these causes can produce measurable cooling.' },
+      { label: 'D', text: 'Cool pavement coatings can reduce surface temperatures by 10–15°C, making them one of the most effective individual strategies currently available to city planners.' },
+    ],
+    correctAnswer: 'B',
+    explanation:
+      'Choice B directly accomplishes the stated goal: it names multiple strategies (reflective roofing, tree canopy, cool pavements) and explicitly connects each to a different surface type (rooftop, air, ground level), demonstrating that the strategies are complementary and span different surfaces.',
+    wrongAnswerExplanations: {
+      A: 'This choice focuses only on green roofs and emphasizes financial benefits — it neither addresses multiple strategies nor connects them across different surface types.',
+      C: 'This choice describes causes of urban heat islands generally and mentions that addressing "any one" cause helps, but does not demonstrate the complementary multi-surface argument the goal requires.',
+      D: 'This choice highlights only cool pavements and compares it to other strategies — it does not show multiple strategies working together across different surfaces.',
     },
   },
 ]

@@ -1,13 +1,39 @@
 import type { MathQuestion } from './types'
 
 export const f3MathModule2EasyQuestions: MathQuestion[] = [
+  // ── Algebra ×7 (q01–q07) ────────────────────────────────────────────────────
+
+  {
+    id: 'sat-f3-math-m2e-q01',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Algebra',
+    skill: 'Linear equations in one variable',
+    difficulty: 'easy',
+    type: 'multiple_choice',
+    question: 'If 4x + 9 = 29, what is the value of x?',
+    choices: [
+      { label: 'A', text: '4' },
+      { label: 'B', text: '5' },
+      { label: 'C', text: '6' },
+      { label: 'D', text: '7' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'Subtract 9 from both sides: 4x = 20. Divide by 4: x = 5.',
+    wrongAnswerExplanations: {
+      A: 'x = 4 gives 4(4) + 9 = 25 ≠ 29.',
+      C: 'x = 6 gives 4(6) + 9 = 33 ≠ 29.',
+      D: 'x = 7 gives 4(7) + 9 = 37 ≠ 29.',
+    },
+  },
+
   {
     id: 'sat-f3-math-m2e-q02',
     section: 'math',
     moduleId: 'f3-math-module-2-easy',
     domain: 'Algebra',
     skill: 'Linear equations in one variable',
-    difficulty: 'medium',
+    difficulty: 'easy',
     type: 'multiple_choice',
     question: 'If 5x − 3 = 2(x + 6), what is the value of 3x?',
     choices: [
@@ -31,7 +57,7 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     moduleId: 'f3-math-module-2-easy',
     domain: 'Algebra',
     skill: 'Linear functions',
-    difficulty: 'medium',
+    difficulty: 'easy',
     type: 'multiple_choice',
     question: 'The linear function f satisfies f(2) = 7 and f(5) = 16. What is the value of f(0)?',
     choices: [
@@ -55,7 +81,7 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     moduleId: 'f3-math-module-2-easy',
     domain: 'Algebra',
     skill: 'Linear functions',
-    difficulty: 'medium',
+    difficulty: 'easy',
     type: 'multiple_choice',
     question: 'A driver decreases speed uniformly from 60 mph to 30 mph over 15 minutes. Which equation models the speed v (in mph) after t minutes?',
     choices: [
@@ -65,11 +91,11 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
       { label: 'D', text: 'v = 30t − 60' },
     ],
     correctAnswer: 'B',
-    explanation: 'The rate of decrease = (60 − 30)/15 = 2 mph per minute, starting from 60. So v = 60 − 2t. Check: at t = 15, v = 60 − 30 = 30.',
+    explanation: 'The rate of decrease = (60 − 30)/15 = 2 mph per minute, starting from 60. So v = 60 − 2t. Check: at t = 15, v = 60 − 30 = 30. ✓',
     wrongAnswerExplanations: {
       A: 'v = 60 − t decreases only 1 mph per minute, reaching 45 at t = 15, not 30.',
       C: 'v = 30 + 2t increases speed and starts at 30, not 60.',
-      D: 'v = 30t − 60 is not decreasing and gives nonsensical speeds.',
+      D: 'v = 30t − 60 is not a decreasing function and gives nonsensical speeds.',
     },
   },
 
@@ -79,22 +105,13 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     moduleId: 'f3-math-module-2-easy',
     domain: 'Algebra',
     skill: 'Systems of two linear equations in two variables',
-    difficulty: 'medium',
-    type: 'multiple_choice',
+    difficulty: 'easy',
+    type: 'grid_in',
     question: 'Amara has some $5 bills and some $10 bills. She has 10 bills in total and they are worth $80. How many $5 bills does she have?',
-    choices: [
-      { label: 'A', text: '3' },
-      { label: 'B', text: '4' },
-      { label: 'C', text: '5' },
-      { label: 'D', text: '6' },
-    ],
-    correctAnswer: 'B',
+    correctAnswer: '4',
+    acceptableAnswers: ['4'],
     explanation: 'Let f = number of $5 bills and t = number of $10 bills. f + t = 10 and 5f + 10t = 80. Substitute t = 10 − f: 5f + 10(10 − f) = 80 → 100 − 5f = 80 → f = 4.',
-    wrongAnswerExplanations: {
-      A: 'f = 3 gives value 5(3) + 10(7) = 85 ≠ 80.',
-      C: 'f = 5 gives 5(5) + 10(5) = 75 ≠ 80.',
-      D: 'f = 6 gives 5(6) + 10(4) = 70 ≠ 80.',
-    },
+    scoringNotes: 'Only 4 is acceptable.',
   },
 
   {
@@ -127,7 +144,7 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     moduleId: 'f3-math-module-2-easy',
     domain: 'Algebra',
     skill: 'Linear equations in two variables',
-    difficulty: 'medium',
+    difficulty: 'hard',
     type: 'multiple_choice',
     question: 'Line m has a slope of 3/4 and passes through the point (8, 5). What is the y-intercept of line m?',
     choices: [
@@ -145,29 +162,144 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     },
   },
 
+  // ── Advanced Math ×6 (q08–q13) ──────────────────────────────────────────────
+
   {
     id: 'sat-f3-math-m2e-q08',
     section: 'math',
     moduleId: 'f3-math-module-2-easy',
-    domain: 'Algebra',
-    skill: 'Systems of two linear equations in two variables',
-    difficulty: 'medium',
+    domain: 'Advanced Math',
+    skill: 'Equivalent expressions',
+    difficulty: 'easy',
     type: 'multiple_choice',
-    question: 'A store sells small and large bags of trail mix. Small bags cost $3 and large bags cost $7. A customer buys 8 bags and spends $36. How many large bags did the customer buy?',
+    question: 'Which expression is equivalent to (x + 3)(x − 3) + 2x(x + 1)?',
     choices: [
-      { label: 'A', text: '2' },
-      { label: 'B', text: '3' },
-      { label: 'C', text: '4' },
-      { label: 'D', text: '5' },
+      { label: 'A', text: '3x² + 2x − 9' },
+      { label: 'B', text: 'x² + 2x − 9' },
+      { label: 'C', text: '3x² + 2x + 9' },
+      { label: 'D', text: '3x² − 2x − 9' },
     ],
-    correctAnswer: 'B',
-    explanation: 'Let s = small bags, L = large bags. s + L = 8 and 3s + 7L = 36. From the first: s = 8 − L. Substituting: 3(8 − L) + 7L = 36 → 24 − 3L + 7L = 36 → 4L = 12 → L = 3.',
+    correctAnswer: 'A',
+    explanation: '(x + 3)(x − 3) = x² − 9 and 2x(x + 1) = 2x² + 2x. Adding: (x² − 9) + (2x² + 2x) = 3x² + 2x − 9.',
     wrongAnswerExplanations: {
-      A: '3(6) + 7(2) = 18 + 14 = 32 ≠ 36.',
-      C: '3(4) + 7(4) = 12 + 28 = 40 ≠ 36.',
-      D: '3(3) + 7(5) = 9 + 35 = 44 ≠ 36.',
+      B: 'x² + 2x − 9 forgets the 2x² term from 2x(x + 1).',
+      C: '3x² + 2x + 9 has the wrong constant sign; (x + 3)(x − 3) = x² − 9, not x² + 9.',
+      D: '3x² − 2x − 9 has the wrong sign on the linear term; 2x(x + 1) contributes +2x.',
     },
   },
+
+  {
+    id: 'sat-f3-math-m2e-q09',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Quadratic functions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'The function p(x) = x² − 5x + 6. What are the zeros of p(x)?',
+    choices: [
+      { label: 'A', text: 'x = 1 and x = 6' },
+      { label: 'B', text: 'x = 5 and x = 1' },
+      { label: 'C', text: 'x = −2 and x = −3' },
+      { label: 'D', text: 'x = 2 and x = 3' },
+    ],
+    correctAnswer: 'D',
+    explanation: 'Factor: x² − 5x + 6 = (x − 2)(x − 3). Setting each factor to zero: x = 2 and x = 3.',
+    wrongAnswerExplanations: {
+      A: '(1)(6) = 6 and 1 + 6 = 7 ≠ −5; these factors do not work.',
+      C: '(x+2)(x+3) = x² + 5x + 6, not x² − 5x + 6.',
+      B: '(x−5)(x−1) = x² − 6x + 5 ≠ x² − 5x + 6.',
+    },
+  },
+
+  {
+    id: 'sat-f3-math-m2e-q10',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear equations in one variable',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'Which values of x satisfy x² − x − 12 = 0?',
+    choices: [
+      { label: 'A', text: 'x = 3 and x = −4' },
+      { label: 'B', text: 'x = 4 and x = 3' },
+      { label: 'C', text: 'x = 4 and x = −3' },
+      { label: 'D', text: 'x = −4 and x = −3' },
+    ],
+    correctAnswer: 'C',
+    explanation: 'Factor: x² − x − 12 = (x − 4)(x + 3). Setting each to zero: x = 4 and x = −3.',
+    wrongAnswerExplanations: {
+      A: '(x−3)(x+4) = x² + x − 12, with a positive middle term, not x² − x − 12.',
+      B: '(x−4)(x−3) = x² − 7x + 12, not x² − x − 12.',
+      D: '(x+4)(x+3) = x² + 7x + 12, not x² − x − 12.',
+    },
+  },
+
+  {
+    id: 'sat-f3-math-m2e-q11',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Equivalent expressions',
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    question: 'Which of the following is equivalent to (x + 4)² − 16?',
+    choices: [
+      { label: 'A', text: 'x² + 8x' },
+      { label: 'B', text: 'x² + 8x + 32' },
+      { label: 'C', text: 'x² + 16' },
+      { label: 'D', text: 'x² − 16' },
+    ],
+    correctAnswer: 'A',
+    explanation: '(x + 4)² − 16 = x² + 8x + 16 − 16 = x² + 8x.',
+    wrongAnswerExplanations: {
+      B: 'This is (x+4)² = x² + 8x + 16, without subtracting 16.',
+      C: 'x² + 16 is not the correct expansion of this expression.',
+      D: 'x² − 16 = (x−4)(x+4), which is not the same as (x+4)² − 16.',
+    },
+  },
+
+  {
+    id: 'sat-f3-math-m2e-q12',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Quadratic functions',
+    difficulty: 'hard',
+    type: 'multiple_choice',
+    question: 'The function h(x) = −2(x − 1)² + 8. What are the coordinates of the vertex?',
+    choices: [
+      { label: 'A', text: '(−1, 8)' },
+      { label: 'B', text: '(1, 8)' },
+      { label: 'C', text: '(1, −8)' },
+      { label: 'D', text: '(2, 8)' },
+    ],
+    correctAnswer: 'B',
+    explanation: 'In vertex form h(x) = a(x − h)² + k, the vertex is at (h, k). Here a = −2, h = 1, k = 8, so the vertex is at (1, 8).',
+    wrongAnswerExplanations: {
+      A: 'The vertex x-coordinate is h = 1 (not −1) because the form is (x − h)²; x = 1 makes the squared term zero.',
+      C: 'The vertex y-value k = 8 is positive, not −8.',
+      D: 'The value 1 in (x − 1)² means x = 1, not x = 2.',
+    },
+  },
+
+  {
+    id: 'sat-f3-math-m2e-q13',
+    section: 'math',
+    moduleId: 'f3-math-module-2-easy',
+    domain: 'Advanced Math',
+    skill: 'Nonlinear functions',
+    difficulty: 'hard',
+    type: 'grid_in',
+    question: 'If f(x) = 3x² − 2x + 1, what is the value of f(−2)?',
+    correctAnswer: '17',
+    acceptableAnswers: ['17'],
+    explanation: 'f(−2) = 3(−2)² − 2(−2) + 1 = 3(4) + 4 + 1 = 12 + 4 + 1 = 17.',
+    scoringNotes: 'Only 17 is acceptable.',
+  },
+
+  // ── Problem-Solving and Data Analysis ×5 (q14–q18) ─────────────────────────
 
   {
     id: 'sat-f3-math-m2e-q14',
@@ -175,7 +307,7 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     moduleId: 'f3-math-module-2-easy',
     domain: 'Problem-Solving and Data Analysis',
     skill: 'Ratios, rates, proportional relationships, and units',
-    difficulty: 'medium',
+    difficulty: 'easy',
     type: 'multiple_choice',
     question: 'A pool contains 1,800 gallons of water. It drains at 40 gallons per minute and is simultaneously filled at 25 gallons per minute. How many minutes will it take to empty the pool?',
     choices: [
@@ -211,9 +343,9 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'Let wholesale = 100. Retail = 100 × 1.60 = 160. Clearance = 160 × 0.75 = 120. So the clearance price is 120% of the wholesale cost.',
     wrongAnswerExplanations: {
-      A: '80% subtracts the percentages (60% − 25% − ...) instead of applying them multiplicatively.',
-      B: '100% assumes the two changes cancel, but the discount applies to the marked-up 160.',
-      D: '135% ignores the 25% discount being applied to 160.',
+      A: '80% subtracts the percentages incorrectly instead of applying them multiplicatively.',
+      B: '100% assumes the two changes cancel, but the discount applies to the marked-up price of 160, not 100.',
+      D: '135% ignores the 25% discount.',
     },
   },
 
@@ -224,21 +356,12 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     domain: 'Problem-Solving and Data Analysis',
     skill: 'One-variable data: distributions and measures of center and spread',
     difficulty: 'medium',
-    type: 'multiple_choice',
+    type: 'grid_in',
     question: 'The ages (in years) of 6 employees at a company are: 24, 31, 37, 42, 47, and 55. What is the median age?',
-    choices: [
-      { label: 'A', text: '37' },
-      { label: 'B', text: '39' },
-      { label: 'C', text: '39.5' },
-      { label: 'D', text: '42' },
-    ],
-    correctAnswer: 'C',
+    correctAnswer: '39.5',
+    acceptableAnswers: ['39.5', '79/2'],
     explanation: 'With an even number of values, the median is the average of the two middle values. The data in order: 24, 31, 37, 42, 47, 55. The two middle values are 37 and 42. Median = (37 + 42)/2 = 39.5.',
-    wrongAnswerExplanations: {
-      A: '37 is the third value but not the median when there are 6 values.',
-      B: '39 is not the arithmetic mean of 37 and 42.',
-      D: '42 is the fourth value but is not the median alone for a 6-value dataset.',
-    },
+    scoringNotes: 'Accept 39.5 or 79/2.',
   },
 
   {
@@ -261,7 +384,7 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     wrongAnswerExplanations: {
       A: '1/3 does not match 10/12.',
       B: '5/9 would use a homework total of 18, not 12.',
-      D: '9/10 inverts the ratio; the correct fraction is 10/12 = 5/6.',
+      D: '9/10 inverts a different ratio; the correct fraction is 10/12 = 5/6.',
     },
   },
 
@@ -271,151 +394,24 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     moduleId: 'f3-math-module-2-easy',
     domain: 'Problem-Solving and Data Analysis',
     skill: 'Two-variable data: models and scatterplots',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'A linear model for study time (hours) and exam score (points) is: Score = 12(hours) + 55. According to this model, what score would a student who studies for 3.5 hours be predicted to earn?',
-    choices: [
-      { label: 'A', text: '95' },
-      { label: 'B', text: '103' },
-      { label: 'C', text: '99' },
-      { label: 'D', text: '97' },
-    ],
-    correctAnswer: 'D',
-    explanation: 'Score = 12(3.5) + 55 = 42 + 55 = 97.',
-    wrongAnswerExplanations: {
-      A: 'Score = 95 would require 12h + 55 = 95 → h = 40/12 ≈ 3.33, not 3.5.',
-      C: 'Score = 99 would require 12h = 44 → h ≈ 3.67, not 3.5.',
-      B: '12(4) + 55 = 103 corresponds to 4 hours, not 3.5.',
-    },
+    difficulty: 'hard',
+    type: 'grid_in',
+    question: 'A linear model for study time (hours) and exam score (points) is: Score = 12(hours) + 55. A student scored 97 on the exam. According to this model, how many hours did the student study?',
+    correctAnswer: '3.5',
+    acceptableAnswers: ['3.5', '7/2'],
+    explanation: '97 = 12h + 55 → 12h = 42 → h = 42/12 = 3.5 hours.',
+    scoringNotes: 'Accept 3.5 or 7/2.',
   },
 
-  {
-    id: 'sat-f3-math-m2e-q09',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'Which expression is equivalent to (x + 3)(x − 3) + 2x(x + 1)?',
-    choices: [
-      { label: 'A', text: '3x² + 2x − 9' },
-      { label: 'B', text: 'x² + 2x − 9' },
-      { label: 'C', text: '3x² + 2x + 9' },
-      { label: 'D', text: '3x² − 2x − 9' },
-    ],
-    correctAnswer: 'A',
-    explanation: '(x + 3)(x − 3) = x² − 9 and 2x(x + 1) = 2x² + 2x. Adding: (x² − 9) + (2x² + 2x) = 3x² + 2x − 9.',
-    wrongAnswerExplanations: {
-      B: 'x² + 2x − 9 forgets the 2x² term from 2x(x + 1).',
-      C: '3x² + 2x + 9 has the wrong constant sign; (x + 3)(x − 3) = x² − 9.',
-      D: '3x² − 2x − 9 has the wrong sign on the linear term; 2x(x + 1) contributes +2x.',
-    },
-  },
+  // ── Geometry and Trigonometry ×4 (q19–q22) ──────────────────────────────────
 
   {
-    id: 'sat-f3-math-m2e-q10',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Quadratic functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'The function p(x) = x² − 5x + 6. What are the zeros of p(x)?',
-    choices: [
-      { label: 'A', text: 'x = 1 and x = 6' },
-      { label: 'B', text: 'x = 5 and x = 1' },
-      { label: 'C', text: 'x = −2 and x = −3' },
-      { label: 'D', text: 'x = 2 and x = 3' },
-    ],
-    correctAnswer: 'D',
-    explanation: 'Factor: x² − 5x + 6 = (x − 2)(x − 3). Setting each factor to zero: x = 2 and x = 3.',
-    wrongAnswerExplanations: {
-      A: '(1)(6) = 6 and 1 + 6 = 7 ≠ −5; these factors don\'t work.',
-      C: '(x+2)(x+3) = x² + 5x + 6, not x² − 5x + 6.',
-      B: '(x−5)(x−1) = x² − 6x + 5 ≠ x² − 5x + 6.',
-    },
-  },
-
-  {
-    id: 'sat-f3-math-m2e-q11',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Nonlinear equations in one variable',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'Which values of x satisfy x² − x − 12 = 0?',
-    choices: [
-      { label: 'A', text: 'x = 3 and x = −4' },
-      { label: 'B', text: 'x = 4 and x = 3' },
-      { label: 'C', text: 'x = 4 and x = −3' },
-      { label: 'D', text: 'x = −4 and x = −3' },
-    ],
-    correctAnswer: 'C',
-    explanation: 'Factor: x² − x − 12 = (x − 4)(x + 3). Setting each to zero: x = 4 and x = −3.',
-    wrongAnswerExplanations: {
-      A: '(x−3)(x+4) = x² + x − 12, with a positive middle term, not x² − x − 12.',
-      B: '(x−4)(x−3) = x² − 7x + 12, not x² − x − 12.',
-      D: '(x+4)(x+3) = x² + 7x + 12, not x² − x − 12.',
-    },
-  },
-
-  {
-    id: 'sat-f3-math-m2e-q12',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Equivalent expressions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'Which of the following is equivalent to (x + 4)² − 16?',
-    choices: [
-      { label: 'A', text: 'x² + 8x' },
-      { label: 'B', text: 'x² + 8x + 32' },
-      { label: 'C', text: 'x² + 16' },
-      { label: 'D', text: 'x² − 16' },
-    ],
-    correctAnswer: 'A',
-    explanation: '(x + 4)² − 16 = x² + 8x + 16 − 16 = x² + 8x.',
-    wrongAnswerExplanations: {
-      B: 'This is (x+4)² = x² + 8x + 16, without subtracting 16.',
-      C: 'x² + 16 is not the correct expansion of this expression.',
-      D: 'x² − 16 would be (x−4)(x+4), not (x+4)² − 16.',
-    },
-  },
-
-  {
-    id: 'sat-f3-math-m2e-q13',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Advanced Math',
-    skill: 'Quadratic functions',
-    difficulty: 'medium',
-    type: 'multiple_choice',
-    question: 'The function h(x) = −2(x − 1)² + 8. What are the coordinates of the vertex?',
-    choices: [
-      { label: 'A', text: '(−1, 8)' },
-      { label: 'B', text: '(1, 8)' },
-      { label: 'C', text: '(1, −8)' },
-      { label: 'D', text: '(2, 8)' },
-    ],
-    correctAnswer: 'B',
-    explanation: 'In vertex form h(x) = a(x − h)² + k, the vertex is at (h, k). Here a = −2, h = 1, k = 8, so the vertex is at (1, 8).',
-    wrongAnswerExplanations: {
-      A: 'The vertex x-coordinate is h = 1 (not −1) because the form is (x − h)², meaning x = 1 makes the squared term zero.',
-      C: 'The vertex y-value k = 8 is positive, not −8.',
-      D: 'h = 1 in the formula (x − 1)², not 2.',
-    },
-  },
-
-  {
-    id: 'sat-f3-math-m2e-q01',
+    id: 'sat-f3-math-m2e-q19',
     section: 'math',
     moduleId: 'f3-math-module-2-easy',
     domain: 'Geometry and Trigonometry',
     skill: 'Lines, angles, and triangles',
-    difficulty: 'medium',
+    difficulty: 'easy',
     type: 'multiple_choice',
     question: 'In triangle ABC, angle A is twice angle B, and angle C = 60°. What is the measure of angle B in degrees?',
     choices: [
@@ -434,7 +430,7 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
   },
 
   {
-    id: 'sat-f3-math-m2e-q19',
+    id: 'sat-f3-math-m2e-q20',
     section: 'math',
     moduleId: 'f3-math-module-2-easy',
     domain: 'Geometry and Trigonometry',
@@ -452,17 +448,17 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     explanation: 'sin(R) = 5/13 means the opposite side = 5 and hypotenuse = 13. The adjacent side = √(13² − 5²) = √144 = 12. So cos(R) = 12/13.',
     wrongAnswerExplanations: {
       A: '5/12 = tan(R), not cos(R).',
-      C: '13/12 exceeds 1, which is impossible for a cosine.',
+      C: '13/12 exceeds 1, which is impossible for a cosine value.',
       D: '5/13 = sin(R), not cos(R).',
     },
   },
 
   {
-    id: 'sat-f3-math-m2e-q20',
+    id: 'sat-f3-math-m2e-q21',
     section: 'math',
     moduleId: 'f3-math-module-2-easy',
     domain: 'Geometry and Trigonometry',
-    skill: 'Circles',
+    skill: 'Area and volume',
     difficulty: 'medium',
     type: 'multiple_choice',
     question: 'A circle has a circumference of 20π. What is the area of the circle?',
@@ -476,13 +472,13 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     explanation: 'Circumference = 2πr = 20π → r = 10. Area = πr² = π(10)² = 100π.',
     wrongAnswerExplanations: {
       A: 'This uses r instead of r² in the area formula.',
-      C: 'This uses the diameter (20) instead of the radius (10) in the area formula: π(20)² = 400π.',
+      C: 'This uses the diameter (20) instead of the radius (10): π(20)² = 400π.',
       D: '40π has no basis in the correct formula.',
     },
   },
 
   {
-    id: 'sat-f3-math-m2e-q21',
+    id: 'sat-f3-math-m2e-q22',
     section: 'math',
     moduleId: 'f3-math-module-2-easy',
     domain: 'Geometry and Trigonometry',
@@ -493,19 +489,6 @@ export const f3MathModule2EasyQuestions: MathQuestion[] = [
     correctAnswer: '24',
     acceptableAnswers: ['24'],
     explanation: 'The other leg = √(25² − 7²) = √(625 − 49) = √576 = 24.',
-  },
-
-  {
-    id: 'sat-f3-math-m2e-q22',
-    section: 'math',
-    moduleId: 'f3-math-module-2-easy',
-    domain: 'Geometry and Trigonometry',
-    skill: 'Area and volume',
-    difficulty: 'medium',
-    type: 'grid_in',
-    question: 'A circle has an area of 49π square inches. What is the diameter of the circle, in inches?',
-    correctAnswer: '14',
-    acceptableAnswers: ['14'],
-    explanation: 'πr² = 49π → r² = 49 → r = 7. The diameter = 2r = 14 inches.',
+    scoringNotes: 'Only 24 is acceptable.',
   },
 ]

@@ -1,50 +1,33 @@
-import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { isMockMateAdmin } from '@/lib/auth/admin'
-import { getOrCreateFreeExamAccess, isFreeExamExpired, formatFreeExamCountdown } from '@/lib/premade-exams/sat/free-exam-access'
-import { getEntitlements } from '@/lib/entitlements'
 import SATExamTakerClient from './SATExamTakerClient'
-import FreeExamExpiredScreen from '@/components/premade/FreeExamExpiredScreen'
+import SATForm2LockedScreen from '@/components/premade/SATForm2LockedScreen'
 
+// SAT Form 2 is locked for all non-admin users.
+// Admin (ranvi.contact@gmail.com) retains full access.
+// Historical results and in-progress data are preserved — only new/resumed activity is blocked.
 export default async function SATForm2Page() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   const isAdmin = isMockMateAdmin(user)
 
-  if (user && !isAdmin) {
-    const { satUpgradeUnlocked } = await getEntitlements()
-
-    if (satUpgradeUnlocked) {
-      return <SATExamTakerClient isAdmin={false} />
-    }
-
-    // Free user: completed check redirects to results (one-attempt rule)
-    const { data: completed } = await supabase
-      .from('standardized_exam_attempts')
-      .select('local_attempt_id')
-      .eq('user_id', user.id)
-      .eq('exam_type', 'SAT')
-      .eq('form_number', 2)
-      .not('completed_at', 'is', null)
-      .order('completed_at', { ascending: false })
-      .limit(1)
-      .maybeSingle()
-
-    if (completed?.local_attempt_id) {
-      redirect(`/premade/sat/form-2/results/${completed.local_attempt_id}`)
-    }
-
-    // Access window check — auto-creates the row for new users
-    const access = await getOrCreateFreeExamAccess(supabase, user)
-
-    if (isFreeExamExpired(access)) {
-      return <FreeExamExpiredScreen />
-    }
-
-    const countdown = formatFreeExamCountdown(access)
-    return <SATExamTakerClient isAdmin={false} countdownText={countdown} />
+  // Admin bypass
+  if (isAdmin) {
+    return <SATExamTakerClient isAdmin={true} />
   }
 
-  return <SATExamTakerClient isAdmin={isAdmin} />
+  // Non-admin: check for in-progress attempt so we can show appropriate copy
+  let hadInProgress = false
+  if (user) {
+    const { data } = await supabase
+      .from('sat_in_progress_attempts')
+      .select('local_attempt_id')
+      .eq('user_id', user.id)
+      .eq('form_number', 2)
+      .maybeSingle()
+    hadInProgress = !!data
+  }
+
+  return <SATForm2LockedScreen hadInProgress={hadInProgress} />
 }
