@@ -91,9 +91,12 @@ export async function POST(req: NextRequest) {
 
   const isAdmin = isMockMateAdmin(user)
 
-  // Form 2: locked for all non-admin users — preserve existing rows, block new writes
+  // Form 2: requires admin or SAT Premium
   if (body.formNumber === 2 && !isAdmin) {
-    return NextResponse.json({ error: 'SAT Form 2 is currently unavailable.' }, { status: 403 })
+    const { satUpgradeUnlocked } = await getEntitlements()
+    if (!satUpgradeUnlocked) {
+      return NextResponse.json({ error: 'SAT Form 2 requires SAT Premium.' }, { status: 403 })
+    }
   }
 
   // Form 3: non-admin, non-premium users need active promotion window to autosave
@@ -192,9 +195,12 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid formNumber' }, { status: 400 })
   }
 
-  // Form 2 non-admin: preserve in-progress data (spec: timer and state kept for possible restoration)
+  // Form 2 non-admin, non-premium: preserve in-progress data
   if (formNumber === 2 && !isMockMateAdmin(user)) {
-    return NextResponse.json({ ok: true, skipped: 'form2-locked' })
+    const { satUpgradeUnlocked } = await getEntitlements()
+    if (!satUpgradeUnlocked) {
+      return NextResponse.json({ ok: true, skipped: 'form2-locked' })
+    }
   }
 
   const { error } = await supabase

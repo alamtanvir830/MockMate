@@ -8,6 +8,8 @@ import { SatForm1BadgeCountdown } from '@/components/sat/SatForm1Countdown'
 import { Form3CountdownBadge } from '@/components/sat/Form3CountdownBadge'
 import { ExamHistoryNotice } from '@/components/premade/ExamHistoryNotice'
 
+export const dynamic = 'force-dynamic'
+
 const cardDetails = [
   'Reading & Writing + Math',
   '98 questions',
@@ -235,16 +237,16 @@ export default async function SATPremadePage() {
               <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-slate-400">1</span>
               </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-[10px] font-semibold text-slate-500">
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-2.5 w-2.5 shrink-0">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                 </svg>
-                Premium
+                SAT Premium
               </span>
             </div>
             <h2 className="font-semibold text-slate-500 mb-1">Form 1</h2>
-            <p className="text-xs text-slate-400 mb-4">Unlock with SAT Premium to access this form.</p>
-            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700 transition-colors">
+            <p className="text-xs text-slate-400 mb-4">SAT Premium required to access this form.</p>
+            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
               Get SAT Premium
             </Link>
           </div>
@@ -290,19 +292,41 @@ export default async function SATPremadePage() {
               ))}
             </ul>
           </Link>
+        ) : satUpgradeUnlocked ? (
+          <Link href="/premade/sat/form-2" className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+            <div className="flex items-start justify-between mb-4">
+              <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-indigo-600">2</span>
+              </div>
+            </div>
+            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-3">Form 2</h2>
+            <ul className="space-y-1.5 mt-auto">
+              {cardDetails.map((d) => (
+                <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
+                  <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />{d}
+                </li>
+              ))}
+            </ul>
+          </Link>
         ) : (
-          /* All non-admin: currently unavailable */
+          /* Non-premium, non-admin: SAT Premium required */
           <div className="rounded-xl border border-slate-200 bg-slate-50 p-6 flex flex-col opacity-80">
             <div className="flex items-start justify-between mb-4">
               <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-slate-400">2</span>
               </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-[10px] font-semibold text-slate-500">
-                Currently Unavailable
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-2.5 w-2.5 shrink-0">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                </svg>
+                SAT Premium
               </span>
             </div>
             <h2 className="font-semibold text-slate-500 mb-1">Form 2</h2>
-            <p className="text-xs text-slate-400">SAT Form 2 is currently locked.</p>
+            <p className="text-xs text-slate-400 mb-4">SAT Premium required to access this form.</p>
+            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
+              Get SAT Premium
+            </Link>
           </div>
         )}
 
@@ -392,17 +416,17 @@ export default async function SATPremadePage() {
               <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-slate-400">3</span>
               </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-[10px] font-semibold text-slate-500">
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-2.5 w-2.5 shrink-0">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                 </svg>
-                Locked
+                SAT Premium
               </span>
             </div>
             <h2 className="font-semibold text-slate-500 mb-1">Form 3</h2>
-            <p className="text-xs text-slate-400 mb-4">Unlock to access this full-length adaptive practice exam.</p>
-            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700 transition-colors">
-              Unlock SAT Forms
+            <p className="text-xs text-slate-400 mb-4">SAT Premium required to access this form.</p>
+            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
+              Get SAT Premium
             </Link>
           </div>
         )}
@@ -431,17 +455,17 @@ export default async function SATPremadePage() {
               <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-slate-400">4</span>
               </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-[10px] font-semibold text-slate-500">
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-2.5 w-2.5 shrink-0">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                 </svg>
-                Locked
+                SAT Premium
               </span>
             </div>
             <h2 className="font-semibold text-slate-500 mb-1">Form 4</h2>
-            <p className="text-xs text-slate-400 mb-4">Unlock to access this full-length adaptive practice exam.</p>
-            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700 transition-colors">
-              Unlock SAT Forms
+            <p className="text-xs text-slate-400 mb-4">SAT Premium required to access this form.</p>
+            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
+              Get SAT Premium
             </Link>
           </div>
         )}
@@ -470,17 +494,17 @@ export default async function SATPremadePage() {
               <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-slate-400">5</span>
               </div>
-              <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-[10px] font-semibold text-slate-500">
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-2.5 w-2.5 shrink-0">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                 </svg>
-                Locked
+                SAT Premium
               </span>
             </div>
             <h2 className="font-semibold text-slate-500 mb-1">Form 5</h2>
-            <p className="text-xs text-slate-400 mb-4">Unlock to access this full-length adaptive practice exam.</p>
-            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white hover:bg-indigo-700 transition-colors">
-              Unlock SAT Forms
+            <p className="text-xs text-slate-400 mb-4">SAT Premium required to access this form.</p>
+            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
+              Get SAT Premium
             </Link>
           </div>
         )}

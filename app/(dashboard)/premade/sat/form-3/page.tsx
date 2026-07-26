@@ -5,6 +5,8 @@ import { UpgradeGate } from '@/components/shared/upgrade-gate'
 import { getForm3Promotion, resolveForm3Access } from '@/lib/premade-exams/sat/form3-promotion-access'
 import SATExamTakerClient from './SATExamTakerClient'
 
+export const dynamic = 'force-dynamic'
+
 export default async function SATForm3Page() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

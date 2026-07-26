@@ -55,9 +55,12 @@ export async function POST(req: NextRequest) {
 
     const isAdmin = isMockMateAdmin(user)
 
-    // Form 2: locked for all non-admin users
+    // Form 2: requires admin or SAT Premium
     if (body.formNumber === 2 && !isAdmin) {
-      return NextResponse.json({ error: 'SAT Form 2 is currently unavailable.' }, { status: 403 })
+      const { satUpgradeUnlocked } = await getEntitlements()
+      if (!satUpgradeUnlocked) {
+        return NextResponse.json({ error: 'SAT Form 2 requires SAT Premium.' }, { status: 403 })
+      }
     }
 
     // Form 3: non-admin, non-premium must be eligible and either have active window
