@@ -956,6 +956,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
   const [feedbackMathM1, setFeedbackMathM1] = useState('')
   const [feedbackMathM2, setFeedbackMathM2] = useState('')
   const [feedbackTouched, setFeedbackTouched] = useState({ rwM1: false, rwM2: false, mathM1: false, mathM2: false })
+  const [feedbackPreviousSatScoreAndPrep, setFeedbackPreviousSatScoreAndPrep] = useState('')
   const [feedbackPremiumInterest, setFeedbackPremiumInterest] = useState<'yes' | 'no' | null>(null)
   const [feedbackPremiumTouched, setFeedbackPremiumTouched] = useState(false)
   const [feedbackReferredByFriend, setFeedbackReferredByFriend] = useState<boolean | null>(null)
@@ -1533,6 +1534,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     completedAtRef.current = ''
     setFeedbackRWM1(''); setFeedbackRWM2(''); setFeedbackMathM1(''); setFeedbackMathM2('')
     setFeedbackTouched({ rwM1: false, rwM2: false, mathM1: false, mathM2: false })
+    setFeedbackPreviousSatScoreAndPrep('')
     setFeedbackSubmitting(false); setFeedbackError('')
   }, [])
 
@@ -2176,6 +2178,9 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
             rwModule2Path:             rwM2Type,
             mathModule2Path:           mathM2Type,
             satPremiumInterestAnswer:  feedbackPremiumInterest,
+            ...(feedbackPreviousSatScoreAndPrep.trim()
+              ? { previousSatScoreAndPrep: feedbackPreviousSatScoreAndPrep.trim() }
+              : {}),
             referredByFriend:          feedbackReferredByFriend,
             referrerFullName,
             referrerEmail,
@@ -2250,6 +2255,33 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   </div>
                 )
               })}
+
+              {/* Optional: prior SAT score and prep resource */}
+              <div>
+                <label htmlFor="feedback-prior-score" className="flex items-center gap-2 text-[13px] font-semibold text-slate-700 mb-1.5">
+                  What was your most recent SAT score, and what company or resource did you use to prepare?
+                  <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-500 leading-none">
+                    Optional
+                  </span>
+                </label>
+                <textarea
+                  id="feedback-prior-score"
+                  value={feedbackPreviousSatScoreAndPrep}
+                  onChange={e => setFeedbackPreviousSatScoreAndPrep(e.target.value.slice(0, 300))}
+                  placeholder="1400 - College Board Exam 2"
+                  rows={2}
+                  maxLength={300}
+                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13px] text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-colors min-h-[44px]"
+                />
+                <p className="text-[11px] text-slate-400 mt-1">
+                  You may include a score, practice-test source, prep company, tutor, book, course, or self-study resource.
+                </p>
+                <div className="flex justify-end mt-0.5">
+                  <span className="text-[11px] text-slate-400">
+                    {feedbackPreviousSatScoreAndPrep.trim().length} / 300 characters
+                  </span>
+                </div>
+              </div>
 
               {/* SAT Premium interest — gold-styled card */}
               <div className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-4">

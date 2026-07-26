@@ -12,6 +12,7 @@ interface ModuleFeedbackBody {
   rwModule2Path?: string
   mathModule2Path?: string
   satPremiumInterestAnswer?: string
+  previousSatScoreAndPrep?: string | null
   referredByFriend?: boolean
   referrerFullName?: string | null
   referrerEmail?: string | null
@@ -93,6 +94,15 @@ export async function POST(req: NextRequest) {
     const m1  = (body.mathModule1Feedback as string).trim()
     const m2  = (body.mathModule2Feedback as string).trim()
 
+    // Optional: prior SAT score / prep resource — absent from older clients → null
+    let previousSatScoreAndPrep: string | null = null
+    if (typeof body.previousSatScoreAndPrep === 'string') {
+      const trimmed = body.previousSatScoreAndPrep.trim()
+      if (trimmed.length > 0) {
+        previousSatScoreAndPrep = trimmed.slice(0, 300)
+      }
+    }
+
     const { error } = await supabase
       .from('sat_exam_module_feedback')
       .insert({
@@ -113,6 +123,7 @@ export async function POST(req: NextRequest) {
         math_module_2_char_count:     m2.length,
         sat_premium_interest_answer:  premiumAnswer,
         interested_in_sat_premium:    premiumAnswer === 'yes',
+        previous_sat_score_and_prep:  previousSatScoreAndPrep,
         referred_by_friend:           referredByFriend,
         referrer_full_name:           referrerFullName,
         referrer_email:               referrerEmail,
