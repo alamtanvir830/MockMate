@@ -170,19 +170,11 @@ export default async function DashboardPage() {
     form3Access.canViewResult
   )
 
-  // Derive the correct action for the Form 3 button — feedback > results > resume > start
-  let form3Action: { href: string; label: string } | null = null
-  if (showForm3Banner) {
-    if (form3Access.canCompleteFeedback && form3Access.attemptId) {
-      form3Action = { href: `/premade/sat/form-3/results/${form3Access.attemptId}`, label: 'Complete Feedback' }
-    } else if (form3Access.canViewResult && form3Access.attemptId) {
-      form3Action = { href: `/premade/sat/form-3/results/${form3Access.attemptId}`, label: 'View Form 3 Results' }
-    } else if (form3Access.canResume) {
-      form3Action = { href: '/premade/sat/form-3', label: 'Resume SAT Form 3' }
-    } else if (form3Access.canStart) {
-      form3Action = { href: '/premade/sat/form-3', label: 'Start Free SAT Form 3' }
-    }
-  }
+  // All Form 3 actions on the Dashboard funnel through /premade/sat so users
+  // see the full five-form grid before taking any action on Form 3.
+  const form3Action: { href: string; label: string } | null = showForm3Banner
+    ? { href: '/premade/sat', label: 'View SAT Exam Forms' }
+    : null
 
   // Owned exams
   const { data: exams } = await supabase
@@ -433,37 +425,16 @@ export default async function DashboardPage() {
               <p className="mt-0.5 text-xs text-slate-400">Forms 1–5 available with SAT Premium.</p>
             </div>
 
-            {/* SAT card action buttons */}
-            {satCardState.tag === 'upgraded' || satCardState.tag === 'admin' ? (
-              <Link href="/premade/sat">
-                <button className="w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-4 py-2.5 transition-colors">
-                  View SAT Practice Forms
-                </button>
-              </Link>
-            ) : showForm3Banner && form3Action ? (
-              <div className="flex flex-col gap-2">
-                <Link href={form3Action.href}>
-                  <button className={`w-full rounded-lg text-white text-sm font-bold px-4 py-2.5 transition-colors ${
-                    form3Access.canViewResult
-                      ? 'bg-emerald-600 hover:bg-emerald-700'
-                      : form3Access.canCompleteFeedback
-                      ? 'bg-amber-500 hover:bg-amber-600'
-                      : 'bg-amber-500 hover:bg-amber-600'
-                  }`}>
-                    {form3Action.label} →
-                  </button>
-                </Link>
-                <Link href="/premade/sat" className="block text-center text-xs text-blue-600 hover:text-blue-700 font-medium py-1">
-                  View All SAT Practice Forms
-                </Link>
-              </div>
-            ) : (
-              <Link href="/premade/sat">
-                <button className="w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-4 py-2.5 transition-colors">
-                  View SAT Practice Forms
-                </button>
-              </Link>
-            )}
+            {/* SAT card action button */}
+            <Link href="/premade/sat">
+              <button className={`w-full rounded-lg text-white text-sm font-bold px-4 py-2.5 transition-colors min-h-[44px] ${
+                showForm3Banner
+                  ? 'bg-amber-500 hover:bg-amber-600'
+                  : 'bg-blue-600 hover:bg-blue-700'
+              }`}>
+                View SAT Exam Forms
+              </button>
+            </Link>
           </div>
 
           {/* MCAT card */}
