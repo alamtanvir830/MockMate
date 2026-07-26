@@ -11,6 +11,12 @@ import { QBHistorySection } from '@/components/dashboard/QBHistorySection'
 import { isMockMateAdmin } from '@/lib/auth/admin'
 import { hasSatPremium, isLegacyLifetimeUser } from '@/lib/auth/server'
 import { EmailVerificationBanner } from '@/components/auth/EmailVerificationBanner'
+import { Form3DashboardBanner, Form3CountdownBadge } from '@/components/sat/Form3Countdown'
+import {
+  getForm3FreeWindow,
+  resolveForm3Access,
+} from '@/lib/premade-exams/sat/form3-access'
+import type { Form3AttemptStatus } from '@/lib/premade-exams/sat/form3-access'
 import type { Exam } from '@/types'
 
 type SatCardState =
@@ -19,6 +25,7 @@ type SatCardState =
   | { tag: 'default' }
 
 export const metadata: Metadata = { title: 'Dashboard' }
+export const dynamic = 'force-dynamic'
 
 function greeting() {
   const hour = new Date().getHours()
@@ -103,6 +110,80 @@ export default async function DashboardPage() {
     }
   }
 
+  // ── Form 3 free-window state (non-premium, non-admin only) ─────────────
+  // Skip these DB queries entirely for premium/admin users — they don't need
+  // the timer and we avoid hitting sat_free_exam_access for every premium visit.
+  let form3FreeWindow: Awaited<ReturnType<typeof getForm3FreeWindow>> = null
+  let form3InProgressAttemptId: string | null = null
+  let form3InProgressStartedAt: string | null = null
+  let form3AttemptStatus: Form3AttemptStatus = 'none'
+  let form3CompletedAttemptId: string | null = null
+
+  if (user && !isAdminUser && !hasPremium) {
+    const [form3Window, form3CompletedRow, form3InProgress] = await Promise.all([
+      getForm3FreeWindow(supabase, user.id),
+      supabase
+        .from('standardized_exam_attempts')
+        .select('local_attempt_id, ai_feedback')
+        .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 3)
+        .not('completed_at', 'is', null)
+        .order('completed_at', { ascending: false })
+        .limit(1)
+        .maybeSingle(),
+      supabase
+        .from('sat_in_progress_attempts')
+        .select('local_attempt_id, started_at')
+        .eq('user_id', user.id)
+        .eq('form_number', 3)
+        .maybeSingle(),
+    ])
+
+    form3FreeWindow = form3Window
+    const f3completed = form3CompletedRow.data as { local_attempt_id: string; ai_feedback: unknown } | null
+    form3CompletedAttemptId = f3completed?.local_attempt_id ?? null
+    const form3FeedbackRequired = !!(f3completed && !f3completed.ai_feedback)
+    form3InProgressAttemptId = form3InProgress.data?.local_attempt_id ?? null
+    form3InProgressStartedAt = (form3InProgress.data?.started_at as string | undefined) ?? null
+
+    form3AttemptStatus =
+      form3FeedbackRequired ? 'feedback-required'
+      : !!form3CompletedAttemptId ? 'completed'
+      : !!form3InProgressAttemptId ? 'in-progress'
+      : 'none'
+  }
+
+  const form3Access = resolveForm3Access({
+    isAdmin: isAdminUser,
+    isPremium: hasPremium,
+    freeWindow: form3FreeWindow,
+    attemptStatus: form3AttemptStatus,
+    attemptId: form3CompletedAttemptId ?? form3InProgressAttemptId,
+    inProgressStartedAt: form3InProgressStartedAt,
+  })
+
+  // Show Form 3 banner instead of generic Premium banner when the user has any
+  // active Form 3 access (start, resume, feedback, or results).
+  const showForm3Banner = !isAdminUser && !hasPremium && (
+    form3Access.canStart ||
+    form3Access.canResume ||
+    form3Access.canCompleteFeedback ||
+    form3Access.canViewResult
+  )
+
+  // Derive the correct action for the Form 3 button — feedback > results > resume > start
+  let form3Action: { href: string; label: string } | null = null
+  if (showForm3Banner) {
+    if (form3Access.canCompleteFeedback && form3Access.attemptId) {
+      form3Action = { href: `/premade/sat/form-3/results/${form3Access.attemptId}`, label: 'Complete Feedback' }
+    } else if (form3Access.canViewResult && form3Access.attemptId) {
+      form3Action = { href: `/premade/sat/form-3/results/${form3Access.attemptId}`, label: 'View Form 3 Results' }
+    } else if (form3Access.canResume) {
+      form3Action = { href: '/premade/sat/form-3', label: 'Resume SAT Form 3' }
+    } else if (form3Access.canStart) {
+      form3Action = { href: '/premade/sat/form-3', label: 'Start Free SAT Form 3' }
+    }
+  }
+
   // Owned exams
   const { data: exams } = await supabase
     .from('exams')
@@ -155,8 +236,64 @@ export default async function DashboardPage() {
         <EmailVerificationBanner email={user.email} />
       )}
 
-      {/* SAT Premium upsell banner — non-admin, non-premium users only */}
-      {user && !isAdminUser && !hasPremium && (
+      {/* Top banner — Form 3 free access (active window) */}
+      {user && showForm3Banner && form3Action && form3Access.accessSource === 'free-window' && (
+        <Form3DashboardBanner
+          expiresAt={form3Access.freeWindowExpiresAt!}
+          actionHref={form3Action.href}
+          actionLabel={form3Action.label}
+        />
+      )}
+
+      {/* Top banner — Form 3 valid ongoing attempt (window expired but exam started/completed) */}
+      {user && showForm3Banner && form3Action && form3Access.accessSource !== 'free-window' && (() => {
+        const isResult = form3Access.canViewResult
+        const isFeedback = form3Access.canCompleteFeedback
+        const bannerClass = isResult
+          ? 'bg-emerald-50 border-emerald-200'
+          : isFeedback
+          ? 'bg-amber-50 border-amber-200'
+          : 'bg-indigo-50 border-indigo-200'
+        const labelClass = isResult ? 'text-emerald-600' : isFeedback ? 'text-amber-600' : 'text-indigo-600'
+        const headingClass = isResult ? 'text-emerald-900' : isFeedback ? 'text-amber-900' : 'text-indigo-900'
+        const bodyClass = isResult ? 'text-emerald-700' : isFeedback ? 'text-amber-700' : 'text-indigo-700'
+        const btnClass = isResult
+          ? 'bg-emerald-600 hover:bg-emerald-700'
+          : isFeedback
+          ? 'bg-amber-500 hover:bg-amber-600'
+          : 'bg-indigo-600 hover:bg-indigo-700'
+        return (
+          <div className={`rounded-xl border p-5 flex flex-col sm:flex-row sm:items-start gap-4 flex-wrap ${bannerClass}`}>
+            <div className="flex-1 min-w-0">
+              <p className={`text-[10px] font-bold uppercase tracking-widest mb-1 ${labelClass}`}>
+                SAT Form 3
+              </p>
+              <p className={`text-[15px] font-bold leading-snug mb-1 ${headingClass}`}>
+                {isFeedback
+                  ? 'SAT Form 3 — Feedback Required'
+                  : isResult
+                  ? 'SAT Form 3 — Completed'
+                  : 'SAT Form 3 — In Progress'}
+              </p>
+              <p className={`text-[12px] leading-relaxed ${bodyClass}`}>
+                {isFeedback
+                  ? 'Complete your feedback to unlock your full score report and personalized feedback.'
+                  : isResult
+                  ? 'View your full score report and personalized feedback.'
+                  : 'You have an unfinished Form 3 exam.'}
+              </p>
+            </div>
+            <Link href={form3Action!.href} className="shrink-0 sm:mt-1">
+              <button className={`w-full sm:w-auto rounded-lg text-white text-sm font-bold px-5 py-2.5 transition-colors whitespace-nowrap min-h-[44px] ${btnClass}`}>
+                {form3Action!.label} →
+              </button>
+            </Link>
+          </div>
+        )
+      })()}
+
+      {/* SAT Premium upsell banner — only when no Form 3 access is active */}
+      {user && !isAdminUser && !hasPremium && !showForm3Banner && (
         <div className="rounded-xl bg-amber-50 border border-amber-200 p-5">
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div className="min-w-0">
@@ -177,7 +314,7 @@ export default async function DashboardPage() {
         </div>
       )}
 
-      {/* Header — no top-right button */}
+      {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-slate-900">
           {greeting()}, {displayName} 👋
@@ -223,10 +360,15 @@ export default async function DashboardPage() {
           <p className="text-sm text-slate-500 mt-0.5">Full-length adaptive practice exams, ready to go.</p>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          {/* SAT card — primary CTA */}
-          <div className="rounded-xl border-2 bg-white p-5 flex flex-col gap-3 shadow-sm border-blue-200 shadow-blue-50">
+
+          {/* SAT card */}
+          <div className={`rounded-xl border-2 bg-white p-5 flex flex-col gap-3 shadow-sm ${
+            showForm3Banner ? 'border-amber-200 shadow-amber-50' : 'border-blue-200 shadow-blue-50'
+          }`}>
             <div className="flex items-start justify-between gap-3">
-              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
+              <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
+                showForm3Banner ? 'bg-amber-100 text-amber-600' : 'bg-blue-100 text-blue-600'
+              }`}>
                 <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-5 w-5">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                 </svg>
@@ -240,8 +382,11 @@ export default async function DashboardPage() {
                     {isLegacyLifetime ? 'Lifetime' : 'Premium'}
                   </span>
                 )}
-                {satCardState.tag === 'default' && (
+                {satCardState.tag === 'default' && !showForm3Banner && (
                   <span className="inline-flex items-center rounded-full bg-blue-50 border border-blue-200 px-2 py-0.5 text-xs font-medium text-blue-600">Pre-made</span>
+                )}
+                {showForm3Banner && (
+                  <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-xs font-semibold text-amber-700">Form 3 Free</span>
                 )}
               </div>
             </div>
@@ -260,21 +405,58 @@ export default async function DashboardPage() {
                   {isLegacyLifetime ? 'Lifetime SAT access unlocked — all forms available' : 'SAT Premium active — all forms available'}
                 </p>
               )}
-              {satCardState.tag === 'default' && (
+              {satCardState.tag === 'default' && showForm3Banner && (
+                <p className="mt-1 text-xs text-amber-600 font-medium">
+                  {form3Access.canCompleteFeedback
+                    ? 'Complete your Form 3 feedback to unlock full results.'
+                    : form3Access.canViewResult
+                    ? 'Your Form 3 results are ready to view.'
+                    : form3Access.canResume
+                    ? 'Your Form 3 exam is in progress.'
+                    : 'SAT Form 3 is free during your active 48-hour access window.'}
+                </p>
+              )}
+              {satCardState.tag === 'default' && !showForm3Banner && (
                 <p className="mt-1 text-xs text-slate-500">
                   Get SAT Premium to unlock all 5 full-length adaptive SAT practice forms.
                 </p>
               )}
+
+              {/* Compact countdown badge inside the card — only when window is active */}
+              {showForm3Banner && form3Access.accessSource === 'free-window' && form3Access.freeWindowExpiresAt && (
+                <div className="mt-2">
+                  <Form3CountdownBadge expiresAt={form3Access.freeWindowExpiresAt} />
+                </div>
+              )}
+
               <p className="mt-2 text-xs text-slate-400">Adaptive · Full length · 98 questions · 2 hr 14 min</p>
               <p className="mt-0.5 text-xs text-slate-400">Forms 1–5 available with SAT Premium.</p>
             </div>
 
+            {/* SAT card action buttons */}
             {satCardState.tag === 'upgraded' || satCardState.tag === 'admin' ? (
               <Link href="/premade/sat">
                 <button className="w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-4 py-2.5 transition-colors">
                   View SAT Practice Forms
                 </button>
               </Link>
+            ) : showForm3Banner && form3Action ? (
+              <div className="flex flex-col gap-2">
+                <Link href={form3Action.href}>
+                  <button className={`w-full rounded-lg text-white text-sm font-bold px-4 py-2.5 transition-colors ${
+                    form3Access.canViewResult
+                      ? 'bg-emerald-600 hover:bg-emerald-700'
+                      : form3Access.canCompleteFeedback
+                      ? 'bg-amber-500 hover:bg-amber-600'
+                      : 'bg-amber-500 hover:bg-amber-600'
+                  }`}>
+                    {form3Action.label} →
+                  </button>
+                </Link>
+                <Link href="/premade/sat" className="block text-center text-xs text-blue-600 hover:text-blue-700 font-medium py-1">
+                  View All SAT Practice Forms
+                </Link>
+              </div>
             ) : (
               <Link href="/premade/sat">
                 <button className="w-full rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-4 py-2.5 transition-colors">
