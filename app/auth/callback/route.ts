@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import type { EmailOtpType } from '@supabase/supabase-js'
 import { ensureForm3FreeWindow } from '@/lib/premade-exams/sat/form3-access'
 import { hasSatPremium } from '@/lib/auth/server'
@@ -55,6 +56,28 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
       const { data: { user: cbUser } } = await supabase.auth.getUser()
+
+      // Belt-and-suspenders: ensure a profile row exists. The DB trigger handles
+      // this at account-creation time; this is a non-fatal fallback only.
+      if (cbUser) {
+        try {
+          const provider = cbUser.app_metadata?.provider as string | undefined
+          const fullName = (cbUser.user_metadata?.full_name as string | undefined)
+            ?? (cbUser.user_metadata?.name as string | undefined)
+            ?? null
+          const admin = createAdminClient()
+          await admin.from('profiles').upsert(
+            {
+              id: cbUser.id,
+              email: cbUser.email ?? null,
+              full_name: fullName,
+              used_google_auth: provider === 'google',
+            },
+            { onConflict: 'id', ignoreDuplicates: true },
+          )
+        } catch { /* non-fatal: trigger already created the profile */ }
+      }
+
       if (cbUser && !isMockMateAdmin(cbUser) && !hasSatPremium(cbUser)) {
         await ensureForm3FreeWindow(cbUser.id)
       }

@@ -140,6 +140,13 @@ export default async function SettingsPage() {
   const periodEndDate = fmt(entitlements.satSubscriptionPeriodEnd ?? undefined)
   const purchaseExpiryDate = fmt(entitlements.satPurchaseExpiresAt ?? undefined)
 
+  const { data: profileRow } = await admin
+    .from('profiles')
+    .select('used_google_auth')
+    .eq('id', user.id)
+    .single()
+  const usedGoogleAuth = profileRow?.used_google_auth ?? false
+
   return (
     <div className="flex h-dvh bg-slate-50 overflow-hidden">
       <Sidebar userEmail={user.email} userFullName={fullName || undefined} />
@@ -160,6 +167,7 @@ export default async function SettingsPage() {
               cancelDate={cancelDate}
               periodEndDate={periodEndDate}
               purchaseExpiryDate={purchaseExpiryDate}
+              usedGoogleAuth={usedGoogleAuth}
             />
           </div>
         </main>

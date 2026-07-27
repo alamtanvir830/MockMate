@@ -535,6 +535,7 @@ export interface SettingsClientProps {
   cancelDate: string | null
   periodEndDate: string | null
   purchaseExpiryDate: string | null
+  usedGoogleAuth?: boolean
 }
 
 /** Returns true for an active, non-expired 3-Month Access purchase. */
@@ -560,6 +561,7 @@ export default function SettingsClient({
   cancelDate,
   periodEndDate,
   purchaseExpiryDate,
+  usedGoogleAuth,
 }: SettingsClientProps) {
   const { satUpgradeUnlocked, isLegacyLifetime, satSubscriptionStatus, satCancelAtPeriodEnd } = entitlements
   const lifetimeActive = isLifetimeActive(entitlements)
@@ -656,6 +658,12 @@ export default function SettingsClient({
             <div className="flex items-start gap-4">
               <dt className="w-36 shrink-0 text-[12px] font-semibold text-slate-500 uppercase tracking-wide pt-0.5">Plan</dt>
               <dd className="text-[13px] text-slate-700">{planLabel}</dd>
+            </div>
+            <div className="flex items-start gap-4">
+              <dt className="w-36 shrink-0 text-[12px] font-semibold text-slate-500 uppercase tracking-wide pt-0.5">Sign-in method</dt>
+              <dd className="text-[13px] text-slate-700">
+                {usedGoogleAuth ? 'Google authentication' : 'Email & password'}
+              </dd>
             </div>
           </dl>
         </div>
