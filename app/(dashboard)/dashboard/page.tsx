@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ExamStatusBadge } from '@/components/ui/badge'
 import { daysUntil, isExamLocked } from '@/lib/utils'
-import { seedDemoExam, seedDemoGroupExam } from '@/lib/demo/seed-demo-exam'
 import { QBHistorySection } from '@/components/dashboard/QBHistorySection'
 import { isMockMateAdmin } from '@/lib/auth/admin'
 import { hasSatPremium, isLegacyLifetimeUser } from '@/lib/auth/server'
@@ -39,57 +38,12 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   const admin = createAdminClient()
 
-  // ── First-time onboarding: seed demo exams for brand new users ─────────
-  // IMPORTANT: always read metadata fresh from the DB via the admin API.
-  // supabase.auth.getUser() returns the JWT from the cookie, which can be
-  // stale for up to an hour after updateUserById() writes new flags.
-  // Reading from admin bypasses the JWT cache entirely.
+  // Read fresh metadata via admin API — bypasses the JWT cache so premium/
+  // subscription status is always current even within the same cookie window.
   const { data: freshAuthData } = await admin.auth.admin.getUserById(user!.id)
   const currentMeta = (freshAuthData?.user?.user_metadata ??
     user?.user_metadata ??
     {}) as Record<string, unknown>
-
-  const needsBioDemo = !currentMeta.demo_created
-  const needsGroupDemo = !currentMeta.demo_group_created
-
-  if (needsBioDemo || needsGroupDemo) {
-    const userEmail = user!.email!
-    const userName =
-      (currentMeta.full_name as string | undefined) ??
-      userEmail.split('@')[0] ??
-      'You'
-
-    if (needsBioDemo) {
-      try {
-        await seedDemoExam(user!.id, admin)
-      } catch (e) {
-        console.error('[dashboard] solo demo seed failed:', e)
-      }
-    }
-
-    if (needsGroupDemo) {
-      try {
-        await seedDemoGroupExam(user!.id, userEmail, userName, admin)
-      } catch (e) {
-        console.error('[dashboard] group demo seed failed:', e)
-      }
-    }
-
-    // Single updateUserById call with both flags merged — prevents either flag
-    // from overwriting the other (the old two-call approach spread the same
-    // stale user.user_metadata each time, causing one flag to erase the other).
-    try {
-      await admin.auth.admin.updateUserById(user!.id, {
-        user_metadata: {
-          ...currentMeta,
-          ...(needsBioDemo ? { demo_created: true } : {}),
-          ...(needsGroupDemo ? { demo_group_created: true } : {}),
-        },
-      })
-    } catch (e) {
-      console.error('[dashboard] failed to persist demo flags:', e)
-    }
-  }
 
   const fullName = user?.user_metadata?.full_name as string | undefined
   const displayName = fullName ?? user?.email?.split('@')[0] ?? 'there'
@@ -541,11 +495,6 @@ export default async function DashboardPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <p className="font-medium text-slate-900 truncate">{exam.title}</p>
-                      {exam.title === 'Biology Demo Exam' && (
-                        <span className="shrink-0 inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-xs font-medium text-slate-500">
-                          Demo
-                        </span>
-                      )}
                     </div>
                     <p className="text-sm text-slate-400 mt-0.5">
                       {exam.subject} ·{' '}

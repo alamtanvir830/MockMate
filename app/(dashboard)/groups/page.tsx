@@ -59,20 +59,7 @@ export default async function GroupsPage() {
     .in('id', allExamIds)
     .order('created_at', { ascending: false })
 
-  // Safety-net deduplication: if demo exam creation ran more than once (e.g.
-  // due to stale JWT + metadata overwrite bug), multiple exam rows with the
-  // same title can end up in the DB.  Keep only the first (newest) per demo
-  // title so My Groups never shows duplicate cards.
-  // Real user exams with identical titles are unaffected because they are
-  // never named after a known demo title.
-  const DEMO_EXAM_TITLES = new Set(['Physics Group Demo Exam', 'Biology Demo Exam'])
-  const seenDemoTitles = new Set<string>()
-  const exams = (rawExams ?? []).filter((exam) => {
-    if (!DEMO_EXAM_TITLES.has(exam.title)) return true   // keep all non-demo exams
-    if (seenDemoTitles.has(exam.title)) return false     // drop subsequent duplicates
-    seenDemoTitles.add(exam.title)
-    return true
-  })
+  const exams = rawExams ?? []
 
   // Fetch all recipients for these exams (to show member names)
   const { data: allRecipients } = await admin

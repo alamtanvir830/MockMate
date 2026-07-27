@@ -121,19 +121,8 @@ export default async function GroupDetailPage({
         const prefs = prefByUserId.get(a.user_id)
         const email = authData.user.email
 
-        // Demo-aware defaults for the Physics Group Demo Exam: existing users may have
-        // null prefs if their demo was seeded before the preference columns existed.
-        // Apply known per-role defaults so the page renders correctly without a DB fix.
-        let showScore: boolean | null = prefs?.showScore ?? null
-        let inRankings: boolean | null = prefs?.includeRankings ?? null
-        if (showScore === null && exam.title === 'Physics Group Demo Exam') {
-          if (email.startsWith('demo-john-')) {
-            showScore = false; inRankings = false
-          } else {
-            // Bob, Timothy, and any other demo member (incl. current user) default to visible
-            showScore = true; inRankings = true
-          }
-        }
+        const showScore: boolean | null = prefs?.showScore ?? null
+        const inRankings: boolean | null = prefs?.includeRankings ?? null
 
         attemptByEmail.set(email, {
           submittedAt: a.submitted_at,
@@ -184,8 +173,7 @@ export default async function GroupDetailPage({
     totalMarks: creatorAttemptInfo?.totalMarks ?? null,
   })
 
-  // Recipients — skip any whose email matches the creator's to avoid duplication
-  // when the creator was also added as a recipient (e.g. in demo exams).
+  // Recipients — skip any whose email matches the creator's to avoid duplication.
   const resolvedCreatorEmail = isCreator ? user!.email! : creatorEmail
   for (const r of recipients ?? []) {
     if (r.email === resolvedCreatorEmail) continue

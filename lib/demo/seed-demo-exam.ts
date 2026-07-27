@@ -407,6 +407,12 @@ export async function seedDemoExam(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   admin: SupabaseClient<any>,
 ): Promise<void> {
+  // This function is disabled. Demo seeding no longer runs for new users.
+  // If re-enabling for local development, set ALLOW_DEMO_SEEDING=true.
+  if (process.env.ALLOW_DEMO_SEEDING !== 'true') {
+    console.warn('[demo] seedDemoExam called but ALLOW_DEMO_SEEDING is not set — skipping.')
+    return
+  }
   console.log('[demo] seeding demo exam for user', userId)
 
   // ── 1. Create the exam row ─────────────────────────────────────────────
@@ -957,6 +963,12 @@ export async function seedDemoGroupExam(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   admin: SupabaseClient<any>,
 ): Promise<void> {
+  // This function is disabled. Demo seeding no longer runs for new users.
+  // If re-enabling for local development, set ALLOW_DEMO_SEEDING=true.
+  if (process.env.ALLOW_DEMO_SEEDING !== 'true') {
+    console.warn('[demo] seedDemoGroupExam called but ALLOW_DEMO_SEEDING is not set — skipping.')
+    return
+  }
   console.log('[demo-group] seeding group demo exam for user', userId)
 
   // ── DB-level guard: fail-CLOSED — skip if already seeded or on any query error ─
