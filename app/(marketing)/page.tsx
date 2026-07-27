@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Logo } from '@/components/shared/logo'
 import { Button } from '@/components/ui/button'
 import { HeroReviewsPanel } from '@/components/landing/StudentReviews'
+import { SocialProofCard } from '@/components/landing/SocialProofCard'
 
 export default function LandingPage() {
   return (
@@ -114,14 +115,7 @@ export default function LandingPage() {
 
                 {/* Social proof — mobile / tablet */}
                 <div className="mt-5 flex justify-center lg:hidden">
-                  <div className="mm-social-proof inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 shadow-sm">
-                    <div className="flex -space-x-1.5" aria-hidden="true">
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-[9px] font-bold text-emerald-700 ring-2 ring-white select-none">S</div>
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-sky-100 text-[9px] font-bold text-sky-700 ring-2 ring-white select-none">M</div>
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-100 text-[9px] font-bold text-violet-700 ring-2 ring-white select-none">A</div>
-                    </div>
-                    <span className="text-[13px] font-semibold text-slate-800">Join more than 720+ users</span>
-                  </div>
+                  <SocialProofCard className="w-full max-w-xs sm:w-auto" />
                 </div>
               </div>
 
@@ -131,14 +125,7 @@ export default function LandingPage() {
 
                 {/* Social proof — desktop */}
                 <div className="mt-4 hidden lg:flex">
-                  <div className="mm-social-proof inline-flex items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 shadow-sm">
-                    <div className="flex -space-x-1.5" aria-hidden="true">
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-[9px] font-bold text-emerald-700 ring-2 ring-white select-none">S</div>
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-sky-100 text-[9px] font-bold text-sky-700 ring-2 ring-white select-none">M</div>
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-violet-100 text-[9px] font-bold text-violet-700 ring-2 ring-white select-none">A</div>
-                    </div>
-                    <span className="text-[13px] font-semibold text-slate-800">Join more than 720+ users</span>
-                  </div>
+                  <SocialProofCard />
                 </div>
               </div>
             </div>
