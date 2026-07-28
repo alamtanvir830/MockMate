@@ -76,7 +76,7 @@ export const rwQuestionsB3a: QBQuestion[] = [
     section: 'reading-writing',
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
-    difficulty: 'medium',
+    difficulty: 'hard',
     timeTargetSeconds: 75,
     mistakeType: 'trap answer',
     questionType: 'multiple_choice',
@@ -110,7 +110,7 @@ export const rwQuestionsB3a: QBQuestion[] = [
     section: 'reading-writing',
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
-    difficulty: 'medium',
+    difficulty: 'hard',
     timeTargetSeconds: 75,
     mistakeType: 'trap answer',
     questionType: 'multiple_choice',
@@ -241,37 +241,37 @@ export const rwQuestionsB3a: QBQuestion[] = [
 
   // ── Group B: Craft and Structure ────────────────────────────────────────
 
-  // Words in Context — easy (formerly medium)
+  // Words in Context — medium
   {
     id: 'rw-b3-008',
     test: 'SAT',
     section: 'reading-writing',
     domain: 'Craft and Structure',
     skill: 'Words in Context',
-    difficulty: 'easy',
+    difficulty: 'medium',
     timeTargetSeconds: 60,
     mistakeType: 'concept error',
     questionType: 'multiple_choice',
     stimulus:
-      'The architectural critic argued that the renovation, however technically accomplished, had domesticated the building\'s famously austere facade — trading the original structure\'s severe, almost confrontational geometry for surfaces that invited rather than challenged the viewer.',
+      'The philosopher\'s late essays are remarkable for their economy: where the early work labored to excavate each argument\'s buried premises, the later prose simply assumes the reader\'s familiarity and proceeds. Critics who admire the early style sometimes describe the late essays as compressed to the point of opacity, while those who prefer the later work praise the same density as bracing.',
     question:
-      'As used in the text, what does the word "domesticated" most nearly mean?',
+      'As used in the text, what does the word "bracing" most nearly mean?',
     choices: [
-      { label: 'A', text: 'Made suitable for residential occupancy' },
-      { label: 'B', text: 'Tamed or rendered more approachable' },
-      { label: 'C', text: 'Refined through careful craftsmanship' },
-      { label: 'D', text: 'Adapted to reflect local cultural preferences' },
+      { label: 'A', text: 'Structurally reinforcing' },
+      { label: 'B', text: 'Invigoratingly challenging' },
+      { label: 'C', text: 'Reassuringly clear' },
+      { label: 'D', text: 'Carefully prepared' },
     ],
     correctAnswer: 'B',
     explanation:
-      'The critic contrasts the original\'s "severe, almost confrontational geometry" with surfaces that "invited rather than challenged the viewer." The renovation softened something harsh — it made the building less threatening and more comfortable. "Domesticated" here means tamed or rendered approachable. Choice A takes the word too literally: the sentence concerns visual aesthetic character, not whether the building can be inhabited. Choice C ("refined") implies an improvement in craft, which contradicts the critic\'s framing of domestication as a loss of confrontational power. Choice D introduces a cultural dimension ("local cultural preferences") that is entirely absent from the passage, which contrasts severity with approachability, not one culture with another.',
+      'The passage sets up a direct contrast: critics who dislike the late essays call their density "opaque," while those who like the late essays call the same density "bracing." Because the passage establishes that both groups are responding to the same quality — compressed, demanding prose — "bracing" must describe density in a positive light. It cannot mean "clear" (Choice C), since the passage explicitly says the late essays assume familiarity and can seem opaque. "Invigoratingly challenging" fits: the density that one reader finds off-putting, another finds stimulating in the way cold air is bracing — sharp, demanding, energizing. Choice A ("structurally reinforcing") is the architectural/physical sense of "bracing" with no connection to prose style. Choice D ("carefully prepared") describes deliberate craft but misses the tone of stimulating difficulty that the context requires.',
     wrongAnswerExplanations: {
-      A: 'The context is about visual and aesthetic register — the building\'s emotional effect on viewers — not whether it can be used as a residence.',
-      C: '"Refined" suggests improvement; the critic presents domestication as a diminishment of the building\'s challenging quality.',
-      D: 'No geographic or cultural adaptation is described; the contrast is between severity and approachability.',
+      A: 'The architectural sense of bracing (a support beam) is unrelated to the critical evaluation of prose density described in the passage.',
+      C: 'The passage says the late essays can seem opaque; "bracing" is used by readers who appreciate the difficulty, not those who find it clarifying.',
+      D: '"Carefully prepared" might describe craft but does not capture the invigorating quality that makes demanding prose appealing to those who admire it.',
     },
     teachingPoint:
-      'When a word has a common literal meaning (domesticated = made into a home), check whether the surrounding context is about something physical or about a quality. The critical framing ("severe" vs. "invited") signals the figurative register.',
+      'When a word is used in a direct contrast (critics who dislike it call it X; those who like it call it "bracing"), the correct meaning must be the positive counterpart to X without importing qualities the passage contradicts. Here "bracing" is the positive framing of what others call opaque — stimulating, not softening or clarifying.',
     relatedSkills: ['Text Structure and Purpose', 'Central Ideas and Details'],
   },
 
@@ -282,7 +282,7 @@ export const rwQuestionsB3a: QBQuestion[] = [
     section: 'reading-writing',
     domain: 'Craft and Structure',
     skill: 'Words in Context',
-    difficulty: 'medium',
+    difficulty: 'hard',
     timeTargetSeconds: 75,
     mistakeType: 'trap answer',
     questionType: 'multiple_choice',
@@ -316,7 +316,7 @@ export const rwQuestionsB3a: QBQuestion[] = [
     section: 'reading-writing',
     domain: 'Craft and Structure',
     skill: 'Text Structure and Purpose',
-    difficulty: 'medium',
+    difficulty: 'hard',
     timeTargetSeconds: 75,
     mistakeType: 'trap answer',
     questionType: 'multiple_choice',
@@ -350,7 +350,7 @@ export const rwQuestionsB3a: QBQuestion[] = [
     section: 'reading-writing',
     domain: 'Craft and Structure',
     skill: 'Text Structure and Purpose',
-    difficulty: 'medium',
+    difficulty: 'hard',
     timeTargetSeconds: 75,
     mistakeType: 'trap answer',
     questionType: 'multiple_choice',
@@ -384,7 +384,7 @@ export const rwQuestionsB3a: QBQuestion[] = [
     section: 'reading-writing',
     domain: 'Craft and Structure',
     skill: 'Cross-Text Connections',
-    difficulty: 'medium',
+    difficulty: 'hard',
     timeTargetSeconds: 75,
     mistakeType: 'trap answer',
     questionType: 'multiple_choice',
@@ -447,37 +447,37 @@ export const rwQuestionsB3a: QBQuestion[] = [
 
   // ── Group C: Expression of Ideas ────────────────────────────────────────
 
-  // Transitions — easy (formerly medium)
+  // Transitions — medium
   {
     id: 'rw-b3-014',
     test: 'SAT',
     section: 'reading-writing',
     domain: 'Expression of Ideas',
     skill: 'Transitions',
-    difficulty: 'easy',
+    difficulty: 'medium',
     timeTargetSeconds: 60,
     mistakeType: 'concept error',
     questionType: 'multiple_choice',
     stimulus:
-      'For decades, ecologists assumed that large predators played only a modest role in shaping plant communities, since their direct prey were herbivores rather than vegetation. _______, field studies of wolf reintroduction in Yellowstone National Park documented dramatic recoveries of riparian plant species along riverbanks from which elk — newly wary of predation — had retreated.',
+      'Behavioral economists have documented that people consistently overestimate how much pleasure a desired purchase will bring them — a phenomenon researchers call "affective forecasting error." Experienced buyers who have purchased many similar items show smaller forecasting errors than first-time buyers. _______, sellers exploit first-time buyers\' inflated expectations by emphasizing novelty and emotional appeal in their marketing rather than durability or long-term utility.',
     question:
       'Which choice completes the text with the most logical transition?',
     choices: [
-      { label: 'A', text: 'Consequently' },
-      { label: 'B', text: 'Similarly' },
-      { label: 'C', text: 'Specifically' },
-      { label: 'D', text: 'Contrary to this view' },
+      { label: 'A', text: 'In contrast' },
+      { label: 'B', text: 'Taking advantage of this pattern' },
+      { label: 'C', text: 'As a result of the research' },
+      { label: 'D', text: 'Similarly' },
     ],
-    correctAnswer: 'D',
+    correctAnswer: 'B',
     explanation:
-      'The first sentence presents an assumption (predators play only a modest role in shaping plant communities). The second sentence presents field evidence that overturns this assumption — wolf reintroduction led to dramatic plant recovery, demonstrating that predators do substantially shape plant communities. The transition must signal that what follows directly contradicts the prior assumption. "Contrary to this view" does exactly that. Choice A ("Consequently") implies the second sentence is a result of the first, but it contradicts rather than results from the assumption. Choice B ("Similarly") implies the sentences move in the same direction — they do not. Choice C ("Specifically") implies the second sentence narrows or elaborates on the first; it overturns it instead.',
+      'The first two sentences establish a finding about buyers: first-time buyers have larger forecasting errors than experienced ones. The third sentence shifts to describe how sellers respond to this specific vulnerability of first-time buyers. The transition must signal that the seller behavior is a deliberate exploitation of the documented pattern, not merely a consequence of the research or a parallel situation. "Taking advantage of this pattern" precisely captures the exploitative relationship — sellers are responding to buyers\' miscalibration. Choice A ("In contrast") signals opposition; sellers exploiting buyers\' errors is not in contrast to buyers having those errors. Choice C ("As a result of the research") implies sellers changed their behavior because researchers published findings about forecasting errors — there is no such claim in the passage. Choice D ("Similarly") implies the third sentence describes a parallel instance of the same type of phenomenon, but seller marketing strategy is a different category from buyer psychology.',
     wrongAnswerExplanations: {
-      A: '"Consequently" signals that the Yellowstone findings resulted from the ecologists\' assumption — illogical, since the findings challenge the assumption.',
-      B: '"Similarly" implies parallel motion; the two sentences contradict each other.',
-      C: '"Specifically" would narrow the assumption to a particular case; instead the second sentence refutes the assumption entirely.',
+      A: '"In contrast" signals that the third sentence opposes or contradicts something in the first two; sellers exploiting buyers\' errors is consistent with, not contrary to, the documented pattern.',
+      C: '"As a result of the research" implies sellers are responding to academic publications, a causal link the passage does not establish.',
+      D: '"Similarly" would introduce another instance of affective forecasting error; seller marketing strategy is a response to that error, not another example of it.',
     },
     teachingPoint:
-      'When an established belief is directly contradicted by the evidence in the next sentence, the transition must signal contradiction or reversal — not consequence, similarity, or elaboration.',
+      'When a sentence describes a deliberate action that exploits or responds to a pattern described in prior sentences, the transition must signal the exploitative or responsive relationship directly. Generic contrast or additive transitions miss this purposeful connection.',
     relatedSkills: ['Text Structure and Purpose', 'Boundaries'],
   },
 
@@ -556,7 +556,7 @@ export const rwQuestionsB3a: QBQuestion[] = [
     section: 'reading-writing',
     domain: 'Expression of Ideas',
     skill: 'Rhetorical Synthesis',
-    difficulty: 'easy',
+    difficulty: 'medium',
     timeTargetSeconds: 60,
     mistakeType: 'concept error',
     questionType: 'multiple_choice',
@@ -653,37 +653,37 @@ export const rwQuestionsB3a: QBQuestion[] = [
 
   // ── Group D: Standard English Conventions ───────────────────────────────
 
-  // Boundaries — easy (formerly medium)
+  // Boundaries — medium
   {
     id: 'rw-b3-020',
     test: 'SAT',
     section: 'reading-writing',
     domain: 'Standard English Conventions',
     skill: 'Boundaries',
-    difficulty: 'easy',
+    difficulty: 'medium',
     timeTargetSeconds: 60,
     mistakeType: 'concept error',
     questionType: 'multiple_choice',
     stimulus:
-      'The renovation of the historic train station, which had been closed to the public for nearly two decades _______ transformed the long-neglected structure into an arts and commerce hub that now draws over forty thousand visitors each month.',
+      'The report\'s central finding — that chronic underfunding of urban transit systems has compounded existing inequalities in access to employment and healthcare _______ was widely cited by advocacy organizations in their subsequent lobbying campaigns.',
     question:
       'Which choice completes the text so that it conforms to the conventions of Standard Written English?',
     choices: [
-      { label: 'A', text: 'decades' },
-      { label: 'B', text: 'decades,' },
-      { label: 'C', text: 'decades, it' },
-      { label: 'D', text: 'decades; and' },
+      { label: 'A', text: 'healthcare,' },
+      { label: 'B', text: 'healthcare' },
+      { label: 'C', text: 'healthcare; it' },
+      { label: 'D', text: 'healthcare —' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation:
-      'The sentence structure is: "The renovation of the historic train station [nonrestrictive relative clause: which had been closed to the public for nearly two decades] transformed the long-neglected structure…" Because the relative clause is nonrestrictive, it must be enclosed by commas on both sides. The opening comma appears after "station"; the closing comma must appear after "decades" before the main verb "transformed." Choice B supplies this necessary closing comma. Choice A omits it, allowing the clause to run into the predicate. Choice C adds "it," creating a second grammatical subject and producing a comma splice. Choice D uses a semicolon, which cannot close a relative clause — semicolons separate independent clauses.',
+      'The sentence opens a parenthetical after "finding" with an em dash: "— that chronic underfunding … and healthcare." This parenthetical renames "the report\'s central finding." Because the parenthetical was opened with an em dash, it must be closed with a matching em dash before the main predicate "was widely cited" resumes. Choice D supplies the required closing em dash. Choice A uses a comma, which mismatches the opening em dash — parentheticals must use consistent punctuation to open and close. Choice B omits any closing delimiter, merging the parenthetical into the predicate and making it impossible to parse the sentence boundary. Choice C uses a semicolon and adds "it," but the material before the semicolon — "The report\'s central finding — that chronic underfunding … and healthcare" — lacks a predicate for "The report\'s central finding" and is therefore a fragment; a semicolon cannot repair this.',
     wrongAnswerExplanations: {
-      A: 'Without the closing comma, the nonrestrictive clause is not properly bounded and the sentence reads as a run-on.',
-      C: '"It" creates a second subject, producing a comma splice between the clause and the predicate.',
-      D: 'A semicolon separates independent clauses; a dependent relative clause cannot be closed with one.',
+      A: 'An em-dash parenthetical must be closed with an em dash, not a comma — mixing punctuation types to open and close a parenthetical is a boundary mismatch.',
+      B: 'Without a closing delimiter, the parenthetical has no defined end and the predicate "was widely cited" appears to modify "healthcare" rather than "the report\'s central finding."',
+      C: 'The material before the semicolon has no predicate — "The report\'s central finding … healthcare" is a noun phrase with an appositive, not an independent clause — making the semicolon grammatically incorrect.',
     },
     teachingPoint:
-      'Nonrestrictive relative clauses introduced by "which" or "who" must be enclosed by commas on both sides. The closing comma is required before the main verb or the continuation of the independent clause.',
+      'Em-dash parentheticals require symmetric punctuation: if an em dash opens the aside, an em dash must close it. To verify, remove the bracketed parenthetical and confirm the remaining sentence is complete: "The report\'s central finding was widely cited" is a well-formed sentence, confirming the em dash belongs where the aside ends.',
     relatedSkills: ['Transitions', 'Form, Structure, and Sense'],
   },
 
@@ -762,7 +762,7 @@ export const rwQuestionsB3a: QBQuestion[] = [
     section: 'reading-writing',
     domain: 'Standard English Conventions',
     skill: 'Form, Structure, and Sense',
-    difficulty: 'easy',
+    difficulty: 'medium',
     timeTargetSeconds: 60,
     mistakeType: 'concept error',
     questionType: 'multiple_choice',
