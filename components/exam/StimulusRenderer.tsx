@@ -1,5 +1,73 @@
 import React from 'react'
 
+// ── Markdown-style table renderer ─────────────────────────────────────────────
+// Detects pipe-delimited table content within a stimulus paragraph and renders
+// it as a proper HTML <table> rather than raw ASCII characters. Handles both
+// standard markdown tables (with |---|---| separator rows) and simple
+// pipe-separated tabular data without separator rows.
+
+function isTableBlock(text: string): boolean {
+  const lines = text.split('\n').filter(l => l.trim().length > 0)
+  if (lines.length < 2) return false
+  // A block is a table if at least half the non-empty lines contain a pipe character
+  const pipeLines = lines.filter(l => l.includes('|'))
+  return pipeLines.length >= Math.ceil(lines.length / 2)
+}
+
+function isSeparatorRow(line: string): boolean {
+  // |---|---|---| or similar
+  return /^\s*\|[\s\-|:]+\|\s*$/.test(line) || /^[\s\-|:]+$/.test(line)
+}
+
+function parseTableRow(line: string): string[] {
+  // Strip leading/trailing pipes then split on |
+  const stripped = line.replace(/^\s*\|/, '').replace(/\|\s*$/, '')
+  return stripped.split('|').map(cell => cell.trim())
+}
+
+function TableBlock({ text }: { text: string }) {
+  const lines = text.split('\n').filter(l => l.trim().length > 0)
+  const dataLines = lines.filter(l => !isSeparatorRow(l))
+  if (dataLines.length === 0) return <span>{text}</span>
+  const [headerLine, ...bodyLines] = dataLines
+  const headers = parseTableRow(headerLine)
+  const rows = bodyLines.map(parseTableRow)
+
+  return (
+    <div className="overflow-x-auto my-2" role="table" aria-label="Data table">
+      <table className="min-w-full text-[12px] border-collapse">
+        <thead>
+          <tr>
+            {headers.map((h, i) => (
+              <th
+                key={i}
+                className="border border-slate-300 bg-slate-100 px-3 py-1.5 text-left font-semibold text-slate-800 whitespace-nowrap"
+                scope="col"
+              >
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, ri) => (
+            <tr key={ri} className={ri % 2 === 0 ? 'bg-white' : 'bg-slate-50'}>
+              {row.map((cell, ci) => (
+                <td
+                  key={ci}
+                  className="border border-slate-300 px-3 py-1.5 text-slate-700"
+                >
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 interface Part {
   text: string
   underline: boolean
@@ -89,12 +157,17 @@ export function StimulusRenderer({ text, underlineTargets, className }: Props) {
   return (
     <div className={className}>
       {paragraphs.map((para, idx) => {
+        const paragraphClass = idx > 0 ? 'mt-3' : undefined
+
+        // Render pipe-delimited content as a proper HTML table
+        if (isTableBlock(para)) {
+          return <div key={idx} className={paragraphClass}><TableBlock text={para} /></div>
+        }
+
         // Detect and bold "Text 1:" / "Text 2:" prefix for paired-text passages
         const labelMatch = para.match(TEXT_LABEL_RE)
         const label = labelMatch?.[1] ?? null
         const body = labelMatch ? para.slice(labelMatch[0].length) : para
-
-        const paragraphClass = idx > 0 ? 'mt-3' : undefined
 
         if (!underlineTargets?.length) {
           return (

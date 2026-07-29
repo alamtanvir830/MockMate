@@ -969,6 +969,9 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
   const [feedbackError, setFeedbackError] = useState('')
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  // Wall-clock deadline for the active module timer — used to reconcile after
+  // tab backgrounding, laptop sleep, or browser-throttled intervals.
+  const moduleDeadlineRef = useRef<number | null>(null)
   const attemptIdRef = useRef<string>(initialAttempt?.id ?? '')
   const completedAtRef = useRef<string>(initialAttempt?.completedAt ?? '')
   const autosaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -1015,6 +1018,8 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
   // ── Timer ──────────────────────────────────────────────────────────────────
   const startTimer = useCallback((minutes: number) => {
     if (timerRef.current) clearInterval(timerRef.current)
+    const deadlineMs = Date.now() + minutes * 60 * 1000
+    moduleDeadlineRef.current = deadlineMs
     setSecsLeft(minutes * 60)
     setTimerRunning(true)
   }, [])
@@ -1030,8 +1035,24 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
     return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [timerRunning])
 
+  // Reconcile the visible countdown against the wall-clock deadline whenever
+  // the tab becomes visible. This corrects for browser-throttled setInterval
+  // during backgrounding, laptop sleep, or mobile app-switching.
+  useEffect(() => {
+    function handleVisibilityChange() {
+      if (document.hidden) return
+      if (!timerRunning || moduleDeadlineRef.current === null) return
+      const remaining = Math.max(0, Math.floor((moduleDeadlineRef.current - Date.now()) / 1000))
+      setSecsLeft(remaining)
+      if (remaining === 0) setTimerRunning(false)
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [timerRunning])
+
   const stopTimer = useCallback(() => {
     setTimerRunning(false)
+    moduleDeadlineRef.current = null
     if (timerRef.current) clearInterval(timerRef.current)
   }, [])
 
@@ -1231,6 +1252,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
         const slot = inProgressAttempt.currentModule as 'm1' | 'm2'
         restoredPhase = { tag: 'module_review', section, slot }
       } else {
+        moduleDeadlineRef.current = deadlineMs
         setSecsLeft(remainingSecs)
         setTimerRunning(true)
       }

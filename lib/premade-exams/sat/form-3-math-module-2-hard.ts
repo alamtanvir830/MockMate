@@ -174,7 +174,7 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      "The two roots of 5x² − 30x + p = 0 are r and s. Given that r · s = 14, what is the value of p?",
+      'The quadratic equation 5x² − 30x + p = 0 has two real roots, r and s. If the product of r and s equals 14, what is the value of p?',
     choices: [
       { label: 'A', text: '14' },
       { label: 'B', text: '28' },
@@ -183,11 +183,11 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
     ],
     correctAnswer: 'C',
     explanation:
-      "By Vieta's formulas for ax² + bx + c = 0:\n• Sum of roots = −b/a = 30/5 = 6\n• Product of roots = c/a = p/5\n\nGiven r · s = 14:\np/5 = 14 → p = 70.",
+      "For any quadratic ax² + bx + c = 0 with roots r and s:\n• Sum of roots:    r + s = −b/a = 30/5 = 6\n• Product of roots: r × s = c/a = p/5\n\nWe are told the product of the roots equals 14:\np/5 = 14\np = 70",
     wrongAnswerExplanations: {
-      A: 'p = 14 gives product of roots = 14/5 = 2.8, not 14.',
-      B: 'p = 28 gives product of roots = 28/5 = 5.6 ≠ 14.',
-      D: 'p = 140 gives product of roots = 140/5 = 28 ≠ 14.',
+      A: 'p = 14 gives a product of roots equal to 14/5 = 2.8, not 14.',
+      B: 'p = 28 gives a product of roots equal to 28/5 = 5.6, not 14.',
+      D: 'p = 140 gives a product of roots equal to 140/5 = 28, not 14.',
     },
   },
 
@@ -497,7 +497,7 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'A grain silo is shaped like a right circular cylinder topped with a hemisphere. The cylinder has radius 6 meters and height 10 meters. The hemisphere has the same radius as the cylinder. Which of the following expressions gives the total volume of the silo, in cubic meters?',
+      'A grain silo consists of a right circular cylinder with a hemisphere sitting on top. (A hemisphere is exactly half of a sphere.) The cylinder has a radius of 6 meters and a height of 10 meters. The hemisphere shares the same radius as the top of the cylinder. Which of the following expressions gives the total volume of the silo, in cubic meters?',
     choices: [
       { label: 'A', text: '360π + 144π' },
       { label: 'B', text: '360π + 288π' },

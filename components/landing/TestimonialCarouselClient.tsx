@@ -4,7 +4,10 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 
 export interface Testimonial {
   initials: string
-  score: number
+  /** Verified MockMate attempt score — renders as "{score} scorer" */
+  score?: number
+  /** Overrides score display for curated entries (e.g. "1490 scorer") */
+  scoreLabel?: string
   quote: string
 }
 
@@ -50,9 +53,12 @@ export function TestimonialCarouselClient({ testimonials, durationSeconds }: Pro
     <>
       {/* ── Screen-reader list — single authoritative source for AT ──────── */}
       <ul className="sr-only" aria-label="Student testimonials">
-        {testimonials.map((t) => (
-          <li key={t.initials}>{`"${t.quote}" — ${t.initials}, ${t.score} scorer`}</li>
-        ))}
+        {testimonials.map((t) => {
+          const label = t.scoreLabel ?? (t.score ? `${t.score} scorer` : null)
+          return (
+            <li key={t.initials}>{`"${t.quote}" — ${t.initials}${label ? `, ${label}` : ''}`}</li>
+          )
+        })}
       </ul>
 
       {/* ── Desktop: vertical animated loop ──────────────────────────────── */}
@@ -157,6 +163,7 @@ export function TestimonialCarouselClient({ testimonials, durationSeconds }: Pro
 }
 
 function Card({ t }: { t: Testimonial }) {
+  const scoreDisplay = t.scoreLabel ?? (t.score ? `${t.score} scorer` : null)
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
       <p className="text-[13px] text-slate-700 leading-relaxed">&ldquo;{t.quote}&rdquo;</p>
@@ -166,7 +173,9 @@ function Card({ t }: { t: Testimonial }) {
         </div>
         <div>
           <p className="text-[12px] font-semibold text-slate-800 leading-none">{t.initials}</p>
-          <p className="text-[11px] text-emerald-600 mt-0.5 font-medium">{t.score} scorer</p>
+          {scoreDisplay && (
+            <p className="text-[11px] text-emerald-600 mt-0.5 font-medium">{scoreDisplay}</p>
+          )}
         </div>
       </div>
     </div>

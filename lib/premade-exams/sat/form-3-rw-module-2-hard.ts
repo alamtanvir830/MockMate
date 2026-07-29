@@ -286,7 +286,7 @@ Sociologist Leon Farber challenges narratives that frame deskilling as rational 
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
     difficulty: 'hard',
-    stimulus: 'An urban planner studying pedestrian behavior collected data at five intersections before and after the installation of protected bike lanes:\n\nIntersection | Ped. Crossings/Hour (Before) | Ped. Crossings/Hour (After) | Vehicle Collisions/Month (Before) | Vehicle Collisions/Month (After)\nNorth Ave | 210 | 285 | 3.2 | 1.8\nEast Blvd | 180 | 240 | 2.7 | 1.4\nWest St | 95 | 88 | 1.9 | 2.1\nSouth Pkwy | 320 | 410 | 4.8 | 2.3\nCentral Dr | 155 | 202 | 2.4 | 1.7\n\nThe planner concluded that bike lane installation increases pedestrian activity and reduces vehicle collisions.',
+    stimulus: 'An urban planner studying pedestrian behavior collected data at five intersections before and after the installation of protected bike lanes.\n\nIntersection | Ped. Crossings/Hour (Before) | Ped. Crossings/Hour (After) | Collisions/Month (Before) | Collisions/Month (After)\nNorth Ave | 210 | 285 | 3.2 | 1.8\nEast Blvd | 180 | 240 | 2.7 | 1.4\nWest St | 95 | 88 | 1.9 | 2.1\nSouth Pkwy | 320 | 410 | 4.8 | 2.3\nCentral Dr | 155 | 202 | 2.4 | 1.7\n\nThe planner concluded that bike lane installation increases pedestrian activity and reduces vehicle collisions.',
     question: 'Which statement best evaluates the planner\'s conclusion given the data?',
     choices: [
       { label: 'A', text: 'The conclusion is fully supported: all intersections show increased pedestrian crossings and reduced vehicle collisions after bike lane installation' },
@@ -310,7 +310,7 @@ Sociologist Leon Farber challenges narratives that frame deskilling as rational 
     domain: 'Information and Ideas',
     skill: 'Command of Evidence',
     difficulty: 'hard',
-    stimulus: 'Researchers studying ocean acidification presented data on shell thickness (in micrometers) of marine snails grown in seawater at different pH levels:\n\npH Level | Average Shell Thickness\n8.1 (pre-industrial baseline) | 182 μm\n8.0 (current ocean average) | 164 μm\n7.9 (projected 2080) | 131 μm\n7.8 (projected 2100) | 98 μm\n\nThe researchers concluded that continued ocean acidification will significantly compromise the structural integrity of marine snail shells.',
+    stimulus: 'Researchers studying ocean acidification collected data on shell thickness (in micrometers) of marine snails grown in seawater at different pH levels.\n\npH Level | Average Shell Thickness\n8.1 (pre-industrial baseline) | 182 μm\n8.0 (current ocean average) | 164 μm\n7.9 (projected 2080) | 131 μm\n7.8 (projected 2100) | 98 μm\n\nThe researchers concluded that continued ocean acidification will significantly compromise the structural integrity of marine snail shells.',
     question: 'Which statement most accurately describes what the data shows and its limitations as evidence for this conclusion?',
     choices: [
       { label: 'A', text: 'The data shows a consistent decline in shell thickness with decreasing pH and directly proves that current marine snail populations are approaching extinction' },

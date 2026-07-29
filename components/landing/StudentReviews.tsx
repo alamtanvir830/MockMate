@@ -1,6 +1,36 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { type Testimonial, TestimonialCarouselClient } from './TestimonialCarouselClient'
 
+// ── Curated static testimonials (Form 2 + Form 3) ──────────────────────────
+// These are approved entries whose prior-exam scores are self-reported and
+// cannot be verified against MockMate attempt data. They are included in the
+// carousel regardless of DB query results.
+// Internal source IDs are server-side only — never rendered in the DOM.
+const CURATED_TESTIMONIALS: Testimonial[] = [
+  {
+    initials: 'T. O.',
+    scoreLabel: '1490 scorer',
+    quote: 'No time to review, very similar to the actual SAT exam.',
+    // source: form3, feedbackId: 1c329839-08c0-4655-8239-c39f314d5d02, score: self-reported prior SAT
+  },
+  {
+    initials: 'S. M.',
+    scoreLabel: '1420 scorer',
+    quote: 'Definitely a step up in difficulty compared to Module 1… the difficulty felt realistic overall.',
+    // source: form3, feedbackId: 20af17b9-eb41-46ca-ba13-d067e64aa9c3, score: self-reported prior SAT
+  },
+  {
+    initials: 'C.',
+    quote: 'The Reading & Writing Module 2 was much more difficult, which I think is great.',
+    // source: form3, feedbackId: 727c34cc-143b-46ed-8b20-f3b3cdfd7789
+  },
+  {
+    initials: 'A. K.',
+    quote: 'The structure was good and accurate to the actual exam.',
+    // source: form2, feedbackId: 2fa0b55e-bebc-4283-bd1e-d2b4128df99f
+  },
+]
+
 // ── Candidate testimonials ──────────────────────────────────────────────────
 // Scores are resolved at render time from standardized_exam_attempts keyed
 // on local_attempt_id (UNIQUE per attempt — avoids ambiguity when a user
@@ -118,6 +148,25 @@ async function fetchVerifiedTestimonials(): Promise<Testimonial[]> {
   }
 }
 
+// ── Interleave curated entries among DB-verified entries ────────────────────
+// Distributes Form 2/3 curated entries evenly among Form 1 verified entries
+// so the carousel shows a mix across forms rather than grouping by source.
+function interleaveTestimonials(verified: Testimonial[], curated: Testimonial[]): Testimonial[] {
+  if (verified.length === 0) return curated
+  if (curated.length === 0) return verified
+  const result: Testimonial[] = []
+  let ci = 0
+  for (let i = 0; i < verified.length; i++) {
+    result.push(verified[i])
+    // Insert a curated entry after every 2nd verified entry
+    if ((i + 1) % 2 === 0 && ci < curated.length) {
+      result.push(curated[ci++])
+    }
+  }
+  while (ci < curated.length) result.push(curated[ci++])
+  return result
+}
+
 /**
  * Compact testimonial panel for the hero right column.
  * All score resolution and 1400+ filtering happens server-side.
@@ -125,7 +174,8 @@ async function fetchVerifiedTestimonials(): Promise<Testimonial[]> {
  * or raw DB records are transmitted.
  */
 export async function HeroReviewsPanel() {
-  const testimonials = await fetchVerifiedTestimonials()
+  const verified = await fetchVerifiedTestimonials()
+  const testimonials = interleaveTestimonials(verified, CURATED_TESTIMONIALS)
 
   // 5 seconds of scroll per card; minimum 35 s so slow scrollers still read cards
   const durationSeconds = Math.max(35, testimonials.length * 5)
@@ -134,8 +184,7 @@ export async function HeroReviewsPanel() {
     <div className="w-full">
       <div className="mb-4">
         <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-600 mb-1 leading-snug">
-          Student Feedback After Taking{' '}
-          <span className="text-slate-900">Mock</span><span>Mate</span>&apos;s SAT Practice Exam
+          Student Feedback from MockMate SAT Practice Forms
         </p>
         <p className="text-sm font-semibold text-slate-700">
           Reviewed by high scorers and former test takers
@@ -151,7 +200,7 @@ export async function HeroReviewsPanel() {
 
       {testimonials.length > 0 && (
         <p className="mt-3 text-[11px] text-slate-400">
-          Names anonymized. Feedback from SAT Form 1 submissions.
+          Names anonymized. Feedback from MockMate SAT Form submissions.
         </p>
       )}
     </div>
