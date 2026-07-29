@@ -1176,6 +1176,60 @@ export const boundaries: AcademySkill = {
       teachingPoint:
         'Past-participial phrases ("known for," "appointed by," "recognized as") modify a noun but are not independent clauses. Use a comma to set them off — never a semicolon or period.',
     },
+    {
+      id: 'bnd-d-023',
+      skillSlug: 'boundaries',
+      subskill: 'Joining Independent Clauses',
+      level: 'sat-application',
+      difficulty: 'medium',
+      errorCategory: 'comma-splice',
+      stimulus:
+        'The exhibit attracted more than forty thousand visitors in its first week _______ museum officials credited the turnout to an unusually aggressive social media campaign.',
+      question: 'Which choice conforms to the conventions of Standard English?',
+      choices: [
+        { label: 'A', text: ',' },
+        { label: 'B', text: '; and' },
+        { label: 'C', text: ';' },
+        { label: 'D', text: ': and' },
+      ],
+      correctAnswer: 'C',
+      explanation:
+        'Both clauses are independent. A semicolon joins two independent clauses without a coordinating conjunction. Choice A is a comma splice. Choice B is grammatically acceptable but the "and" misrepresents the relationship — museum officials are explaining the turnout, not adding another independent idea. Choice D misuses a colon where a semicolon is needed.',
+      wrongAnswerExplanations: {
+        A: `A comma alone between two independent clauses is a comma splice — it does not have the joining power to connect them.`,
+        B: `"; and" is grammatically possible but misleading here; "and" suggests addition rather than explanation, distorting the relationship.`,
+        D: `A colon introduces elaboration or a list; the second clause here is a separate explanation, not a direct elaboration, making the semicolon a better fit.`,
+      },
+      teachingPoint:
+        'When two independent clauses are closely related but do not need a coordinating conjunction, a semicolon is the most precise connector. Avoid the temptation to add "and" — it can misrepresent the relationship.',
+    },
+    {
+      id: 'bnd-d-024',
+      skillSlug: 'boundaries',
+      subskill: 'Colons and Dashes',
+      level: 'advanced',
+      difficulty: 'hard',
+      errorCategory: 'colon-rule',
+      stimulus:
+        'The geologist spent three months cataloguing rock samples from five different sites, cross-referencing isotope ratios, and comparing stratigraphy across formations _______ her goal was to reconstruct the tectonic history of the region over the past two hundred million years.',
+      question: 'Which choice conforms to the conventions of Standard English?',
+      choices: [
+        { label: 'A', text: ',' },
+        { label: 'B', text: '; however,' },
+        { label: 'C', text: '; and' },
+        { label: 'D', text: ':' },
+      ],
+      correctAnswer: 'D',
+      explanation:
+        'The first clause is a complete independent clause. The second clause explains the purpose behind all those activities — it answers "why." A colon after a complete independent clause introduces an explanation, restatement, or elaboration of what precedes it. Choice A is a comma splice. Choices B and C use the wrong logical connectors.',
+      wrongAnswerExplanations: {
+        A: `A comma between two independent clauses without a coordinating conjunction is a comma splice.`,
+        B: `"However" signals contrast; the second clause does not contrast with the first — it explains the purpose behind it.`,
+        C: `"; and" adds; the second clause does not add a parallel idea but rather reveals the goal behind everything listed in the first clause.`,
+      },
+      teachingPoint:
+        `A colon is ideal when the second clause directly explains, restates, or reveals the purpose of the first. If you can read the colon as "namely" or "specifically," it is the right choice.`,
+    },
   ],
   masteryQuestions: [
     {

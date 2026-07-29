@@ -5,11 +5,18 @@ import { resolveUserIdentity } from '@/lib/supabase/resolve-user-identity'
 import {
   getDiagnosticRegistry,
   getDiagnosticV2Registry,
+  getDiagnosticV3Registry,
   DIAGNOSTIC_VERSION,
   DIAGNOSTIC_V2_VERSION,
   routeToM2Branch,
 } from '@/lib/academy/diagnostic-questions'
 import { DIAGNOSTIC_M1_QUESTIONS } from '@/lib/academy/diagnostic-questions-v2'
+import {
+  DIAGNOSTIC_V3_VERSION,
+  DIAGNOSTIC_V3_M1_QUESTIONS,
+  routeToM2V3Branch,
+} from '@/lib/academy/diagnostic-questions-v3'
+import { DIAGNOSTIC_V3_M2_ADVANCED_QUESTIONS } from '@/lib/academy/diagnostic-questions-v3-advanced'
 import { SKILL_DISPLAY_NAMES, ACADEMY_SKILL_SLUGS } from '@/lib/academy/skill-mapping'
 import { allSkills } from '@/lib/academy'
 import { hasSatPremium } from '@/lib/auth/server'
@@ -20,6 +27,8 @@ interface ResponseItem {
 }
 
 const M1_TOTAL = DIAGNOSTIC_M1_QUESTIONS.length
+const M1_V3_TOTAL = DIAGNOSTIC_V3_M1_QUESTIONS.length
+const M2_V3_ADVANCED_IDS = new Set(DIAGNOSTIC_V3_M2_ADVANCED_QUESTIONS.map(q => q.id))
 
 // Priority order for recommendations (foundational first)
 const WRITING_PRIORITY = ['boundaries', 'form-structure-sense', 'transitions', 'rhetorical-synthesis']
@@ -89,6 +98,11 @@ export async function POST(req: NextRequest) {
       clientToken?: string
       diagnosticVersion?: number
       m2Branch?: string
+    }
+
+    // ── v3 adaptive path ──────────────────────────────────────────────────────
+    if (rawBody.diagnosticVersion === DIAGNOSTIC_V3_VERSION) {
+      return await completeV3(supabase, user, rawBody)
     }
 
     // ── v2 adaptive path ──────────────────────────────────────────────────────
@@ -449,4 +463,254 @@ async function completeV2(
   }
 
   return NextResponse.json(summary)
+}
+
+// ── v3 adaptive completion ─────────────────────────────────────────────────────
+// Adds difficulty-weighted scoring and a guardrailed SAT score estimate.
+
+// Weights by module × difficulty:
+// M1 medium → 1.0, M1 hard → 1.2
+// M2-Foundation medium → 1.0, M2-Foundation hard → 1.2
+// M2-Advanced medium → 1.5, M2-Advanced hard → 1.8
+function getV3Weight(questionId: string, difficulty: string): number {
+  const isAdvanced = M2_V3_ADVANCED_IDS.has(questionId)
+  if (isAdvanced) {
+    return difficulty === 'hard' ? 1.8 : 1.5
+  }
+  return difficulty === 'hard' ? 1.2 : 1.0
+}
+
+// Guardrailed SAT score band from weighted accuracy.
+function computeSatEstimate(
+  weightedAccuracy: number,
+  m2Branch: 'foundation' | 'advanced',
+  m2AdvancedCorrect: number,
+): number {
+  // Raw estimate: 200 + accuracy * 600, rounded to nearest 10
+  const raw = Math.round((200 + weightedAccuracy * 600) / 10) * 10
+
+  if (m2Branch === 'foundation') {
+    // Foundation students cannot receive a 700+ estimate
+    return Math.min(raw, 690)
+  }
+
+  // Advanced path guardrails
+  if (weightedAccuracy >= 0.88 && m2AdvancedCorrect >= 16) {
+    return Math.max(750, Math.min(raw, 800))
+  }
+  if (weightedAccuracy >= 0.78 && m2AdvancedCorrect >= 12) {
+    return Math.max(700, Math.min(raw, 749))
+  }
+  // Advanced but score doesn't reach 700 threshold
+  return Math.min(raw, 699)
+}
+
+async function completeV3(
+  supabase: SupabaseServerClient,
+  user: User,
+  body: { responses: ResponseItem[]; clientToken?: string; m2Branch?: string },
+) {
+  const { responses, clientToken, m2Branch } = body
+
+  if (!Array.isArray(responses) || responses.length === 0) {
+    return NextResponse.json({ error: 'responses array is required' }, { status: 400 })
+  }
+  if (m2Branch !== 'foundation' && m2Branch !== 'advanced') {
+    return NextResponse.json({ error: 'm2Branch must be "foundation" or "advanced"' }, { status: 400 })
+  }
+
+  // Idempotency
+  if (clientToken) {
+    const { data: existing } = await supabase
+      .from('sat_rw_diagnostic_attempts')
+      .select('*')
+      .eq('client_token', clientToken)
+      .single()
+    if (existing) return NextResponse.json(existing)
+  }
+
+  const registry = getDiagnosticV3Registry()
+
+  const seen = new Set<string>()
+  const validResponses: Array<{ questionId: string; selectedAnswer: string; meta: NonNullable<ReturnType<typeof registry.get>> }> = []
+
+  for (const r of responses) {
+    if (typeof r.questionId !== 'string' || typeof r.selectedAnswer !== 'string') continue
+    if (seen.has(r.questionId)) continue
+    const meta = registry.get(r.questionId)
+    if (!meta) continue
+    seen.add(r.questionId)
+    validResponses.push({ questionId: r.questionId, selectedAnswer: r.selectedAnswer, meta })
+  }
+
+  if (validResponses.length === 0) {
+    return NextResponse.json({ error: 'No valid responses provided' }, { status: 400 })
+  }
+
+  // Separate M1 from M2 and validate branch prefix.
+  const m1Items = validResponses.filter(v => v.questionId.startsWith('diag3-m1-'))
+  const m2Items = validResponses.filter(v => v.questionId.startsWith('diag3-m2'))
+  const expectedM2Prefix = m2Branch === 'advanced' ? 'diag3-m2a-' : 'diag3-m2f-'
+
+  for (const item of m2Items) {
+    if (!item.questionId.startsWith(expectedM2Prefix)) {
+      return NextResponse.json({ error: 'Module 2 responses do not match the submitted branch' }, { status: 400 })
+    }
+  }
+
+  // Server re-derives the branch from M1 score and rejects a mismatch.
+  const m1Correct = m1Items.reduce((n, v) => n + (v.selectedAnswer === v.meta.correctAnswer ? 1 : 0), 0)
+  const derivedBranch = routeToM2V3Branch(m1Correct, M1_V3_TOTAL)
+  if (derivedBranch !== m2Branch) {
+    return NextResponse.json({ error: 'Submitted branch does not match Module 1 performance' }, { status: 400 })
+  }
+
+  // Server-side grading with difficulty weighting.
+  const skillResults: Record<string, { correct: number; total: number; pct: number; section: string; title: string; weightedCorrect: number; weightedTotal: number }> = {}
+  const domainResults: Record<string, { correct: number; total: number; pct: number; title: string }> = {}
+
+  let correct = 0
+  let incorrect = 0
+  let weightedCorrect = 0
+  let weightedTotal = 0
+  let m2AdvancedCorrect = 0
+
+  const DOMAIN_TITLES_V3: Record<string, string> = {
+    'information-and-ideas': 'Information and Ideas',
+    'craft-and-structure': 'Craft and Structure',
+    'expression-of-ideas': 'Expression of Ideas',
+    'standard-english-conventions': 'Standard English Conventions',
+  }
+
+  for (const { questionId, selectedAnswer, meta } of validResponses) {
+    const isCorrect = selectedAnswer === meta.correctAnswer
+    if (isCorrect) correct++; else incorrect++
+
+    const weight = getV3Weight(questionId, meta.difficulty)
+    weightedTotal += weight
+    if (isCorrect) {
+      weightedCorrect += weight
+      if (M2_V3_ADVANCED_IDS.has(questionId)) m2AdvancedCorrect++
+    }
+
+    const slug = meta.skillSlug
+    const skillTitle = SKILL_DISPLAY_NAMES[slug] ?? slug
+    if (!skillResults[slug]) {
+      const skillMeta = allSkills.find(s => s.slug === slug)
+      skillResults[slug] = { correct: 0, total: 0, pct: 0, section: skillMeta?.section ?? 'reading', title: skillTitle, weightedCorrect: 0, weightedTotal: 0 }
+    }
+    skillResults[slug].total++
+    skillResults[slug].weightedTotal += weight
+    if (isCorrect) {
+      skillResults[slug].correct++
+      skillResults[slug].weightedCorrect += weight
+    }
+
+    if (meta.domainSlug) {
+      if (!domainResults[meta.domainSlug]) {
+        domainResults[meta.domainSlug] = { correct: 0, total: 0, pct: 0, title: DOMAIN_TITLES_V3[meta.domainSlug] ?? meta.domainSlug }
+      }
+      domainResults[meta.domainSlug].total++
+      if (isCorrect) domainResults[meta.domainSlug].correct++
+    }
+  }
+
+  // Compute percentages (weighted for skills, raw for domains).
+  for (const r of Object.values(skillResults)) {
+    r.pct = r.weightedTotal > 0
+      ? Math.round((r.weightedCorrect / r.weightedTotal) * 100)
+      : 0
+  }
+  for (const r of Object.values(domainResults)) r.pct = Math.round((r.correct / r.total) * 100)
+
+  const totalAnswered = validResponses.length
+  const totalQuestions = M1_V3_TOTAL + m2Items.length
+  const omitted = Math.max(0, totalQuestions - totalAnswered)
+  const accuracy = Math.round((correct / totalQuestions) * 100 * 100) / 100
+  const weightedAccuracy = weightedTotal > 0 ? weightedCorrect / weightedTotal : 0
+
+  const satEstimate = computeSatEstimate(weightedAccuracy, m2Branch, m2AdvancedCorrect)
+
+  const weakestSlugs = rankSkills(skillResults, 'asc').slice(0, 5)
+  const strongestSlugs = rankSkills(skillResults, 'desc').slice(0, 3)
+  const recommendedSkill = computeRecommendedSkill(skillResults)
+
+  const { user_name, user_email } = await resolveUserIdentity(supabase, user)
+  const now = new Date().toISOString()
+
+  const { data: summary, error: summaryError } = await supabase
+    .from('sat_rw_diagnostic_attempts')
+    .insert({
+      user_id: user.id,
+      user_email,
+      user_name,
+      client_token: clientToken ?? null,
+      diagnostic_version: DIAGNOSTIC_V3_VERSION,
+      m2_branch: m2Branch,
+      m1_correct: m1Correct,
+      m1_total: M1_V3_TOTAL,
+      total_questions: totalQuestions,
+      answered_questions: totalAnswered,
+      correct_count: correct,
+      incorrect_count: incorrect,
+      omitted_count: omitted,
+      accuracy_percentage: accuracy,
+      domain_results: domainResults,
+      skill_results: skillResults,
+      strongest_skill_slugs: strongestSlugs,
+      weakest_skill_slugs: weakestSlugs,
+      recommended_skill_slug: recommendedSkill,
+      recommended_lesson_slug: recommendedSkill,
+      completed_at: now,
+    })
+    .select('*')
+    .single()
+
+  if (summaryError) {
+    if (summaryError.code === '23505' && clientToken) {
+      const { data: existing } = await supabase
+        .from('sat_rw_diagnostic_attempts')
+        .select('*')
+        .eq('client_token', clientToken)
+        .single()
+      if (existing) return NextResponse.json({ ...existing, sat_estimate: satEstimate, weighted_accuracy: Math.round(weightedAccuracy * 100) })
+    }
+    console.error('diagnostic complete v3: summary insert error', summaryError)
+    return NextResponse.json({ error: 'Failed to save diagnostic result' }, { status: 500 })
+  }
+
+  const attemptRows = validResponses.map(({ questionId, selectedAnswer, meta }) => ({
+    user_id: user.id,
+    user_email,
+    user_name,
+    source_type: 'academy_diagnostic',
+    source_id: 'diagnostic',
+    question_id: questionId,
+    skill_slug: meta.skillSlug,
+    difficulty: meta.difficulty,
+    selected_answer: selectedAnswer,
+    correct_answer: meta.correctAnswer,
+    is_correct: selectedAnswer === meta.correctAnswer,
+    practice_mode: 'diagnostic',
+    domain_slug: meta.domainSlug,
+    content_version: DIAGNOSTIC_V3_VERSION,
+    hint_count: 0,
+    timed: false,
+  }))
+
+  const { error: attemptsError } = await supabase
+    .from('sat_rw_academy_attempts')
+    .insert(attemptRows)
+
+  if (attemptsError) {
+    console.error('diagnostic complete v3: attempts insert error', attemptsError)
+  }
+
+  // Return the stored row plus computed fields not persisted to DB.
+  return NextResponse.json({
+    ...summary,
+    sat_estimate: satEstimate,
+    weighted_accuracy: Math.round(weightedAccuracy * 100),
+    m2_advanced_correct: m2Branch === 'advanced' ? m2AdvancedCorrect : undefined,
+  })
 }

@@ -60,6 +60,18 @@ export const crossTextConnections: AcademySkill = {
       avoidance:
         'If Text 2 acknowledges or accepts any part of Text 1\'s claim before pushing back, the relationship is a qualification, not a total rejection. Look for concessive language like "while," "although," or "even if."',
     },
+    {
+      title: `The partial-reading trap`,
+      description: `A student reads only the opening sentence or two of each text, or skips to the final sentence looking for a keyword match, and misses a qualification, concession, or key detail that appears in the middle. The relationship identified reflects only part of what the texts actually say.`,
+      avoidance: `Read each text completely before characterizing the relationship. Qualifications, concessive clauses, and the most precise evidence often appear mid-passage. If your summary of a text can be challenged by a detail you glossed over, your relationship label will be off.`,
+      miniExample: `Text 1 opens by praising urban green space, then mid-passage notes that access is unequal across neighborhoods. A student who stops reading after the opening praise will miss the caveat and may choose "full agreement" when Text 2 focuses on the inequality concern.`,
+    },
+    {
+      title: `The tone-versus-claim trap`,
+      description: `A student mistakes the author's tone or attitude for the author's actual argument. An author can write skeptically about a theory while ultimately accepting it, or write enthusiastically while only partially endorsing it. Answers built on tone rather than claim will misname the relationship.`,
+      avoidance: `Ask what the author concludes, not how they sound. A cautious or hedged tone does not necessarily mean the author disagrees; an enthusiastic tone does not guarantee full agreement. Identify the explicit claim or conclusion before characterizing the relationship.`,
+      miniExample: `Text 2's author writes with clear skepticism about a study's methodology but ultimately concludes the study's findings are "broadly consistent" with prior research. A student reading the skeptical tone may choose "disagreement" when the actual conclusion is qualified agreement.`,
+    },
   ],
   guidedExamples: [
     {
@@ -336,6 +348,159 @@ export const crossTextConnections: AcademySkill = {
         C: 'Neither text argues that reefs will recover. Text 1 suggests reefs may not survive; Text 2 shows recovery is limited. Both texts are pessimistic about recovery.',
         D: 'Both texts are directly about the same topic — coral reef vulnerability to warming — and Text 2 even explicitly echoes Text 1\'s conclusion.',
       },
+    },
+    {
+      id: 'ctc-ex-6',
+      subskill: 'How One Text Responds to Another',
+      level: 'sat-application',
+      stimulus: `Text 1: Early twentieth-century urban planners embraced the "garden city" model, designing self-contained communities surrounded by green belts that would prevent the sprawl and overcrowding associated with industrial cities. Ebenezer Howard, the model's chief advocate, argued that planned decentralization — rather than reform of existing city centers — was the only lasting solution to urban poverty and congestion.\n\nText 2: Subsequent decades revealed the limits of the garden city ideal. New towns built on Howard's principles attracted primarily middle-class residents, leaving the working-class populations that planners sought to help concentrated in the unreformed city centers. Scholars now recognize that the model responded to real problems but miscalculated which populations would actually benefit from planned decentralization.`,
+      question: `Based on the texts, how does Text 2 respond to the argument made in Text 1?`,
+      steps: [
+        {
+          instruction: `Read each text for its main claim`,
+          content: `Text 1 presents Howard's garden city model as a viable solution to urban poverty and congestion through planned decentralization. Text 2 evaluates what actually happened when the model was implemented.`,
+        },
+        {
+          instruction: `Identify the point of contact between the texts`,
+          content: `Both texts engage with the garden city model's purpose of addressing urban problems. Text 1 presents the theory; Text 2 examines the practice and its unintended consequences.`,
+        },
+        {
+          instruction: `Characterize the relationship precisely`,
+          content: `Text 2 neither fully rejects nor fully endorses Text 1. It accepts that the model "responded to real problems" but argues it "miscalculated" who would benefit — a qualification or partial critique, not a wholesale dismissal.`,
+        },
+        {
+          instruction: `Select the answer that names the relationship correctly`,
+          content: `The correct answer should show Text 2 accepting the model's intention while criticizing its real-world outcome, especially that it failed to reach its intended working-class beneficiaries.`,
+        },
+      ],
+      choices: [
+        {
+          label: 'A',
+          text: `Text 2 endorses the garden city model and argues it should be revived for modern cities.`,
+        },
+        {
+          label: 'B',
+          text: `Text 2 accepts that the garden city model addressed genuine urban problems but argues it failed to benefit the working-class populations it was meant to help.`,
+        },
+        {
+          label: 'C',
+          text: `Text 2 agrees with Text 1 that planned decentralization is the only lasting solution to urban poverty.`,
+        },
+        {
+          label: 'D',
+          text: `Text 2 argues that Ebenezer Howard never intended the garden city model to help working-class residents.`,
+        },
+      ],
+      correctAnswer: 'B',
+      explanation: `Text 2 explicitly states the model "responded to real problems" — a concession to Text 1 — but then argues it "miscalculated which populations would actually benefit," since new towns attracted middle-class rather than working-class residents. This is a qualification: Text 2 accepts the model's aims while challenging its real-world impact.`,
+      wrongAnswerExplanations: {
+        A: `Text 2 treats the garden city model as historically flawed, not as a template to revive. It describes limitations, not endorsements.`,
+        C: `Text 2 does not affirm Howard's prescription; it shows the prescription failed in practice. Agreeing that decentralization is the "only" solution contradicts Text 2's critical stance.`,
+        D: `Text 2 never claims Howard's intentions excluded working-class residents — it says the model's real-world outcome failed them, not that Howard designed it that way.`,
+      },
+      coachTakeaway: `When Text 2 uses concessive language like "responded to real problems but miscalculated," it is signaling a qualification, not a flat agreement or disagreement. Train yourself to spot this pattern — it is one of the most common relationship types on the SAT.`,
+    },
+    {
+      id: 'ctc-ex-7',
+      subskill: 'Comparison of Methods',
+      level: 'sat-application',
+      stimulus: `Text 1: To study how ancient Polynesian navigators crossed the Pacific, researcher Ben Finney led the construction of Hokule'a, a replica double-hulled canoe built using traditional techniques. By sailing the vessel from Hawaii to Tahiti without modern instruments, Finney's team demonstrated that indigenous wayfinding methods — reading stars, swells, and wind — were sufficient for long-distance ocean voyages. Experimental replication, he argued, is the most direct test of historical feasibility.\n\nText 2: Archaeologist Anne Di Piazza approached the same question through computational modeling. Using thousands of simulated voyages derived from historical wind and current data, Di Piazza's team calculated the probability that canoes following various routes could have successfully reached different island groups. The simulations pointed to several viable corridors of settlement and generated predictions about the sequence of island colonization that closely matched the archaeological record.`,
+      question: `Which choice best describes the relationship between the two texts?`,
+      steps: [
+        {
+          instruction: `Read each text for its main claim`,
+          content: `Text 1 describes Finney's hands-on experimental replication as the method for testing Polynesian navigation feasibility. Text 2 describes Di Piazza's computational simulation approach to the same historical question.`,
+        },
+        {
+          instruction: `Identify the point of contact between the texts`,
+          content: `Both texts investigate how ancient Polynesian navigators crossed the Pacific, but they use fundamentally different methodologies: physical replication versus computer simulation.`,
+        },
+        {
+          instruction: `Characterize the relationship precisely`,
+          content: `The texts do not disagree on conclusions — both support the feasibility of Polynesian long-distance navigation. They differ in method: one relies on experiential replication, the other on probabilistic modeling. This is a comparison of methods, not a dispute.`,
+        },
+        {
+          instruction: `Select the answer that names the relationship correctly`,
+          content: `The correct answer should acknowledge that both texts address the same topic and reach compatible conclusions while emphasizing that they use different investigative approaches.`,
+        },
+      ],
+      choices: [
+        {
+          label: 'A',
+          text: `The two texts reach opposing conclusions about whether Polynesian navigators could successfully cross the Pacific.`,
+        },
+        {
+          label: 'B',
+          text: `Text 2 criticizes Finney's experimental method as unreliable and proposes computational modeling as a superior replacement.`,
+        },
+        {
+          label: 'C',
+          text: `Both texts investigate the feasibility of Polynesian navigation but use different methods — physical replication in Text 1 and computational simulation in Text 2.`,
+        },
+        {
+          label: 'D',
+          text: `Text 1 focuses on modern navigation technology, while Text 2 focuses on ancient wayfinding traditions.`,
+        },
+      ],
+      correctAnswer: 'C',
+      explanation: `Both texts study the same historical question — how Polynesian navigators crossed the Pacific — and both support the feasibility of those voyages. The distinction is methodological: Finney's team used hands-on experimental replication of the voyage itself, while Di Piazza's team used computational modeling of thousands of simulated voyages. Neither text disputes the other's conclusions; they use complementary approaches to the same question.`,
+      wrongAnswerExplanations: {
+        A: `Neither text argues that Polynesian navigation was impossible. Both studies provide evidence that long-distance voyaging was feasible.`,
+        B: `Text 2 does not mention Finney or criticize experimental replication. It simply describes a different methodology applied to the same research question.`,
+        D: `This reverses the focus of each text. Text 1 describes traditional indigenous methods (stars, swells, wind), while Text 2 uses modern computational tools to reconstruct ancient routes.`,
+      },
+      coachTakeaway: `"Comparison of Methods" questions test whether you can distinguish how two authors investigate a topic from what they conclude. When two texts study the same subject but neither disputes the other, look for a methodological contrast rather than an agreement-versus-disagreement framing.`,
+    },
+    {
+      id: 'ctc-ex-8',
+      subskill: 'Inference About One Author Given the Other',
+      level: 'advanced',
+      stimulus: `Text 1: The widespread adoption of open-plan offices in the 1990s and 2000s was premised on the belief that removing physical barriers between employees would spontaneously generate collaboration and creative exchange. Architects and business consultants promoted open layouts as engines of innovation, arguing that proximity alone could spark the kind of informal interaction that drives organizational creativity.\n\nText 2: A 2018 study by Ethan Bernstein and Stephen Turban tracked employee interactions before and after a company transitioned to an open-plan office. Counter to expectations, face-to-face interaction among employees dropped by roughly 70 percent after the transition, while electronic communication — email and messaging — increased substantially. The researchers concluded that when physical barriers are removed, workers often substitute digital privacy for the architectural privacy they have lost.`,
+      question: `Based on the texts, how would the architects and business consultants described in Text 1 most likely respond to the findings reported in Text 2?`,
+      steps: [
+        {
+          instruction: `Read each text for its main claim`,
+          content: `Text 1 describes the premise behind open-plan offices: that removing barriers spontaneously generates collaboration and innovation. Text 2 presents empirical findings showing that open-plan offices actually reduced face-to-face interaction and increased digital communication.`,
+        },
+        {
+          instruction: `Identify the point of contact between the texts`,
+          content: `Text 1 presents the theoretical prediction (open plans increase collaboration); Text 2 presents empirical evidence that challenges that prediction (face-to-face interaction dropped 70 percent after the transition).`,
+        },
+        {
+          instruction: `Characterize the relationship precisely`,
+          content: `Text 2's findings directly contradict the assumption stated in Text 1 — that proximity alone sparks interaction. The architects and consultants in Text 1 would be challenged, not supported, by Text 2's data.`,
+        },
+        {
+          instruction: `Select the answer that names the relationship correctly`,
+          content: `The correct answer should show the Text 1 advocates being surprised or challenged by Text 2's counterintuitive finding that open plans reduced, rather than increased, face-to-face collaboration.`,
+        },
+      ],
+      choices: [
+        {
+          label: 'A',
+          text: `They would likely be surprised, since the study's finding that open plans reduced face-to-face interaction contradicts the assumption that proximity spontaneously generates collaboration.`,
+        },
+        {
+          label: 'B',
+          text: `They would likely be satisfied, since the study confirms that open-plan offices succeed in increasing overall employee communication.`,
+        },
+        {
+          label: 'C',
+          text: `They would likely be indifferent, since the study examined only one company and therefore cannot challenge broader claims about open-plan design.`,
+        },
+        {
+          label: 'D',
+          text: `They would likely argue that the study's findings prove that digital communication is now more valuable than face-to-face interaction.`,
+        },
+      ],
+      correctAnswer: 'A',
+      explanation: `Text 1 presents the assumption that removing physical barriers would generate spontaneous collaboration through proximity. Text 2 reports the opposite: face-to-face interaction fell by 70 percent, and workers turned to digital communication instead. The architects and consultants described in Text 1 would be challenged — not validated — by these results, making A the accurate inference about how they would respond.`,
+      wrongAnswerExplanations: {
+        B: `Text 2 shows that overall communication shifted from face-to-face to digital, not that it increased in a way the open-plan advocates would celebrate. The open-plan premise was specifically about spontaneous in-person interaction, which dropped dramatically.`,
+        C: `The question asks how the Text 1 advocates would respond to the findings, not whether the findings are definitive. Nothing in either text suggests the advocates would dismiss a single study as irrelevant.`,
+        D: `Neither text makes a claim about the relative value of digital versus face-to-face communication. Text 2 reports the shift as a counterintuitive outcome, not as evidence that digital is superior.`,
+      },
+      coachTakeaway: `"Inference About One Author Given the Other" questions require you to take a position stated in one text and reason about how the author — or figures described in that text — would evaluate new information from the other text. Ask yourself: does Text 2 support, challenge, or complicate what Text 1 claimed? Then find the answer that accurately describes that reaction.`,
     },
   ],
   drillQuestions: [
@@ -702,6 +867,860 @@ export const crossTextConnections: AcademySkill = {
       },
       teachingPoint:
         'In "how would the author respond" questions, look for what the second text accepts before what it contests. Text 2 accepts patronage matters, then argues formal analysis also matters — so the response is "both, not just one."',
+    },
+    {
+      id: 'ctc-d-011',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Agreement Between Texts',
+      level: 'foundation',
+      difficulty: 'easy',
+      stimulus:
+        'Text 1: Sleep deprivation has measurable effects on cognitive performance. Studies show that individuals who sleep fewer than six hours per night score significantly lower on tests of attention, working memory, and problem-solving than those who sleep seven to nine hours. Even a single night of poor sleep reduces performance on tasks requiring sustained focus.\n\nText 2: Adolescents are especially vulnerable to the effects of insufficient sleep because their developing brains require more restorative rest than adult brains. Research on high school students found that those who averaged fewer than seven hours of sleep performed worse on standardized academic assessments and reported greater difficulty concentrating during class than peers who met recommended sleep durations.',
+      question: 'Which choice best describes the relationship between the two texts?',
+      choices: [
+        {
+          label: 'A',
+          text: 'Both texts support the view that insufficient sleep harms cognitive functioning, though Text 1 addresses the general population and Text 2 focuses on adolescents.',
+        },
+        {
+          label: 'B',
+          text: 'Text 2 contradicts Text 1 by arguing that adolescents are not affected by sleep deprivation.',
+        },
+        {
+          label: 'C',
+          text: 'Text 1 argues sleep is unnecessary for adults, while Text 2 argues it is essential for adolescents.',
+        },
+        {
+          label: 'D',
+          text: 'The two texts discuss unrelated topics and draw incompatible conclusions.',
+        },
+      ],
+      correctAnswer: 'A',
+      explanation:
+        'Both texts present evidence that sleeping fewer hours than recommended impairs cognitive performance. Text 1 establishes the general relationship using studies of adults; Text 2 extends that finding to adolescents specifically. They agree on the central claim about sleep and cognition, differing only in their population of focus.',
+      wrongAnswerExplanations: {
+        B: 'Text 2 shows adolescents are harmed by insufficient sleep -- the opposite of arguing they are unaffected.',
+        C: 'Neither text argues sleep is unnecessary for any group. Both treat adequate sleep as beneficial.',
+        D: 'Both texts address the same relationship between sleep duration and cognitive performance, making them directly comparable.',
+      },
+      teachingPoint:
+        'When two texts reach the same conclusion using different populations or settings, the relationship is agreement with different scope -- not contradiction.',
+    },
+    {
+      id: 'ctc-d-012',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Disagreement Between Texts',
+      level: 'foundation',
+      difficulty: 'easy',
+      stimulus:
+        "Text 1: Ancient Rome's decline is best explained by military overextension. As the empire expanded beyond the Mediterranean into northern Europe and western Asia, the cost of defending thousands of miles of frontier drained the treasury and stretched legions too thin. By the fourth century, Rome could no longer afford to station enough professional soldiers at its borders to repel sustained barbarian incursions.\n\nText 2: Military weakness alone cannot account for Rome's fall. The empire had survived military crises before and had adapted its frontier defenses across centuries. The more fundamental cause was political fragmentation: repeated civil wars over imperial succession destabilized governance, undermined economic production, and eroded the administrative coherence that had held a vast and diverse empire together.",
+      question: 'Which choice best describes the relationship between the two texts?',
+      choices: [
+        {
+          label: 'A',
+          text: "Both texts agree that military overextension was the primary cause of Rome's decline.",
+        },
+        {
+          label: 'B',
+          text: "Text 1 attributes Rome's fall primarily to military overextension, while Text 2 argues that political fragmentation was a more fundamental cause.",
+        },
+        {
+          label: 'C',
+          text: 'Text 2 agrees with Text 1 but focuses on the economic rather than military consequences.',
+        },
+        {
+          label: 'D',
+          text: 'Text 1 addresses the Western Roman Empire and Text 2 addresses the Eastern, so they cannot be compared.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 1 offers a single primary explanation: military overextension drained the treasury and left borders undefended. Text 2 directly challenges this by arguing the empire had handled military crises before and that political fragmentation was more fundamental. This is a direct disagreement about the primary cause.',
+      wrongAnswerExplanations: {
+        A: 'Only Text 1 treats military overextension as the primary cause. Text 2 explicitly says "military weakness alone cannot account" for the fall.',
+        C: "Text 2 does not agree with Text 1; it offers a different cause. While Text 2 mentions economic production, it attributes economic damage to political fragmentation, not to Text 1's military explanation.",
+        D: 'Neither text specifies whether it addresses the Western or Eastern empire; both discuss Roman decline generally.',
+      },
+      teachingPoint:
+        'Disagreement questions often involve one text making a claim and a second text saying that claim is insufficient or that a different explanation is more important. Look for "alone cannot account" or similar qualifying language.',
+    },
+    {
+      id: 'ctc-d-013',
+      skillSlug: 'cross-text-connections',
+      subskill: 'How One Text Responds to Another',
+      level: 'foundation',
+      difficulty: 'easy',
+      stimulus:
+        "Text 1: The most effective way to reduce plastic waste in oceans is to invest in better waste management infrastructure in coastal developing nations, where the majority of plastic enters the marine environment. Cleanup efforts that remove plastic already in the water address the symptom without treating the cause.\n\nText 2: While upstream waste management improvements are necessary, they will take decades to scale and cannot address the hundreds of millions of tons of plastic already afloat in the world's oceans. Targeted removal operations -- including floating barriers, trawling nets, and coastal cleanup programs -- are an essential complement to prevention efforts, not an alternative to them.",
+      question: 'Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1?',
+      choices: [
+        {
+          label: 'A',
+          text: 'The author of Text 2 would argue that cleanup efforts are a waste of resources and that only waste management improvements matter.',
+        },
+        {
+          label: 'B',
+          text: 'The author of Text 2 would fully agree that waste management infrastructure is the only solution needed.',
+        },
+        {
+          label: 'C',
+          text: 'The author of Text 2 would accept that waste management is necessary but argue that it does not make cleanup efforts unnecessary -- both approaches are needed simultaneously.',
+        },
+        {
+          label: 'D',
+          text: 'The author of Text 2 would deny that plastic waste is a serious environmental problem.',
+        },
+      ],
+      correctAnswer: 'C',
+      explanation:
+        'Text 2 opens with "While upstream waste management improvements are necessary" -- explicitly accepting Text 1\'s core recommendation -- before arguing that cleanup efforts are also essential because existing ocean plastic cannot wait for infrastructure improvements. The author of Text 2 endorses both strategies rather than choosing one over the other.',
+      wrongAnswerExplanations: {
+        A: 'Text 2 argues for cleanup efforts as a complement to waste management, not a replacement. It calls removal operations "essential."',
+        B: 'Text 2 explicitly argues cleanup is also essential -- it does not agree that waste management is the only solution.',
+        D: 'Both texts take plastic ocean pollution seriously as a problem worth solving; neither dismisses it.',
+      },
+      teachingPoint:
+        'When Text 2 opens with "while" or "although" followed by a concession, the author accepts the first text\'s point but argues it is incomplete. The relationship is partial agreement plus addition, not full agreement or contradiction.',
+    },
+    {
+      id: 'ctc-d-014',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Comparison of Conclusions',
+      level: 'foundation',
+      difficulty: 'easy',
+      stimulus:
+        'Text 1: Research on bilingualism consistently finds that speakers who regularly use two languages show enhanced executive control -- the cognitive ability to switch between tasks, inhibit irrelevant responses, and manage competing information. Neuroimaging studies reveal that bilingual individuals recruit prefrontal cortex regions associated with cognitive control more efficiently than monolingual peers.\n\nText 2: A growing body of replication studies has challenged the "bilingual advantage" in executive control. Several large-scale studies that corrected for methodological weaknesses in earlier research -- such as small sample sizes and inadequate controls for socioeconomic status -- found no statistically significant difference in executive function between bilingual and monolingual participants.',
+      question: 'Which choice best describes the relationship between the two texts?',
+      choices: [
+        {
+          label: 'A',
+          text: 'Both texts agree that bilingualism consistently improves executive control.',
+        },
+        {
+          label: 'B',
+          text: 'Text 1 presents evidence for a bilingual cognitive advantage, while Text 2 questions whether that advantage exists when research methodology is improved.',
+        },
+        {
+          label: 'C',
+          text: 'Text 2 argues that bilingualism impairs executive control, contradicting Text 1.',
+        },
+        {
+          label: 'D',
+          text: 'The two texts study the same participants and therefore reach the same conclusions.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 1 claims bilingualism produces a measurable advantage in executive control, supported by neuroimaging evidence. Text 2 challenges this by citing replication studies with better methodology that found no significant difference. This is a direct clash over whether the bilingual advantage is real or an artifact of earlier research flaws.',
+      wrongAnswerExplanations: {
+        A: 'Only Text 1 argues for a consistent bilingual advantage. Text 2 disputes this finding.',
+        C: 'Text 2 does not argue bilingualism impairs executive control -- it argues the advantage may not exist, which is different from claiming a disadvantage.',
+        D: 'The texts describe different bodies of research; there is no indication they study the same participants.',
+      },
+      teachingPoint:
+        'Watch for replication studies challenging earlier findings. When Text 2 says earlier research had methodological flaws, it is questioning the conclusion of Text 1, not simply adding nuance.',
+    },
+    {
+      id: 'ctc-d-015',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Agreement Between Texts',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus:
+        'Text 1: The widespread assumption that larger class sizes inevitably harm student achievement is not fully supported by evidence. Meta-analyses of randomized controlled studies find that reducing class size from thirty to twenty students produces modest but inconsistent gains in test scores. The effect size is much smaller than public discourse suggests, and the benefits are concentrated among early elementary grades and disadvantaged populations.\n\nText 2: Class size reduction is not a cost-neutral intervention: cutting class sizes by ten students requires hiring one additional teacher for every two existing classrooms. Cost-effectiveness analyses consistently find that the same funds spent on teacher professional development, high-dosage tutoring, or extended learning time produce larger achievement gains per dollar than reducing class size. For most school districts, class size reduction is a relatively expensive path to relatively modest results.',
+      question: 'Which choice best describes what the two texts have in common?',
+      choices: [
+        {
+          label: 'A',
+          text: 'Both texts argue that class size has absolutely no effect on student achievement.',
+        },
+        {
+          label: 'B',
+          text: 'Both texts suggest that the benefits of reducing class size are more limited than commonly believed -- Text 1 by questioning the evidence base and Text 2 by comparing it to more cost-effective alternatives.',
+        },
+        {
+          label: 'C',
+          text: 'Both texts argue that class size should never be reduced under any circumstances.',
+        },
+        {
+          label: 'D',
+          text: 'Text 1 supports class size reduction, while Text 2 argues against it on cost grounds alone.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 1 calls the achievement gains from class size reduction "modest but inconsistent" and smaller than public discourse suggests. Text 2 argues those modest gains cost more than alternative interventions. Both texts converge on the view that class size reduction is overrated -- one from a question of evidence quality, the other from a question of cost-effectiveness.',
+      wrongAnswerExplanations: {
+        A: 'Text 1 says reductions produce "modest but inconsistent gains" -- not zero effect. Claiming "absolutely no effect" overstates both texts.',
+        C: 'Neither text says class size should never be reduced; both simply argue the benefits are limited relative to expectations or costs.',
+        D: 'Text 1 does not support class size reduction -- it questions whether the evidence justifies the widespread assumption. Both texts cast doubt on it.',
+      },
+      teachingPoint:
+        'When two texts reach the same bottom-line conclusion by different routes (one via evidence quality, one via cost-effectiveness), the relationship is agreement through different arguments.',
+    },
+    {
+      id: 'ctc-d-016',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Inference About One Author Given the Other',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus:
+        'Text 1: Economic growth, measured by gross domestic product, remains the best available proxy for national prosperity. GDP aggregates the market value of all goods and services produced in an economy and, in so doing, captures rises in income, employment, and productive capacity that correlate strongly with improvements in material living standards. For all its acknowledged limitations, GDP provides a consistent, internationally comparable measure that no alternative has matched.',
+      question:
+        'Based on Text 1, which of the following is a claim the author of Text 1 would most likely agree with?',
+      choices: [
+        {
+          label: 'A',
+          text: 'GDP is a perfect measure of prosperity with no significant limitations.',
+        },
+        {
+          label: 'B',
+          text: 'GDP, despite its imperfections, remains more useful than available alternatives for measuring national economic wellbeing.',
+        },
+        {
+          label: 'C',
+          text: 'GDP should be replaced immediately by measures that capture non-market activity.',
+        },
+        {
+          label: 'D',
+          text: 'GDP accurately captures every dimension of human quality of life.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'The author of Text 1 acknowledges GDP\'s limitations ("for all its acknowledged limitations") but argues it "provides a consistent, internationally comparable measure that no alternative has matched." This reflects a pragmatic defense -- GDP is imperfect but still the best option currently available.',
+      wrongAnswerExplanations: {
+        A: 'The author explicitly acknowledges GDP has limitations, so it is not a perfect measure.',
+        C: 'The author defends GDP against alternatives, not the reverse. Calling for immediate replacement contradicts the text.',
+        D: 'The author says GDP correlates with material living standards, not that it captures every dimension of human quality of life -- a much broader claim.',
+      },
+      teachingPoint:
+        'Single-text inference questions within a cross-text format still require careful attention to qualifications. The "acknowledged limitations" hedge is essential to the correct answer.',
+    },
+    {
+      id: 'ctc-d-017',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Disagreement Between Texts',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus:
+        'Text 1: The widespread adoption of standardized testing in K-12 education has improved accountability by providing consistent, objective measures of student achievement across schools, districts, and states. Before standardized assessments, evaluating school quality was largely subjective and inconsistent. Comparable data allow policymakers to identify underperforming schools, allocate resources strategically, and track whether interventions are producing measurable results.\n\nText 2: The accountability benefits of standardized testing come at a significant pedagogical cost. When schools\' ratings and funding depend on test scores, administrators and teachers face enormous pressure to "teach to the test" -- narrowing the curriculum to assessed subjects and tested skills while reducing time for creative inquiry, arts, physical education, and subjects that contribute to students\' full development. The metric, in this case, distorts the thing it was designed to measure.',
+      question:
+        'Based on the texts, the authors would most likely disagree about which of the following?',
+      choices: [
+        {
+          label: 'A',
+          text: 'Whether standardized tests produce consistent, comparable data across schools',
+        },
+        {
+          label: 'B',
+          text: 'Whether the accountability benefits of standardized testing outweigh the costs to curriculum breadth and pedagogical quality',
+        },
+        {
+          label: 'C',
+          text: 'Whether schools existed before standardized testing was introduced',
+        },
+        {
+          label: 'D',
+          text: 'Whether students should attend school',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 1 argues standardized testing produces valuable accountability benefits. Text 2 accepts that the tests produce data but argues those benefits come with serious pedagogical costs -- curriculum narrowing and "teaching to the test." The core disagreement is a trade-off question: are the accountability gains worth the educational costs?',
+      wrongAnswerExplanations: {
+        A: 'Text 2 does not dispute that tests produce comparable data -- it disputes whether those data justify the costs.',
+        C: 'Both texts assume schools existed before standardized testing; this is not a point of disagreement.',
+        D: 'Neither text questions whether students should attend school; this is far outside the scope of both passages.',
+      },
+      teachingPoint:
+        'For "would disagree about" questions, find the precise trade-off or evaluative claim that one text affirms and the other challenges. Often one text addresses benefits and the other addresses costs of the same policy.',
+    },
+    {
+      id: 'ctc-d-018',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Comparison of Methods',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus:
+        'Text 1: Archaeologists studying the settlement patterns of pre-Columbian civilizations in the Amazon basin have traditionally relied on ceramic typologies -- classifying pottery styles to trace cultural exchange and migration routes. When a distinctive ceramic type appears across a wide geographic range, archaeologists infer contact between the groups that produced it. The technique has generated detailed chronologies of cultural development across the region.\n\nText 2: Recent advances in LiDAR technology -- which uses laser pulses from aircraft to map terrain beneath dense forest canopy -- have transformed Amazonian archaeology. Where ceramic-based methods depend on artifacts reaching the surface or surviving in excavated soil layers, LiDAR reveals the spatial organization of entire settlements: plazas, causeways, earthworks, and residential zones invisible from the ground. Settlements once considered modest have been reclassified as urban centers once their full spatial extent is mapped from the air.',
+      question:
+        'Based on both texts, which of the following best describes the relationship between ceramic typology and LiDAR in Amazonian archaeology?',
+      choices: [
+        {
+          label: 'A',
+          text: 'LiDAR has proven that all conclusions drawn from ceramic typology were incorrect.',
+        },
+        {
+          label: 'B',
+          text: 'Both methods are entirely interchangeable and answer the same archaeological questions.',
+        },
+        {
+          label: 'C',
+          text: 'Ceramic typology and LiDAR are complementary methods that answer different archaeological questions -- one tracing cultural exchange through artifacts, the other revealing settlement structure through spatial mapping.',
+        },
+        {
+          label: 'D',
+          text: 'LiDAR cannot be used in the Amazon because of the dense forest canopy.',
+        },
+      ],
+      correctAnswer: 'C',
+      explanation:
+        'Text 1 describes ceramic typology as a method for tracing cultural exchange and migration via pottery styles. Text 2 describes LiDAR as a method for revealing the spatial organization of settlements hidden under forest canopy. The two methods address different questions (cultural contact vs. settlement structure) and are therefore complementary rather than competitive or interchangeable.',
+      wrongAnswerExplanations: {
+        A: 'Text 2 does not say LiDAR has disproved ceramic typology findings; it says LiDAR reveals settlement structure that ceramics cannot detect.',
+        B: 'The texts describe distinct methods that answer different questions; they are not interchangeable.',
+        D: 'Text 2 explicitly states LiDAR uses laser pulses "from aircraft to map terrain beneath dense forest canopy" -- dense canopy is exactly what LiDAR is designed to penetrate.',
+      },
+      teachingPoint:
+        'Comparison of methods questions require you to identify what each method can and cannot do. Methods that answer different questions are complementary; methods that answer the same question differently are alternatives.',
+    },
+    {
+      id: 'ctc-d-019',
+      skillSlug: 'cross-text-connections',
+      subskill: 'How One Text Responds to Another',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus:
+        'Text 1: The spread of social media has fundamentally changed how political misinformation circulates. False claims that once reached a limited audience through tabloid newspapers can now reach millions within hours through shares, reposts, and algorithmic amplification. The speed and scale of digital misinformation create challenges for democratic deliberation that no prior era of media has faced.\n\nText 2: Concerns about social media and misinformation sometimes overstate the novelty of the problem. Propaganda, rumor, and deliberate disinformation campaigns predate the internet by centuries. The printing press enabled the mass production of pamphlets containing fabricated claims; radio was weaponized for political manipulation in the 1930s; television reshaped political reality through selective imagery long before the first tweet was sent. Each new communication medium has amplified misinformation in ways contemporaries found unprecedented.',
+      question:
+        'Based on the texts, how would the author of Text 2 most likely respond to Text 1\'s claim that social media misinformation creates "challenges that no prior era of media has faced"?',
+      choices: [
+        {
+          label: 'A',
+          text: 'The author of Text 2 would agree that social media is unique and that historical analogies are irrelevant.',
+        },
+        {
+          label: 'B',
+          text: 'The author of Text 2 would challenge the claim of novelty by pointing out that every new communication medium has, in its time, amplified misinformation in ways that seemed unprecedented.',
+        },
+        {
+          label: 'C',
+          text: 'The author of Text 2 would argue that misinformation is not a serious problem in any era.',
+        },
+        {
+          label: 'D',
+          text: 'The author of Text 2 would agree that social media is more dangerous than the printing press but argue that regulation can solve the problem.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 2 directly targets the assumption that social media misinformation is historically unprecedented, listing the printing press, radio, and television as prior media that also enabled misinformation at scales their contemporaries found alarming. The author of Text 2 would challenge Text 1\'s "no prior era" claim by showing a historical pattern.',
+      wrongAnswerExplanations: {
+        A: 'Text 2 argues historical analogies are highly relevant -- the opposite of calling them irrelevant.',
+        C: 'Text 2 does not deny that misinformation is a serious problem; it disputes the claim of novelty, not the importance of the issue.',
+        D: 'Text 2 never concedes that social media is more dangerous than prior media, nor does it discuss regulation.',
+      },
+      teachingPoint:
+        '"No prior era" is a strong novelty claim. When Text 2 provides multiple historical counterexamples, it is directly refuting that claim. Always test whether a Text 2 challenge is partial or complete.',
+    },
+    {
+      id: 'ctc-d-020',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Inference About One Author Given the Other',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus:
+        'Text 1: Public libraries, once defined primarily by their book collections, have evolved into community centers that provide internet access, job-search assistance, coding workshops, early childhood literacy programs, and mental health resources. This expansion reflects a recognition that information access now encompasses digital connectivity and social services, not just physical media. Libraries that have embraced this broader mission report higher foot traffic and greater community engagement than those that have not.',
+      question:
+        'Based on Text 1, which of the following is an assumption the author makes without explicitly stating it?',
+      choices: [
+        {
+          label: 'A',
+          text: 'Public libraries should close their physical locations and operate entirely online.',
+        },
+        {
+          label: 'B',
+          text: 'Higher foot traffic and community engagement are desirable outcomes that reflect a library serving its purpose well.',
+        },
+        {
+          label: 'C',
+          text: 'Libraries that offer social services have abandoned their original purpose.',
+        },
+        {
+          label: 'D',
+          text: 'All libraries have already fully implemented digital and social service programs.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'The author cites "higher foot traffic and greater community engagement" as evidence that the expanded mission succeeds. For this to function as evidence of success, the author must assume these outcomes are desirable markers of a library fulfilling its purpose.',
+      wrongAnswerExplanations: {
+        A: 'The text celebrates libraries expanding physical services; closing physical locations contradicts the text.',
+        C: 'The author frames expanded services as an evolution of purpose, not an abandonment of it.',
+        D: 'The text notes libraries "that have embraced this broader mission" differ from those "that have not," implying incomplete adoption.',
+      },
+      teachingPoint:
+        'Assumption questions ask what must be true for the argument to work. When an author treats an outcome as evidence of success, they implicitly assume that outcome is a legitimate measure of success.',
+    },
+    {
+      id: 'ctc-d-021',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Comparison of Conclusions',
+      level: 'advanced',
+      difficulty: 'medium',
+      stimulus:
+        'Text 1: The recent explosion of true-crime podcasts and documentaries reflects a genuine public appetite for understanding criminal psychology. Producers and networks have discovered that audiences are fascinated by the interior lives of people who commit serious crimes. This fascination, in the view of most content creators, is not morbid but educational: it deepens public understanding of justice, mental health, and the conditions that produce violence.\n\nText 2: The framing of true crime as educational masks a more troubling function: the entertainment industry\'s exploitation of real victims\' worst moments for commercial gain. Survivors and victims\' families routinely report that documentaries and podcasts relive their trauma without consent and sometimes without compensation. The packaging of suffering as "public interest journalism" does not change the fundamental transaction, in which platforms profit from real human pain.',
+      question: 'Which choice best describes the relationship between the two texts?',
+      choices: [
+        {
+          label: 'A',
+          text: 'Both texts agree that true crime content is primarily educational and beneficial to public understanding.',
+        },
+        {
+          label: 'B',
+          text: 'Text 1 presents the content-creator rationale for true crime as educational, while Text 2 challenges that framing by arguing the format exploits victims for commercial gain.',
+        },
+        {
+          label: 'C',
+          text: 'Text 2 agrees with Text 1 that audiences are fascinated by criminal psychology but argues this fascination is harmful.',
+        },
+        {
+          label: 'D',
+          text: 'Text 2 argues that true crime content should be banned entirely, while Text 1 defends it unconditionally.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 1 presents the industry defense of true crime as educational. Text 2 specifically challenges this framing, calling it a mask over commercial exploitation. Text 2 directly disputes the justification Text 1 reports.',
+      wrongAnswerExplanations: {
+        A: 'Only Text 1 presents the educational framing positively. Text 2 disputes it.',
+        C: 'Text 2 focuses on the ethics of the content format, not the psychology of the audience.',
+        D: 'Text 2 does not call for a ban. Text 1 reports the industry view without unconditionally endorsing it.',
+      },
+      teachingPoint:
+        'Notice which text is reporting others\' views versus which is taking its own position. Text 1 reports that content creators view true crime as educational; Text 2 challenges that framing directly.',
+    },
+    {
+      id: 'ctc-d-022',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Use of Evidence Across Texts',
+      level: 'advanced',
+      difficulty: 'medium',
+      stimulus:
+        'Text 1: Proponents of merit pay for teachers argue that tying compensation to measurable student outcomes will attract talented individuals to the profession and incentivize improved performance. The logic mirrors that of performance-based pay in the private sector, where bonuses tied to measurable results have been shown to increase productivity in a range of industries.\n\nText 2: The analogy between private-sector performance pay and teacher merit pay breaks down on examination. In manufacturing or sales, individual output is largely separable from colleagues\' contributions and environmental factors outside the worker\'s control. In teaching, a student\'s performance reflects family circumstances, prior schooling, language background, and class composition in ways that are difficult to isolate from the teacher\'s contribution. Applying a private-sector framework to a profession whose outputs are inherently collaborative produces incentives that are both unfair and ineffective.',
+      question:
+        'Based on the texts, how would the author of Text 2 respond to the analogy in Text 1 between private-sector performance pay and teacher merit pay?',
+      choices: [
+        {
+          label: 'A',
+          text: 'The author of Text 2 would agree that the private-sector analogy fully supports merit pay for teachers.',
+        },
+        {
+          label: 'B',
+          text: 'The author of Text 2 would argue that the analogy is flawed because teaching differs fundamentally from private-sector work in the degree to which individual output can be separated from contextual and collaborative factors.',
+        },
+        {
+          label: 'C',
+          text: 'The author of Text 2 would argue that no teacher ever influences student outcomes.',
+        },
+        {
+          label: 'D',
+          text: 'The author of Text 2 would accept the analogy but argue that performance bonuses are too expensive for school districts.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 2 opens by saying the analogy "breaks down on examination" and explains why: in private-sector jobs, individual output is separable, but in teaching it is not. The objection is structural -- the two contexts differ in ways that make the private-sector logic inapplicable.',
+      wrongAnswerExplanations: {
+        A: 'Text 2 explicitly says the analogy "breaks down" -- the opposite of agreeing it fully supports merit pay.',
+        C: 'Text 2 never claims teachers have no influence on students. It argues the influence is hard to isolate.',
+        D: 'Text 2 makes no mention of cost. Its objection is about fairness and effectiveness.',
+      },
+      teachingPoint:
+        'When Text 2 says an analogy "breaks down," look for the specific structural difference it identifies between the two things being compared. The correct answer will name that structural difference.',
+    },
+    {
+      id: 'ctc-d-023',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Inference About One Author Given the Other',
+      level: 'advanced',
+      difficulty: 'medium',
+      stimulus:
+        'Text 1: The dominant narrative of the Industrial Revolution frames it as an era of unprecedented material progress -- rising wages, increased life expectancy, and the eventual emergence of a prosperous middle class. Historians who subscribe to this view point to long-run data showing that real wages in Britain roughly doubled between 1760 and 1850 and that access to manufactured goods expanded dramatically across social classes.\n\nText 2: Long-run averages obscure the catastrophic living conditions experienced by factory workers during the first half of the Industrial Revolution. Urban mortality rates in new industrial cities like Manchester were higher in 1840 than they had been in pre-industrial rural England. Life expectancy at birth in Manchester fell to twenty-eight years during this period. Whatever prosperity eventually arrived, it was built on decades of immiseration for those who lived through industrialization.',
+      question:
+        'The author of Text 1 would most likely characterize the data in Text 2 as which of the following?',
+      choices: [
+        {
+          label: 'A',
+          text: 'Compelling evidence that the Industrial Revolution produced no long-term benefits',
+        },
+        {
+          label: 'B',
+          text: 'Data that confirms the dominant narrative of the Industrial Revolution as straightforward progress',
+        },
+        {
+          label: 'C',
+          text: 'Information about short-term and localized conditions that does not necessarily contradict long-run trends showing rising wages and expanded access to goods',
+        },
+        {
+          label: 'D',
+          text: "Evidence that Text 2's author is mistaken about Manchester's mortality rates",
+        },
+      ],
+      correctAnswer: 'C',
+      explanation:
+        "The author of Text 1 defends the long-run view. Text 2's data about Manchester in 1840 describes conditions in a specific industrial city at a specific moment. The Text 1 author would characterize this as short-term and localized data that does not undermine the long-run trend, because Text 1 explicitly appeals to long-run averages as the relevant measure.",
+      wrongAnswerExplanations: {
+        A: "The author of Text 1 believes the Industrial Revolution produced real long-term benefits; they would not grant that Text 2's data disproves this.",
+        B: "Text 2's data about falling life expectancy does not confirm that industrialization was straightforwardly positive.",
+        D: "The author of Text 1 does not dispute particular historical facts; their argument is about interpretation.",
+      },
+      teachingPoint:
+        "When asked how Text 1's author would respond to Text 2's evidence, use Text 1's framework. Text 1 privileges long-run averages, so it would handle Text 2's local, short-term data by calling it insufficiently representative.",
+    },
+    {
+      id: 'ctc-d-024',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Disagreement Between Texts',
+      level: 'challenge',
+      difficulty: 'hard',
+      stimulus:
+        'Text 1: The genre of literary memoir has become increasingly problematic as its conventions have standardized. The contemporary memoir market rewards a recognizable narrative arc -- childhood wound, descent, struggle, revelation, redemption -- that audiences expect and publishers demand. Writers who have genuinely interesting lives that do not conform to this arc are pressured to reshape their experiences into the approved template. The result is a genre that increasingly mistakes a formula for truth.\n\nText 2: The redemptive arc that critics deride as a formula may in fact reflect something structurally true about how human beings experience and narrate suffering after the fact. Psychologists who study narrative identity find that people recounting traumatic experiences overwhelmingly impose a coherence and forward momentum on events that, while being lived, felt chaotic and without meaning. The "wound-and-redemption" structure is not a publishing convention imposed from outside -- it is the shape that memory itself tends to give to painful pasts.',
+      question:
+        'Based on the texts, what is the fundamental disagreement between the two authors about the redemptive arc in memoir?',
+      choices: [
+        {
+          label: 'A',
+          text: 'Whether memoirs should be published at all',
+        },
+        {
+          label: 'B',
+          text: "Whether the redemptive arc reflects an external commercial formula imposed on writers' lives, or whether it reflects a natural pattern in how humans narrativize their own experiences",
+        },
+        {
+          label: 'C',
+          text: 'Whether psychologists or publishers have more influence on the memoir genre',
+        },
+        {
+          label: 'D',
+          text: 'Whether memoirs are more popular than novels',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 1 argues the redemptive arc is an external commercial formula that publishers impose, distorting genuine experience. Text 2 argues the opposite: the arc reflects how human memory naturally structures painful experience. The fundamental disagreement is about the origin of the arc -- market convention vs. cognitive reality.',
+      wrongAnswerExplanations: {
+        A: 'Neither text argues memoirs should not be published; both presuppose the genre exists.',
+        C: 'The disagreement is about the nature of the arc, not about who has more industry influence.',
+        D: 'Neither text addresses memoir popularity relative to novels.',
+      },
+      teachingPoint:
+        'The hardest fundamental-disagreement questions involve two texts that agree a phenomenon exists but disagree about its origin or explanation. Identify what each text says the cause or source is.',
+    },
+  ],
+  masteryQuestions: [
+    {
+      id: 'ctc-m-001',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Disagreement Between Texts',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus:
+        "Text 1: The best evidence for the existence of dark matter is gravitational. The visible mass of galaxies -- the stars, gas, and dust astronomers can observe -- is insufficient to account for the rotational velocities measured at galaxies' outer edges. Stars at those distances move far faster than Newtonian gravity from visible matter would permit. The simplest explanation is that galaxies are embedded in halos of non-luminous matter that provides the additional gravitational pull needed to explain the observed rotation curves.\n\nText 2: The anomalous rotation curves that motivate dark matter hypotheses may instead reflect a need to modify our theory of gravity rather than to invoke an undetected substance. Modified Newtonian dynamics (MOND) proposes that gravitational force behaves differently at very low accelerations. Under MOND, the observed rotation velocities follow naturally from the visible mass alone, with no need for dark matter halos. The data that appear to demand an invisible substance may instead be revealing the limits of conventional gravitational theory.",
+      question:
+        'Which choice best describes the relationship between the two texts?',
+      choices: [
+        {
+          label: 'A',
+          text: 'Both texts agree that dark matter halos are the correct explanation for galaxy rotation curves.',
+        },
+        {
+          label: 'B',
+          text: 'Text 1 explains anomalous rotation curves by positing unseen matter, while Text 2 proposes that modifying gravitational theory eliminates the need for unseen matter.',
+        },
+        {
+          label: 'C',
+          text: "Text 2 argues that galaxy rotation curves do not actually deviate from predictions, contradicting Text 1's observations.",
+        },
+        {
+          label: 'D',
+          text: 'Both texts conclude that current physics cannot explain galaxy rotation curves at all.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Both texts accept the same observational fact: stars at galaxies\' outer edges move faster than visible mass alone predicts. They disagree about the explanation. Text 1 explains the anomaly by adding unseen matter. Text 2 explains it by modifying the law of gravity (MOND). Both offer competing explanations for the same data.',
+      wrongAnswerExplanations: {
+        A: 'Text 2 explicitly rejects the dark matter halo explanation in favor of MOND.',
+        C: 'Text 2 accepts that rotation curves deviate from conventional predictions -- it disputes the explanation, not the observation.',
+        D: 'Both texts offer explanations for rotation curves; neither claims physics cannot explain them.',
+      },
+      teachingPoint:
+        'When two texts agree on observations but disagree on interpretation, identify each text\'s preferred explanatory framework. The disagreement is about theory, not data.',
+    },
+    {
+      id: 'ctc-m-002',
+      skillSlug: 'cross-text-connections',
+      subskill: 'How One Text Responds to Another',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus:
+        'Text 1: Universal basic income (UBI) -- a regular cash payment made to all citizens regardless of employment status -- would provide a floor of economic security that the current welfare state fails to guarantee. Unlike means-tested programs that phase out as income rises, UBI avoids the poverty trap in which additional earnings cost beneficiaries their eligibility for support. A universal, unconditional payment removes the disincentives embedded in the current system while ensuring that no one falls below a dignified minimum.\n\nText 2: Universal basic income\'s proponents rarely reckon seriously with the fiscal arithmetic. Providing even a modest monthly payment to every adult in a large country requires revenues that would either demand substantial tax increases on middle-income households or come at the expense of existing programs -- including Medicaid, housing vouchers, and child care subsidies -- that disproportionately benefit the poorest citizens. Trading targeted programs for a universal check may produce a net transfer of resources away from the most vulnerable.',
+      question:
+        "Based on the texts, how would the author of Text 2 most likely respond to Text 1's argument that UBI avoids the poverty trap?",
+      choices: [
+        {
+          label: 'A',
+          text: 'The author of Text 2 would agree that avoiding the poverty trap is the most important consideration in welfare policy.',
+        },
+        {
+          label: 'B',
+          text: 'The author of Text 2 would accept that UBI removes means-testing disincentives but argue that this benefit may come at the cost of existing targeted programs that better serve the most vulnerable.',
+        },
+        {
+          label: 'C',
+          text: 'The author of Text 2 would argue that poverty traps do not exist.',
+        },
+        {
+          label: 'D',
+          text: 'The author of Text 2 would support UBI but propose that it be limited to employed workers.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        "Text 2 does not directly dispute that UBI removes poverty trap disincentives. Instead, it raises a fiscal counterargument: UBI revenues might come from eliminating targeted programs that help the poorest citizens more effectively. The author of Text 2 would grant the poverty-trap point while arguing the trade-off is unfavorable.",
+      wrongAnswerExplanations: {
+        A: 'Text 2 raises fiscal concerns it treats as equally or more important than poverty-trap avoidance.',
+        C: 'Text 2 never disputes the existence of poverty traps; it raises a different objection.',
+        D: 'Text 2 does not propose any alternative design for UBI; it opposes UBI on fiscal grounds.',
+      },
+      teachingPoint:
+        'When Text 2 shifts the argument to a different domain (here: fiscal arithmetic vs. incentive structure), it is not refuting the specific claim but arguing it misses a bigger problem. The response is concession-plus-redirect.',
+    },
+    {
+      id: 'ctc-m-003',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Comparison of Conclusions',
+      level: 'advanced',
+      difficulty: 'hard',
+      stimulus:
+        'Text 1: The historical consensus that the Maya civilization experienced a sudden "collapse" in the ninth century CE misrepresents a complex, regionally varied process. The great lowland cities of Tikal, Palenque, and Copan did indeed decline dramatically, but population decline and political fragmentation did not occur simultaneously across the Maya world. Northern cities like Chichen Itza and Uxmal continued to flourish for centuries after the southern decline. The "Maya collapse" narrative projects a false uniformity onto a civilization that was never a single political entity.\n\nText 2: Even granting the regional variation acknowledged by some scholars, the ninth-century decline of the southern lowland Maya centers represents one of the most rapid and severe demographic contractions in pre-Columbian history. Within roughly one hundred years, cities that had housed tens of thousands of inhabitants were essentially abandoned. Whatever is said of northern continuity, the scale of southern demographic collapse -- documented through settlement surveys, agricultural pollen records, and monument-construction chronologies -- demands an explanation in its own right, not a dissolution into regional variation.',
+      question:
+        'Based on the texts, the authors disagree primarily about which of the following?',
+      choices: [
+        {
+          label: 'A',
+          text: 'Whether any Maya cities existed in the northern Yucatan Peninsula',
+        },
+        {
+          label: 'B',
+          text: 'Whether the concept of a unified "Maya collapse" is an appropriate framework for understanding ninth-century events, given regional variation',
+        },
+        {
+          label: 'C',
+          text: 'Whether the Maya civilization had writing',
+        },
+        {
+          label: 'D',
+          text: 'Whether Tikal or Copan was the more important city',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 1 argues the "Maya collapse" concept is misleading because it projects false uniformity. Text 2 accepts regional variation ("even granting the regional variation") but argues the southern collapse was severe enough to demand analysis as a significant event in its own right. The disagreement is about whether the collapse framework is useful given that variation.',
+      wrongAnswerExplanations: {
+        A: 'Both texts accept that northern cities existed and continued; this is not a point of disagreement.',
+        C: 'Neither text addresses Maya writing; this is outside the scope of both passages.',
+        D: 'Neither text evaluates the relative importance of Tikal versus Copan.',
+      },
+      teachingPoint:
+        'When Text 2 opens with "even granting," it accepts part of Text 1\'s claim before arguing the concession does not resolve the main issue. Text 2 agrees on the facts but disputes the interpretive conclusion.',
+    },
+    {
+      id: 'ctc-m-004',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Agreement Between Texts',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus:
+        'Text 1: Empirical research on the effectiveness of anti-drug education programs in schools consistently finds a paradox: programs that dwell extensively on the harms of substance use can inadvertently increase curiosity about those substances among adolescents. Students who receive detailed information about the physiological effects of drugs may be more, not less, likely to experiment with them than peers who receive no formal drug education. The mechanism appears to be that graphic descriptions of effects function as a form of advertising.\n\nText 2: The failure of fear-based drug prevention programs to reduce adolescent substance use is well-documented. When programs like DARE were subjected to rigorous long-term evaluation, researchers found no significant reduction -- and in some cases modest increases -- in drug use among program participants compared with control groups. Subsequent intervention research has shifted toward programs that build refusal skills, social norm correction, and peer-influence resistance rather than cataloging drug dangers.',
+      question:
+        'Both texts would most likely support which of the following claims?',
+      choices: [
+        {
+          label: 'A',
+          text: 'All drug education programs increase adolescent substance use.',
+        },
+        {
+          label: 'B',
+          text: 'Programs that focus on describing drug dangers in detail may not effectively reduce -- and may sometimes increase -- adolescent substance use.',
+        },
+        {
+          label: 'C',
+          text: 'Drug education should be eliminated from schools entirely.',
+        },
+        {
+          label: 'D',
+          text: 'Adolescents are uniquely immune to educational interventions.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 1 presents a paradox in which detailed harm information may increase curiosity and experimentation. Text 2 specifically mentions fear-based programs that catalog drug dangers as failures. Both texts converge on the view that the detail-the-dangers approach can backfire.',
+      wrongAnswerExplanations: {
+        A: 'Neither text says all programs increase use -- both specifically criticize fear-based approaches while implying alternatives exist.',
+        C: 'Text 2 mentions that subsequent research shifted toward alternative program designs, implying drug education still has a place.',
+        D: 'Neither text claims adolescents are immune to educational interventions generally.',
+      },
+      teachingPoint:
+        'For "both would support" questions, find the precise claim both texts endorse. Neither text condemns all drug education; both condemn a specific approach.',
+    },
+    {
+      id: 'ctc-m-005',
+      skillSlug: 'cross-text-connections',
+      subskill: 'How One Text Responds to Another',
+      level: 'advanced',
+      difficulty: 'hard',
+      stimulus:
+        'Text 1: The romantic notion that great scientific discoveries arise from individual genius distorts the actual social structure of scientific inquiry. Virtually every major scientific breakthrough of the modern era has involved networks of researchers, shared databases, overlapping grant programs, and sustained institutional support. Science is an irreducibly collective enterprise, and policies that concentrate resources on individual "star" researchers at the expense of collaborative infrastructure are built on a myth.\n\nText 2: The history of science reveals that transformative theoretical advances -- as distinct from incremental experimental progress -- have often required the contrarian thinking of individuals willing to challenge the consensus of their fields. The heliocentrism of Copernicus, the relativity of Einstein, the plate tectonics of Wegener: each overturned a dominant paradigm against significant institutional resistance. Collective infrastructure excels at generating the normal science that fills in established frameworks; it tends to inhibit the revolutionary departures that reframe those frameworks entirely.',
+      question:
+        'Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1 that focusing on individual "star" researchers is "built on a myth"?',
+      choices: [
+        {
+          label: 'A',
+          text: 'The author of Text 2 would agree that all significant scientific advances are the product of collective research networks.',
+        },
+        {
+          label: 'B',
+          text: 'The author of Text 2 would argue that while collective infrastructure supports incremental progress, transformative theoretical breakthroughs have historically required individual contrarians -- a role that collectives tend to suppress.',
+        },
+        {
+          label: 'C',
+          text: 'The author of Text 2 would argue that government funding for science should be eliminated.',
+        },
+        {
+          label: 'D',
+          text: 'The author of Text 2 would agree that the individual-genius narrative is purely mythological with no empirical basis.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 2 accepts that collective infrastructure supports "normal science" while arguing that paradigm-shifting advances (Copernicus, Einstein, Wegener) required individual contrarians who challenged consensus against institutional resistance. The author of Text 2 would reject Text 1\'s blanket dismissal of the individual role by distinguishing between types of scientific advance.',
+      wrongAnswerExplanations: {
+        A: 'Text 2 specifically argues that collective infrastructure can inhibit revolutionary departures.',
+        C: 'Text 2 never addresses government funding policy.',
+        D: 'Text 2 provides historical examples as evidence that individuals have been essential for paradigm shifts.',
+      },
+      teachingPoint:
+        'When Text 2 introduces a distinction that Text 1 does not make (incremental vs. paradigm-shifting), the correct response answer will incorporate that distinction.',
+    },
+    {
+      id: 'ctc-m-006',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Comparison of Methods',
+      level: 'advanced',
+      difficulty: 'hard',
+      stimulus:
+        'Text 1: Linguists studying language change have traditionally relied on written historical records to trace the evolution of vocabulary, grammar, and syntax across time. The study of a language\'s history is only as deep as its written record allows: for a language like Latin, with texts spanning more than a millennium, reconstruction is detailed and confident; for languages without a writing tradition, historical analysis effectively begins at the moment of first contact with literate cultures.\n\nText 2: The field of historical linguistics has developed tools that allow researchers to reach back far beyond the written record through the comparative method. By systematically comparing cognate words -- words in related languages descended from a common ancestor -- linguists can reconstruct features of proto-languages that predate writing by thousands of years. Proto-Indo-European, the ancestor of Sanskrit, Greek, Latin, and hundreds of modern languages, has been reconstructed with significant confidence despite having left no written texts of its own.',
+      question:
+        'Based on both texts, which of the following best describes the relationship between the methods the two texts discuss?',
+      choices: [
+        {
+          label: 'A',
+          text: 'The comparative method described in Text 2 is identical to the written-record method described in Text 1.',
+        },
+        {
+          label: 'B',
+          text: 'The written-record method (Text 1) and the comparative method (Text 2) address different temporal horizons: written records cover literate periods while the comparative method extends analysis beyond written history.',
+        },
+        {
+          label: 'C',
+          text: 'The comparative method has made written historical records completely obsolete for linguistic research.',
+        },
+        {
+          label: 'D',
+          text: 'Both texts argue that no reliable method exists for studying language change.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 1 establishes that written-record analysis is limited by when writing began. Text 2 describes the comparative method as a tool that extends analysis further back, reconstructing proto-languages that predate writing. The two methods cover different time periods and are complementary rather than competing.',
+      wrongAnswerExplanations: {
+        A: 'The methods are clearly distinct: one relies on texts, the other on systematic cross-language comparison of cognates.',
+        C: 'Text 2 never says the comparative method replaces written records.',
+        D: 'Both texts describe methods that work for their respective time periods.',
+      },
+      teachingPoint:
+        'When two texts describe different methods, ask what each method can do and for what situations each is suited. Often they are complementary tools for different contexts rather than rivals.',
+    },
+    {
+      id: 'ctc-m-007',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Inference About One Author Given the Other',
+      level: 'advanced',
+      difficulty: 'hard',
+      stimulus:
+        'Text 1: Nudge theory holds that small, carefully designed changes to the environment in which choices are made -- "choice architecture" -- can reliably steer people toward better decisions without restricting their freedom to choose otherwise. Placing fruit at eye level in a cafeteria line, setting organ donation as the default option, or making retirement saving automatic unless employees opt out are all nudges: low-cost interventions that exploit predictable cognitive biases to produce socially desirable outcomes. Proponents argue that this approach respects autonomy while harnessing behavioral insights for the public good.\n\nText 2: The appeal of nudge theory lies partly in what it obscures: that "choice architecture" is never neutral. Every arrangement of options reflects the values and priorities of whoever designs the environment. When a government or employer decides what counts as the "socially desirable outcome" toward which people should be steered, it is exercising normative judgment. Framing this exercise of power as mere "environmental design" makes it harder to scrutinize and contest than explicit policy mandates would be.',
+      question:
+        "The author of Text 1 would most likely respond to Text 2's concern about hidden normative judgment by arguing which of the following?",
+      choices: [
+        {
+          label: 'A',
+          text: 'Nudges do not reflect any values at all, because the person being nudged retains the freedom to choose otherwise.',
+        },
+        {
+          label: 'B',
+          text: 'The normative judgments embedded in nudge design are justified because the outcomes they produce are widely recognized as beneficial, and individuals remain free to opt out.',
+        },
+        {
+          label: 'C',
+          text: 'The author of Text 1 would accept that nudge theory is unacceptably manipulative and should be abandoned.',
+        },
+        {
+          label: 'D',
+          text: 'Choice architecture should only be used by private employers, not governments.',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        "Text 1 frames nudges as producing 'socially desirable outcomes' while 'respecting autonomy.' The author's position is that the outcomes are good and autonomy is preserved. When confronted with Text 2's concern about hidden values, the Text 1 author would argue that the normative judgments are legitimate because the goals are broadly beneficial and choice is retained.",
+      wrongAnswerExplanations: {
+        A: "Text 1 frames the outcomes as 'socially desirable,' which is itself a normative claim. The author cannot plausibly argue nudges reflect no values.",
+        C: 'Text 1 is an endorsement of nudge theory; the author would not concede that it should be abandoned.',
+        D: 'Text 1 presents nudges in both private and public contexts without restricting them to private employers.',
+      },
+      teachingPoint:
+        "When Text 2 challenges Text 1's implicit assumptions, predict Text 1's response by consulting its own framework. Text 1's defenses are: (1) outcomes are socially desirable and (2) autonomy is preserved.",
+    },
+    {
+      id: 'ctc-m-008',
+      skillSlug: 'cross-text-connections',
+      subskill: 'Disagreement Between Texts',
+      level: 'challenge',
+      difficulty: 'hard',
+      stimulus:
+        'Text 1: The most consequential shift in the contemporary art market is the emergence of art as a pure financial asset class. Ultra-high-net-worth collectors increasingly purchase works not to live with them or display them publicly but to store them in tax-advantaged free-port facilities where they will appreciate in value. When art functions as a financial instrument, its aesthetic, cultural, and social dimensions become irrelevant to the transaction. The free-port warehouse is the logical terminus of the commodification of culture.\n\nText 2: The claim that art has become purely financial misunderstands the layered motivations of contemporary collectors. Even among those who use art for investment purposes, surveys consistently find that aesthetic response, cultural signaling, and personal identity formation remain primary stated motivations for acquisition. The free-port phenomenon, while real, accounts for a fraction of art market transactions and represents one extreme of a spectrum. Art retains multiple simultaneous meanings -- financial, aesthetic, social, cultural -- that resist reduction to any single function.',
+      question:
+        'Based on the texts, the fundamental disagreement between the two authors concerns which of the following?',
+      choices: [
+        {
+          label: 'A',
+          text: 'Whether any art is stored in free-port facilities',
+        },
+        {
+          label: 'B',
+          text: "Whether the most consequential trend in the contemporary art market has eliminated art's aesthetic, cultural, and social dimensions, or whether those dimensions coexist alongside art's financial function",
+        },
+        {
+          label: 'C',
+          text: 'Whether tax-advantaged free ports should be legal',
+        },
+        {
+          label: 'D',
+          text: 'Whether contemporary art has any aesthetic value at all',
+        },
+      ],
+      correctAnswer: 'B',
+      explanation:
+        'Text 1 argues that when art functions as a financial instrument, its aesthetic, cultural, and social dimensions become "irrelevant." Text 2 accepts that free-port storage exists but argues that aesthetic and identity-based motivations persist even among investment-oriented collectors, and that art retains "multiple simultaneous meanings." The disagreement is over whether financialization eliminates or merely supplements other dimensions.',
+      wrongAnswerExplanations: {
+        A: 'Both texts accept that art is stored in free ports; Text 2 says the phenomenon is "real."',
+        C: 'Neither text addresses the legality of free ports.',
+        D: 'Neither author disputes that art has aesthetic value -- they disagree about whether that value remains relevant in the current market.',
+      },
+      teachingPoint:
+        'For the hardest fundamental-disagreement questions, both texts may accept the same facts but draw opposite conclusions about significance. Text 1 sees financialization as displacing other meanings; Text 2 sees it as one layer among many. The disagreement is interpretive, not factual.',
     },
   ],
 }

@@ -66,6 +66,16 @@ export const centralIdeasDetails: AcademySkill = {
       avoidance:
         'Detail questions require an explicit statement. Save inferences for inference questions.',
     },
+    {
+      title: `The scope-mismatch trap`,
+      description: `A choice states the main idea of only one paragraph rather than the whole passage, or it extends the passage's argument to a context the passage never addresses.`,
+      avoidance: `Check whether the choice covers all parts of the passage. A true main idea should account for the opening, the middle, and the conclusion — not just one section.`,
+    },
+    {
+      title: `The purpose-confusion trap`,
+      description: `On primary-purpose questions, a choice names what the passage discusses (its topic) rather than what the author is trying to do (the purpose).`,
+      avoidance: `Ask yourself what verb best describes the author's action: explain, argue, compare, challenge, describe. Match that verb to the wording of the choice.`,
+    },
   ],
   guidedExamples: [
     {
@@ -241,6 +251,269 @@ export const centralIdeasDetails: AcademySkill = {
         A: 'This is the opposite of the passage, which shows sharing the recipe helped rather than hurt the bakery.',
         B: 'This overstates a detail; some home bakers struggled, but the passage does not claim home bakers usually fail at difficult recipes.',
         D: 'The passage never says the bread was the bakery\'s only successful product; it only calls it the most popular.',
+      },
+    },
+    {
+      id: 'cid-ex-4',
+      level: 'foundation',
+      hints: [
+        `Find the sentence that directly answers the question. Look for the part of the passage that explains what the researcher was trying to find.`,
+        `The passage describes a specific goal the researcher had. Focus on the sentence that names that goal.`,
+        `Eliminate any choice that describes a result the researcher found, not the goal she started with.`,
+      ],
+      coachTakeaway: `For detail questions, the answer is always directly stated. Locate the exact sentence that answers the question before looking at the choices.`,
+      stimulus: `A marine biologist spent three summers tagging dolphins near the harbor to learn how far they traveled during feeding hours. She discovered that some dolphins ranged up to forty miles from the harbor in a single day, much farther than previous researchers had estimated.`,
+      question: `According to the passage, what was the marine biologist's goal?`,
+      steps: [
+        {
+          instruction: `Locate the relevant detail`,
+          content: `The first sentence says she was "tagging dolphins near the harbor to learn how far they traveled during feeding hours." That phrase names her goal directly.`,
+        },
+        {
+          instruction: `Match the detail to a choice`,
+          content: `Her goal was to find out how far dolphins traveled during feeding hours — look for a choice that restates that purpose.`,
+        },
+        {
+          instruction: `Eliminate unsupported choices`,
+          content: `The forty-mile discovery is a result, not her original goal. The harbor's location and the number of summers are background details, not the goal.`,
+        },
+        {
+          instruction: `Confirm the correct choice`,
+          content: `The choice naming her interest in how far the dolphins traveled during feeding hours matches the passage's first sentence directly.`,
+        },
+      ],
+      choices: [
+        { label: 'A', text: 'To determine how far dolphins travel during feeding hours' },
+        { label: 'B', text: 'To compare harbor dolphins with open-ocean dolphins' },
+        { label: 'C', text: 'To measure the dolphins\' swimming speed' },
+        { label: 'D', text: 'To count the number of dolphins near the harbor' },
+      ],
+      correctAnswer: 'A',
+      explanation: `The passage states directly that the biologist was "tagging dolphins near the harbor to learn how far they traveled during feeding hours." This is the stated goal, and it matches Choice A precisely.`,
+      wrongAnswerExplanations: {
+        B: `Comparing harbor dolphins to open-ocean dolphins is never mentioned in the passage.`,
+        C: `Swimming speed is not discussed; the passage focuses on distance traveled.`,
+        D: `Counting dolphins is never mentioned; the passage describes tagging them to track travel distance.`,
+      },
+    },
+    {
+      id: 'cid-ex-5',
+      level: 'sat-application',
+      hints: [
+        `Notice that the passage presents two contrasting ideas. Which one does the author ultimately argue for?`,
+        `The last sentence of the passage signals the author's position. What does it say?`,
+        `Eliminate choices that describe only one side of the contrast or that go beyond what the passage claims.`,
+      ],
+      coachTakeaway: `When a passage presents two sides and then comes down on one, the main idea is the author's position, not a neutral description of both sides.`,
+      stimulus: `Some urban planners argue that wide sidewalks slow foot traffic by encouraging people to stop and linger. Others contend that narrow sidewalks create crowding that discourages walking altogether. A decade-long study of twelve cities found that wide sidewalks consistently produced both higher pedestrian counts and faster average travel times, suggesting that the first view underestimates how much people will walk when given comfortable space.`,
+      question: `Which choice best states the main idea of the passage?`,
+      steps: [
+        {
+          instruction: `Summarize the passage`,
+          content: `The passage presents a debate between two views on sidewalk width and then reports a study that favors wide sidewalks on both counts.`,
+        },
+        {
+          instruction: `Identify the author's position`,
+          content: `The last sentence says wide sidewalks "consistently produced" better outcomes and that this suggests the anti-wide-sidewalk view is wrong. The study resolves the debate.`,
+        },
+        {
+          instruction: `Eliminate too-narrow and too-broad choices`,
+          content: `A choice only about the debate misses the study's resolution. A choice claiming all urban design debates are resolved by data goes beyond the passage.`,
+        },
+        {
+          instruction: `Confirm the correct choice`,
+          content: `The choice that says the study supports wide sidewalks against the common assumption captures the passage's structure and conclusion.`,
+        },
+      ],
+      choices: [
+        {
+          label: 'A',
+          text: 'Urban planners have never agreed on how to design city sidewalks.',
+        },
+        {
+          label: 'B',
+          text: 'Narrow sidewalks are always more efficient than wide ones in busy cities.',
+        },
+        {
+          label: 'C',
+          text: 'A multi-city study found that wide sidewalks increased both foot traffic and speed, countering the assumption that they slow pedestrians.',
+        },
+        {
+          label: 'D',
+          text: 'Pedestrians prefer narrow sidewalks because they create a sense of urgency.',
+        },
+      ],
+      correctAnswer: 'C',
+      explanation: `The passage sets up a debate, then resolves it with a study showing wide sidewalks produce higher pedestrian counts and faster travel times — countering the view that they slow people down. Choice C captures the study's finding and its significance.`,
+      wrongAnswerExplanations: {
+        A: `This is too broad and misses the passage's central point: not that disagreement exists, but that a study resolved the debate in favor of wide sidewalks.`,
+        B: `This is the opposite of the passage's conclusion; the study found wide sidewalks outperformed narrow ones.`,
+        D: `This contradicts the passage; there is no claim that narrow sidewalks create urgency, and the study found better outcomes from wide ones.`,
+      },
+    },
+    {
+      id: 'cid-ex-6',
+      level: 'sat-application',
+      hints: [
+        `Find the line that states what the study found. What specific detail is given about the outcome?`,
+        `Be careful: the passage gives a reason why the finding surprised researchers. That reason is context, not the finding itself.`,
+        `Eliminate choices that reverse the direction of the finding or introduce information not in the passage.`,
+      ],
+      coachTakeaway: `On detail questions about study findings, locate the exact sentence that states the result and match it to a choice. The surprise or context around the result is not the result itself.`,
+      stimulus: `Researchers studying urban noise expected to find that residents near train stations reported lower sleep quality than those in quieter neighborhoods. Instead, the study found that train-station residents and residents of quiet streets reported nearly identical sleep quality scores. The researchers suggested that people who live near train stations may adapt to predictable noise over time.`,
+      question: `According to the passage, what did the researchers find?`,
+      steps: [
+        {
+          instruction: `Locate the relevant detail`,
+          content: `The second sentence states the finding: "train-station residents and residents of quiet streets reported nearly identical sleep quality scores."`,
+        },
+        {
+          instruction: `Match the detail to a choice`,
+          content: `The finding is that sleep quality was nearly the same in both groups — look for a choice that restates this equivalence.`,
+        },
+        {
+          instruction: `Eliminate unsupported choices`,
+          content: `The hypothesis that people adapt to noise is a suggestion, not the finding. The expectation that sleep quality would differ is what the researchers predicted before the study, not what they found.`,
+        },
+        {
+          instruction: `Confirm the correct choice`,
+          content: `The choice that sleep quality was similar for train-station and quiet-neighborhood residents directly mirrors the passage's stated result.`,
+        },
+      ],
+      choices: [
+        {
+          label: 'A',
+          text: 'Train-station residents reported worse sleep quality than residents of quiet neighborhoods.',
+        },
+        {
+          label: 'B',
+          text: 'Sleep quality was unaffected by any form of urban noise.',
+        },
+        {
+          label: 'C',
+          text: 'Train-station residents and quiet-neighborhood residents reported nearly identical sleep quality.',
+        },
+        {
+          label: 'D',
+          text: 'Residents of quiet neighborhoods slept significantly more hours per night.',
+        },
+      ],
+      correctAnswer: 'C',
+      explanation: `The passage explicitly states that the two groups "reported nearly identical sleep quality scores." This directly matches Choice C.`,
+      wrongAnswerExplanations: {
+        A: `This was the researchers' expectation before the study, not what they actually found; the passage says the result was the opposite.`,
+        B: `The passage only compares these two groups; it makes no broader claim about all urban noise.`,
+        D: `Hours of sleep are never mentioned; the passage discusses sleep quality scores, not duration.`,
+      },
+    },
+    {
+      id: 'cid-ex-7',
+      level: 'advanced',
+      hints: [
+        `Ask what the author is doing in this passage, not just what it is about. Is the author explaining, arguing, comparing, or challenging?`,
+        `Notice that the passage both describes a criticism and defends against it. Which action is primary?`,
+        `Eliminate choices that describe only the criticism or only the defense, since the passage does both.`,
+      ],
+      coachTakeaway: `Primary-purpose questions ask about the author's action. A passage that presents a criticism and then responds to it has defending or rebutting as its primary purpose, not merely describing.`,
+      stimulus: `Economists who study behavioral finance have argued that traditional economic models fail because they assume people make rational decisions. Defenders of traditional models respond that irrational behavior tends to average out across large markets, so the models remain useful for predicting aggregate trends even if they miss individual choices. The debate continues, but traditional models have retained their central place in policy discussions precisely because of their predictive usefulness at scale.`,
+      question: `Which choice best describes the primary purpose of the passage?`,
+      steps: [
+        {
+          instruction: `Summarize the passage`,
+          content: `The passage describes a criticism of traditional economic models, the defense offered by their supporters, and the conclusion that those models remain useful despite the criticism.`,
+        },
+        {
+          instruction: `Identify what the author is doing`,
+          content: `The author presents both sides of a debate and ends by noting the outcome: traditional models retain their central place. The author is explaining an ongoing debate and its current status, not advocating for either side.`,
+        },
+        {
+          instruction: `Eliminate choices that are too narrow or too extreme`,
+          content: `A choice that says the author is arguing against behavioral finance ignores the balanced presentation. A choice that says the author argues traditional models are perfect overstates the passage.`,
+        },
+        {
+          instruction: `Confirm the correct choice`,
+          content: `The choice that describes explaining both the challenge to and the defense of traditional economic models matches what the author actually does.`,
+        },
+      ],
+      choices: [
+        {
+          label: 'A',
+          text: 'To explain the challenge behavioral economists pose to traditional models and the response those models\' defenders offer',
+        },
+        {
+          label: 'B',
+          text: 'To argue that behavioral economics has permanently replaced traditional economic modeling',
+        },
+        {
+          label: 'C',
+          text: 'To prove that irrational individual behavior makes all economic prediction impossible',
+        },
+        {
+          label: 'D',
+          text: 'To describe why economists should stop using large-scale market models',
+        },
+      ],
+      correctAnswer: 'A',
+      explanation: `The passage presents the behavioral economists' critique, the defenders' response, and the current status of the debate. Choice A accurately names both sides of this exchange without overstating the author's position.`,
+      wrongAnswerExplanations: {
+        B: `The passage explicitly states that traditional models "retained their central place," which contradicts the idea that behavioral economics has replaced them.`,
+        C: `The defenders argue that irrational behavior averages out and models remain useful; the passage never claims prediction is impossible.`,
+        D: `The passage says traditional models are still central to policy discussions; recommending their abandonment is the opposite of what the passage concludes.`,
+      },
+    },
+    {
+      id: 'cid-ex-8',
+      level: 'advanced',
+      hints: [
+        `This is a challenge-level question. Notice that the passage presents a paradox — two things that seem contradictory. The main idea will explain or acknowledge that paradox.`,
+        `Identify both halves of the paradox: what the research showed at first, and what the longer follow-up found.`,
+        `Eliminate any choice that resolves the paradox by picking only one side; the passage keeps both truths in tension.`,
+      ],
+      coachTakeaway: `When a passage holds two apparently contradictory findings in tension without resolving them, the main idea names the tension, not one side of it.`,
+      stimulus: `Studies of early childhood reading programs consistently found that children who participated showed large gains in reading scores by age seven. However, follow-up research tracking the same children through age twelve found that those gains had largely faded; by middle school, participants and non-participants performed similarly. Researchers are divided: some argue the programs still matter because they give children a crucial early confidence, while others contend that without sustained support, early gains cannot be maintained.`,
+      question: `Which choice best states the main idea of the passage?`,
+      steps: [
+        {
+          instruction: `Summarize the passage`,
+          content: `Early reading programs produced measurable gains by age seven, but those gains largely disappeared by age twelve, leaving researchers divided about the programs' lasting value.`,
+        },
+        {
+          instruction: `Identify what the passage is really saying`,
+          content: `The passage does not resolve the debate — it presents the early benefit, the later fade, and the ongoing disagreement. The main idea must include both the gain and the fade.`,
+        },
+        {
+          instruction: `Eliminate choices that pick only one side`,
+          content: `A choice that says early programs clearly work ignores the fade. A choice that says they clearly fail ignores the early gains and the confidence argument.`,
+        },
+        {
+          instruction: `Confirm the correct choice`,
+          content: `The choice that mentions both the initial gains and the later fade, and acknowledges the ongoing debate, captures the full picture the passage presents.`,
+        },
+      ],
+      choices: [
+        {
+          label: 'A',
+          text: 'Early childhood reading programs produce lasting gains that follow children into middle school.',
+        },
+        {
+          label: 'B',
+          text: 'Early childhood reading programs have no measurable effect on reading scores.',
+        },
+        {
+          label: 'C',
+          text: 'Early reading programs show initial gains in reading scores, but those gains tend to fade, leaving researchers divided about the programs\' long-term value.',
+        },
+        {
+          label: 'D',
+          text: 'Researchers agree that sustained support is the only factor that determines long-term reading success.',
+        },
+      ],
+      correctAnswer: 'C',
+      explanation: `The passage presents early gains, follow-up evidence of fading, and the resulting research debate. Choice C captures all three elements without resolving the debate in a direction the passage does not support.`,
+      wrongAnswerExplanations: {
+        A: `This contradicts the follow-up research showing gains had largely faded by age twelve.`,
+        B: `This ignores the consistent early gains the studies found by age seven.`,
+        D: `"Researchers agree" is wrong — the passage says researchers are divided, and the passage only presents sustained support as one possible explanation, not a point of consensus.`,
       },
     },
   ],
@@ -751,6 +1024,204 @@ export const centralIdeasDetails: AcademySkill = {
       },
       teachingPoint:
         'The main idea of a study passage is usually the study\'s conclusion, not a variable that was controlled or ruled out. Controlled variables are part of the method, not the finding.',
+    },
+    {
+      id: 'cid-d-016',
+      skillSlug: 'central-ideas-details',
+      level: 'foundation',
+      difficulty: 'easy',
+      stimulus: `Monarch butterflies travel up to three thousand miles during their annual migration from Canada to Mexico. They navigate using the sun as a compass and can adjust their direction as the sun moves across the sky throughout the day.`,
+      question: `According to the passage, how do monarch butterflies navigate during migration?`,
+      choices: [
+        { label: 'A', text: 'By using the sun as a compass' },
+        { label: 'B', text: 'By following rivers and mountain ranges' },
+        { label: 'C', text: 'By detecting changes in temperature' },
+        { label: 'D', text: 'By following older butterflies in the group' },
+      ],
+      correctAnswer: 'A',
+      explanation: `The passage explicitly states that monarch butterflies navigate "using the sun as a compass and can adjust their direction as the sun moves across the sky."`,
+      wrongAnswerExplanations: {
+        B: `Rivers and mountain ranges are never mentioned as navigation tools in the passage.`,
+        C: `Temperature changes are not discussed as a navigation method in the passage.`,
+        D: `The passage does not mention following older butterflies; it describes a solar compass mechanism.`,
+      },
+      teachingPoint: `On detail questions, the answer is always directly stated. Find the sentence that answers the exact question, then match it to a choice.`,
+    },
+    {
+      id: 'cid-d-017',
+      skillSlug: 'central-ideas-details',
+      level: 'foundation',
+      difficulty: 'easy',
+      stimulus: `The ancient city of Çatalhöyük in present-day Turkey is one of the earliest known urban settlements, dating back roughly nine thousand years. Its residents lived in mud-brick houses arranged so closely together that people entered their homes through holes in the roof rather than ground-level doors.`,
+      question: `According to the passage, why did residents of Çatalhöyük enter their homes through the roof?`,
+      choices: [
+        { label: 'A', text: 'To protect themselves from flooding' },
+        { label: 'B', text: 'To follow a religious tradition of the city' },
+        { label: 'C', text: 'Because the houses were arranged too closely to have ground-level doors' },
+        { label: 'D', text: 'Because the doors were reserved for animals' },
+      ],
+      correctAnswer: 'C',
+      explanation: `The passage states that houses were "arranged so closely together that people entered their homes through holes in the roof rather than ground-level doors." The close arrangement of the houses — not flooding, religion, or animals — is the explicitly stated reason.`,
+      wrongAnswerExplanations: {
+        A: `Flooding is never mentioned in the passage.`,
+        B: `Religious tradition is not given as a reason; the passage attributes rooftop entry to the close arrangement of the houses.`,
+        D: `Animals are never mentioned in the passage.`,
+      },
+      teachingPoint: `For detail questions, the passage always gives an explicit reason. Match the reason stated in the text — don't add outside knowledge.`,
+    },
+    {
+      id: 'cid-d-018',
+      skillSlug: 'central-ideas-details',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus: `The introduction of the printing press in the fifteenth century did not immediately make books cheaper. Early printed books were often as expensive as hand-copied ones, partly because printers tried to imitate manuscript style to appeal to buyers who associated value with the traditional handmade look. Only after several decades did production efficiencies and increased competition begin to drive prices down.`,
+      question: `Which choice best states the main idea of the passage?`,
+      choices: [
+        { label: 'A', text: 'The printing press immediately lowered the price of books throughout Europe.' },
+        { label: 'B', text: 'Printers in the fifteenth century were less skilled than manuscript copyists.' },
+        { label: 'C', text: 'Although the printing press was invented in the fifteenth century, its effect of making books cheaper took decades to materialize.' },
+        { label: 'D', text: 'Early printers copied the style of manuscripts because they wanted to deceive buyers.' },
+      ],
+      correctAnswer: 'C',
+      explanation: `The passage explains that early printed books were as expensive as hand-copied ones and that prices only fell after several decades. Choice C captures this delayed effect, which is the central point.`,
+      wrongAnswerExplanations: {
+        A: `This is the opposite of the passage's opening claim; the passage says the printing press did not immediately make books cheaper.`,
+        B: `The relative skill of printers versus copyists is never compared in the passage.`,
+        D: `The passage says printers imitated manuscript style to appeal to buyers' existing preferences, not to deceive them.`,
+      },
+      teachingPoint: `When a passage challenges a common assumption ("did not immediately"), the main idea is often that the assumed effect was delayed or more complicated than expected.`,
+    },
+    {
+      id: 'cid-d-019',
+      skillSlug: 'central-ideas-details',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus: `A study of elementary school students found that those who received instruction in music theory showed measurably stronger performance in mathematics compared with students who received no music instruction. The researchers emphasized, however, that the study did not establish a causal link between music theory and math performance because students who chose music classes may have had stronger academic motivation to begin with.`,
+      question: `According to the passage, why did the researchers hesitate to conclude that music theory causes improved math performance?`,
+      choices: [
+        { label: 'A', text: 'The improvement in math performance was too small to be statistically significant.' },
+        { label: 'B', text: 'The study lasted too short a time to measure lasting effects.' },
+        { label: 'C', text: 'The students who took music classes may have already been more academically motivated before the study.' },
+        { label: 'D', text: 'The students in the music group were older than the students in the comparison group.' },
+      ],
+      correctAnswer: 'C',
+      explanation: `The passage states the researchers hesitated because "students who chose music classes may have had stronger academic motivation to begin with." This pre-existing motivation difference is the explicitly stated reason for their caution about claiming causation.`,
+      wrongAnswerExplanations: {
+        A: `The passage says the improvement was "measurably stronger," implying the finding was statistically detectable, not insufficient.`,
+        B: `Study duration is never mentioned as a reason for the researchers' caution.`,
+        D: `Age differences between groups are never mentioned in the passage.`,
+      },
+      teachingPoint: `When a passage describes researchers' hesitation to claim causation, always look for the passage's explicit reason — it will be directly stated, not implied.`,
+    },
+    {
+      id: 'cid-d-020',
+      skillSlug: 'central-ideas-details',
+      level: 'sat-application',
+      difficulty: 'medium',
+      stimulus: `Before the twentieth century, most biographers wrote only about famous men, and their accounts tended to celebrate achievements while leaving out unflattering details. Contemporary biography has moved in a different direction: biographers now write about ordinary people, and they are expected to present subjects with both strengths and flaws. The shift reflects a broader cultural change in what readers expect from nonfiction — they want complexity, not hagiography.`,
+      question: `Which choice best states the main idea of the passage?`,
+      choices: [
+        { label: 'A', text: 'Modern biography has become more complex and inclusive by moving away from the celebratory, famous-men focus of earlier biographies.' },
+        { label: 'B', text: 'Readers today prefer biographies about famous men over those about ordinary people.' },
+        { label: 'C', text: 'Biographers before the twentieth century were dishonest about their subjects.' },
+        { label: 'D', text: 'Contemporary biographers face more legal restrictions than earlier biographers did.' },
+      ],
+      correctAnswer: 'A',
+      explanation: `The passage contrasts earlier biography — focused on famous men, celebratory — with contemporary biography — broader subjects, both strengths and flaws. Choice A captures this evolution without overstating either side.`,
+      wrongAnswerExplanations: {
+        B: `This contradicts the passage; the passage says readers now want complexity, suggesting they prefer the newer style.`,
+        C: `"Dishonest" is too extreme; the passage says earlier biographers left out unflattering details, but it does not call them dishonest.`,
+        D: `Legal restrictions are never mentioned in the passage.`,
+      },
+      teachingPoint: `When a passage traces a historical shift from one approach to another, the main idea is the nature and direction of that shift.`,
+    },
+    {
+      id: 'cid-d-021',
+      skillSlug: 'central-ideas-details',
+      level: 'advanced',
+      difficulty: 'hard',
+      stimulus: `Critics of the proposed national park expansion argue that it would harm local economies by restricting grazing and logging. Supporters respond that the long-term economic benefits of increased tourism and watershed protection outweigh short-term losses. A recent economic analysis found that counties adjacent to existing expanded parks had, on average, higher per-capita income growth over a twenty-year period than comparable counties without such expansions.`,
+      question: `Which choice best states the main idea of the passage?`,
+      choices: [
+        { label: 'A', text: 'Economic data from existing park expansions suggest that the long-term benefits may outweigh the concerns of local critics.' },
+        { label: 'B', text: 'Logging and grazing are the most important industries in counties near national parks.' },
+        { label: 'C', text: 'National park expansions always harm local economies in the short term.' },
+        { label: 'D', text: 'The debate over park expansion will never be resolved because both sides have valid points.' },
+      ],
+      correctAnswer: 'A',
+      explanation: `The passage sets up the debate and then presents economic data showing higher income growth near expanded parks. Choice A names the data's implication — that supporters' claims may be borne out — without overstating the passage's measured conclusion.`,
+      wrongAnswerExplanations: {
+        B: `The passage mentions these industries as concerns, not as the most important ones; this overstates a detail.`,
+        C: `"Always" is too absolute; the passage acknowledges short-term losses as a concern but presents evidence for long-term benefits.`,
+        D: `The passage presents evidence that favors the supporters' view; it does not conclude the debate is irresolvable.`,
+      },
+      teachingPoint: `When a passage presents a debate and then offers evidence favoring one side, the main idea is the evidence's implication, not a neutral "both sides have merit" summary.`,
+    },
+    {
+      id: 'cid-d-022',
+      skillSlug: 'central-ideas-details',
+      level: 'advanced',
+      difficulty: 'hard',
+      stimulus: `The novelist's use of unreliable narrators has drawn consistent critical attention. Less examined is the way she uses setting: every novel is set in the same fictional coastal city, and the city's geography — its hills, harbor, and fog — shifts subtly from book to book, reflecting the psychological state of whoever narrates that novel. In one book the harbor is open and expansive; in another it is hemmed in by mist. The city, in effect, becomes a barometer of the narrator's mind.`,
+      question: `Which choice best states the main idea of the passage?`,
+      choices: [
+        { label: 'A', text: 'The novelist sets all her novels in the same city because she is most familiar with coastal settings.' },
+        { label: 'B', text: 'Critics should focus more on the novelist\'s use of unreliable narrators than on her settings.' },
+        { label: 'C', text: 'The fictional coastal city appears identically in each of the novelist\'s books.' },
+        { label: 'D', text: 'In the novelist\'s work, the shifting geography of a repeated setting reflects each narrator\'s psychological state.' },
+      ],
+      correctAnswer: 'D',
+      explanation: `The passage's central point is that the city's geography changes from book to book to reflect the narrator's mind — functioning as "a barometer of the narrator's mind." Choice D captures this argument precisely.`,
+      wrongAnswerExplanations: {
+        A: `The passage gives no reason for why the novelist chose a coastal setting; it analyzes the function the setting serves, not the author's personal motivation.`,
+        B: `The passage says the setting is "less examined," not that it deserves more attention than unreliable narrators; the passage does not make a prescriptive argument.`,
+        C: `The passage explicitly says the geography "shifts subtly from book to book," which contradicts the idea that the city appears identically.`,
+      },
+      teachingPoint: `When a passage argues that an element serves a specific function, the main idea names both the element and its function. Here: the shifting setting reflects the narrator's psychology.`,
+    },
+    {
+      id: 'cid-d-023',
+      skillSlug: 'central-ideas-details',
+      level: 'advanced',
+      difficulty: 'hard',
+      stimulus: `Historians have long treated the fall of Rome in 476 CE as a sharp break — the end of antiquity and the beginning of the medieval period. More recent scholarship has challenged this periodization. Rather than a sudden collapse, these historians argue, the transformation of the western Roman Empire was gradual, with Roman institutions, laws, and even Roman-identified ruling families persisting in many regions for generations after 476. The date, they suggest, was more significant to later historians than it was to people living through the period.`,
+      question: `Which choice best states the main idea of the passage?`,
+      choices: [
+        { label: 'A', text: 'Roman law and institutions disappeared immediately after 476 CE.' },
+        { label: 'B', text: 'The fall of Rome was caused primarily by the failure of Roman military institutions.' },
+        { label: 'C', text: 'Medieval historians were the first to study the fall of Rome seriously.' },
+        { label: 'D', text: 'The year 476 CE was chosen by historians as a convenient but somewhat misleading marker of an actually gradual transition.' },
+      ],
+      correctAnswer: 'D',
+      explanation: `The passage argues that 476 CE, long used as a sharp dividing line, was more of a later historiographical convention than a real rupture — the transition was gradual and Roman institutions persisted. Choice D captures this revisionist argument without overstating it.`,
+      wrongAnswerExplanations: {
+        A: `This is the opposite of the new scholarship's claim; the passage says Roman institutions persisted for generations after 476.`,
+        B: `Military failure is never mentioned as a cause; the passage is about periodization, not the causes of Rome's transformation.`,
+        C: `The passage discusses modern scholarship revising the older view; it makes no claims about who first studied the fall of Rome.`,
+      },
+      teachingPoint: `When a passage presents a "revision" of an earlier historical view, the main idea is what the new view argues and how it differs from the old — not the old view itself.`,
+    },
+    {
+      id: 'cid-d-024',
+      skillSlug: 'central-ideas-details',
+      level: 'challenge',
+      difficulty: 'hard',
+      stimulus: `The sociologist's study compared two groups of workers who lost their jobs in the same economic downturn. One group had worked in a single industry for their entire careers; the other had moved between industries at least twice. Five years later, those who had changed industries before losing their jobs were re-employed at comparable salaries significantly more often than single-industry workers. The sociologist cautioned, however, that her sample was limited to workers under fifty, and that the advantage of cross-industry experience may not apply to older workers navigating different structural barriers.`,
+      question: `Which choice best states the main idea of the passage?`,
+      choices: [
+        { label: 'A', text: 'Economic downturns affect younger workers more severely than older workers.' },
+        { label: 'B', text: 'The sociologist concluded that all workers benefit equally from cross-industry experience.' },
+        { label: 'C', text: 'Older workers should change industries more often to improve their job security.' },
+        { label: 'D', text: 'Workers who have experience across industries are more likely to recover from job loss, though this finding may not apply to all age groups.' },
+      ],
+      correctAnswer: 'D',
+      explanation: `The passage reports that cross-industry workers recovered more often (the finding) but notes the sociologist's caution that this may not extend to older workers (the qualifier). Choice D captures both the finding and the important limitation.`,
+      wrongAnswerExplanations: {
+        A: `Comparative severity of downturns on different age groups is not what the study measured; it compared single-industry to cross-industry workers.`,
+        B: `This contradicts the passage; the sociologist specifically said the advantage may not apply to older workers, so she did not conclude equal benefit for all.`,
+        C: `The passage does not make a recommendation for older workers; the sociologist identified a gap in her findings, not a prescription for behavior.`,
+      },
+      teachingPoint: `When a study passage presents a finding and then immediately qualifies it, the main idea must include both the finding and the qualifier. Choices that drop the qualifier overstate the passage.`,
     },
   ],
   masteryQuestions: [

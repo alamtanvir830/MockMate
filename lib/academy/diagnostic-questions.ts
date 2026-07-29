@@ -9,6 +9,11 @@ import {
   DIAGNOSTIC_M2_EASY_QUESTIONS,
   DIAGNOSTIC_M2_HARD_QUESTIONS,
 } from './diagnostic-questions-v2'
+import {
+  DIAGNOSTIC_V3_M1_QUESTIONS,
+  DIAGNOSTIC_V3_M2_FOUNDATION_QUESTIONS,
+} from './diagnostic-questions-v3'
+import { DIAGNOSTIC_V3_M2_ADVANCED_QUESTIONS } from './diagnostic-questions-v3-advanced'
 
 export const DIAGNOSTIC_VERSION = 1
 
@@ -22,6 +27,17 @@ export {
   buildDiagnosticM2HardQuestions,
   routeToM2Branch,
 } from './diagnostic-questions-v2'
+
+// Re-export the v3 adaptive-diagnostic API.
+export {
+  DIAGNOSTIC_V3_VERSION,
+  M1_V3_ROUTING_THRESHOLD,
+  buildDiagnosticV3M1Questions,
+  buildDiagnosticV3M2FoundationQuestions,
+  routeToM2V3Branch,
+} from './diagnostic-questions-v3'
+
+export { buildDiagnosticV3M2AdvancedQuestions } from './diagnostic-questions-v3-advanced'
 
 const READING_SKILL_SLUGS = [
   'words-in-context',
@@ -116,4 +132,28 @@ export function getDiagnosticV2Registry(): Map<string, DiagnosticQuestionMeta> {
     })
   }
   return _registryV2
+}
+
+// V3 registry — all three modules so the server can grade any v3 response by ID.
+let _registryV3: Map<string, DiagnosticQuestionMeta> | null = null
+
+export function getDiagnosticV3Registry(): Map<string, DiagnosticQuestionMeta> {
+  if (_registryV3) return _registryV3
+  _registryV3 = new Map()
+  const all: DrillQuestion[] = [
+    ...DIAGNOSTIC_V3_M1_QUESTIONS,
+    ...DIAGNOSTIC_V3_M2_FOUNDATION_QUESTIONS,
+    ...DIAGNOSTIC_V3_M2_ADVANCED_QUESTIONS,
+  ]
+  for (const q of all) {
+    const skill = allSkills.find(s => s.slug === q.skillSlug)
+    _registryV3.set(q.id, {
+      correctAnswer: q.correctAnswer,
+      skillSlug: q.skillSlug,
+      difficulty: q.difficulty,
+      domainSlug: getDomainForSkill(q.skillSlug),
+      section: skill?.section ?? 'reading',
+    })
+  }
+  return _registryV3
 }

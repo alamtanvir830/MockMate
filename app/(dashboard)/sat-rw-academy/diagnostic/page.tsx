@@ -9,13 +9,15 @@ import {
   buildDiagnosticM1Questions,
   buildDiagnosticM2EasyQuestions,
   buildDiagnosticM2HardQuestions,
+  buildDiagnosticV3M1Questions,
+  buildDiagnosticV3M2FoundationQuestions,
 } from '@/lib/academy/diagnostic-questions'
+import { buildDiagnosticV3M2AdvancedQuestions } from '@/lib/academy/diagnostic-questions-v3-advanced'
 import type { DrillQuestion, AnswerLabel } from '@/lib/academy/types'
 import { SKILL_DISPLAY_NAMES } from '@/lib/academy/skill-mapping'
 
-// Use the two-module adaptive diagnostic (v2) for all new attempts.
-const USE_V2 = true
-const DIAGNOSTIC_VERSION = 2
+// V3 is now the active diagnostic for new attempts.
+const DIAGNOSTIC_VERSION = 3
 
 const STORAGE_KEY = 'sat_rw_diagnostic_progress'
 
@@ -37,12 +39,12 @@ interface SavedProgress {
   // v1
   answers: Record<string, string>   // questionId → selectedAnswer
   questionIndex: number
-  // v2
+  // v2 / v3
   m1Answers?: Record<string, string>
   m2Answers?: Record<string, string>
   m1QuestionIndex?: number
   m2QuestionIndex?: number
-  m2Branch?: 'easy' | 'hard' | null
+  m2Branch?: 'easy' | 'hard' | 'foundation' | 'advanced' | null
   savedAt: number
 }
 
@@ -84,6 +86,19 @@ function saveProgressV2(p: Omit<SavedProgress, 'savedAt' | 'diagnosticVersion' |
   } catch { /* ignore */ }
 }
 
+function saveProgressV3(p: Omit<SavedProgress, 'savedAt' | 'diagnosticVersion' | 'answers' | 'questionIndex'>) {
+  try {
+    const full: SavedProgress = {
+      ...p,
+      diagnosticVersion: 3,
+      answers: {},
+      questionIndex: 0,
+      savedAt: Date.now(),
+    }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(full))
+  } catch { /* ignore */ }
+}
+
 function clearProgress() {
   try { localStorage.removeItem(STORAGE_KEY) } catch { /* ignore */ }
 }
@@ -104,33 +119,25 @@ export interface DiagnosticResult {
   weakest_skill_slugs: string[]
   recommended_skill_slug: string | null
   completed_at: string
+  diagnostic_version?: number
+  m2_branch?: string
+  sat_estimate?: number
+  weighted_accuracy?: number
 }
 
 // ── Intro ─────────────────────────────────────────────────────────────────────
 
 function IntroScreen({ hasSaved, onStart, onResume }: { hasSaved: boolean; onStart: () => void; onResume: () => void }) {
-  const stats = USE_V2
-    ? [
-        { label: '36 questions', sub: 'two adaptive modules' },
-        { label: '11 skills', sub: '7 reading + 4 writing' },
-        { label: '~30 minutes', sub: 'untimed, go at your pace' },
-      ]
-    : [
-        { label: '26 questions', sub: '2–3 per skill' },
-        { label: '11 skills', sub: '7 reading + 4 writing' },
-        { label: '~20 minutes', sub: 'untimed, go at your pace' },
-      ]
-  const bullets = USE_V2
-    ? [
-        'Module 1 measures every R&W skill; Module 2 adapts to your performance.',
-        'Your results show which skills to prioritize first.',
-        'This is an Academy diagnostic — not an official SAT score.',
-      ]
-    : [
-        'Each question covers a different SAT R&W skill.',
-        'Your results show which skills to prioritize first.',
-        'This is an Academy diagnostic — not an official SAT score.',
-      ]
+  const stats = [
+    { label: '44 questions', sub: 'two adaptive modules' },
+    { label: '11 skills', sub: '7 reading + 4 writing' },
+    { label: '~50 minutes', sub: 'untimed, go at your pace' },
+  ]
+  const bullets = [
+    'Module 1 (22 questions) covers every R&W skill at medium and hard difficulty.',
+    'Module 2 adapts to your Module 1 performance — Foundation or Advanced path.',
+    'Results include a guardrailed SAT score estimate and a prioritized skill plan.',
+  ]
   return (
     <div className="space-y-6 max-w-2xl">
       <div>
@@ -337,8 +344,8 @@ function RoutingScreen() {
 
 // ── Module break ─────────────────────────────────────────────────────────────────
 
-function ModuleBreakScreen({ branch, onContinue }: { branch: 'easy' | 'hard'; onContinue: () => void }) {
-  const isHard = branch === 'hard'
+function ModuleBreakScreen({ branch, onContinue }: { branch: 'easy' | 'hard' | 'foundation' | 'advanced'; onContinue: () => void }) {
+  const isAdvanced = branch === 'hard' || branch === 'advanced'
   return (
     <div className="space-y-6 max-w-2xl">
       <div className="rounded-xl border border-slate-200 bg-white p-8 text-center space-y-4">
@@ -347,12 +354,12 @@ function ModuleBreakScreen({ branch, onContinue }: { branch: 'easy' | 'hard'; on
         </div>
         <h1 className="text-xl font-bold text-slate-900">Module 1 Complete</h1>
         <p className="text-sm text-slate-600 leading-relaxed">
-          {isHard
-            ? "Strong work — you're being routed to the advanced module, which features tougher, more complex questions."
-            : "Nice effort — you're being routed to the foundation module, which builds from core R&W skills."}
+          {isAdvanced
+            ? "Strong performance — you're taking the Advanced Module 2, which includes harder, more nuanced questions. A strong result here can unlock a 700+ score estimate."
+            : "Nice effort — you're taking the Foundation Module 2, which pinpoints the core skill gaps that will move your score the most."}
         </p>
         <p className="text-xs text-slate-400">
-          Module 2 has 16 questions. Your full results appear after you finish.
+          Module 2 has 22 questions. Your full results and score estimate appear after you finish.
         </p>
         <button
           onClick={onContinue}
@@ -380,6 +387,8 @@ function SubmittingScreen() {
 
 function ResultsScreen({ result, onRetake }: { result: DiagnosticResult; onRetake: () => void }) {
   const overallPct = Math.round(result.accuracy_percentage)
+  const satEstimate = result.sat_estimate
+  const isV3 = result.diagnostic_version === 3
 
   const weakSkills = result.weakest_skill_slugs
     .filter(s => result.skill_results[s]?.total > 0)
@@ -401,6 +410,23 @@ function ResultsScreen({ result, onRetake }: { result: DiagnosticResult; onRetak
         <h1 className="text-2xl font-bold text-slate-900">R&amp;W Diagnostic Complete</h1>
         <p className="mt-1 text-sm text-slate-500">Completed {dateStr}</p>
       </div>
+
+      {/* V3: SAT Score Estimate */}
+      {isV3 && satEstimate !== undefined && (
+        <div className="rounded-xl border-2 border-indigo-200 bg-indigo-50 p-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-1">Estimated SAT R&amp;W Score</p>
+          <div className="flex items-baseline gap-3">
+            <p className="text-5xl font-bold text-indigo-700">{satEstimate}</p>
+            <p className="text-sm text-indigo-500">/ 800</p>
+          </div>
+          <p className="mt-2 text-xs text-indigo-600 leading-relaxed">
+            Based on difficulty-weighted performance across both modules.
+            {result.m2_branch === 'foundation' && ' Scoring 700+ requires completing the Advanced module — retake to unlock.'}
+            {result.m2_branch === 'advanced' && satEstimate < 700 && ' To reach 700+, focus on the priority skills below and retake.'}
+          </p>
+          <p className="mt-1 text-xs text-slate-400">This is a diagnostic estimate, not an official College Board score.</p>
+        </div>
+      )}
 
       {/* Score summary */}
       <div className="rounded-xl border border-slate-200 bg-white p-6 flex items-center gap-6">
@@ -425,9 +451,11 @@ function ResultsScreen({ result, onRetake }: { result: DiagnosticResult; onRetak
         </div>
       </div>
 
-      <p className="text-xs text-slate-400 bg-slate-50 rounded-lg border border-slate-200 px-3 py-2">
-        This diagnostic measures your current Academy skill performance. It is not an official SAT score.
-      </p>
+      {!isV3 && (
+        <p className="text-xs text-slate-400 bg-slate-50 rounded-lg border border-slate-200 px-3 py-2">
+          This diagnostic measures your current Academy skill performance. It is not an official SAT score.
+        </p>
+      )}
 
       {/* Domain breakdown */}
       {domains.length > 0 && (
@@ -577,27 +605,32 @@ function ErrorScreen({ onRetry, message }: { onRetry: () => void; message: strin
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function DiagnosticPage() {
-  // v1 questions (single module)
+  // v1 questions (single module — legacy path only)
   const v1Questions = useMemo(() => buildDiagnosticQuestions(), [])
-  // v2 questions
-  const m1Questions = useMemo(() => buildDiagnosticM1Questions(), [])
+  // v2 questions (legacy path — preserved for resume of saved v2 attempts)
+  const m1V2Questions = useMemo(() => buildDiagnosticM1Questions(), [])
   const m2EasyQuestions = useMemo(() => buildDiagnosticM2EasyQuestions(), [])
   const m2HardQuestions = useMemo(() => buildDiagnosticM2HardQuestions(), [])
+  // v3 questions (active)
+  const m1V3Questions = useMemo(() => buildDiagnosticV3M1Questions(), [])
+  const m2FoundationQuestions = useMemo(() => buildDiagnosticV3M2FoundationQuestions(), [])
+  const m2AdvancedQuestions = useMemo(() => buildDiagnosticV3M2AdvancedQuestions(), [])
 
   const [phase, setPhase] = useState<Phase>('intro')
   const [clientToken, setClientToken] = useState<string>('')
   const [result, setResult] = useState<DiagnosticResult | null>(null)
   const [errorMessage, setErrorMessage] = useState('')
   const [savedProgress, setSavedProgress] = useState<SavedProgress | null>(null)
-  // Which submission to re-run when the user retries after an error.
   const [retryKind, setRetryKind] = useState<'v1' | 'm2'>('v1')
+  // Which diagnostic version is currently running (determines question set and API call)
+  const [activeDiagnosticVersion, setActiveDiagnosticVersion] = useState<number>(DIAGNOSTIC_VERSION)
 
   // v1 state
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [startIndex, setStartIndex] = useState(0)
 
-  // v2 state
-  const [m2Branch, setM2Branch] = useState<'easy' | 'hard' | null>(null)
+  // v2/v3 state
+  const [m2Branch, setM2Branch] = useState<'easy' | 'hard' | 'foundation' | 'advanced' | null>(null)
   const [m1Answers, setM1Answers] = useState<Record<string, string>>({})
   const [m2Answers, setM2Answers] = useState<Record<string, string>>({})
   const [m1QuestionIndex, setM1QuestionIndex] = useState(0)
@@ -608,37 +641,42 @@ export default function DiagnosticPage() {
     setSavedProgress(loadProgress())
   }, [])
 
-  const m2Questions = m2Branch === 'hard' ? m2HardQuestions : m2EasyQuestions
+  // Active M1 questions depend on which version is running
+  const m1Questions = activeDiagnosticVersion === 3 ? m1V3Questions : m1V2Questions
+
+  // Active M2 questions depend on both version and branch
+  const m2Questions = useMemo(() => {
+    if (activeDiagnosticVersion === 3) {
+      return m2Branch === 'advanced' ? m2AdvancedQuestions : m2FoundationQuestions
+    }
+    return m2Branch === 'hard' ? m2HardQuestions : m2EasyQuestions
+  }, [activeDiagnosticVersion, m2Branch, m2AdvancedQuestions, m2FoundationQuestions, m2HardQuestions, m2EasyQuestions])
 
   function startFresh() {
     const token = crypto.randomUUID()
     clearProgress()
     setClientToken(token)
-    if (USE_V2) {
-      setM1Answers({})
-      setM2Answers({})
-      setM1QuestionIndex(0)
-      setM2QuestionIndex(0)
-      setM2Branch(null)
-      setPhase('m1_quiz')
-    } else {
-      setAnswers({})
-      setStartIndex(0)
-      setPhase('quiz')
-    }
+    setActiveDiagnosticVersion(3)
+    setM1Answers({})
+    setM2Answers({})
+    setM1QuestionIndex(0)
+    setM2QuestionIndex(0)
+    setM2Branch(null)
+    setPhase('m1_quiz')
   }
 
   function resumeSaved() {
     if (!savedProgress) return
     setClientToken(savedProgress.clientToken)
-    if (savedProgress.diagnosticVersion === 2) {
+    const version = savedProgress.diagnosticVersion ?? 1
+    setActiveDiagnosticVersion(version)
+
+    if (version === 3 || version === 2) {
       setM1Answers(savedProgress.m1Answers ?? {})
       setM2Answers(savedProgress.m2Answers ?? {})
       setM1QuestionIndex(savedProgress.m1QuestionIndex ?? 0)
       setM2QuestionIndex(savedProgress.m2QuestionIndex ?? 0)
       setM2Branch(savedProgress.m2Branch ?? null)
-      // Resume into a safe phase. Quizzing phases resume in place; anything past
-      // routing resumes at the module break so the branch is re-shown first.
       if (savedProgress.phase === 'm2_quiz' && savedProgress.m2Branch) {
         setPhase('m2_quiz')
       } else if (savedProgress.phase === 'module_break' && savedProgress.m2Branch) {
@@ -687,7 +725,7 @@ export default function DiagnosticPage() {
     }
   }
 
-  // ── v2: Module 1 complete → route ──────────────────────────────────────────────
+  // ── v2/v3: Module 1 complete → route ───────────────────────────────────────────
   async function completeM1(finalM1Answers: Record<string, string>) {
     setM1Answers(finalM1Answers)
     setPhase('routing')
@@ -701,15 +739,16 @@ export default function DiagnosticPage() {
       const res = await fetch('/api/academy/diagnostic/route-m1', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ m1Responses }),
+        body: JSON.stringify({ m1Responses, diagnosticVersion: activeDiagnosticVersion }),
       })
       if (!res.ok) {
         const body = await res.json().catch(() => ({})) as { error?: string }
         throw new Error(body.error ?? `HTTP ${res.status}`)
       }
-      const data = await res.json() as { branch: 'easy' | 'hard' }
+      const data = await res.json() as { branch: 'easy' | 'hard' | 'foundation' | 'advanced' }
       setM2Branch(data.branch)
-      saveProgressV2({
+      const saveFn = activeDiagnosticVersion === 3 ? saveProgressV3 : saveProgressV2
+      saveFn({
         clientToken,
         phase: 'module_break',
         m1Answers: finalM1Answers,
@@ -722,12 +761,12 @@ export default function DiagnosticPage() {
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Unknown error — please try again.'
       setErrorMessage(msg)
-      setRetryKind('v1') // routing failure is not retriable via /complete; send back to M1
+      setRetryKind('v1')
       setPhase('error')
     }
   }
 
-  // ── v2: Module 2 complete → submit everything ──────────────────────────────────
+  // ── v2/v3: Module 2 complete → submit everything ────────────────────────────────
   async function completeM2(finalM2Answers: Record<string, string>) {
     setM2Answers(finalM2Answers)
     setRetryKind('m2')
@@ -742,7 +781,7 @@ export default function DiagnosticPage() {
       const res = await fetch('/api/academy/diagnostic/complete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ responses, clientToken, diagnosticVersion: DIAGNOSTIC_VERSION, m2Branch }),
+        body: JSON.stringify({ responses, clientToken, diagnosticVersion: activeDiagnosticVersion, m2Branch }),
       })
       if (!res.ok) {
         const body = await res.json().catch(() => ({})) as { error?: string }
@@ -798,8 +837,9 @@ export default function DiagnosticPage() {
     )
   }
 
-  // v2 Module 1
+  // Module 1 quiz
   if (phase === 'm1_quiz') {
+    const saveFn = activeDiagnosticVersion === 3 ? saveProgressV3 : saveProgressV2
     return (
       <QuizScreen
         questions={m1Questions}
@@ -809,7 +849,7 @@ export default function DiagnosticPage() {
         completeLabel="Finish Module 1 →"
         onProgressChange={(a, i) => {
           setM1QuestionIndex(i)
-          saveProgressV2({
+          saveFn({
             clientToken,
             phase: 'm1_quiz',
             m1Answers: a,
@@ -827,11 +867,12 @@ export default function DiagnosticPage() {
   if (phase === 'routing') return <RoutingScreen />
 
   if (phase === 'module_break' && m2Branch) {
+    const saveFn = activeDiagnosticVersion === 3 ? saveProgressV3 : saveProgressV2
     return (
       <ModuleBreakScreen
         branch={m2Branch}
         onContinue={() => {
-          saveProgressV2({
+          saveFn({
             clientToken,
             phase: 'm2_quiz',
             m1Answers,
@@ -846,19 +887,21 @@ export default function DiagnosticPage() {
     )
   }
 
-  // v2 Module 2
+  // Module 2 quiz
   if (phase === 'm2_quiz' && m2Branch) {
+    const saveFn = activeDiagnosticVersion === 3 ? saveProgressV3 : saveProgressV2
+    const m2Label = m2Branch === 'advanced' || m2Branch === 'hard' ? 'Advanced' : 'Foundation'
     return (
       <QuizScreen
         key={m2Branch}
         questions={m2Questions}
         initialAnswers={m2Answers}
         initialIndex={m2QuestionIndex}
-        moduleLabel={`R&W Diagnostic · Module 2 (${m2Branch === 'hard' ? 'Advanced' : 'Foundation'})`}
+        moduleLabel={`R&W Diagnostic · Module 2 (${m2Label})`}
         completeLabel="See results →"
         onProgressChange={(a, i) => {
           setM2QuestionIndex(i)
-          saveProgressV2({
+          saveFn({
             clientToken,
             phase: 'm2_quiz',
             m1Answers,
