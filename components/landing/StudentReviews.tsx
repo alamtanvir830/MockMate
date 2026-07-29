@@ -21,8 +21,11 @@ const CURATED_TESTIMONIALS: Testimonial[] = [
   },
   {
     initials: 'C.',
+    scoreLabel: '1450 scorer',
     quote: 'The Reading & Writing Module 2 was much more difficult, which I think is great.',
     // source: form3, feedbackId: 727c34cc-143b-46ed-8b20-f3b3cdfd7789
+    // scoreType: mockmate_estimated_practice_score
+    // totalScore: 1450, rwScore: 700, mathScore: 750
   },
   {
     initials: 'A. K.',
