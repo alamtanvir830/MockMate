@@ -87,28 +87,26 @@ export const f3MathModule1Questions: MathQuestion[] = [
     section: 'math',
     moduleId: 'f3-math-module-1',
     domain: 'Algebra',
-    skill: 'Systems of linear equations',
+    skill: 'Systems of two linear equations in two variables',
     difficulty: 'medium',
     type: 'multiple_choice',
-    // System: 3x + 2y = 16, x + 4y = 14.
-    // Multiply eq1 by 2: 6x + 4y = 32. Subtract eq2: 5x = 18 → non-integer.
-    // Use: 2x + 3y = 18 and x + y = 8. From eq2: x = 8 − y. Sub: 2(8−y)+3y=18 → 16+y=18 → y=2, x=6.
-    // x+y=8. Sum asked directly: answer is 8.
+    // m + c = 80; 2.50m + 1.50c = 150.
+    // c = 80 − m; 2.50m + 1.50(80 − m) = 150 → 2.50m + 120 − 1.50m = 150 → m = 30.
     question:
-      'What is the value of x + y for the system below?\n\n2x + 3y = 18\nx + y = 8',
+      'A bakery sells muffins for $2.50 each and cookies for $1.50 each. On a given morning, the bakery sold a combined total of 80 muffins and cookies and collected exactly $150 in revenue from those sales. How many muffins were sold?',
     choices: [
-      { label: 'A', text: '4' },
-      { label: 'B', text: '6' },
-      { label: 'C', text: '8' },
-      { label: 'D', text: '10' },
+      { label: 'A', text: '20' },
+      { label: 'B', text: '30' },
+      { label: 'C', text: '50' },
+      { label: 'D', text: '60' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'B',
     explanation:
-      'The second equation directly states x + y = 8. (We can verify: from the second equation x = 8 − y; substituting into the first gives 2(8 − y) + 3y = 18 → 16 + y = 18 → y = 2, x = 6, so x + y = 6 + 2 = 8.)',
+      'Let m = number of muffins and c = number of cookies.\n\nEquation 1 (count): m + c = 80\nEquation 2 (revenue): 2.50m + 1.50c = 150\n\nFrom Equation 1: c = 80 − m. Substitute into Equation 2:\n2.50m + 1.50(80 − m) = 150\n2.50m + 120 − 1.50m = 150\nm = 30\n\nVerify: c = 50; revenue = 2.50(30) + 1.50(50) = 75 + 75 = $150 ✓',
     wrongAnswerExplanations: {
-      A: 'x + y = 4 would require x = 8 − y to sum to 4, contradicting the second equation.',
-      B: 'x = 6 and y = 2 are the individual values, but their sum is 8, not 6.',
-      D: 'x + y = 10 is not supported by the second equation, which directly gives x + y = 8.',
+      A: '20 muffins and 60 cookies gives revenue = 2.50(20) + 1.50(60) = 50 + 90 = $140, not $150.',
+      C: '50 is the number of cookies, not muffins — a common error from solving for c instead of m.',
+      D: '60 muffins and 20 cookies gives revenue = 2.50(60) + 1.50(20) = 150 + 30 = $180, not $150.',
     },
   },
 
@@ -170,29 +168,30 @@ export const f3MathModule1Questions: MathQuestion[] = [
     },
   },
 
-  // ── Q07 · Advanced Math · easy · MC · "Equivalent algebraic expressions" ─
+  // ── Q07 · Advanced Math · medium · MC · "Equivalent algebraic expressions" ─
   {
     id: 'sat-f3-math-m1-q07',
     section: 'math',
     moduleId: 'f3-math-module-1',
     domain: 'Advanced Math',
     skill: 'Equivalent algebraic expressions',
-    difficulty: 'easy',
+    difficulty: 'medium',
     type: 'multiple_choice',
-    question: 'Which expression is equivalent to 4x² − 9?',
+    // Complete the square: 2x²+12x+19 = 2(x²+6x)+19 = 2(x+3)²−18+19 = 2(x+3)²+1.
+    question: 'Which of the following is equivalent to 2x² + 12x + 19?',
     choices: [
-      { label: 'A', text: '(2x − 3)²' },
-      { label: 'B', text: '(2x + 3)(2x − 3)' },
-      { label: 'C', text: '(4x − 9)(x + 1)' },
-      { label: 'D', text: '(2x − 3)(2x − 3)' },
+      { label: 'A', text: '2(x + 3)² − 1' },
+      { label: 'B', text: '2(x + 3)² + 1' },
+      { label: 'C', text: '(2x + 6)² + 1' },
+      { label: 'D', text: '2(x + 6)² + 19' },
     ],
     correctAnswer: 'B',
     explanation:
-      '4x² − 9 = (2x)² − 3² is a difference of two perfect squares, which factors as (2x + 3)(2x − 3).',
+      'Complete the square: 2x² + 12x + 19 = 2(x² + 6x) + 19. To complete the square inside the parentheses, add and subtract (6/2)² = 9: = 2(x² + 6x + 9 − 9) + 19 = 2(x + 3)² − 18 + 19 = 2(x + 3)² + 1.',
     wrongAnswerExplanations: {
-      A: '(2x − 3)² = 4x² − 12x + 9. This includes a −12x middle term and a positive constant, so it does not equal 4x² − 9.',
-      C: '(4x − 9)(x + 1) = 4x² + 4x − 9x − 9 = 4x² − 5x − 9 ≠ 4x² − 9.',
-      D: '(2x − 3)(2x − 3) = (2x − 3)² = 4x² − 12x + 9, same error as choice A.',
+      A: 'The constant inside is −18 + 19 = +1, not −1. The error is computing −18 + 19 as −1 instead of +1.',
+      C: '(2x + 6)² = 4x² + 24x + 36, which has a leading coefficient of 4, not 2. This is not equivalent to the original expression.',
+      D: '2(x + 6)² = 2(x² + 12x + 36) = 2x² + 24x + 72. The middle-term coefficient would be 24, but the original expression has 12x.',
     },
   },
 
@@ -383,23 +382,23 @@ export const f3MathModule1Questions: MathQuestion[] = [
     },
   },
 
-  // ── Q15 · PSDA · easy · grid_in · "Percentages" ──────────────────────────
+  // ── Q15 · PSDA · medium · grid_in · "Percentages" ───────────────────────
   {
     id: 'sat-f3-math-m1-q15',
     section: 'math',
     moduleId: 'f3-math-module-1',
     domain: 'Problem-Solving and Data Analysis',
     skill: 'Percentages',
-    difficulty: 'easy',
+    difficulty: 'medium',
     type: 'grid_in',
-    // 0.35 × 120 = 42. Sale price = 120 − 42 = 78.
+    // 1.25p = 1125 → p = 1125/1.25 = 900.
     question:
-      'A jacket originally priced at $120 is on sale for 35% off. What is the sale price of the jacket, in dollars?',
-    correctAnswer: '78',
-    acceptableAnswers: ['78'],
+      'After a 25% price increase, a laptop costs $1,125. What was the original price of the laptop, in dollars?',
+    correctAnswer: '900',
+    acceptableAnswers: ['900'],
     explanation:
-      'Discount = 35% of $120 = 0.35 × 120 = $42. Sale price = 120 − 42 = $78.',
-    scoringNotes: 'Only 78 is acceptable.',
+      'A 25% increase means the new price equals 125% of the original. Let p be the original price: 1.25p = 1125 → p = 1125 ÷ 1.25 = $900.',
+    scoringNotes: 'Only 900 is acceptable.',
   },
 
   // ── Q16 · PSDA · medium · MC · "Data distributions" ─────────────────────
@@ -491,22 +490,22 @@ export const f3MathModule1Questions: MathQuestion[] = [
     skill: 'Angles, triangles',
     difficulty: 'easy',
     type: 'multiple_choice',
-    // (3x+10)+(5x−2)=180 → 8x+8=180 → x=21.5.
+    // (x+15)+(2x−5)+(x+10)=180 → 4x+20=180 → x=40.
     question:
-      'Two supplementary angles measure (3x + 10)° and (5x − 2)°. What is the value of x?',
+      'A triangle has interior angles measuring (x + 15)°, (2x − 5)°, and (x + 10)°. What is the value of x?',
     choices: [
-      { label: 'A', text: '17' },
-      { label: 'B', text: '21.5' },
-      { label: 'C', text: '22' },
-      { label: 'D', text: '43' },
+      { label: 'A', text: '30' },
+      { label: 'B', text: '35' },
+      { label: 'C', text: '40' },
+      { label: 'D', text: '45' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'C',
     explanation:
-      'Supplementary angles sum to 180°: (3x + 10) + (5x − 2) = 180 → 8x + 8 = 180 → 8x = 172 → x = 21.5.',
+      'The interior angles of a triangle sum to 180°: (x + 15) + (2x − 5) + (x + 10) = 180 → 4x + 20 = 180 → 4x = 160 → x = 40. Check: 55° + 75° + 50° = 180° ✓',
     wrongAnswerExplanations: {
-      A: 'x = 17: (3·17+10) + (5·17−2) = 61 + 83 = 144 ≠ 180.',
-      C: 'x = 22: (3·22+10) + (5·22−2) = 76 + 108 = 184 ≠ 180.',
-      D: 'x = 43: 8(43) + 8 = 352 ≠ 180.',
+      A: 'x = 30 gives angles 45°, 55°, and 40° — sum = 140° ≠ 180°.',
+      B: 'x = 35 gives angles 50°, 65°, and 45° — sum = 160° ≠ 180°.',
+      D: 'x = 45 gives angles 60°, 85°, and 55° — sum = 200° ≠ 180°.',
     },
   },
 
@@ -538,23 +537,32 @@ export const f3MathModule1Questions: MathQuestion[] = [
     },
   },
 
-  // ── Q21 · Geometry · hard · grid_in · "Right triangles and trigonometry" ─
+  // ── Q21 · Geometry · medium · MC · "Right triangles and trigonometry" ────
   {
     id: 'sat-f3-math-m1-q21',
     section: 'math',
     moduleId: 'f3-math-module-1',
     domain: 'Geometry and Trigonometry',
     skill: 'Right triangles and trigonometry',
-    difficulty: 'hard',
-    type: 'grid_in',
-    // sin(30°)=0.5, so opposite = 20×0.5 = 10.
+    difficulty: 'medium',
+    type: 'multiple_choice',
+    // height² = 17²−8² = 289−64 = 225 → height = 15. sin(θ) = 15/17.
     question:
-      'In a right triangle, one acute angle measures 30° and the hypotenuse has length 20. What is the length of the side opposite the 30° angle?',
-    correctAnswer: '10',
-    acceptableAnswers: ['10'],
+      'A 17-foot ladder leans against a vertical wall. The base of the ladder rests on horizontal ground 8 feet from the base of the wall. What is the value of sin(θ), where θ is the angle the ladder makes with the ground?',
+    choices: [
+      { label: 'A', text: '8/17' },
+      { label: 'B', text: '8/15' },
+      { label: 'C', text: '15/17' },
+      { label: 'D', text: '17/15' },
+    ],
+    correctAnswer: 'C',
     explanation:
-      'sin(30°) = opposite / hypotenuse → opposite = 20 × sin(30°) = 20 × 0.5 = 10. Equivalently, in a 30-60-90 triangle the side opposite 30° is half the hypotenuse.',
-    scoringNotes: 'Only 10 is acceptable.',
+      'The wall is vertical, so the ladder, wall, and ground form a right triangle. Find the height using the Pythagorean theorem: height² = 17² − 8² = 289 − 64 = 225 → height = 15 feet. The angle θ is at the base of the ladder. The side opposite θ is the height (15) and the hypotenuse is the ladder (17). sin(θ) = opposite/hypotenuse = 15/17.',
+    wrongAnswerExplanations: {
+      A: '8/17 is cos(θ) — the ratio of the adjacent side (8, along the ground) to the hypotenuse (17). This gives cosine, not sine.',
+      B: '8/15 divides two leg lengths rather than using the hypotenuse. Sine is always opposite divided by hypotenuse.',
+      D: '17/15 exceeds 1, which is impossible for a sine value. This inverts the correct ratio.',
+    },
   },
 
   // ── Q22 · Geometry · hard · grid_in · "Area and perimeter" ───────────────
