@@ -41,3 +41,28 @@ export function scoreBg(percentage: number): string {
   if (percentage >= 60) return 'bg-amber-50 text-amber-700 border-amber-200'
   return 'bg-red-50 text-red-700 border-red-200'
 }
+
+/**
+ * Formats an attempt timestamp in 12-hour Eastern Time with timezone abbreviation.
+ * Output: "07/30/2026, 12:57 PM EDT" | "01/15/2026, 9:08 AM EST"
+ * Returns "—" for null, undefined, or invalid values.
+ */
+export function formatAttemptTimestamp(ts: string | Date | null | undefined): string {
+  if (ts == null) return '—'
+  const d = ts instanceof Date ? ts : new Date(ts as string)
+  if (isNaN(d.getTime())) return '—'
+  try {
+    return new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      month: '2-digit',
+      day: '2-digit',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZoneName: 'short',
+    }).format(d)
+  } catch {
+    return '—'
+  }
+}

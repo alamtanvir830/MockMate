@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { loadAllQBHistory, type QBHistoryEntry } from '@/lib/question-bank/history'
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  return new Date(iso).toLocaleDateString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric', year: 'numeric' })
 }
 
 function AccuracyColor(acc: number) {

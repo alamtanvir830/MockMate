@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
-import { cn } from '@/lib/utils'
+import { cn, formatAttemptTimestamp } from '@/lib/utils'
 import { StimulusRenderer } from '@/components/exam/StimulusRenderer'
 import { MathText } from '@/components/exam/MathText'
 import { SATGraph } from '@/components/exam/SATGraph'
@@ -1639,7 +1639,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                     <div className="flex-1 min-w-0">
                       <p className="font-semibold text-slate-900 text-[14px]">Resume your previous attempt?</p>
                       <p className="text-[12px] text-slate-500 mt-0.5">
-                        Started {new Date(inProgressAttempt.startedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}{' '}
+                        Started {formatAttemptTimestamp(inProgressAttempt.startedAt)}{' '}
                         · {Object.keys(inProgressAttempt.answers).length} answers saved
                       </p>
                       <div className="flex items-center gap-3 mt-3">
@@ -2545,8 +2545,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
             <h1 className="text-2xl font-bold text-slate-900">Results — {form.title}</h1>
             {isHistoryView && initialAttempt?.completedAt && (
               <p className="text-sm text-slate-400 mt-0.5">
-                Completed {new Date(initialAttempt.completedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}{' '}
-                at {new Date(initialAttempt.completedAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+                Completed {formatAttemptTimestamp(initialAttempt.completedAt)}
               </p>
             )}
           </div>

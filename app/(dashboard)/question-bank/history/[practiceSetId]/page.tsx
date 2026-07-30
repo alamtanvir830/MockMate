@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { cn } from '@/lib/utils'
+import { cn, formatAttemptTimestamp } from '@/lib/utils'
 import { loadQBResultById } from '@/lib/question-bank/history'
 import { rwQuestions } from '@/lib/question-bank/sat/rw-questions'
 import { mathQuestions } from '@/lib/question-bank/sat/math-questions'
@@ -33,10 +33,7 @@ function isSatCorrect(q: QBQuestion, ans: string): boolean {
 }
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleString('en-US', {
-    month: 'long', day: 'numeric', year: 'numeric',
-    hour: 'numeric', minute: '2-digit',
-  })
+  return formatAttemptTimestamp(iso)
 }
 
 // ── SAT Review ────────────────────────────────────────────────────────────────

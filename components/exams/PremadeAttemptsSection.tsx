@@ -5,12 +5,7 @@ import Link from 'next/link'
 import { loadAllAttempts, deleteAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
 import { syncLocalSatAttemptsToSupabase, type SyncResult } from '@/lib/premade-exams/sat/sync-to-supabase'
 import { useEntitlements } from '@/hooks/use-entitlements'
-
-function formatDate(iso: string): string {
-  const d = new Date(iso)
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
-    ' at ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
-}
+import { formatAttemptTimestamp } from '@/lib/utils'
 
 function resultsPath(id: string, examId: string): string {
   const m = examId?.match(/sat-form-(\d+)/)
@@ -185,7 +180,7 @@ export function PremadeAttemptsSection({
                       </span>
                     </div>
                     <p className="text-sm text-slate-400 mt-0.5">
-                      {answeredCount} answers saved · Last saved {formatDate(row.last_saved_at)}
+                      {answeredCount} answers saved · Last saved {formatAttemptTimestamp(row.last_saved_at)}
                     </p>
                   </div>
                   <Link
@@ -246,7 +241,7 @@ export function PremadeAttemptsSection({
                       )}
                     </div>
                     <p className="text-sm text-slate-400 mt-0.5">
-                      {formatDate(attempt.completedAt)}
+                      {formatAttemptTimestamp(attempt.completedAt)}
                     </p>
                   </div>
 
