@@ -1,7 +1,5 @@
 import OpenAI from 'openai'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-
 const OPTION_LETTERS = ['A', 'B', 'C', 'D'] as const
 
 export interface AnkiCard {
@@ -29,6 +27,8 @@ export async function generateAnkiCards(
   language?: string,
 ): Promise<AnkiCard[]> {
   if (questions.length === 0) return []
+
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
   const questionsText = questions
     .map((q, i) => {
