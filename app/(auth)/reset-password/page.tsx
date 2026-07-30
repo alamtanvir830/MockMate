@@ -5,6 +5,7 @@ import { ResetPasswordForm } from '@/components/auth/reset-password-form'
 
 export const metadata: Metadata = {
   title: 'Set new password',
+  robots: { index: false, follow: false },
 }
 
 export default function ResetPasswordPage() {

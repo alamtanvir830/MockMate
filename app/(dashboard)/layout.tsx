@@ -1,6 +1,11 @@
+import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { hasSatPremium } from '@/lib/auth/server'
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+}
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { MobileHeader } from '@/components/dashboard/mobile-header'
 import { SyncSatAttempts } from '@/components/premade/SyncSatAttempts'
