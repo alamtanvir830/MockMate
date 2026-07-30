@@ -10,7 +10,10 @@ import { AcademySidebarSlot } from '@/components/dashboard/AcademySidebarSlot'
 import { MathAcademySidebarSlot } from '@/components/dashboard/MathAcademySidebarSlot'
 import SettingsClient, { ResendVerificationButton, SignOutButton } from './SettingsClient'
 
-export const metadata: Metadata = { title: 'Settings — MockMate' }
+export const metadata: Metadata = {
+  title: 'Settings — MockMate',
+  robots: { index: false, follow: false },
+}
 
 function fmt(iso: string | null | undefined): string | null {
   if (!iso) return null

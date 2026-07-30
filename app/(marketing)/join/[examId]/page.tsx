@@ -5,7 +5,10 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { Button } from '@/components/ui/button'
 import { Logo } from '@/components/shared/logo'
 
-export const metadata: Metadata = { title: 'Shared Exam Invite' }
+export const metadata: Metadata = {
+  title: 'Shared Exam Invite',
+  robots: { index: false, follow: false },
+}
 
 export default async function JoinPage({
   params,
