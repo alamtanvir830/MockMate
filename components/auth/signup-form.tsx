@@ -29,6 +29,7 @@ export function SignupForm() {
       </div>
 
       <form action={action} className="space-y-4">
+        {next && <input type="hidden" name="next" value={next} />}
         <Input
           label="Full name"
           type="text"
@@ -68,7 +69,7 @@ export function SignupForm() {
 
         <p className="text-xs text-slate-400 text-center">
           You can access the dashboard immediately after signing up.{' '}
-          <Link href="/login" className="underline hover:text-slate-600">
+          <Link href={next ? `/login?next=${encodeURIComponent(next)}` : '/login'} className="underline hover:text-slate-600">
             Already have an account? Sign in →
           </Link>
         </p>

@@ -2,14 +2,18 @@
 
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
-import { ensureForm3FreeWindow } from '@/lib/premade-exams/sat/form3-access'
-import { hasSatPremium } from '@/lib/auth/server'
-import { isMockMateAdmin } from '@/lib/auth/admin'
 
 export type AuthState = { error?: string; message?: string } | null
 
 function siteUrl() {
   return process.env.NEXT_PUBLIC_SITE_URL ?? 'https://mockmateapp.com'
+}
+
+function safeNextRedirect(next: FormDataEntryValue | null): string {
+  if (typeof next !== 'string' || !next) return '/dashboard'
+  if (!next.startsWith('/') || next.startsWith('//')) return '/dashboard'
+  if (/[a-zA-Z][a-zA-Z0-9+\-.]*:/.test(next)) return '/dashboard'
+  return next
 }
 
 export async function login(
@@ -44,14 +48,7 @@ export async function login(
     return { error: error.message }
   }
 
-  // Initialize the per-user 48-hour Form 3 free window on first login.
-  // Skip for admin and premium users — they don't need the timer.
-  const { data: { user: loggedInUser } } = await supabase.auth.getUser()
-  if (loggedInUser && !isMockMateAdmin(loggedInUser) && !hasSatPremium(loggedInUser)) {
-    await ensureForm3FreeWindow(loggedInUser.id)
-  }
-
-  redirect('/dashboard')
+  redirect(safeNextRedirect(formData.get('next')))
 }
 
 export async function signup(
@@ -87,11 +84,7 @@ export async function signup(
 
   // With email confirmation OFF, session is returned immediately.
   if (data.session) {
-    // Initialize the per-user 48-hour Form 3 free window for new signups.
-    if (data.user && !isMockMateAdmin(data.user) && !hasSatPremium(data.user)) {
-      await ensureForm3FreeWindow(data.user.id)
-    }
-    redirect('/dashboard')
+    redirect(safeNextRedirect(formData.get('next')))
   }
 
   // Fallback: email confirmation still enabled on Supabase side.

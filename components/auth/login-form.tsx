@@ -45,6 +45,7 @@ export function LoginForm() {
       </div>
 
       <form action={action} className="space-y-4">
+        {next && <input type="hidden" name="next" value={next} />}
         <Input
           label="Email"
           type="email"

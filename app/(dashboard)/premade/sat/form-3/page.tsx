@@ -7,6 +7,7 @@ import SATExamTakerClient from './SATExamTakerClient'
 import {
   getForm3FreeWindow,
   resolveForm3Access,
+  ensureForm3FreeWindow,
 } from '@/lib/premade-exams/sat/form3-access'
 import type { Form3AttemptStatus } from '@/lib/premade-exams/sat/form3-access'
 
@@ -23,7 +24,7 @@ export default async function SATForm3Page() {
   const isAdmin = isMockMateAdmin(user)
   const { satUpgradeUnlocked } = await getEntitlements()
 
-  const [freeWindow, inProgressRow, completedRow] = await Promise.all([
+  let [freeWindow, inProgressRow, completedRow] = await Promise.all([ // eslint-disable-line prefer-const
     getForm3FreeWindow(supabase, user.id),
     supabase
       .from('sat_in_progress_attempts')
@@ -42,6 +43,13 @@ export default async function SATForm3Page() {
       .limit(1)
       .maybeSingle(),
   ])
+
+  // Start the 48-hour free window when the user first selects Form 3.
+  // ON CONFLICT DO NOTHING in the RPC makes repeated calls safe (idempotent).
+  if (!isAdmin && !satUpgradeUnlocked && !freeWindow) {
+    await ensureForm3FreeWindow(user.id)
+    freeWindow = await getForm3FreeWindow(supabase, user.id)
+  }
 
   const attemptId =
     completedRow.data?.local_attempt_id ?? inProgressRow.data?.local_attempt_id ?? null

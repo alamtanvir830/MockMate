@@ -425,21 +425,22 @@ export default async function SATPremadePage() {
               Start Exam →
             </span>
           </Link>
-        ) : !user ? (
-          <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
+        ) : user && !isAdmin && !satUpgradeUnlocked && !form3FreeWindow && form3AttemptStatus === 'none' ? (
+          // Eligible free user: no window initialized yet — clicking Start Form 3 triggers the 48-hour window
+          <Link href="/premade/sat/form-3" className="rounded-xl border border-amber-200 bg-white p-5 hover:border-amber-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-emerald-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-emerald-600">3</span>
+              <div className="h-8 w-8 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-amber-600">3</span>
               </div>
-              <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Free</span>
+              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Free for 48 Hours</span>
             </div>
-            <h2 className="font-semibold text-slate-900 mb-0.5">Form 3</h2>
-            <p className="text-[11px] text-emerald-700">Available to all MockMate users.</p>
+            <h2 className="font-semibold text-slate-900 group-hover:text-amber-700 transition-colors mb-0.5">Form 3</h2>
+            <p className="text-[11px] text-amber-700">Start to begin your 48-hour free access window.</p>
             <SatExamDetails />
-            <Link href="/signup" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors">
-              Sign up to Start →
-            </Link>
-          </div>
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-amber-600 transition-colors">
+              Start Free SAT Form 3 →
+            </span>
+          </Link>
         ) : (
           <div className="rounded-xl border border-slate-200 bg-slate-50 p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
