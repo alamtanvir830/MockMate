@@ -9,7 +9,7 @@ import { deleteQBResult } from '@/lib/question-bank/sat/question-selector'
 import { deleteMCATQBResult } from '@/lib/question-bank/mcat/question-selector'
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric', year: 'numeric' })
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 }
 
 export default function QBHistoryPage() {

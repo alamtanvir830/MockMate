@@ -49,7 +49,7 @@ function calcScore(result: QBPracticeSetResult) {
 }
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric' })
+  return new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 
 // ── SetCard ───────────────────────────────────────────────────────────────────
