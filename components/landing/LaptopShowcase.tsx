@@ -131,41 +131,43 @@ export function LaptopShowcase({ children }: { children: React.ReactNode }) {
               'inset 0 1px 0 rgba(255,255,255,0.38)',
           }}
         >
-          {/* Keyboard recess — slight inset shadow gives depth */}
+          {/* Keyboard recess — clearly recessed tray so keys stand out */}
           <div
             style={{
-              background: 'rgba(0,0,0,0.045)',
+              background: 'rgba(0,0,0,0.1)',
               borderRadius: '6px',
-              padding: '7px 7px 6px',
-              marginBottom: '10px',
-              boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.1)',
+              padding: '8px 8px 7px',
+              marginBottom: '12px',
+              boxShadow: 'inset 0 2px 5px rgba(0,0,0,0.18)',
             }}
           >
-            {/* Function row — shorter keys */}
-            <div style={{ display: 'flex', gap: '2px', marginBottom: '3px' }}>
+            {/* Function row — short chiclet keys */}
+            <div style={{ display: 'flex', gap: '3px', marginBottom: '4px' }}>
               {FN_ROW.map((_, i) => (
                 <div
                   key={i}
                   style={{
                     flex: 1,
-                    height: '8px',
-                    background: 'linear-gradient(to bottom, #dce1e7 0%, #ccd4dc 100%)',
+                    height: '10px',
+                    background: 'linear-gradient(to bottom, #e6ecf4 0%, #d0d9e6 100%)',
                     borderRadius: '2px',
-                    border: '0.5px solid rgba(0,0,0,0.18)',
-                    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.55), 0 1px 1px rgba(0,0,0,0.18)',
+                    border: '0.5px solid rgba(0,0,0,0.24)',
+                    boxShadow:
+                      'inset 0 2px 0 rgba(255,255,255,0.8), ' +
+                      '0 2px 3px rgba(0,0,0,0.28)',
                   }}
                 />
               ))}
             </div>
 
-            {/* Main key rows */}
+            {/* Main key rows — taller for realistic chiclet proportions */}
             {KEY_ROWS.map((row, ri) => (
               <div
                 key={ri}
                 style={{
                   display: 'flex',
-                  gap: '2px',
-                  marginBottom: ri < KEY_ROWS.length - 1 ? '2px' : '0',
+                  gap: '3px',
+                  marginBottom: ri < KEY_ROWS.length - 1 ? '3px' : '0',
                 }}
               >
                 {row.map((flex, ki) => (
@@ -173,12 +175,13 @@ export function LaptopShowcase({ children }: { children: React.ReactNode }) {
                     key={ki}
                     style={{
                       flex,
-                      height: '12px',
-                      background: 'linear-gradient(to bottom, #dce2e8 0%, #ccd4dc 100%)',
+                      height: '15px',
+                      background: 'linear-gradient(to bottom, #e4eaf2 0%, #cdd6e2 100%)',
                       borderRadius: '3px',
-                      border: '0.5px solid rgba(0,0,0,0.2)',
+                      border: '0.5px solid rgba(0,0,0,0.24)',
                       boxShadow:
-                        'inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 2px rgba(0,0,0,0.2)',
+                        'inset 0 2px 0 rgba(255,255,255,0.8), ' +
+                        '0 2px 4px rgba(0,0,0,0.3)',
                     }}
                   />
                 ))}
@@ -186,18 +189,18 @@ export function LaptopShowcase({ children }: { children: React.ReactNode }) {
             ))}
           </div>
 
-          {/* Trackpad */}
+          {/* Trackpad — large, centered, inset look */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div
               style={{
-                width: '36%',
-                height: '56px',
-                background: 'linear-gradient(160deg, #c4ccd4 0%, #b8c0c8 100%)',
-                borderRadius: '8px',
-                border: '0.5px solid rgba(0,0,0,0.18)',
+                width: '38%',
+                height: '72px',
+                background: 'linear-gradient(160deg, #c2cad4 0%, #b6bec8 100%)',
+                borderRadius: '10px',
+                border: '0.5px solid rgba(0,0,0,0.2)',
                 boxShadow:
-                  'inset 0 0 0 0.5px rgba(255,255,255,0.38), ' +
-                  'inset 0 2px 6px rgba(0,0,0,0.1)',
+                  'inset 0 0 0 0.5px rgba(255,255,255,0.4), ' +
+                  'inset 0 3px 8px rgba(0,0,0,0.14)',
               }}
             />
           </div>

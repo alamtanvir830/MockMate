@@ -36,36 +36,32 @@ export default function LandingPage() {
 
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative overflow-hidden pt-16 pb-6 sm:pt-24 sm:pb-8">
-          {/* Wave background */}
-          <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
+        <section
+          className="relative overflow-hidden pt-16 pb-6 sm:pt-24 sm:pb-8"
+          style={{ background: 'linear-gradient(150deg, #eaeff7 0%, #e2eaf4 45%, #d8e3f0 100%)' }}
+        >
+          {/* Wave overlay — subtle texture on top of the CSS gradient */}
+          <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
             <svg
               className="absolute w-full h-full"
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="xMidYMid slice"
               viewBox="0 0 1440 600"
             >
-              <defs>
-                <linearGradient id="wave-bg" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#f4f6f9" />
-                  <stop offset="100%" stopColor="#e8ecf2" />
-                </linearGradient>
-              </defs>
-              <rect width="1440" height="600" fill="url(#wave-bg)" />
               {/* Wave 1 — broad soft arc */}
               <path
                 d="M0,200 C360,100 720,320 1440,180 L1440,600 L0,600 Z"
-                fill="#dde4ec"
-                fillOpacity="0.6"
+                fill="#c8d4e4"
+                fillOpacity="0.35"
               />
               {/* Wave 2 — smaller, tighter */}
               <path
                 d="M0,350 C480,250 960,420 1440,300 L1440,600 L0,600 Z"
-                fill="#d2dae4"
-                fillOpacity="0.45"
+                fill="#bccade"
+                fillOpacity="0.25"
               />
-              {/* Soft highlight — upper left */}
-              <ellipse cx="160" cy="160" rx="420" ry="210" fill="#ffffff" fillOpacity="0.35" />
+              {/* Soft white highlight — upper left */}
+              <ellipse cx="160" cy="160" rx="420" ry="210" fill="#ffffff" fillOpacity="0.28" />
             </svg>
           </div>
 
