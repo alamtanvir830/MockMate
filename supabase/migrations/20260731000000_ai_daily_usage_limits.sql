@@ -102,18 +102,17 @@ BEGIN
   -- Next midnight Eastern — timezone() with a named IANA zone handles DST.
   v_reset_at := timezone('America/New_York', (v_today + 1)::timestamp);
 
-  -- Atomic upsert: insert the first request of the day, or increment the
-  -- counter — but only when still below the limit. This prevents
-  -- double-counting under concurrent requests.
+  -- Atomic upsert: insert the first request of the day (count=1), or
+  -- unconditionally increment the counter. This means:
+  --   • 25th request → count=25, 25<=25=true  (allowed)
+  --   • 26th request → count=26, 26<=25=false (denied)
+  -- A capped increment (CASE WHEN count < limit THEN count+1 ELSE count)
+  -- is incorrect: the 26th request would see count=25 and 25<=25=true.
   INSERT INTO public.ai_daily_usage (user_id, feature, usage_date, request_count, updated_at)
   VALUES (v_user_id, p_feature, v_today, 1, now())
   ON CONFLICT (user_id, feature, usage_date) DO UPDATE
-    SET request_count = CASE
-          WHEN ai_daily_usage.request_count < v_limit
-          THEN ai_daily_usage.request_count + 1
-          ELSE ai_daily_usage.request_count
-        END,
-        updated_at = now()
+    SET request_count = ai_daily_usage.request_count + 1,
+        updated_at    = now()
   RETURNING request_count INTO v_used;
 
   v_allowed   := v_used <= v_limit;
