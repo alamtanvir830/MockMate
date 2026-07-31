@@ -118,6 +118,7 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
   const [liveAttempt, setLiveAttempt] = useState<MCATAttempt | null>(null)
   const [aiFeedback, setAIFeedback] = useState<MCATAIFeedback | null>(initialAttempt?.aiFeedback ?? null)
   const [aiFeedbackLoading, setAIFeedbackLoading] = useState(false)
+  const [aiFeedbackError, setAIFeedbackError] = useState('')
   const [attemptId] = useState(() => uid())
 
   // ── Timer ────────────────────────────────────────────────────────────────────
@@ -267,13 +268,18 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
 
   async function fetchAIFeedback(a: MCATAttempt) {
     setAIFeedbackLoading(true)
+    setAIFeedbackError('')
     try {
       const res = await fetch('/api/mcat-feedback', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(buildFeedbackPayload(a)),
       })
-      if (res.ok) {
+      if (res.status === 429) {
+        setAIFeedbackError(
+          "You've reached today's AI feedback limit. You can generate more feedback after midnight Eastern Time.",
+        )
+      } else if (res.ok) {
         const fb = (await res.json()) as MCATAIFeedback
         setAIFeedback(fb)
         updateMCATAttempt(a.id, { aiFeedback: fb })
@@ -821,6 +827,7 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
         attempt={displayAttempt}
         aiFeedback={aiFeedback}
         aiFeedbackLoading={aiFeedbackLoading}
+        aiFeedbackError={aiFeedbackError}
       />
     )
   }
@@ -899,12 +906,13 @@ function WelcomeScreen({ form, flatSections, onStart }: {
 }
 
 // ─── Results Screen ────────────────────────────────────────────────────────────
-function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoading }: {
+function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoading, aiFeedbackError }: {
   form: MCATForm
   flatSections: FlatQ[][]
   attempt: MCATAttempt
   aiFeedback: MCATAIFeedback | null
   aiFeedbackLoading: boolean
+  aiFeedbackError: string
 }) {
   const [expandedQ, setExpandedQ] = useState<string | null>(null)
   const [activeSection, setActiveSection] = useState(0)
@@ -1050,7 +1058,10 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
               <FeedbackBlock label="Recommended Next Steps" content={aiFeedback.recommendedNextSteps} color="indigo" />
             </div>
           )}
-          {!aiFeedbackLoading && !aiFeedback && (
+          {aiFeedbackError && (
+            <p className="text-sm text-red-600">{aiFeedbackError}</p>
+          )}
+          {!aiFeedbackLoading && !aiFeedback && !aiFeedbackError && (
             <p className="text-sm text-slate-400">AI feedback not available for this attempt.</p>
           )}
         </div>

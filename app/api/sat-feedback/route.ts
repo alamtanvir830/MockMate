@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
 import { hasSatPremium, isAdminUser } from '@/lib/auth/server'
+import { consumeAiQuota } from '@/lib/security/aiDailyQuota'
 
 // Deferred init — avoids "Missing credentials" error during Next.js build
 // when OPENAI_API_KEY is not set in the build environment.
@@ -52,6 +53,12 @@ export async function POST(req: NextRequest) {
     const isPremium = user ? hasSatPremium(user) : false
     const isAdmin = user ? isAdminUser(user) : false
     const hasFullAccess = isPremium || isAdmin
+
+    // Enforce daily AI quota for authenticated users
+    if (user) {
+      const quotaDenied = await consumeAiQuota('other_ai_feedback')
+      if (quotaDenied) return quotaDenied.denied
+    }
 
     const input = (await req.json()) as SATFeedbackInput
 
