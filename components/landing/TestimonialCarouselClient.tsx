@@ -15,12 +15,14 @@ interface Props {
   testimonials: Testimonial[]
   /** Total animation duration for one full loop in seconds (desktop) */
   durationSeconds: number
+  /** Background color for gradient fade overlays. Defaults to 'white'. Use '#f8fafc' inside laptop screen. */
+  fadeBg?: string
 }
 
 // Target comfortable reading speed for mobile vertical scroll
 const MOBILE_PX_PER_SECOND = 35
 
-export function TestimonialCarouselClient({ testimonials, durationSeconds }: Props) {
+export function TestimonialCarouselClient({ testimonials, durationSeconds, fadeBg = 'white' }: Props) {
   const [desktopPaused, setDesktopPaused] = useState(false)
   const [mobilePaused, setMobilePaused] = useState(false)
   // null until measured — keeps animation paused until we know the correct speed
@@ -77,11 +79,11 @@ export function TestimonialCarouselClient({ testimonials, durationSeconds }: Pro
         >
           <div
             className="absolute inset-x-0 top-0 h-14 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to bottom, white 0%, transparent 100%)' }}
+            style={{ background: `linear-gradient(to bottom, ${fadeBg} 0%, transparent 100%)` }}
           />
           <div
             className="absolute inset-x-0 bottom-0 h-14 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to top, white 0%, transparent 100%)' }}
+            style={{ background: `linear-gradient(to top, ${fadeBg} 0%, transparent 100%)` }}
           />
           <div
             className="mm-testimonial-track flex flex-col gap-3 py-1"
@@ -130,11 +132,11 @@ export function TestimonialCarouselClient({ testimonials, durationSeconds }: Pro
         >
           <div
             className="absolute inset-x-0 top-0 h-10 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to bottom, white 0%, transparent 100%)' }}
+            style={{ background: `linear-gradient(to bottom, ${fadeBg} 0%, transparent 100%)` }}
           />
           <div
             className="absolute inset-x-0 bottom-0 h-10 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to top, white 0%, transparent 100%)' }}
+            style={{ background: `linear-gradient(to top, ${fadeBg} 0%, transparent 100%)` }}
           />
           <div
             ref={mobileTrackRef}

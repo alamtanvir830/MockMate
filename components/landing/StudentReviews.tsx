@@ -170,13 +170,18 @@ function interleaveTestimonials(verified: Testimonial[], curated: Testimonial[])
   return result
 }
 
+interface HeroReviewsPanelProps {
+  /** Background color for testimonial gradient fades. Defaults to 'white'. Pass '#f8fafc' inside laptop screen. */
+  fadeBg?: string
+}
+
 /**
  * Compact testimonial panel for the hero right column.
  * All score resolution and 1400+ filtering happens server-side.
  * Only {quote, initials, score} reach the browser — no emails, user IDs,
  * or raw DB records are transmitted.
  */
-export async function HeroReviewsPanel() {
+export async function HeroReviewsPanel({ fadeBg }: HeroReviewsPanelProps = {}) {
   const verified = await fetchVerifiedTestimonials()
   const testimonials = interleaveTestimonials(verified, CURATED_TESTIMONIALS)
 
@@ -184,25 +189,28 @@ export async function HeroReviewsPanel() {
   const durationSeconds = Math.max(35, testimonials.length * 5)
 
   return (
-    <div className="w-full">
-      <div className="mb-4">
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-emerald-600 mb-1 leading-snug">
+    <div className="w-full h-full flex flex-col">
+      <div className="mb-3 px-3 pt-3">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-600 mb-1 leading-snug">
           Student Feedback from MockMate SAT Practice Forms
         </p>
-        <p className="text-sm font-semibold text-slate-700">
+        <p className="text-xs font-semibold text-slate-700">
           Reviewed by high scorers and former test takers
         </p>
       </div>
 
       {testimonials.length > 0 && (
-        <TestimonialCarouselClient
-          testimonials={testimonials}
-          durationSeconds={durationSeconds}
-        />
+        <div className="flex-1 min-h-0 px-2">
+          <TestimonialCarouselClient
+            testimonials={testimonials}
+            durationSeconds={durationSeconds}
+            fadeBg={fadeBg}
+          />
+        </div>
       )}
 
       {testimonials.length > 0 && (
-        <p className="mt-3 text-[11px] text-slate-400">
+        <p className="px-3 pb-2 text-[10px] text-slate-400 mt-1">
           Names anonymized. Feedback from MockMate SAT Form submissions.
         </p>
       )}

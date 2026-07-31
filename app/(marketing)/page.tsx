@@ -4,6 +4,7 @@ import { Logo } from '@/components/shared/logo'
 import { Button } from '@/components/ui/button'
 import { HeroReviewsPanel } from '@/components/landing/StudentReviews'
 import { SocialProofCard } from '@/components/landing/SocialProofCard'
+import { LaptopShowcase } from '@/components/landing/LaptopShowcase'
 
 export default function LandingPage() {
   return (
@@ -36,23 +37,43 @@ export default function LandingPage() {
       <main className="flex-1">
         {/* Hero */}
         <section className="relative overflow-hidden pt-16 pb-6 sm:pt-24 sm:pb-8">
-          {/* Gradient blob */}
-          <div aria-hidden className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl">
-            <div
-              className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] opacity-15 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-              style={{
-                background: 'linear-gradient(135deg, #6ee7b7, #10b981)',
-                clipPath:
-                  'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-              }}
-            />
+          {/* Wave background */}
+          <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
+            <svg
+              className="absolute w-full h-full"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="xMidYMid slice"
+              viewBox="0 0 1440 600"
+            >
+              <defs>
+                <linearGradient id="wave-bg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#f8f9fb" />
+                  <stop offset="100%" stopColor="#eef1f5" />
+                </linearGradient>
+              </defs>
+              <rect width="1440" height="600" fill="url(#wave-bg)" />
+              {/* Wave 1 — broad soft arc */}
+              <path
+                d="M0,200 C360,100 720,320 1440,180 L1440,600 L0,600 Z"
+                fill="#e8edf3"
+                fillOpacity="0.5"
+              />
+              {/* Wave 2 — higher contrast, smaller */}
+              <path
+                d="M0,350 C480,250 960,420 1440,300 L1440,600 L0,600 Z"
+                fill="#dde3ea"
+                fillOpacity="0.35"
+              />
+              {/* Soft highlight */}
+              <ellipse cx="200" cy="180" rx="400" ry="200" fill="#ffffff" fillOpacity="0.25" />
+            </svg>
           </div>
 
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            {/* Split hero: left copy, right review cards */}
+            {/* Split hero: left copy, right laptop with reviews */}
             <div className="flex flex-col lg:flex-row lg:items-start lg:gap-14">
               {/* Left: copy */}
-              <div className="lg:w-[52%] text-center lg:text-left">
+              <div className="lg:w-[42%] text-center lg:text-left">
                 {/* Eyebrow */}
                 <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-5">
                   <span className="h-px w-6 bg-emerald-400 hidden lg:block" />
@@ -118,20 +139,17 @@ export default function LandingPage() {
                   </Link>
                 </div>
 
-                {/* Social proof — mobile / tablet */}
-                <div className="mt-5 flex justify-center lg:hidden">
+                {/* Social proof — below CTAs (both mobile and desktop) */}
+                <div className="mt-5 flex justify-center lg:justify-start">
                   <SocialProofCard className="w-full max-w-xs sm:w-auto" />
                 </div>
               </div>
 
-              {/* Right: student review cards */}
-              <div className="lg:w-[48%] mt-10 lg:mt-0">
-                <HeroReviewsPanel />
-
-                {/* Social proof — desktop */}
-                <div className="mt-4 hidden lg:flex">
-                  <SocialProofCard />
-                </div>
+              {/* Right: laptop mockup with scrolling testimonials */}
+              <div className="lg:w-[58%] mt-10 lg:mt-0">
+                <LaptopShowcase>
+                  <HeroReviewsPanel fadeBg="#f8fafc" />
+                </LaptopShowcase>
               </div>
             </div>
           </div>

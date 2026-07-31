@@ -58,6 +58,16 @@
   display: none;
 }
 
+/* ── Laptop showcase ─────────────────────────────────────────────────── */
+/* Default: start at initial (JS will animate in). Reduced-motion: skip to final. */
+@media (prefers-reduced-motion: reduce) {
+  .mm-laptop-wrap {
+    transform: rotateY(-6deg) rotateX(2deg) !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
+
 /* ── Global ──────────────────────────────────────────────────────────── */
 
 html {
