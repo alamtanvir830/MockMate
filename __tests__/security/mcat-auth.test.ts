@@ -17,15 +17,19 @@ import { NextRequest } from 'next/server'
 
 // Track OpenAI calls
 const mockOpenAICreate = vi.fn()
+
+// OpenAI constructor must use a regular function (not arrow) to support `new OpenAI()`
 vi.mock('openai', () => {
   return {
-    default: vi.fn().mockImplementation(() => ({
-      chat: {
-        completions: {
-          create: mockOpenAICreate,
+    default: vi.fn(function () {
+      return {
+        chat: {
+          completions: {
+            create: mockOpenAICreate,
+          },
         },
-      },
-    })),
+      }
+    }),
   }
 })
 
@@ -66,6 +70,8 @@ const MINIMAL_BODY = {
 
 describe('POST /api/mcat-feedback auth guard', () => {
   beforeEach(() => {
+    // Reset module registry so the lazy _openai singleton is cleared between tests.
+    vi.resetModules()
     vi.clearAllMocks()
   })
 
