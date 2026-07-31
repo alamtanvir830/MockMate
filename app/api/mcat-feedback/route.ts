@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import type { MCATAIFeedback } from '@/lib/premade-exams/mcat/types'
 import { createClient } from '@/lib/supabase/server'
+import { consumeAiQuota } from '@/lib/security/aiDailyQuota'
 
 // Deferred init — avoids "Missing credentials" error during Next.js build
 // when OPENAI_API_KEY is not set in the build environment.
@@ -42,6 +43,9 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
+
+    const quotaDenied = await consumeAiQuota('mcat_feedback')
+    if (quotaDenied) return quotaDenied.denied
 
     const input = (await req.json()) as FeedbackInput
 

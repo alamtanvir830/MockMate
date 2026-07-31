@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { generateMindMap } from '@/lib/ai/generate-mind-map'
+import { consumeAiQuota } from '@/lib/security/aiDailyQuota'
 
 interface RequestBody {
   questions: Array<{
@@ -20,6 +21,9 @@ export async function POST(request: Request) {
     data: { user },
   } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const quotaDenied = await consumeAiQuota('other_ai_feedback')
+  if (quotaDenied) return quotaDenied.denied
 
   let body: RequestBody
   try {

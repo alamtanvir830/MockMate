@@ -35,11 +35,13 @@ vi.mock('openai', () => {
 
 // Track Supabase createClient calls
 const mockGetUser = vi.fn()
+const mockRpc = vi.fn()
 vi.mock('@/lib/supabase/server', () => ({
   createClient: vi.fn().mockResolvedValue({
     auth: {
       getUser: mockGetUser,
     },
+    rpc: mockRpc,
   }),
 }))
 
@@ -98,6 +100,18 @@ describe('POST /api/mcat-feedback auth guard', () => {
 
   it('proceeds to call OpenAI when user is authenticated', async () => {
     mockGetUser.mockResolvedValue({ data: { user: { id: 'user-123', email: 'test@example.com' } } })
+
+    // Mock quota RPC — quota is available
+    mockRpc.mockResolvedValue({
+      data: {
+        allowed: true,
+        limit_count: 25,
+        used_count: 1,
+        remaining_count: 24,
+        reset_at: new Date(Date.now() + 3600 * 1000).toISOString(),
+      },
+      error: null,
+    })
 
     // Mock a successful OpenAI response
     mockOpenAICreate.mockResolvedValue({

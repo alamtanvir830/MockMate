@@ -1435,6 +1435,12 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
           missedQuestions,
         }),
       })
+      if (res.status === 429) {
+        setAiFeedbackError(
+          "You've reached today's AI feedback limit. You can generate more feedback after midnight Eastern Time.",
+        )
+        return
+      }
       if (!res.ok) throw new Error('API error')
       setAiFeedback(await res.json())
     } catch {
