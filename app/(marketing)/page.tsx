@@ -38,10 +38,10 @@ export default function LandingPage() {
         {/* Hero */}
         <section
           className="relative overflow-hidden pt-16 pb-6 sm:pt-24 sm:pb-8"
-          style={{ background: 'linear-gradient(150deg, #eaeff7 0%, #e2eaf4 45%, #d8e3f0 100%)' }}
+          style={{ background: 'linear-gradient(150deg, #eaecf0 0%, #e2e6ed 45%, #d8dde6 100%)' }}
         >
-          {/* Wave overlay — subtle texture on top of the CSS gradient */}
-          <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Wave texture — -z-10 keeps it strictly behind all content */}
+          <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
             <svg
               className="absolute w-full h-full"
               xmlns="http://www.w3.org/2000/svg"

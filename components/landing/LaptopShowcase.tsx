@@ -29,19 +29,36 @@ export function LaptopShowcase({ children }: { children: React.ReactNode }) {
     if (prefersReduced || !laptopRef.current) return
     laptopRef.current.style.transition =
       'transform 1.1s cubic-bezier(0.22,1,0.36,1), opacity 1.1s cubic-bezier(0.22,1,0.36,1)'
-    laptopRef.current.style.transform = 'rotateY(-6deg) rotateX(2deg)'
+    laptopRef.current.style.transform = 'rotateY(-10deg) rotateX(4deg)'
     laptopRef.current.style.opacity = '1'
   }, [])
 
   return (
-    <div style={{ perspective: '1200px' }} className="w-full flex items-start justify-center">
+    <div style={{ perspective: '900px' }} className="w-full flex items-start justify-center relative">
+      {/* Cast shadow — creates the 3D floating-device illusion */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          bottom: '2px',
+          left: '8%',
+          right: '8%',
+          height: '48px',
+          background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.32) 0%, rgba(0,0,0,0) 70%)',
+          filter: 'blur(14px)',
+          pointerEvents: 'none',
+          zIndex: 0,
+        }}
+      />
       <div
         ref={laptopRef}
         className="mm-laptop-wrap w-full"
         style={{
-          transform: 'translateX(60px) rotateY(-15deg)',
+          transform: 'translateX(80px) rotateY(-22deg)',
           opacity: '0',
           transformStyle: 'preserve-3d',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {/* ── LID (screen half) ─────────────────────────────────────────── */}
@@ -53,7 +70,7 @@ export function LaptopShowcase({ children }: { children: React.ReactNode }) {
             boxShadow:
               'inset 0 -1px 0 rgba(0,0,0,0.08), ' +
               'inset 1px 0 0 rgba(255,255,255,0.22), ' +
-              'inset -1px 0 0 rgba(0,0,0,0.06)',
+              'inset -8px 0 12px -5px rgba(0,0,0,0.32)',
           }}
         >
           {/* Dark bezel */}
@@ -128,7 +145,8 @@ export function LaptopShowcase({ children }: { children: React.ReactNode }) {
             boxShadow:
               '0 32px 72px rgba(0,0,0,0.22), ' +
               '0 10px 24px rgba(0,0,0,0.14), ' +
-              'inset 0 1px 0 rgba(255,255,255,0.38)',
+              'inset 0 1px 0 rgba(255,255,255,0.38), ' +
+              'inset -10px 0 16px -6px rgba(0,0,0,0.38)',
           }}
         >
           {/* Keyboard recess — clearly recessed tray so keys stand out */}
@@ -149,12 +167,12 @@ export function LaptopShowcase({ children }: { children: React.ReactNode }) {
                   style={{
                     flex: 1,
                     height: '10px',
-                    background: 'linear-gradient(to bottom, #e6ecf4 0%, #d0d9e6 100%)',
+                    background: 'linear-gradient(to bottom, #edf2f8 0%, #bcc8d8 100%)',
                     borderRadius: '2px',
-                    border: '0.5px solid rgba(0,0,0,0.24)',
+                    border: '0.5px solid rgba(0,0,0,0.3)',
                     boxShadow:
-                      'inset 0 2px 0 rgba(255,255,255,0.8), ' +
-                      '0 2px 3px rgba(0,0,0,0.28)',
+                      'inset 0 2px 0 rgba(255,255,255,0.92), ' +
+                      '0 2px 4px rgba(0,0,0,0.32)',
                   }}
                 />
               ))}
@@ -176,12 +194,12 @@ export function LaptopShowcase({ children }: { children: React.ReactNode }) {
                     style={{
                       flex,
                       height: '15px',
-                      background: 'linear-gradient(to bottom, #e4eaf2 0%, #cdd6e2 100%)',
+                      background: 'linear-gradient(to bottom, #ecf1f8 0%, #bac6d6 100%)',
                       borderRadius: '3px',
-                      border: '0.5px solid rgba(0,0,0,0.24)',
+                      border: '0.5px solid rgba(0,0,0,0.3)',
                       boxShadow:
-                        'inset 0 2px 0 rgba(255,255,255,0.8), ' +
-                        '0 2px 4px rgba(0,0,0,0.3)',
+                        'inset 0 2px 0 rgba(255,255,255,0.92), ' +
+                        '0 2px 5px rgba(0,0,0,0.35)',
                     }}
                   />
                 ))}
