@@ -1,7 +1,15 @@
 import OpenAI from 'openai'
 import type { GeneratedQuestion } from './generate-questions'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+// Deferred init — avoids "Missing credentials" error during Next.js build
+// when OPENAI_API_KEY is not set in the build environment.
+let _openai: OpenAI | null = null
+function getOpenAI(): OpenAI {
+  if (!_openai) {
+    _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  }
+  return _openai
+}
 
 const LETTERS = ['A', 'B', 'C', 'D', 'E']
 
@@ -87,7 +95,7 @@ export async function generateStudyRoundQuestions(input: {
     ? 'A=options[0], B=options[1], C=options[2], D=options[3], E=options[4]. Omit the key for the correct answer.'
     : 'A=options[0], B=options[1], C=options[2], D=options[3]. Omit the key for the correct answer.'
 
-  const response = await openai.chat.completions.create({
+  const response = await getOpenAI().chat.completions.create({
     model: isUSMLE ? 'gpt-4o' : 'gpt-4o-mini',
     response_format: { type: 'json_object' },
     temperature: 0.75,

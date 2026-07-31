@@ -3,7 +3,15 @@ import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
 import { hasSatPremium, isAdminUser } from '@/lib/auth/server'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+// Deferred init — avoids "Missing credentials" error during Next.js build
+// when OPENAI_API_KEY is not set in the build environment.
+let _openai: OpenAI | null = null
+function getOpenAI(): OpenAI {
+  if (!_openai) {
+    _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  }
+  return _openai
+}
 
 export interface SATAIFeedback {
   whatWentWell: string
@@ -101,7 +109,7 @@ Provide honest, specific, actionable SAT coaching. Return valid JSON only:
   "mockMateNextSteps": "5 specific steps for using MockMate next as a numbered list."
 }`
 
-    const response = await openai.chat.completions.create({
+    const response = await getOpenAI().chat.completions.create({
       model: 'gpt-4o-mini',
       response_format: { type: 'json_object' },
       temperature: 0.4,

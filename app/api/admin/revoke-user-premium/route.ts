@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { revokeSATPremium } from '@/lib/entitlements'
+import { timingSafeStringEqual } from '@/lib/auth/timingSafeCompare'
 
 const ADMIN_EMAIL = 'ranvi.contact@gmail.com'
 
@@ -19,7 +20,7 @@ export async function POST(req: NextRequest) {
 
   let callerEmail: string | null = null
 
-  if (bearerToken && serviceRoleKey && bearerToken === serviceRoleKey) {
+  if (timingSafeStringEqual(bearerToken, serviceRoleKey)) {
     // Direct service-role invocation (e.g., internal script)
     callerEmail = ADMIN_EMAIL
   } else {

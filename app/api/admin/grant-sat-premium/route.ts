@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getUserIdByEmail, grantSATPremiumManual } from '@/lib/entitlements'
+import { timingSafeStringEqual } from '@/lib/auth/timingSafeCompare'
 
 // POST /api/admin/grant-sat-premium
 // Header: Authorization: Bearer <SUPABASE_SERVICE_ROLE_KEY>
@@ -9,7 +10,7 @@ import { getUserIdByEmail, grantSATPremiumManual } from '@/lib/entitlements'
 // Does NOT grant admin privileges — only SAT Premium entitlement.
 export async function POST(req: NextRequest) {
   const token = (req.headers.get('authorization') ?? '').replace('Bearer ', '').trim()
-  if (!token || token !== process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (!timingSafeStringEqual(token, process.env.SUPABASE_SERVICE_ROLE_KEY)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

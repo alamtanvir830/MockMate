@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { rescoreAttempt } from '@/lib/premade-exams/sat/sat-score-conversion'
+import { timingSafeStringEqual } from '@/lib/auth/timingSafeCompare'
 
 // Secured with the service-role key itself — only the admin knows it.
 // POST /api/admin/recalculate-sat-scores
@@ -13,7 +14,7 @@ export async function POST(req: NextRequest) {
   const authHeader = req.headers.get('authorization') ?? ''
   const token = authHeader.replace('Bearer ', '').trim()
 
-  if (!token || token !== process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (!timingSafeStringEqual(token, process.env.SUPABASE_SERVICE_ROLE_KEY)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

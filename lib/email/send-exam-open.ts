@@ -143,10 +143,7 @@ export async function sendExamOpenEmails(
     (r) => r.name.trim() && r.email.trim() && r.email.includes('@'),
   )
 
-  console.log(
-    '[email:exam-open] valid recipients:',
-    validRecipients.map((r) => r.email),
-  )
+  console.log('[email:exam-open] sending to', validRecipients.length, 'recipients')
 
   if (validRecipients.length === 0) {
     console.log('[email:exam-open] skipping — no valid recipients after filtering')
@@ -183,12 +180,9 @@ export async function sendExamOpenEmails(
 
   results.forEach((result, i) => {
     if (result.status === 'fulfilled') {
-      console.log(`[email:exam-open] sent to ${validRecipients[i].email}:`, result.value)
+      console.log(`[email:exam-open] recipient ${i}: sent`, result.value?.data?.id ?? 'ok')
     } else {
-      console.error(
-        `[email:exam-open] FAILED to send to ${validRecipients[i].email}:`,
-        result.reason,
-      )
+      console.error(`[email:exam-open] recipient ${i}: failed`, result.reason)
     }
   })
 

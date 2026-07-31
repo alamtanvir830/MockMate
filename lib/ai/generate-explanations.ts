@@ -1,6 +1,14 @@
 import OpenAI from 'openai'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+// Deferred init — avoids "Missing credentials" error during Next.js build
+// when OPENAI_API_KEY is not set in the build environment.
+let _openai: OpenAI | null = null
+function getOpenAI(): OpenAI {
+  if (!_openai) {
+    _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  }
+  return _openai
+}
 
 const OPTION_LETTERS = ['A', 'B', 'C', 'D'] as const
 
@@ -41,7 +49,7 @@ Correct: ${correctLetter}. ${q.correct_answer}`
     })
     .join('\n\n---\n\n')
 
-  const response = await openai.chat.completions.create({
+  const response = await getOpenAI().chat.completions.create({
     model: 'gpt-4o-mini',
     response_format: { type: 'json_object' },
     temperature: 0.3,

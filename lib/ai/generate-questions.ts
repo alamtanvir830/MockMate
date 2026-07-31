@@ -1,8 +1,14 @@
 import OpenAI from 'openai'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+// Deferred init — avoids "Missing credentials" error during Next.js build
+// when OPENAI_API_KEY is not set in the build environment.
+let _openai: OpenAI | null = null
+function getOpenAI(): OpenAI {
+  if (!_openai) {
+    _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  }
+  return _openai
+}
 
 export interface GeneratedQuestion {
   question_text: string
@@ -488,7 +494,7 @@ Notes for explanations (STRICTLY REQUIRED):
 - explanation_incorrect: For each WRONG option only, 2–3 sentences explaining (a) why it is wrong, (b) what misconception it represents, and (c) what that choice would indicate instead or how to distinguish it from the correct answer. Bold key distinguishing terms. Keys A/B/C/D correspond to positions in the options array (A=index 0). Omit the key for whichever letter is the correct answer.
 - Explanations must be educational, specific to this question, and genuinely helpful for studying — never generic filler.`
 
-  const response = await openai.chat.completions.create({
+  const response = await getOpenAI().chat.completions.create({
     model,
     response_format: { type: 'json_object' },
     temperature: isUSMLE1 ? 0.85 : 0.7,
