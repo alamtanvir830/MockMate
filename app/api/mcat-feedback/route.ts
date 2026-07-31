@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import type { MCATAIFeedback } from '@/lib/premade-exams/mcat/types'
+import { createClient } from '@/lib/supabase/server'
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+// Deferred init — avoids "Missing credentials" error during Next.js build
+// when OPENAI_API_KEY is not set in the build environment.
+let _openai: OpenAI | null = null
+function getOpenAI(): OpenAI {
+  if (!_openai) {
+    _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  }
+  return _openai
+}
 
 interface MissedQ {
   section: string
@@ -28,6 +37,12 @@ interface FeedbackInput {
 
 export async function POST(req: NextRequest) {
   try {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const input = (await req.json()) as FeedbackInput
 
     const sectionLines = [
@@ -72,7 +87,7 @@ Provide specific, honest, actionable MCAT coaching feedback. Return valid JSON o
   "recommendedNextSteps": "3-4 numbered steps as a single string"
 }`
 
-    const response = await openai.chat.completions.create({
+    const response = await getOpenAI().chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [{ role: 'user', content: prompt }],
       response_format: { type: 'json_object' },

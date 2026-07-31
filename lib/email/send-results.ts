@@ -153,7 +153,7 @@ export async function sendResultsToFriends(
     (f) => f.name.trim() && f.email.trim() && f.email.includes('@'),
   )
 
-  console.log('[email] valid recipients:', validFriends.map((f) => f.email))
+  console.log('[email:results] sending to', validFriends.length, 'recipients')
 
   if (validFriends.length === 0) {
     console.log('[email] skipping — no valid recipients')
@@ -175,9 +175,9 @@ export async function sendResultsToFriends(
 
   results.forEach((result, i) => {
     if (result.status === 'fulfilled') {
-      console.log(`[email] sent to ${validFriends[i].email}:`, result.value)
+      console.log(`[email:results] recipient ${i}: sent`, result.value?.data?.id ?? 'ok')
     } else {
-      console.error(`[email] failed to send to ${validFriends[i].email}:`, result.reason)
+      console.error(`[email:results] recipient ${i}: failed`, result.reason)
     }
   })
 }

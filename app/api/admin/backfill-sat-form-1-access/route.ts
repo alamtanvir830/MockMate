@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { SAT_FORM_1_FREE_ACCESS_MS } from '@/lib/premade-exams/sat/form1-access'
+import { timingSafeStringEqual } from '@/lib/auth/timingSafeCompare'
 
 // POST /api/admin/backfill-sat-form-1-access
 // Header: Authorization: Bearer <SUPABASE_SERVICE_ROLE_KEY>
@@ -9,7 +10,7 @@ import { SAT_FORM_1_FREE_ACCESS_MS } from '@/lib/premade-exams/sat/form1-access'
 // New rows get 48 hours from the current time (they'll be fine-tuned on first dashboard visit).
 export async function POST(req: NextRequest) {
   const token = (req.headers.get('authorization') ?? '').replace('Bearer ', '').trim()
-  if (!token || token !== process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (!timingSafeStringEqual(token, process.env.SUPABASE_SERVICE_ROLE_KEY)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

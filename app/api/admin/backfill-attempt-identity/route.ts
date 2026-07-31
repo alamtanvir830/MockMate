@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/admin'
+import { timingSafeStringEqual } from '@/lib/auth/timingSafeCompare'
 
 // POST /api/admin/backfill-attempt-identity
 // Header: Authorization: Bearer <SUPABASE_SERVICE_ROLE_KEY>
@@ -8,7 +9,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 // that are missing those fields.
 export async function POST(req: NextRequest) {
   const token = (req.headers.get('authorization') ?? '').replace('Bearer ', '').trim()
-  if (!token || token !== process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  if (!timingSafeStringEqual(token, process.env.SUPABASE_SERVICE_ROLE_KEY)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 

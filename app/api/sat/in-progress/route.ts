@@ -112,6 +112,17 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  // Forms 4 and 5: admin or Premium only
+  if ([4, 5].includes(body.formNumber) && !isAdmin) {
+    const { satUpgradeUnlocked } = await getEntitlements()
+    if (!satUpgradeUnlocked) {
+      return NextResponse.json(
+        { error: 'SAT Premium is required for this form.' },
+        { status: 403 }
+      )
+    }
+  }
+
   // Resolve identity server-side — never trust client-supplied name/email.
   // profiles.full_name is authoritative; fall back to user_metadata, then null.
   const user_email = user.email ?? null
