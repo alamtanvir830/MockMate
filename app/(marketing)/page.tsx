@@ -47,25 +47,25 @@ export default function LandingPage() {
             >
               <defs>
                 <linearGradient id="wave-bg" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#f8f9fb" />
-                  <stop offset="100%" stopColor="#eef1f5" />
+                  <stop offset="0%" stopColor="#f4f6f9" />
+                  <stop offset="100%" stopColor="#e8ecf2" />
                 </linearGradient>
               </defs>
               <rect width="1440" height="600" fill="url(#wave-bg)" />
               {/* Wave 1 — broad soft arc */}
               <path
                 d="M0,200 C360,100 720,320 1440,180 L1440,600 L0,600 Z"
-                fill="#e8edf3"
-                fillOpacity="0.5"
+                fill="#dde4ec"
+                fillOpacity="0.6"
               />
-              {/* Wave 2 — higher contrast, smaller */}
+              {/* Wave 2 — smaller, tighter */}
               <path
                 d="M0,350 C480,250 960,420 1440,300 L1440,600 L0,600 Z"
-                fill="#dde3ea"
-                fillOpacity="0.35"
+                fill="#d2dae4"
+                fillOpacity="0.45"
               />
-              {/* Soft highlight */}
-              <ellipse cx="200" cy="180" rx="400" ry="200" fill="#ffffff" fillOpacity="0.25" />
+              {/* Soft highlight — upper left */}
+              <ellipse cx="160" cy="160" rx="420" ry="210" fill="#ffffff" fillOpacity="0.35" />
             </svg>
           </div>
 
@@ -124,16 +124,16 @@ export default function LandingPage() {
                   <Link href="/signup?next=/premade/sat">
                     <Button
                       size="lg"
-                      className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700"
+                      className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 whitespace-nowrap"
                     >
-                      Start Free SAT Form 3
+                      Get A Free SAT Exam!
                       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                       </svg>
                     </Button>
                   </Link>
                   <Link href="/pricing">
-                    <Button variant="outline" size="lg" className="w-full sm:w-auto border-slate-300 hover:border-emerald-400">
+                    <Button variant="outline" size="lg" className="w-full sm:w-auto border-slate-300 hover:border-emerald-400 whitespace-nowrap">
                       View SAT Premium
                     </Button>
                   </Link>
