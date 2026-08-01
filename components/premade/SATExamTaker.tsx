@@ -2643,7 +2643,139 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
           </button>
         </div>
 
-        {/* 3. Performance Analysis */}
+        {/* 3. Recommended Next Steps */}
+        <div className="bg-white rounded-xl border border-slate-200 p-6">
+          <h2 className="text-[18px] font-bold text-slate-900 mb-5">Recommended Next Steps</h2>
+          <div className="space-y-5">
+            {/* Step 1 */}
+            <div className="flex gap-4">
+              <div className="shrink-0 h-8 w-8 rounded-full bg-[#1b3a5c] flex items-center justify-center">
+                <span className="text-white text-[13px] font-bold">1</span>
+              </div>
+              <p className="text-[14px] font-bold text-slate-900 leading-snug pt-1">
+                First, scroll down to the answer key and explanations. Look closely at the questions you missed, read why the correct answer is right, and make sure you understand the mistake before practicing more.
+              </p>
+            </div>
+            {/* Step 2 — academy boxes, threshold 750 */}
+            <div className="flex gap-4">
+              <div className="shrink-0 h-8 w-8 rounded-full bg-[#1b3a5c] flex items-center justify-center">
+                <span className="text-white text-[13px] font-bold">2</span>
+              </div>
+              <div className="flex-1 pt-1">
+                <p className="text-[13px] text-slate-700 leading-relaxed mb-3">
+                  {rwScaled < 750 && mathScaled < 750 ? (
+                    <><span className="font-bold text-slate-900">Your Reading &amp; Writing and Math scores are below 750.</span> Use these academies to rebuild weak areas before doing more mixed practice.</>
+                  ) : rwScaled < 750 ? (
+                    <><span className="font-bold text-slate-900">Your Reading &amp; Writing score is below 750.</span> Use the SAT Reading &amp; Writing Academy to rebuild weak areas before doing more mixed practice.</>
+                  ) : mathScaled < 750 ? (
+                    <><span className="font-bold text-slate-900">Your Math score is below 750.</span> Use the SAT Math &amp; Desmos Academy to rebuild weak areas before doing more mixed practice.</>
+                  ) : (
+                    <><span className="font-bold text-slate-900">Both sections are above 750.</span> Focus on pushing your weakest domains higher — the Question Bank will help you reach the next score band.</>
+                  )}
+                </p>
+                {(rwScaled < 750 || mathScaled < 750) && (
+                  <div className="flex flex-col sm:flex-row gap-2.5">
+                    {rwScaled < 750 && (
+                      <Link
+                        href="/sat-rw-academy"
+                        className="flex items-center gap-2.5 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3.5 hover:bg-emerald-100 transition-colors flex-1"
+                      >
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0 text-emerald-700">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                        </svg>
+                        <span className="text-[13px] font-semibold text-emerald-800">SAT Reading &amp; Writing Academy</span>
+                      </Link>
+                    )}
+                    {mathScaled < 750 && (
+                      <Link
+                        href="/sat-math-academy"
+                        className="flex items-center gap-2.5 bg-violet-50 border border-violet-200 rounded-xl px-4 py-3.5 hover:bg-violet-100 transition-colors flex-1"
+                      >
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0 text-violet-700">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                        </svg>
+                        <span className="text-[13px] font-semibold text-violet-800">SAT Math &amp; Desmos Academy</span>
+                      </Link>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* Step 3 — Question Bank → Personalized Practice Path */}
+            <div className="flex gap-4">
+              <div className="shrink-0 h-8 w-8 rounded-full bg-[#1b3a5c] flex items-center justify-center">
+                <span className="text-white text-[13px] font-bold">3</span>
+              </div>
+              <div className="flex-1 pt-1">
+                <p className="text-[13px] text-slate-700 leading-relaxed mb-3">
+                  After reviewing your mistakes, use your <span className="font-bold">Personalized Practice Path</span>. It creates targeted practice from MockMate&apos;s Question Bank based on the skills you missed on this exam.
+                </p>
+                {/* Connected flow: Question Bank → Personalized Practice Path */}
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  {/* Left: Question Bank card */}
+                  <Link
+                    href="/question-bank/sat"
+                    className="flex items-center justify-center gap-2.5 bg-red-50 border border-red-200 rounded-xl px-4 py-3.5 hover:bg-red-100 transition-colors shrink-0 sm:w-[23%]"
+                  >
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0 text-red-700">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                    </svg>
+                    <span className="text-[13px] font-semibold text-red-800">Question Bank</span>
+                  </Link>
+                  {/* Connecting arrow */}
+                  <div className="flex justify-center items-center self-center shrink-0">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} className="hidden sm:block h-6 w-6 text-slate-400">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} className="block sm:hidden h-6 w-6 text-slate-400">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
+                    </svg>
+                  </div>
+                  {/* Right: Personalized Practice Path card */}
+                  <div className={cn(
+                    'flex-1 rounded-xl px-4 py-3.5 flex items-center justify-between gap-3',
+                    satUpgradeUnlocked || isAdmin
+                      ? 'bg-gradient-to-r from-indigo-600 to-indigo-700'
+                      : 'bg-gradient-to-r from-slate-700 to-slate-800'
+                  )}>
+                    <div className="min-w-0">
+                      <span className="text-[10px] font-bold text-indigo-200 uppercase tracking-widest">SAT PREMIUM</span>
+                      <p className="text-white font-bold text-[14px] mt-0.5 mb-1 leading-snug">Personalized Practice Path</p>
+                      <p className="text-indigo-200 text-[11px] leading-snug">
+                        Targeted sets from MockMate&apos;s 700+ SAT Question Bank based on the skills you missed on this exam.
+                      </p>
+                    </div>
+                    {satUpgradeUnlocked || isAdmin ? (
+                      <Link
+                        href={attemptIdRef.current ? `/question-bank/sat/personalized/${attemptIdRef.current}` : '/question-bank/sat'}
+                        className="shrink-0 bg-white text-indigo-700 font-semibold text-[12px] px-3.5 py-2 rounded-lg hover:bg-indigo-50 transition-colors whitespace-nowrap"
+                      >
+                        Start practicing →
+                      </Link>
+                    ) : (
+                      <Link
+                        href="/billing"
+                        className="shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-semibold text-[12px] px-3.5 py-2 rounded-lg transition-colors whitespace-nowrap"
+                      >
+                        Get SAT Premium →
+                      </Link>
+                    )}
+                  </div>
+                </div>
+                {/* "What is the Personalized Practice Path?" explanation box */}
+                <div className="mt-3 bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-1.5">
+                  <p className="text-[11px] font-bold text-indigo-700 uppercase tracking-widest">What is the Personalized Practice Path?</p>
+                  <p className="text-[12px] text-indigo-900 leading-relaxed">
+                    Your Personalized Practice Path pulls targeted sets from MockMate&apos;s 700+ SAT Question Bank based on the skills you missed on this exam. It targets your weaknesses — not random topics — so every practice question counts.
+                  </p>
+                  <p className="text-[12px] text-indigo-800 font-semibold">Scroll down to start your personalized sets.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 4. Performance Analysis */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
             <h2 className="text-[15px] font-bold text-slate-900">Performance Analysis</h2>
@@ -2838,103 +2970,6 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
               <p className="text-[13px] text-slate-400 italic">Personalized performance analysis will generate automatically when you complete an exam.</p>
             )}
             <p className="mt-4 text-[11px] text-slate-400 italic">AI-assisted feedback may be incomplete or inaccurate. Use it as a study aid, not as a final authority.</p>
-          </div>
-        </div>
-
-        {/* 4. Recommended Next Steps */}
-        <div className="bg-white rounded-xl border border-slate-200 p-6">
-          <h2 className="text-[18px] font-bold text-slate-900 mb-5">Recommended Next Steps</h2>
-          <div className="space-y-5">
-            <div className="flex gap-4">
-              <div className="shrink-0 h-8 w-8 rounded-full bg-[#1b3a5c] flex items-center justify-center">
-                <span className="text-white text-[13px] font-bold">1</span>
-              </div>
-              <p className="text-[14px] font-bold text-slate-900 leading-snug pt-1">
-                First, scroll down to the answer key and explanations. Look closely at the questions you missed, read why the correct answer is right, and make sure you understand the mistake before practicing more.
-              </p>
-            </div>
-            <div className="flex gap-4">
-              <div className="shrink-0 h-8 w-8 rounded-full bg-[#1b3a5c] flex items-center justify-center">
-                <span className="text-white text-[13px] font-bold">2</span>
-              </div>
-              <p className="text-[13px] text-slate-700 leading-relaxed pt-1">
-                {rwScaled < 700 && mathScaled < 700 ? (
-                  <><span className="font-bold text-slate-900">Both your Reading &amp; Writing and Math need work.</span> Use the <Link href="/sat-rw-academy" className="text-[#1d4ed8] font-semibold hover:underline">SAT Reading &amp; Writing Academy</Link> and the <Link href="/sat-math-academy" className="text-[#1d4ed8] font-semibold hover:underline">SAT Math &amp; Desmos Academy</Link> to rebuild weak areas before doing more mixed practice.</>
-                ) : rwScaled < 700 ? (
-                  <><span className="font-bold text-slate-900">Your Reading &amp; Writing needs work.</span> Use the <Link href="/sat-rw-academy" className="text-[#1d4ed8] font-semibold hover:underline">SAT Reading &amp; Writing Academy</Link> to strengthen the exact skills that held your score down.</>
-                ) : mathScaled < 700 ? (
-                  <><span className="font-bold text-slate-900">Your Math needs work.</span> Use the <Link href="/sat-math-academy" className="text-[#1d4ed8] font-semibold hover:underline">SAT Math &amp; Desmos Academy</Link> to rebuild weak concepts and improve speed.</>
-                ) : (
-                  <><span className="font-bold text-slate-900">Both sections are above 700.</span> Focus on pushing your weakest domains higher — the Academies and Question Bank will help you reach the next score band.</>
-                )}
-              </p>
-            </div>
-            <div className="flex gap-4">
-              <div className="shrink-0 h-8 w-8 rounded-full bg-[#1b3a5c] flex items-center justify-center">
-                <span className="text-white text-[13px] font-bold">3</span>
-              </div>
-              <div className="flex-1 pt-1">
-                <p className="text-[13px] text-slate-700 leading-relaxed mb-3">
-                  After reviewing your mistakes, use your <span className="font-bold">Personalized Practice Path</span>. It creates targeted practice from MockMate&apos;s Question Bank based on the skills you missed on this exam.
-                </p>
-                {/* Connected flow: Question Bank → Personalized Practice Path */}
-                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                  {/* Left: Question Bank card */}
-                  <Link
-                    href="/question-bank/sat"
-                    className="flex items-center justify-center gap-2.5 bg-red-50 border border-red-200 rounded-xl px-4 py-3.5 hover:bg-red-100 transition-colors shrink-0 sm:w-[23%]"
-                  >
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0 text-red-700">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
-                    </svg>
-                    <span className="text-[13px] font-semibold text-red-800">Question Bank</span>
-                  </Link>
-
-                  {/* Connecting arrow */}
-                  <div className="flex justify-center items-center self-center shrink-0">
-                    {/* Desktop: right-pointing arrow */}
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} className="hidden sm:block h-6 w-6 text-slate-400">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                    </svg>
-                    {/* Mobile: downward arrow */}
-                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2} className="block sm:hidden h-6 w-6 text-slate-400">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5L12 21m0 0l-7.5-7.5M12 21V3" />
-                    </svg>
-                  </div>
-
-                  {/* Right: Personalized Practice Path card */}
-                  <div className={cn(
-                    'flex-1 rounded-xl px-4 py-3.5 flex items-center justify-between gap-3',
-                    satUpgradeUnlocked || isAdmin
-                      ? 'bg-gradient-to-r from-indigo-600 to-indigo-700'
-                      : 'bg-gradient-to-r from-slate-700 to-slate-800'
-                  )}>
-                    <div className="min-w-0">
-                      <span className="text-[10px] font-bold text-indigo-200 uppercase tracking-widest">SAT PREMIUM</span>
-                      <p className="text-white font-bold text-[14px] mt-0.5 mb-1 leading-snug">Personalized Practice Path</p>
-                      <p className="text-indigo-200 text-[11px] leading-snug">
-                        Targeted sets from MockMate&apos;s 700+ SAT Question Bank based on the skills you missed on this exam.
-                      </p>
-                    </div>
-                    {satUpgradeUnlocked || isAdmin ? (
-                      <Link
-                        href={attemptIdRef.current ? `/question-bank/sat/personalized/${attemptIdRef.current}` : '/question-bank/sat'}
-                        className="shrink-0 bg-white text-indigo-700 font-semibold text-[12px] px-3.5 py-2 rounded-lg hover:bg-indigo-50 transition-colors whitespace-nowrap"
-                      >
-                        Start practicing →
-                      </Link>
-                    ) : (
-                      <Link
-                        href="/billing"
-                        className="shrink-0 bg-amber-500 hover:bg-amber-600 text-white font-semibold text-[12px] px-3.5 py-2 rounded-lg transition-colors whitespace-nowrap"
-                      >
-                        Get SAT Premium →
-                      </Link>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 
