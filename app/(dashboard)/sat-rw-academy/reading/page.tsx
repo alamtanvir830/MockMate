@@ -53,7 +53,7 @@ export default function ReadingSkillsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-slate-900">Reading Skills</h1>
-        <p className="mt-1 text-sm text-slate-500">7 skills across Information and Ideas and Craft and Structure</p>
+        <p className="mt-1 text-sm text-slate-700">7 skills across Information and Ideas and Craft and Structure</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -71,12 +71,12 @@ export default function ReadingSkillsPage() {
                   </span>
                 )}
               </div>
-              <p className="text-xs text-slate-500 leading-relaxed">{skill.description}</p>
-              <p className="text-[10px] text-slate-400 mt-1.5">{skill.domain}</p>
+              <p className="text-xs text-slate-700 leading-relaxed">{skill.description}</p>
+              <p className="text-[10px] text-slate-600 mt-1.5">{skill.domain}</p>
             </div>
 
             <div className="flex items-center justify-between gap-3">
-              <span className="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-xs font-medium text-slate-500">
+              <span className="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-2 py-0.5 text-xs font-medium text-slate-700">
                 Not Started
               </span>
               <Link href={`/sat-rw-academy/lesson/${skill.slug}`}>
