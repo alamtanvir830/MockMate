@@ -7,9 +7,24 @@ import { createClient } from '@/lib/supabase/client'
 type AccessState = 'pending' | 'confirmed' | 'waiting'
 
 function hasPremiumAccess(metadata: Record<string, unknown>): boolean {
+  // 1. Legacy lifetime unlock
   if (metadata.sat_upgrade_unlocked === true) return true
-  const status = metadata.sat_subscription_status as string | undefined
-  return status === 'active' || status === 'past_due' || status === 'trialing'
+  // 2. One-time purchase (lifetime or three_month)
+  const planType = metadata.sat_purchase_plan_type as string | undefined
+  const purchaseStatus = metadata.sat_purchase_status as string | undefined
+  if (purchaseStatus === 'active') {
+    if (planType === 'lifetime') return true
+    if (planType === 'three_month') {
+      const expiresAt = metadata.sat_purchase_expires_at as string | undefined
+      if (expiresAt) {
+        const expiry = new Date(expiresAt).getTime()
+        if (!Number.isNaN(expiry) && expiry > Date.now()) return true
+      }
+    }
+  }
+  // 3. Monthly subscription
+  const subStatus = metadata.sat_subscription_status as string | undefined
+  return subStatus === 'active' || subStatus === 'past_due' || subStatus === 'trialing'
 }
 
 export default function PaymentSuccessPage() {

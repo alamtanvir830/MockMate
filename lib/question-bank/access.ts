@@ -8,6 +8,8 @@
  *   if (!access.hasPremiumAccess) redirect('/question-bank?locked=1')
  */
 
+import { isAdminUser, hasSatPremium } from '@/lib/auth/server'
+
 export interface QBAccessResult {
   hasPremiumAccess: boolean
   isAdmin: boolean
@@ -32,10 +34,8 @@ export function getQBAccess(
     }
   }
 
-  const isAdmin = user.email === 'ranvi.contact@gmail.com'
-  const subStatus = user.user_metadata?.sat_subscription_status as string | undefined
-  const hasActiveSub = subStatus === 'active' || subStatus === 'past_due' || subStatus === 'trialing'
-  const hasPremium = isAdmin || user.user_metadata?.sat_upgrade_unlocked === true || hasActiveSub
+  const isAdmin = isAdminUser(user)
+  const hasPremium = hasSatPremium(user)
 
   return {
     hasPremiumAccess: hasPremium,
