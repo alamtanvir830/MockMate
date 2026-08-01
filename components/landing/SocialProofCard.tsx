@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 // ── Centralized social-proof count ────────────────────────────────────────────
 // Update this one constant to change the number everywhere on the landing page.
 // Do not derive this from auth.users, profile rows, or any private data.
-export const LANDING_USER_COUNT_LABEL = '920+'
+export const LANDING_USER_COUNT_LABEL = '980+'
 
 const AVATARS = [
   { initials: 'S', bg: '#d1fae5', color: '#065f46' },
@@ -108,7 +108,7 @@ export function SocialProofCard({ className = '' }: SocialProofCardProps) {
           {AVATARS.map((a, i) => (
             <div
               key={a.initials}
-              className={`sp-avatar-${i} flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-bold ring-2 ring-white select-none`}
+              className={`sp-avatar-${i} flex h-8 w-8 items-center justify-center rounded-full text-[11px] font-bold ring-2 ring-white select-none`}
               style={{ background: a.bg, color: a.color }}
             >
               {a.initials}
@@ -118,14 +118,14 @@ export function SocialProofCard({ className = '' }: SocialProofCardProps) {
 
         {/* Text — screen reader reads this naturally as "Join 800+ users" */}
         <p className="flex items-baseline gap-1 leading-none m-0">
-          <span className="text-[13px] font-medium text-slate-500">Join</span>
+          <span className="text-[14px] font-medium text-slate-500">Join</span>
           <span
-            className="text-[22px] font-extrabold tracking-tight leading-none"
+            className="text-[24px] font-extrabold tracking-tight leading-none"
             style={{ color: '#059669' }}
           >
             {LANDING_USER_COUNT_LABEL}
           </span>
-          <span className="text-[13px] font-semibold text-slate-700">users</span>
+          <span className="text-[14px] font-semibold text-slate-700">users</span>
         </p>
       </div>
     </>

@@ -58,7 +58,7 @@
   display: none;
 }
 
-/* ── Laptop showcase ─────────────────────────────────────────────────── */
+/* ── Device showcases (laptop + iPad) ───────────────────────────────── */
 /* Default: start at initial (JS will animate in). Reduced-motion: skip to final. */
 @media (prefers-reduced-motion: reduce) {
   .mm-laptop-wrap {
