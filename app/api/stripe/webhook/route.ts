@@ -13,6 +13,7 @@ import {
   refundOneTimePurchase,
 } from '@/lib/entitlements'
 import { SAT_PREMIUM_PLANS, isOneTimePlanKey } from '@/lib/stripe/sat-premium-plans'
+import { updateTrialClaimBySession, updateTrialClaimBySubscription } from '@/lib/sat-trial/claims'
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -198,6 +199,19 @@ async function handleSubscriptionCheckout(session: Stripe.Checkout.Session, stri
       endedAt: toDate(sub.ended_at),
     })
     console.log(`[webhook] subscription ${sub.id} synced for user ${userId} (status: ${sub.status})`)
+
+    // If this was a trial checkout, update the claim record
+    if (session.metadata?.is_trial === 'true') {
+      const trialStart = new Date()
+      const trialEnd = new Date(trialStart)
+      trialEnd.setDate(trialEnd.getDate() + 7)
+      await updateTrialClaimBySession(session.id, {
+        status: 'trialing',
+        stripeSubscriptionId: sub.id,
+        trialStart,
+        trialEnd,
+      })
+    }
   } catch (err) {
     console.error('[webhook] failed to retrieve/sync subscription after checkout', subscriptionId, err)
   }
@@ -259,6 +273,9 @@ async function handleSubscriptionDeleted(sub: Stripe.Subscription, stripe: Strip
   })
 
   console.log(`[webhook] subscription ${sub.id} deleted for user ${userId}`)
+
+  // If this was a trial, mark the claim canceled
+  await updateTrialClaimBySubscription(sub.id, { status: 'canceled' })
 }
 
 /** Handles invoice.paid — updates the subscription and confirms access. */
@@ -292,6 +309,11 @@ async function handleInvoicePaid(invoice: Stripe.Invoice, stripe: Stripe): Promi
         latestInvoicePaidAt: new Date(),
       })
       console.log(`[webhook] invoice.paid — subscription ${sub.id} confirmed active for user ${userId}`)
+
+      // If subscription converted from trial, mark it
+      if (sub.status === 'active') {
+        await updateTrialClaimBySubscription(sub.id, { convertedAt: new Date() })
+      }
     }
   } catch (err) {
     console.error('[webhook] invoice.paid sync error', err)
@@ -396,6 +418,14 @@ export async function POST(req: NextRequest) {
       case 'customer.subscription.deleted': {
         const sub = event.data.object as Stripe.Subscription
         await handleSubscriptionDeleted(sub, stripe)
+        break
+      }
+
+      case 'customer.subscription.trial_will_end': {
+        // Stripe fires this 3 days before trial ends. Log only — the student
+        // is responsible for canceling; Stripe manages dunning after conversion.
+        const sub = event.data.object as Stripe.Subscription
+        console.log(`[webhook] trial_will_end for subscription ${sub.id}`)
         break
       }
 
