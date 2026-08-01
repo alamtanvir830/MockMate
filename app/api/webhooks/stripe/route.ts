@@ -181,6 +181,17 @@ export async function POST(request: Request) {
       }
     }
   } catch (err) {
+    const errMsg = err instanceof Error ? err.message : String(err)
+    // If a required database table is missing, return 503 so Stripe retries
+    // until the migration is applied. For all other errors (non-transient
+    // business logic failures) return 200 to stop retries.
+    if (
+      errMsg.includes('sat_premium_purchases') ||
+      errMsg.includes('sat_premium_subscriptions')
+    ) {
+      console.error('[webhooks/stripe] missing table error — returning 503 to trigger retry:', err)
+      return Response.json({ error: 'Database table missing' }, { status: 503 })
+    }
     console.error('[webhooks/stripe] handler error:', err)
     return new Response('Internal error', { status: 500 })
   }
