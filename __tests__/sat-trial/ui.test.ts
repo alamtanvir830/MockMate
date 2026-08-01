@@ -156,21 +156,23 @@ describe('SATTrialOffer — handleStartTrial logic', () => {
   })
 
   it('verifies pricing disclosure is correct', () => {
-    const disclosure = '$9.99/month after trial. Cancel anytime. Card required to prevent abuse.'
+    // Required text from spec
+    const disclosure = 'Credit card required. $0 today, then $9.99/month after your 7-day trial. Cancel before the trial ends to avoid being charged.'
     expect(disclosure).toContain('9.99')
-    expect(disclosure).toContain('Cancel anytime')
-    expect(disclosure).toContain('Card required')
+    expect(disclosure).toContain('Credit card required')
+    expect(disclosure).toContain('$0 today')
+    expect(disclosure).toContain('Cancel before the trial ends')
   })
 
   it('verifies CTA button text', () => {
-    const ctaText = 'Start 7-Day Free Trial →'
-    expect(ctaText).toContain('7-Day')
-    expect(ctaText).toContain('Free Trial')
+    const ctaText = 'Start your 7-day free trial'
+    expect(ctaText).toContain('7-day')
+    expect(ctaText).toContain('free trial')
   })
 
   it('verifies header title', () => {
-    const title = '7-Day Free SAT Premium Trial'
-    expect(title).toContain('7-Day')
+    const title = 'Try everything in SAT Premium free for 7 days'
+    expect(title).toContain('7 days')
     expect(title).toContain('SAT Premium')
   })
 

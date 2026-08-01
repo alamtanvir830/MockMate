@@ -68,15 +68,26 @@ function makeRequest() {
   })
 }
 
-function makeDbChain(insertResult = { error: null }) {
-  const updateChain = {
-    eq: vi.fn().mockResolvedValue({ error: null }),
+function makeUpdateChain() {
+  // The endpoint does: .update({...}).eq(...).eq(...) — two chained eq() calls.
+  // The last awaitable is the second eq() which must resolve to { error: null }.
+  const terminal = Promise.resolve({ error: null })
+  const inner = {
+    eq: vi.fn().mockReturnValue(terminal),
   }
+  const outer = {
+    eq: vi.fn().mockReturnValue(inner),
+  }
+  return outer
+}
+
+function makeDbChain(insertResult = { error: null }, selectData: Record<string, unknown> | null = null) {
   const chain = {
     insert: vi.fn().mockResolvedValue(insertResult),
-    update: vi.fn().mockReturnValue(updateChain),
+    update: vi.fn().mockReturnValue(makeUpdateChain()),
     select: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
+    maybeSingle: vi.fn().mockResolvedValue({ data: selectData, error: null }),
   }
   return chain
 }
@@ -227,9 +238,31 @@ describe('POST /api/stripe/create-trial-checkout', () => {
   })
 
   // ── 6. Race condition / double-claim prevention ─────────────────────────────
-  it('returns 400 when DB insert returns 23505 (unique constraint violation)', async () => {
-    const chain = makeDbChain({ error: { code: '23505', message: 'duplicate key' } })
-    mockFrom.mockReturnValue(chain)
+  it('returns 400 when DB insert returns 23505 and no existing session to recover', async () => {
+    // First from() = insert chain (23505 error)
+    const insertChain = makeDbChain({ error: { code: '23505', message: 'duplicate key' } })
+    // Second from() = select chain (claim row has no stripe_checkout_session_id)
+    const selectChain = makeDbChain({ error: null }, { stripe_checkout_session_id: null, status: 'pending' })
+    mockFrom
+      .mockReturnValueOnce(insertChain)
+      .mockReturnValueOnce(selectChain)
+    const res = await POST(makeRequest() as Parameters<typeof POST>[0])
+    expect(res.status).toBe(400)
+    const body = await res.json()
+    expect(body.error).toContain('already claimed')
+  })
+
+  it('returns 400 when 23505 and existing pending session is not retrievable (double-click fallback)', async () => {
+    // First from() = insert (23505 error)
+    const insertChain = makeDbChain({ error: { code: '23505', message: 'duplicate key' } })
+    // Second from() = select (has a session ID in status pending)
+    const selectChain = makeDbChain({ error: null }, { stripe_checkout_session_id: 'cs_pending', status: 'pending' })
+    mockFrom
+      .mockReturnValueOnce(insertChain)
+      .mockReturnValueOnce(selectChain)
+    // sessions.retrieve is not in the mock (only sessions.create is).
+    // The endpoint's try/catch will catch the TypeError from undefined property
+    // and fall through to the "already claimed" 400 response.
     const res = await POST(makeRequest() as Parameters<typeof POST>[0])
     expect(res.status).toBe(400)
     const body = await res.json()
