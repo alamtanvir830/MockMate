@@ -4,6 +4,7 @@ import { isMockMateAdmin } from '@/lib/auth/admin'
 import { redirect } from 'next/navigation'
 import { UpgradeGate } from '@/components/shared/upgrade-gate'
 import SATForm2ResultsClient from './SATForm2ResultsClient'
+import { getSatTrialEligibility } from '@/lib/sat-trial/eligibility'
 
 export const dynamic = 'force-dynamic'
 
@@ -33,5 +34,15 @@ export default async function SATForm2ResultsPage({
     )
   }
 
-  return <SATForm2ResultsClient attemptId={attemptId} satUpgradeUnlocked={satUpgradeUnlocked} />
+  const trialEligible = isAdmin
+    ? false
+    : (await getSatTrialEligibility(user.id)).eligible
+
+  return (
+    <SATForm2ResultsClient
+      attemptId={attemptId}
+      satUpgradeUnlocked={satUpgradeUnlocked}
+      trialEligible={trialEligible}
+    />
+  )
 }

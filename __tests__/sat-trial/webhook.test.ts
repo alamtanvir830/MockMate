@@ -177,10 +177,10 @@ describe('webhook — trial claim updates', () => {
 
     await POST(makeWebhookRequest(fakeEvent) as Parameters<typeof POST>[0])
     const call = mockUpdateBySession.mock.calls[0][1]
-    expect(call.trialStart).toBeInstanceOf(Date)
-    expect(call.trialEnd).toBeInstanceOf(Date)
+    expect(call.trialStartedAt).toBeInstanceOf(Date)
+    expect(call.trialEndsAt).toBeInstanceOf(Date)
     // Trial end should be ~7 days after trial start
-    const diff = (call.trialEnd as Date).getTime() - (call.trialStart as Date).getTime()
+    const diff = (call.trialEndsAt as Date).getTime() - (call.trialStartedAt as Date).getTime()
     expect(diff).toBeGreaterThanOrEqual(6 * 24 * 60 * 60 * 1000)
     expect(diff).toBeLessThanOrEqual(8 * 24 * 60 * 60 * 1000)
   })
@@ -296,7 +296,7 @@ describe('webhook — trial claim updates', () => {
     expect(res.status).toBe(200)
     expect(mockUpdateBySubscription).toHaveBeenCalledWith(
       'sub_canceled_6',
-      { status: 'canceled' }
+      expect.objectContaining({ status: 'canceled', canceledAt: expect.any(Date) })
     )
   })
 
@@ -329,7 +329,7 @@ describe('webhook — trial claim updates', () => {
     expect(res.status).toBe(200)
     expect(mockUpdateBySubscription).toHaveBeenCalledWith(
       'sub_converted_7',
-      expect.objectContaining({ convertedAt: expect.any(Date) })
+      expect.objectContaining({ status: 'converted', consumedAt: expect.any(Date) })
     )
   })
 
@@ -361,7 +361,7 @@ describe('webhook — trial claim updates', () => {
     // Should not be called since sub.status is 'trialing' not 'active'
     expect(mockUpdateBySubscription).not.toHaveBeenCalledWith(
       'sub_trialing_8',
-      expect.objectContaining({ convertedAt: expect.anything() })
+      expect.objectContaining({ consumedAt: expect.anything() })
     )
   })
 
@@ -493,7 +493,10 @@ describe('webhook — trial claim updates', () => {
 
     await POST(makeWebhookRequest(fakeEvent) as Parameters<typeof POST>[0])
     // Called — claims.ts handles PGRST116 gracefully if no matching row
-    expect(mockUpdateBySubscription).toHaveBeenCalledWith('sub_nontrial_deleted', { status: 'canceled' })
+    expect(mockUpdateBySubscription).toHaveBeenCalledWith(
+      'sub_nontrial_deleted',
+      expect.objectContaining({ status: 'canceled' })
+    )
   })
 
   // ── 10. Unhandled event types don't trigger trial helpers ────────────────────

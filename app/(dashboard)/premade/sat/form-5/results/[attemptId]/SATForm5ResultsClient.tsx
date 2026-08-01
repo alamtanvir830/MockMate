@@ -3,20 +3,16 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import SATExamTaker from '@/components/premade/SATExamTaker'
-import { satForm1 } from '@/lib/premade-exams/sat/form-1'
+import { satForm5 } from '@/lib/premade-exams/sat/form-5'
 import { loadAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
 
-export default function SATForm1ResultsClient({
-  attemptId,
-  isAdmin,
-  satUpgradeUnlocked,
-  trialEligible = false,
-}: {
+interface Props {
   attemptId: string
-  isAdmin: boolean
   satUpgradeUnlocked: boolean
   trialEligible?: boolean
-}) {
+}
+
+export default function SATForm5ResultsClient({ attemptId, satUpgradeUnlocked, trialEligible = false }: Props) {
   const [attempt, setAttempt] = useState<PremadeAttempt | null | 'loading'>('loading')
 
   useEffect(() => {
@@ -42,7 +38,10 @@ export default function SATForm1ResultsClient({
       <div className="flex flex-col items-center justify-center min-h-[40vh] text-center gap-4">
         <p className="text-slate-600 font-medium">Attempt not found.</p>
         <p className="text-sm text-slate-400">This result may have been cleared from your browser storage.</p>
-        <Link href="/exams" className="text-sm font-medium text-[#1d4ed8] hover:underline">
+        <Link
+          href="/exams"
+          className="text-sm font-medium text-[#1d4ed8] hover:underline"
+        >
           ← Back to Exam History
         </Link>
       </div>
@@ -51,11 +50,8 @@ export default function SATForm1ResultsClient({
 
   return (
     <SATExamTaker
-      form={satForm1}
+      form={satForm5}
       initialAttempt={attempt}
-      isAdmin={isAdmin}
-      allowRetake={isAdmin}
-      showUnlockCTA={!isAdmin}
       satUpgradeUnlocked={satUpgradeUnlocked}
       trialEligible={trialEligible}
     />

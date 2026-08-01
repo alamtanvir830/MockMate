@@ -7,6 +7,7 @@ import {
   resolveForm3Access,
 } from '@/lib/premade-exams/sat/form3-access'
 import SATForm3ResultsClient from './SATForm3ResultsClient'
+import { getSatTrialEligibility } from '@/lib/sat-trial/eligibility'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,7 +30,17 @@ export default async function SATForm3ResultsPage({
 
   // Admin and Premium always have access
   if (isAdmin || satUpgradeUnlocked) {
-    return <SATForm3ResultsClient attemptId={attemptId} satUpgradeUnlocked={satUpgradeUnlocked} />
+    // Admins are never eligible for the trial; premium users already have access.
+    const trialEligible = isAdmin
+      ? false
+      : (await getSatTrialEligibility(user.id)).eligible
+    return (
+      <SATForm3ResultsClient
+        attemptId={attemptId}
+        satUpgradeUnlocked={satUpgradeUnlocked}
+        trialEligible={trialEligible}
+      />
+    )
   }
 
   // Non-premium: check if they have a completed Form 3 attempt
@@ -45,8 +56,16 @@ export default async function SATForm3ResultsPage({
     .maybeSingle()
 
   if (completedAttempt) {
-    // They completed this specific attempt — allow result access
-    return <SATForm3ResultsClient attemptId={attemptId} satUpgradeUnlocked={false} />
+    // They completed this specific attempt — allow result access.
+    // Free users who completed Form 3 may be eligible for the trial.
+    const trialEligible = (await getSatTrialEligibility(user.id)).eligible
+    return (
+      <SATForm3ResultsClient
+        attemptId={attemptId}
+        satUpgradeUnlocked={false}
+        trialEligible={trialEligible}
+      />
+    )
   }
 
   // Also allow if they have a valid free window access (in-progress attempt)
@@ -70,7 +89,14 @@ export default async function SATForm3ResultsPage({
   })
 
   if (access.canStart || access.canResume) {
-    return <SATForm3ResultsClient attemptId={attemptId} satUpgradeUnlocked={false} />
+    const trialEligible = (await getSatTrialEligibility(user.id)).eligible
+    return (
+      <SATForm3ResultsClient
+        attemptId={attemptId}
+        satUpgradeUnlocked={false}
+        trialEligible={trialEligible}
+      />
+    )
   }
 
   // No access — redirect to Form 3 landing which will show the upgrade gate

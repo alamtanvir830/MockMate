@@ -202,14 +202,17 @@ async function handleSubscriptionCheckout(session: Stripe.Checkout.Session, stri
 
     // If this was a trial checkout, update the claim record
     if (session.metadata?.is_trial === 'true') {
-      const trialStart = new Date()
-      const trialEnd = new Date(trialStart)
-      trialEnd.setDate(trialEnd.getDate() + 7)
+      // Use Stripe's trial_end from the subscription for accuracy, falling back
+      // to now + 7 days if the subscription doesn't carry it yet.
+      const trialStartedAt = sub.trial_start ? new Date(sub.trial_start * 1000) : new Date()
+      const trialEndsAt = sub.trial_end
+        ? new Date(sub.trial_end * 1000)
+        : (() => { const d = new Date(trialStartedAt); d.setDate(d.getDate() + 7); return d })()
       await updateTrialClaimBySession(session.id, {
         status: 'trialing',
         stripeSubscriptionId: sub.id,
-        trialStart,
-        trialEnd,
+        trialStartedAt,
+        trialEndsAt,
       })
     }
   } catch (err) {
@@ -275,7 +278,10 @@ async function handleSubscriptionDeleted(sub: Stripe.Subscription, stripe: Strip
   console.log(`[webhook] subscription ${sub.id} deleted for user ${userId}`)
 
   // If this was a trial, mark the claim canceled
-  await updateTrialClaimBySubscription(sub.id, { status: 'canceled' })
+  await updateTrialClaimBySubscription(sub.id, {
+    status: 'canceled',
+    canceledAt: toDate(sub.canceled_at) ?? new Date(),
+  })
 }
 
 /** Handles invoice.paid — updates the subscription and confirms access. */
@@ -312,7 +318,7 @@ async function handleInvoicePaid(invoice: Stripe.Invoice, stripe: Stripe): Promi
 
       // If subscription converted from trial, mark it
       if (sub.status === 'active') {
-        await updateTrialClaimBySubscription(sub.id, { convertedAt: new Date() })
+        await updateTrialClaimBySubscription(sub.id, { status: 'converted', consumedAt: new Date() })
       }
     }
   } catch (err) {

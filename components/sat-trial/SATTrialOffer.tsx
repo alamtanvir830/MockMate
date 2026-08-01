@@ -7,6 +7,7 @@ export function SATTrialOffer() {
   const [error, setError] = useState<string | null>(null)
 
   async function handleStartTrial() {
+    if (loading) return
     setLoading(true)
     setError(null)
     try {
@@ -30,7 +31,7 @@ export function SATTrialOffer() {
       <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 px-6 py-4 flex items-center justify-between">
         <div>
           <span className="text-[10px] font-bold text-indigo-200 uppercase tracking-widest">Limited Offer</span>
-          <h3 className="text-white font-bold text-[16px] mt-0.5">7-Day Free SAT Premium Trial</h3>
+          <h3 className="text-white font-bold text-[16px] mt-0.5">Try everything in SAT Premium free for 7 days</h3>
         </div>
         <span className="bg-amber-400 text-amber-900 text-[11px] font-bold px-2.5 py-1 rounded-full">
           FREE for 7 days
@@ -78,12 +79,12 @@ export function SATTrialOffer() {
               Starting trial…
             </>
           ) : (
-            'Start 7-Day Free Trial →'
+            'Start your 7-day free trial'
           )}
         </button>
 
         <p className="text-[11px] text-slate-400 text-center mt-2.5 leading-relaxed">
-          $9.99/month after trial. Cancel anytime. Card required to prevent abuse.
+          Credit card required. $0 today, then $9.99/month after your 7-day trial. Cancel before the trial ends to avoid being charged.
         </p>
       </div>
     </div>
