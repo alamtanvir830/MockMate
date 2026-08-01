@@ -89,7 +89,7 @@ export function TabletShowcase({ children }: { children: React.ReactNode }) {
             overflow: 'hidden',
             position: 'relative',
             background: '#f8fafc',
-            height: '300px',
+            height: '340px',
           }}
         >
           {/* Top-left diagonal glare */}
