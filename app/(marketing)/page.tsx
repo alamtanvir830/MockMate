@@ -170,7 +170,7 @@ export default function LandingPage() {
               </div>
 
               {/* ── Right: landscape tablet → SAT Premium benefits ─────────── */}
-              <div className="lg:w-[58%] mt-10 lg:mt-0 flex flex-col gap-8">
+              <div className="lg:w-[58%] mt-10 lg:mt-0 flex flex-col gap-14">
                 {/* Landscape tablet with scrolling testimonials */}
                 <TabletShowcase>
                   <HeroReviewsPanel fadeBg="#f8fafc" />
