@@ -38,34 +38,86 @@ export default function LandingPage() {
         {/* Hero */}
         <section
           className="relative overflow-hidden pt-16 pb-6 sm:pt-24 sm:pb-8"
-          style={{ background: 'linear-gradient(150deg, #eaecf0 0%, #e2e6ed 45%, #d8dde6 100%)' }}
+          style={{ background: 'linear-gradient(150deg, #f0f3f7 0%, #e8ecf2 45%, #dde3ec 100%)' }}
         >
-          {/* Wave texture — -z-10 keeps it strictly behind all content */}
-          <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+          {/* ── Wave background — z-index 0, always below content (z-index 10) ── */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 overflow-hidden pointer-events-none"
+            style={{ zIndex: 0 }}
+          >
             <svg
               className="absolute w-full h-full"
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="xMidYMid slice"
-              viewBox="0 0 1440 600"
+              viewBox="0 0 1440 700"
             >
-              {/* Wave 1 — broad soft arc */}
+              <defs>
+                <linearGradient id="wg1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stopColor="#b8c8dc" stopOpacity="0.45" />
+                  <stop offset="50%"  stopColor="#c4d2e6" stopOpacity="0.36" />
+                  <stop offset="100%" stopColor="#b0c2d8" stopOpacity="0.22" />
+                </linearGradient>
+                <linearGradient id="wg2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stopColor="#a8bcd2" stopOpacity="0.32" />
+                  <stop offset="60%"  stopColor="#b4c6de" stopOpacity="0.24" />
+                  <stop offset="100%" stopColor="#a2b6cc" stopOpacity="0.16" />
+                </linearGradient>
+              </defs>
+              {/* Wave 1 — broad upper sweep */}
               <path
-                d="M0,200 C360,100 720,320 1440,180 L1440,600 L0,600 Z"
-                fill="#c8d4e4"
-                fillOpacity="0.35"
+                d="M0,160 C220,60 500,240 800,150 C1080,64 1280,200 1440,130 L1440,700 L0,700 Z"
+                fill="url(#wg1)"
               />
-              {/* Wave 2 — smaller, tighter */}
+              {/* Wave 2 — mid flow */}
               <path
-                d="M0,350 C480,250 960,420 1440,300 L1440,600 L0,600 Z"
-                fill="#bccade"
-                fillOpacity="0.25"
+                d="M0,310 C280,210 580,370 880,295 C1100,238 1300,340 1440,275 L1440,700 L0,700 Z"
+                fill="url(#wg2)"
               />
-              {/* Soft white highlight — upper left */}
-              <ellipse cx="160" cy="160" rx="420" ry="210" fill="#ffffff" fillOpacity="0.28" />
+              {/* Wave 3 — lower subtle band */}
+              <path
+                d="M0,470 C260,400 560,490 860,430 C1080,385 1300,450 1440,410 L1440,700 L0,700 Z"
+                fill="#aebece"
+                fillOpacity="0.18"
+              />
+              {/* White glow — upper left */}
+              <ellipse cx="180" cy="140" rx="520" ry="270" fill="#ffffff" fillOpacity="0.30" />
+              {/* Tonal accent — right */}
+              <ellipse cx="1300" cy="380" rx="360" ry="280" fill="#ccd8e8" fillOpacity="0.18" />
             </svg>
+
+            {/* Blurred radial depth — upper left */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '-100px',
+                left: '-80px',
+                width: '640px',
+                height: '520px',
+                background:
+                  'radial-gradient(ellipse at 40% 40%, rgba(216,226,240,0.50) 0%, transparent 70%)',
+                filter: 'blur(32px)',
+                borderRadius: '50%',
+              }}
+            />
+            {/* Blurred radial depth — lower right */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '-80px',
+                right: '-60px',
+                width: '520px',
+                height: '420px',
+                background:
+                  'radial-gradient(ellipse at 60% 60%, rgba(196,212,232,0.35) 0%, transparent 70%)',
+                filter: 'blur(36px)',
+                borderRadius: '50%',
+              }}
+            />
           </div>
 
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          {/* Content — z-index 10 keeps it above the wave layer */}
+          <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             {/* Split hero: left copy + CTAs, right landscape tablet + benefits */}
             <div className="flex flex-col lg:flex-row lg:items-start lg:gap-12">
 
