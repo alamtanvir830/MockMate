@@ -19,7 +19,7 @@ type PageState = 'loading' | 'active' | 'waiting'
 function TrialSuccessContent() {
   const [state, setState] = useState<PageState>('loading')
   const [trialEndDate, setTrialEndDate] = useState<Date | null>(null)
-  const searchParams = useSearchParams()
+  useSearchParams() // retains Suspense boundary requirement
 
   useEffect(() => {
     const supabase = createClient()

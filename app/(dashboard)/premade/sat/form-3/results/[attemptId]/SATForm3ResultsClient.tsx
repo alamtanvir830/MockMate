@@ -9,9 +9,10 @@ import { loadAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attemp
 interface Props {
   attemptId: string
   satUpgradeUnlocked: boolean
+  trialEligible?: boolean
 }
 
-export default function SATForm3ResultsClient({ attemptId, satUpgradeUnlocked }: Props) {
+export default function SATForm3ResultsClient({ attemptId, satUpgradeUnlocked, trialEligible = false }: Props) {
   const [attempt, setAttempt] = useState<PremadeAttempt | null | 'loading'>('loading')
 
   useEffect(() => {
@@ -47,5 +48,5 @@ export default function SATForm3ResultsClient({ attemptId, satUpgradeUnlocked }:
     )
   }
 
-  return <SATExamTaker form={satForm3} initialAttempt={attempt} satUpgradeUnlocked={satUpgradeUnlocked} />
+  return <SATExamTaker form={satForm3} initialAttempt={attempt} satUpgradeUnlocked={satUpgradeUnlocked} trialEligible={trialEligible} />
 }

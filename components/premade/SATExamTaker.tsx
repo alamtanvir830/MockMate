@@ -929,7 +929,7 @@ interface InProgressData {
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, isAdmin = false, allowRetake = true, showUnlockCTA = false, satUpgradeUnlocked = false, countdownText }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean; isAdmin?: boolean; allowRetake?: boolean; showUnlockCTA?: boolean; satUpgradeUnlocked?: boolean; countdownText?: string }) {
+export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, isAdmin = false, allowRetake = true, showUnlockCTA = false, satUpgradeUnlocked = false, countdownText, trialEligible = false }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean; isAdmin?: boolean; allowRetake?: boolean; showUnlockCTA?: boolean; satUpgradeUnlocked?: boolean; countdownText?: string; trialEligible?: boolean }) {
   const isHistoryView = !!initialAttempt
 
   // ── Exam state ─────────────────────────────────────────────────────────────
@@ -2776,8 +2776,8 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
           </div>
         </div>
 
-        {/* Trial offer — only shown to free users who haven't claimed a trial */}
-        {!satUpgradeUnlocked && !isAdmin && (
+        {/* Trial offer — server-side eligibility gated via trialEligible prop */}
+        {trialEligible && (
           <SATTrialOffer />
         )}
 

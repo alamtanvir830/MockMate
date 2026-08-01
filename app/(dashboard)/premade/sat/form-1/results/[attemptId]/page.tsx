@@ -4,6 +4,7 @@ import { isMockMateAdmin } from '@/lib/auth/admin'
 import { redirect } from 'next/navigation'
 import { UpgradeGate } from '@/components/shared/upgrade-gate'
 import SATForm1ResultsClient from './SATForm1ResultsClient'
+import { getSatTrialEligibility } from '@/lib/sat-trial/eligibility'
 
 export const dynamic = 'force-dynamic'
 
@@ -33,11 +34,18 @@ export default async function SATForm1ResultsPage({
     )
   }
 
+  // Server-side eligibility check — never trust client-side JWT for this gate.
+  // Admins always get false (they already have access).
+  const trialEligible = isAdmin
+    ? false
+    : (await getSatTrialEligibility(user.id)).eligible
+
   return (
     <SATForm1ResultsClient
       attemptId={attemptId}
       isAdmin={isAdmin}
       satUpgradeUnlocked={satUpgradeUnlocked}
+      trialEligible={trialEligible}
     />
   )
 }
