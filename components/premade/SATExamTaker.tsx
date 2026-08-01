@@ -27,6 +27,7 @@ import {
 } from '@/lib/premade-exams/sat/sat-score-conversion'
 import type { SATAIFeedback } from '@/app/api/sat-feedback/route'
 import { ExamSaveStatus, type SaveStatus } from '@/components/premade/ExamSaveStatus'
+import { SATTrialOffer } from '@/components/sat-trial/SATTrialOffer'
 
 // ─── Phase state machine ───────────────────────────────────────────────────────
 type SATPhase =
@@ -2774,6 +2775,11 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
             </div>
           </div>
         </div>
+
+        {/* Trial offer — only shown to free users who haven't claimed a trial */}
+        {!satUpgradeUnlocked && !isAdmin && (
+          <SATTrialOffer />
+        )}
 
         {/* 4. Performance Analysis */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
