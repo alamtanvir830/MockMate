@@ -4,7 +4,7 @@ import { Logo } from '@/components/shared/logo'
 import { Button } from '@/components/ui/button'
 import { HeroReviewsPanel } from '@/components/landing/StudentReviews'
 import { SocialProofCard } from '@/components/landing/SocialProofCard'
-import { IPadShowcase } from '@/components/landing/IPadShowcase'
+import { TabletShowcase } from '@/components/landing/IPadShowcase'
 
 export default function LandingPage() {
   return (
@@ -66,9 +66,10 @@ export default function LandingPage() {
           </div>
 
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            {/* Split hero: left copy, right iPad stack */}
+            {/* Split hero: left copy + CTAs, right landscape tablet + benefits */}
             <div className="flex flex-col lg:flex-row lg:items-start lg:gap-12">
-              {/* Left: headline + body only */}
+
+              {/* ── Left: copy → CTA buttons → social proof ───────────────── */}
               <div className="lg:w-[42%] text-center lg:text-left">
                 {/* Eyebrow */}
                 <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-5">
@@ -89,19 +90,44 @@ export default function LandingPage() {
                 <p className="mt-6 text-base sm:text-lg text-slate-500 leading-relaxed max-w-xl mx-auto lg:mx-0">
                   Take realistic SAT-style practice exams and targeted practice with high-quality questions reviewed by students, former test takers, and high scorers.
                 </p>
+
+                {/* CTA buttons */}
+                <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
+                  <Link href="/signup?next=/premade/sat">
+                    <Button
+                      size="lg"
+                      className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 whitespace-nowrap"
+                    >
+                      Get A Free SAT Exam!
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                    </Button>
+                  </Link>
+                  <Link href="/pricing">
+                    <Button variant="outline" size="lg" className="w-full sm:w-auto border-slate-300 hover:border-emerald-400 whitespace-nowrap">
+                      View SAT Premium
+                    </Button>
+                  </Link>
+                </div>
+
+                {/* Social proof */}
+                <div className="mt-5 flex justify-center lg:justify-start">
+                  <SocialProofCard className="w-full max-w-xs sm:w-auto" />
+                </div>
               </div>
 
-              {/* Right: iPad → SAT Premium box → CTA buttons → social proof */}
+              {/* ── Right: landscape tablet → SAT Premium benefits ─────────── */}
               <div className="lg:w-[58%] mt-10 lg:mt-0 flex flex-col gap-5">
-                {/* iPad device with scrolling testimonials */}
-                <IPadShowcase>
+                {/* Landscape tablet with scrolling testimonials */}
+                <TabletShowcase>
                   <HeroReviewsPanel fadeBg="#f8fafc" />
-                </IPadShowcase>
+                </TabletShowcase>
 
                 {/* SAT Premium benefits card */}
                 <div className="rounded-2xl border border-emerald-100 bg-emerald-50 px-6 py-5">
                   <p className="flex items-center gap-2 text-sm font-semibold text-emerald-700 mb-3.5">
-                    <svg className="h-4.5 w-4.5 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                    <svg className="h-4 w-4 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                     </svg>
                     <span className="text-[15px]"><span className="text-amber-600">SAT Premium</span> is 96% cheaper than major test prep companies</span>
@@ -122,32 +148,8 @@ export default function LandingPage() {
                     ))}
                   </ul>
                 </div>
-
-                {/* CTA buttons */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                  <Link href="/signup?next=/premade/sat" className="flex-1 sm:flex-none">
-                    <Button
-                      size="lg"
-                      className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 whitespace-nowrap px-7"
-                    >
-                      Get A Free SAT Exam!
-                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                      </svg>
-                    </Button>
-                  </Link>
-                  <Link href="/pricing" className="flex-1 sm:flex-none">
-                    <Button variant="outline" size="lg" className="w-full sm:w-auto border-slate-300 hover:border-emerald-400 whitespace-nowrap px-7">
-                      View SAT Premium
-                    </Button>
-                  </Link>
-                </div>
-
-                {/* Social proof */}
-                <div>
-                  <SocialProofCard />
-                </div>
               </div>
+
             </div>
           </div>
         </section>
