@@ -46,7 +46,7 @@ const DOMAIN_BADGE: Record<string, string> = {
 }
 
 const MASTERY_COLOR: Record<string, string> = {
-  not_started: 'text-slate-400',
+  not_started: 'text-slate-600',
   learning: 'text-amber-600',
   developing: 'text-orange-600',
   proficient: 'text-blue-600',
@@ -140,7 +140,7 @@ function StimulusBlock({ text, label }: { text: string; label?: string }) {
 
   return (
     <div className="rounded-lg border border-slate-200 bg-slate-50 px-5 py-4 space-y-2.5">
-      {label && <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">{label}</p>}
+      {label && <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-600">{label}</p>}
       <div className="space-y-2.5">
         {segments.map((seg, i) => {
           if (seg.type === 'bullets') return (
@@ -214,8 +214,8 @@ function MixedRecognitionCheck({ excludeSlug, onComplete }: { excludeSlug: strin
   return (
     <div className="space-y-4 pt-2">
       <div className="flex items-center gap-3">
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Cross-skill check</span>
-        <span className="text-xs text-slate-400">{qIdx + 1} / {questions.length}</span>
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-600">Cross-skill check</span>
+        <span className="text-xs text-slate-600">{qIdx + 1} / {questions.length}</span>
       </div>
       {q.stimulus && <StimulusBlock text={q.stimulus} />}
       <p className="text-sm font-medium text-slate-900">{q.question}</p>
@@ -247,7 +247,7 @@ function MixedRecognitionCheck({ excludeSlug, onComplete }: { excludeSlug: strin
                 {selected === q.correctAnswer ? 'Correct' : `Incorrect — answer: ${q.correctAnswer}`}
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">{q.explanation}</p>
-              <p className="text-xs font-semibold text-slate-500 mt-1">Skill: <span className="text-slate-700">{q.fromSkill}</span></p>
+              <p className="text-xs font-semibold text-slate-700 mt-1">Skill: <span className="text-slate-700">{q.fromSkill}</span></p>
             </div>
             <button onClick={handleNext} className="rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-sm font-semibold px-5 py-2.5 transition-colors">
               {qIdx < questions.length - 1 ? 'Next →' : 'Finish'}
@@ -302,7 +302,7 @@ function InlineQuickCheck({
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">{q.explanation}</p>
             </div>
-            <p className="text-[11px] text-slate-400 italic">This quick check does not affect your mastery score.</p>
+            <p className="text-[11px] text-slate-600 italic">This quick check does not affect your mastery score.</p>
             <button onClick={onComplete} className="rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 transition-colors">Continue to Strategy →</button>
           </div>
         )
@@ -334,19 +334,19 @@ function OverviewTab({ skill, onComplete }: { skill: AcademySkill; onComplete: (
       {/* What this skill tests */}
       <div className="space-y-2">
         <h3 className="text-sm font-semibold text-slate-900">What this skill tests</h3>
-        <p className="text-sm text-slate-600 leading-relaxed">{o.whatItTests}</p>
+        <p className="text-sm text-slate-800 leading-relaxed">{o.whatItTests}</p>
       </div>
 
       {/* How it appears */}
       <div className="space-y-2">
         <h3 className="text-sm font-semibold text-slate-900">How it appears on the SAT</h3>
-        <p className="text-sm text-slate-600 leading-relaxed">{o.howItAppears}</p>
+        <p className="text-sm text-slate-800 leading-relaxed">{o.howItAppears}</p>
       </div>
 
       {/* Why students miss it */}
       <div className="space-y-2">
         <h3 className="text-sm font-semibold text-slate-900">Why students miss these questions</h3>
-        <p className="text-sm text-slate-600 leading-relaxed">{o.whyStudentsMissIt}</p>
+        <p className="text-sm text-slate-800 leading-relaxed">{o.whyStudentsMissIt}</p>
       </div>
 
       {/* Skill anatomy */}
@@ -356,7 +356,7 @@ function OverviewTab({ skill, onComplete }: { skill: AcademySkill; onComplete: (
           <ul className="space-y-2">
             {o.skillAnatomy.map((item, i) => (
               <li key={i} className="flex items-start gap-3">
-                <span className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-bold flex items-center justify-center">{i + 1}</span>
+                <span className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-slate-100 text-slate-800 text-[11px] font-bold flex items-center justify-center">{i + 1}</span>
                 <span className="text-sm text-slate-700 leading-relaxed">{item}</span>
               </li>
             ))}
@@ -375,7 +375,7 @@ function OverviewTab({ skill, onComplete }: { skill: AcademySkill; onComplete: (
         <div className="border-t border-slate-100 pt-6 space-y-4">
           <div>
             <h3 className="text-sm font-semibold text-slate-900">One-minute check</h3>
-            <p className="text-xs text-slate-500 mt-0.5">Try this example before moving on. It does not count toward your mastery score.</p>
+            <p className="text-xs text-slate-700 mt-0.5">Try this example before moving on. It does not count toward your mastery score.</p>
           </div>
 
           {!showQuickCheck && !quickCheckDone && (
@@ -427,7 +427,7 @@ function StrategyTab({ skill, onComplete }: { skill: AcademySkill; onComplete: (
 
       {/* Intro */}
       {s.intro && (
-        <p className="text-sm text-slate-600 leading-relaxed">{s.intro}</p>
+        <p className="text-sm text-slate-800 leading-relaxed">{s.intro}</p>
       )}
 
       {/* Step-by-step */}
@@ -451,10 +451,10 @@ function StrategyTab({ skill, onComplete }: { skill: AcademySkill; onComplete: (
             <table className="w-full text-xs min-w-[600px]">
               <thead>
                 <tr className="border-b border-slate-200 bg-slate-50">
-                  <th className="text-left px-3 py-2.5 font-semibold text-slate-600 w-1/4">Situation</th>
-                  <th className="text-left px-3 py-2.5 font-semibold text-slate-600 w-1/4">Valid construction</th>
-                  <th className="text-left px-3 py-2.5 font-semibold text-slate-600 w-1/4">Example</th>
-                  <th className="text-left px-3 py-2.5 font-semibold text-slate-600 w-1/4">Common error</th>
+                  <th className="text-left px-3 py-2.5 font-semibold text-slate-800 w-1/4">Situation</th>
+                  <th className="text-left px-3 py-2.5 font-semibold text-slate-800 w-1/4">Valid construction</th>
+                  <th className="text-left px-3 py-2.5 font-semibold text-slate-800 w-1/4">Example</th>
+                  <th className="text-left px-3 py-2.5 font-semibold text-slate-800 w-1/4">Common error</th>
                 </tr>
               </thead>
               <tbody>
@@ -462,7 +462,7 @@ function StrategyTab({ skill, onComplete }: { skill: AcademySkill; onComplete: (
                   <tr key={i} className={cn('border-b border-slate-100 last:border-0', i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50')}>
                     <td className="px-3 py-2.5 text-slate-700 align-top">{row.situation}</td>
                     <td className="px-3 py-2.5 text-emerald-700 font-medium align-top">{row.valid}</td>
-                    <td className="px-3 py-2.5 text-slate-600 align-top italic">{row.example}</td>
+                    <td className="px-3 py-2.5 text-slate-800 align-top italic">{row.example}</td>
                     <td className="px-3 py-2.5 text-red-600 align-top">{row.invalid}</td>
                   </tr>
                 ))}
@@ -480,7 +480,7 @@ function StrategyTab({ skill, onComplete }: { skill: AcademySkill; onComplete: (
 
       {/* When not to overthink */}
       <div className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3.5">
-        <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 mb-1">When not to overthink</p>
+        <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-700 mb-1">When not to overthink</p>
         <p className="text-sm text-slate-700 leading-relaxed">{s.whenNotToOverthink}</p>
       </div>
 
@@ -489,7 +489,7 @@ function StrategyTab({ skill, onComplete }: { skill: AcademySkill; onComplete: (
         <div className="border-t border-slate-100 pt-6 space-y-4">
           <div>
             <h3 className="text-sm font-semibold text-slate-900">Try the strategy</h3>
-            <p className="text-xs text-slate-500 mt-0.5">Apply the steps you just read. Complete this to unlock Guided Examples.</p>
+            <p className="text-xs text-slate-700 mt-0.5">Apply the steps you just read. Complete this to unlock Guided Examples.</p>
           </div>
 
           {s.tryItQuestion.stimulus && <StimulusBlock text={s.tryItQuestion.stimulus} label="Text" />}
@@ -567,12 +567,12 @@ function TrapsTab({ skill, onComplete }: { skill: AcademySkill; onComplete: () =
         {categories.length > 1 && (
           <div className="flex flex-wrap gap-1.5">
             <button onClick={() => setFilter('all')}
-              className={cn('rounded-full px-3 py-1 text-xs font-medium transition-colors', filter === 'all' ? 'bg-slate-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200')}>
+              className={cn('rounded-full px-3 py-1 text-xs font-medium transition-colors', filter === 'all' ? 'bg-slate-700 text-white' : 'bg-slate-100 text-slate-800 hover:bg-slate-200')}>
               All
             </button>
             {categories.map(cat => (
               <button key={cat} onClick={() => setFilter(cat)}
-                className={cn('rounded-full px-3 py-1 text-xs font-medium transition-colors', filter === cat ? 'bg-slate-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200')}>
+                className={cn('rounded-full px-3 py-1 text-xs font-medium transition-colors', filter === cat ? 'bg-slate-700 text-white' : 'bg-slate-100 text-slate-800 hover:bg-slate-200')}>
                 {TRAP_CATEGORY_LABEL[cat] ?? cat}
               </button>
             ))}
@@ -600,23 +600,23 @@ function TrapsTab({ skill, onComplete }: { skill: AcademySkill; onComplete: () =
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-sm font-semibold text-slate-800">{trap.title}</span>
                     {trap.category && (
-                      <span className={cn('inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold', TRAP_CATEGORY_COLOR[trap.category] ?? 'bg-slate-50 text-slate-600 border-slate-200')}>
+                      <span className={cn('inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold', TRAP_CATEGORY_COLOR[trap.category] ?? 'bg-slate-50 text-slate-800 border-slate-200')}>
                         {TRAP_CATEGORY_LABEL[trap.category] ?? trap.category}
                       </span>
                     )}
                   </div>
                 </div>
-                <svg className={cn('h-4 w-4 text-slate-400 flex-shrink-0 transition-transform', isOpen && 'rotate-180')} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className={cn('h-4 w-4 text-slate-600 flex-shrink-0 transition-transform', isOpen && 'rotate-180')} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
 
               {isOpen && (
                 <div className="px-4 pb-4 pt-1 space-y-3 bg-white">
-                  <p className="text-sm text-slate-600 leading-relaxed">{trap.description}</p>
+                  <p className="text-sm text-slate-800 leading-relaxed">{trap.description}</p>
 
                   <div className="rounded-lg bg-slate-50 border border-slate-100 px-3.5 py-3 space-y-1">
-                    <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">How to avoid it</p>
+                    <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-700">How to avoid it</p>
                     <p className="text-sm text-slate-700 leading-relaxed">{trap.avoidance}</p>
                   </div>
 
@@ -672,10 +672,10 @@ function GuidedExamplesTab({ examples, onComplete }: { examples: GuidedExample[]
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="space-y-0.5">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs text-slate-500 font-medium">Example {exIdx + 1} of {examples.length}</span>
+            <span className="text-xs text-slate-700 font-medium">Example {exIdx + 1} of {examples.length}</span>
             {ex.level && <LevelBadge level={ex.level} />}
             {ex.subskill && (
-              <span className="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[11px] text-slate-600">{ex.subskill}</span>
+              <span className="inline-flex items-center rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[11px] text-slate-800">{ex.subskill}</span>
             )}
           </div>
           {/* Dot navigation */}
@@ -689,9 +689,9 @@ function GuidedExamplesTab({ examples, onComplete }: { examples: GuidedExample[]
         </div>
         <div className="flex gap-1">
           <button disabled={exIdx === 0} onClick={() => goToExample(exIdx - 1)}
-            className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 text-xs font-medium text-slate-600 px-3 py-1.5 transition-colors">← Prev</button>
+            className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 text-xs font-medium text-slate-800 px-3 py-1.5 transition-colors">← Prev</button>
           <button disabled={exIdx === examples.length - 1} onClick={() => goToExample(exIdx + 1)}
-            className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 text-xs font-medium text-slate-600 px-3 py-1.5 transition-colors">Next →</button>
+            className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-30 text-xs font-medium text-slate-800 px-3 py-1.5 transition-colors">Next →</button>
         </div>
       </div>
 
@@ -771,16 +771,16 @@ function GuidedExamplesTab({ examples, onComplete }: { examples: GuidedExample[]
           {/* Step-by-step walkthrough */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Step-by-step walkthrough — {stepIdx + 1} of {totalSteps}</p>
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-600">Step-by-step walkthrough — {stepIdx + 1} of {totalSteps}</p>
               {stepIdx < totalSteps - 1 && (
                 <button onClick={() => setStepIdx(s => s + 1)}
-                  className="text-xs font-medium text-slate-600 hover:text-slate-800 underline underline-offset-2">Next step →</button>
+                  className="text-xs font-medium text-slate-800 hover:text-slate-800 underline underline-offset-2">Next step →</button>
               )}
             </div>
             <div className="space-y-2">
               {ex.steps.slice(0, stepIdx + 1).map((step, i) => (
                 <div key={i} className={cn('rounded-lg border px-4 py-3 space-y-1', i === stepIdx ? 'border-emerald-200 bg-emerald-50' : 'border-slate-100 bg-slate-50')}>
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Step {i + 1}: {step.instruction}</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-600">Step {i + 1}: {step.instruction}</p>
                   <p className="text-sm text-slate-700 leading-relaxed">{step.content}</p>
                 </div>
               ))}
@@ -790,11 +790,11 @@ function GuidedExamplesTab({ examples, onComplete }: { examples: GuidedExample[]
           {/* Wrong-answer analysis */}
           {ex.wrongAnswerExplanations && Object.keys(ex.wrongAnswerExplanations).length > 0 && (
             <div className="space-y-3">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Why the other choices don&apos;t work</p>
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-600">Why the other choices don&apos;t work</p>
               {(Object.entries(ex.wrongAnswerExplanations) as [AnswerLabel, string][]).map(([label, text]) => (
                 <div key={label} className="flex items-start gap-3">
                   <span className="flex-shrink-0 mt-0.5 w-5 h-5 rounded-full bg-red-100 text-red-600 text-xs font-bold flex items-center justify-center">{label}</span>
-                  <p className="text-sm text-slate-600 leading-relaxed">{text}</p>
+                  <p className="text-sm text-slate-800 leading-relaxed">{text}</p>
                 </div>
               ))}
             </div>
@@ -803,7 +803,7 @@ function GuidedExamplesTab({ examples, onComplete }: { examples: GuidedExample[]
           {/* Coach takeaway */}
           {ex.coachTakeaway && (
             <div className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3.5 space-y-1">
-              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Coach&apos;s takeaway</p>
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-700">Coach&apos;s takeaway</p>
               <p className="text-sm text-slate-700 leading-relaxed">{ex.coachTakeaway}</p>
             </div>
           )}
@@ -932,7 +932,7 @@ function DrillTab({
     return (
       <div className="space-y-6 max-w-2xl">
         <h2 className="text-base font-semibold text-slate-900">Practice</h2>
-        <p className="text-sm text-slate-600 leading-relaxed">Choose a practice mode. All modes use the same question set; your responses are saved to your mastery history.</p>
+        <p className="text-sm text-slate-800 leading-relaxed">Choose a practice mode. All modes use the same question set; your responses are saved to your mastery history.</p>
         <div className="grid gap-3 sm:grid-cols-3">
           {([
             { id: 'learn' as DrillMode, label: 'Learn Mode', desc: 'Immediate feedback after each question. Take your time.', icon: '📖' },
@@ -944,7 +944,7 @@ function DrillTab({
               className={cn('rounded-xl border p-4 text-left space-y-2 transition-colors', opt.id === 'missed' && missedIds.size === 0 ? 'border-slate-200 bg-slate-50 opacity-50 cursor-not-allowed' : 'border-slate-200 bg-white hover:border-emerald-300 hover:bg-emerald-50 cursor-pointer')}>
               <div className="text-xl">{opt.icon}</div>
               <p className="text-sm font-semibold text-slate-800">{opt.label}</p>
-              <p className="text-xs text-slate-500 leading-relaxed">{opt.desc}</p>
+              <p className="text-xs text-slate-700 leading-relaxed">{opt.desc}</p>
             </button>
           ))}
         </div>
@@ -959,7 +959,7 @@ function DrillTab({
         <h2 className="text-base font-semibold text-slate-900">Practice Complete</h2>
         <div className="rounded-xl border border-slate-200 bg-white p-6 text-center space-y-2">
           <div className={cn('text-5xl font-bold', pct >= 80 ? 'text-emerald-600' : pct >= 60 ? 'text-amber-500' : 'text-red-500')}>{pct}%</div>
-          <p className="text-slate-500 text-sm">{score} of {activeQuestions.length} correct</p>
+          <p className="text-slate-700 text-sm">{score} of {activeQuestions.length} correct</p>
           <div className="flex gap-2 justify-center flex-wrap pt-1">
             {answers.map((a, i) => (
               <span key={i} className={cn('w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center', a.correct ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700')}>{i + 1}</span>
@@ -990,11 +990,11 @@ function DrillTab({
         )}
 
         <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">Cross-skill recognition</p>
-          <p className="text-xs text-slate-500">Now identify skill types without labels — three questions from other skills.</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-600">Cross-skill recognition</p>
+          <p className="text-xs text-slate-700">Now identify skill types without labels — three questions from other skills.</p>
         </div>
         <MixedRecognitionCheck excludeSlug={skillSlug} onComplete={markComplete} />
-        <button onClick={() => { setMode(null) }} className="text-xs text-slate-500 hover:text-slate-700 underline underline-offset-2">Try a different mode</button>
+        <button onClick={() => { setMode(null) }} className="text-xs text-slate-700 hover:text-slate-700 underline underline-offset-2">Try a different mode</button>
       </div>
     )
   }
@@ -1004,7 +1004,7 @@ function DrillTab({
     <div className="space-y-5 max-w-2xl">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs font-medium text-slate-500">{qIdx + 1} / {activeQuestions.length}</span>
+          <span className="text-xs font-medium text-slate-700">{qIdx + 1} / {activeQuestions.length}</span>
           <span className={cn('inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium',
             q.difficulty === 'easy' ? 'bg-green-50 text-green-700 border-green-200' :
             q.difficulty === 'medium' ? 'bg-amber-50 text-amber-700 border-amber-200' :
@@ -1012,15 +1012,15 @@ function DrillTab({
             {q.difficulty.charAt(0).toUpperCase() + q.difficulty.slice(1)}
           </span>
           {q.level && <LevelBadge level={q.level} />}
-          {q.subskill && <span className="text-[11px] text-slate-400">{q.subskill}</span>}
+          {q.subskill && <span className="text-[11px] text-slate-600">{q.subskill}</span>}
         </div>
         <div className="flex items-center gap-3">
           {mode === 'timed' && (
-            <span className={cn('text-sm font-mono font-bold', timeLeft <= 15 ? 'text-red-500' : 'text-slate-600')}>
+            <span className={cn('text-sm font-mono font-bold', timeLeft <= 15 ? 'text-red-500' : 'text-slate-800')}>
               {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, '0')}
             </span>
           )}
-          <button onClick={() => setMode(null)} className="text-xs text-slate-400 hover:text-slate-600 transition-colors">← Modes</button>
+          <button onClick={() => setMode(null)} className="text-xs text-slate-600 hover:text-slate-800 transition-colors">← Modes</button>
         </div>
       </div>
 
@@ -1055,11 +1055,11 @@ function DrillTab({
       {/* Confidence picker — learn mode only */}
       {mode === 'learn' && !revealed && selected && (
         <div className="space-y-1.5">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">How confident are you?</p>
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-600">How confident are you?</p>
           <div className="flex gap-2">
             {(['guessing', 'unsure', 'confident'] as const).map(c => (
               <button key={c} onClick={() => setConfidence(c)}
-                className={cn('rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors capitalize', confidence === c ? 'border-emerald-400 bg-emerald-50 text-emerald-700' : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50')}>
+                className={cn('rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors capitalize', confidence === c ? 'border-emerald-400 bg-emerald-50 text-emerald-700' : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-50')}>
                 {c}
               </button>
             ))}
@@ -1080,15 +1080,15 @@ function DrillTab({
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">{q.explanation}</p>
               {q.wrongAnswerExplanations && selected && selected !== q.correctAnswer && q.wrongAnswerExplanations[selected] && (
-                <p className="text-xs text-slate-500 leading-relaxed border-t border-current/10 pt-2">
+                <p className="text-xs text-slate-700 leading-relaxed border-t border-current/10 pt-2">
                   <span className="font-bold">Why ({selected}) is wrong:</span> {q.wrongAnswerExplanations[selected]}
                 </p>
               )}
               {q.teachingPoint && (
-                <p className="text-xs text-slate-500 italic border-t border-current/10 pt-2">{q.teachingPoint}</p>
+                <p className="text-xs text-slate-700 italic border-t border-current/10 pt-2">{q.teachingPoint}</p>
               )}
               {q.errorCategory && !selected || selected === q.correctAnswer ? null : (
-                <p className="text-[11px] text-slate-400">Category: {q.errorCategory}</p>
+                <p className="text-[11px] text-slate-600">Category: {q.errorCategory}</p>
               )}
             </div>
             <button onClick={handleNext}
@@ -1180,20 +1180,20 @@ function MasteryCheckTab({ skill, masteryData, onComplete }: {
         <h2 className="text-base font-semibold text-slate-900">Mastery Check</h2>
         {masteryData && (
           <div className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-3.5 space-y-1">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Current mastery</p>
-            <p className={cn('text-2xl font-bold', MASTERY_COLOR[masteryData.masteryStatus] ?? 'text-slate-600')}>
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-700">Current mastery</p>
+            <p className={cn('text-2xl font-bold', MASTERY_COLOR[masteryData.masteryStatus] ?? 'text-slate-800')}>
               {Math.round(masteryData.masteryScore)}%
             </p>
-            <p className="text-xs text-slate-500">{MASTERY_LABEL[masteryData.masteryStatus] ?? masteryData.masteryStatus} · {masteryData.totalAttempts} total attempts</p>
+            <p className="text-xs text-slate-700">{MASTERY_LABEL[masteryData.masteryStatus] ?? masteryData.masteryStatus} · {masteryData.totalAttempts} total attempts</p>
           </div>
         )}
 
         <div className="space-y-3">
-          <p className="text-sm text-slate-600 leading-relaxed">
+          <p className="text-sm text-slate-800 leading-relaxed">
             This {questions.length}-question assessment covers all major subskills for this lesson. Your results update your mastery score.
           </p>
           <div className="rounded-lg border border-slate-200 bg-white p-4 space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">Mastery thresholds</p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2">Mastery thresholds</p>
             {[
               { label: 'Needs Review', range: 'Below 60%', color: 'text-red-600' },
               { label: 'Developing', range: '60–79%', color: 'text-amber-600' },
@@ -1202,7 +1202,7 @@ function MasteryCheckTab({ skill, masteryData, onComplete }: {
             ].map(({ label, range, color }) => (
               <div key={label} className="flex items-center justify-between text-xs">
                 <span className={cn('font-semibold', color)}>{label}</span>
-                <span className="text-slate-400">{range}</span>
+                <span className="text-slate-600">{range}</span>
               </div>
             ))}
           </div>
@@ -1223,7 +1223,7 @@ function MasteryCheckTab({ skill, masteryData, onComplete }: {
         <div className="rounded-xl border border-slate-200 bg-white p-6 text-center space-y-2">
           <div className={cn('text-5xl font-bold', masteryStatusColor)}>{pct}%</div>
           <p className={cn('text-base font-semibold', masteryStatusColor)}>{masteryStatus}</p>
-          <p className="text-sm text-slate-500">{score} of {questions.length} correct</p>
+          <p className="text-sm text-slate-700">{score} of {questions.length} correct</p>
           <div className="flex gap-2 justify-center flex-wrap pt-2">
             {answers.map((a, i) => (
               <span key={i} className={cn('w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center', a.correct ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700')}>{i + 1}</span>
@@ -1241,7 +1241,7 @@ function MasteryCheckTab({ skill, masteryData, onComplete }: {
                 return (
                   <div key={subskill} className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-600 font-medium">{subskill}</span>
+                      <span className="text-slate-800 font-medium">{subskill}</span>
                       <span className={cn('font-semibold', p >= 80 ? 'text-emerald-600' : p >= 60 ? 'text-amber-600' : 'text-red-600')}>{p}%</span>
                     </div>
                     <div className="w-full bg-slate-100 rounded-full h-1.5">
@@ -1256,7 +1256,7 @@ function MasteryCheckTab({ skill, masteryData, onComplete }: {
 
         {/* Recommendation */}
         <div className="rounded-lg border border-slate-200 bg-slate-50 px-4 py-4 space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Recommended next step</p>
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-700">Recommended next step</p>
           <p className="text-sm text-slate-700 leading-relaxed">
             {pct >= 90
               ? 'Excellent work. Move on to the next skill in your learning path.'
@@ -1281,16 +1281,16 @@ function MasteryCheckTab({ skill, masteryData, onComplete }: {
     <div className="space-y-5 max-w-2xl">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs text-slate-500 font-medium">Question {qIdx + 1} of {questions.length}</span>
+          <span className="text-xs text-slate-700 font-medium">Question {qIdx + 1} of {questions.length}</span>
           <span className={cn('inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium',
             q.difficulty === 'easy' ? 'bg-green-50 text-green-700 border-green-200' :
             q.difficulty === 'medium' ? 'bg-amber-50 text-amber-700 border-amber-200' :
             'bg-red-50 text-red-700 border-red-200')}>
             {q.difficulty.charAt(0).toUpperCase() + q.difficulty.slice(1)}
           </span>
-          {q.subskill && <span className="text-[11px] text-slate-400">{q.subskill}</span>}
+          {q.subskill && <span className="text-[11px] text-slate-600">{q.subskill}</span>}
         </div>
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Mastery Check</span>
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-600">Mastery Check</span>
       </div>
 
       <div className="w-full bg-slate-100 rounded-full h-1.5">
@@ -1362,7 +1362,7 @@ function StageStepper({ tabs, activeTab, stagesCompleted, onTabClick }: {
             onClick={() => onTabClick(tab.id)}
             className={cn(
               'flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-colors',
-              isActive ? 'bg-emerald-600 text-white' : isDone ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100',
+              isActive ? 'bg-emerald-600 text-white' : isDone ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100' : 'text-slate-700 hover:text-slate-700 hover:bg-slate-100',
             )}>
             {isDone && !isActive && (
               <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -1390,7 +1390,7 @@ export default function LessonPage({ params }: Props) {
   const skill = getSkill(skillSlug)
   const domain = getDomainForSkill(skillSlug)
   const domainLabel = domain ? (DOMAIN_DISPLAY[domain] ?? domain) : null
-  const domainBadgeCls = domain ? (DOMAIN_BADGE[domain] ?? 'border-slate-200 bg-slate-50 text-slate-600') : ''
+  const domainBadgeCls = domain ? (DOMAIN_BADGE[domain] ?? 'border-slate-200 bg-slate-50 text-slate-800') : ''
 
   // Fetch mastery data
   useEffect(() => {
@@ -1418,8 +1418,8 @@ export default function LessonPage({ params }: Props) {
   return (
     <div className="space-y-5">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-1.5 text-xs text-slate-400">
-        <Link href="/sat-rw-academy" className="hover:text-slate-600 transition-colors">R&W Academy</Link>
+      <nav className="flex items-center gap-1.5 text-xs text-slate-600">
+        <Link href="/sat-rw-academy" className="hover:text-slate-800 transition-colors">R&W Academy</Link>
         <span>/</span>
         <span className="text-slate-700 font-medium">{skill?.title ?? skillSlug}</span>
       </nav>
@@ -1438,25 +1438,25 @@ export default function LessonPage({ params }: Props) {
           {/* Mastery chip */}
           {masteryData ? (
             <div className="text-right space-y-0.5">
-              <p className={cn('text-xl font-bold', MASTERY_COLOR[masteryData.masteryStatus] ?? 'text-slate-600')}>
+              <p className={cn('text-xl font-bold', MASTERY_COLOR[masteryData.masteryStatus] ?? 'text-slate-800')}>
                 {Math.round(masteryData.masteryScore)}%
               </p>
-              <p className="text-xs text-slate-500">{MASTERY_LABEL[masteryData.masteryStatus] ?? masteryData.masteryStatus}</p>
+              <p className="text-xs text-slate-700">{MASTERY_LABEL[masteryData.masteryStatus] ?? masteryData.masteryStatus}</p>
             </div>
           ) : (
             <div className="text-right space-y-0.5">
-              <p className="text-xl font-bold text-slate-300">—</p>
-              <p className="text-xs text-slate-400">No attempts yet</p>
+              <p className="text-xl font-bold text-slate-500">—</p>
+              <p className="text-xs text-slate-600">No attempts yet</p>
             </div>
           )}
         </div>
 
         {/* Objective + meta */}
         {skill?.objective && (
-          <p className="text-sm text-slate-600 leading-relaxed max-w-2xl">{skill.objective}</p>
+          <p className="text-sm text-slate-800 leading-relaxed max-w-2xl">{skill.objective}</p>
         )}
 
-        <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+        <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600">
           {skill?.estimatedMinutes && (
             <span className="flex items-center gap-1">
               <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -1486,7 +1486,7 @@ export default function LessonPage({ params }: Props) {
       <div className="min-h-0">
         {!skill ? (
           <div className="space-y-3">
-            <p className="text-sm text-slate-500">Lesson not found for <code className="text-xs bg-slate-100 px-1.5 py-0.5 rounded">{skillSlug}</code>.</p>
+            <p className="text-sm text-slate-700">Lesson not found for <code className="text-xs bg-slate-100 px-1.5 py-0.5 rounded">{skillSlug}</code>.</p>
             <Link href="/sat-rw-academy" className="inline-flex text-sm text-emerald-600 hover:underline">← Back to R&W Academy</Link>
           </div>
         ) : (

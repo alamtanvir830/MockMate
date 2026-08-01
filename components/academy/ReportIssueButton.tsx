@@ -73,7 +73,7 @@ export function ReportIssueButton({
       <button
         onClick={() => setStage('open')}
         className={cn(
-          'inline-flex items-center gap-1 text-[11px] text-slate-400 hover:text-slate-600 transition-colors',
+          'inline-flex items-center gap-1 text-[11px] text-slate-600 hover:text-slate-800 transition-colors',
           className,
         )}
         aria-label="Report an issue with this content"
@@ -97,7 +97,7 @@ export function ReportIssueButton({
       <p className="font-medium text-slate-800 text-[12px]">Report an Issue</p>
 
       <div className="space-y-1">
-        <label className="text-[11px] text-slate-500">Issue type</label>
+        <label className="text-[11px] text-slate-700">Issue type</label>
         <select
           value={category}
           onChange={e => setCategory(e.target.value)}
@@ -111,7 +111,7 @@ export function ReportIssueButton({
       </div>
 
       <div className="space-y-1">
-        <label className="text-[11px] text-slate-500">Description</label>
+        <label className="text-[11px] text-slate-700">Description</label>
         <textarea
           value={description}
           onChange={e => setDescription(e.target.value)}
@@ -134,7 +134,7 @@ export function ReportIssueButton({
         </button>
         <button
           onClick={() => { setStage('idle'); setCategory(''); setDescription(''); setErrorMsg('') }}
-          className="rounded-md border border-slate-200 text-slate-600 text-[11px] font-medium px-3 py-1.5 hover:bg-slate-50 transition-colors"
+          className="rounded-md border border-slate-200 text-slate-800 text-[11px] font-medium px-3 py-1.5 hover:bg-slate-50 transition-colors"
         >
           Cancel
         </button>

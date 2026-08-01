@@ -463,7 +463,7 @@ function buildPathItems(
       actionLabel = 'Practice'
     } else {
       status = 'not_started'; statusLabel = 'Not Started'
-      statusBadgeClass = 'bg-slate-100 text-slate-500 border-slate-300'
+      statusBadgeClass = 'bg-slate-100 text-slate-700 border-slate-300'
       actionLabel = 'Start Lesson'
     }
 
@@ -517,7 +517,7 @@ function buildPathItems(
   ): Pick<PathItem, 'status' | 'statusLabel' | 'statusBadgeClass' | 'lockReason'> {
     if (done) return { status: 'completed', statusLabel: 'Completed', statusBadgeClass: 'bg-emerald-100 text-emerald-700 border-emerald-300' }
     if (isRecommendedType) return { status: 'recommended', statusLabel: 'Recommended Next', statusBadgeClass: 'bg-sky-100 text-sky-700 border-sky-300' }
-    if (!unlocked) return { status: 'locked', statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-400 border-slate-200', lockReason: lockMsg }
+    if (!unlocked) return { status: 'locked', statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-600 border-slate-200', lockReason: lockMsg }
     return { status: 'ready', statusLabel: 'Ready', statusBadgeClass: readyBadgeClass }
   }
 
@@ -526,7 +526,7 @@ function buildPathItems(
     reviewDone: boolean,
     lockMsg: string,
   ): Pick<PathItem, 'status' | 'statusLabel' | 'statusBadgeClass' | 'lockReason'> {
-    if (!capCompleted) return { status: 'locked', statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-400 border-slate-200', lockReason: lockMsg }
+    if (!capCompleted) return { status: 'locked', statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-600 border-slate-200', lockReason: lockMsg }
     if (reviewDone) return { status: 'completed', statusLabel: 'Completed', statusBadgeClass: 'bg-emerald-100 text-emerald-700 border-emerald-300' }
     return { status: 'review_required', statusLabel: 'Review Required', statusBadgeClass: 'bg-amber-100 text-amber-700 border-amber-300' }
   }
@@ -620,9 +620,9 @@ function buildPathItems(
   const cap3Done = cap3?.completed ?? false
   let cap3StatusOverride: Pick<PathItem, 'status' | 'statusLabel' | 'statusBadgeClass' | 'lockReason'> | null = null
   if (!cap3Unlocked) {
-    cap3StatusOverride = { status: 'locked', statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-400 border-slate-200', lockReason: 'Complete your Capstone 2 Review to unlock Capstone 3.' }
+    cap3StatusOverride = { status: 'locked', statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-600 border-slate-200', lockReason: 'Complete your Capstone 2 Review to unlock Capstone 3.' }
   } else if (!cap3Available) {
-    cap3StatusOverride = { status: 'coming_soon', statusLabel: 'Coming Soon', statusBadgeClass: 'bg-slate-100 text-slate-400 border-slate-200' }
+    cap3StatusOverride = { status: 'coming_soon', statusLabel: 'Coming Soon', statusBadgeClass: 'bg-slate-100 text-slate-600 border-slate-200' }
   }
   const cap3s = cap3StatusOverride ?? mkStatus(
     cap3Done,
@@ -652,7 +652,7 @@ function buildPathItems(
     'Complete Capstone 3 to unlock your personalized review.',
   )
   const cap3rsStatus = (!cap3Available && !cap3Done)
-    ? { status: 'locked' as PathItemStatus, statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-400 border-slate-200', lockReason: 'Complete Capstone 3 to unlock your personalized review.' }
+    ? { status: 'locked' as PathItemStatus, statusLabel: 'Locked', statusBadgeClass: 'bg-slate-100 text-slate-600 border-slate-200', lockReason: 'Complete Capstone 3 to unlock your personalized review.' }
     : cap3rsBase
   const capstone3ReviewItem: PathItem = {
     id: 'capstone-3-review', type: 'capstone_review', rowNum: base + 6,
@@ -726,7 +726,7 @@ function buildPathItems(
   } else {
     satStatus = 'locked'
     satStatusLabel = 'Locked'
-    satStatusBadgeClass = 'bg-slate-100 text-slate-400 border-slate-200'
+    satStatusBadgeClass = 'bg-slate-100 text-slate-600 border-slate-200'
     satActionLabel = 'Locked'
     satActionEnabled = false
     satLockReason = 'Complete the Final R&W Mastery Check to unlock your full-length SAT exam milestone.'
@@ -777,8 +777,8 @@ function PathItemRow({
       <div className="rounded-lg border border-slate-100 bg-slate-50 px-4 py-3">
         <div className="flex items-center gap-3 flex-wrap">
           <div className="flex-1 min-w-[8rem]">
-            <p className="text-sm font-semibold text-slate-500">{item.title}</p>
-            <p className="text-[12px] text-slate-400 mt-0.5 leading-snug">{item.description}</p>
+            <p className="text-sm font-semibold text-slate-700">{item.title}</p>
+            <p className="text-[12px] text-slate-600 mt-0.5 leading-snug">{item.description}</p>
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <span className={cn('text-[11px] font-semibold px-2 py-0.5 rounded-full border', item.statusBadgeClass)}>
@@ -802,13 +802,13 @@ function PathItemRow({
         'flex items-center gap-3 flex-wrap rounded-lg border px-4 py-3',
         item.premiumLocked ? 'border-slate-100 bg-slate-50' : 'border-slate-200 bg-white',
       )}>
-        <span className="text-xs font-bold text-slate-300 w-4 shrink-0">{item.rowNum}</span>
+        <span className="text-xs font-bold text-slate-500 w-4 shrink-0">{item.rowNum}</span>
         <div className="flex-1 min-w-[8rem]">
-          <p className={cn('text-sm font-semibold truncate', item.premiumLocked ? 'text-slate-500' : 'text-slate-900')}>{item.title}</p>
+          <p className={cn('text-sm font-semibold truncate', item.premiumLocked ? 'text-slate-700' : 'text-slate-900')}>{item.title}</p>
           {item.premiumLocked ? (
-            <p className="text-[11px] text-slate-400 mt-0.5">Not Assessed</p>
+            <p className="text-[11px] text-slate-600 mt-0.5">Not Assessed</p>
           ) : item.diagnosticPct !== null && item.diagnosticPct !== undefined ? (
-            <p className="text-[11px] text-slate-400 mt-0.5">
+            <p className="text-[11px] text-slate-600 mt-0.5">
               Diagnostic: {item.diagnosticPct}% ({item.diagnosticScore})
             </p>
           ) : null}
@@ -860,14 +860,14 @@ function PathItemRow({
     <div className={cn('rounded-lg border px-4 py-3', borderClass)}>
       <div className="flex items-center gap-3 flex-wrap">
         <div className="flex-1 min-w-[8rem]">
-          <p className={cn('text-sm font-semibold', isLocked ? 'text-slate-400' : 'text-slate-900')}>
+          <p className={cn('text-sm font-semibold', isLocked ? 'text-slate-600' : 'text-slate-900')}>
             {item.title}
           </p>
-          <p className={cn('text-[12px] mt-0.5 leading-snug', isLocked ? 'text-slate-400' : 'text-slate-500')}>
+          <p className={cn('text-[12px] mt-0.5 leading-snug', isLocked ? 'text-slate-600' : 'text-slate-700')}>
             {item.description}
           </p>
           {item.details && (
-            <p className="text-[11px] text-slate-400 mt-0.5">{item.details}</p>
+            <p className="text-[11px] text-slate-600 mt-0.5">{item.details}</p>
           )}
           {item.accuracy !== null && item.accuracy !== undefined && (
             <p className="text-[11px] text-emerald-600 mt-0.5">
@@ -875,7 +875,7 @@ function PathItemRow({
             </p>
           )}
           {item.lockReason && isLocked && (
-            <p className="text-[11px] text-slate-400 mt-1 italic">{item.lockReason}</p>
+            <p className="text-[11px] text-slate-600 mt-1 italic">{item.lockReason}</p>
           )}
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
@@ -907,13 +907,13 @@ function PathItemRow({
             </Link>
           )
         ) : (
-          <span className="shrink-0 text-xs text-slate-300 whitespace-nowrap">{item.actionLabel}</span>
+          <span className="shrink-0 text-xs text-slate-500 whitespace-nowrap">{item.actionLabel}</span>
         )}
       </div>
 
       {showWeakSkills && (
         <div className="mt-2 pt-2 border-t border-slate-100 space-y-1.5">
-          <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">Weak areas to address</p>
+          <p className="text-[11px] font-semibold text-slate-700 uppercase tracking-wide">Weak areas to address</p>
           {item.weakestSlugs!.map(slug => {
             const m = mastery[slug]
             const done = m?.status === 'proficient' || m?.status === 'mastered'
@@ -921,7 +921,7 @@ function PathItemRow({
             return (
               <div key={slug} className="flex items-center gap-2">
                 {done
-                  ? <span className="text-[11px] text-slate-400 line-through flex-1">{name}</span>
+                  ? <span className="text-[11px] text-slate-600 line-through flex-1">{name}</span>
                   : <span className="text-[11px] text-amber-700 flex-1">{name}</span>
                 }
                 {done
@@ -952,7 +952,7 @@ function StatBox({ value, label, color = 'slate' }: { value: number; label: stri
       <p className={cn('text-2xl font-bold',
         color === 'emerald' ? 'text-emerald-600' : color === 'blue' ? 'text-sky-600' : 'text-slate-900',
       )}>{value}</p>
-      <p className="text-xs text-slate-500 mt-0.5">{label}</p>
+      <p className="text-xs text-slate-700 mt-0.5">{label}</p>
     </div>
   )
 }
@@ -1084,16 +1084,16 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
           <div className="grid gap-6 lg:grid-cols-5">
             <div className="lg:col-span-3 space-y-2">
               <h2 className="text-lg font-bold text-slate-900">Your Personalized Academy</h2>
-              <p className="text-sm text-slate-600 leading-relaxed">
+              <p className="text-sm text-slate-800 leading-relaxed">
                 Your diagnostic results shape the learning path below. Follow the recommended order, or use the academy menu to open any lesson or practice tool directly.
               </p>
               {lessonsCompleted > 0 && (
-                <p className="text-xs text-slate-500">{lessonsCompleted} lesson{lessonsCompleted !== 1 ? 's' : ''} completed</p>
+                <p className="text-xs text-slate-700">{lessonsCompleted} lesson{lessonsCompleted !== 1 ? 's' : ''} completed</p>
               )}
             </div>
 
             <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Your Academy Progress</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-600 mb-4">Your Academy Progress</p>
               <div className="space-y-4">
                 <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-3 space-y-1">
                   <div className="flex items-center justify-between">
@@ -1127,7 +1127,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                           style={{ width: `${Math.round((totalProficient / TOTAL_SKILLS) * 100)}%` }}
                         />
                       </div>
-                      <p className="text-[11px] text-slate-400 text-right">{totalProficient}/{TOTAL_SKILLS} proficient+</p>
+                      <p className="text-[11px] text-slate-600 text-right">{totalProficient}/{TOTAL_SKILLS} proficient+</p>
                     </div>
                   </>
                 )}
@@ -1199,7 +1199,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
           {/* ── Unified Personalized Learning Path ─────────────────────── */}
           {pathItems && pathItems.length > 0 && (
             <div>
-              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400 mb-3">
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-600 mb-3">
                 Your Personalized Learning Path
               </h2>
 
@@ -1211,12 +1211,12 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                       <div className="pt-4">
                         <div className="flex items-center gap-3 mb-2">
                           <div className="h-px flex-1 bg-slate-200" />
-                          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 whitespace-nowrap">
+                          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-600 whitespace-nowrap">
                             Apply Everything You Learned
                           </span>
                           <div className="h-px flex-1 bg-slate-200" />
                         </div>
-                        <p className="text-xs text-slate-500 mb-3">
+                        <p className="text-xs text-slate-700 mb-3">
                           Complete three full R&amp;W Academy Capstones, review your remaining weaknesses, and finish with the Final Mastery Check before taking a full-length SAT exam.
                         </p>
                       </div>
@@ -1230,7 +1230,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                 ))}
               </div>
 
-              <p className="text-[11px] text-slate-400 mt-3">
+              <p className="text-[11px] text-slate-600 mt-3">
                 Skill rows ranked by diagnostic performance · weakest first · Capstone milestones always visible
               </p>
             </div>
@@ -1243,7 +1243,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
         <>
           <div className="space-y-3">
             <h2 className="text-lg font-bold text-slate-900">Welcome to the SAT R&amp;W Academy</h2>
-            <p className="text-sm text-slate-600 leading-relaxed">
+            <p className="text-sm text-slate-800 leading-relaxed">
               This academy covers every major SAT Reading and Writing skill through a structured curriculum:
               diagnose your baseline, learn Writing rules, build vocabulary, develop Reading strategies,
               practice mixed questions, test under timed conditions, and demonstrate mastery.
@@ -1260,7 +1260,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
           {/* ── Premium user: progress card ─────────────────────────────── */}
           {!loading && isPremium && hasAny && (
             <div className="rounded-xl border border-slate-200 bg-white p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Your Academy Progress</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-600 mb-4">Your Academy Progress</p>
               <div className="space-y-4">
                 <div className="grid grid-cols-3 gap-3">
                   <StatBox value={totalStarted} label="started" />
@@ -1274,7 +1274,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                       style={{ width: `${Math.round((totalProficient / TOTAL_SKILLS) * 100)}%` }}
                     />
                   </div>
-                  <p className="text-[11px] text-slate-400 text-right">{totalProficient}/{TOTAL_SKILLS} proficient+</p>
+                  <p className="text-[11px] text-slate-600 text-right">{totalProficient}/{TOTAL_SKILLS} proficient+</p>
                 </div>
                 {reviewsDue > 0 && (
                   <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2">
@@ -1318,12 +1318,12 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
               <div className="flex items-start justify-between gap-4 flex-wrap">
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-slate-900">R&amp;W Diagnostic</p>
-                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                  <p className="text-xs text-slate-700 mt-1 leading-relaxed">
                     {hasSavedProgress
                       ? 'You have an in-progress diagnostic. Resume where you left off.'
                       : 'Identify your baseline across all 11 R&W skills and receive a recommended starting path.'}
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-2">26 original SAT-style questions · All 11 skills · ~20 min</p>
+                  <p className="text-[11px] text-slate-600 mt-2">26 original SAT-style questions · All 11 skills · ~20 min</p>
                 </div>
                 <Link
                   href="/sat-rw-academy/diagnostic"
@@ -1332,7 +1332,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                   {hasSavedProgress ? 'Resume Diagnostic →' : 'Start Diagnostic →'}
                 </Link>
               </div>
-              <p className="text-xs text-slate-500 mt-4 pt-4 border-t border-slate-100">
+              <p className="text-xs text-slate-700 mt-4 pt-4 border-t border-slate-100">
                 The diagnostic personalizes the learning path and identifies which skills to prioritize.
               </p>
             </div>
@@ -1349,10 +1349,10 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                       SAT Premium Required
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                  <p className="text-xs text-slate-700 mt-1 leading-relaxed">
                     Identify your baseline across all 11 R&W skills and receive a personalized learning path.
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-2">26 original SAT-style questions · All 11 skills · ~20 min</p>
+                  <p className="text-[11px] text-slate-600 mt-2">26 original SAT-style questions · All 11 skills · ~20 min</p>
                 </div>
                 <Link
                   href="/billing"
@@ -1368,14 +1368,14 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
           {freePreviewItems && freePreviewItems.length > 0 && (
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+                <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-600">
                   Your R&amp;W Academy Learning Path
                 </h2>
-                <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-semibold text-slate-500">
+                <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-semibold text-slate-700">
                   Default Order
                 </span>
               </div>
-              <p className="text-xs text-slate-500 mb-3">
+              <p className="text-xs text-slate-700 mb-3">
                 Complete the R&W Diagnostic with SAT Premium to personalize the order around your weakest skills.
               </p>
 
@@ -1392,12 +1392,12 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                         <div className="pt-4">
                           <div className="flex items-center gap-3 mb-2">
                             <div className="h-px flex-1 bg-slate-200" />
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 whitespace-nowrap">
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600 whitespace-nowrap">
                               Trainers &amp; Practice Tools
                             </span>
                             <div className="h-px flex-1 bg-slate-200" />
                           </div>
-                          <p className="text-xs text-slate-500 mb-3">
+                          <p className="text-xs text-slate-700 mb-3">
                             Vocabulary building, transition mastery, reading speed, spaced review, and mixed practice — all included with SAT Premium.
                           </p>
                         </div>
@@ -1406,12 +1406,12 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                         <div className="pt-4">
                           <div className="flex items-center gap-3 mb-2">
                             <div className="h-px flex-1 bg-slate-200" />
-                            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 whitespace-nowrap">
+                            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-600 whitespace-nowrap">
                               Apply Everything You Learned
                             </span>
                             <div className="h-px flex-1 bg-slate-200" />
                           </div>
-                          <p className="text-xs text-slate-500 mb-3">
+                          <p className="text-xs text-slate-700 mb-3">
                             Complete three full R&amp;W Academy Capstones, review your remaining weaknesses, and finish with the Final Mastery Check before taking a full-length SAT exam.
                           </p>
                         </div>
@@ -1422,7 +1422,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
                 })}
               </div>
 
-              <p className="text-[11px] text-slate-400 mt-3">
+              <p className="text-[11px] text-slate-600 mt-3">
                 Default curriculum order · Complete the R&W Diagnostic with SAT Premium to personalize
               </p>
             </div>
@@ -1431,7 +1431,7 @@ export function AcademyHome({ isPremium }: { isPremium: boolean }) {
       )}
 
       {/* ── Disclaimer ───────────────────────────────────────────────── */}
-      <p className="text-xs text-slate-400 leading-relaxed">
+      <p className="text-xs text-slate-600 leading-relaxed">
         All MockMate Academy content is independently created for practice purposes. MockMate is not affiliated with, endorsed by, or sponsored by College Board. SAT® is a trademark of College Board, which is not affiliated with and does not endorse MockMate.
       </p>
 
