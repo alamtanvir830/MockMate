@@ -28,6 +28,7 @@ function makeDbChain(overrides: Record<string, unknown> = {}) {
   const chain = {
     select: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
+    in: vi.fn().mockReturnThis(),
     not: vi.fn().mockReturnThis(),
     limit: vi.fn().mockReturnThis(),
     maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }),
@@ -149,12 +150,14 @@ describe('getSatTrialEligibility', () => {
     expect(result).toEqual({ eligible: false, reason: 'trial_already_claimed' })
   })
 
-  it('returns trial_already_claimed regardless of claim status (pending, trialing, canceled)', async () => {
+  it('returns trial_already_claimed only for trialing/converted; canceled rows are eligible', async () => {
+    // canceled is filtered out by .in('status', ['trialing','converted']) → claimChain returns null
     mockGetUserById.mockResolvedValue(makeUser({}))
-    const claimChain = makeDbChain({ maybeSingle: vi.fn().mockResolvedValue({ data: { id: 'claim-1', status: 'canceled' }, error: null }) })
-    mockFrom.mockReturnValue(claimChain)
+    const claimChain = makeDbChain({ maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }) })
+    const attemptChain = makeDbChain({ maybeSingle: vi.fn().mockResolvedValue({ data: { id: 'a1' }, error: null }) })
+    mockFrom.mockReturnValueOnce(claimChain).mockReturnValueOnce(attemptChain)
     const result = await getSatTrialEligibility('user-1')
-    expect(result).toEqual({ eligible: false, reason: 'trial_already_claimed' })
+    expect(result).toEqual({ eligible: true, reason: 'eligible' })
   })
 
   // ── 4. no_completed_exam ────────────────────────────────────────────────────

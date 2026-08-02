@@ -44,9 +44,8 @@ export default async function SATForm3ResultsPage({
   // completed attempt may exist only in localStorage with no DB row. The client
   // shows "Attempt not found" for missing localStorage data — no other user's
   // data is exposed. Premium content locks remain enforced via satUpgradeUnlocked=false.
-  // skipCompletedExamCheck: the user is on a results page, so they have a completed
   // attempt; skip the redundant DB re-query in getSatTrialEligibility.
-  const trialEligible = (await getSatTrialEligibility(user.id, { skipCompletedExamCheck: true })).eligible
+  const trialEligible = (await getSatTrialEligibility(user.id)).eligible
   return (
     <SATForm3ResultsClient
       attemptId={attemptId}

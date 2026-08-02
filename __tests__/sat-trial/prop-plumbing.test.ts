@@ -45,6 +45,7 @@ function makeDbChain(overrides: Record<string, unknown> = {}) {
   return {
     select: vi.fn().mockReturnThis(),
     eq: vi.fn().mockReturnThis(),
+    in: vi.fn().mockReturnThis(),
     not: vi.fn().mockReturnThis(),
     limit: vi.fn().mockReturnThis(),
     maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }),
@@ -190,16 +191,18 @@ describe('SATExamTaker trial card prop plumbing — trialEligible is false for e
     expect(result).toBe(false)
   })
 
-  // ── Category 8a: Trial already claimed (any status counts) ─────────────────
-  it('pending claim row: getSatTrialEligibility returns eligible=false', async () => {
+  // ── Category 8a: Active/converted trial blocks eligibility ─────────────────
+  // Only 'trialing' and 'converted' are real trials. 'pending' (abandoned checkout),
+  // 'expired', and 'canceled' do not block re-eligibility.
+  it('pending claim row (abandoned checkout): getSatTrialEligibility returns eligible=true', async () => {
     mockGetUserById.mockResolvedValue(makeUser({}))
-    const claimChain = makeDbChain({
-      maybeSingle: vi.fn().mockResolvedValue({ data: { id: 'c1', status: 'pending' }, error: null }),
-    })
-    mockFrom.mockReturnValue(claimChain)
+    // .in('status', ['trialing','converted']) filters out 'pending' → null returned
+    const claimChain = makeDbChain({ maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }) })
+    const attemptChain = makeDbChain({ maybeSingle: vi.fn().mockResolvedValue({ data: { id: 'a1' }, error: null }) })
+    mockFrom.mockReturnValueOnce(claimChain).mockReturnValueOnce(attemptChain)
     const r = await getSatTrialEligibility('user-1')
-    expect(r.eligible).toBe(false)
-    expect(r.reason).toBe('trial_already_claimed')
+    expect(r.eligible).toBe(true)
+    expect(r.reason).toBe('eligible')
   })
 
   it('trialing claim row: getSatTrialEligibility returns eligible=false', async () => {
@@ -213,15 +216,25 @@ describe('SATExamTaker trial card prop plumbing — trialEligible is false for e
     expect(r.reason).toBe('trial_already_claimed')
   })
 
-  it('canceled claim row: getSatTrialEligibility returns eligible=false (once claimed, always claimed)', async () => {
+  it('canceled claim row: getSatTrialEligibility returns eligible=true (canceled trials can retry)', async () => {
     mockGetUserById.mockResolvedValue(makeUser({}))
-    const claimChain = makeDbChain({
-      maybeSingle: vi.fn().mockResolvedValue({ data: { id: 'c1', status: 'canceled' }, error: null }),
-    })
-    mockFrom.mockReturnValue(claimChain)
+    // .in('status', ['trialing','converted']) filters out 'canceled' → null returned
+    const claimChain = makeDbChain({ maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }) })
+    const attemptChain = makeDbChain({ maybeSingle: vi.fn().mockResolvedValue({ data: { id: 'a1' }, error: null }) })
+    mockFrom.mockReturnValueOnce(claimChain).mockReturnValueOnce(attemptChain)
     const r = await getSatTrialEligibility('user-1')
-    expect(r.eligible).toBe(false)
-    expect(r.reason).toBe('trial_already_claimed')
+    expect(r.eligible).toBe(true)
+    expect(r.reason).toBe('eligible')
+  })
+
+  it('expired claim row: getSatTrialEligibility returns eligible=true (session expired, can retry)', async () => {
+    mockGetUserById.mockResolvedValue(makeUser({}))
+    const claimChain = makeDbChain({ maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }) })
+    const attemptChain = makeDbChain({ maybeSingle: vi.fn().mockResolvedValue({ data: { id: 'a1' }, error: null }) })
+    mockFrom.mockReturnValueOnce(claimChain).mockReturnValueOnce(attemptChain)
+    const r = await getSatTrialEligibility('user-1')
+    expect(r.eligible).toBe(true)
+    expect(r.reason).toBe('eligible')
   })
 
   it('converted claim row: getSatTrialEligibility returns eligible=false', async () => {

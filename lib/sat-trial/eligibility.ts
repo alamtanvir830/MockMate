@@ -20,16 +20,14 @@ export interface SatTrialEligibility {
  * 2. They do NOT currently have SAT Premium (any type: legacy, one-time,
  *    subscription — including admin bypass). Uses fresh metadata via admin
  *    client to bypass JWT cache staleness.
- * 3. They have NOT previously claimed or started a trial (no row in
- *    sat_premium_trial_claims for this user, regardless of offer_version or
- *    status — once any trial is recorded it is non-repeatable).
+ * 3. They do NOT have an active or converted trial. Only status values
+ *    'trialing' and 'converted' represent a real trial — 'pending' (abandoned
+ *    checkout), 'expired' (session expired), and 'canceled' do not block
+ *    re-eligibility. The DB unique constraint on (user_id, offer_version) still
+ *    prevents double-claiming at the DB level.
  * 4. They have completed at least one SAT exam (row in
  *    standardized_exam_attempts WHERE completed_at IS NOT NULL). Any historical
  *    attempt qualifies — no date cutoff is applied.
- *    Pass skipCompletedExamCheck=true when the caller already knows the user
- *    has a completed attempt (e.g. results pages where the attempt ID is in
- *    the URL). This handles the case where save-attempt failed silently and
- *    the DB has no row even though the user genuinely completed the exam.
  *
  * If the sat_premium_trial_claims table is missing (42P01), eligibility returns
  * false with reason 'storage_unavailable' rather than granting a trial on the
@@ -39,7 +37,6 @@ export interface SatTrialEligibility {
  */
 export async function getSatTrialEligibility(
   userId: string,
-  { skipCompletedExamCheck = false }: { skipCompletedExamCheck?: boolean } = {},
 ): Promise<SatTrialEligibility> {
   const admin = createAdminClient()
 
@@ -58,11 +55,13 @@ export async function getSatTrialEligibility(
     return { eligible: false, reason: 'already_premium' }
   }
 
-  // 3. Already claimed a trial (any row for this user, any offer_version, any status)
+  // 3. Active or converted trial check. 'pending' (abandoned checkout), 'expired',
+  //    and 'canceled' do not block re-eligibility — only a real trial does.
   const { data: existingClaim, error: claimError } = await admin
     .from('sat_premium_trial_claims')
     .select('id')
     .eq('user_id', userId)
+    .in('status', ['trialing', 'converted'])
     .maybeSingle()
 
   if (claimError) {
@@ -83,27 +82,21 @@ export async function getSatTrialEligibility(
   // 4. Must have completed at least one SAT exam (completed_at IS NOT NULL ensures
   //    only fully submitted attempts qualify, not in-progress or autosaved ones).
   //    No date filter — any historical completed attempt qualifies.
-  //    skipCompletedExamCheck skips this DB query when the caller already knows
-  //    the user has a completed attempt (e.g. results pages). This handles the
-  //    case where save-attempt failed silently, leaving no DB row even though
-  //    the user genuinely completed the exam.
-  if (!skipCompletedExamCheck) {
-    const { data: attempt, error: attemptError } = await admin
-      .from('standardized_exam_attempts')
-      .select('id')
-      .eq('user_id', userId)
-      .not('completed_at', 'is', null)
-      .limit(1)
-      .maybeSingle()
+  const { data: attempt, error: attemptError } = await admin
+    .from('standardized_exam_attempts')
+    .select('id')
+    .eq('user_id', userId)
+    .not('completed_at', 'is', null)
+    .limit(1)
+    .maybeSingle()
 
-    if (attemptError) {
-      console.error('[eligibility] attempt lookup error', attemptError)
-      return { eligible: false, reason: 'no_completed_exam' }
-    }
+  if (attemptError) {
+    console.error('[eligibility] attempt lookup error', attemptError)
+    return { eligible: false, reason: 'no_completed_exam' }
+  }
 
-    if (!attempt) {
-      return { eligible: false, reason: 'no_completed_exam' }
-    }
+  if (!attempt) {
+    return { eligible: false, reason: 'no_completed_exam' }
   }
 
   return { eligible: true, reason: 'eligible' }

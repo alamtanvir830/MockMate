@@ -448,6 +448,16 @@ export async function POST(req: NextRequest) {
         break
       }
 
+      // ── Abandoned trial checkout ──────────────────────────────────────
+      case 'checkout.session.expired': {
+        const session = event.data.object as Stripe.Checkout.Session
+        if (session.metadata?.is_trial === 'true') {
+          await updateTrialClaimBySession(session.id, { status: 'expired' })
+          console.log(`[webhook] trial checkout session expired: ${session.id}`)
+        }
+        break
+      }
+
       // ── One-time purchase refunds ─────────────────────────────────────
       case 'charge.refunded': {
         const charge = event.data.object as Stripe.Charge
