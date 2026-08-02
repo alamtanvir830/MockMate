@@ -365,7 +365,7 @@ export default async function SATPremadePage() {
         )}
 
         {/* ── Form 3 — per-user 48-hour free window ─────────────────────── */}
-        {form3Access.canCompleteFeedback && form3Access.attemptId ? (
+        {form3ResultsAttemptId && form3FeedbackRequired ? (
           <div className="rounded-xl border border-amber-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
@@ -376,11 +376,11 @@ export default async function SATPremadePage() {
             <h2 className="font-semibold text-slate-900 mb-0.5">Form 3</h2>
             <p className="text-xs text-slate-400">Complete your feedback to unlock full results.</p>
             <SatExamDetails />
-            <Link href={`/premade/sat/form-3/results/${form3Access.attemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
+            <Link href={`/premade/sat/form-3/results/${form3ResultsAttemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
               Complete Feedback →
             </Link>
           </div>
-        ) : form3Access.canViewResult && form3Access.attemptId ? (
+        ) : form3ResultsAttemptId && !form3FeedbackRequired ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
@@ -391,7 +391,7 @@ export default async function SATPremadePage() {
             <h2 className="font-semibold text-slate-900 mb-0.5">Form 3</h2>
             <p className="text-xs text-slate-400">You already completed this exam.</p>
             <SatExamDetails />
-            <Link href={`/premade/sat/form-3/results/${form3Access.attemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors">
+            <Link href={`/premade/sat/form-3/results/${form3ResultsAttemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors">
               View Results →
             </Link>
           </div>
@@ -482,7 +482,7 @@ export default async function SATPremadePage() {
         )}
 
         {/* ── Form 4 ────────────────────────────────────────────────────── */}
-        {form4ResultsAttemptId && !isAdmin && !satUpgradeUnlocked ? (
+        {form4ResultsAttemptId ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
@@ -533,7 +533,7 @@ export default async function SATPremadePage() {
         )}
 
         {/* ── Form 5 ────────────────────────────────────────────────────── */}
-        {form5ResultsAttemptId && !isAdmin && !satUpgradeUnlocked ? (
+        {form5ResultsAttemptId ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
