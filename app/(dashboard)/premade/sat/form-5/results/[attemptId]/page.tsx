@@ -2,7 +2,6 @@ import { createClient } from '@/lib/supabase/server'
 import { getEntitlements } from '@/lib/entitlements'
 import { isMockMateAdmin } from '@/lib/auth/admin'
 import { redirect } from 'next/navigation'
-import { UpgradeGate } from '@/components/shared/upgrade-gate'
 import SATForm5ResultsClient from './SATForm5ResultsClient'
 import { getSatTrialEligibility } from '@/lib/sat-trial/eligibility'
 
@@ -40,36 +39,19 @@ export default async function SATForm5ResultsPage({
     )
   }
 
-  // Non-premium: check if they own a completed Form 5 attempt for this attemptId.
-  // Any user who completed the exam may view their own results.
-  const { data: completedAttempt } = await supabase
-    .from('standardized_exam_attempts')
-    .select('local_attempt_id')
-    .eq('user_id', user.id)
-    .eq('exam_type', 'SAT')
-    .eq('form_number', 5)
-    .eq('local_attempt_id', attemptId)
-    .not('completed_at', 'is', null)
-    .maybeSingle()
-
-  if (completedAttempt) {
-    // They completed this specific attempt — allow result access.
-    // Free users who completed Form 5 may be eligible for the trial.
-    const trialEligible = (await getSatTrialEligibility(user.id)).eligible
-    return (
-      <SATForm5ResultsClient
-        attemptId={attemptId}
-        satUpgradeUnlocked={false}
-        trialEligible={trialEligible}
-      />
-    )
-  }
-
-  // No completed attempt owned by this user — show upgrade gate.
+  // Non-premium authenticated user: allow access to the results client.
+  // The DB ownership check (completed_at IS NOT NULL) is the ideal gate, but
+  // save-attempt is fire-and-forget and can fail silently, leaving a valid
+  // attempt in localStorage with no corresponding DB row. The client will show
+  // "Attempt not found" for data that isn't in localStorage, so there is no
+  // risk of exposing another user's data. Premium content locks remain in force
+  // via satUpgradeUnlocked=false.
+  const trialEligible = (await getSatTrialEligibility(user.id)).eligible
   return (
-    <UpgradeGate
-      title="SAT Premium required to view results"
-      description="Subscribe to SAT Premium to access your SAT Form 5 results, detailed score breakdowns, and AI feedback."
+    <SATForm5ResultsClient
+      attemptId={attemptId}
+      satUpgradeUnlocked={false}
+      trialEligible={trialEligible}
     />
   )
 }
