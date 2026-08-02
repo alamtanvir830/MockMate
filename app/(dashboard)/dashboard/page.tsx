@@ -12,7 +12,7 @@ import { hasSatPremium, isLegacyLifetimeUser } from '@/lib/auth/server'
 import { EmailVerificationBanner } from '@/components/auth/EmailVerificationBanner'
 import { Form3DashboardBanner, Form3CountdownBadge } from '@/components/sat/Form3Countdown'
 import {
-  getForm3FreeWindow,
+  getGlobalForm3Window,
   resolveForm3Access,
 } from '@/lib/premade-exams/sat/form3-access'
 import type { Form3AttemptStatus } from '@/lib/premade-exams/sat/form3-access'
@@ -66,8 +66,8 @@ export default async function DashboardPage() {
 
   // ── Form 3 free-window state (non-premium, non-admin only) ─────────────
   // Skip these DB queries entirely for premium/admin users — they don't need
-  // the timer and we avoid hitting sat_free_exam_access for every premium visit.
-  let form3FreeWindow: Awaited<ReturnType<typeof getForm3FreeWindow>> = null
+  // the timer and we avoid hitting sat_form3_promotion for every premium visit.
+  let form3FreeWindow: Awaited<ReturnType<typeof getGlobalForm3Window>> = null
   let form3InProgressAttemptId: string | null = null
   let form3InProgressStartedAt: string | null = null
   let form3AttemptStatus: Form3AttemptStatus = 'none'
@@ -75,7 +75,7 @@ export default async function DashboardPage() {
 
   if (user && !isAdminUser && !hasPremium) {
     const [form3Window, form3CompletedRow, form3InProgress] = await Promise.all([
-      getForm3FreeWindow(supabase, user.id),
+      getGlobalForm3Window(supabase),
       supabase
         .from('standardized_exam_attempts')
         .select('local_attempt_id, ai_feedback')

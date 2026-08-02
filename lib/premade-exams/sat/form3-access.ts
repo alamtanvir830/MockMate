@@ -5,7 +5,7 @@ import type { SupabaseClient } from '@supabase/supabase-js'
 
 export interface Form3FreeWindow {
   startsAt: string
-  expiresAt: string
+  expiresAt: string  // maps to ends_at in sat_form3_promotion
 }
 
 export type Form3AttemptStatus = 'none' | 'in-progress' | 'completed' | 'feedback-required'
@@ -15,6 +15,10 @@ export interface Form3AccessResult {
   formNumber: 3
   isPremium: boolean
   isAdmin: boolean
+  // Global promotional window state
+  globalWindowEnabled: boolean   // sat_form3_promotion row exists with enabled=true
+  globalWindowStarted: boolean   // starts_at has passed (now >= starts_at)
+  globalWindowExpired: boolean   // ends_at has passed (now >= ends_at)
   accessSource: Form3AccessSource
   freeWindowStartsAt: string | null
   freeWindowExpiresAt: string | null
@@ -30,43 +34,32 @@ export interface Form3AccessResult {
   lockReason: string | null
 }
 
-// ── DB helpers ─────────────────────────────────────────────────────────────────
+// ── Global window DB helper ───────────────────────────────────────────────────
 
 /**
- * Initializes a per-user 48-hour Form 3 free access window on first call.
- * Subsequent calls are no-ops (ON CONFLICT DO NOTHING).
- * Uses the admin (service-role) client to call the SECURITY DEFINER RPC.
- * Non-fatal — never blocks login or auth flow if this fails.
+ * Fetches the current global Form 3 promotional window from sat_form3_promotion.
+ * Returns null when the window is disabled, not yet activated, or the table is missing.
+ *
+ * Returns data regardless of whether ends_at has passed — the resolver determines
+ * live/expired status from the timestamps. This allows the resolver to grant the
+ * "started before expiry" resume grace period.
  */
-export async function ensureForm3FreeWindow(userId: string): Promise<void> {
-  try {
-    const admin = createAdminClient()
-    await admin.rpc('init_form3_free_window', { p_user_id: userId })
-  } catch {
-    // swallow — timer must never block auth or page load
-  }
-}
-
-/**
- * Fetches the Form 3 free window for the given user from sat_free_exam_access.
- * Returns null if no row exists.
- */
-export async function getForm3FreeWindow(
+export async function getGlobalForm3Window(
   supabase: SupabaseClient,
-  userId: string,
 ): Promise<Form3FreeWindow | null> {
   const { data } = await supabase
-    .from('sat_free_exam_access')
-    .select('access_started_at, access_expires_at')
-    .eq('user_id', userId)
-    .eq('form_number', 3)
+    .from('sat_form3_promotion')
+    .select('starts_at, ends_at, enabled')
+    .eq('promotion_key', 'august-2026')
+    .eq('enabled', true)
+    .not('starts_at', 'is', null)
     .maybeSingle()
 
   if (!data) return null
 
   return {
-    startsAt: data.access_started_at as string,
-    expiresAt: data.access_expires_at as string,
+    startsAt: data.starts_at as string,
+    expiresAt: data.ends_at as string,
   }
 }
 
@@ -77,7 +70,7 @@ export async function getForm3FreeWindow(
 // 2. completed → canViewResult
 // 3. admin → full access
 // 4. premium → full access
-// 5. active free window → canStart (if none) or canResume (if in-progress)
+// 5. active global free window → canStart (if none) or canResume (if in-progress)
 // 6. expired window + in-progress started before expiry → canResume only
 // 7. no access → lockReason set
 
@@ -97,11 +90,13 @@ export function resolveForm3Access(opts: {
   const freeWindowExpiresAt = freeWindow?.expiresAt ?? null
   const freeWindowStartsAt = freeWindow?.startsAt ?? null
 
-  const freeWindowActive = freeWindowExpiresAt != null
-    ? now < new Date(freeWindowExpiresAt)
-    : false
+  // Global window state flags
+  const globalWindowEnabled = freeWindow != null
+  const globalWindowStarted = freeWindow != null && new Date(freeWindow.startsAt) <= now
+  const globalWindowExpired = freeWindow != null && new Date(freeWindow.expiresAt) <= now
+  const freeWindowActive = globalWindowEnabled && globalWindowStarted && !globalWindowExpired
 
-  // Remaining seconds in free window
+  // Remaining seconds in free window (non-negative)
   const remainingSeconds = freeWindowExpiresAt
     ? Math.max(0, Math.floor((new Date(freeWindowExpiresAt).getTime() - now.getTime()) / 1000))
     : 0
@@ -111,6 +106,9 @@ export function resolveForm3Access(opts: {
     formNumber: 3,
     isPremium,
     isAdmin,
+    globalWindowEnabled,
+    globalWindowStarted,
+    globalWindowExpired,
     freeWindowStartsAt,
     freeWindowExpiresAt,
     serverNow,
@@ -174,7 +172,7 @@ export function resolveForm3Access(opts: {
     }
   }
 
-  // Priority 5: active free window
+  // Priority 5: active global free window
   if (freeWindowActive) {
     return {
       ...base,
@@ -226,24 +224,28 @@ export function resolveForm3Access(opts: {
  * Returns true if a non-premium user may access Form 3 via the API
  * (save-attempt, in-progress autosave).
  *
+ * Uses the admin client to bypass RLS for the global sat_form3_promotion read.
+ *
  * Allowed when:
- * - Active free window exists, OR
- * - User has an existing in-progress row with localAttemptId matching
- *   the one being saved, AND it was started before the window expired.
+ * - Global window is active (enabled=true AND now between starts_at and ends_at), OR
+ * - User has an existing in-progress row started before the window expired.
  */
 export async function canNonPremiumAccessForm3Api(
-  supabase: SupabaseClient,
+  _supabase: SupabaseClient,
   userId: string,
   localAttemptId: string,
 ): Promise<boolean> {
-  const [freeWindowResult, inProgressResult] = await Promise.all([
-    supabase
-      .from('sat_free_exam_access')
-      .select('access_expires_at')
-      .eq('user_id', userId)
-      .eq('form_number', 3)
+  const admin = createAdminClient()
+
+  const [globalWindowResult, inProgressResult] = await Promise.all([
+    admin
+      .from('sat_form3_promotion')
+      .select('starts_at, ends_at')
+      .eq('promotion_key', 'august-2026')
+      .eq('enabled', true)
+      .not('starts_at', 'is', null)
       .maybeSingle(),
-    supabase
+    admin
       .from('sat_in_progress_attempts')
       .select('local_attempt_id, started_at')
       .eq('user_id', userId)
@@ -251,11 +253,16 @@ export async function canNonPremiumAccessForm3Api(
       .maybeSingle(),
   ])
 
-  const expiresAt = freeWindowResult.data?.access_expires_at as string | undefined
+  const promo = globalWindowResult.data
   const now = new Date()
 
-  // Active window
-  if (expiresAt && now < new Date(expiresAt)) {
+  // Active global window
+  if (
+    promo?.starts_at &&
+    promo?.ends_at &&
+    new Date(promo.starts_at as string) <= now &&
+    now < new Date(promo.ends_at as string)
+  ) {
     return true
   }
 
@@ -264,11 +271,28 @@ export async function canNonPremiumAccessForm3Api(
   if (
     existing &&
     existing.local_attempt_id === localAttemptId &&
-    expiresAt &&
-    new Date(existing.started_at as string) < new Date(expiresAt)
+    promo?.ends_at &&
+    new Date(existing.started_at as string) < new Date(promo.ends_at as string)
   ) {
     return true
   }
 
   return false
+}
+
+// ── Legacy no-op stubs (kept so existing imports compile) ────────────────────
+// Form 3 now uses a global window (sat_form3_promotion). Per-user window
+// initialization is no longer needed for Form 3.
+
+export async function getForm3FreeWindow(
+  supabase: SupabaseClient,  // eslint-disable-line @typescript-eslint/no-unused-vars
+  userId: string,            // eslint-disable-line @typescript-eslint/no-unused-vars
+): Promise<Form3FreeWindow | null> {
+  return null
+}
+
+export async function ensureForm3FreeWindow(
+  userId: string,  // eslint-disable-line @typescript-eslint/no-unused-vars
+): Promise<void> {
+  // No-op: Form 3 uses a global promotional window, not per-user rows.
 }

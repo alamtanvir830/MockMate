@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { UpgradeGate } from '@/components/shared/upgrade-gate'
 import SATExamTakerClient from './SATExamTakerClient'
 import {
-  getForm3FreeWindow,
+  getGlobalForm3Window,
   resolveForm3Access,
 } from '@/lib/premade-exams/sat/form3-access'
 import type { Form3AttemptStatus } from '@/lib/premade-exams/sat/form3-access'
@@ -24,7 +24,7 @@ export default async function SATForm3Page() {
   const { satUpgradeUnlocked } = await getEntitlements()
 
   const [freeWindow, inProgressRow, completedRow] = await Promise.all([
-    getForm3FreeWindow(supabase, user.id),
+    getGlobalForm3Window(supabase),
     supabase
       .from('sat_in_progress_attempts')
       .select('local_attempt_id, started_at')
@@ -85,7 +85,7 @@ export default async function SATForm3Page() {
   return (
     <UpgradeGate
       title="SAT Form 3 — Free Access Window Ended"
-      description="Your 48-hour free access window for SAT Form 3 has ended. Subscribe to SAT Premium to access all 5 SAT practice forms, the 700+ question bank, and both SAT Academies."
+      description="The free promotional access window for SAT Form 3 has ended. Subscribe to SAT Premium to access all 5 SAT practice forms, the 700+ question bank, and both SAT Academies."
     />
   )
 }

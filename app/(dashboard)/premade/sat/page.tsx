@@ -8,7 +8,7 @@ import { ExamHistoryNotice } from '@/components/premade/ExamHistoryNotice'
 import { Form3CountdownBanner, Form3CountdownBadge } from '@/components/sat/Form3Countdown'
 import { SatExamDetails } from '@/components/sat/SatExamDetails'
 import {
-  getForm3FreeWindow,
+  getGlobalForm3Window,
   resolveForm3Access,
 } from '@/lib/premade-exams/sat/form3-access'
 import type { Form3AttemptStatus } from '@/lib/premade-exams/sat/form3-access'
@@ -50,7 +50,7 @@ export default async function SATPremadePage() {
   let form3FeedbackRequired = false
   let form3InProgressAttemptId: string | null = null
   let form3InProgressStartedAt: string | null = null
-  let form3FreeWindow = null as Awaited<ReturnType<typeof getForm3FreeWindow>>
+  let form3FreeWindow = null as Awaited<ReturnType<typeof getGlobalForm3Window>>
 
   // Form 4 state
   let form4ResultsAttemptId: string | null = null
@@ -100,7 +100,7 @@ export default async function SATPremadePage() {
         .select('local_attempt_id, ai_feedback')
         .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 3)
         .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
-      getForm3FreeWindow(supabase, user.id),
+      getGlobalForm3Window(supabase),
       supabase
         .from('standardized_exam_attempts')
         .select('local_attempt_id')
