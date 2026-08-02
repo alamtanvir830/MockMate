@@ -52,6 +52,12 @@ export default async function SATPremadePage() {
   let form3InProgressStartedAt: string | null = null
   let form3FreeWindow = null as Awaited<ReturnType<typeof getForm3FreeWindow>>
 
+  // Form 4 state
+  let form4ResultsAttemptId: string | null = null
+
+  // Form 5 state
+  let form5ResultsAttemptId: string | null = null
+
   if (user) {
     const [
       form1Completed,
@@ -62,6 +68,8 @@ export default async function SATPremadePage() {
       form3InProgress,
       form3FeedbackRow,
       form3Window,
+      form4Completed,
+      form5Completed,
     ] = await Promise.all([
       supabase
         .from('standardized_exam_attempts')
@@ -93,6 +101,16 @@ export default async function SATPremadePage() {
         .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 3)
         .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
       getForm3FreeWindow(supabase, user.id),
+      supabase
+        .from('standardized_exam_attempts')
+        .select('local_attempt_id')
+        .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 4)
+        .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
+      supabase
+        .from('standardized_exam_attempts')
+        .select('local_attempt_id')
+        .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 5)
+        .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
     ])
 
     form1ResultsAttemptId = form1Completed.data?.local_attempt_id ?? null
@@ -107,6 +125,8 @@ export default async function SATPremadePage() {
     form3InProgressAttemptId = form3InProgress.data?.local_attempt_id ?? null
     form3InProgressStartedAt = form3InProgress.data?.started_at ?? null
     form3FreeWindow = form3Window
+    form4ResultsAttemptId = form4Completed.data?.local_attempt_id ?? null
+    form5ResultsAttemptId = form5Completed.data?.local_attempt_id ?? null
 
     const f3row = form3FeedbackRow.data as { local_attempt_id: string; ai_feedback: unknown } | null
     if (f3row && !f3row.ai_feedback) {
@@ -194,7 +214,7 @@ export default async function SATPremadePage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
 
         {/* ── Form 1 ────────────────────────────────────────────────────── */}
-        {form1Completed && (isAdmin || satUpgradeUnlocked) ? (
+        {form1Completed ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
@@ -277,7 +297,7 @@ export default async function SATPremadePage() {
         )}
 
         {/* ── Form 2 ────────────────────────────────────────────────────── */}
-        {form2ResultsAttemptId && (isAdmin || satUpgradeUnlocked) ? (
+        {form2ResultsAttemptId ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
@@ -462,7 +482,22 @@ export default async function SATPremadePage() {
         )}
 
         {/* ── Form 4 ────────────────────────────────────────────────────── */}
-        {isAdmin || satUpgradeUnlocked ? (
+        {form4ResultsAttemptId && !isAdmin && !satUpgradeUnlocked ? (
+          <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
+            <div className="flex items-start justify-between mb-3">
+              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-indigo-600">4</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Completed</span>
+            </div>
+            <h2 className="font-semibold text-slate-900 mb-0.5">Form 4</h2>
+            <p className="text-xs text-slate-400">You already completed this exam.</p>
+            <SatExamDetails />
+            <Link href={`/premade/sat/form-4/results/${form4ResultsAttemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors">
+              View Results →
+            </Link>
+          </div>
+        ) : isAdmin || satUpgradeUnlocked ? (
           <Link href="/premade/sat/form-4" className="rounded-xl border border-indigo-200 bg-white p-5 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
@@ -498,7 +533,22 @@ export default async function SATPremadePage() {
         )}
 
         {/* ── Form 5 ────────────────────────────────────────────────────── */}
-        {isAdmin || satUpgradeUnlocked ? (
+        {form5ResultsAttemptId && !isAdmin && !satUpgradeUnlocked ? (
+          <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
+            <div className="flex items-start justify-between mb-3">
+              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-indigo-600">5</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Completed</span>
+            </div>
+            <h2 className="font-semibold text-slate-900 mb-0.5">Form 5</h2>
+            <p className="text-xs text-slate-400">You already completed this exam.</p>
+            <SatExamDetails />
+            <Link href={`/premade/sat/form-5/results/${form5ResultsAttemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors">
+              View Results →
+            </Link>
+          </div>
+        ) : isAdmin || satUpgradeUnlocked ? (
           <Link href="/premade/sat/form-5" className="rounded-xl border border-indigo-200 bg-white p-5 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
