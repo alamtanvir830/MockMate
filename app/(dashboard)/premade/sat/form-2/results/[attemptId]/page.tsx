@@ -25,24 +25,51 @@ export default async function SATForm2ResultsPage({
   const isAdmin = isMockMateAdmin(user)
   const { satUpgradeUnlocked } = await getEntitlements()
 
-  if (!isAdmin && !satUpgradeUnlocked) {
+  // Admin and Premium always have access
+  if (isAdmin || satUpgradeUnlocked) {
+    // Admins are never eligible for the trial; premium users already have access.
+    const trialEligible = isAdmin
+      ? false
+      : (await getSatTrialEligibility(user.id)).eligible
     return (
-      <UpgradeGate
-        title="SAT Premium required to view results"
-        description="Subscribe to SAT Premium to access your SAT Form 2 results, detailed score breakdowns, and AI feedback."
+      <SATForm2ResultsClient
+        attemptId={attemptId}
+        satUpgradeUnlocked={satUpgradeUnlocked}
+        trialEligible={trialEligible}
       />
     )
   }
 
-  const trialEligible = isAdmin
-    ? false
-    : (await getSatTrialEligibility(user.id)).eligible
+  // Non-premium: check if they own a completed Form 2 attempt for this attemptId.
+  // Any user who completed the exam may view their own results.
+  const { data: completedAttempt } = await supabase
+    .from('standardized_exam_attempts')
+    .select('local_attempt_id')
+    .eq('user_id', user.id)
+    .eq('exam_type', 'SAT')
+    .eq('form_number', 2)
+    .eq('local_attempt_id', attemptId)
+    .not('completed_at', 'is', null)
+    .maybeSingle()
 
+  if (completedAttempt) {
+    // They completed this specific attempt — allow result access.
+    // Free users who completed Form 2 may be eligible for the trial.
+    const trialEligible = (await getSatTrialEligibility(user.id)).eligible
+    return (
+      <SATForm2ResultsClient
+        attemptId={attemptId}
+        satUpgradeUnlocked={false}
+        trialEligible={trialEligible}
+      />
+    )
+  }
+
+  // No completed attempt owned by this user — show upgrade gate.
   return (
-    <SATForm2ResultsClient
-      attemptId={attemptId}
-      satUpgradeUnlocked={satUpgradeUnlocked}
-      trialEligible={trialEligible}
+    <UpgradeGate
+      title="SAT Premium required to view results"
+      description="Subscribe to SAT Premium to access your SAT Form 2 results, detailed score breakdowns, and AI feedback."
     />
   )
 }
