@@ -26,6 +26,10 @@ export interface SatTrialEligibility {
  * 4. They have completed at least one SAT exam (row in
  *    standardized_exam_attempts WHERE completed_at IS NOT NULL). Any historical
  *    attempt qualifies — no date cutoff is applied.
+ *    Pass skipCompletedExamCheck=true when the caller already knows the user
+ *    has a completed attempt (e.g. results pages where the attempt ID is in
+ *    the URL). This handles the case where save-attempt failed silently and
+ *    the DB has no row even though the user genuinely completed the exam.
  *
  * If the sat_premium_trial_claims table is missing (42P01), eligibility returns
  * false with reason 'storage_unavailable' rather than granting a trial on the
@@ -33,7 +37,10 @@ export interface SatTrialEligibility {
  *
  * Uses admin client throughout to bypass JWT cache.
  */
-export async function getSatTrialEligibility(userId: string): Promise<SatTrialEligibility> {
+export async function getSatTrialEligibility(
+  userId: string,
+  { skipCompletedExamCheck = false }: { skipCompletedExamCheck?: boolean } = {},
+): Promise<SatTrialEligibility> {
   const admin = createAdminClient()
 
   // 1. Fresh metadata to bypass JWT cache
@@ -76,21 +83,27 @@ export async function getSatTrialEligibility(userId: string): Promise<SatTrialEl
   // 4. Must have completed at least one SAT exam (completed_at IS NOT NULL ensures
   //    only fully submitted attempts qualify, not in-progress or autosaved ones).
   //    No date filter — any historical completed attempt qualifies.
-  const { data: attempt, error: attemptError } = await admin
-    .from('standardized_exam_attempts')
-    .select('id')
-    .eq('user_id', userId)
-    .not('completed_at', 'is', null)
-    .limit(1)
-    .maybeSingle()
+  //    skipCompletedExamCheck skips this DB query when the caller already knows
+  //    the user has a completed attempt (e.g. results pages). This handles the
+  //    case where save-attempt failed silently, leaving no DB row even though
+  //    the user genuinely completed the exam.
+  if (!skipCompletedExamCheck) {
+    const { data: attempt, error: attemptError } = await admin
+      .from('standardized_exam_attempts')
+      .select('id')
+      .eq('user_id', userId)
+      .not('completed_at', 'is', null)
+      .limit(1)
+      .maybeSingle()
 
-  if (attemptError) {
-    console.error('[eligibility] attempt lookup error', attemptError)
-    return { eligible: false, reason: 'no_completed_exam' }
-  }
+    if (attemptError) {
+      console.error('[eligibility] attempt lookup error', attemptError)
+      return { eligible: false, reason: 'no_completed_exam' }
+    }
 
-  if (!attempt) {
-    return { eligible: false, reason: 'no_completed_exam' }
+    if (!attempt) {
+      return { eligible: false, reason: 'no_completed_exam' }
+    }
   }
 
   return { eligible: true, reason: 'eligible' }

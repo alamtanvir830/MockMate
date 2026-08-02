@@ -40,13 +40,13 @@ export default async function SATForm4ResultsPage({
   }
 
   // Non-premium authenticated user: allow access to the results client.
-  // The DB ownership check (completed_at IS NOT NULL) is the ideal gate, but
-  // save-attempt is fire-and-forget and can fail silently, leaving a valid
-  // attempt in localStorage with no corresponding DB row. The client will show
-  // "Attempt not found" for data that isn't in localStorage, so there is no
-  // risk of exposing another user's data. Premium content locks remain in force
-  // via satUpgradeUnlocked=false.
-  const trialEligible = (await getSatTrialEligibility(user.id)).eligible
+  // save-attempt is fire-and-forget and can fail silently, so a genuine
+  // completed attempt may exist only in localStorage with no DB row. The client
+  // shows "Attempt not found" for missing localStorage data — no other user's
+  // data is exposed. Premium content locks remain enforced via satUpgradeUnlocked=false.
+  // skipCompletedExamCheck: the user is on a results page, so they have a completed
+  // attempt; skip the redundant DB re-query in getSatTrialEligibility.
+  const trialEligible = (await getSatTrialEligibility(user.id, { skipCompletedExamCheck: true })).eligible
   return (
     <SATForm4ResultsClient
       attemptId={attemptId}
