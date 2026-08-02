@@ -33,6 +33,23 @@
   .mm-static-section   { display: block !important; }
 }
 
+/* ── SAT trial card float ────────────────────────────────────────────── */
+@keyframes mm-trial-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-5px); }
+}
+
+.mm-trial-float {
+  animation: mm-trial-float 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-trial-float {
+    animation: none;
+  }
+}
+
 /* ── Social proof badge ──────────────────────────────────────────────── */
 @keyframes mm-fade-in {
   from { opacity: 0; transform: translateY(6px); }
