@@ -3,9 +3,6 @@ import type { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import type { EmailOtpType } from '@supabase/supabase-js'
-import { ensureForm3FreeWindow } from '@/lib/premade-exams/sat/form3-access'
-import { hasSatPremium } from '@/lib/auth/server'
-import { isMockMateAdmin } from '@/lib/auth/admin'
 
 /**
  * Validates that a redirect destination is a safe relative path to prevent open redirects.
@@ -78,9 +75,7 @@ export async function GET(request: NextRequest) {
         } catch { /* non-fatal: trigger already created the profile */ }
       }
 
-      if (cbUser && !isMockMateAdmin(cbUser) && !hasSatPremium(cbUser)) {
-        await ensureForm3FreeWindow(cbUser.id)
-      }
+      // Form 3 now uses a global promotional window — no per-user initialization needed.
       return NextResponse.redirect(new URL(next, origin))
     }
     console.error('[auth/callback] PKCE exchange failed:', error.message)
@@ -97,10 +92,7 @@ export async function GET(request: NextRequest) {
       if (type === 'recovery') {
         return NextResponse.redirect(new URL('/reset-password', origin))
       }
-      const { data: { user: cbUser } } = await supabase.auth.getUser()
-      if (cbUser && !isMockMateAdmin(cbUser) && !hasSatPremium(cbUser)) {
-        await ensureForm3FreeWindow(cbUser.id)
-      }
+      // Form 3 now uses a global promotional window — no per-user initialization needed.
       return NextResponse.redirect(new URL(next, origin))
     }
     console.error('[auth/callback] OTP verify failed:', error.message)

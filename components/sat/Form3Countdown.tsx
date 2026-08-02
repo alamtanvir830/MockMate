@@ -66,10 +66,10 @@ export function Form3CountdownBanner({ expiresAt }: BannerProps) {
       <div className="flex flex-col sm:flex-row sm:items-start gap-3">
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-amber-900 text-sm">
-            Your free SAT Form 3 access is active
+            SAT Form 3 free access is active
           </p>
           <p className="text-xs text-amber-700 mt-0.5">
-            Start Form 3 before your 48-hour access window ends. An exam started before expiration can still be completed afterward.
+            Start Form 3 before the promotional window ends. An exam started before expiration can still be completed afterward.
           </p>
           <p className="text-xs text-amber-600 mt-1">
             Expires: {formatLocalExpiry(expiresAt)}
@@ -114,10 +114,10 @@ export function Form3DashboardBanner({ expiresAt, actionHref, actionLabel }: Das
             SAT Form 3 — Free Access
           </p>
           <p className="text-[15px] font-bold text-amber-900 leading-snug mb-1">
-            Your free SAT Form 3 access is active
+            SAT Form 3 free access is active
           </p>
           <p className="text-[12px] text-amber-700 leading-relaxed">
-            Start Form 3 before your 48-hour access window ends. An exam started before expiration can still be completed afterward.
+            Start Form 3 before the promotional window ends. An exam started before expiration can still be completed afterward.
           </p>
           <div className="mt-2 flex items-center gap-1.5">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 text-amber-600 shrink-0" aria-hidden="true">
