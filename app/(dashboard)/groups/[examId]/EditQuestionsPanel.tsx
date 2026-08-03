@@ -121,7 +121,7 @@ export function EditQuestionsPanel({ examId, questions }: Props) {
           <button
             type="button"
             onClick={() => { setIsOpen((v) => !v); setRemoveError(''); resetAddForm() }}
-            className="shrink-0 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+            className="shrink-0 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors"
           >
             {isOpen ? 'Done' : 'Edit'}
           </button>
@@ -201,7 +201,7 @@ export function EditQuestionsPanel({ examId, questions }: Props) {
             <button
               type="button"
               onClick={() => setShowAddForm(true)}
-              className="flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+              className="flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors"
             >
               <svg
                 fill="none"
@@ -219,7 +219,7 @@ export function EditQuestionsPanel({ examId, questions }: Props) {
               Add question
             </button>
           ) : (
-            <div className="rounded-xl border border-indigo-100 bg-slate-50 p-4 space-y-4">
+            <div className="rounded-xl border border-brand-100 bg-slate-50 p-4 space-y-4">
               <p className="text-sm font-semibold text-slate-800">New question</p>
 
               {addError && (
@@ -238,7 +238,7 @@ export function EditQuestionsPanel({ examId, questions }: Props) {
                   onChange={(e) => setNewQuestion(e.target.value)}
                   rows={3}
                   placeholder="Enter the question stem…"
-                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 resize-none focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                 />
               </div>
 
@@ -261,13 +261,13 @@ export function EditQuestionsPanel({ examId, questions }: Props) {
                         className={cn(
                           'flex h-4 w-4 shrink-0 rounded-full border-2 items-center justify-center transition-colors',
                           isSelected
-                            ? 'border-indigo-600'
+                            ? 'border-brand-600'
                             : 'border-slate-300 hover:border-slate-400',
                         )}
                         title="Mark as correct"
                       >
                         {isSelected && (
-                          <span className="h-2 w-2 rounded-full bg-indigo-600" />
+                          <span className="h-2 w-2 rounded-full bg-brand-600" />
                         )}
                       </button>
                       <span className="shrink-0 text-xs font-semibold text-slate-400 w-4">
@@ -286,7 +286,7 @@ export function EditQuestionsPanel({ examId, questions }: Props) {
                           setNewOptions(updated)
                         }}
                         placeholder={`Option ${LETTERS[i]}`}
-                        className="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        className="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
                       />
                     </div>
                   )

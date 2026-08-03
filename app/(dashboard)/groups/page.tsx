@@ -106,7 +106,7 @@ export default async function GroupsPage() {
                       <span className={cn(
                         'shrink-0 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium border',
                         isCreator
-                          ? 'bg-indigo-50 border-indigo-100 text-indigo-600'
+                          ? 'bg-brand-50 border-brand-100 text-brand-600'
                           : 'bg-slate-50 border-slate-200 text-slate-500',
                       )}>
                         {isCreator ? 'Created by you' : 'Member'}
@@ -165,7 +165,7 @@ export default async function GroupsPage() {
                 </div>
 
                 <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-end">
-                  <span className="text-xs font-medium text-indigo-600">View group →</span>
+                  <span className="text-xs font-medium text-brand-600">View group →</span>
                 </div>
               </Card>
             </Link>

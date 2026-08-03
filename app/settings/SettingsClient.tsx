@@ -75,8 +75,8 @@ function PlanBadge({ isAdmin, entitlements, cancelDate }: PlanBadgeProps) {
   if (isAdmin) {
     return (
       <div className="rounded-xl border border-slate-200 bg-white p-5 flex items-center gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-50">
-          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 text-indigo-600" aria-hidden="true">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-50">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 text-brand-600" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
           </svg>
         </div>
@@ -222,7 +222,7 @@ function ProfileForm({ initialFullName }: { initialFullName: string }) {
         aria-invalid={!!error}
         className={cn(
           'w-full rounded-lg border px-3 py-2.5 text-[13px] text-slate-800 focus:outline-none focus:ring-2 transition-colors',
-          error ? 'bg-red-50 border-red-200 focus:ring-red-200' : 'bg-white border-slate-200 focus:ring-indigo-200'
+          error ? 'bg-red-50 border-red-200 focus:ring-red-200' : 'bg-white border-slate-200 focus:ring-brand-200'
         )}
       />
       {error && (
@@ -236,7 +236,7 @@ function ProfileForm({ initialFullName }: { initialFullName: string }) {
           className={cn(
             'rounded-lg px-4 py-2 text-[13px] font-semibold transition-colors',
             isDirty && !saving
-              ? 'bg-indigo-600 hover:bg-indigo-700 text-white cursor-pointer'
+              ? 'bg-brand-600 hover:bg-brand-700 text-white cursor-pointer'
               : 'bg-slate-100 text-slate-400 cursor-not-allowed'
           )}
         >
@@ -445,7 +445,7 @@ function BillingSection({
       </p>
       <Link
         href="/billing"
-        className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[13px] px-4 py-2.5 transition-colors"
+        className="inline-flex items-center gap-2 rounded-lg bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[13px] px-4 py-2.5 transition-colors"
       >
         <PremiumStar className="text-white" />
         View SAT Premium
@@ -495,7 +495,7 @@ export function ResendVerificationButton({ email }: { email: string }) {
       <button
         onClick={handleResend}
         disabled={loading}
-        className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-indigo-600 hover:text-indigo-800 disabled:opacity-60 transition-colors"
+        className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-brand-600 hover:text-brand-800 disabled:opacity-60 transition-colors"
       >
         {loading ? 'Sending…' : 'Resend Verification Email'}
       </button>
@@ -686,7 +686,7 @@ export default function SettingsClient({
       {/* Help */}
       <p className="text-[12px] text-slate-400 text-center">
         Questions?{' '}
-        <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+        <a href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">
           ranvi@mockmateapp.com
         </a>
       </p>

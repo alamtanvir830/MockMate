@@ -191,7 +191,7 @@ export function AnkiSection({ incorrectQuestions, subject, examTitle, language }
             <button
               type="button"
               onClick={toggleAll}
-              className="shrink-0 text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors"
+              className="shrink-0 text-xs font-medium text-brand-600 hover:text-brand-800 transition-colors"
             >
               {allSelected ? 'Deselect all' : 'Select all'}
             </button>

@@ -42,7 +42,7 @@ const DOMAIN_BADGE: Record<string, string> = {
   'standard-english-conventions': 'border-violet-200 bg-violet-50 text-violet-700',
   'expression-of-ideas': 'border-teal-200 bg-teal-50 text-teal-700',
   'craft-and-structure': 'border-sky-200 bg-sky-50 text-sky-700',
-  'information-and-ideas': 'border-indigo-200 bg-indigo-50 text-indigo-700',
+  'information-and-ideas': 'border-brand-200 bg-brand-50 text-brand-700',
 }
 
 const MASTERY_COLOR: Record<string, string> = {

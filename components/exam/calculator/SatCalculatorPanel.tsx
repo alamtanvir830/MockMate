@@ -305,7 +305,7 @@ export default function SatCalculatorPanel({ open, onClose, moduleKey }: SatCalc
       {showLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-slate-50 z-10">
           <div className="text-center">
-            <div className="h-6 w-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+            <div className="h-6 w-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
             <p className="text-xs text-slate-500">Loading calculator…</p>
           </div>
         </div>
@@ -327,7 +327,7 @@ export default function SatCalculatorPanel({ open, onClose, moduleKey }: SatCalc
           <div className="flex gap-2">
             <button
               onClick={retry}
-              className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 transition-colors"
+              className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2 transition-colors"
             >
               Try Again
             </button>
@@ -374,7 +374,7 @@ export default function SatCalculatorPanel({ open, onClose, moduleKey }: SatCalc
         <div className="shrink-0 border-t border-slate-100 px-4 py-2 text-center">
           <button
             onClick={onClose}
-            className="text-xs font-semibold text-indigo-600 hover:text-indigo-800"
+            className="text-xs font-semibold text-brand-600 hover:text-brand-800"
           >
             ← Return to Question
           </button>
@@ -394,7 +394,7 @@ export default function SatCalculatorPanel({ open, onClose, moduleKey }: SatCalc
     >
       {/* Drag resize handle */}
       <div
-        className="absolute left-0 inset-y-0 w-1 cursor-ew-resize hover:bg-indigo-300 active:bg-indigo-400 transition-colors z-10"
+        className="absolute left-0 inset-y-0 w-1 cursor-ew-resize hover:bg-brand-300 active:bg-brand-400 transition-colors z-10"
         onMouseDown={onResizeMouseDown}
         title="Drag to resize calculator"
         aria-label="Resize calculator panel"

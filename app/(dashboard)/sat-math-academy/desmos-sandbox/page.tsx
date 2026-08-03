@@ -306,7 +306,7 @@ export default function DemosSandboxPage() {
                 className={cn(
                   'px-3 py-2 text-xs font-semibold border-b-2 -mb-px transition-colors',
                   tab === t.id
-                    ? 'border-indigo-600 text-indigo-700'
+                    ? 'border-brand-600 text-brand-700'
                     : 'border-transparent text-slate-500 hover:text-slate-700',
                 )}
               >{t.label}</button>
@@ -320,8 +320,8 @@ export default function DemosSandboxPage() {
           {/* ── Challenges tab ─────────────────────────────────────────────── */}
           {tab === 'challenges' && (
             <div className="divide-y divide-slate-100">
-              <div className="px-4 py-3 bg-indigo-50 border-b border-indigo-100">
-                <p className="text-[11px] text-indigo-700 leading-relaxed">
+              <div className="px-4 py-3 bg-brand-50 border-b border-brand-100">
+                <p className="text-[11px] text-brand-700 leading-relaxed">
                   Type the expressions below into the Desmos calculator on the left, then complete each task. Use the copy button to copy them to your clipboard.
                 </p>
               </div>
@@ -333,12 +333,12 @@ export default function DemosSandboxPage() {
                       onClick={() => setExpandedChallenge(open ? null : c.id)}
                       className="w-full flex items-start gap-2 text-left"
                     >
-                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-[10px] font-bold text-indigo-600">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-[10px] font-bold text-brand-600">
                         {idx + 1}
                       </span>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-semibold text-slate-800 leading-snug">{c.title}</p>
-                        <p className="text-[10px] text-indigo-600 mt-0.5">{c.skill}</p>
+                        <p className="text-[10px] text-brand-600 mt-0.5">{c.skill}</p>
                       </div>
                       <svg
                         viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}
@@ -381,9 +381,9 @@ export default function DemosSandboxPage() {
                         </div>
 
                         {/* Task */}
-                        <div className="rounded-lg border border-indigo-100 bg-indigo-50 px-3 py-2">
-                          <p className="text-[10px] font-semibold text-indigo-500 uppercase tracking-wider mb-0.5">Task</p>
-                          <p className="text-[11px] text-indigo-800 leading-relaxed">{c.task}</p>
+                        <div className="rounded-lg border border-brand-100 bg-brand-50 px-3 py-2">
+                          <p className="text-[10px] font-semibold text-brand-500 uppercase tracking-wider mb-0.5">Task</p>
+                          <p className="text-[11px] text-brand-800 leading-relaxed">{c.task}</p>
                         </div>
 
                         {/* Hint toggle */}
@@ -412,8 +412,8 @@ export default function DemosSandboxPage() {
           {/* ── Techniques tab ──────────────────────────────────────────────── */}
           {tab === 'techniques' && (
             <div className="divide-y divide-slate-100">
-              <div className="px-4 py-3 bg-indigo-50 border-b border-indigo-100">
-                <p className="text-[11px] text-indigo-700 leading-relaxed">
+              <div className="px-4 py-3 bg-brand-50 border-b border-brand-100">
+                <p className="text-[11px] text-brand-700 leading-relaxed">
                   Essential Desmos moves for the SAT. Knowing these turns the calculator from a graphing tool into a problem-solving shortcut.
                 </p>
               </div>
@@ -434,8 +434,8 @@ export default function DemosSandboxPage() {
           {/* ── Reference tab ────────────────────��──────────────────────────── */}
           {tab === 'reference' && (
             <div className="divide-y divide-slate-100">
-              <div className="px-4 py-3 bg-indigo-50 border-b border-indigo-100">
-                <p className="text-[11px] text-indigo-700 leading-relaxed">
+              <div className="px-4 py-3 bg-brand-50 border-b border-brand-100">
+                <p className="text-[11px] text-brand-700 leading-relaxed">
                   Desmos syntax for expressions you&apos;ll encounter on the SAT. Type these directly into the expression bar.
                 </p>
               </div>

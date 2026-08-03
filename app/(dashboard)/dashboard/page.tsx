@@ -199,15 +199,15 @@ export default async function DashboardPage() {
           ? 'bg-emerald-50 border-emerald-200'
           : isFeedback
           ? 'bg-amber-50 border-amber-200'
-          : 'bg-indigo-50 border-indigo-200'
-        const labelClass = isResult ? 'text-emerald-600' : isFeedback ? 'text-amber-600' : 'text-indigo-600'
-        const headingClass = isResult ? 'text-emerald-900' : isFeedback ? 'text-amber-900' : 'text-indigo-900'
-        const bodyClass = isResult ? 'text-emerald-700' : isFeedback ? 'text-amber-700' : 'text-indigo-700'
+          : 'bg-brand-50 border-brand-200'
+        const labelClass = isResult ? 'text-emerald-600' : isFeedback ? 'text-amber-600' : 'text-brand-600'
+        const headingClass = isResult ? 'text-emerald-900' : isFeedback ? 'text-amber-900' : 'text-brand-900'
+        const bodyClass = isResult ? 'text-emerald-700' : isFeedback ? 'text-amber-700' : 'text-brand-700'
         const btnClass = isResult
           ? 'bg-emerald-600 hover:bg-emerald-700'
           : isFeedback
           ? 'bg-amber-500 hover:bg-amber-600'
-          : 'bg-indigo-600 hover:bg-indigo-700'
+          : 'bg-brand-600 hover:bg-brand-700'
         return (
           <div className={`rounded-xl border p-5 flex flex-col sm:flex-row sm:items-start gap-4 flex-wrap ${bannerClass}`}>
             <div className="flex-1 min-w-0">
@@ -324,7 +324,7 @@ export default async function DashboardPage() {
                   <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-xs font-semibold text-amber-700">Admin</span>
                 )}
                 {satCardState.tag === 'upgraded' && (
-                  <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-200 px-2 py-0.5 text-xs font-semibold text-indigo-700">
+                  <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-xs font-semibold text-brand-700">
                     {isLegacyLifetime ? 'Lifetime' : 'Premium'}
                   </span>
                 )}
@@ -347,7 +347,7 @@ export default async function DashboardPage() {
                 <p className="mt-1 text-xs text-amber-600">Admin testing mode: timer disabled</p>
               )}
               {satCardState.tag === 'upgraded' && (
-                <p className="mt-1 text-xs text-indigo-600 font-medium">
+                <p className="mt-1 text-xs text-brand-600 font-medium">
                   {isLegacyLifetime ? 'Lifetime SAT access unlocked — all forms available' : 'SAT Premium active — all forms available'}
                 </p>
               )}
@@ -548,7 +548,7 @@ export default async function DashboardPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <p className="font-medium text-slate-900 truncate">{exam.title}</p>
-                      <span className="shrink-0 inline-flex items-center rounded-full bg-indigo-50 border border-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-600">
+                      <span className="shrink-0 inline-flex items-center rounded-full bg-brand-50 border border-brand-100 px-2 py-0.5 text-xs font-medium text-brand-600">
                         Shared
                       </span>
                     </div>
@@ -559,7 +559,7 @@ export default async function DashboardPage() {
                       View results
                     </Link>
                   ) : (
-                    <Link href={`/exams/${exam.id}/shared`} className="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors shrink-0">
+                    <Link href={`/exams/${exam.id}/shared`} className="text-sm font-medium text-brand-600 hover:text-brand-500 transition-colors shrink-0">
                       Take exam →
                     </Link>
                   )}

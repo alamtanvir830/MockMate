@@ -67,7 +67,7 @@ const SECTION_COLORS = ['indigo', 'emerald', 'violet', 'amber'] as const
 type SectionColor = typeof SECTION_COLORS[number]
 
 const colorMap: Record<SectionColor, { bg: string; text: string; border: string; light: string }> = {
-  indigo: { bg: 'bg-indigo-600', text: 'text-indigo-700', border: 'border-indigo-300', light: 'bg-indigo-50' },
+  indigo: { bg: 'bg-brand-600', text: 'text-brand-700', border: 'border-brand-300', light: 'bg-brand-50' },
   emerald: { bg: 'bg-emerald-600', text: 'text-emerald-700', border: 'border-emerald-300', light: 'bg-emerald-50' },
   violet: { bg: 'bg-violet-600', text: 'text-violet-700', border: 'border-violet-300', light: 'bg-violet-50' },
   amber: { bg: 'bg-amber-500', text: 'text-amber-700', border: 'border-amber-300', light: 'bg-amber-50' },
@@ -949,7 +949,7 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
     <div className="min-h-screen bg-slate-50">
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="flex items-center gap-2 text-sm text-slate-500 mb-6">
-          <Link href="/premade/mcat" className="hover:text-indigo-600">Pre-made Exams / MCAT</Link>
+          <Link href="/premade/mcat" className="hover:text-brand-600">Pre-made Exams / MCAT</Link>
           <span>/</span>
           <span className="text-slate-700 font-medium">Results</span>
         </div>
@@ -1039,7 +1039,7 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
           <h3 className="text-sm font-semibold text-slate-700 mb-4">AI Performance Feedback</h3>
           {aiFeedbackLoading && (
             <div className="flex items-center gap-2 text-sm text-slate-400 py-4">
-              <svg className="animate-spin h-4 w-4 text-indigo-500" fill="none" viewBox="0 0 24 24">
+              <svg className="animate-spin h-4 w-4 text-brand-500" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
@@ -1121,7 +1121,7 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
                         <span className="text-xs text-slate-400">{q.discipline}</span>
                         <span className="text-slate-200">·</span>
                         <span className="text-xs text-slate-400">{q.difficulty}</span>
-                        {passage && <span className="text-xs text-indigo-400">passage</span>}
+                        {passage && <span className="text-xs text-brand-400">passage</span>}
                       </div>
                       <p className="text-sm text-slate-700 line-clamp-2">{q.question}</p>
                     </div>
@@ -1156,8 +1156,8 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
                           <p className="text-sm text-slate-600">{expl}</p>
                         </div>
                       ))}
-                      <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-3">
-                        <p className="text-[11px] font-semibold text-indigo-700 uppercase tracking-wide mb-1">Teaching Point</p>
+                      <div className="bg-brand-50 border border-brand-100 rounded-lg p-3">
+                        <p className="text-[11px] font-semibold text-brand-700 uppercase tracking-wide mb-1">Teaching Point</p>
                         <p className="text-sm text-slate-700">{q.teachingPoint}</p>
                       </div>
                     </div>
@@ -1169,7 +1169,7 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
         </div>
 
         <div className="mt-6 text-center">
-          <Link href="/premade/mcat" className="text-sm font-medium text-indigo-600 hover:text-indigo-800">
+          <Link href="/premade/mcat" className="text-sm font-medium text-brand-600 hover:text-brand-800">
             ← Back to MCAT Practice
           </Link>
         </div>
@@ -1181,7 +1181,7 @@ function ResultsScreen({ form, flatSections, attempt, aiFeedback, aiFeedbackLoad
 function FeedbackBlock({ label, content, color }: { label: string; content: string; color: string }) {
   const colorCls: Record<string, string> = {
     emerald: 'text-emerald-700 bg-emerald-50 border-emerald-100',
-    indigo: 'text-indigo-700 bg-indigo-50 border-indigo-100',
+    indigo: 'text-brand-700 bg-brand-50 border-brand-100',
     amber: 'text-amber-700 bg-amber-50 border-amber-100',
     violet: 'text-violet-700 bg-violet-50 border-violet-100',
     red: 'text-red-700 bg-red-50 border-red-100',

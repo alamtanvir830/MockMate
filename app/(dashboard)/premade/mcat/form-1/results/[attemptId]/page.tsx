@@ -21,7 +21,7 @@ export default function MCATResultsPage() {
     return (
       <div className="flex items-center justify-center min-h-[40vh]">
         <div className="flex items-center gap-3 text-sm text-slate-500">
-          <svg className="animate-spin h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24">
+          <svg className="animate-spin h-4 w-4 text-brand-600" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
           </svg>
@@ -36,7 +36,7 @@ export default function MCATResultsPage() {
       <div className="flex flex-col items-center justify-center min-h-[40vh] text-center gap-4">
         <p className="text-slate-600 font-medium">Attempt not found.</p>
         <p className="text-sm text-slate-400">This result may have been cleared from browser storage.</p>
-        <Link href="/exams" className="text-sm font-medium text-indigo-600 hover:underline">
+        <Link href="/exams" className="text-sm font-medium text-brand-600 hover:underline">
           ← Back to Exam History
         </Link>
       </div>

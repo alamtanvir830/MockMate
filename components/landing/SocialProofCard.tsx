@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react'
 export const LANDING_USER_COUNT_LABEL = '975+'
 
 const AVATARS = [
-  { initials: 'S', bg: '#dbeafe', color: '#44A5F0' },
+  { initials: 'S', bg: '#dbeafe', color: 'var(--color-brand-500)' },
   { initials: 'M', bg: '#e0f2fe', color: '#0369a1' },
   { initials: 'A', bg: '#ede9fe', color: '#5b21b6' },
   { initials: 'J', bg: '#fef3c7', color: '#92400e' },
@@ -85,7 +85,7 @@ export function SocialProofCard({ className = '' }: SocialProofCardProps) {
         <svg
           aria-hidden="true"
           focusable="false"
-          className="pointer-events-none absolute -top-2 -right-1.5 h-[14px] w-[14px] text-[#44A5F0] opacity-50 select-none"
+          className="pointer-events-none absolute -top-2 -right-1.5 h-[14px] w-[14px] text-brand-500 opacity-50 select-none"
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -121,7 +121,7 @@ export function SocialProofCard({ className = '' }: SocialProofCardProps) {
           <span className="text-[14px] font-medium text-slate-500">Join</span>
           <span
             className="text-[24px] font-extrabold tracking-tight leading-none"
-            style={{ color: '#44A5F0' }}
+            style={{ color: 'var(--color-brand-500)' }}
           >
             {LANDING_USER_COUNT_LABEL}
           </span>

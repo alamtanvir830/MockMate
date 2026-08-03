@@ -51,7 +51,7 @@ function MessageBody({ text }: { text: string }) {
         <button
           type="button"
           onClick={() => setIsExpanded((v) => !v)}
-          className="mt-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+          className="mt-1.5 text-xs font-medium text-brand-600 hover:text-brand-700 transition-colors"
         >
           {isExpanded ? 'Show less' : 'Show more'}
         </button>
@@ -98,13 +98,13 @@ export function CreatorMessagePanel({ examId, initialMessage, isCreator }: Props
       <CardHeader>
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
+            <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
               <svg
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth={1.5}
-                className="h-4 w-4 text-indigo-500"
+                className="h-4 w-4 text-brand-500"
               >
                 <path
                   strokeLinecap="round"
@@ -121,7 +121,7 @@ export function CreatorMessagePanel({ examId, initialMessage, isCreator }: Props
             <button
               type="button"
               onClick={() => setEditing(true)}
-              className="shrink-0 text-xs font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+              className="shrink-0 text-xs font-medium text-brand-600 hover:text-brand-700 transition-colors"
             >
               {message ? 'Edit' : 'Add a note'}
             </button>
@@ -139,7 +139,7 @@ export function CreatorMessagePanel({ examId, initialMessage, isCreator }: Props
             className={cn(
               'w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900',
               'placeholder:text-slate-400 resize-none',
-              'focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent',
+              'focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent',
               'hover:border-slate-300 transition-colors',
             )}
           />

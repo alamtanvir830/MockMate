@@ -361,7 +361,7 @@ export default async function ResultsPage({
                 {exam.subject}
               </span>
               {(exam as any).adaptive_mode && (
-                <span className="rounded-full bg-indigo-500/30 border border-indigo-400/40 px-3 py-1 text-indigo-200">
+                <span className="rounded-full bg-brand-500/30 border border-brand-400/40 px-3 py-1 text-brand-200">
                   Adaptive difficulty
                 </span>
               )}
@@ -405,8 +405,8 @@ export default async function ResultsPage({
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center">
-                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4 text-indigo-500">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4 text-brand-500">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
                 </svg>
               </div>
@@ -491,13 +491,13 @@ export default async function ResultsPage({
       </Card>
 
       {/* Performance nudge */}
-      <div className="rounded-xl border border-indigo-100 bg-indigo-50 px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-4">
+      <div className="rounded-xl border border-brand-100 bg-brand-50 px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-4">
         <div className="flex-1">
-          <p className="text-sm font-medium text-indigo-900">
+          <p className="text-sm font-medium text-brand-900">
             Be sure to input your real exam score in the{' '}
             <span className="font-semibold">Previous Exam Performance</span> page!
           </p>
-          <p className="mt-0.5 text-xs text-indigo-600">
+          <p className="mt-0.5 text-xs text-brand-600">
             Track how your practice results compare to the real thing.
           </p>
         </div>

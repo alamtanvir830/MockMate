@@ -223,9 +223,9 @@ function SATReview({ result }: { result: QBPracticeSetResult }) {
                   )}
 
                   {/* Teaching point */}
-                  <div className="bg-indigo-50 border border-indigo-100 rounded-lg p-3">
-                    <p className="text-[11px] font-bold text-indigo-700 uppercase tracking-widest mb-1">Teaching Point</p>
-                    <p className="text-xs text-indigo-800 leading-relaxed">{q.teachingPoint}</p>
+                  <div className="bg-brand-50 border border-brand-100 rounded-lg p-3">
+                    <p className="text-[11px] font-bold text-brand-700 uppercase tracking-widest mb-1">Teaching Point</p>
+                    <p className="text-xs text-brand-800 leading-relaxed">{q.teachingPoint}</p>
                   </div>
 
                   {/* Review This Skill — R&W only */}

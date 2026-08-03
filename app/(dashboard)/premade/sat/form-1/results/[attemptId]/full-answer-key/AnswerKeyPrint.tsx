@@ -46,7 +46,7 @@ function QuestionBlock({ q, num }: { q: SATQuestion; num: number }) {
       <div className="flex items-start gap-2 mb-3">
         <span className="shrink-0 font-bold text-slate-500 text-[13px] w-7">Q{num}.</span>
         <div className="flex-1 text-[13px] text-slate-800 font-medium leading-snug">
-          <span className="text-[10px] font-semibold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded mr-2 uppercase tracking-wide">
+          <span className="text-[10px] font-semibold text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded mr-2 uppercase tracking-wide">
             {q.skill}
           </span>
           <span className="text-[10px] text-slate-400 uppercase tracking-wide">
@@ -170,7 +170,7 @@ function ModuleSection({
       style={index > 0 ? { pageBreakBefore: 'always' } : undefined}
     >
       {/* Module heading */}
-      <div className="mb-6 pb-3 border-b-2 border-indigo-600">
+      <div className="mb-6 pb-3 border-b-2 border-brand-600">
         <h2 className="text-xl font-bold text-slate-900">{label}</h2>
         <p className="text-sm text-slate-500 mt-0.5">{questions.length} questions</p>
       </div>
@@ -241,7 +241,7 @@ export default function AnswerKeyPrint({
         <p className="font-semibold text-slate-700">Complete SAT Form 1 to access the full answer key.</p>
         <Link
           href="/premade/sat/form-1"
-          className="text-sm font-medium text-indigo-600 hover:underline"
+          className="text-sm font-medium text-brand-600 hover:underline"
         >
           Take SAT Form 1 →
         </Link>
@@ -277,13 +277,13 @@ export default function AnswerKeyPrint({
         <div className="no-print flex items-center justify-between mb-6 gap-4 flex-wrap">
           <Link
             href={`/premade/sat/form-1/results/${attemptId}`}
-            className="text-sm text-indigo-600 hover:underline"
+            className="text-sm text-brand-600 hover:underline"
           >
             ← Back to results
           </Link>
           <button
             onClick={() => window.print()}
-            className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
           >
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
               <path strokeLinecap="round" strokeLinejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />

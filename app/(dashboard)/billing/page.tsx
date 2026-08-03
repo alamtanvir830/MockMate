@@ -41,7 +41,7 @@ export default async function BillingPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
           </div>
-          <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-200 px-3 py-1 text-xs font-semibold text-indigo-700 mb-3">
+          <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-3 py-1 text-xs font-semibold text-brand-700 mb-3">
             Legacy Lifetime Access
           </span>
           <h1 className="text-xl font-bold text-slate-900">Lifetime SAT Access — Active</h1>
@@ -52,7 +52,7 @@ export default async function BillingPage() {
             You have permanent access to all SAT Practice Forms, the SAT Question Bank, and both SAT Academies. No monthly charge applies to your account.
           </p>
           <div className="mt-6 space-y-2.5">
-            <Link href="/premade/sat" className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">
+            <Link href="/premade/sat" className="block w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">
               View SAT Practice Forms
             </Link>
             <Link href="/question-bank/sat" className="block w-full border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">
@@ -61,7 +61,7 @@ export default async function BillingPage() {
           </div>
           <p className="mt-6 text-[11px] text-slate-400">
             Questions?{' '}
-            <Link href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+            <Link href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">
               ranvi@mockmateapp.com
             </Link>
           </p>
@@ -83,7 +83,7 @@ export default async function BillingPage() {
             One-time payment. No expiration. You have permanent access to all SAT Practice Forms, the SAT Question Bank, and both SAT Academies.
           </p>
           <div className="mt-6 space-y-2.5">
-            <Link href="/premade/sat" className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">
+            <Link href="/premade/sat" className="block w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">
               View SAT Practice Forms
             </Link>
             <Link href="/question-bank/sat" className="block w-full border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">
@@ -92,7 +92,7 @@ export default async function BillingPage() {
           </div>
           <p className="mt-6 text-[11px] text-slate-400">
             Questions?{' '}
-            <Link href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+            <Link href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">
               ranvi@mockmateapp.com
             </Link>
           </p>
@@ -127,7 +127,7 @@ export default async function BillingPage() {
           )}
 
           <div className="space-y-2.5">
-            <Link href="/premade/sat" className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">
+            <Link href="/premade/sat" className="block w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">
               View SAT Practice Forms
             </Link>
             <Link href="/question-bank/sat" className="block w-full border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">
@@ -137,7 +137,7 @@ export default async function BillingPage() {
 
           <p className="mt-6 text-[11px] text-slate-400 text-center">
             Questions?{' '}
-            <Link href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+            <Link href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">
               ranvi@mockmateapp.com
             </Link>
           </p>

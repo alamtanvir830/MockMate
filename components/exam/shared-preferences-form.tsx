@@ -42,8 +42,8 @@ function YesNoToggle({
         className={cn(
           'flex-1 rounded-lg border px-4 py-3 text-sm font-medium transition-colors',
           value === true
-            ? 'border-indigo-600 bg-indigo-600 text-white'
-            : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+            ? 'border-brand-600 bg-brand-600 text-white'
+            : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
         )}
       >
         {yesLabel}
@@ -80,7 +80,7 @@ export function SharedPreferencesForm({ examId, examTitle }: Props) {
     <div className="max-w-xl mx-auto space-y-6">
       {/* Header */}
       <div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-indigo-500 mb-1">Shared exam</p>
+        <p className="text-xs font-semibold uppercase tracking-wide text-brand-500 mb-1">Shared exam</p>
         <h1 className="text-2xl font-bold text-slate-900">One last step</h1>
         <p className="mt-1 text-sm text-slate-500">
           Before viewing your results for <strong>{examTitle}</strong>, set your visibility
@@ -91,7 +91,7 @@ export function SharedPreferencesForm({ examId, examTitle }: Props) {
       {/* Q1 — Score visibility */}
       <Card>
         <div className="flex items-start gap-3">
-          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold mt-0.5">
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700 text-xs font-bold mt-0.5">
             1
           </div>
           <div className="flex-1">
@@ -114,7 +114,7 @@ export function SharedPreferencesForm({ examId, examTitle }: Props) {
       {/* Q2 — Rankings */}
       <Card>
         <div className="flex items-start gap-3">
-          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold mt-0.5">
+          <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-100 text-brand-700 text-xs font-bold mt-0.5">
             2
           </div>
           <div className="flex-1">

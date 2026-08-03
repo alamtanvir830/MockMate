@@ -45,7 +45,7 @@ export default function SATDisclaimerPage() {
       <LegalSection title="AI-Assisted Feedback on SAT Practice">
         <LegalP>
           Performance feedback generated after SAT practice tests is AI-assisted and may be incomplete, inaccurate, or based on imperfect assumptions. AI feedback is a study aid only. See our{' '}
-          <a href="/ai-disclosure" className="text-indigo-600 hover:underline">AI Disclosure</a>{' '}
+          <a href="/ai-disclosure" className="text-brand-600 hover:underline">AI Disclosure</a>{' '}
           for full details.
         </LegalP>
       </LegalSection>
@@ -71,7 +71,7 @@ export default function SATDisclaimerPage() {
       <LegalSection title="Contact">
         <LegalP>
           Questions about our SAT practice content? Contact us at{' '}
-          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+          <a href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">
             ranvi@mockmateapp.com
           </a>.
         </LegalP>

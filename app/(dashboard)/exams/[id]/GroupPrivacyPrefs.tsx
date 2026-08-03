@@ -111,7 +111,7 @@ export function GroupPrivacyPrefs({
               selected={showScore === true}
               onClick={() => handleShowScore(true)}
               label="Reveal my score"
-              activeClass="border-indigo-300 bg-indigo-50 text-indigo-700"
+              activeClass="border-brand-300 bg-brand-50 text-brand-700"
             />
             <OptionButton
               selected={showScore === false}
@@ -137,7 +137,7 @@ export function GroupPrivacyPrefs({
               selected={includeRankings === true}
               onClick={() => handleIncludeRankings(true)}
               label="Include me in rankings"
-              activeClass="border-indigo-300 bg-indigo-50 text-indigo-700"
+              activeClass="border-brand-300 bg-brand-50 text-brand-700"
             />
             <OptionButton
               selected={includeRankings === false}

@@ -349,7 +349,7 @@ export function StudyRoundClient({ session, attempts, latestAttempt }: Props) {
   }
 
   const PHASE_COLORS: Record<Phase, string> = {
-    test: 'bg-indigo-100 text-indigo-700',
+    test: 'bg-brand-100 text-brand-700',
     review: 'bg-slate-100 text-slate-700',
     mindmap: 'bg-violet-100 text-violet-700',
     studying: 'bg-teal-100 text-teal-700',
@@ -367,8 +367,8 @@ export function StudyRoundClient({ session, attempts, latestAttempt }: Props) {
       {/* Top bar */}
       <div className="flex flex-wrap items-center gap-3 justify-between bg-white rounded-2xl border border-slate-200 px-4 py-3 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center flex-shrink-0">
-            <svg className="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+          <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center flex-shrink-0">
+            <svg className="h-4 w-4 text-brand-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
             </svg>
           </div>
@@ -433,12 +433,12 @@ export function StudyRoundClient({ session, attempts, latestAttempt }: Props) {
                         onClick={() => setAnswers((prev) => ({ ...prev, [q.id]: opt }))}
                         className={`w-full text-left flex items-start gap-3 rounded-xl border px-4 py-2.5 text-sm transition-colors ${
                           selected
-                            ? 'border-indigo-400 bg-indigo-50 text-indigo-900'
+                            ? 'border-brand-400 bg-brand-50 text-brand-900'
                             : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300'
                         }`}
                       >
                         <span className={`shrink-0 w-5 h-5 rounded-full border text-xs flex items-center justify-center font-semibold mt-0.5 ${
-                          selected ? 'border-indigo-500 bg-indigo-500 text-white' : 'border-slate-300 text-slate-400'
+                          selected ? 'border-brand-500 bg-brand-500 text-white' : 'border-slate-300 text-slate-400'
                         }`}>
                           {letter}
                         </span>
@@ -458,7 +458,7 @@ export function StudyRoundClient({ session, attempts, latestAttempt }: Props) {
             <button
               onClick={handleSubmitRound}
               disabled={submitting}
-              className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 disabled:opacity-50 transition-colors shadow-sm"
+              className="rounded-xl bg-brand-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 disabled:opacity-50 transition-colors shadow-sm"
             >
               {submitting ? 'Submitting…' : 'Submit Round'}
             </button>
@@ -686,7 +686,7 @@ export function StudyRoundClient({ session, attempts, latestAttempt }: Props) {
             <div className="ml-auto">
               <button
                 onClick={handleReadyForNextRound}
-                className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
+                className="rounded-xl bg-brand-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 transition-colors"
               >
                 I&apos;m ready for next round →
               </button>
@@ -698,7 +698,7 @@ export function StudyRoundClient({ session, attempts, latestAttempt }: Props) {
       {/* ── GENERATING PHASE ────────────────────────────────────────────── */}
       {phase === 'generating' && (
         <div className="bg-white rounded-2xl border border-slate-200 p-10 shadow-sm text-center space-y-4">
-          <svg className="h-10 w-10 animate-spin text-indigo-500 mx-auto" fill="none" viewBox="0 0 24 24">
+          <svg className="h-10 w-10 animate-spin text-brand-500 mx-auto" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
           </svg>

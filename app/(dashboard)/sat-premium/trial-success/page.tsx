@@ -104,7 +104,7 @@ function TrialSuccessContent() {
             <div className="space-y-2.5">
               <Link
                 href="/premade/sat"
-                className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
+                className="block w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
               >
                 View All SAT Practice Forms
               </Link>

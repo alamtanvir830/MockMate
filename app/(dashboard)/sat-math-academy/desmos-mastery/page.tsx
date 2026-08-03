@@ -290,7 +290,7 @@ function LessonCard({ lesson, open, onToggle }: { lesson: Lesson; open: boolean;
   return (
     <div className={cn(
       'rounded-xl border bg-white transition-shadow',
-      open ? 'border-indigo-200 shadow-sm' : 'border-slate-200 hover:border-slate-300',
+      open ? 'border-brand-200 shadow-sm' : 'border-slate-200 hover:border-slate-300',
     )}>
       {/* Header row */}
       <button
@@ -324,7 +324,7 @@ function LessonCard({ lesson, open, onToggle }: { lesson: Lesson; open: boolean;
             <ol className="space-y-3">
               {lesson.steps.map((step, i) => (
                 <li key={i} className="flex gap-3">
-                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-[11px] font-bold text-indigo-700">
+                  <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-100 text-[11px] font-bold text-brand-700">
                     {i + 1}
                   </span>
                   <div>
@@ -360,7 +360,7 @@ function LessonCard({ lesson, open, onToggle }: { lesson: Lesson; open: boolean;
           {/* Try in sandbox */}
           <Link
             href="/sat-math-academy/desmos-sandbox"
-            className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 px-4 py-2 text-xs font-semibold text-white transition-colors"
+            className="inline-flex items-center gap-2 rounded-lg bg-brand-600 hover:bg-brand-700 px-4 py-2 text-xs font-semibold text-white transition-colors"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 010 1.972l-11.54 6.347a1.125 1.125 0 01-1.667-.986V5.653z" />
@@ -394,7 +394,7 @@ export default function DemosMasteryPage() {
         </div>
         <Link
           href="/sat-math-academy/desmos-sandbox"
-          className="hidden sm:inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-700 hover:bg-indigo-100 transition-colors"
+          className="hidden sm:inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-brand-200 bg-brand-50 px-3 py-2 text-xs font-semibold text-brand-700 hover:bg-brand-100 transition-colors"
         >
           Open Sandbox →
         </Link>
@@ -402,7 +402,7 @@ export default function DemosMasteryPage() {
 
       {/* Progress indicator */}
       <div className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-100 text-indigo-600">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-brand-600">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
           </svg>

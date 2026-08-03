@@ -146,7 +146,7 @@ const MATH_DIAGNOSTIC_STORAGE_KEY = 'sat_math_diagnostic_progress'
 
 const CAPSTONE_BADGE_CLASS = 'bg-blue-50 text-blue-600 border-blue-200'
 const MASTERY_BADGE_CLASS = 'bg-rose-50 text-rose-500 border-rose-200'
-const FULL_SAT_BADGE_CLASS = 'bg-indigo-50 text-indigo-600 border-indigo-200'
+const FULL_SAT_BADGE_CLASS = 'bg-brand-50 text-brand-600 border-brand-200'
 const DESMOS_BADGE_CLASS = 'bg-violet-50 text-violet-600 border-violet-200'
 
 interface DesmosLessonMeta {
@@ -932,16 +932,16 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
       {!isPremium && <PremiumNotice />}
 
       {/* Course banner */}
-      <div className="rounded-xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-white p-6">
+      <div className="rounded-xl border border-brand-200 bg-gradient-to-br from-brand-50 to-white p-6">
         <div className="flex items-start gap-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-indigo-100 text-indigo-700">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-100 text-brand-700">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.6} className="h-7 w-7">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008zm0 2.25h.008v.008H8.25V13.5zm0 2.25h.008v.008H8.25v-.008zm0 2.25h.008v.008H8.25V18zm2.498-6.75h.007v.008h-.007v-.008zm0 2.25h.007v.008h-.007V13.5zm0 2.25h.007v.008h-.007v-.008zm0 2.25h.007v.008h-.007V18zm2.504-6.75h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V13.5zm0 2.25h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V18zm2.498-6.75h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V13.5zM8.25 6h7.5v2.25h-7.5V6zM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.652 4.5 4.756V19.5a2.25 2.25 0 002.25 2.25h10.5a2.25 2.25 0 002.25-2.25V4.756c0-1.104-.807-2.057-1.907-2.184A48.507 48.507 0 0012 2.25z" />
             </svg>
           </div>
           <div>
-            <h1 className="text-xl font-bold text-indigo-900">SAT Math &amp; Desmos Academy</h1>
-            <p className="text-sm text-indigo-700 mt-0.5">
+            <h1 className="text-xl font-bold text-brand-900">SAT Math &amp; Desmos Academy</h1>
+            <p className="text-sm text-brand-700 mt-0.5">
               A structured curriculum covering all 21 SAT Math skills across four domains, with integrated Desmos graphing calculator training.
             </p>
           </div>
@@ -975,17 +975,17 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
               <div className="lg:col-span-2 rounded-xl border border-slate-200 bg-white p-5">
                 <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">Your Academy Progress</p>
                 <div className="space-y-4">
-                  <div className="rounded-lg bg-indigo-50 border border-indigo-200 px-3 py-3 space-y-1">
+                  <div className="rounded-lg bg-brand-50 border border-brand-200 px-3 py-3 space-y-1">
                     <div className="flex items-center justify-between">
-                      <p className="text-xs font-semibold text-indigo-800">Diagnostic: Completed</p>
-                      <Link href="/sat-math-academy/diagnostic" className="text-[11px] text-indigo-600 hover:underline">View results</Link>
+                      <p className="text-xs font-semibold text-brand-800">Diagnostic: Completed</p>
+                      <Link href="/sat-math-academy/diagnostic" className="text-[11px] text-brand-600 hover:underline">View results</Link>
                     </div>
-                    <p className="text-xs text-indigo-700">
+                    <p className="text-xs text-brand-700">
                       Score: <strong>{diagnostic.correct_count}/{diagnostic.total_questions}</strong>
                       {' · '}Accuracy: <strong>{Math.round(diagnostic.accuracy_percentage)}%</strong>
                     </p>
                     {diagnostic.recommended_skill_slug && (
-                      <p className="text-[11px] text-indigo-700">
+                      <p className="text-[11px] text-brand-700">
                         Priority skill: {MATH_SKILL_DISPLAY_NAMES[diagnostic.recommended_skill_slug as MathSkillSlug] ?? diagnostic.recommended_skill_slug}
                       </p>
                     )}
@@ -1000,7 +1000,7 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
                       </div>
                       <div>
                         <div className="w-full bg-slate-100 rounded-full h-1.5 mb-1">
-                          <div className="bg-indigo-500 h-1.5 rounded-full transition-all" style={{ width: `${Math.round((totalProficient / TOTAL_SKILLS) * 100)}%` }} />
+                          <div className="bg-brand-500 h-1.5 rounded-full transition-all" style={{ width: `${Math.round((totalProficient / TOTAL_SKILLS) * 100)}%` }} />
                         </div>
                         <p className="text-[11px] text-slate-400 text-right">{totalProficient}/{TOTAL_SKILLS} proficient</p>
                       </div>
@@ -1009,11 +1009,11 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
 
                   {nextStep && nextStep.type !== 'diagnostic' && (
                     nextStep.type === 'sat-full-exam' ? (
-                      <button onClick={() => setShowSATSelector(true)} className="block w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors">
+                      <button onClick={() => setShowSATSelector(true)} className="block w-full rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors">
                         {nextStep.label}
                       </button>
                     ) : (
-                      <Link href={nextStep.href} className="block w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors">
+                      <Link href={nextStep.href} className="block w-full rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors">
                         {nextStep.label}
                       </Link>
                     )
@@ -1051,7 +1051,7 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
                   {isPremium ? (
                     <Link
                       href="/sat-math-academy/diagnostic"
-                      className="block w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors"
+                      className="block w-full rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold text-center px-4 py-2.5 transition-colors"
                     >
                       {hasSavedProgress ? 'Resume Diagnostic →' : 'Start Math Diagnostic →'}
                     </Link>
@@ -1127,17 +1127,17 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
 
       {/* ── Pre-diagnostic personalization callout ─────────────────────── */}
       {!loading && !isDiagnosticDone && isPremium && (
-        <div className="rounded-xl border border-indigo-200 bg-indigo-50/50 px-5 py-4">
+        <div className="rounded-xl border border-brand-200 bg-brand-50/50 px-5 py-4">
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-indigo-900">Take the Diagnostic to Personalize Your Path</p>
-              <p className="text-xs text-indigo-700 mt-1 leading-relaxed">
+              <p className="text-sm font-semibold text-brand-900">Take the Diagnostic to Personalize Your Path</p>
+              <p className="text-xs text-brand-700 mt-1 leading-relaxed">
                 The course is shown below in its recommended default order. Complete the Math Diagnostic first to reorder the lessons around your weakest skills and receive personalized recommendations.
               </p>
             </div>
             <Link
               href="/sat-math-academy/diagnostic"
-              className="shrink-0 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2.5 transition-colors whitespace-nowrap"
+              className="shrink-0 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2.5 transition-colors whitespace-nowrap"
             >
               {hasSavedProgress ? 'Resume Diagnostic →' : 'Start Math Diagnostic →'}
             </Link>
@@ -1153,7 +1153,7 @@ export default function MathAcademyHome({ isPremium }: { isPremium: boolean }) {
               {isDiagnosticDone ? 'Your Personalized Math Learning Path' : 'Your Math Academy Learning Path'}
             </h2>
             {!isDiagnosticDone && (
-              <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-600">
+              <span className="rounded-full border border-brand-200 bg-brand-50 px-2 py-0.5 text-[10px] font-semibold text-brand-600">
                 Default Order
               </span>
             )}

@@ -36,7 +36,7 @@ const MASTERY_STATUS_COLOR: Record<MasteryStatus, string> = {
   learning:    'bg-amber-50 text-amber-600',
   developing:  'bg-orange-50 text-orange-600',
   proficient:  'bg-blue-50 text-blue-600',
-  mastered:    'bg-indigo-50 text-indigo-700',
+  mastered:    'bg-brand-50 text-brand-700',
 }
 
 // ── Utilities ──────────────────────────────────────────────────────────────────
@@ -140,19 +140,19 @@ function MathRecognitionCheck({ excludeSlug, onComplete }: { excludeSlug: string
   }
 
   if (done) return (
-    <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-5 space-y-3">
-      <p className="text-xs font-semibold uppercase tracking-wider text-indigo-500">Mixed Recognition Check — Complete</p>
-      <p className="text-sm text-indigo-900 font-medium">{correct} of {questions.length} correct</p>
-      <p className="text-xs text-indigo-600 leading-relaxed">Recognising skill types quickly is what turns accuracy into speed on test day.</p>
-      <button onClick={onComplete} className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 transition-colors">Done →</button>
+    <div className="rounded-xl border border-brand-200 bg-brand-50 p-5 space-y-3">
+      <p className="text-xs font-semibold uppercase tracking-wider text-brand-500">Mixed Recognition Check — Complete</p>
+      <p className="text-sm text-brand-900 font-medium">{correct} of {questions.length} correct</p>
+      <p className="text-xs text-brand-600 leading-relaxed">Recognising skill types quickly is what turns accuracy into speed on test day.</p>
+      <button onClick={onComplete} className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2 transition-colors">Done →</button>
     </div>
   )
 
   return (
     <div className="space-y-4">
-      <div className="rounded-lg border border-indigo-200 bg-indigo-50 px-4 py-3">
-        <p className="text-xs font-semibold text-indigo-600 uppercase tracking-wider">Mixed Recognition Check</p>
-        <p className="text-[11px] text-indigo-500 mt-0.5">No skill labels shown until you answer.</p>
+      <div className="rounded-lg border border-brand-200 bg-brand-50 px-4 py-3">
+        <p className="text-xs font-semibold text-brand-600 uppercase tracking-wider">Mixed Recognition Check</p>
+        <p className="text-[11px] text-brand-500 mt-0.5">No skill labels shown until you answer.</p>
       </div>
       <span className="text-xs text-slate-400">{qIdx + 1} / {questions.length}</span>
       {q.stimulus && <div className="rounded-lg border border-slate-200 bg-slate-50 p-4"><StimulusBlock text={q.stimulus} /></div>}
@@ -163,10 +163,10 @@ function MathRecognitionCheck({ excludeSlug, onComplete }: { excludeSlug: string
           const isCorrectChoice = choice.label === q.correctAnswer
           let cls = 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 cursor-pointer'
           if (revealed) {
-            if (isCorrectChoice) cls = 'border-indigo-500 bg-indigo-50 cursor-default'
+            if (isCorrectChoice) cls = 'border-brand-500 bg-brand-50 cursor-default'
             else if (isSelected) cls = 'border-red-400 bg-red-50 cursor-default'
             else cls = 'border-slate-200 bg-white opacity-40 cursor-default'
-          } else if (isSelected) cls = 'border-indigo-400 bg-indigo-50 cursor-pointer'
+          } else if (isSelected) cls = 'border-brand-400 bg-brand-50 cursor-pointer'
           return (
             <button key={choice.label} disabled={revealed} onClick={() => !revealed && setSelected(choice.label as AnswerLabel)}
               className={cn('w-full flex items-start gap-3 rounded-lg border p-3 text-left transition-colors', cls)}>
@@ -177,12 +177,12 @@ function MathRecognitionCheck({ excludeSlug, onComplete }: { excludeSlug: string
         })}
       </div>
       {!revealed
-        ? <button disabled={!selected} onClick={handleReveal} className="rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-2.5 transition-colors">Submit</button>
+        ? <button disabled={!selected} onClick={handleReveal} className="rounded-lg bg-brand-600 hover:bg-brand-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-2.5 transition-colors">Submit</button>
         : <div className="space-y-2">
-            <div className={cn('rounded-lg border p-4 space-y-1', selected === q.correctAnswer ? 'border-indigo-300 bg-indigo-50' : 'border-red-300 bg-red-50')}>
-              <p className={cn('text-xs font-bold uppercase tracking-wider', selected === q.correctAnswer ? 'text-indigo-600' : 'text-red-600')}>{selected === q.correctAnswer ? 'Correct' : 'Incorrect — correct: ' + q.correctAnswer}</p>
+            <div className={cn('rounded-lg border p-4 space-y-1', selected === q.correctAnswer ? 'border-brand-300 bg-brand-50' : 'border-red-300 bg-red-50')}>
+              <p className={cn('text-xs font-bold uppercase tracking-wider', selected === q.correctAnswer ? 'text-brand-600' : 'text-red-600')}>{selected === q.correctAnswer ? 'Correct' : 'Incorrect — correct: ' + q.correctAnswer}</p>
               <p className="text-sm text-slate-700 leading-relaxed">{q.explanation}</p>
-              <p className="mt-1 text-xs font-semibold text-indigo-600">Skill: <span className="text-indigo-800">{q.fromSkill}</span></p>
+              <p className="mt-1 text-xs font-semibold text-brand-600">Skill: <span className="text-brand-800">{q.fromSkill}</span></p>
             </div>
             <button onClick={handleNext} className="rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-sm font-semibold px-5 py-2.5 transition-colors">
               {qIdx < questions.length - 1 ? 'Next →' : 'See summary'}
@@ -202,9 +202,9 @@ function OverviewTab({ skill, onComplete }: { skill: MathAcademySkill; onComplet
   return (
     <div className="space-y-8 max-w-2xl">
       {skill.objective && (
-        <div className="rounded-xl border border-indigo-100 bg-indigo-50 px-5 py-4">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-indigo-500 mb-1.5">Learning objective</p>
-          <p className="text-sm font-medium text-indigo-900 leading-relaxed">{skill.objective}</p>
+        <div className="rounded-xl border border-brand-100 bg-brand-50 px-5 py-4">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-brand-500 mb-1.5">Learning objective</p>
+          <p className="text-sm font-medium text-brand-900 leading-relaxed">{skill.objective}</p>
         </div>
       )}
 
@@ -248,9 +248,9 @@ function OverviewTab({ skill, onComplete }: { skill: MathAcademySkill; onComplet
         </div>
       )}
 
-      <div className="border-l-2 border-indigo-400 pl-4 py-3 pr-4 rounded-r-lg bg-indigo-50/70">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-indigo-600 mb-1.5">Key takeaway</p>
-        <p className="text-sm text-indigo-900 leading-relaxed">{o.whatToLookFor}</p>
+      <div className="border-l-2 border-brand-400 pl-4 py-3 pr-4 rounded-r-lg bg-brand-50/70">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-brand-600 mb-1.5">Key takeaway</p>
+        <p className="text-sm text-brand-900 leading-relaxed">{o.whatToLookFor}</p>
       </div>
 
       {o.quickCheckQuestion && (
@@ -266,10 +266,10 @@ function OverviewTab({ skill, onComplete }: { skill: MathAcademySkill; onComplet
               const isCorr = c.label === o.quickCheckQuestion!.correctAnswer
               let cls = 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 cursor-pointer'
               if (qckRevealed) {
-                if (isCorr) cls = 'border-indigo-500 bg-indigo-50 cursor-default'
+                if (isCorr) cls = 'border-brand-500 bg-brand-50 cursor-default'
                 else if (isSel) cls = 'border-red-400 bg-red-50 cursor-default'
                 else cls = 'border-slate-200 bg-white opacity-40 cursor-default'
-              } else if (isSel) cls = 'border-indigo-400 bg-indigo-50'
+              } else if (isSel) cls = 'border-brand-400 bg-brand-50'
               return (
                 <button key={c.label} disabled={qckRevealed} onClick={() => !qckRevealed && setQckSelected(c.label as AnswerLabel)}
                   className={cn('w-full flex items-start gap-3 rounded-lg border p-3 text-left transition-colors', cls)}>
@@ -282,14 +282,14 @@ function OverviewTab({ skill, onComplete }: { skill: MathAcademySkill; onComplet
           {!qckRevealed
             ? <button disabled={!qckSelected} onClick={() => setQckRevealed(true)}
                 className="rounded-lg bg-slate-700 hover:bg-slate-800 disabled:opacity-40 text-white text-xs font-semibold px-4 py-2 transition-colors">Check answer</button>
-            : <div className={cn('rounded-lg border p-3 text-sm', qckSelected === o.quickCheckQuestion.correctAnswer ? 'border-indigo-200 bg-indigo-50 text-indigo-800' : 'border-red-200 bg-red-50 text-red-800')}>
+            : <div className={cn('rounded-lg border p-3 text-sm', qckSelected === o.quickCheckQuestion.correctAnswer ? 'border-brand-200 bg-brand-50 text-brand-800' : 'border-red-200 bg-red-50 text-red-800')}>
                 <p className="font-semibold mb-1">{qckSelected === o.quickCheckQuestion.correctAnswer ? '✓ Correct' : `Incorrect — correct: ${o.quickCheckQuestion.correctAnswer}`}</p>
                 <p className="text-xs leading-relaxed">{o.quickCheckQuestion.explanation}</p>
               </div>}
         </div>
       )}
 
-      <button onClick={onComplete} className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">
+      <button onClick={onComplete} className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">
         Continue to Strategy →
       </button>
     </div>
@@ -312,7 +312,7 @@ function StrategyTab({ skill, onComplete }: { skill: MathAcademySkill; onComplet
         <ol className="space-y-2">
           {s.steps.map((step, i) => (
             <li key={i} className="flex gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center mt-0.5">{i + 1}</span>
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 text-brand-700 text-xs font-bold flex items-center justify-center mt-0.5">{i + 1}</span>
               <p className="text-sm text-slate-700 leading-relaxed">{step}</p>
             </li>
           ))}
@@ -377,10 +377,10 @@ function StrategyTab({ skill, onComplete }: { skill: MathAcademySkill; onComplet
               const isCorr = c.label === s.tryItQuestion!.correctAnswer
               let cls = 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 cursor-pointer'
               if (tryRevealed) {
-                if (isCorr) cls = 'border-indigo-500 bg-indigo-50 cursor-default'
+                if (isCorr) cls = 'border-brand-500 bg-brand-50 cursor-default'
                 else if (isSel) cls = 'border-red-400 bg-red-50 cursor-default'
                 else cls = 'border-slate-200 bg-white opacity-40 cursor-default'
-              } else if (isSel) cls = 'border-indigo-400 bg-indigo-50'
+              } else if (isSel) cls = 'border-brand-400 bg-brand-50'
               return (
                 <button key={c.label} disabled={tryRevealed} onClick={() => !tryRevealed && setTrySelected(c.label as AnswerLabel)}
                   className={cn('w-full flex items-start gap-3 rounded-lg border p-3 text-left transition-colors', cls)}>
@@ -393,14 +393,14 @@ function StrategyTab({ skill, onComplete }: { skill: MathAcademySkill; onComplet
           {!tryRevealed
             ? <button disabled={!trySelected} onClick={() => setTryRevealed(true)}
                 className="rounded-lg bg-slate-700 hover:bg-slate-800 disabled:opacity-40 text-white text-xs font-semibold px-4 py-2 transition-colors">Check answer</button>
-            : <div className={cn('rounded-lg border p-3 text-sm', trySelected === s.tryItQuestion.correctAnswer ? 'border-indigo-200 bg-indigo-50 text-indigo-800' : 'border-red-200 bg-red-50 text-red-800')}>
+            : <div className={cn('rounded-lg border p-3 text-sm', trySelected === s.tryItQuestion.correctAnswer ? 'border-brand-200 bg-brand-50 text-brand-800' : 'border-red-200 bg-red-50 text-red-800')}>
                 <p className="font-semibold mb-1">{trySelected === s.tryItQuestion.correctAnswer ? '✓ Correct' : `Incorrect — correct: ${s.tryItQuestion.correctAnswer}`}</p>
                 <p className="text-xs leading-relaxed">{s.tryItQuestion.explanation}</p>
               </div>}
         </div>
       )}
 
-      <button onClick={onComplete} className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">
+      <button onClick={onComplete} className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">
         Continue to Common Traps →
       </button>
     </div>
@@ -451,7 +451,7 @@ function TrapsTab({ skill, onComplete }: { skill: MathAcademySkill; onComplete: 
         ))}
       </div>
 
-      <button onClick={onComplete} className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">
+      <button onClick={onComplete} className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">
         Continue to Guided Examples →
       </button>
     </div>
@@ -501,8 +501,8 @@ function GuidedExamplesTab({ examples, skillSlug, onComplete }: { examples: Guid
           {examples.map((_, i) => (
             <button key={i} onClick={() => goToExample(i)}
               className={cn('w-7 h-7 rounded-full text-xs font-bold transition-colors',
-                exIdx === i ? 'bg-indigo-600 text-white' :
-                seen.has(i) ? 'bg-indigo-100 text-indigo-700' :
+                exIdx === i ? 'bg-brand-600 text-white' :
+                seen.has(i) ? 'bg-brand-100 text-brand-700' :
                 'bg-slate-100 text-slate-500 hover:bg-slate-200',
               )}>{i + 1}</button>
           ))}
@@ -547,10 +547,10 @@ function GuidedExamplesTab({ examples, skillSlug, onComplete }: { examples: Guid
           const isCorrect = choice.label === ex.correctAnswer
           let cls = 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 cursor-pointer'
           if (revealed) {
-            if (isCorrect) cls = 'border-indigo-500 bg-indigo-50 cursor-default'
+            if (isCorrect) cls = 'border-brand-500 bg-brand-50 cursor-default'
             else if (isSelected) cls = 'border-red-400 bg-red-50 cursor-default'
             else cls = 'border-slate-200 bg-white opacity-50 cursor-default'
-          } else if (isSelected) cls = 'border-indigo-400 bg-indigo-50 cursor-pointer'
+          } else if (isSelected) cls = 'border-brand-400 bg-brand-50 cursor-pointer'
           return (
             <button key={choice.label} disabled={revealed} onClick={() => !revealed && setSelectedAnswer(choice.label as AnswerLabel)}
               className={cn('w-full flex items-start gap-3 rounded-lg border p-3.5 text-left transition-colors', cls)}>
@@ -566,7 +566,7 @@ function GuidedExamplesTab({ examples, skillSlug, onComplete }: { examples: Guid
         <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Step-by-step — {stepIdx + 1} of {totalSteps}</p>
         <div className="space-y-3">
           {ex.steps.slice(0, stepIdx + 1).map((step, i) => (
-            <div key={i} className={cn('rounded-lg border px-4 py-3.5 space-y-1.5', i === stepIdx ? 'border-indigo-300 bg-indigo-50' : 'border-slate-200 bg-slate-50')}>
+            <div key={i} className={cn('rounded-lg border px-4 py-3.5 space-y-1.5', i === stepIdx ? 'border-brand-300 bg-brand-50' : 'border-slate-200 bg-slate-50')}>
               <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Step {i + 1}: {step.instruction}</p>
               <p className="text-sm text-slate-700 leading-relaxed">{step.content}</p>
             </div>
@@ -579,7 +579,7 @@ function GuidedExamplesTab({ examples, skillSlug, onComplete }: { examples: Guid
           )}
           {stepIdx === totalSteps - 1 && !revealed && (
             <button onClick={() => setRevealed(true)}
-              className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2.5 transition-colors">Reveal answer</button>
+              className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2.5 transition-colors">Reveal answer</button>
           )}
         </div>
       </div>
@@ -587,12 +587,12 @@ function GuidedExamplesTab({ examples, skillSlug, onComplete }: { examples: Guid
       {/* Result + analysis */}
       {revealed && (
         <div className="space-y-4 pt-2">
-          <div className="rounded-lg border border-indigo-300 bg-indigo-50 px-5 py-4 space-y-3">
+          <div className="rounded-lg border border-brand-300 bg-brand-50 px-5 py-4 space-y-3">
             <div className="flex items-center gap-2">
-              <svg className="h-4 w-4 text-indigo-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <svg className="h-4 w-4 text-brand-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
               </svg>
-              <p className="text-sm font-semibold text-indigo-700">Correct answer: {ex.correctAnswer}</p>
+              <p className="text-sm font-semibold text-brand-700">Correct answer: {ex.correctAnswer}</p>
             </div>
             <p className="text-sm text-slate-700 leading-relaxed">{ex.explanation}</p>
           </div>
@@ -640,7 +640,7 @@ function GuidedExamplesTab({ examples, skillSlug, onComplete }: { examples: Guid
                 className="rounded-lg bg-slate-700 hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 transition-colors">Next example →</button>
             : allSeen && (
                 <button onClick={onComplete}
-                  className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">Continue to Drill →</button>
+                  className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">Continue to Drill →</button>
               )
           }
         </div>
@@ -767,7 +767,7 @@ function DrillTab({ questions, skillSlug, onComplete }: { questions: DrillQuesti
         <h2 className="text-base font-semibold text-slate-900">Choose a drill mode</h2>
         <div className="space-y-3">
           {[
-            { id: 'learn' as DrillMode, label: 'Learn Mode', desc: 'Immediate feedback, hints available, build toward mastery', color: 'border-indigo-200 bg-indigo-50 hover:bg-indigo-100' },
+            { id: 'learn' as DrillMode, label: 'Learn Mode', desc: 'Immediate feedback, hints available, build toward mastery', color: 'border-brand-200 bg-brand-50 hover:bg-brand-100' },
             { id: 'timed' as DrillMode, label: 'Timed Mode', desc: '75 seconds per question — realistic SAT pacing, no hints', color: 'border-amber-200 bg-amber-50 hover:bg-amber-100' },
             { id: 'missed' as DrillMode, label: 'Missed Questions', desc: 'Retry only the questions you got wrong in Learn Mode', color: missedIds.length === 0 ? 'border-slate-200 bg-slate-50 opacity-50 cursor-not-allowed' : 'border-slate-200 bg-slate-50 hover:bg-slate-100', disabled: missedIds.length === 0 },
           ].map(({ id, label, desc, color, disabled }) => (
@@ -794,15 +794,15 @@ function DrillTab({ questions, skillSlug, onComplete }: { questions: DrillQuesti
         <div className="space-y-5">
           <h2 className="text-base font-semibold text-slate-900">Drill Complete</h2>
           <div className="rounded-xl border border-slate-200 bg-white p-6 text-center space-y-2">
-            <div className={cn('text-5xl font-bold', pct >= 80 ? 'text-indigo-600' : pct >= 60 ? 'text-amber-500' : 'text-red-500')}>{pct}%</div>
+            <div className={cn('text-5xl font-bold', pct >= 80 ? 'text-brand-600' : pct >= 60 ? 'text-amber-500' : 'text-red-500')}>{pct}%</div>
             <p className="text-slate-500 text-sm">{score} of {activeQuestions.length} correct</p>
             <div className="flex gap-1.5 justify-center flex-wrap pt-2">
               {answers.map((a, i) => (
-                <span key={i} className={cn('inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold', a.correct ? 'bg-indigo-100 text-indigo-700' : 'bg-red-100 text-red-700')}>{i + 1}</span>
+                <span key={i} className={cn('inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold', a.correct ? 'bg-brand-100 text-brand-700' : 'bg-red-100 text-red-700')}>{i + 1}</span>
               ))}
             </div>
             {pct >= 80
-              ? <p className="text-xs text-indigo-600 font-medium pt-1">Strong work. Head to Mastery to lock this in.</p>
+              ? <p className="text-xs text-brand-600 font-medium pt-1">Strong work. Head to Mastery to lock this in.</p>
               : pct >= 60
               ? <p className="text-xs text-amber-600 font-medium pt-1">Good progress. Review missed questions, then try Mastery.</p>
               : <p className="text-xs text-red-600 font-medium pt-1">Review the Strategy and Traps tabs, then try again.</p>}
@@ -816,18 +816,18 @@ function DrillTab({ questions, skillSlug, onComplete }: { questions: DrillQuesti
       <div className="space-y-5">
         <h2 className="text-base font-semibold text-slate-900">Drill Complete</h2>
         <div className="rounded-xl border border-slate-200 bg-white p-8 text-center">
-          <div className={cn('text-5xl font-bold mb-2', pct >= 80 ? 'text-indigo-600' : pct >= 60 ? 'text-amber-500' : 'text-red-500')}>{pct}%</div>
+          <div className={cn('text-5xl font-bold mb-2', pct >= 80 ? 'text-brand-600' : pct >= 60 ? 'text-amber-500' : 'text-red-500')}>{pct}%</div>
           <p className="text-slate-500 text-sm mb-4">{score} of {activeQuestions.length} correct</p>
           <div className="flex gap-1.5 justify-center flex-wrap mb-6">
             {answers.map((a, i) => (
-              <span key={i} className={cn('inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold', a.correct ? 'bg-indigo-100 text-indigo-700' : 'bg-red-100 text-red-700')}>{i + 1}</span>
+              <span key={i} className={cn('inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold', a.correct ? 'bg-brand-100 text-brand-700' : 'bg-red-100 text-red-700')}>{i + 1}</span>
             ))}
           </div>
           <div className="flex gap-2 justify-center flex-wrap">
             <button onClick={() => { resetDrill(); setMode(null) }}
               className="rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold px-5 py-2.5 transition-colors">Back to modes</button>
             <button onClick={() => { resetDrill(); setMode(mode) }}
-              className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">Retry</button>
+              className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">Retry</button>
           </div>
         </div>
       </div>
@@ -850,7 +850,7 @@ function DrillTab({ questions, skillSlug, onComplete }: { questions: DrillQuesti
       </div>
 
       <div className="w-full bg-slate-100 rounded-full h-1.5">
-        <div className="bg-indigo-500 h-1.5 rounded-full transition-all" style={{ width: `${(qIdx / activeQuestions.length) * 100}%` }} />
+        <div className="bg-brand-500 h-1.5 rounded-full transition-all" style={{ width: `${(qIdx / activeQuestions.length) * 100}%` }} />
       </div>
 
       <div className="flex items-center gap-2">
@@ -871,10 +871,10 @@ function DrillTab({ questions, skillSlug, onComplete }: { questions: DrillQuesti
           const isCorrect = choice.label === q.correctAnswer
           let cls = 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 cursor-pointer'
           if (revealed) {
-            if (isCorrect) cls = 'border-indigo-500 bg-indigo-50 cursor-default'
+            if (isCorrect) cls = 'border-brand-500 bg-brand-50 cursor-default'
             else if (isSelected) cls = 'border-red-400 bg-red-50 cursor-default'
             else cls = 'border-slate-200 bg-white opacity-40 cursor-default'
-          } else if (isSelected) cls = 'border-indigo-400 bg-indigo-50 cursor-pointer'
+          } else if (isSelected) cls = 'border-brand-400 bg-brand-50 cursor-pointer'
           return (
             <button key={choice.label} disabled={revealed} onClick={() => !revealed && setSelected(choice.label as AnswerLabel)}
               className={cn('w-full flex items-start gap-3 rounded-lg border p-3 text-left transition-colors', cls)}>
@@ -901,10 +901,10 @@ function DrillTab({ questions, skillSlug, onComplete }: { questions: DrillQuesti
 
       {!revealed
         ? <button disabled={!selected} onClick={() => handleSubmit()}
-            className="rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-2.5 transition-colors">Submit answer</button>
+            className="rounded-lg bg-brand-600 hover:bg-brand-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-2.5 transition-colors">Submit answer</button>
         : <div className="space-y-3">
-            <div className={cn('rounded-lg border p-4', selected === q.correctAnswer ? 'border-indigo-300 bg-indigo-50' : 'border-red-300 bg-red-50')}>
-              <p className={cn('text-xs font-bold uppercase tracking-wider mb-1', selected === q.correctAnswer ? 'text-indigo-600' : 'text-red-600')}>
+            <div className={cn('rounded-lg border p-4', selected === q.correctAnswer ? 'border-brand-300 bg-brand-50' : 'border-red-300 bg-red-50')}>
+              <p className={cn('text-xs font-bold uppercase tracking-wider mb-1', selected === q.correctAnswer ? 'text-brand-600' : 'text-red-600')}>
                 {selected === q.correctAnswer ? 'Correct' : 'Incorrect — correct answer: ' + q.correctAnswer}
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">{q.explanation}</p>
@@ -999,7 +999,7 @@ function MasteryTab({ skill, masteryData, onComplete }: {
               <span className="text-sm font-bold text-slate-700">{masteryData.masteryPct}%</span>
             </div>
             <div className="w-full bg-slate-200 rounded-full h-2">
-              <div className={cn('h-2 rounded-full transition-all', masteryData.masteryPct >= 85 ? 'bg-indigo-500' : masteryData.masteryPct >= 70 ? 'bg-blue-400' : 'bg-amber-400')}
+              <div className={cn('h-2 rounded-full transition-all', masteryData.masteryPct >= 85 ? 'bg-brand-500' : masteryData.masteryPct >= 70 ? 'bg-blue-400' : 'bg-amber-400')}
                 style={{ width: `${masteryData.masteryPct}%` }} />
             </div>
             <p className="text-xs text-slate-400">{masteryData.attemptCount} total attempts</p>
@@ -1013,7 +1013,7 @@ function MasteryTab({ skill, masteryData, onComplete }: {
           <p className="pt-1 text-slate-400">Mastered = weighted score ≥ 85% across ≥ 15 total attempts.</p>
         </div>
 
-        <button onClick={() => setStarted(true)} className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">
+        <button onClick={() => setStarted(true)} className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-5 py-2.5 transition-colors">
           Start Mastery Assessment
         </button>
       </div>
@@ -1033,11 +1033,11 @@ function MasteryTab({ skill, masteryData, onComplete }: {
       <div className="space-y-6 max-w-md">
         <h2 className="text-base font-semibold text-slate-900">Mastery Result</h2>
         <div className="rounded-xl border border-slate-200 bg-white p-6 text-center space-y-3">
-          <div className={cn('text-5xl font-bold', pct >= 80 ? 'text-indigo-600' : pct >= 60 ? 'text-amber-500' : 'text-red-500')}>{pct}%</div>
+          <div className={cn('text-5xl font-bold', pct >= 80 ? 'text-brand-600' : pct >= 60 ? 'text-amber-500' : 'text-red-500')}>{pct}%</div>
           <p className="text-slate-500 text-sm">{correct} of {pool.length} correct</p>
           <div className="flex gap-1.5 justify-center flex-wrap">
             {answers.map((a, i) => (
-              <span key={i} className={cn('inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold', a.correct ? 'bg-indigo-100 text-indigo-700' : 'bg-red-100 text-red-700')}>{i + 1}</span>
+              <span key={i} className={cn('inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold', a.correct ? 'bg-brand-100 text-brand-700' : 'bg-red-100 text-red-700')}>{i + 1}</span>
             ))}
           </div>
         </div>
@@ -1048,7 +1048,7 @@ function MasteryTab({ skill, masteryData, onComplete }: {
         <div className="flex gap-2 flex-wrap">
           <button onClick={() => { setStarted(false); setDone(false); setQIdx(0); setSelected(null); setRevealed(false); setAnswers([]) }}
             className="rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold px-4 py-2.5 transition-colors">Retry Mastery</button>
-          <button onClick={onComplete} className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2.5 transition-colors">Continue →</button>
+          <button onClick={onComplete} className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2.5 transition-colors">Continue →</button>
         </div>
       </div>
     )
@@ -1062,7 +1062,7 @@ function MasteryTab({ skill, masteryData, onComplete }: {
         <span className="text-xs text-slate-400">{qIdx + 1} / {pool.length}</span>
       </div>
       <div className="w-full bg-slate-100 rounded-full h-1.5">
-        <div className="bg-indigo-500 h-1.5 rounded-full transition-all" style={{ width: `${(qIdx / pool.length) * 100}%` }} />
+        <div className="bg-brand-500 h-1.5 rounded-full transition-all" style={{ width: `${(qIdx / pool.length) * 100}%` }} />
       </div>
       <span className={cn('inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium border',
         q.difficulty === 'easy'   ? 'bg-green-50 text-green-700 border-green-200' :
@@ -1076,10 +1076,10 @@ function MasteryTab({ skill, masteryData, onComplete }: {
           const isCorrect = choice.label === q.correctAnswer
           let cls = 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 cursor-pointer'
           if (revealed) {
-            if (isCorrect) cls = 'border-indigo-500 bg-indigo-50 cursor-default'
+            if (isCorrect) cls = 'border-brand-500 bg-brand-50 cursor-default'
             else if (isSelected) cls = 'border-red-400 bg-red-50 cursor-default'
             else cls = 'border-slate-200 bg-white opacity-40 cursor-default'
-          } else if (isSelected) cls = 'border-indigo-400 bg-indigo-50 cursor-pointer'
+          } else if (isSelected) cls = 'border-brand-400 bg-brand-50 cursor-pointer'
           return (
             <button key={choice.label} disabled={revealed} onClick={() => !revealed && setSelected(choice.label as AnswerLabel)}
               className={cn('w-full flex items-start gap-3 rounded-lg border p-3 text-left transition-colors', cls)}>
@@ -1091,10 +1091,10 @@ function MasteryTab({ skill, masteryData, onComplete }: {
       </div>
       {!revealed
         ? <button disabled={!selected} onClick={handleSubmit}
-            className="rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-2.5 transition-colors">Submit answer</button>
+            className="rounded-lg bg-brand-600 hover:bg-brand-700 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm font-semibold px-5 py-2.5 transition-colors">Submit answer</button>
         : <div className="space-y-3">
-            <div className={cn('rounded-lg border p-4', selected === q.correctAnswer ? 'border-indigo-300 bg-indigo-50' : 'border-red-300 bg-red-50')}>
-              <p className={cn('text-xs font-bold uppercase tracking-wider mb-1', selected === q.correctAnswer ? 'text-indigo-600' : 'text-red-600')}>
+            <div className={cn('rounded-lg border p-4', selected === q.correctAnswer ? 'border-brand-300 bg-brand-50' : 'border-red-300 bg-red-50')}>
+              <p className={cn('text-xs font-bold uppercase tracking-wider mb-1', selected === q.correctAnswer ? 'text-brand-600' : 'text-red-600')}>
                 {selected === q.correctAnswer ? 'Correct' : 'Incorrect — correct: ' + q.correctAnswer}
               </p>
               <p className="text-sm text-slate-700 leading-relaxed">{q.explanation}</p>
@@ -1185,7 +1185,7 @@ function LessonHeader({
       {/* Stage progress */}
       <div className="flex items-center gap-3">
         <div className="flex-1 bg-slate-100 rounded-full h-1.5 min-w-0">
-          <div className="bg-indigo-500 h-1.5 rounded-full transition-all" style={{ width: `${(completedCount / totalStages) * 100}%` }} />
+          <div className="bg-brand-500 h-1.5 rounded-full transition-all" style={{ width: `${(completedCount / totalStages) * 100}%` }} />
         </div>
         <p className="text-xs text-slate-400 shrink-0">{completedCount} of {totalStages} stages</p>
       </div>
@@ -1232,7 +1232,7 @@ export default function MathLessonPage({ params }: Props) {
     return (
       <div className="space-y-3 p-6">
         <p className="text-sm text-slate-500">Lesson not found for <code className="text-xs bg-slate-100 px-1.5 py-0.5 rounded">{slug}</code>.</p>
-        <Link href="/sat-math-academy" className="inline-flex text-sm text-indigo-600 hover:underline">← Back to Math Academy</Link>
+        <Link href="/sat-math-academy" className="inline-flex text-sm text-brand-600 hover:underline">← Back to Math Academy</Link>
       </div>
     )
   }
@@ -1255,11 +1255,11 @@ export default function MathLessonPage({ params }: Props) {
                 className={cn(
                   'px-3 sm:px-4 py-2.5 text-sm font-medium whitespace-nowrap border-b-2 -mb-px transition-colors flex items-center gap-1.5',
                   isActive
-                    ? 'border-indigo-600 text-indigo-700'
+                    ? 'border-brand-600 text-brand-700'
                     : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300',
                 )}>
                 {isCompleted && (
-                  <svg className="h-3 w-3 text-indigo-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <svg className="h-3 w-3 text-brand-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
                 )}

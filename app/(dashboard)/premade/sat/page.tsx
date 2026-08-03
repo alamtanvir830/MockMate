@@ -158,7 +158,7 @@ export default async function SATPremadePage() {
   return (
     <div className="py-10">
       <div className="flex items-center gap-2 text-sm text-slate-500 mb-6">
-        <Link href="/premade" className="hover:text-indigo-600 transition-colors">Pre-made Exams</Link>
+        <Link href="/premade" className="hover:text-brand-600 transition-colors">Pre-made Exams</Link>
         <span>/</span>
         <span className="text-slate-900 font-medium">SAT</span>
       </div>
@@ -173,7 +173,7 @@ export default async function SATPremadePage() {
           <ul className="space-y-1.5">
             {['98 questions', '2 hours 14 minutes', 'Reading & Writing + Math'].map((item) => (
               <li key={item} className="flex items-center gap-2 text-sm text-slate-600">
-                <span className="h-1.5 w-1.5 rounded-full bg-indigo-300 shrink-0" />
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-300 shrink-0" />
                 {item}
               </li>
             ))}
@@ -217,8 +217,8 @@ export default async function SATPremadePage() {
         {form1Completed ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">1</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">1</span>
               </div>
               <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Completed</span>
             </div>
@@ -230,49 +230,49 @@ export default async function SATPremadePage() {
             </Link>
           </div>
         ) : isAdmin ? (
-          <Link href="/premade/sat/form-1" className="rounded-xl border border-indigo-200 bg-white p-5 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+          <Link href="/premade/sat/form-1" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">1</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">1</span>
               </div>
               <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Admin</span>
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-0.5">Form 1</h2>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 1</h2>
             <p className="text-xs text-slate-400">Full access</p>
             <SatExamDetails />
-            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-indigo-700 transition-colors">
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
               Start Exam →
             </span>
           </Link>
         ) : satUpgradeUnlocked ? (
-          <Link href="/premade/sat/form-1" className="rounded-xl border border-indigo-200 bg-white p-5 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+          <Link href="/premade/sat/form-1" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">1</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">1</span>
               </div>
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-0.5">Form 1</h2>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 1</h2>
             <p className="text-xs text-slate-400">SAT Premium</p>
             <SatExamDetails />
-            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-indigo-700 transition-colors">
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
               Start Exam →
             </span>
           </Link>
         ) : form1HasLegacyWindow ? (
-          <Link href="/premade/sat/form-1" className="rounded-xl border border-indigo-200 bg-white p-5 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+          <Link href="/premade/sat/form-1" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">1</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">1</span>
               </div>
               <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
                 <ClockIcon />
                 <SatForm1BadgeCountdown expiresAt={form1LegacyExpiresAt!} />
               </span>
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-0.5">Form 1</h2>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 1</h2>
             <p className="text-xs text-slate-400">Free access window active</p>
             <SatExamDetails />
-            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-indigo-700 transition-colors">
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
               Start Exam →
             </span>
           </Link>
@@ -300,8 +300,8 @@ export default async function SATPremadePage() {
         {form2ResultsAttemptId ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">2</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">2</span>
               </div>
               <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Completed</span>
             </div>
@@ -313,34 +313,34 @@ export default async function SATPremadePage() {
             </Link>
           </div>
         ) : isAdmin ? (
-          <Link href="/premade/sat/form-2" className="rounded-xl border border-indigo-200 bg-white p-5 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+          <Link href="/premade/sat/form-2" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">2</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">2</span>
               </div>
               <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Admin</span>
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-0.5">Form 2</h2>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 2</h2>
             <p className="text-xs text-slate-400">Full access</p>
             <SatExamDetails />
-            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-indigo-700 transition-colors">
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
               Start Exam →
             </span>
           </Link>
         ) : satUpgradeUnlocked ? (
-          <Link href="/premade/sat/form-2" className="rounded-xl border border-indigo-200 bg-white p-5 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+          <Link href="/premade/sat/form-2" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">2</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">2</span>
               </div>
               {form2HasInProgress && (
-                <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-200 px-2 py-0.5 text-[10px] font-semibold text-indigo-700">In Progress</span>
+                <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">In Progress</span>
               )}
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-0.5">Form 2</h2>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 2</h2>
             <p className="text-xs text-slate-400">{form2HasInProgress ? 'Resume where you left off.' : 'SAT Premium'}</p>
             <SatExamDetails />
-            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-indigo-700 transition-colors">
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
               {form2HasInProgress ? 'Resume Exam →' : 'Start Exam →'}
             </span>
           </Link>
@@ -368,8 +368,8 @@ export default async function SATPremadePage() {
         {form3ResultsAttemptId && form3FeedbackRequired ? (
           <div className="rounded-xl border border-amber-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">3</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">3</span>
               </div>
               <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Feedback</span>
             </div>
@@ -383,8 +383,8 @@ export default async function SATPremadePage() {
         ) : form3ResultsAttemptId && !form3FeedbackRequired ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">3</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">3</span>
               </div>
               <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Completed</span>
             </div>
@@ -396,17 +396,17 @@ export default async function SATPremadePage() {
             </Link>
           </div>
         ) : form3Access.canResume ? (
-          <Link href="/premade/sat/form-3" className="rounded-xl border border-indigo-200 bg-white p-5 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+          <Link href="/premade/sat/form-3" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">3</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">3</span>
               </div>
-              <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-200 px-2 py-0.5 text-[10px] font-semibold text-indigo-700">In Progress</span>
+              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">In Progress</span>
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-0.5">Form 3</h2>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 3</h2>
             <p className="text-xs text-slate-400">Resume where you left off.</p>
             <SatExamDetails />
-            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-indigo-700 transition-colors">
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
               Resume SAT Form 3 →
             </span>
           </Link>
@@ -431,17 +431,17 @@ export default async function SATPremadePage() {
             </span>
           </Link>
         ) : form3Access.canStart && (isAdmin || satUpgradeUnlocked) ? (
-          <Link href="/premade/sat/form-3" className="rounded-xl border border-indigo-200 bg-white p-5 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+          <Link href="/premade/sat/form-3" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">3</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">3</span>
               </div>
               {isAdmin && <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Admin</span>}
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-0.5">Form 3</h2>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 3</h2>
             <p className="text-xs text-slate-400">{isAdmin ? 'Full access' : 'SAT Premium'}</p>
             <SatExamDetails />
-            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-indigo-700 transition-colors">
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
               Start Exam →
             </span>
           </Link>
@@ -485,8 +485,8 @@ export default async function SATPremadePage() {
         {form4ResultsAttemptId ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">4</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">4</span>
               </div>
               <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Completed</span>
             </div>
@@ -498,17 +498,17 @@ export default async function SATPremadePage() {
             </Link>
           </div>
         ) : isAdmin || satUpgradeUnlocked ? (
-          <Link href="/premade/sat/form-4" className="rounded-xl border border-indigo-200 bg-white p-5 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+          <Link href="/premade/sat/form-4" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">4</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">4</span>
               </div>
               {isAdmin && <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Admin</span>}
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-0.5">Form 4</h2>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 4</h2>
             <p className="text-xs text-slate-400">{isAdmin ? 'Full access' : 'SAT Premium'}</p>
             <SatExamDetails />
-            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-indigo-700 transition-colors">
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
               Start Exam →
             </span>
           </Link>
@@ -536,8 +536,8 @@ export default async function SATPremadePage() {
         {form5ResultsAttemptId ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">5</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">5</span>
               </div>
               <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Completed</span>
             </div>
@@ -549,17 +549,17 @@ export default async function SATPremadePage() {
             </Link>
           </div>
         ) : isAdmin || satUpgradeUnlocked ? (
-          <Link href="/premade/sat/form-5" className="rounded-xl border border-indigo-200 bg-white p-5 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col">
+          <Link href="/premade/sat/form-5" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
-              <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-indigo-600">5</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">5</span>
               </div>
               {isAdmin && <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Admin</span>}
             </div>
-            <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-0.5">Form 5</h2>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 5</h2>
             <p className="text-xs text-slate-400">{isAdmin ? 'Full access' : 'SAT Premium'}</p>
             <SatExamDetails />
-            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-indigo-700 transition-colors">
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
               Start Exam →
             </span>
           </Link>

@@ -23,14 +23,14 @@ export function ForgotPasswordForm() {
           <button
             type="button"
             onClick={() => window.location.reload()}
-            className="font-medium text-indigo-600 hover:text-indigo-500"
+            className="font-medium text-brand-600 hover:text-brand-500"
           >
             Try again
           </button>
         </p>
         <Link
           href="/login"
-          className="block text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
+          className="block text-sm font-medium text-brand-600 hover:text-brand-500 transition-colors"
         >
           Back to sign in
         </Link>

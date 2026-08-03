@@ -279,7 +279,7 @@ function QuizScreen({
               else if (isSelected) cls = 'border-red-400 bg-red-50 cursor-default'
               else cls = 'border-slate-100 bg-white opacity-40 cursor-default'
             } else if (isSelected) {
-              cls = 'border-indigo-400 bg-indigo-50 cursor-pointer'
+              cls = 'border-brand-400 bg-brand-50 cursor-pointer'
             }
             return (
               <button
@@ -413,13 +413,13 @@ function ResultsScreen({ result, onRetake }: { result: DiagnosticResult; onRetak
 
       {/* V3: SAT Score Estimate */}
       {isV3 && satEstimate !== undefined && (
-        <div className="rounded-xl border-2 border-indigo-200 bg-indigo-50 p-6">
-          <p className="text-xs font-semibold uppercase tracking-wider text-indigo-500 mb-1">Estimated SAT R&amp;W Score</p>
+        <div className="rounded-xl border-2 border-brand-200 bg-brand-50 p-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-brand-500 mb-1">Estimated SAT R&amp;W Score</p>
           <div className="flex items-baseline gap-3">
-            <p className="text-5xl font-bold text-indigo-700">{satEstimate}</p>
-            <p className="text-sm text-indigo-500">/ 800</p>
+            <p className="text-5xl font-bold text-brand-700">{satEstimate}</p>
+            <p className="text-sm text-brand-500">/ 800</p>
           </div>
-          <p className="mt-2 text-xs text-indigo-600 leading-relaxed">
+          <p className="mt-2 text-xs text-brand-600 leading-relaxed">
             Based on difficulty-weighted performance across both modules.
             {result.m2_branch === 'foundation' && ' Scoring 700+ requires completing the Advanced module — retake to unlock.'}
             {result.m2_branch === 'advanced' && satEstimate < 700 && ' To reach 700+, focus on the priority skills below and retake.'}

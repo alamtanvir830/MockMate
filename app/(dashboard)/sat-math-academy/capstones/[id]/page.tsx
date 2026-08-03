@@ -69,7 +69,7 @@ function IntroScreen({ capstone, onStart }: { capstone: MathCapstoneInfo; onStar
             'Explanations appear after each module, not during.',
           ].map(item => (
             <li key={item} className="flex items-start gap-2">
-              <span className="text-indigo-500 font-bold mt-0.5 shrink-0">✓</span>
+              <span className="text-brand-500 font-bold mt-0.5 shrink-0">✓</span>
               {item}
             </li>
           ))}
@@ -79,7 +79,7 @@ function IntroScreen({ capstone, onStart }: { capstone: MathCapstoneInfo; onStar
         </div>
         <button
           onClick={onStart}
-          className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 transition-colors"
+          className="w-full rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 transition-colors"
         >
           Begin Module 1 →
         </button>
@@ -134,7 +134,7 @@ function ModuleExam({ questions, moduleNum, state, onChange, onToggleMark, onSub
               onClick={() => setCurrentIndex(i)}
               className={cn(
                 'h-7 w-7 rounded text-[11px] font-semibold border transition-colors',
-                isCurrent ? 'bg-indigo-600 border-indigo-600 text-white' :
+                isCurrent ? 'bg-brand-600 border-brand-600 text-white' :
                   marked ? 'bg-amber-100 border-amber-400 text-amber-700' :
                     ans ? 'bg-emerald-100 border-emerald-400 text-emerald-700' :
                       'bg-slate-50 border-slate-200 text-slate-500 hover:bg-slate-100',
@@ -181,7 +181,7 @@ function ModuleExam({ questions, moduleNum, state, onChange, onToggleMark, onSub
               className={cn(
                 'w-full flex items-start gap-3 rounded-lg border p-3 text-left text-sm transition-colors',
                 selected === choice.label
-                  ? 'border-indigo-400 bg-indigo-50 text-indigo-800'
+                  ? 'border-brand-400 bg-brand-50 text-brand-800'
                   : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
               )}
             >
@@ -212,7 +212,7 @@ function ModuleExam({ questions, moduleNum, state, onChange, onToggleMark, onSub
         {currentIndex < questions.length - 1 ? (
           <button
             onClick={() => setCurrentIndex(i => i + 1)}
-            className="rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-4 py-2 transition-colors"
+            className="rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-4 py-2 transition-colors"
           >
             Next →
           </button>
@@ -306,13 +306,13 @@ function ModuleReview({ questions, moduleNum, answers, onNext, isLastModule }: M
                     {q.wrongAnswerExplanations[sel as 'A' | 'B' | 'C' | 'D']}
                   </p>
                 )}
-                <p className="mt-2 text-[11px] text-indigo-700 font-medium">{q.teachingPoint}</p>
+                <p className="mt-2 text-[11px] text-brand-700 font-medium">{q.teachingPoint}</p>
               </div>
 
               <div className="flex items-center justify-between">
                 <a
                   href={`/sat-math-academy/lesson/${q.skillSlug}`}
-                  className="text-[11px] text-indigo-600 hover:underline"
+                  className="text-[11px] text-brand-600 hover:underline"
                 >
                   Review {domain ? MATH_DOMAIN_DISPLAY[domain] : ''} Lesson →
                 </a>
@@ -329,7 +329,7 @@ function ModuleReview({ questions, moduleNum, answers, onNext, isLastModule }: M
 
       <button
         onClick={onNext}
-        className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 transition-colors"
+        className="w-full rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 transition-colors"
       >
         {isLastModule ? 'View Final Results →' : 'Continue to Module 2 →'}
       </button>
@@ -394,9 +394,9 @@ function ResultsScreen({ capstone, m1Answers, m2Answers }: ResultsProps) {
 
       <div className={cn(
         'rounded-xl border p-5 text-center',
-        pct >= 85 ? 'border-emerald-300 bg-emerald-50' : pct >= 70 ? 'border-indigo-200 bg-indigo-50' : 'border-amber-200 bg-amber-50',
+        pct >= 85 ? 'border-emerald-300 bg-emerald-50' : pct >= 70 ? 'border-brand-200 bg-brand-50' : 'border-amber-200 bg-amber-50',
       )}>
-        <p className={cn('text-5xl font-bold mb-1', pct >= 85 ? 'text-emerald-700' : pct >= 70 ? 'text-indigo-700' : 'text-amber-700')}>
+        <p className={cn('text-5xl font-bold mb-1', pct >= 85 ? 'text-emerald-700' : pct >= 70 ? 'text-brand-700' : 'text-amber-700')}>
           {pct}%
         </p>
         <p className="text-sm text-slate-600">{correct} of {total} correct across both modules</p>
@@ -415,7 +415,7 @@ function ResultsScreen({ capstone, m1Answers, m2Answers }: ResultsProps) {
                 </span>
                 <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                   <div
-                    className={cn('h-full rounded-full', p >= 80 ? 'bg-emerald-500' : p >= 60 ? 'bg-indigo-500' : 'bg-amber-500')}
+                    className={cn('h-full rounded-full', p >= 80 ? 'bg-emerald-500' : p >= 60 ? 'bg-brand-500' : 'bg-amber-500')}
                     style={{ width: `${p}%` }}
                   />
                 </div>
@@ -434,12 +434,12 @@ function ResultsScreen({ capstone, m1Answers, m2Answers }: ResultsProps) {
             const p = Math.round((data.correct / data.total) * 100)
             return (
               <div key={slug} className="flex items-center gap-3">
-                <a href={`/sat-math-academy/lesson/${slug}`} className="text-[12px] text-indigo-700 hover:underline w-48 shrink-0 truncate">
+                <a href={`/sat-math-academy/lesson/${slug}`} className="text-[12px] text-brand-700 hover:underline w-48 shrink-0 truncate">
                   {data.title}
                 </a>
                 <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                   <div
-                    className={cn('h-full rounded-full', p >= 80 ? 'bg-emerald-500' : p >= 60 ? 'bg-indigo-500' : 'bg-amber-500')}
+                    className={cn('h-full rounded-full', p >= 80 ? 'bg-emerald-500' : p >= 60 ? 'bg-brand-500' : 'bg-amber-500')}
                     style={{ width: `${p}%` }}
                   />
                 </div>
@@ -459,7 +459,7 @@ function ResultsScreen({ capstone, m1Answers, m2Answers }: ResultsProps) {
         </a>
         <a
           href="/sat-math-academy/mastery-check"
-          className="flex-1 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 text-center text-sm transition-colors"
+          className="flex-1 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 text-center text-sm transition-colors"
         >
           Take Mastery Check →
         </a>
@@ -551,7 +551,7 @@ export default function MathCapstoneTestPage() {
       <div className="max-w-xl">
         <div className="rounded-xl border border-red-200 bg-red-50 p-5">
           <p className="font-semibold text-red-700">Capstone not found.</p>
-          <a href="/sat-math-academy/capstones" className="mt-2 text-sm text-indigo-600 hover:underline block">
+          <a href="/sat-math-academy/capstones" className="mt-2 text-sm text-brand-600 hover:underline block">
             ← Back to Capstones
           </a>
         </div>
@@ -573,7 +573,7 @@ export default function MathCapstoneTestPage() {
               This capstone is currently being prepared. Check back soon — it will appear here once ready.
             </p>
           </div>
-          <a href="/sat-math-academy/capstones" className="block text-sm text-indigo-600 hover:underline">
+          <a href="/sat-math-academy/capstones" className="block text-sm text-brand-600 hover:underline">
             ← Back to Capstones
           </a>
         </div>

@@ -91,7 +91,7 @@ function SkillCard({ row }: { row: SkillRow }) {
         <span className={cn('text-[11px] font-semibold', cfg.color)}>{cfg.label}</span>
         <Link
           href={`/sat-math-academy/lesson/${row.skillSlug}`}
-          className="rounded-lg border border-indigo-200 bg-indigo-50 px-3 py-1.5 text-[11px] font-semibold text-indigo-700 hover:bg-indigo-100 transition-colors"
+          className="rounded-lg border border-brand-200 bg-brand-50 px-3 py-1.5 text-[11px] font-semibold text-brand-700 hover:bg-brand-100 transition-colors"
         >
           {row.status === 'untried' ? 'Start →' : 'Review →'}
         </Link>
@@ -246,13 +246,13 @@ export default function MathReviewPage() {
           <div className="flex gap-3 pt-2">
             <Link
               href="/sat-math-academy/mixed-practice"
-              className="flex-1 rounded-xl border border-indigo-200 bg-indigo-50 py-3 text-center text-sm font-semibold text-indigo-700 hover:bg-indigo-100 transition-colors"
+              className="flex-1 rounded-xl border border-brand-200 bg-brand-50 py-3 text-center text-sm font-semibold text-brand-700 hover:bg-brand-100 transition-colors"
             >
               Mixed Practice
             </Link>
             <Link
               href="/sat-math-academy/mastery-check"
-              className="flex-1 rounded-xl bg-indigo-600 hover:bg-indigo-700 py-3 text-center text-sm font-semibold text-white transition-colors"
+              className="flex-1 rounded-xl bg-brand-600 hover:bg-brand-700 py-3 text-center text-sm font-semibold text-white transition-colors"
             >
               Mastery Check →
             </Link>

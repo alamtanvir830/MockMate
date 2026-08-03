@@ -247,7 +247,7 @@ export default async function GroupDetailPage({
       {/* Header */}
       <div>
         <div className="flex items-center gap-2 flex-wrap mb-1">
-          <span className="inline-flex items-center rounded-full bg-indigo-50 border border-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-600">
+          <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-100 px-2 py-0.5 text-xs font-medium text-brand-600">
             {isCreator ? 'Created by you' : 'Member'}
           </span>
         </div>
@@ -353,7 +353,7 @@ export default async function GroupDetailPage({
 
                     {/* Name */}
                     <div className="flex-1 min-w-0">
-                      <p className={cn('text-sm truncate', member.isCurrentUser ? 'font-semibold text-indigo-700' : 'font-medium text-slate-900')}>
+                      <p className={cn('text-sm truncate', member.isCurrentUser ? 'font-semibold text-brand-700' : 'font-medium text-slate-900')}>
                         {member.name}
                         {member.isCurrentUser && (
                           <span className="ml-1.5 text-xs font-normal text-slate-400">(you)</span>
@@ -364,7 +364,7 @@ export default async function GroupDetailPage({
                     {/* Score */}
                     <div className="shrink-0 text-right">
                       {canSeeScore && member.percentage !== null ? (
-                        <p className={cn('text-sm font-semibold', member.isCurrentUser ? 'text-indigo-700' : 'text-slate-800')}>
+                        <p className={cn('text-sm font-semibold', member.isCurrentUser ? 'text-brand-700' : 'text-slate-800')}>
                           {member.percentage}%
                         </p>
                       ) : (
@@ -416,7 +416,7 @@ export default async function GroupDetailPage({
                   className={cn(
                     'flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-semibold',
                     member.isCurrentUser
-                      ? 'bg-indigo-100 text-indigo-700'
+                      ? 'bg-brand-100 text-brand-700'
                       : 'bg-slate-100 text-slate-500',
                   )}
                 >
@@ -433,7 +433,7 @@ export default async function GroupDetailPage({
                       )}
                     </p>
                     {member.role === 'creator' && (
-                      <span className="shrink-0 inline-flex items-center rounded-full bg-indigo-50 border border-indigo-100 px-1.5 py-0.5 text-xs font-medium text-indigo-600">
+                      <span className="shrink-0 inline-flex items-center rounded-full bg-brand-50 border border-brand-100 px-1.5 py-0.5 text-xs font-medium text-brand-600">
                         Creator
                       </span>
                     )}
@@ -501,10 +501,10 @@ export default async function GroupDetailPage({
 
       {/* CTA for current user if not started and exam is open */}
       {!locked && members.find((m) => m.isCurrentUser && m.status === 'not_started') && (
-        <div className="rounded-xl border border-indigo-100 bg-indigo-50 p-5 flex items-center justify-between gap-4">
+        <div className="rounded-xl border border-brand-100 bg-brand-50 p-5 flex items-center justify-between gap-4">
           <div>
-            <p className="font-medium text-indigo-900">You have not taken this exam yet</p>
-            <p className="text-sm text-indigo-700 mt-0.5">The exam is open — start your attempt now.</p>
+            <p className="font-medium text-brand-900">You have not taken this exam yet</p>
+            <p className="text-sm text-brand-700 mt-0.5">The exam is open — start your attempt now.</p>
           </div>
           {isCreator ? (
             <Link href={`/exams/${examId}/take`} className="shrink-0">
