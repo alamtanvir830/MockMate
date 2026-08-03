@@ -19,6 +19,8 @@ interface NavItem {
   icon: React.ReactNode
   premium?: boolean
   exact?: boolean
+  inactiveClass?: string
+  inactiveIconClass?: string
 }
 
 const navItems: NavItem[] = [
@@ -44,17 +46,21 @@ const navItems: NavItem[] = [
   {
     href: '/sat-rw-academy',
     label: 'SAT R&W Academy',
+    inactiveClass: 'text-emerald-700 hover:bg-slate-100 hover:text-emerald-900',
+    inactiveIconClass: 'text-emerald-600',
     icon: (
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+      <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
       </svg>
     ),
   },
   {
     href: '/sat-math-academy',
     label: 'SAT Math Academy',
+    inactiveClass: 'text-violet-700 hover:bg-slate-100 hover:text-violet-900',
+    inactiveIconClass: 'text-violet-600',
     icon: (
-      <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0">
+      <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0">
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.745 3A23.933 23.933 0 003 12c0 3.183.62 6.22 1.745 9M19.255 3A23.933 23.933 0 0121 12c0 3.183-.62 6.22-1.745 9M8.25 8.885l1.444-.89a.75.75 0 011.105.402l2.402 7.206a.75.75 0 001.104.401l1.445-.889m-8.25.75l.213.09a1.687 1.687 0 002.062-.617l4.45-6.676a1.688 1.688 0 012.062-.618l.213.09" />
       </svg>
     ),
@@ -233,7 +239,7 @@ export function Sidebar({ userEmail, userFullName, subscriptionTier = 'free' }: 
           collapsed ? 'flex flex-col items-center gap-0.5 px-2' : 'px-3 space-y-0.5',
         )}
       >
-        {navItems.map(({ href, label, icon, premium, exact }) => {
+        {navItems.map(({ href, label, icon, premium, exact, inactiveClass, inactiveIconClass }) => {
           const isActive = exact
             ? pathname === href
             : pathname === href || pathname.startsWith(href + '/')
@@ -258,7 +264,9 @@ export function Sidebar({ userEmail, userFullName, subscriptionTier = 'free' }: 
                         : 'text-amber-500 hover:bg-amber-50 hover:text-amber-700 focus-visible:ring-amber-400'
                       : effectiveActive
                         ? 'bg-indigo-50 text-indigo-600 focus-visible:ring-indigo-400'
-                        : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700 focus-visible:ring-indigo-400',
+                        : inactiveIconClass
+                          ? `${inactiveIconClass} hover:bg-slate-100 focus-visible:ring-indigo-400`
+                          : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700 focus-visible:ring-indigo-400',
                   )}
                 >
                   {icon}
@@ -297,10 +305,10 @@ export function Sidebar({ userEmail, userFullName, subscriptionTier = 'free' }: 
                 'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                 effectiveActive
                   ? 'bg-indigo-50 text-indigo-700'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  : inactiveClass ?? 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
               )}
             >
-              <span className={cn('shrink-0', effectiveActive ? 'text-indigo-600' : 'text-slate-400')}>
+              <span className={cn('shrink-0', effectiveActive ? 'text-indigo-600' : inactiveIconClass ?? 'text-slate-400')}>
                 {icon}
               </span>
               {label}

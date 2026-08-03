@@ -236,16 +236,6 @@ export default function LandingPage() {
         {/* Features */}
         <section id="features" className="py-24">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
-                built around your actual exam
-              </h2>
-              <p className="mt-4 text-lg text-slate-500 max-w-xl mx-auto">
-                MockMate adapts to your syllabus, your exam style, and your weakest
-                topics — not a generic question bank.
-              </p>
-            </div>
-
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {features.map(({ icon, title, description }) => (
                 <div
