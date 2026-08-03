@@ -36,6 +36,7 @@ interface SaveAttemptBody {
   submittedAnswers: Record<string, string>
   completedAt: string
   responses: QuestionResponse[]
+  contentVersion?: 1 | 2
 }
 
 interface UpdateFeedbackBody {
@@ -124,6 +125,9 @@ export async function POST(req: NextRequest) {
         weak_skills:        body.weakSkills,
         submitted_answers:  body.submittedAnswers,
         completed_at:       body.completedAt,
+        // content_version column is additive — existing rows default to 1 via SQL DEFAULT.
+        // Only write when present; guards against the column not yet existing in older DB states.
+        ...(body.contentVersion !== undefined ? { content_version: body.contentVersion } : {}),
       })
       .select('id')
       .single()

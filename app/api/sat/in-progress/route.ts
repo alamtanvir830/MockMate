@@ -17,6 +17,7 @@ interface InProgressBody {
   currentQuestionIdx: number | null
   secsLeft: number | null
   timerRunning: boolean
+  contentVersion?: 1 | 2
 }
 
 function isValidFormNumber(n: unknown): n is number {
@@ -36,7 +37,7 @@ export async function GET(req: NextRequest) {
 
   const { data, error } = await supabase
     .from('sat_in_progress_attempts')
-    .select('local_attempt_id, form_number, answers, bookmarks, strikeouts, rw_m2_type, math_m2_type, current_phase_tag, current_section, current_module, current_question_idx, module_deadline_at, started_at, last_saved_at')
+    .select('local_attempt_id, form_number, answers, bookmarks, strikeouts, rw_m2_type, math_m2_type, current_phase_tag, current_section, current_module, current_question_idx, module_deadline_at, started_at, last_saved_at, content_version')
     .eq('user_id', user.id)
     .eq('form_number', formNumber)
     .maybeSingle()
@@ -63,6 +64,8 @@ export async function GET(req: NextRequest) {
       currentQuestionIdx: data.current_question_idx as number | null,
       moduleDeadlineAt: data.module_deadline_at as string | null,
       startedAt: data.started_at as string,
+      // null / missing → undefined → normalizes to V1 at the client
+      contentVersion: (data.content_version ?? undefined) as 1 | 2 | undefined,
     },
   })
 }
@@ -168,6 +171,8 @@ export async function POST(req: NextRequest) {
         current_question_idx: body.currentQuestionIdx,
         module_deadline_at: moduleDeadlineAt,
         last_saved_at: new Date().toISOString(),
+        // Persist content version; only update if provided (guards against old clients)
+        ...(body.contentVersion !== undefined ? { content_version: body.contentVersion } : {}),
       },
       { onConflict: 'user_id, form_number' },
     )

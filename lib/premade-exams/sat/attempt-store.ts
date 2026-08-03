@@ -1,5 +1,6 @@
 import type { SATAIFeedback } from '@/app/api/sat-feedback/route'
 import { rescoreAttempt } from './sat-score-conversion'
+import { type SATContentVersion, normalizeSatContentVersion } from './version-constants'
 
 export interface PremadeAttempt {
   id: string
@@ -21,6 +22,9 @@ export interface PremadeAttempt {
   bookmarks: string[]
   strikeouts?: Record<string, string[]>
   aiFeedback: SATAIFeedback | null
+  // Version of the SAT exam content used for this attempt.
+  // Absent on historical attempts — normalized to V1 by normalizeSatContentVersion().
+  contentVersion: SATContentVersion
 }
 
 const STORAGE_KEY = 'mockmate_premade_attempts_v1'
@@ -40,7 +44,9 @@ function readStorage(): PremadeAttempt[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     const attempts = raw ? (JSON.parse(raw) as PremadeAttempt[]) : []
-    return attempts.map(applyCurrentScoring)
+    return attempts
+      .map(a => ({ ...a, contentVersion: normalizeSatContentVersion(a.contentVersion) }))
+      .map(applyCurrentScoring)
   } catch {
     return []
   }

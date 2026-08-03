@@ -1,13 +1,13 @@
-import type { MathQuestion } from './types'
+import type { MathQuestion } from '../types'
 
-export const f3MathModule2HardQuestions: MathQuestion[] = [
+export const f3MathModule2HardQuestionsV2: MathQuestion[] = [
   // ─── Advanced Math × 9 ────────────────────────────────────────────────────
 
   // Q01 — Advanced Math | Nonlinear system (linear + quadratic) | hard | MC
   {
-    id: 'sat-f3-math-m2h-q01',
+    id: 'sat-f3-v2-math-m2h-q01',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Advanced Math',
     skill: 'Nonlinear equations in one variable and systems of equations',
     difficulty: 'hard',
@@ -32,9 +32,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q02 — Advanced Math | Polynomial division (Remainder Theorem) | hard | MC
   {
-    id: 'sat-f3-math-m2h-q02',
+    id: 'sat-f3-v2-math-m2h-q02',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Advanced Math',
     skill: 'Equivalent expressions',
     difficulty: 'hard',
@@ -59,9 +59,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q03 — Advanced Math | Exponential equation requiring same-base manipulation | hard | MC
   {
-    id: 'sat-f3-math-m2h-q03',
+    id: 'sat-f3-v2-math-m2h-q03',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Advanced Math',
     skill: 'Exponential functions',
     difficulty: 'hard',
@@ -85,9 +85,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q04 — Advanced Math | Completing the square → vertex | hard | MC
   {
-    id: 'sat-f3-math-m2h-q04',
+    id: 'sat-f3-v2-math-m2h-q04',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Advanced Math',
     skill: 'Quadratic functions',
     difficulty: 'hard',
@@ -112,9 +112,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q05 — Advanced Math | Function composition | hard | MC
   {
-    id: 'sat-f3-math-m2h-q05',
+    id: 'sat-f3-v2-math-m2h-q05',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Advanced Math',
     skill: 'Functions',
     difficulty: 'hard',
@@ -139,9 +139,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q06 — Advanced Math | Rational equation with extraneous solution check | hard | MC
   {
-    id: 'sat-f3-math-m2h-q06',
+    id: 'sat-f3-v2-math-m2h-q06',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Advanced Math',
     skill: 'Nonlinear equations in one variable and systems of equations',
     difficulty: 'hard',
@@ -165,19 +165,16 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
   },
 
   // Q07 — Advanced Math | Product of roots (Vieta's formulas) | hard | MC
-  // VERSION 1 FREEZE: This question contains a mathematical inconsistency (discriminant < 0 means
-  // no real roots, but the problem asserts two real roots). It is preserved here exactly as
-  // historical students took it. The corrected version lives in v2/form-3-math-module-2-hard.ts.
   {
-    id: 'sat-f3-math-m2h-q07',
+    id: 'sat-f3-v2-math-m2h-q07',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Advanced Math',
     skill: 'Quadratic functions',
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'The quadratic equation 5x² − 30x + p = 0 has two real roots, r and s. If the product of r and s equals 14, what is the value of p?',
+      'The quadratic equation 5x² − 45x + p = 0 has two real roots, r and s. If the product of r and s equals 14, what is the value of p?',
     choices: [
       { label: 'A', text: '14' },
       { label: 'B', text: '28' },
@@ -186,7 +183,7 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
     ],
     correctAnswer: 'C',
     explanation:
-      "For any quadratic ax² + bx + c = 0 with roots r and s:\n• Sum of roots:    r + s = −b/a = 30/5 = 6\n• Product of roots: r × s = c/a = p/5\n\nWe are told the product of the roots equals 14:\np/5 = 14\np = 70",
+      "For any quadratic ax² + bx + c = 0 with roots r and s:\n• Sum of roots:    r + s = −b/a = 45/5 = 9\n• Product of roots: r × s = c/a = p/5\n\nWe are told the product of the roots equals 14:\np/5 = 14\np = 70\n\nVerification: the equation 5x² − 45x + 70 = 0 factors as 5(x − 2)(x − 7) = 0, giving roots 2 and 7. Product: 2 × 7 = 14 ✓",
     wrongAnswerExplanations: {
       A: 'p = 14 gives a product of roots equal to 14/5 = 2.8, not 14.',
       B: 'p = 28 gives a product of roots equal to 28/5 = 5.6, not 14.',
@@ -196,9 +193,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q08 — Advanced Math | Inverse function | hard | MC
   {
-    id: 'sat-f3-math-m2h-q08',
+    id: 'sat-f3-v2-math-m2h-q08',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Advanced Math',
     skill: 'Functions',
     difficulty: 'hard',
@@ -223,9 +220,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q09 — Advanced Math | Grid-in: repeated root (discriminant = 0) | hard | grid_in
   {
-    id: 'sat-f3-math-m2h-q09',
+    id: 'sat-f3-v2-math-m2h-q09',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Advanced Math',
     skill: 'Quadratic functions',
     difficulty: 'hard',
@@ -243,9 +240,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q10 — Algebra | Absolute value inequality (two disjoint solution ranges) | hard | MC
   {
-    id: 'sat-f3-math-m2h-q10',
+    id: 'sat-f3-v2-math-m2h-q10',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Algebra',
     skill: 'Linear inequalities in one or two variables',
     difficulty: 'hard',
@@ -270,9 +267,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q11 — Algebra | System of 3 variables from a word problem | hard | MC
   {
-    id: 'sat-f3-math-m2h-q11',
+    id: 'sat-f3-v2-math-m2h-q11',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Algebra',
     skill: 'Systems of two linear equations in two variables',
     difficulty: 'hard',
@@ -297,9 +294,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q12 — Algebra | Chained percent changes (% of %) | medium | MC
   {
-    id: 'sat-f3-math-m2h-q12',
+    id: 'sat-f3-v2-math-m2h-q12',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Algebra',
     skill: 'Ratios, rates, proportional relationships, and units',
     difficulty: 'medium',
@@ -324,9 +321,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q13 — Algebra | Grid-in: linear equation condition for infinitely many solutions | hard | grid_in
   {
-    id: 'sat-f3-math-m2h-q13',
+    id: 'sat-f3-v2-math-m2h-q13',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Algebra',
     skill: 'Linear equations in one variable',
     difficulty: 'hard',
@@ -342,9 +339,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q14 — Algebra | Grid-in: find b given solution constraint | hard | grid_in
   {
-    id: 'sat-f3-math-m2h-q14',
+    id: 'sat-f3-v2-math-m2h-q14',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Algebra',
     skill: 'Linear equations in one variable',
     difficulty: 'hard',
@@ -362,9 +359,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q15 — PSDA | Conditional probability from contingency table | hard | MC
   {
-    id: 'sat-f3-math-m2h-q15',
+    id: 'sat-f3-v2-math-m2h-q15',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Problem-Solving and Data Analysis',
     skill: 'Probability and conditional probability',
     difficulty: 'hard',
@@ -391,9 +388,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q16 — PSDA | Standard deviation interpretation | hard | MC
   {
-    id: 'sat-f3-math-m2h-q16',
+    id: 'sat-f3-v2-math-m2h-q16',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Problem-Solving and Data Analysis',
     skill: 'One-variable data: distributions and measures of center and spread',
     difficulty: 'hard',
@@ -418,9 +415,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q17 — PSDA | Multi-step unit conversion | hard | MC
   {
-    id: 'sat-f3-math-m2h-q17',
+    id: 'sat-f3-v2-math-m2h-q17',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Problem-Solving and Data Analysis',
     skill: 'Ratios, rates, proportional relationships, and units',
     difficulty: 'hard',
@@ -445,9 +442,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q18 — PSDA | Grid-in: probability from combinatorics | hard | grid_in
   {
-    id: 'sat-f3-math-m2h-q18',
+    id: 'sat-f3-v2-math-m2h-q18',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Problem-Solving and Data Analysis',
     skill: 'Probability and conditional probability',
     difficulty: 'hard',
@@ -465,9 +462,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q19 — Geometry | Arc length in radians | hard | MC
   {
-    id: 'sat-f3-math-m2h-q19',
+    id: 'sat-f3-v2-math-m2h-q19',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Geometry and Trigonometry',
     skill: 'Circles',
     difficulty: 'hard',
@@ -492,9 +489,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q20 — Geometry | Volume of composite solid (cylinder + hemisphere) | hard | MC
   {
-    id: 'sat-f3-math-m2h-q20',
+    id: 'sat-f3-v2-math-m2h-q20',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Geometry and Trigonometry',
     skill: 'Area and volume',
     difficulty: 'hard',
@@ -519,9 +516,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q21 — Geometry | Grid-in: right triangle + trig (find missing side, then tan) | hard | grid_in
   {
-    id: 'sat-f3-math-m2h-q21',
+    id: 'sat-f3-v2-math-m2h-q21',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Geometry and Trigonometry',
     skill: 'Right triangles and trigonometry',
     difficulty: 'hard',
@@ -537,9 +534,9 @@ export const f3MathModule2HardQuestions: MathQuestion[] = [
 
   // Q22 — Geometry | Center of circle from diameter endpoints | medium | grid_in
   {
-    id: 'sat-f3-math-m2h-q22',
+    id: 'sat-f3-v2-math-m2h-q22',
     section: 'math',
-    moduleId: 'f3-math-module-2-hard',
+    moduleId: 'f3v2-math-module-2-hard',
     domain: 'Geometry and Trigonometry',
     skill: 'Circles',
     difficulty: 'medium',
