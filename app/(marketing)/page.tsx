@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { Logo } from '@/components/shared/logo'
 import { Button } from '@/components/ui/button'
 import { HeroReviewsPanel } from '@/components/landing/StudentReviews'
@@ -222,20 +221,6 @@ export default function LandingPage() {
                 </li>
               ))}
             </ul>
-          </div>
-        </section>
-
-        {/* How MockMate works — illustration */}
-        <section className="bg-white py-12 sm:py-16">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 flex justify-center">
-            <Image
-              src="/flow.png"
-              alt="How MockMate works — practice exam, instant score report, and targeted Q-Bank drilling"
-              width={1200}
-              height={420}
-              className="w-full h-auto object-contain"
-              style={{ maxWidth: '960px' }}
-            />
           </div>
         </section>
 
