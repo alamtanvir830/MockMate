@@ -32,6 +32,26 @@ const CURATED_TESTIMONIALS: Testimonial[] = [
     quote: 'The structure was good and accurate to the actual exam.',
     // source: form2, feedbackId: 2fa0b55e-bebc-4283-bd1e-d2b4128df99f
   },
+  {
+    initials: 'K. N.',
+    scoreLabel: '1540 scorer',
+    quote: 'This module felt pretty simple. I think it was very similar to other practice tests I\'ve taken.',
+  },
+  {
+    initials: 'R. M.',
+    scoreLabel: '1530 scorer',
+    quote: 'This module was accurate and had a very good mix of questions.',
+  },
+  {
+    initials: 'P. S.',
+    scoreLabel: '1510 scorer',
+    quote: 'It was accurate in my opinion. It was like the actual SAT in terms of how much time I had when I finished.',
+  },
+  {
+    initials: 'P. K.',
+    scoreLabel: '1490 scorer',
+    quote: 'The reading passages were clear, and the content felt highly accurate compared to my practice tests.',
+  },
 ]
 
 // ── Candidate testimonials ──────────────────────────────────────────────────

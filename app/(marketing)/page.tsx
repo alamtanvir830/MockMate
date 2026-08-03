@@ -345,7 +345,7 @@ export default function LandingPage() {
               <Link href="/ai-disclosure" className="hover:text-slate-300 transition-colors">AI Disclosure</Link>
               <Link href="/sat-disclaimer" className="hover:text-slate-300 transition-colors">SAT Disclaimer</Link>
               <Link href="/refund-policy" className="hover:text-slate-300 transition-colors">Refund Policy</Link>
-              <a href="mailto:ranvi.contact@gmail.com" className="hover:text-slate-300 transition-colors">Contact</a>
+              <a href="mailto:ranvi@mockmateapp.com" className="hover:text-slate-300 transition-colors">Contact</a>
             </div>
           </div>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 border-t border-slate-800 pt-5">

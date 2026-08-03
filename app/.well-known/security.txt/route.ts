@@ -11,7 +11,7 @@ export function GET() {
   expiry.setFullYear(expiry.getFullYear() + 1)
 
   const body = [
-    'Contact: mailto:ranvi.contact@gmail.com',
+    'Contact: mailto:ranvi@mockmateapp.com',
     'Preferred-Languages: en',
     `Expires: ${expiry.toISOString().replace(/\.\d{3}Z$/, 'Z')}`,
     'Canonical: https://mockmateapp.com/.well-known/security.txt',

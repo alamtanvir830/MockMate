@@ -65,7 +65,7 @@ export default function AIDisclosurePage() {
         </LegalP>
         <LegalP>
           If you identify an error in an AI-generated question or explanation, please report it to{' '}
-          <a href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">ranvi.contact@gmail.com</a>.
+          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">ranvi@mockmateapp.com</a>.
         </LegalP>
       </LegalSection>
 
@@ -84,8 +84,8 @@ export default function AIDisclosurePage() {
       <LegalSection title="Contact">
         <LegalP>
           Questions about our use of AI? Contact us at{' '}
-          <a href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">
-            ranvi.contact@gmail.com
+          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+            ranvi@mockmateapp.com
           </a>.
         </LegalP>
       </LegalSection>

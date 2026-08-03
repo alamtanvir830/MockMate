@@ -686,8 +686,8 @@ export default function SettingsClient({
       {/* Help */}
       <p className="text-[12px] text-slate-400 text-center">
         Questions?{' '}
-        <a href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">
-          ranvi.contact@gmail.com
+        <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+          ranvi@mockmateapp.com
         </a>
       </p>
     </div>

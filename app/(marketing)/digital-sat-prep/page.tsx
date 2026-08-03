@@ -29,7 +29,7 @@ const jsonLd = [
     name: 'MockMate',
     url: SITE_URL,
     logo: `${SITE_URL}/mockmate-og-v3.png`,
-    email: 'ranvi.contact@gmail.com',
+    email: 'ranvi@mockmateapp.com',
   },
 ]
 

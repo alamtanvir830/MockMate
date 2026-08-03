@@ -6,7 +6,7 @@ import { IndependenceCallout } from '@/components/seo/IndependenceCallout'
 import { buildSeoMetadata, SITE_URL } from '@/components/seo/seo-meta'
 
 const SLUG = '/contact'
-const SUPPORT_EMAIL = 'ranvi.contact@gmail.com'
+const SUPPORT_EMAIL = 'ranvi@mockmateapp.com'
 
 export const metadata: Metadata = buildSeoMetadata({
   title: 'Contact MockMate | Support and Feedback',

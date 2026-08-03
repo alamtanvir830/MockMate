@@ -61,8 +61,8 @@ export default async function BillingPage() {
           </div>
           <p className="mt-6 text-[11px] text-slate-400">
             Questions?{' '}
-            <Link href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">
-              ranvi.contact@gmail.com
+            <Link href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+              ranvi@mockmateapp.com
             </Link>
           </p>
         </div>
@@ -92,8 +92,8 @@ export default async function BillingPage() {
           </div>
           <p className="mt-6 text-[11px] text-slate-400">
             Questions?{' '}
-            <Link href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">
-              ranvi.contact@gmail.com
+            <Link href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+              ranvi@mockmateapp.com
             </Link>
           </p>
         </div>
@@ -137,8 +137,8 @@ export default async function BillingPage() {
 
           <p className="mt-6 text-[11px] text-slate-400 text-center">
             Questions?{' '}
-            <Link href="mailto:ranvi.contact@gmail.com" className="text-indigo-600 hover:underline">
-              ranvi.contact@gmail.com
+            <Link href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+              ranvi@mockmateapp.com
             </Link>
           </p>
         </div>

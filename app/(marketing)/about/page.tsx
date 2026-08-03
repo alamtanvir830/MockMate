@@ -27,7 +27,7 @@ const jsonLd = [
     name: 'MockMate',
     url: SITE_URL,
     logo: OG_IMAGE,
-    email: 'ranvi.contact@gmail.com',
+    email: 'ranvi@mockmateapp.com',
     description:
       'MockMate is an independent, affordable Digital SAT preparation platform offering adaptive SAT-style exams, a large question bank, and focused courses.',
   },
@@ -99,8 +99,8 @@ export default function AboutPage() {
       <Section title="How to Contact Us">
         <p>
           Questions, feedback, or billing issues? Email{' '}
-          <a href="mailto:ranvi.contact@gmail.com" className="font-medium text-emerald-600 hover:text-emerald-700">
-            ranvi.contact@gmail.com
+          <a href="mailto:ranvi@mockmateapp.com" className="font-medium text-emerald-600 hover:text-emerald-700">
+            ranvi@mockmateapp.com
           </a>{' '}
           or visit our{' '}
           <Link href="/contact" className="font-medium text-emerald-600 hover:text-emerald-700">

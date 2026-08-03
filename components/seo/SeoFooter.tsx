@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const SUPPORT_EMAIL = 'ranvi.contact@gmail.com'
+const SUPPORT_EMAIL = 'ranvi@mockmateapp.com'
 
 type FooterColumn = {
   heading: string

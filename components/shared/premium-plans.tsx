@@ -221,8 +221,8 @@ export function PremiumPlans({
         </p>
         <p className="text-[11px] text-slate-400">
           Have questions?{' '}
-          <Link href="mailto:ranvi.contact@gmail.com" className="text-amber-600 hover:underline">
-            ranvi.contact@gmail.com
+          <Link href="mailto:ranvi@mockmateapp.com" className="text-amber-600 hover:underline">
+            ranvi@mockmateapp.com
           </Link>
         </p>
       </div>
