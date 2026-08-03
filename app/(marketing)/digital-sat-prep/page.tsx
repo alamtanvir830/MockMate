@@ -28,7 +28,7 @@ const jsonLd = [
     '@type': 'Organization',
     name: 'MockMate',
     url: SITE_URL,
-    logo: `${SITE_URL}/mockmate-og-v4.png`,
+    logo: `${SITE_URL}/opengraph-image`,
     email: 'ranvi@mockmateapp.com',
   },
 ]
