@@ -9,6 +9,7 @@ import { TabletShowcase } from '@/components/landing/IPadShowcase'
 const fraunces = Fraunces({
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-fraunces',
 })
 
 export default function LandingPage() {
