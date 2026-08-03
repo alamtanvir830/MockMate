@@ -12,7 +12,7 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-sm">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            <Logo />
+            <Logo navyTheme />
             <nav className="hidden md:flex items-center gap-6">
               <a href="#features" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">
                 Features
@@ -26,7 +26,7 @@ export default function LandingPage() {
                 Sign in
               </Link>
               <Link href="/signup">
-                <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700">Get started free</Button>
+                <Button size="sm" className="bg-[#1b3a5c] hover:bg-[#254d7a]">Get started free</Button>
               </Link>
             </div>
           </div>
@@ -123,8 +123,8 @@ export default function LandingPage() {
               {/* ── Left: copy → CTA buttons → social proof ───────────────── */}
               <div className="lg:w-[42%] text-center lg:text-left">
                 {/* Eyebrow */}
-                <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-5">
-                  <span className="h-px w-6 bg-emerald-400 hidden lg:block" />
+                <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-[#1b3a5c] mb-5">
+                  <span className="h-px w-6 bg-[#1b3a5c] hidden lg:block" />
                   MockMate
                 </p>
 
@@ -132,13 +132,13 @@ export default function LandingPage() {
                   Your standardized exam hub for{' '}
                   <span
                     className="bg-clip-text text-transparent"
-                    style={{ backgroundImage: 'linear-gradient(135deg, #10b981, #059669)' }}
+                    style={{ backgroundImage: 'linear-gradient(135deg, #1b3a5c, #2d5f8a)' }}
                   >
                     affordable test prep.
                   </span>
                 </h1>
 
-                <p className="mt-6 text-base sm:text-lg text-slate-500 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                <p className="mt-6 text-base sm:text-lg text-slate-800 leading-relaxed max-w-xl mx-auto lg:mx-0">
                   Take realistic SAT-style practice exams and targeted practice with high-quality questions reviewed by students, former test takers, and high scorers.
                 </p>
 
@@ -147,7 +147,7 @@ export default function LandingPage() {
                   <Link href="/signup?next=/premade/sat">
                     <Button
                       size="lg"
-                      className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 whitespace-nowrap"
+                      className="w-full sm:w-auto bg-[#1b3a5c] hover:bg-[#254d7a] whitespace-nowrap"
                     >
                       Get A Free SAT Exam!
                       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -176,8 +176,8 @@ export default function LandingPage() {
                 </TabletShowcase>
 
                 {/* SAT Premium benefits card */}
-                <div className="rounded-2xl border border-emerald-100 bg-emerald-50 px-6 py-5">
-                  <p className="flex items-center gap-2 text-sm font-semibold text-emerald-700 mb-3.5">
+                <div className="rounded-2xl border border-blue-100 bg-blue-50 px-6 py-5">
+                  <p className="flex items-center gap-2 text-sm font-semibold text-[#1b3a5c] mb-3.5">
                     <svg className="h-4 w-4 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
                     </svg>
@@ -188,9 +188,9 @@ export default function LandingPage() {
                       <li key={text}>
                         <Link
                           href={href}
-                          className="flex items-center gap-2 text-sm text-emerald-800 hover:text-emerald-600 transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                          className="flex items-center gap-2 text-sm text-[#1b3a5c] hover:text-[#254d7a] transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1b3a5c]"
                         >
-                          <svg className="h-3.5 w-3.5 shrink-0 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <svg className="h-3.5 w-3.5 shrink-0 text-[#1b3a5c]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                           </svg>
                           {text}
@@ -213,9 +213,9 @@ export default function LandingPage() {
                 <li key={label}>
                   <Link
                     href={href}
-                    className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    className="flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1b3a5c]"
                   >
-                    <span className="text-emerald-500">{icon}</span>
+                    <span className="text-[#1b3a5c]">{icon}</span>
                     {label}
                   </Link>
                 </li>
@@ -260,7 +260,7 @@ export default function LandingPage() {
                   key={title}
                   className="rounded-2xl border border-slate-200 bg-white p-6 hover:shadow-md transition-shadow"
                 >
-                  <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                  <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-[#1b3a5c]">
                     {icon}
                   </div>
                   <h3 className="mb-2 text-base font-semibold text-slate-900">{title}</h3>
@@ -286,12 +286,12 @@ export default function LandingPage() {
             <div className="relative">
               <div
                 aria-hidden
-                className="absolute left-1/2 top-5 hidden h-0.5 w-3/4 -translate-x-1/2 bg-emerald-100 lg:block"
+                className="absolute left-1/2 top-5 hidden h-0.5 w-3/4 -translate-x-1/2 bg-blue-100 lg:block"
               />
               <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
                 {steps.map(({ number, title, description }) => (
                   <div key={number} className="relative text-center">
-                    <div className="relative z-10 mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-600 text-sm font-bold text-white">
+                    <div className="relative z-10 mx-auto mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#1b3a5c] text-sm font-bold text-white">
                       {number}
                     </div>
                     <h3 className="mb-2 font-semibold text-slate-900">{title}</h3>
@@ -308,7 +308,7 @@ export default function LandingPage() {
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-snug">
               your SAT test day is coming.{' '}
-              <span style={{ color: '#34d399' }}>
+              <span style={{ color: '#93c5fd' }}>
                 don&apos;t let the first full test be the real one.
               </span>
             </h2>
@@ -317,7 +317,7 @@ export default function LandingPage() {
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/signup?next=/premade/sat">
-                <Button size="lg" className="bg-emerald-600 hover:bg-emerald-500">
+                <Button size="lg" className="bg-[#1b3a5c] hover:bg-[#254d7a]">
                   Start Free SAT Practice
                 </Button>
               </Link>

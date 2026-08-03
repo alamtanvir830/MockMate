@@ -170,13 +170,13 @@ function Card({ t }: { t: Testimonial }) {
     <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
       <p className="text-[13px] text-slate-700 leading-relaxed">&ldquo;{t.quote}&rdquo;</p>
       <div className="mt-3 flex items-center gap-2 pt-3 border-t border-slate-100">
-        <div className="h-7 w-7 shrink-0 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-[11px] font-semibold select-none">
+        <div className="h-7 w-7 shrink-0 rounded-full bg-blue-100 flex items-center justify-center text-[#1b3a5c] text-[11px] font-semibold select-none">
           {t.initials.charAt(0)}
         </div>
         <div>
           <p className="text-[12px] font-semibold text-slate-800 leading-none">{t.initials}</p>
           {scoreDisplay && (
-            <p className="text-[11px] text-emerald-600 mt-0.5 font-medium">{scoreDisplay}</p>
+            <p className="text-[11px] text-[#1b3a5c] mt-0.5 font-medium">{scoreDisplay}</p>
           )}
         </div>
       </div>

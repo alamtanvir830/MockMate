@@ -3,12 +3,14 @@ import { cn } from '@/lib/utils'
 interface LogoProps {
   className?: string
   iconOnly?: boolean
+  /** When true, renders the logo in navy instead of the default green — landing page only */
+  navyTheme?: boolean
 }
 
-export function Logo({ className, iconOnly = false }: LogoProps) {
+export function Logo({ className, iconOnly = false, navyTheme = false }: LogoProps) {
   return (
     <div className={cn('flex items-center gap-2', className)}>
-      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-600 shrink-0">
+      <div className={cn('flex h-8 w-8 items-center justify-center rounded-lg shrink-0', navyTheme ? 'bg-[#1b3a5c]' : 'bg-emerald-600')}>
         <svg
           width="18"
           height="18"
@@ -27,7 +29,7 @@ export function Logo({ className, iconOnly = false }: LogoProps) {
       </div>
       {!iconOnly && (
         <span className="text-lg font-bold text-slate-900 tracking-tight">
-          Mock<span className="text-emerald-600">Mate</span>
+          Mock<span className={navyTheme ? 'text-[#1b3a5c]' : 'text-emerald-600'}>Mate</span>
         </span>
       )}
     </div>

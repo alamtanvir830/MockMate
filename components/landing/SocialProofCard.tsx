@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react'
 export const LANDING_USER_COUNT_LABEL = '975+'
 
 const AVATARS = [
-  { initials: 'S', bg: '#d1fae5', color: '#065f46' },
+  { initials: 'S', bg: '#dbeafe', color: '#1e3a5f' },
   { initials: 'M', bg: '#e0f2fe', color: '#0369a1' },
   { initials: 'A', bg: '#ede9fe', color: '#5b21b6' },
   { initials: 'J', bg: '#fef3c7', color: '#92400e' },
@@ -42,8 +42,8 @@ export function SocialProofCard({ className = '' }: SocialProofCardProps) {
           to   { opacity: 1; transform: translateY(0)   scale(1);    }
         }
         @keyframes sp-glow-in {
-          from { box-shadow: 0 2px 8px rgba(16,185,129,0.06), 0 1px 3px rgba(0,0,0,0.04); }
-          to   { box-shadow: 0 2px 16px rgba(16,185,129,0.14), 0 1px 6px rgba(0,0,0,0.06); }
+          from { box-shadow: 0 2px 8px rgba(27,58,92,0.06), 0 1px 3px rgba(0,0,0,0.04); }
+          to   { box-shadow: 0 2px 16px rgba(27,58,92,0.14), 0 1px 6px rgba(0,0,0,0.06); }
         }
 
         .sp-card {
@@ -54,7 +54,7 @@ export function SocialProofCard({ className = '' }: SocialProofCardProps) {
         }
         .sp-card:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 24px rgba(16,185,129,0.18), 0 2px 8px rgba(0,0,0,0.07) !important;
+          box-shadow: 0 6px 24px rgba(27,58,92,0.18), 0 2px 8px rgba(0,0,0,0.07) !important;
         }
 
         .sp-avatar-0 { animation: sp-avatar-in 0.38s cubic-bezier(0.22,1,0.36,1) 0.16s both; }
@@ -75,17 +75,17 @@ export function SocialProofCard({ className = '' }: SocialProofCardProps) {
 
       <div
         ref={cardRef}
-        className={`sp-card relative inline-flex items-center gap-3.5 rounded-2xl border border-emerald-200 px-5 py-3.5 ${className}`}
+        className={`sp-card relative inline-flex items-center gap-3.5 rounded-2xl border border-blue-200 px-5 py-3.5 ${className}`}
         style={{
-          background: 'linear-gradient(140deg, #ffffff 55%, #ecfdf5 100%)',
-          boxShadow: '0 2px 8px rgba(16,185,129,0.06), 0 1px 3px rgba(0,0,0,0.04)',
+          background: 'linear-gradient(140deg, #ffffff 55%, #eff6ff 100%)',
+          boxShadow: '0 2px 8px rgba(27,58,92,0.06), 0 1px 3px rgba(0,0,0,0.04)',
         }}
       >
         {/* Decorative sparkle — top right */}
         <svg
           aria-hidden="true"
           focusable="false"
-          className="pointer-events-none absolute -top-2 -right-1.5 h-[14px] w-[14px] text-emerald-400 opacity-75 select-none"
+          className="pointer-events-none absolute -top-2 -right-1.5 h-[14px] w-[14px] text-[#1b3a5c] opacity-50 select-none"
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -96,7 +96,7 @@ export function SocialProofCard({ className = '' }: SocialProofCardProps) {
         <svg
           aria-hidden="true"
           focusable="false"
-          className="pointer-events-none absolute -bottom-1.5 left-4 h-[10px] w-[10px] text-emerald-300 opacity-60 select-none"
+          className="pointer-events-none absolute -bottom-1.5 left-4 h-[10px] w-[10px] text-blue-300 opacity-60 select-none"
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -121,7 +121,7 @@ export function SocialProofCard({ className = '' }: SocialProofCardProps) {
           <span className="text-[14px] font-medium text-slate-500">Join</span>
           <span
             className="text-[24px] font-extrabold tracking-tight leading-none"
-            style={{ color: '#059669' }}
+            style={{ color: '#1b3a5c' }}
           >
             {LANDING_USER_COUNT_LABEL}
           </span>
