@@ -1,6 +1,25 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 import { type Testimonial, TestimonialCarouselClient } from './TestimonialCarouselClient'
 
+// ── Pinned testimonials — always shown first in the carousel ────────────────
+const PINNED_TESTIMONIALS: Testimonial[] = [
+  {
+    initials: 'K. N.',
+    scoreLabel: '1540 scorer',
+    quote: "This module felt pretty simple. I think it was very similar to other practice tests I've taken.",
+  },
+  {
+    initials: 'R. M.',
+    scoreLabel: '1530 scorer',
+    quote: 'This module was accurate and had a very good mix of questions.',
+  },
+  {
+    initials: 'P. S.',
+    scoreLabel: '1510 scorer',
+    quote: 'It was accurate in my opinion. It was like the actual SAT in terms of how much time I had when I finished.',
+  },
+]
+
 // ── Curated static testimonials (Form 2 + Form 3) ──────────────────────────
 // These are approved entries whose prior-exam scores are self-reported and
 // cannot be verified against MockMate attempt data. They are included in the
@@ -26,26 +45,6 @@ const CURATED_TESTIMONIALS: Testimonial[] = [
     // source: form3, feedbackId: 727c34cc-143b-46ed-8b20-f3b3cdfd7789
     // scoreType: mockmate_estimated_practice_score
     // totalScore: 1450, rwScore: 700, mathScore: 750
-  },
-  {
-    initials: 'A. K.',
-    quote: 'The structure was good and accurate to the actual exam.',
-    // source: form2, feedbackId: 2fa0b55e-bebc-4283-bd1e-d2b4128df99f
-  },
-  {
-    initials: 'K. N.',
-    scoreLabel: '1540 scorer',
-    quote: 'This module felt pretty simple. I think it was very similar to other practice tests I\'ve taken.',
-  },
-  {
-    initials: 'R. M.',
-    scoreLabel: '1530 scorer',
-    quote: 'This module was accurate and had a very good mix of questions.',
-  },
-  {
-    initials: 'P. S.',
-    scoreLabel: '1510 scorer',
-    quote: 'It was accurate in my opinion. It was like the actual SAT in terms of how much time I had when I finished.',
   },
   {
     initials: 'P. K.',
@@ -203,7 +202,8 @@ interface HeroReviewsPanelProps {
  */
 export async function HeroReviewsPanel({ fadeBg }: HeroReviewsPanelProps = {}) {
   const verified = await fetchVerifiedTestimonials()
-  const testimonials = interleaveTestimonials(verified, CURATED_TESTIMONIALS)
+  const rest = interleaveTestimonials(verified, CURATED_TESTIMONIALS)
+  const testimonials = [...PINNED_TESTIMONIALS, ...rest]
 
   // 5 seconds of scroll per card; minimum 35 s so slow scrollers still read cards
   const durationSeconds = Math.max(35, testimonials.length * 5)
