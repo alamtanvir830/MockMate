@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 
 export const SITE_URL = 'https://www.mockmateapp.com'
-export const OG_IMAGE = `${SITE_URL}/mockmate-og-v3.png`
+export const OG_IMAGE = `${SITE_URL}/mockmate-og-v4.png`
 
 /**
  * Builds a consistent Metadata object for public SEO pages:

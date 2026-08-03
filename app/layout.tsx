@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://mockmateapp.com/mockmate-og-v3.png',
+        url: 'https://mockmateapp.com/mockmate-og-v4.png',
         width: 1200,
         height: 630,
         alt: 'MockMate — Take the exam before the exam.',
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     title: 'MockMate — Your Standardized Exam Hub for Affordable Test Prep',
     description:
       'Take your first free standardized exam and practice with affordable SAT, MCAT, SHSAT, and question bank tools built for students.',
-    images: ['https://mockmateapp.com/mockmate-og-v3.png'],
+    images: ['https://mockmateapp.com/mockmate-og-v4.png'],
   },
   metadataBase: new URL('https://www.mockmateapp.com'),
 }

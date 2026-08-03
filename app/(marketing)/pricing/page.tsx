@@ -14,7 +14,7 @@ export const metadata: Metadata = {
       'MockMate plans start at $9.99/month, with a $24.99 3-month plan and $29.99 lifetime access.',
     url: 'https://www.mockmateapp.com/pricing',
     siteName: 'MockMate',
-    images: [{ url: 'https://www.mockmateapp.com/mockmate-og-v3.png', width: 1200, height: 630 }],
+    images: [{ url: 'https://www.mockmateapp.com/mockmate-og-v4.png', width: 1200, height: 630 }],
     type: 'website',
   },
   twitter: {
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     title: 'Pricing | MockMate SAT Prep',
     description:
       'MockMate plans start at $9.99/month, with a $24.99 3-month plan and $29.99 lifetime access.',
-    images: ['https://www.mockmateapp.com/mockmate-og-v3.png'],
+    images: ['https://www.mockmateapp.com/mockmate-og-v4.png'],
   },
 }
 
