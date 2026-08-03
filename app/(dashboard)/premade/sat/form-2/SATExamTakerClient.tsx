@@ -1,7 +1,8 @@
 'use client'
 
 import SATExamTaker from '@/components/premade/SATExamTaker'
-import { satForm2 } from '@/lib/premade-exams/sat/form-2'
+import { getSatForm } from '@/lib/premade-exams/sat/sat-form-resolver'
+import { CURRENT_SAT_CONTENT_VERSION } from '@/lib/premade-exams/sat/version-constants'
 
 export default function SATExamTakerClient({
   isAdmin = false,
@@ -12,7 +13,8 @@ export default function SATExamTakerClient({
 }) {
   return (
     <SATExamTaker
-      form={satForm2}
+      form={getSatForm(2, CURRENT_SAT_CONTENT_VERSION)}
+      contentVersion={CURRENT_SAT_CONTENT_VERSION}
       skipPasswordGate
       isAdmin={isAdmin}
       allowRetake={isAdmin}

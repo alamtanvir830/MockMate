@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import SATExamTaker from '@/components/premade/SATExamTaker'
-import { satForm1 } from '@/lib/premade-exams/sat/form-1'
+import { getSatForm } from '@/lib/premade-exams/sat/sat-form-resolver'
 import { loadAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
+import { normalizeSatContentVersion } from '@/lib/premade-exams/sat/version-constants'
 
 export default function SATForm1ResultsClient({
   attemptId,
@@ -49,9 +50,10 @@ export default function SATForm1ResultsClient({
     )
   }
 
+  const contentVersion = normalizeSatContentVersion(attempt.contentVersion)
   return (
     <SATExamTaker
-      form={satForm1}
+      form={getSatForm(1, contentVersion)}
       initialAttempt={attempt}
       isAdmin={isAdmin}
       allowRetake={isAdmin}

@@ -18,6 +18,7 @@ import type {
   SATGraphData,
 } from '@/lib/premade-exams/sat/types'
 import { saveAttempt, updateAttempt, loadAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
+import { type SATContentVersion, CURRENT_SAT_CONTENT_VERSION, normalizeSatContentVersion } from '@/lib/premade-exams/sat/version-constants'
 import { rwSkillToAcademySlug } from '@/lib/academy/skill-mapping'
 import { buildPersonalizedSets, type PersonalizedSetCard } from '@/lib/question-bank/sat/personalized-sets'
 import {
@@ -926,11 +927,19 @@ interface InProgressData {
   currentQuestionIdx: number | null
   moduleDeadlineAt: string | null
   startedAt: string
+  contentVersion?: 1 | 2
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, isAdmin = false, allowRetake = true, showUnlockCTA = false, satUpgradeUnlocked = false, countdownText, trialEligible = false }: { form: SATForm; initialAttempt?: PremadeAttempt; skipPasswordGate?: boolean; isAdmin?: boolean; allowRetake?: boolean; showUnlockCTA?: boolean; satUpgradeUnlocked?: boolean; countdownText?: string; trialEligible?: boolean }) {
+export default function SATExamTaker({ form, initialAttempt, contentVersion: contentVersionProp, skipPasswordGate, isAdmin = false, allowRetake = true, showUnlockCTA = false, satUpgradeUnlocked = false, countdownText, trialEligible = false }: { form: SATForm; initialAttempt?: PremadeAttempt; contentVersion?: SATContentVersion; skipPasswordGate?: boolean; isAdmin?: boolean; allowRetake?: boolean; showUnlockCTA?: boolean; satUpgradeUnlocked?: boolean; countdownText?: string; trialEligible?: boolean }) {
   const isHistoryView = !!initialAttempt
+
+  // Content version for this attempt:
+  //   - history view: use the stored attempt's version (falls back to V1 for old attempts)
+  //   - new attempt:  use the explicitly passed contentVersionProp, or CURRENT_SAT_CONTENT_VERSION
+  const contentVersion: SATContentVersion = isHistoryView
+    ? normalizeSatContentVersion(initialAttempt?.contentVersion)
+    : (contentVersionProp ?? CURRENT_SAT_CONTENT_VERSION)
 
   // ── Exam state ─────────────────────────────────────────────────────────────
   const [phase, setPhase] = useState<SATPhase>(isHistoryView ? { tag: 'results' } : { tag: 'welcome' })
@@ -1092,6 +1101,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
           currentQuestionIdx: qIdx,
           secsLeft: currentTimerRunning ? currentSecsLeft : null,
           timerRunning: currentTimerRunning,
+          contentVersion,
         }),
       })
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -1113,7 +1123,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
         }
       }
     }
-  }, [form.id, isHistoryView, phase, answers, bookmarks, strikeouts, rwM2Type, mathM2Type, secsLeft, timerRunning])
+  }, [form.id, isHistoryView, phase, answers, bookmarks, strikeouts, rwM2Type, mathM2Type, secsLeft, timerRunning, contentVersion])
 
   // Keep saveToServerRef in sync so retry callbacks always call the latest version.
   useEffect(() => { saveToServerRef.current = saveToServer }, [saveToServer])
@@ -1185,12 +1195,13 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
         currentQuestionIdx: qIdx,
         secsLeft: timerRunning ? secsLeft : null,
         timerRunning,
+        contentVersion,
       })
       navigator.sendBeacon('/api/sat/in-progress', new Blob([payload], { type: 'application/json' }))
     }
     window.addEventListener('beforeunload', handleBeforeUnload)
     return () => window.removeEventListener('beforeunload', handleBeforeUnload)
-  }, [form.id, isHistoryView, phase, answers, bookmarks, strikeouts, rwM2Type, mathM2Type, secsLeft, timerRunning])
+  }, [form.id, isHistoryView, phase, answers, bookmarks, strikeouts, rwM2Type, mathM2Type, secsLeft, timerRunning, contentVersion])
 
   // Check for in-progress attempt on mount
   useEffect(() => {
@@ -1473,6 +1484,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
       bookmarks: [...bookmarks],
       strikeouts: Object.fromEntries(Object.entries(strikeouts).map(([k, v]) => [k, [...v]])),
       aiFeedback: null,
+      contentVersion,
     }
     saveAttempt(attempt)
 
@@ -1533,6 +1545,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
         submittedAnswers: answers,
         completedAt: completedAtRef.current,
         responses,
+        contentVersion,
       }),
     }).catch(() => { /* silent — localStorage is the source of truth */ })
   // only save once when entering results — intentionally omitting reactive deps
