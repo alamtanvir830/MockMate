@@ -19,9 +19,9 @@ export const f5RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'A',
     explanation: '"Immersive" means drawing the audience deeply into an experience, which fits the description of viewers feeling as if they are physically present with the community.',
     wrongAnswerExplanations: {
-      B: '"Brief" refers to length, not the quality of drawing viewers into the experience.',
-      C: '"Controversial" describes something that provokes disagreement, not the sense of being transported into a setting.',
-      D: '"Repetitive" means doing the same thing over and over, which contradicts the sense of vividness the passage conveys.',
+      B: '"Brief" refers to duration or length, not to the quality of making viewers feel present. Students who note the filmmaker "spent three years" on the project and assume the blank describes the film\'s length relative to that investment select this. But the colon after the blank introduces an explanation of what kind of film it was — viewers felt transported — which has nothing to do with how long the film runs.',
+      C: '"Controversial" is the most tempting wrong answer for students who assume that a film about a remote community three years in the making must have challenged mainstream audiences or provoked debate. But the passage describes the film through the lens of viewer experience ("felt they were sitting in the families\' kitchens"), and nothing in the passage suggests disagreement or challenge — only vivid presence.',
+      D: '"Repetitive" would mean the film recycles the same scenes or ideas — a negative quality that contradicts the passage\'s clear admiration for the finished film. Students who over-read "three years of following" as suggesting that the footage must have become monotonous might select this, but the tone of the passage is positive.',
     },
   },
 
@@ -43,9 +43,9 @@ export const f5RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'A',
     explanation: '"Charming" captures the endearing quality of a child\'s simplified and imaginative explanation. The passage presents it affectionately, not critically.',
     wrongAnswerExplanations: {
-      B: '"Technical" implies precise, expert-level language, which the child\'s simple "scoop" explanation is not.',
-      C: '"Inaccurate" would mean factually wrong; the passage does not evaluate the explanation\'s correctness.',
-      D: '"Lengthy" refers to how long the explanation is, not its character or quality.',
+      B: '"Technical" is the most tempting wrong answer. Students who note that the child is explaining aerodynamics — a complex technical topic — might think the explanation earns that label. But "technical" describes the precision and expertise of the language itself, not the topic. The child\'s word "scoop" is conspicuously non-technical, and the passage frames her explanation as endearing, not expert.',
+      C: '"Inaccurate" tempts students who know actual aerodynamics and recognize that "scooping air" is an oversimplification. But the passage does not evaluate the explanation\'s correctness at all — it presents the child\'s description without editorial judgment about accuracy. Imposing outside knowledge of physics onto the passage leads to this error.',
+      D: '"Lengthy" describes duration or word count, not the quality or character of an explanation. The passage gives no indication of how long the explanation was — it could have been brief or extended. The blank needs a word that characterizes the nature of the explanation, not its length.',
     },
   },
 
@@ -67,9 +67,9 @@ export const f5RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'B',
     explanation: 'The new director\'s open meetings and working groups contrast with her predecessor\'s solo decision-making. "Collaborative" — involving others — captures this contrast precisely.',
     wrongAnswerExplanations: {
-      A: '"Secretive" is the opposite of the new director\'s open, inclusive approach.',
-      C: '"Costly" refers to financial expense, not to a leadership style involving others.',
-      D: '"Cautious" means careful or hesitant, which does not address whether decisions were made alone or with others.',
+      A: '"Secretive" is the antonym of the correct answer — the new director is openly inclusive, not hidden. However, some students who focus on the predecessor\'s "nearly every decision alone" and interpret that as "secretive" might then look for the opposite of secretive in the new director. But the blank describes the new director\'s approach, not the predecessor\'s. The blank needs a word that characterizes working with groups and holding open meetings.',
+      C: '"Costly" is tempting for students who associate "more than" with a quantity comparison and assume the blank is about resource use. Working groups and open meetings do cost more time and money than solo decision-making, so students might infer "costly" fits the contrast. But the passage never mentions finances, and the described behaviors (open meetings, inviting input) describe a leadership style involving others, not financial expenditure.',
+      D: '"Cautious" is the most seductive wrong answer. Students who interpret "forming working groups" and "checking with others" as evidence of the director being careful and deliberate — not rushing into decisions — might select this. "Cautious" does describe a deliberate approach, but it misses the specific dimension of the contrast: the predecessor acted alone, the new director involves others. The key difference is inclusivity/group-involvement, not caution.',
     },
   },
 
@@ -91,9 +91,9 @@ export const f5RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: 'The passage lists multiple distinct types of evidence — ceramics, a furnace, coin hoards, an inn\'s foundations — pointing to "abundant" (plentiful) evidence.',
     wrongAnswerExplanations: {
-      A: '"Scarce" means rare or limited, contradicting the long list of finds described.',
-      B: '"Puzzling" would mean confusing or hard to interpret, but the evidence straightforwardly supports the claim about trade.',
-      D: '"Recent" describes when the evidence was found or made, not how much of it there is.',
+      A: '"Scarce" directly contradicts what the passage describes. Students who confuse "surprising" with "scarce" — thinking that an ancient trading post producing so many artifacts would normally yield little, making these finds unexpected and rare — might select this. But the passage lists four distinct categories of evidence without any suggestion that these were hard to find or unusually few.',
+      B: '"Puzzling" is the most seductive wrong answer. A student who reads the list of evidence — ceramics, a copper-smelting furnace, coin hoards from three empires, an inn — might think that mixing three different empires\' coins in one place is "puzzling" or that the variety of artifacts needs explaining. But the passage treats all of this evidence as straightforwardly supporting the claim about trade activity; nothing is described as confusing or contradictory.',
+      D: '"Recent" describes timing, not quantity. This tempts students who connect the blank to the word "evidence" and assume it must describe when the evidence dates from (recent = modern? = pertaining to the most recent excavation?). But the blank modifies the claim that the trading post "once bustled with activity" — the evidence needs to be characterized by how much of it there is, not when it comes from. The sheer variety and quantity of finds makes "abundant" correct.',
     },
   },
 
@@ -115,9 +115,9 @@ export const f5RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'B',
     explanation: 'The passage directly challenges the widespread belief that color change is for camouflage, then explains the actual purpose — communication. Its aim is to correct a misconception.',
     wrongAnswerExplanations: {
-      A: 'The passage does not compare chameleons\' intelligence to other reptiles.',
-      C: 'Habitats are not mentioned anywhere in the passage.',
-      D: 'The passage states what color change is for, not the biological mechanism of how it is produced.',
+      A: '"To argue that chameleons are more intelligent than other reptiles" is tempting because color-change-as-communication implies a sophisticated signaling system, which students might associate with intelligence. But the passage never mentions intelligence or makes any comparison to other reptiles — these concepts are imported from outside the text. The passage is specifically about purpose of color change, not about cognitive ability.',
+      C: '"To describe the habitats where chameleons are found" is the easiest wrong answer to dismiss — habitats are entirely absent from the passage. However, students who confuse "context setting" with "purpose" might assume a passage about chameleons naturally describes where they live. This error comes from applying a template ("animal passages describe habitats") to a passage that does something entirely different.',
+      D: '"To explain how chameleons physically produce different colors" is the most tempting wrong answer. Students who see "color change" in the first sentence and "new research" in the second might assume the passage will explain the biology or mechanism of color production. But the passage is about purpose, not mechanism — it tells us what color change is for (communication), not how the skin cells actually change hue. These are distinct questions.',
     },
   },
 
@@ -187,9 +187,9 @@ export const f5RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: 'The many rewrites, deleted drafts, and years-long abandonment — followed by an eventual prize — illustrate that difficult creative work demands sustained persistence.',
     wrongAnswerExplanations: {
-      A: 'The passage frames the long process as dedication, not as a sign of self-doubt.',
-      B: 'The prize is mentioned as the outcome; the passage does not explain the criteria or difficulty of winning awards.',
-      D: 'No other writers\' processes are mentioned for comparison.',
+      A: '"To suggest that the novelist lacked confidence in her abilities" is the most tempting wrong answer. Students might reason: rewriting the same chapter 40 times and abandoning the project for 3 years sounds like a person who did not trust herself. Insecurity and persistence can look similar from the outside. But the passage does not characterize the novelist\'s psychology or attribute her process to doubt — it presents her iterative work as the labor required to create a prize-winning book, which is a positive framing.',
+      B: '"To explain why literary prizes are difficult to win" imports a conclusion that the passage does not make. The prize is mentioned in the final sentence as the payoff for the long process, not as the subject of explanation. Nothing in the passage discusses the standards, judges, or competition involved in winning literary awards — the prize is simply the outcome.',
+      D: '"To compare the novelist\'s process with other writers\' methods" would require at least one other writer to be mentioned for contrast or similarity. The passage describes a single novelist\'s experience without any reference to how other writers work. Students who know that some writers produce books quickly and mentally compare them to this novelist\'s years-long process are importing a comparison the passage itself never makes.',
     },
   },
 
@@ -235,9 +235,9 @@ export const f5RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'B',
     explanation: 'The principal\'s claim is specifically that reading club participants read more books per year. Choice B directly measures and confirms this with a comparison of average books read by each group.',
     wrongAnswerExplanations: {
-      A: 'Enjoying school is a measure of attitude, not of how many books students read.',
-      C: 'The number of books the library purchased says nothing about how many books individual students read.',
-      D: 'Making recommendations shows engagement with reading but does not measure how many books students actually finished.',
+      A: '"Reading club members reported enjoying school more than non-members" is tempting because student enjoyment seems connected to academic engagement, and students who enjoy school might logically be expected to read more. But "enjoying school more" does not measure books read — it measures attitude. The principal\'s specific claim is about quantity of books per year, not about satisfaction with school.',
+      C: '"The school library purchased more books this year than in any previous year" connects the reading club initiative to library growth, which sounds relevant. But how many books the library bought says nothing about how many books individual students read. The library could double its collection while reading habits stay flat. The claim requires student-level data on books completed.',
+      D: '"Students in reading clubs were more likely to recommend books to friends" is the most seductive wrong answer. Recommending books implies having read them, so higher recommendation rates could suggest more reading. But "more likely to recommend" does not measure how many books were actually finished — a student could enthusiastically recommend one book she read without having read more than non-members. The claim requires a direct count of books read per year.',
     },
   },
 
@@ -259,9 +259,9 @@ export const f5RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'B',
     explanation: 'The claim is that arts participants have better attendance. A finding that they missed fewer school days directly measures and supports this claim.',
     wrongAnswerExplanations: {
-      A: 'Cost comparisons with sports programs have no bearing on student attendance.',
-      C: 'How many states offer these programs says nothing about whether participants attend school more regularly.',
-      D: 'Enthusiasm is a measure of engagement, not of school attendance.',
+      A: '"The district\'s after-school arts programs cost less than sports programs" is tempting because cost-effectiveness can influence which programs administrators support. If arts programs are cheaper, they might enroll more students, potentially affecting attendance. But lower cost is not evidence that participants attend school more — cost and attendance are separate variables. The claim requires comparing attendance rates, not program costs.',
+      C: '"After-school arts programs are offered in forty states" speaks to national prevalence, not to whether individual participants attend school more regularly. Students who confuse "widely available" with "effective at improving attendance" select this. Scale of adoption does not establish the attendance outcome the administrator claimed.',
+      D: '"Arts teachers reported that students were enthusiastic participants" is the most tempting wrong answer. Enthusiastic participation in after-school arts suggests engagement with school, which might seem connected to better attendance. But teacher reports of enthusiasm in the arts program are not the same as showing up for class more consistently — attendance is a separate behavioral outcome. A student could love the arts program but still miss regular school days.',
     },
   },
 
@@ -534,9 +534,9 @@ export const f5RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: 'The second sentence gives a specific instance of illness spreading when handwashing is skipped — an example that supports the first sentence. "For example" is the correct transition.',
     wrongAnswerExplanations: {
-      A: '"In fact" adds emphasis or a surprising truth, but the second sentence is an illustration, not a surprising reinforcement.',
-      B: '"By contrast" signals opposition; the two sentences are consistent, not contrasting.',
-      D: '"Therefore" signals a result or conclusion; the second sentence is not a consequence of the first but an example of it.',
+      A: '"In fact" is the most tempting wrong answer. "In fact" signals that the second sentence confirms or strengthens the first with additional emphasis or a surprising truth. And the outbreak data does reinforce the handwashing claim — but the logical relationship is illustration (a specific case), not intensification. The second sentence gives one concrete type of situation where skipping handwashing leads to illness, which is a "for example" relationship, not an "in fact" one. "In fact" would fit better if the second sentence provided a counterintuitive or especially strong confirmation.',
+      B: '"By contrast" would signal that the second sentence presents information that opposes or differs from the first. But the two sentences are consistent: both support the idea that handwashing prevents illness. Food-borne disease outbreaks in settings without handwashing are not a contrast to handwashing\'s effectiveness — they confirm it. No contrast exists between these two ideas.',
+      D: '"Therefore" signals that the second sentence is a logical conclusion drawn from the first. But the second sentence is not a deduction from the claim that handwashing prevents illness — it is a specific example that illustrates that claim. "Therefore" would fit if the argument structure were: premise → logical consequence. Here the structure is: general claim → illustrative case.',
     },
   },
 
@@ -558,9 +558,9 @@ export const f5RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'D',
     explanation: 'The residents organized a petition in reaction to the town\'s road-widening plan. "In response" accurately signals that the petition was a reaction to that specific plan.',
     wrongAnswerExplanations: {
-      A: '"As a result" implies the petition caused the plan, reversing the logical order.',
-      B: '"Similarly" signals that the second sentence parallels the first, but the residents are pushing back, not doing something similar.',
-      C: '"Nonetheless" implies the residents acted despite something — but there is nothing earlier suggesting they might not act.',
+      A: '"As a result" is the most tempting wrong answer and contains a real causal relationship — just in the wrong direction. There IS a cause-and-effect link between the town\'s plan and the residents\' petition: the plan caused the petition. But "as a result" marks the second element as the consequence of the first, which would mean "the plan caused the residents to organize a petition" — and that IS what happened. Wait — actually, "in response" and "as a result" describe the same causal direction. The key difference: "in response" emphasizes the reactive, oppositional nature of the petition (residents pushing back against a plan), while "as a result" treats the petition as a neutral consequence. "In response" more precisely captures that the residents are reacting against the proposal.',
+      B: '"Similarly" would signal that both sentences describe parallel activities. The town planned something, and the residents... similarly planned something? But the residents are doing the opposite — they are opposing the plan. "Similarly" would make sense only if the residents\' action was of the same type or direction as the town\'s, which it is not.',
+      C: '"Nonetheless" would signal that the residents organized the petition despite some anticipated obstacle or contrary pressure — that they persisted against something. But the first sentence contains no obstacle or reason the residents might not organize. There is nothing the residents had to overcome in order to respond. The town simply announced a plan, and the residents reacted.',
     },
   },
 
@@ -606,9 +606,9 @@ export const f5RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'D',
     explanation: '"As a result" signals that the drop in attendance was a direct consequence of the construction disruption — paths being closed and the lawn fenced off caused people to visit less. The second sentence describes a predictable outcome of the renovation work described implicitly in the first sentence\'s mention of the project beginning.',
     wrongAnswerExplanations: {
-      A: '"Likewise" signals that the second sentence describes something similar or parallel to the first; but a drop in attendance is not parallel to having community support.',
-      B: '"Nonetheless" introduces something that happens despite an obstacle; but the drop in attendance is not surprising given closed paths and fencing — it is an expected consequence, not a persisting action despite adversity.',
-      C: '"For example" introduces a specific instance that illustrates the previous point; the drop in attendance is a consequence, not an illustration, of the community\'s support for the project.',
+      A: '"Likewise" signals parallelism — the second sentence describes something of the same type or direction as the first. The first sentence describes strong community support; "likewise" would imply the second sentence also describes something positive and parallel. But declining park attendance is not parallel to community support — it is a disruption caused by the renovation, pointing in a different direction.',
+      B: '"Nonetheless" is the most tempting wrong answer. "Nonetheless" would signal that the drop in attendance happened despite the community\'s strong support — as if you might expect support to keep people showing up during construction, yet they still stayed away. This reading makes emotional sense (why would supporters abandon the park?), but "nonetheless" requires an expectation being overcome. The passage does not set up any expectation that people would continue visiting during path closures and fencing.',
+      C: '"For example" would signal that the drop in attendance is a specific instance illustrating the general point of the first sentence. But the drop in attendance does not illustrate "strong community support" — it is caused by the construction disruption described in the first sentence. The relationship is causal (construction caused reduced access, which caused lower attendance), not illustrative.',
     },
   },
 

@@ -19,9 +19,9 @@ export const f2RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: '"Obsolete" means no longer in use or no longer useful, which exactly describes a technology that has been superseded and has "no practical role in contemporary society."',
     wrongAnswerExplanations: {
-      B: '"Popular" means widely liked, which contradicts the passage\'s description of the telegraph as having no practical modern role.',
-      A: '"Innovative" means introducing new ideas, which describes emerging technology — the opposite of what the telegraph is now.',
-      D: '"Reliable" is a positive attribute, but the passage\'s point is that the telegraph is no longer needed, not that it is unreliable.',
+      B: '"Popular" is a trap for students who focus on the first half of the sentence ("once considered indispensable") and interpret "indispensable" as equivalent to "popular." The passage is describing the telegraph\'s current status — a technology with no practical role — not its historical reputation. A technology can have been popular without currently being obsolete.',
+      A: '"Innovative" is tempting because the passage mentions digital networks, which are innovative. Students who infer that the telegraph\'s contrast with innovative digital networks means the telegraph is the opposite of innovative might land here. However, the blank describes the telegraph itself, not digital networks, and "innovative" describes something new and groundbreaking, which the telegraph certainly is not today.',
+      D: '"Reliable" is the most seductive wrong answer because the passage literally says digital networks transmit information "more reliably than the telegraph ever could." Students might read this as a hint that the telegraph is unreliable, suggesting "unreliable" as the intended word — and then select "reliable" as the best option in the list. But the passage doesn\'t say the telegraph is unreliable; it says it has no practical role, which is captured by "obsolete."',
     },
   },
 
@@ -43,9 +43,9 @@ export const f2RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'A',
     explanation: '"Transparent" means open, honest, and easy to understand — exactly what is described: publishing detailed budgets and acknowledging shortcomings rather than hiding them.',
     wrongAnswerExplanations: {
-      B: '"Frugal" means economical with money, which doesn\'t describe the quality of the report\'s communication style.',
-      C: '"Defensive" means resistant to criticism, which contradicts openly acknowledging failures.',
-      D: '"Selective" means choosing only some things, which implies the report was hiding information — the opposite of the passage\'s meaning.',
+      B: '"Frugal" is tempting because the passage is explicitly about finances ("praised for being _______ about its finances") and frugal has a strongly financial connotation. Students who latch onto "finances" as the key word and seek a financial adjective may reach for "frugal." But frugal describes how carefully money is spent, not how openly financial information is communicated; the passage praises the report\'s honesty, not its budget management.',
+      C: '"Defensive" is tempting because an organization publicly acknowledging that it "missed its targets" is doing the opposite of what a defensive organization would do — and a student might assume the passage is describing an unusual departure from defensiveness. However, "defensive" would directly contradict the passage\'s description: the report openly published breakdowns and acknowledged failures, which is the opposite of defensive.',
+      D: '"Selective" is the most tempting wrong answer. The passage says the report published detailed budget breakdowns and "openly acknowledged which initiatives had missed their targets" — suggesting it selected only certain failures to highlight. Students who read this as strategic disclosure ("they chose which things to reveal") might think "selective" fits. But the passage contrasts this report favorably against vague reports that hide information; the purpose is to praise openness, not strategic selectivity.',
     },
   },
 
@@ -67,9 +67,9 @@ export const f2RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: '"Sustain" means to maintain or keep something going over time. Maintenance is performed specifically to sustain structural integrity — to keep structures safe through ongoing effort.',
     wrongAnswerExplanations: {
-      B: '"Establish" means to set up or create for the first time, not to maintain something already in existence.',
-      A: '"Challenge" means to question or test, which implies undermining integrity rather than maintaining it.',
-      D: '"Measure" means to assess the extent of something, not to maintain or preserve it.',
+      B: '"Establish" is the most tempting wrong answer. The passage says maintenance is required "to _______ structural integrity" — and a reader might think: maintenance helps establish safety. However, "establish" means to create or set something up for the first time. The structures already have integrity that was built in; the purpose of maintenance is to keep that integrity going, not to create it anew. "Sustain" captures this ongoing preservation.',
+      A: '"Challenge" is tempting because the passage does describe maintenance as testing structures through "periodic inspections" — and "challenge" can describe a testing process. However, a challenge implies contest or confrontation: engineers challenging the bridge to reveal its weaknesses. The passage frames maintenance as supportive of integrity, not as opposition to it.',
+      D: '"Measure" is tempting because the passage specifically mentions "inspections," which do involve measuring or assessing structural integrity. Students who equate "inspect" with "measure" and then select "measure" as the blank are conflating one step of the maintenance process (assessment) with the overall goal (sustained integrity). Measuring integrity and maintaining it are different acts.',
     },
   },
 
@@ -91,9 +91,9 @@ export const f2RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'A',
     explanation: 'The context states that partial shading is a problem to assess and avoid, and the passage discusses ways it can negatively affect output. "Reduce" is the only choice that describes a decrease in power output, consistent with the negative consequence implied.',
     wrongAnswerExplanations: {
-      B: '"Enhance" means to increase or improve, which contradicts the negative implication of shading on solar panels.',
-      C: '"Stabilize" means to make steady, which doesn\'t fit the idea of shading causing a change.',
-      D: '"Record" means to document, which makes no sense in the context of physical power output.',
+      B: '"Enhance" is the most clearly wrong choice — it means to improve, which is the opposite of the negative effect shading causes. However, students who skim the sentence and notice "solar panels" and "power output" without reading carefully for the shading context might choose it, thinking the question is asking what solar panels do with output. Context makes clear that the blank describes a problem, not a benefit.',
+      C: '"Stabilize" is the most tempting wrong answer. Engineers designing rooftop installations must assess shading because it affects output — and "stabilize" sounds like something a good engineer would want to do (stabilize output). However, the sentence says shading can _______ output significantly, and shading doesn\'t stabilize output; it disrupts it. "Stabilize" implies making output constant and steady, while shading creates unpredictable variation.',
+      D: '"Record" has no sensible meaning in this physical context: shading cannot record a power output. This choice can only be selected by students who are reading so rapidly that they pick a word without checking whether it fits the sentence physically. A quick test — "shading can record the panels\' power output" — reveals the absurdity immediately.',
     },
   },
 
@@ -164,9 +164,9 @@ export const f2RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: 'The passage explicitly states that migrations "rely on internal compasses sensitive to Earth\'s magnetic field, the position of the sun, and even the pattern of stars."',
     wrongAnswerExplanations: {
-      A: 'Landmark memory is not mentioned in the passage.',
-      B: 'The passage specifically notes these journeys occur "without maps or GPS."',
-      D: 'Communication with other animals about routes is not mentioned.',
+      A: '"Memory of landmarks" is tempting because landmarks are real navigational tools that humans use, and one might reasonably assume that birds crossing the same routes year after year would memorize key features. However, the passage makes no mention of landmark memory — it specifies internal compasses sensitive to magnetic fields, the sun, and stars. Students who reason from prior knowledge rather than from the passage fall into this trap.',
+      B: '"Physical maps and GPS devices attached by researchers" is a trap for students who confuse the research context (scientists study these migrations) with the navigational mechanism. Researchers may track animals with GPS, but the passage explicitly says migrations happen "without maps or GPS." This is the most clearly wrong answer, but it tests whether students read carefully enough to catch that explicit denial.',
+      D: '"Communication with other animals about the route" is tempting because many animals are social and coordinate behavior. In particular, readers who just read about monarch butterflies (which travel in groups at certain times) might assume communication is involved. However, the passage attributes navigation entirely to internal biological compasses — there is no mention of social communication as a navigational mechanism.',
     },
   },
 
@@ -390,9 +390,9 @@ export const f2RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'B',
     explanation: 'In neither/nor constructions, the verb agrees with the subject closest to it — here, "their teacher" (singular). The correct verb is the singular "was."',
     wrongAnswerExplanations: {
-      A: '"Were" is plural and would agree with "students," but in neither/nor constructions the verb follows the closer subject ("teacher"), which is singular.',
-      C: '"Are" is present tense plural, inconsistent with the past-tense context.',
-      D: '"Have been" is present perfect, inconsistent with the simple past context of the sentence.',
+      A: '"Were" is the most common wrong answer. The "neither...nor" construction joins "the students" (plural) with "their teacher" (singular), and students who see "students" first instinctively make the verb plural. The proximity rule for neither/nor requires the verb to agree with the subject immediately before it — here "their teacher," not "the students." This rule feels counterintuitive because "students" appears earlier and seems like the main topic.',
+      C: '"Are" is plural present tense. Students who make both errors simultaneously — misidentifying the subject as plural ("students") and using present tense despite the past-tense context of "interrupted" — select this. The fire drill "interrupted" the chemistry lab, which anchors the sentence in past tense.',
+      D: '"Have been" is present perfect (indicating an action that occurred and has relevance to the present) and also plural. The sentence describes a one-time event in the past ("the fire drill that interrupted"), so present perfect is wrong on tense, and "have" is wrong on number.',
     },
   },
 
@@ -414,9 +414,9 @@ export const f2RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: '"By the end of next year" signals a future perfect construction — an action that will be completed before a specific future point. "Will have completed" correctly expresses this.',
     wrongAnswerExplanations: {
-      B: '"Has completed" is present perfect, indicating an action already finished — inconsistent with "next year."',
-      A: '"Completed" is simple past, inconsistent with a future deadline.',
-      D: '"Completes" is simple present, inconsistent with the future reference.',
+      B: '"Has completed" is present perfect — it describes an action recently finished with current relevance. The time marker "by the end of next year" signals a future deadline, not a present completion. "Has completed" would work only if the community center were already finished; since "next year" lies in the future, present perfect cannot be used here.',
+      A: '"Completed" (simple past) is tempting for students who encounter the construction "By [time], [subject] completed [action]" and misread "by the end of next year" as setting a past context. Simple past requires the event to be already finished. "By the end of next year" specifies a future deadline before which the action will be complete — which requires future perfect.',
+      D: '"Completes" (simple present) is the most seductive wrong answer for students who treat "by the end of next year" as if it establishes a habitual or general situation ("each year, it completes..."). But "the end of next year" is a specific future point in time, not a general present-tense condition. Simple present cannot express an action that has not yet occurred.',
     },
   },
 
@@ -534,9 +534,9 @@ export const f2RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'B',
     explanation: 'The second sentence adds another noteworthy quality of bamboo — its long history of practical use — to the growth rate mentioned in the first. "In addition" correctly signals that the second sentence is supplementing the first with a related but distinct piece of information.',
     wrongAnswerExplanations: {
-      A: 'Choice A is incorrect. "As a result" implies that bamboo\'s widespread use in construction and textiles is a direct consequence of its rapid growth rate; the passage does not establish that causal connection.',
-      C: 'Choice C is incorrect. "However" signals a contrast or contradiction, but the two sentences describe compatible, complementary attributes of bamboo.',
-      D: 'Choice D is incorrect. "For example" indicates that the second sentence illustrates a claim made in the first, but the uses of bamboo are not examples of fast growth.',
+      A: '"As a result" is the most tempting wrong answer. Students may reason: "Bamboo grows incredibly fast → as a result, there is a large supply available → as a result, it has been used widely in construction." This is a plausible causal chain, but the passage does not establish it — it does not say abundance caused widespread use. The two sentences present independent noteworthy qualities of bamboo, not a cause-and-effect sequence.',
+      C: '"However" is tempting for students who read the second sentence as surprising given the first — "Bamboo grows incredibly fast; however, it has also been used for centuries." But "however" requires an actual contradiction or tension. Being fast-growing and being historically useful for construction are not in conflict. Both are positive attributes; neither limits or complicates the other.',
+      D: '"For example" is tempting because construction and textile uses could seem like examples of what fast-growing bamboo makes possible. However, "for example" requires the second sentence to be a specific instance of a general claim made in the first. The first sentence claims fast growth; construction uses are not examples of fast growth — they are applications that derive from a different quality (strength and availability), which the passage does not explicitly state.',
     },
   },
 
@@ -558,9 +558,9 @@ export const f2RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: '"In addition" signals that the second sentence adds another set of benefits to those already mentioned. The transition correctly introduces mental and cognitive benefits as additional advantages beyond the physical ones.',
     wrongAnswerExplanations: {
-      A: '"However" signals contrast, but the second sentence adds to rather than contradicts the first.',
-      B: '"Therefore" signals a logical conclusion following from the first sentence — but the mental benefits are not caused by reducing heart disease risk.',
-      D: '"For example" introduces a specific instance of what was just described, but the second sentence offers an entirely new category of benefits, not an example of the physical ones.',
+      A: '"However" signals that the second sentence will introduce a contradiction or surprising qualification. A student might read the structure as: "Exercise is physically beneficial [first sentence]. However, it also affects the mind [second sentence]" — as if mental benefits are surprising or in tension with physical ones. But there is no tension here; both kinds of benefits are positive and compatible. "However" requires actual opposition, not just a shift in category.',
+      B: '"Therefore" signals that the second sentence is a logical consequence of the first. A reader might think: "Exercise reduces heart disease risk → therefore it also improves mood." While this causal chain might be true in some biological sense, the passage does not present it as a logical deduction — the mental benefits are independently documented, not derived from the physical ones. "Therefore" would imply that reducing heart disease causes mood improvement, which the passage does not assert.',
+      D: '"For example" requires the second sentence to illustrate a specific case of the general claim in the first. The first sentence makes a claim about physical health benefits; mood improvement and cognitive effects are not examples of physical health — they are a separate, distinct category of benefits. "For example" would only work if the second sentence said something like "...for example, by strengthening the heart and lowering blood pressure."',
     },
   },
 
@@ -582,9 +582,9 @@ export const f2RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'D',
     explanation: '"Remarkably" signals that what follows is surprising given what came before. The juxtaposition of a 12-second, 120-foot flight with a moon landing within 66 years is striking — "remarkably" captures this sense of astonishment at the speed of progress.',
     wrongAnswerExplanations: {
-      A: '"Similarly" signals that the two facts are alike, but they are not parallel — one is a humble beginning and the other an extraordinary achievement.',
-      B: '"Nevertheless" signals that a result occurred despite an obstacle, but there is no obstacle in the first sentence.',
-      C: '"In contrast" sets up a direct opposition, which is not quite right — the moon landing is an extension, not a contrast, of aviation progress.',
+      A: '"Similarly" is tempting if a student reads both sentences as achievements in aviation/aerospace: "The Wright brothers flew [first achievement]; similarly, humans landed on the moon [second achievement]." But "similarly" requires the two events to be alike in kind and scale — and a 12-second flight covering 120 feet is not at all similar to a moon landing. The contrast in scale is precisely what makes the second sentence remarkable.',
+      B: '"Nevertheless" is the most tempting wrong answer. Students who read the structure as "The Wright Brothers\' flight was tiny and modest [an implicit obstacle to progress]. Nevertheless, within 66 years, humans reached the moon" hear a classic concession-then-triumph structure. However, "nevertheless" specifically signals that the second sentence occurs despite the first — as if the modest beginning was a reason to doubt further progress. The passage does not frame the 12-second flight as an obstacle; it frames the contrast as astonishing, calling for "remarkably" rather than "nevertheless."',
+      C: '"In contrast" requires the second sentence to present something directly opposed to the first. Students might think: "12-second humble beginning ↔ moon landing" is a contrast. But the moon landing doesn\'t oppose the Wright Brothers\' flight — it extends the same line of progress. "In contrast" would work if the second sentence described a setback or a shift in direction, not a continuation of the same trajectory at dramatically higher scale.',
     },
   },
 

@@ -14,16 +14,16 @@ export const rwModule2EasyQuestionsV2: RWQuestion[] = [
     question: `As used in the passage, "convey" most nearly means`,
     choices: [
       { label: 'A', text: 'transmit' },
-      { label: 'B', text: 'disguise' },
-      { label: 'C', text: 'request' },
+      { label: 'B', text: 'encode' },
+      { label: 'C', text: 'announce' },
       { label: 'D', text: 'store' },
     ],
     correctAnswer: 'A',
     explanation: `Choice A is correct. The scout bee uses its dance to pass navigational information to other bees. "Transmit" means to send or pass information from one party to another, which is exactly what the bee is doing.`,
     wrongAnswerExplanations: {
-      B: `Choice B is incorrect. "Disguise" means to conceal, but the purpose of the dance is to reveal, not hide, information.`,
-      C: `Choice C is incorrect. "Request" implies asking for something; the bee is sharing information, not making a request.`,
-      D: `Choice D is incorrect. "Store" implies keeping information in one place, but the bee is sharing it outward with nest-mates.`,
+      B: `"Encode" is the most tempting wrong answer because the waggle dance does in fact encode information — the direction and duration of the dance map to angle and distance. However, in context the bee is not merely encoding (converting into a code) but actively sending that code outward to nest-mates. "Transmit" captures both the encoding and the sending, while "encode" captures only the conversion step.`,
+      C: `"Announce" is tempting because the bee's dance is a kind of public performance visible to thousands of nest-mates — it does sound like an announcement. However, "announce" typically implies a one-directional broadcast of a fact (an event, a decision), whereas "convey" here implies carrying specific navigational data across to recipients who act on it. The passage emphasizes that the information is "precise," suggesting a richer transfer than mere announcement.`,
+      D: `"Store" is the most clearly wrong choice: storing information means keeping it in one place for later retrieval, which is the opposite of sharing it outward with nest-mates. A bee that stores navigational information would not be communicating at all.`,
     },
   },
 
@@ -38,16 +38,16 @@ export const rwModule2EasyQuestionsV2: RWQuestion[] = [
     question: `As used in the passage, "sustain" most nearly means`,
     choices: [
       { label: 'A', text: 'withstand' },
-      { label: 'B', text: 'endure' },
+      { label: 'B', text: 'achieve' },
       { label: 'C', text: 'maintain' },
-      { label: 'D', text: 'support financially' },
+      { label: 'D', text: 'prolong' },
     ],
     correctAnswer: 'C',
     explanation: `Choice C is correct. In this context, "sustain controlled flight" means to keep controlled flight going continuously. "Maintain" captures this meaning of keeping something ongoing or in operation.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Withstand" implies resisting a force, but the passage is about maintaining flight, not resisting anything.`,
-      B: `Choice B is incorrect. "Endure" typically implies suffering through hardship, which does not fit the technical context of maintaining flight.`,
-      D: `Choice D is incorrect. "Support financially" is another meaning of "sustain" but clearly does not fit the aeronautical context.`,
+      A: `"Withstand" is tempting because early powered flight did require the aircraft to withstand forces — wind, turbulence, engine vibration. However, "withstand" describes resisting or surviving an external force, not keeping something in continuous operation. The passage is about the machine's ability to keep flight going, not to resist something acting against it.`,
+      B: `"Achieve" is the most tempting wrong answer. The Wright Brothers' flight was a milestone, and the passage says it demonstrated "for the first time" that such flight was possible — language that sounds like an achievement. However, "sustain" in context means to keep flight going continuously, not merely to accomplish it once. A plane that achieved one second of flight and crashed would have "achieved" flight but not "sustained" it; the 12-second duration suggests ongoing maintenance of flight, not just a single moment.`,
+      D: `"Prolong" is close to "maintain" but implies extending something beyond its natural or expected endpoint — as if flight would naturally stop and the plane is stretching it out. "Maintain" is more neutral, simply meaning to keep flight in operation, without implying that termination is imminent. "Sustain controlled flight" describes the ongoing state, not an extension of a nearly-ended state.`,
     },
   },
 
@@ -62,16 +62,16 @@ export const rwModule2EasyQuestionsV2: RWQuestion[] = [
     question: `As used in the passage, "vehicle" most nearly means`,
     choices: [
       { label: 'A', text: 'means' },
-      { label: 'B', text: 'automobile' },
-      { label: 'C', text: 'obstacle' },
-      { label: 'D', text: 'reward' },
+      { label: 'B', text: 'platform' },
+      { label: 'C', text: 'refuge' },
+      { label: 'D', text: 'substitute' },
     ],
     correctAnswer: 'A',
     explanation: `Choice A is correct. Butler saw science fiction as a "vehicle" for exploring social questions, meaning she used the genre as a method or means of inquiry. "Means" accurately captures this figurative usage.`,
     wrongAnswerExplanations: {
-      B: `Choice B is incorrect. The passage is using "vehicle" figuratively; there is no literal automobile in context.`,
-      C: `Choice C is incorrect. "Obstacle" is the opposite of what Butler intended; she saw the genre as an enabler, not a barrier.`,
-      D: `Choice D is incorrect. "Reward" has no connection to the meaning of "vehicle" in this context.`,
+      B: `"Platform" is the most tempting wrong answer. In modern usage, a "platform" is frequently used figuratively to mean a medium through which someone expresses views — very similar to "vehicle." Butler did use science fiction as a platform in this sense. However, "platform" implies a public stage for advocacy or performance, while "vehicle" in context stresses the genre as the mechanism for exploring questions — the genre is the thing that carries and enables the exploration. "Means" captures this more precisely.`,
+      C: `"Refuge" is tempting because the passage implies Butler turned to science fiction partly because mainstream fiction "avoided" the questions she wanted to ask. One might read this as her finding refuge in the genre. However, "refuge" implies escape or shelter from something threatening, whereas Butler was actively using the genre as a tool for inquiry, not retreating to it.`,
+      D: `"Substitute" would imply Butler used science fiction in place of another form of writing she preferred but couldn't access, suggesting the genre was a second-best option. The passage does not suggest she considered it a substitute — rather, she was "convinced" it was the right vehicle for her purposes.`,
     },
   },
 
@@ -93,9 +93,9 @@ export const rwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'B',
     explanation: `Choice B is correct. The passage describes a village where shops stand empty, the square fills only occasionally, and the young have left — all signs of diminished activity and life. "Inert" in this context means lacking in activity or vitality, capturing the stillness and reduced energy of the depopulated town. The surrounding details all reinforce this meaning.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. Nothing in the passage suggests hostility toward outsiders; the village is simply quiet and depopulated.`,
-      C: `Choice C is incorrect. "Chemically stable" is a scientific definition of "inert" that makes no sense in the context of describing a village's social and economic condition.`,
-      D: `Choice D is incorrect. While "resistant to change" is sometimes associated with inertness, the passage emphasizes the absence of activity and energy, not stubbornness about changing; the villagers have in fact adapted to their reduced circumstances.`,
+      A: `"Hostile to outsiders" is tempting because a depleted village with empty shops and few residents might seem closed or unwelcoming to visitors. However, the passage makes no suggestion of antagonism; the observer walking through finds quiet streets and measured patience — passivity, not hostility. The wrong answer imports a social attitude the passage never establishes.`,
+      C: `"Resistant to change" is the most tempting wrong answer. "Inert" in physics does describe a substance that does not react, and applied to a community, it could suggest stubbornness or unwillingness to evolve. But the passage shows the villagers have adapted: they have made their "accommodation with reduced circumstances," which is itself a form of change. The dominant quality the passage conveys is not resistance but emptiness — lack of vitality and activity, not refusal to change.`,
+      D: `"Chemically stable" is the technical scientific definition of "inert" (as in inert gases), and a test-taker who has only encountered the word in a chemistry class might be tempted by it. But applied to a village's social and economic life, this meaning makes no sense. The passage uses "inert" in its figurative sense — dull, inactive, lacking energy — not its scientific one.`,
     },
   },
 
@@ -117,9 +117,9 @@ export const rwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'B',
     explanation: `Choice B is correct. The passage describes the monarch butterfly's long-distance migration and emphasizes what scientists find most remarkable — that butterflies with no prior experience navigate to the same specific destination. The overall purpose is to convey how extraordinary this navigational feat is.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage does not mention population decline.`,
-      C: `Choice C is incorrect. The passage focuses exclusively on monarch butterflies without comparing them to other insects.`,
-      D: `Choice D is incorrect. The passage is purely descriptive and makes no policy argument.`,
+      A: `"Explain why monarch butterfly populations have declined" is tempting because the passage does discuss threats to butterflies implicitly — and many students know from broader knowledge that monarchs are endangered. However, the passage contains no mention of population decline whatsoever. Students must base their answer on what the passage actually says, not on external knowledge.`,
+      C: `"Compare monarch butterfly migration to that of other migratory insects" is tempting because the passage calls the migration "one of the most remarkable in the animal kingdom," which implies comparison. But this phrase is incidental — the passage never actually discusses another insect species. A comparison requires presenting at least two things; the passage presents only monarchs.`,
+      D: `"Argue that monarch butterflies should receive federal protection" is tempting only if a reader imports their own environmental values into the passage. The passage is purely descriptive — it explains the migration mechanism and notes what scientists find astonishing — but never calls for policy action. A persuasive argument requires the author to make a recommendation, which this passage does not do.`,
     },
   },
 
@@ -214,9 +214,9 @@ export const rwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'D',
     explanation: `Choice D is correct. The passage traces a historical transition from miasma theory to germ theory, notes why the old theory seemed plausible, and concludes that the shift required both new evidence and new conceptual frameworks. This is a description of one theory replacing another.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. The passage does not critique germ theory or suggest it has weaknesses.`,
-      C: `Choice C is incorrect. The passage mentions Pasteur and Koch but does not describe their experimental methods.`,
-      B: `Choice B is incorrect. The passage presents miasma theory as a historical belief that was replaced, not as a current threat.`,
+      A: `"Argue that the germ theory of disease has important limitations" is a tempting wrong answer because the passage is nuanced: it acknowledges that miasma theory "seemed to explain" some observations, and one might expect the next step to be a similar acknowledgment that germ theory, too, has limits. But the passage makes no such claim — it presents the germ theory transition as a genuine scientific advance with no caveats about its limitations.`,
+      C: `"Explain the experimental methods Pasteur and Koch used" is tempting because these scientists are named in the passage and are associated with the development of germ theory. Students may expect a passage about germ theory pioneers to discuss their methods. However, the passage mentions Pasteur and Koch only to attribute the theory to them — it does not describe experiments, controls, or laboratory procedures at all.`,
+      B: `"Warn readers about the continued dangers of miasma in urban environments" is the most clearly incorrect option: the passage describes miasma theory as a historical belief that was replaced. However, a student reading quickly might misread the passage's description of miasma as a current warning, especially since the language ("noxious vapors") sounds alarming.`,
     },
   },
 
@@ -286,9 +286,9 @@ export const rwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'A',
     explanation: `Choice A is correct. The researcher claims that varied vocabulary exposure before age three predicts stronger reading comprehension by the end of second grade. Choice A directly supports this by reporting that children with high vocabulary exposure scored substantially higher on reading comprehension tests at the end of second grade — linking the specific input (vocabulary variety in early childhood) to the specific outcome (second-grade reading comprehension) the researcher identifies.`,
     wrongAnswerExplanations: {
-      B: `Choice B is incorrect. It addresses a correlation between income, vocabulary, and preschool enrollment, but does not connect early vocabulary exposure to reading comprehension outcomes by second grade.`,
-      C: `Choice C is incorrect. It actually challenges the researcher's specific claim about vocabulary variety by suggesting that quantity alone (not variety) predicts vocabulary size — and it focuses on age-four vocabulary rather than second-grade reading comprehension.`,
-      D: `Choice D is incorrect. It links early vocabulary to long-term educational outcomes (college attendance), which is a different outcome than the second-grade reading comprehension the researcher is arguing about.`,
+      B: `Choice B mentions vocabulary — which matches the general topic — and it does establish a correlation between early childhood inputs and later outcomes, which sounds like evidence for the researcher's argument. However, it attributes the effect to income and preschool enrollment, not to vocabulary variety specifically, and it does not mention reading comprehension at second grade at all. Evidence that explains an effect through a confounding variable (income) does not support the claim that vocabulary variety itself drives reading outcomes.`,
+      C: `Choice C is the most seductive wrong answer because it comes directly from the study the researcher is citing and it does address early vocabulary exposure and later outcomes. However, it actually undermines the researcher's claim in two ways: first, it argues that quantity (not variety) predicts later vocabulary, and second, it measures vocabulary at age four rather than reading comprehension at second grade. A quotation that contradicts the precise mechanism the researcher claims (variety) and measures a different outcome cannot support that claim.`,
+      D: `Choice D is tempting because it directly links early vocabulary scores (at age three) to long-term success (college attendance) — a striking, memorable statistic. However, college attendance is a much later and more distal outcome than second-grade reading comprehension. The researcher's argument is specifically about reading comprehension by the end of second grade; evidence about college attendance decades later does not establish the short-term pathway the researcher claims.`,
     },
   },
 
@@ -539,9 +539,9 @@ export const rwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: `Choice C is correct. The first sentence establishes that the sandhill crane travels thousands of miles. The second sentence reveals that despite covering such vast distances, it returns to precisely the same roosting spots each year. This precision amid such large-scale movement is surprising or noteworthy, which is exactly what "Remarkably" signals — it introduces a detail that the reader would find surprising given what was just stated.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Therefore" signals a logical consequence, implying the second sentence follows as a result of the first. But the crane's site fidelity is not a consequence of migrating thousands of miles; it is an additional characteristic that is surprising given that migration.`,
-      B: `Choice B is incorrect. "In contrast" signals opposition or difference, but the second sentence does not contrast with the first — both describe aspects of the same migration behavior.`,
-      D: `Choice D is incorrect. "As a result" implies causation, suggesting the crane returns to the same spots because it migrates thousands of miles, which is not the logical relationship between the sentences.`,
+      A: `"Therefore" is the most tempting wrong answer. Students may reason: "The crane migrates thousands of miles; therefore it develops a strong sense of place and returns to the same spots." This seems logical — extensive migration could cause strong site fidelity. However, "therefore" signals a logical consequence, and the passage does not establish that the enormous distance causes the site fidelity. The second sentence presents an additional surprising fact, not an outcome that follows necessarily from the first.`,
+      B: `"In contrast" signals that the second sentence will present something opposite to or different from the first. But the two sentences both describe the same crane's migration behavior — one addresses the scale of the journey, the other addresses the precision of the return. These are complementary, not contrasting, features of the same phenomenon.`,
+      D: `"As a result" implies the same causation error as "therefore" but with slightly different phrasing. A student who reads "As a result, it returns to the same sites" is asserting that returning to exact sites is a consequence of traveling thousands of miles — a reasonable-sounding but unsupported causal claim. The passage presents both facts as separate remarkable features, not as cause and effect.`,
     },
   },
 
@@ -563,9 +563,9 @@ export const rwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: `Choice C is correct. The first sentence states that athletes view mental preparation as equally important to physical training. The second sentence provides research evidence supporting this view: structured mental rehearsal leads to measurable improvements. The second sentence follows logically from and confirms the first, making "Accordingly" — which signals a logical continuation or natural consequence — the best fit.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "However" signals a contrast or counterpoint, but the second sentence supports and validates the claim made in the first rather than contradicting it.`,
-      B: `Choice B is incorrect. "In contrast" introduces an opposing or different idea, but both sentences present aligned perspectives on mental preparation's value.`,
-      D: `Choice D is incorrect. "Instead" suggests a replacement or alternative, implying the second sentence offers something in place of what the first described, which is not the relationship here.`,
+      A: `"However" is the most tempting wrong answer. A student might read the structure as: "Athletes believe mental prep matters [first sentence]. However, scientists have actually measured its effects [second sentence]" — as if the research is pushing back on or qualifying the athletes' subjective belief. But the research in fact confirms the athletes' view rather than complicating or contradicting it. "However" should only be used when the second statement is in tension with the first.`,
+      B: `"In contrast" requires the second sentence to present something opposed to the first. Both sentences endorse the importance of mental preparation — the first through athletes' self-reports, the second through scientific measurement. There is no opposition between them; they are mutually reinforcing.`,
+      D: `"Instead" implies the second sentence offers an alternative or replacement for something mentioned in the first. A student might read it as: "Athletes say mental prep matters; instead, sports psychologists say structured rehearsal matters" — as if mental prep and structured rehearsal are different things. But structured mental rehearsal is a component of mental preparation, so the second sentence extends rather than replaces the first.`,
     },
   },
 
@@ -587,9 +587,9 @@ export const rwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'D',
     explanation: `Choice D is correct. The passage describes one navigational method (magnetic field) and then adds another (stars and sun). "In addition" signals the addition of a supplementary point, which is the relationship between the two sentences.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "Therefore" signals a logical conclusion drawn from the preceding statement, but the second sentence adds a different method rather than drawing a conclusion.`,
-      C: `Choice C is incorrect. "However" signals contrast, but using stars as a navigational cue does not contradict using magnetic fields.`,
-      B: `Choice B is incorrect. "As a result" signals causation, implying that magnetic field detection causes star navigation, which is illogical.`,
+      A: `"Therefore" signals a logical conclusion. A student might construct a chain: "birds detect magnetic fields → they can navigate → therefore they also use stars." But "therefore" would imply that using stars is a necessary or predictable consequence of magnetic navigation. The second sentence is not a conclusion from the first; it is a separate, additional method. "In addition" captures this accumulation without implying logical derivation.`,
+      C: `"However" signals that the second sentence introduces an exception, qualification, or opposition to the first. A student might think: "Using magnetic fields seems like a complete navigation system — however, it turns out that's not the only method." But this framing implies the second method is surprising or contradictory, when in fact the passage presents both as complementary tools. There is no tension between using magnetic fields and also using stars.`,
+      B: `"As a result" signals that the second sentence is a direct effect of the first. The only way this would work is if detecting the Earth's magnetic field caused birds to also detect stars and the sun — a biological implausibility. The two navigation systems are independent mechanisms, so "as a result" misrepresents the relationship as causal rather than additive.`,
     },
   },
 
@@ -611,9 +611,9 @@ export const rwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: `Choice C is correct. The second sentence concedes that some scholars see co-authorship, then introduces a contrasting position: most scholars still attribute primary authorship to Mary Shelley. "Nevertheless" correctly signals this contrast — acknowledging the preceding point while introducing a counterpoint.`,
     wrongAnswerExplanations: {
-      A: `Choice A is incorrect. "In addition" would add a parallel point, but the second sentence introduces a contrast to the co-authorship interpretation.`,
-      B: `Choice B is incorrect. "For instance" introduces an example, but the final sentence is a counterargument, not an illustration.`,
-      D: `Choice D is incorrect. "As a result" indicates causation, implying Percy's edits caused Mary's primary authorship to be recognized, which is not the logical relationship between the sentences.`,
+      A: `"In addition" is tempting because the final sentence does add information beyond the co-authorship debate — it adds the consensus view of careful scholars. But "in addition" signals accumulation of parallel points, implying the final sentence simply adds another point in the same direction as the co-authorship argument. In fact, the final sentence pushes back against that argument. When the two ideas are in tension, an additive transition like "in addition" misrepresents their relationship.`,
+      B: `"For instance" signals that the following sentence will illustrate or exemplify the preceding point. A student might read it as: "Some scholars argue Percy co-authored the novel; for instance, [a specific piece of evidence]." But the final sentence doesn't provide an example of the co-authorship argument — it counters it by attributing primary authorship to Mary. An example would have to support the claim, not contradict it.`,
+      D: `"As a result" is the second most tempting wrong answer. A student might reason: "Percy's edits were documented → as a result, scholars carefully studied the manuscript → as a result, they attributed it to Mary." But this misreads the structure: the causal claim isn't stated in the passage, and "as a result" would imply Percy's visible involvement caused the scholarly attribution to Mary, which is backwards. The passage presents the scholarly consensus as a contrast to the co-authorship interpretation, not a consequence of Percy's edits.`,
     },
   },
 

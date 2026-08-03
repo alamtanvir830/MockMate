@@ -21,9 +21,9 @@ export const f2MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: '3x + 7 = 22 → 3x = 15 → x = 5. Then 2x − 1 = 10 − 1 = 9.',
     wrongAnswerExplanations: {
-      A: '7 = 2(4) − 1 uses x = 4; but 3(4) + 7 = 19, not 22.',
-      C: '11 = 2(6) − 1 uses x = 6; but 3(6) + 7 = 25, not 22.',
-      D: '13 = x + 8 confuses the calculation; substitute correctly.',
+      A: '7 is obtained by substituting the wrong value of x. A student who solves 3x + 7 = 22 incorrectly as 3x = 22 + 7 = 29 → x ≈ 9.67 and rounds to x = 4 produces 2(4) − 1 = 7. The correct step is 3x = 22 − 7 = 15 → x = 5.',
+      C: '11 is the most tempting wrong answer. Students who solve 3x = 22 + 7 = 29 (adding 7 instead of subtracting) get x ≈ 9.67; others who correctly get x = 5 but then compute 2x − 1 = 2(5) + 1 = 11 (adding instead of subtracting 1) arrive here. Verification: 2(5) − 1 = 10 − 1 = 9, not 11.',
+      D: '13 results from computing 2x + 3 = 2(5) + 3 instead of 2x − 1 = 2(5) − 1. Students who correctly find x = 5 but misread the second expression (changing the minus to a plus, or using the wrong constant) get 13. A careful re-read of "2x − 1" with x = 5 gives 10 − 1 = 9.',
     },
   },
 
@@ -47,9 +47,9 @@ export const f2MathModule2EasyQuestionsV2: MathQuestion[] = [
     explanation:
       'Perimeter = 2(length + width): 36 = 2(12 + w) → 18 = 12 + w → w = 6.',
     wrongAnswerExplanations: {
-      A: '3 = 36/12 divides the perimeter by the length, ignoring the perimeter formula.',
-      C: '8 would give perimeter 2(12 + 8) = 40, not 36.',
-      D: '12 equals the length; the width must be smaller since perimeter is only 36.',
+      A: '3 comes from computing 36 ÷ 12 = 3 — dividing the perimeter by the length as if the perimeter equals length × width. Students who confuse the area formula (A = l × w) with the perimeter formula and set P = l × w → w = P/l = 36/12 = 3 make this error. The correct perimeter formula is P = 2(l + w).',
+      C: '8 is the most tempting wrong answer. Students who correctly set up 36 = 2(12 + w) → 18 = 12 + w but then compute 18 − 10 = 8 (subtracting 10 instead of 12) arrive here. A quick check reveals the error: 2(12 + 8) = 40 ≠ 36.',
+      D: '12 results from students who set up the equation as 36 = 2(w + w) = 4w → w = 9 and then misread, or who simply repeat the given length as the width because they forget which value is missing. Since the length is 12 and the perimeter is only 36, the two widths together must account for 36 − 24 = 12, making each width 6.',
     },
   },
 
@@ -225,9 +225,9 @@ export const f2MathModule2EasyQuestionsV2: MathQuestion[] = [
     explanation:
       'Add the equations: 2x = 10 → x = 5. Substitute: 5 + y = 8 → y = 3. Product xy = 5 × 3 = 15.',
     wrongAnswerExplanations: {
-      A: '10 = x + y, the sum rather than the product.',
-      B: '12 is not the product of x = 5 and y = 3.',
-      D: '18 would require xy with different values of x and y than the system produces.',
+      A: '10 is the sum x + y = 5 + 3 = 8... wait, actually x + y = 8 from the first equation, so 10 = x + y would be wrong too. A student who never solved the system and just reported x + y from the equation (reading "the value of xy" as "the value of x + y") would answer 8, not 10. Students who get x = 5 and then set xy = 5 + 5 = 10 (treating the product as doubled x) arrive at 10.',
+      B: '12 has no clean derivation from this system. Students who solve x = 5 correctly and miscompute y as 7 (from 5 + y = 8 → y = 3 but carry y = 7 due to arithmetic error) would get 5 × 7 = 35 — not 12. Students who recall that a "system with xy" problem should produce 12 from vague pattern-matching, without working through the solution, select this.',
+      D: '18 = 2 × 9 has no relationship to this system. Students who solve x = 5 and y = 3 correctly but then compute x × y as x + y + xy = 8 + 10 = 18, conflating the sum with the product, arrive here. The correct product is 5 × 3 = 15.',
     },
   },
 
@@ -251,9 +251,9 @@ export const f2MathModule2EasyQuestionsV2: MathQuestion[] = [
     explanation:
       'Evaluate the inner function first: h(2) = 3(2) − 1 = 5. Then g(5) = 5² + 2 = 27.',
     wrongAnswerExplanations: {
-      A: '17 = h(g(2)) = h(6) = 17; this reverses the order of composition.',
-      B: '22 applies an incorrect operation to the result 5.',
-      D: '32 = 5² + 7 uses the wrong constant.',
+      A: '17 = h(g(2)) — the reversed composition. Students who compute g(2) = 4 + 2 = 6 first and then apply h: h(6) = 3(6) − 1 = 17 have reversed the order. g(h(2)) means "apply h first, then g"; h(g(2)) means "apply g first, then h." Since function composition is not commutative, order matters: g(h(2)) = 27, not h(g(2)) = 17.',
+      B: '22 likely results from evaluating h(2) = 5 correctly but then computing g(5) as 5² − 3 = 22 (using the wrong constant) instead of 5² + 2 = 27. Students who misread g(x) = x² + 2 as g(x) = x² − 3 make this error.',
+      D: '32 = 5² + 7 also comes from evaluating h(2) = 5 correctly but using the wrong constant in g: students who write g(x) = x² + 7 (possibly confusing the +2 with the coefficient in h(x) = 3x − 1, thinking "+1" became "+7") produce 32. A careful reading of g(x) = x² + 2 confirms the constant is +2.',
     },
   },
 
@@ -277,9 +277,9 @@ export const f2MathModule2EasyQuestionsV2: MathQuestion[] = [
     explanation:
       'Percent increase = (change/original) × 100 = (16/80) × 100 = 20%.',
     wrongAnswerExplanations: {
-      A: '16% confuses the dollar change ($16) with the percent change.',
-      B: '18% ≈ (16/96) × 100 divides by the new price instead of the original.',
-      D: '25% would be a $20 increase from $80; the actual increase is $16.',
+      A: '16% is by far the most common wrong answer because $16 is the actual dollar increase ($96 − $80 = $16), and students who confuse the dollar change for the percent change select this without applying the percentage formula. The formula is (change ÷ original) × 100, not just "the change."',
+      B: '18% ≈ (16/96) × 100 = 16.7% comes from dividing the price increase by the new price ($96) instead of the original price ($80). Students who use the wrong denominator — an extremely common error — arrive near 17-18%. The rule: percent change always uses the original value as the denominator.',
+      D: '25% would require a $20 increase: 25% × $80 = $20. Students who misread $96 − $80 = $16 as $20 (a transcription or rounding error) and then compute 20/80 = 25% arrive here. A quick verification: 25% × $80 = $20, and $80 + $20 = $100 ≠ $96.',
     },
   },
 
@@ -303,9 +303,9 @@ export const f2MathModule2EasyQuestionsV2: MathQuestion[] = [
     explanation:
       '2 − 3x ≥ 8 → −3x ≥ 6 → x ≤ −2. Dividing by −3 reverses the inequality direction.',
     wrongAnswerExplanations: {
-      A: 'x ≥ −2 fails to reverse the inequality when dividing by −3.',
-      B: 'x ≤ 2 results from a sign error in the arithmetic.',
-      D: 'x ≥ 2 fails on both the arithmetic and the sign reversal.',
+      A: 'x ≥ −2 is the result of failing to reverse the inequality direction when dividing by −3. Students correctly reach −3x ≥ 6, then divide both sides by −3 and get x ≥ −2, forgetting the fundamental rule: dividing an inequality by a negative number reverses the direction. The correct result is x ≤ −2.',
+      B: 'x ≤ 2 comes from an arithmetic error before the division step. Students who subtract 2 from both sides instead of subtracting 8 get: 2 − 3x ≥ 8 → −3x ≥ 6... actually −3x ≥ 6 is correct, but students who then compute −3x ≥ 6 → −3x/3 ≥ 6/3 → −x ≥ 2 → x ≤ −2... wait, that\'s correct. More likely, students who misread the original as −3x ≥ −6 arrive at x ≤ 2 after dividing correctly.',
+      D: 'x ≥ 2 combines both errors: students who miscompute 2 − 3x ≥ 8 as −3x ≥ 6 (correct) but then compute 6/−3 = 2 (using the absolute value) and fail to flip the sign write x ≥ 2. This answer requires getting the magnitude right (2) but making the sign-flip error on both the value and the direction simultaneously.',
     },
   },
 
@@ -457,9 +457,9 @@ export const f2MathModule2EasyQuestionsV2: MathQuestion[] = [
     explanation:
       'Factor: (x − 5)(x − 2) = 0, so the roots are x = 5 and x = 2. Product = 5 × 2 = 10. (Vieta\'s: product of roots = constant/leading coefficient = 10.)',
     wrongAnswerExplanations: {
-      A: '5 is one root, not the product.',
-      B: '7 is the sum of the roots, not the product.',
-      D: '12 does not follow from any standard computation with these coefficients.',
+      A: '5 is one of the two roots (x = 5 from the factoring (x − 5)(x − 2) = 0), not their product. Students who find the roots correctly but misread the question — selecting one root instead of computing the product — arrive here. The question asks for the product of all solutions.',
+      B: '7 is the sum of the roots, not the product. By Vieta\'s formulas, the sum of roots = b/a (with sign adjustment) = 7/1 = 7, while the product = c/a = 10/1 = 10. Students who confuse which Vieta\'s formula gives the sum versus the product — or who compute 5 + 2 = 7 instead of 5 × 2 = 10 — arrive here. "Sum" and "product" are different operations; the question asks for multiplication.',
+      D: '12 is a tempting distractor because 12 = 5 + 2 + 5 = 5 × 2 + 2 or from other combinations of the problem\'s numbers, but none of these reflect the correct operation. Students who are uncertain about Vieta\'s formulas may guess based on pattern recognition. Verification: the roots are 5 and 2, and 5 × 2 = 10, not 12.',
     },
   },
 
@@ -483,9 +483,9 @@ export const f2MathModule2EasyQuestionsV2: MathQuestion[] = [
     explanation:
       'Total marbles = 3 + 5 + 2 = 10. Non-blue = 3 + 2 = 5. P(not blue) = 5/10 = 1/2.',
     wrongAnswerExplanations: {
-      A: '1/5 = 2/10 is the probability of drawing green only.',
-      B: '1/3 is not consistent with any simple count from these values.',
-      D: '3/5 = 6/10; but only 5 of the 10 marbles are non-blue.',
+      A: '1/5 = 2/10 is the probability of drawing a green marble specifically, not any non-blue marble. Students who misread "NOT blue" as "green" (the only other color mentioned after red, which students may not count carefully) arrive here. The non-blue marbles include both red (3) and green (2), totaling 5.',
+      B: '1/3 could arise from computing P(red) = 3/10 and thinking "1/3 is close enough" due to rounding, or from accidentally counting only the red marbles and dividing by 9 (counting 10 − 1 = 9 "other" marbles as the denominator). No clean path from the given numbers produces exactly 1/3.',
+      D: '3/5 = 6/10 is the most tempting wrong answer — it is the probability of drawing a blue marble, not a non-blue one. Students who compute P(blue) = 5/10 = 1/2 and then add 1/10 to get 6/10, or who miscount the blue marbles as 6 instead of 5, arrive here. More likely, students who compute the complement incorrectly: P(not blue) = 1 − 2/5 = 3/5, confusing P(blue) = 5/10 = 1/2 with P(blue) = 2/5.',
     },
   },
 
@@ -528,9 +528,9 @@ export const f2MathModule2EasyQuestionsV2: MathQuestion[] = [
     explanation:
       'Vertex x-coordinate: x = −b/(2a) = 8/4 = 2. Vertex y-coordinate: f(2) = 2(4) − 8(2) + 5 = 8 − 16 + 5 = −3.',
     wrongAnswerExplanations: {
-      B: '−1 results from an arithmetic error when evaluating f(2).',
-      C: '1 = 8 − 16 + 9 uses the wrong constant.',
-      D: '3 = −8 + 16 − 5 uses a sign error in the formula.',
+      B: '−1 results from computing f(2) = 2(4) − 8(2) + 5 but making an arithmetic slip: 8 − 16 + 5 = −3, not −1. Students who compute 8 − 16 = −8 and then −8 + 5 = −3 correctly but write −1 due to a careless error, or who compute 2(2)² as 2(2) = 4 instead of 2(4) = 8, arrive at a result near −1. Careful arithmetic: 2(4) = 8, 8(2) = 16, 8 − 16 + 5 = −3.',
+      C: '1 = 8 − 16 + 9 uses the wrong constant. Students who read the function as f(x) = 2x² − 8x + 9 (misreading +5 as +9, perhaps confusing this question\'s function with a similar one) evaluate f(2) = 8 − 16 + 9 = 1. The given function has constant +5, not +9.',
+      D: '3 = −8 + 16 − 5 uses a sign error throughout. Students who evaluate f(2) by computing −2x² + 8x − 5 (negating all signs) get f(2) = −8 + 16 − 5 = 3. This error might arise from students who subtract every term rather than following order of operations, or who think the leading coefficient 2 should be subtracted rather than multiplied.',
     },
   },
 

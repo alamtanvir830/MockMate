@@ -81,9 +81,9 @@ export const mathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'The per-pound charge applies only to weight over 200 pounds, so the charge for the excess is 0.40(w − 200). The total bill inequality is: 120 + 0.40(w − 200) < 220 → 120 + 0.40w − 80 < 220 → 0.40w + 40 < 220 → 0.40w < 180 → w < 450.',
     wrongAnswerExplanations: {
-      B: 'w < 250 results from applying the $0.40 rate to the entire weight w instead of only the weight exceeding 200 pounds.',
-      C: 'w < 350 uses 0.40(w − 200) < 220 and forgets to subtract the flat fee: 0.40(w − 200) < 100 → w − 200 < 250 → w < 450; using 0.40(w−200) < 60 gives w < 350.',
-      D: 'w < 500 results from an arithmetic error such as using 0.40(w − 200) < 200 instead of 0.40(w − 200) < 100.',
+      B: 'w < 250 results from applying the $0.40 rate to the entire weight w rather than only to the excess above 200 pounds. Setting up 120 + 0.40w < 220 gives 0.40w < 100, so w < 250 — a common error when the "over 200 pounds" threshold is missed.',
+      C: 'w < 350 results from correctly applying 0.40(w − 200) but then comparing it to the remaining budget after subtracting $60 instead of $100: if 0.40(w − 200) < 60 (using the wrong remainder), then w − 200 < 150, giving w < 350. The correct remaining budget is $220 − $120 = $100, not $60.',
+      D: 'w < 500 results from an off-by-one error in computing the remaining budget, such as using $220 − $80 = $140 and then solving 0.40(w − 200) < 120 → w < 500, forgetting to subtract the full flat fee of $120.',
     },
   },
 
@@ -129,9 +129,9 @@ export const mathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'Profit = Revenue − Total Costs = 14n − (6n + 4,800) = 8n − 4,800.',
     wrongAnswerExplanations: {
-      C: 'This ignores the $6 variable cost per widget.',
-      B: '6 is the variable cost rate, not the profit per unit; profit per unit is 14 − 6 = 8.',
-      D: 'Fixed costs reduce profit, so 4,800 must be subtracted, not added.',
+      C: 'P = 14n − 4,800 uses the selling price per widget as the profit rate, ignoring that $6 of each sale goes toward variable production costs. Revenue is 14n, but each unit also costs $6 to produce, leaving only $8 per widget as contribution toward fixed costs and profit.',
+      B: 'P = 6n − 4,800 uses the variable cost ($6) as the profit rate rather than the contribution margin ($14 − $6 = $8). It is easy to confuse the variable cost with profit-per-unit, but profit per widget requires subtracting cost from revenue.',
+      D: 'P = 8n + 4,800 correctly identifies the $8 contribution margin per widget but adds the fixed costs instead of subtracting them. Fixed costs are an expense that must be recovered before any profit is earned, so they reduce, not increase, total profit.',
     },
   },
 
@@ -248,9 +248,9 @@ export const mathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'Complete the square: x² − 10x + 29 = (x − 5)² − 25 + 29 = (x − 5)² + 4. So a = 5 and b = 4, giving a + b = 9.',
     wrongAnswerExplanations: {
-      B: '14 = 10 + 4 — incorrectly adds the coefficient 10 to b instead of using a = 5.',
-      C: '29 is the constant in the original expression, not a + b.',
-      D: '5 is the value of a alone; b = 4 must also be added.',
+      B: '14 results from adding the linear coefficient (10) to b (4): 10 + 4 = 14. The error is confusing the original coefficient −10 with the value of a. Completing the square gives a = 10/2 = 5, not 10.',
+      C: '29 is the constant term in the original expression, not the sum a + b. A student who does not complete the square and simply reads off the last number from the original polynomial will land on this answer.',
+      D: '5 is the value of a alone — the half-coefficient obtained when completing the square. Forgetting to add b = 4 gives 5 instead of 5 + 4 = 9. This error comes from stopping after finding a without evaluating b.',
     },
   },
 
@@ -272,9 +272,9 @@ export const mathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'Complete the square: f(x) = (x − 3)² + (k − 9). The minimum value occurs at the vertex: k − 9 = 4, so k = 13.\n\nDesmos method: Enter y = x² − 6x + k and add a slider for k. Drag k until the lowest point of the parabola (the vertex) sits exactly at y = 4 on the graph. The slider value reads k = 13.',
     wrongAnswerExplanations: {
-      B: '10 = 6 + 4 — adding the coefficient and minimum instead of using the vertex formula.',
-      C: '4 is the minimum value of f, not the value of k.',
-      D: '7 results from computing k = 4 + 3 instead of 4 + 9.',
+      B: '10 results from adding the linear coefficient (6) to the minimum value (4): 6 + 4 = 10. The correct method is to use the vertex form, which shows the vertex y-value is k − (b/2)² = k − 9. Setting k − 9 = 4 gives k = 13, not 10.',
+      C: '4 is the minimum value of the function, not k. A student who confuses "the function has a minimum value of 4" with "k = 4" will choose this. But k is the constant in the original expression, and setting k = 4 gives a vertex at (3, 4 − 9) = (3, −5), not a minimum of 4.',
+      D: '7 results from computing k = 4 + 3 — adding the minimum value to the x-coordinate of the vertex (x = 3) rather than to the square of the half-coefficient (3² = 9). The vertex x-coordinate and the quantity added to find k are both derived from b/2 = 3, making the confusion understandable but incorrect.',
     },
   },
 
@@ -318,11 +318,11 @@ export const mathModule1QuestionsV2: MathQuestion[] = [
       { label: 'D', text: '29' },
     ],
     correctAnswer: 'D',
-    explanation: 'f(−2) = 3(4) − 5 = 7; f(3) = 3(9) − 5 = 22. Sum = 29.',
+    explanation: 'f(−2) = 3(−2)² − 5 = 3(4) − 5 = 12 − 5 = 7; f(3) = 3(3)² − 5 = 3(9) − 5 = 27 − 5 = 22. Sum = 7 + 22 = 29.',
     wrongAnswerExplanations: {
-      A: 'A common error is computing f(−2) = 3(−4) − 5 (not squaring first), giving a much lower value.',
-      B: 'Arithmetic error in one of the evaluations.',
-      C: 'Omitting the −5 in both terms gives 12 + 27 = 39; other errors yield 36.',
+      A: '17 = 22 − 5 results from evaluating only f(3) correctly (22) and then mistakenly subtracting 5 again from f(−2). Alternatively, it comes from computing f(−2) = 3(−2) − 5 = −6 − 5 = −11 and f(3) = 3(3) − 5 = 4 (forgetting to square), with arithmetic errors producing 17.',
+      B: '25 results from computing f(−2) = 3(4) − 5 = 7 correctly but then calculating f(3) as 3(3) − 5 = 4 (using 3 instead of 3²), giving 7 + 18 = 25. The error is failing to square the input for f(3).',
+      C: '36 results from omitting the −5 in both evaluations: 3(4) + 3(9) = 12 + 27 = 39, then possibly making a further arithmetic error, or from computing f(−2) = 3(4) = 12 and f(3) = 3(8) = 24 (using 2³ instead of 3²), giving 12 + 24 = 36.',
     },
   },
 
@@ -444,11 +444,11 @@ export const mathModule1QuestionsV2: MathQuestion[] = [
       { label: 'D', text: '$180' },
     ],
     correctAnswer: 'C',
-    explanation: 'Set the plans equal: p − 30 = 0.8p → 0.2p = 30 → p = 150.',
+    explanation: 'Set the final prices equal: p − 30 = 0.8p → 0.2p = 30 → p = 150. At $150: Plan X gives $120 and Plan Y gives 0.8(150) = $120 ✓.',
     wrongAnswerExplanations: {
-      A: 'At $100: Plan X gives $70, Plan Y gives $80 — not equal.',
-      B: 'At $120: Plan X gives $90, Plan Y gives $96 — not equal.',
-      D: 'At $180: Plan X gives $150, Plan Y gives $144 — not equal.',
+      A: 'At $100: Plan X gives $70 and Plan Y gives $80. Plan Y is better here because a 20% discount is only $20, less than the flat $30. At prices below $150, Plan X always wins, so these plans cannot be equal at $100.',
+      B: 'At $120: Plan X gives $90 and Plan Y gives $96. A 20% discount on $120 is $24, which is less than $30, so Plan X again gives the lower final price. The break-even point must be higher.',
+      D: 'At $180: Plan X gives $150 and Plan Y gives $144. A 20% discount on $180 is $36, which exceeds the flat $30, so Plan Y is now cheaper. The break-even price must be between $120 and $180 — specifically $150.',
     },
   },
 
@@ -470,9 +470,9 @@ export const mathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'For exactly one real solution, the discriminant must equal zero: b² − 4ac = (−6)² − 4(3)(k) = 36 − 12k = 0 → k = 3.\n\nDesmos method: Enter y = 3x² − 6x + k and add a slider for k. When k < 3 the parabola crosses the x-axis at two points; when k > 3 it never touches the x-axis. At k = 3 the parabola is tangent to the x-axis — exactly one real solution.',
     wrongAnswerExplanations: {
-      A: 'If k = 1: discriminant = 36 − 12 = 24 > 0 — two real solutions.',
-      B: 'If k = 2: discriminant = 36 − 24 = 12 > 0 — two real solutions.',
-      D: 'If k = 4: discriminant = 36 − 48 = −12 < 0 — no real solutions.',
+      A: 'k = 1 gives discriminant = (−6)² − 4(3)(1) = 36 − 12 = 24 > 0. A positive discriminant means two distinct real solutions, not one. This is a plausible guess if a student incorrectly sets b² − 4ac = 1 or confuses the discriminant condition.',
+      B: 'k = 2 gives discriminant = 36 − 4(3)(2) = 36 − 24 = 12 > 0. Still two real solutions. This answer is tempting because 36/12 = 3 involves the coefficient 12 from 4ac = 4(3)(k), and a student might mistakenly solve 36 − 12 = 0 (using k = 1) or miscount the factor.',
+      D: 'k = 4 gives discriminant = 36 − 4(3)(4) = 36 − 48 = −12 < 0. A negative discriminant means no real solutions at all. This is particularly tempting because k = 4 is one step above the correct answer and a student who solves 36 − 12k = 0 and gets k = 3 but then rounds up or adds 1 will land here.',
     },
   },
 
@@ -494,9 +494,9 @@ export const mathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'D',
     explanation: 'Set x² − 2 = x → x² − x − 2 = 0 → (x − 2)(x + 1) = 0 → x = 2 or x = −1. The positive root is 2.',
     wrongAnswerExplanations: {
-      A: 'x = −1 is the negative intersection.',
-      B: 'At x = 0: y = −2 on the parabola but y = 0 on the line — not equal.',
-      C: 'At x = 1: y = −1 on the parabola but y = 1 on the line — not equal.',
+      A: 'x = −1 is the other (negative) intersection point. It is a valid solution to x² − x − 2 = 0, but the question asks for the positive intersection. Students who factor correctly but do not read the question carefully may select this.',
+      B: 'At x = 0: y = 0² − 2 = −2 on the parabola and y = 0 on the line. These are not equal, so (0, 0) is not an intersection. Students may guess this because 0 is "between" −1 and 2 or confuse it with the line\'s y-intercept.',
+      C: 'At x = 1: y = 1² − 2 = −1 on the parabola and y = 1 on the line. These are not equal. Students may select 1 because the problem mentions x is positive and 1 is the smallest positive integer answer, or because they factor x² − x − 2 incorrectly as (x − 1)(x − 2) = 0.',
     },
   },
 

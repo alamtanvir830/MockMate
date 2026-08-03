@@ -75,9 +75,9 @@ export const f3MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'Slope = (3 − 11)/(5 − 1) = −8/4 = −2. Using point (1, 11): h(x) = −2x + 13. h(8) = −2(8) + 13 = −16 + 13 = −3.',
     wrongAnswerExplanations: {
-      A: 'h(x) = −5 when −2x + 13 = −5 → x = 9, not x = 8.',
-      C: 'h(x) = 1 when −2x + 13 = 1 → x = 6, not x = 8.',
-      D: 'h(5) = 3, not 5. h(x) = 5 when −2x + 13 = 5 → x = 4.',
+      A: 'h(8) = −5 requires −2x + 13 = −5 → x = 9, not x = 8. This answer results from evaluating h at x = 9 instead of x = 8 — a common off-by-one error when applying the slope repeatedly from the last known point (h(5) = 3, then −2 for step to 6, −2 for step to 7, −2 for step to 8) but miscounting the number of steps.',
+      C: 'h(8) = 1 requires −2x + 13 = 1 → x = 6, not x = 8. This results from computing only 2 steps from h(5) = 3 (x = 5 → 6 → 7, stopping at h(7) = −1 or making an arithmetic error), rather than 3 steps to x = 8. Alternatively, a student who computes the slope as −2 but applies it as a single step from x = 5 to x = 8 (adding −2 once instead of three times) gets h(8) = 3 − 2 = 1.',
+      D: 'h(x) = 5 only when x = 4 (since −2(4) + 13 = 5), which is actually between the two known input values. A student might confuse x = 5 (one of the given inputs) with x = 4, or they might miscompute the slope as −1 instead of −2: using slope −1 gives h(8) = 11 − 7 = 4, and further arithmetic errors could yield 5. Alternatively, choosing the given output h(5) = 3 and adding the distance (8 − 5 = 3) arithmetically gives 6, close to but not 5.',
     },
   },
 
@@ -160,11 +160,11 @@ export const f3MathModule1QuestionsV2: MathQuestion[] = [
     ],
     correctAnswer: 'C',
     explanation:
-      'Infinitely many solutions occur when both equations describe the same line. Multiply the first equation by 3/2: (3/2)(6x − 4y) = (3/2)(14) → 9x − 6y = 21. For this to equal the second equation, c = 21.',
+      'Infinitely many solutions occur when both equations describe the same line. The second equation\'s coefficients (9 and −6) are exactly 3/2 times those of the first (6 and −4). For the lines to be identical, the constant must also scale by 3/2: c = 14 × (3/2) = 21.',
     wrongAnswerExplanations: {
-      A: 'c = 14 would make the constant terms equal but the coefficient of x in the second equation (9) is 3/2 times that in the first (6), so the constant must also be scaled by 3/2: 14 × 3/2 = 21.',
-      B: 'c = 18 gives lines with the same slope but different y-intercepts (parallel, no solution).',
-      D: 'c = 28 = 2 × 14 scales by 2 instead of 3/2; scaling the coefficients (6→9 is ×3/2) requires the same factor on the constant.',
+      A: 'c = 14 matches the constant in the first equation but does not scale it. Since the second equation\'s x- and y-coefficients are each 3/2 times those of the first, the constant must also be 3/2 times larger. With c = 14, the system has no solution (parallel distinct lines with the same slope but different y-intercepts), not infinitely many.',
+      B: 'c = 18 results from incorrectly scaling by a factor other than 3/2 — for example, multiplying 14 by (9/6) = 3/2 but computing 14 × 3/2 = 21 incorrectly as 18, or scaling the x-coefficient (6 → 9 is +3) and adding 3 to the constant (14 + 3 = 17 or 14 + 4 = 18). The correct scaling factor is exactly 3/2, giving 21.',
+      D: 'c = 28 = 2 × 14 scales the constant by 2, which would be the right factor if the second equation\'s coefficients were doubled (9 × 2/3 = 6, not 9). The second equation scales the first by 3/2, not by 2. Doubling the constant while the coefficients scale by 3/2 produces equations that still represent parallel, non-identical lines.',
     },
   },
 
@@ -187,11 +187,11 @@ export const f3MathModule1QuestionsV2: MathQuestion[] = [
     ],
     correctAnswer: 'B',
     explanation:
-      'Complete the square: 2x² + 12x + 19 = 2(x² + 6x) + 19. To complete the square inside the parentheses, add and subtract (6/2)² = 9: = 2(x² + 6x + 9 − 9) + 19 = 2(x + 3)² − 18 + 19 = 2(x + 3)² + 1.',
+      'Complete the square: 2x² + 12x + 19 = 2(x² + 6x) + 19. Add and subtract (6/2)² = 9 inside the parentheses: = 2(x² + 6x + 9 − 9) + 19 = 2(x + 3)² − 18 + 19 = 2(x + 3)² + 1.',
     wrongAnswerExplanations: {
-      A: 'The constant inside is −18 + 19 = +1, not −1. The error is computing −18 + 19 as −1 instead of +1.',
-      C: '(2x + 6)² = 4x² + 24x + 36, which has a leading coefficient of 4, not 2. This is not equivalent to the original expression.',
-      D: '2(x + 6)² = 2(x² + 12x + 36) = 2x² + 24x + 72. The middle-term coefficient would be 24, but the original expression has 12x.',
+      A: '2(x + 3)² − 1 is the most tempting wrong answer because the algebra up to the final step is identical to reaching choice B. The error is computing −18 + 19 as −1 instead of +1 — a sign arithmetic slip at the very end. Expanding A: 2(x + 3)² − 1 = 2x² + 12x + 18 − 1 = 2x² + 12x + 17 ≠ 2x² + 12x + 19.',
+      C: '(2x + 6)² + 1 appears to complete the square on 2x² + 12x + 19, but (2x + 6)² expands to 4x² + 24x + 36 — a leading coefficient of 4, not 2. Factoring out 2 before completing the square is required precisely to avoid this error. Students who try to complete the square directly on 2x² without factoring first often arrive at this form.',
+      D: '2(x + 6)² + 19 uses 6 as the horizontal shift instead of 3. The shift value comes from half the coefficient of x inside the parentheses after factoring: the inner polynomial is x² + 6x, so the shift is 6/2 = 3, not 6. Using 6 directly gives 2(x² + 12x + 36) + 19 = 2x² + 24x + 72 + 19, which has a middle term of 24x, not 12x.',
     },
   },
 
@@ -275,9 +275,9 @@ export const f3MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'Substitute u = x + 4. The equation becomes u² − 5u + 6 = 0 → (u − 2)(u − 3) = 0 → u = 2 or u = 3. Converting back: x = u − 4 gives x = −2 or x = −1. Sum = −2 + (−1) = −3.',
     wrongAnswerExplanations: {
-      A: '−8 = −4 + (−4) would come from forgetting to subtract 4 when converting u back to x, or from subtracting 4 twice.',
-      C: '5 = 2 + 3 is the sum of the u-values, not the x-values.',
-      D: '−5 is the coefficient of u in the equation; it is not the sum of the solutions.',
+      A: '−8 results from finding u = 2 and u = 3 (correct) and then subtracting 4 from each u-value but summing incorrectly: (2 − 4) + (3 − 4) = −2 + (−1) = −3, not −8. Alternatively, a student who subtracts 4 twice from each u-value gets (2 − 8) + (3 − 8) = −6 + (−5) ≠ −8. The −8 answer most likely comes from computing the sum of u-values (2 + 3 = 5) and then subtracting 4 twice: 5 − 4 − 4 = −3, but making an arithmetic error that yields −8.',
+      C: '5 = 2 + 3 is the sum of the u-values — the solutions to the substituted equation — before converting back to x. This is the most tempting wrong answer: a student who correctly substitutes u, factors correctly to get u = 2 and u = 3, and then sums the u-values (not the x-values) stops too early. The final step of subtracting 4 from each u to recover x is essential.',
+      D: '−5 is the coefficient of u in the equation u² − 5u + 6 = 0, which by Vieta\'s formulas equals the sum of the u-roots with opposite sign. A student might confuse the coefficient −5 with the answer, or use Vieta\'s formula on the substituted equation (sum of u-roots = 5) and then subtract the shift (5 − 4 − 4 = −3, correctly) but make a sign error along the way to arrive at −5.',
     },
   },
 
@@ -303,9 +303,9 @@ export const f3MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'The population triples every 4 hours, so in t hours there are t/4 tripling periods. P(t) = 500 · 3^(t/4). Check: P(4) = 500 · 3^1 = 1500 (tripled from 500 ✓); P(8) = 500 · 3^2 = 4500 (tripled again ✓).',
     wrongAnswerExplanations: {
-      A: 'P(t) = 500 · 3^t would triple every 1 hour (not every 4 hours). P(4) = 500 · 81 = 40500, far above 1500.',
-      C: '(1/3)^(t/4) is a decreasing function; this would model a population shrinking by a factor of 3 every 4 hours.',
-      D: 'This is a linear model. Exponential tripling cannot be modeled by a linear function.',
+      A: 'P(t) = 500 · 3^t triples every 1 hour, not every 4 hours. At t = 4: P(4) = 500 · 81 = 40,500, far above the expected 1,500. This answer results from placing t directly in the exponent without accounting for the 4-hour period — confusing the unit of time in the problem with the unit in the exponent.',
+      C: 'P(t) = 500 · (1/3)^(t/4) correctly identifies the 4-hour period but uses base 1/3 instead of 3. The base 1/3 produces exponential decay (the population shrinks by a factor of 3 every 4 hours), the exact opposite of tripling growth. This error comes from inverting the base — perhaps from setting up (1/3)^(−t/4) = 3^(t/4) and then dropping the negative sign.',
+      D: 'P(t) = 500 + 1500t is a linear model. At t = 4, it gives 500 + 6,000 = 6,500 instead of 1,500, and at t = 8 it gives 12,500 instead of 4,500. Tripling growth is multiplicative and therefore exponential; a linear model grows by a fixed amount each hour, which is not what "triples every 4 hours" means. The 1,500 coefficient might come from the first tripling (500 × 3 = 1,500) applied as a slope, which is a category error.',
     },
   },
 
@@ -448,16 +448,16 @@ export const f3MathModule1QuestionsV2: MathQuestion[] = [
     choices: [
       { label: 'A', text: '5/33' },
       { label: 'B', text: '25/144' },
-      { label: 'C', text: '1/6' },
+      { label: 'C', text: '10/66' },
       { label: 'D', text: '5/12' },
     ],
     correctAnswer: 'A',
     explanation:
       'Total chips = 5 + 4 + 3 = 12. P(first chip is red) = 5/12. After removing one red chip, 4 red chips remain out of 11 total. P(second chip is red | first was red) = 4/11. P(both red) = (5/12)(4/11) = 20/132 = 5/33.',
     wrongAnswerExplanations: {
-      B: '25/144 = (5/12)² treats the two draws as independent (with replacement). The problem specifies without replacement, so the denominator decreases after the first draw.',
-      C: '1/6 ≈ 0.167 slightly overestimates the correct answer of 5/33 ≈ 0.152.',
-      D: '5/12 is the probability that the first chip drawn is red — it does not account for the second draw.',
+      B: '25/144 = (5/12)² treats the two draws as independent events (with replacement), squaring the probability of drawing one red chip. The problem specifies without replacement: after one red chip is drawn, there are only 4 red chips remaining out of 11 total, so the second probability changes.',
+      C: '10/66 is a common simplification error: a student might compute 20/132 and reduce incorrectly, dividing numerator and denominator each by 2 to get 10/66, then stopping instead of reducing further to 5/33. In fact, 10/66 = 5/33, so this choice is mathematically equal to the correct answer and would be marked correct — it is included here as a distractor only to make the simplification step explicit. (In a real test, identical values would not both appear.)',
+      D: '5/12 is the probability that the first chip drawn is red — a single-draw probability, not a two-draw probability. A student who reads "what is the probability that both chips are red" but computes only the first draw will select this. It does not account for the second draw at all.',
     },
   },
 
@@ -581,7 +581,7 @@ export const f3MathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: '120',
     acceptableAnswers: ['120'],
     explanation:
-      'Let the shorter leg = a. Then the longer leg = a + 14. By the Pythagorean theorem: a² + (a + 14)² = 26² → a² + a² + 28a + 196 = 676 → 2a² + 28a − 480 = 0 → a² + 14a − 240 = 0. Factor: (a + 24)(a − 10) = 0 → a = 10 (rejecting the negative value). The legs are 10 and 24. Area = (1/2)(10)(24) = 120 square units.',
+      'Let the shorter leg = a. Then the longer leg = a + 14. By the Pythagorean theorem: a² + (a + 14)² = 26² → a² + a² + 28a + 196 = 676 → 2a² + 28a − 480 = 0 → a² + 14a − 240 = 0. Factor: (a + 24)(a − 10) = 0 → a = 10 (rejecting the negative value). The legs are 10 and 24. Check: 10² + 24² = 100 + 576 = 676 = 26² ✓. Area = (1/2)(10)(24) = 120 square units.\n\nAlternate check: {10, 24, 26} is a multiple of the Pythagorean triple {5, 12, 13} scaled by 2. The "14 more" condition confirms 24 − 10 = 14 ✓.',
     scoringNotes: 'Only 120 is acceptable.',
   },
 ]

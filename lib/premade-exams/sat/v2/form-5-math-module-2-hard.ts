@@ -10,7 +10,7 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'The system of equations 4x + ky = 8 and 2x + 3y = 5 has no solution. What is the value of k?',
+      'For the system of equations 4x + ky = 8 and 2x + 3y = 5 to have no solution, what must be the value of k? Justify why the value you select produces parallel — not coincident — lines.',
     choices: [
       { label: 'A', text: '3' },
       { label: 'B', text: '6' },
@@ -19,11 +19,11 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     ],
     correctAnswer: 'B',
     explanation:
-      'A system of two linear equations has no solution when the lines are parallel — same slope but different y-intercepts. For the first equation 4x + ky = 8, the slope is −4/k. For the second equation 2x + 3y = 5, the slope is −2/3. Set slopes equal: −4/k = −2/3 → 4/k = 2/3 → k = 6. Now check whether the lines are truly parallel (not identical): with k = 6, the first equation is 4x + 6y = 8, or 2x + 3y = 4 (dividing by 2). The second is 2x + 3y = 5. Since 4 ≠ 5, the lines have equal slopes but different y-intercepts — they are parallel and the system has no solution. Answer: k = 6.',
+      'A system has no solution when the lines are parallel — equal slopes but different y-intercepts. Rewrite in slope-intercept form: line 1 has slope −4/k; line 2 has slope −2/3. Set −4/k = −2/3 → k = 6. Now verify the lines are parallel (not coincident): with k = 6, line 1 becomes 4x + 6y = 8, which simplifies to 2x + 3y = 4. Line 2 is 2x + 3y = 5. Same left side, different constants — parallel, not coincident. Therefore k = 6 produces no solution.',
     wrongAnswerExplanations: {
-      A: 'k = 3 gives 4x + 3y = 8 and 2x + 3y = 5. Subtracting the second from the first: 2x = 3, so x = 3/2 and y = 4/3. This is one unique solution, not no solution.',
-      C: 'k = −6 gives slope 4/6 = 2/3 for the first line and −2/3 for the second — the slopes differ (one positive, one negative), so the lines intersect and there is one solution.',
-      D: 'k = 12 gives slope −4/12 = −1/3 for the first line, which differs from −2/3. Different slopes mean the lines intersect (one solution).',
+      A: 'k = 3 gives slopes −4/3 and −2/3, which are unequal. The lines intersect at one point; the system has a unique solution.',
+      C: 'k = −6 gives slope 4/6 = 2/3 for line 1 and −2/3 for line 2. The slopes have opposite signs, so the lines intersect — one solution exists.',
+      D: 'k = 12 gives slope −4/12 = −1/3 for line 1 and −2/3 for line 2. The slopes differ, so the lines intersect — one solution exists.',
     },
   },
 
@@ -36,20 +36,20 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'What value of x satisfies (x + 3)/4 − (x − 3)/6 = 2?',
+      'Company A charges a flat fee of $24 plus $3 per mile driven. Company B charges a flat fee of $10 plus $4.75 per mile. For how many miles driven do the two companies charge the same total amount?',
     choices: [
       { label: 'A', text: '5' },
       { label: 'B', text: '7' },
-      { label: 'C', text: '9' },
-      { label: 'D', text: '11' },
+      { label: 'C', text: '8' },
+      { label: 'D', text: '12' },
     ],
     correctAnswer: 'C',
     explanation:
-      'Multiply every term by 12 (the LCM of 4 and 6): 12·(x+3)/4 − 12·(x−3)/6 = 12·2. This gives 3(x + 3) − 2(x − 3) = 24. Expand: 3x + 9 − 2x + 6 = 24. Combine: x + 15 = 24 → x = 9. Verify: (9+3)/4 − (9−3)/6 = 12/4 − 6/6 = 3 − 1 = 2 ✓.',
+      'Set the two expressions equal: 24 + 3m = 10 + 4.75m. Subtract 3m from both sides: 24 = 10 + 1.75m. Subtract 10: 14 = 1.75m → m = 14/1.75 = 8. Verify: Company A: 24 + 3(8) = 48. Company B: 10 + 4.75(8) = 10 + 38 = 48 ✓.',
     wrongAnswerExplanations: {
-      A: 'x = 5 results from incorrectly distributing the negative sign as −2(x + 3) instead of −2(x − 3), changing the sign of the 3.',
-      B: 'x = 7 results from multiplying only the numerators by 12 without correctly clearing the denominators (for example, treating the equation as x + 3 − (x − 3) = 24).',
-      D: 'x = 11 comes from adding the fractions instead of subtracting, giving 3(x+3) + 2(x−3) = 24 → 5x + 3 = 24 → x = 21/5, then rounding up incorrectly to 11.',
+      A: 'm = 5: Company A charges 24 + 15 = 39; Company B charges 10 + 23.75 = 33.75. Not equal. This error comes from dividing 14 by 2.8 rather than 1.75.',
+      B: 'm = 7: Company A charges 24 + 21 = 45; Company B charges 10 + 33.25 = 43.25. Not equal. This results from computing 12/1.75 (using 12 instead of 14) as the numerator.',
+      D: 'm = 12: This results from subtracting the flat fees (24 − 10 = 14) and then dividing by the wrong rate difference (14/1.17 ≈ 12), for example using (4.75 − 3.58) instead of (4.75 − 3).',
     },
   },
 
@@ -71,11 +71,11 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     ],
     correctAnswer: 'B',
     explanation:
-      'Find the slope: m = (11 − (−5))/(3 − (−1)) = 16/4 = 4. Use point-slope with (3, 11): f(x) = 4(x − 3) + 11 = 4x − 12 + 11 = 4x − 1. Check: f(−1) = −4 − 1 = −5 ✓. Then f(7) = 4(7) − 1 = 28 − 1 = 27.',
+      'Slope: m = (11 − (−5)) / (3 − (−1)) = 16/4 = 4. Using point-slope: f(x) = 4(x − 3) + 11 = 4x − 1. Verify: f(−1) = −4 − 1 = −5 ✓. Then f(7) = 4(7) − 1 = 28 − 1 = 27.',
     wrongAnswerExplanations: {
-      A: 'f(7) = 23 results from using slope 3 instead of 4.',
-      C: 'f(7) = 31 comes from using the correct slope but adding the y-intercept twice.',
-      D: 'f(7) = 35 results from forgetting to subtract 1 (the y-intercept) after computing 4 × 9.',
+      A: 'f(7) = 23 results from computing slope as (11 − 5)/(3 − (−1)) = 6/4 = 1.5, then using f(x) = 1.5x + 6.5 (wrong slope and intercept).',
+      C: 'f(7) = 31 comes from using the correct slope but computing the y-intercept as +1 instead of −1, giving f(x) = 4x + 1 → f(7) = 29. Alternatively, computing 4(8) − 1 by using x = 8 instead of x = 7 gives 31.',
+      D: 'f(7) = 35 results from forgetting to subtract the y-intercept and computing f(7) = 4(7) + 7 = 35 by carrying the +7 offset from point (3, 11) without adjusting.',
     },
   },
 
@@ -88,20 +88,20 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'Which of the following represents all values of x that satisfy both −2 < 3x + 1 ≤ 10 and x > −1/3?',
+      'A laboratory protocol requires that a solution\'s concentration c (in mg/mL) satisfy both −2 < 3c + 1 ≤ 10 and c > −1/3. Which of the following represents all permissible values of c?',
     choices: [
-      { label: 'A', text: 'x > −1/3' },
-      { label: 'B', text: '−1 < x ≤ 3' },
-      { label: 'C', text: '−1/3 < x ≤ 3' },
-      { label: 'D', text: '0 < x ≤ 3' },
+      { label: 'A', text: 'c > −1/3' },
+      { label: 'B', text: '−1 < c ≤ 3' },
+      { label: 'C', text: '−1/3 < c ≤ 3' },
+      { label: 'D', text: '0 < c ≤ 3' },
     ],
     correctAnswer: 'C',
     explanation:
-      'Solve the compound inequality −2 < 3x + 1 ≤ 10. Subtract 1 throughout: −3 < 3x ≤ 9. Divide by 3: −1 < x ≤ 3. Now intersect with x > −1/3. Since −1/3 > −1, the intersection is x > −1/3 AND x ≤ 3, giving −1/3 < x ≤ 3.',
+      'Solve −2 < 3c + 1 ≤ 10: subtract 1 to get −3 < 3c ≤ 9, then divide by 3: −1 < c ≤ 3. Intersect with c > −1/3: since −1/3 > −1, the binding lower bound is −1/3. Intersection: −1/3 < c ≤ 3.',
     wrongAnswerExplanations: {
-      A: 'x > −1/3 ignores the upper bound x ≤ 3 from the compound inequality.',
-      B: '−1 < x ≤ 3 is the solution to the compound inequality alone, before intersecting with x > −1/3.',
-      D: '0 < x ≤ 3 incorrectly rounds −1/3 to 0 as the lower bound.',
+      A: 'c > −1/3 ignores the upper bound c ≤ 3 from the compound inequality, leaving the solution set unbounded above.',
+      B: '−1 < c ≤ 3 is the solution to the compound inequality alone, before intersecting with c > −1/3. This lower bound is too permissive.',
+      D: '0 < c ≤ 3 incorrectly rounds the lower bound −1/3 ≈ −0.33 up to 0, excluding valid values in the interval (−1/3, 0].',
     },
   },
 
@@ -118,7 +118,7 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     correctAnswer: '7',
     acceptableAnswers: ['7'],
     explanation:
-      'Add the two equations to eliminate y: (5x + 2y) + (3x − 2y) = 23 + 1 → 8x = 24 → x = 3. Substitute x = 3 into the second equation: 3(3) − 2y = 1 → 9 − 2y = 1 → 2y = 8 → y = 4. Therefore x + y = 3 + 4 = 7.',
+      'Add the equations to eliminate y: 8x = 24 → x = 3. Substitute into 3(3) − 2y = 1: 9 − 2y = 1 → y = 4. Therefore x + y = 7.',
   },
 
   {
@@ -130,11 +130,11 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'grid_in',
     question:
-      'A line passes through the points (a, 1) and (4, 7), and has slope 3. What is the value of a?',
+      'Line ℓ passes through (a, 1) and (4, 7) and has slope 3. What is the value of a?',
     correctAnswer: '2',
     acceptableAnswers: ['2'],
     explanation:
-      'Slope = (7 − 1)/(4 − a) = 6/(4 − a) = 3. Solving: 4 − a = 2 → a = 2.',
+      'Using the slope formula: (7 − 1)/(4 − a) = 3 → 6/(4 − a) = 3 → 4 − a = 2 → a = 2.',
   },
 
   {
@@ -146,7 +146,7 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'Machine A can complete a job in 6 hours. Machine B can complete the same job in 9 hours. If both machines work together, how many hours will it take them to complete the job?',
+      'Pipe A fills a tank in 6 hours and Pipe B fills the same tank in 9 hours. Both pipes are opened simultaneously. How many hours does it take to fill the tank?',
     choices: [
       { label: 'A', text: '3.0' },
       { label: 'B', text: '3.6' },
@@ -155,11 +155,11 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     ],
     correctAnswer: 'B',
     explanation:
-      'Machine A\'s rate is 1/6 of the job per hour; Machine B\'s rate is 1/9. Combined rate = 1/6 + 1/9 = 3/18 + 2/18 = 5/18 jobs per hour. Time = 1 ÷ (5/18) = 18/5 = 3.6 hours.',
+      'Combined rate = 1/6 + 1/9 = 3/18 + 2/18 = 5/18 tanks per hour. Time = 1 ÷ (5/18) = 18/5 = 3.6 hours.',
     wrongAnswerExplanations: {
-      A: '3.0 hours is the harmonic mean of 6 and 9 computed incorrectly as (6 + 9)/5 = 3, confusing the formula.',
-      C: '4.5 hours is the average of 6/2 and 9/2, not the combined work rate calculation.',
-      D: '5.4 hours is the result of averaging 6 and 9 then applying an incorrect reciprocal.',
+      A: '3.0 hours results from computing the harmonic mean incorrectly as (6 + 9)/5 = 3, confusing the combined-rate formula.',
+      C: '4.5 hours is the arithmetic mean of 6/2 = 3 and 9/2 = 4.5, not a valid combined-work computation.',
+      D: '5.4 hours results from averaging 6 and 9 (= 7.5) and then applying an incorrect reciprocal, or from computing 1/(1/6 − 1/9) = 18 as though the pipes were working against each other and dividing by a different constant.',
     },
   },
 
@@ -172,20 +172,20 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'A jacket is marked up by 40% from its wholesale cost, then placed on sale at 25% off the marked price. The final sale price is what percent of the original wholesale cost?',
+      'A jacket is marked up 40% above its wholesale cost, then discounted 25% off the marked price during a sale. The sale price is then subject to a 10% sales tax. The final price paid by the customer is what percent of the original wholesale cost? (Round to the nearest whole percent.)',
     choices: [
-      { label: 'A', text: '95%' },
-      { label: 'B', text: '105%' },
-      { label: 'C', text: '115%' },
-      { label: 'D', text: '125%' },
+      { label: 'A', text: '105%' },
+      { label: 'B', text: '116%' },
+      { label: 'C', text: '125%' },
+      { label: 'D', text: '154%' },
     ],
     correctAnswer: 'B',
     explanation:
-      'Let the wholesale cost be C. Marked price = 1.40C. Sale price = 0.75 × 1.40C = 1.05C. The sale price is 1.05C, which is 105% of the wholesale cost.',
+      'Let wholesale cost = C. Marked price = 1.40C. Sale price = 0.75 × 1.40C = 1.05C. After 10% tax: 1.10 × 1.05C = 1.155C ≈ 116% of C.',
     wrongAnswerExplanations: {
-      A: '95% would result from a 5% net decrease; subtracting 40% − 25% = 15% net markup incorrectly gives 115%, not 95%.',
-      C: '115% results from incorrectly computing 40% − 25% = 15% net markup and adding it to 100%.',
-      D: '125% results from adding 40% and 25% instead of applying them sequentially.',
+      A: '105% is the sale price before tax (1.05C), omitting the final 10% sales tax step.',
+      C: '125% results from adding 40% and subtracting 25% arithmetically (100 + 40 − 25 = 115%) and then adding 10 percentage points more (115 + 10 = 125), treating percentages as additive rather than multiplicative.',
+      D: '154% results from applying the 10% tax to the marked price (1.40C) before the 25% discount: 1.40 × 1.10 = 1.54C, skipping the discount step.',
     },
   },
 
@@ -198,7 +198,7 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'A data set of seven values has a mean of 12 and a median of 10. A new value of 30 is added to the set. Which of the following must be true?',
+      'A data set of seven values has a mean of 12 and a median of 10. A new value of 30 is added to the data set. Which of the following must be true?',
     choices: [
       { label: 'A', text: 'The mean increases and the median stays the same.' },
       { label: 'B', text: 'Both the mean and the median increase.' },
@@ -207,11 +207,11 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     ],
     correctAnswer: 'C',
     explanation:
-      'The mean of the original 7 values is 12, so their sum is 84. Adding 30 gives a new sum of 114 with 8 values, so the new mean = 114/8 = 14.25, which is greater than 12. The mean must increase. For the median: originally with 7 values, the median is the 4th value = 10. With 8 values, the new median is the average of the 4th and 5th values. Adding 30 (a large value) to the ordered list places it at the end, shifting positions. The new median depends on where the other values fall — it could stay at 10 or increase, but it cannot decrease. Therefore the mean definitely increases, while the median could increase or stay the same.',
+      'Original sum = 7 × 12 = 84. New sum = 84 + 30 = 114; new mean = 114/8 = 14.25 > 12 — the mean definitely increases. For the median: originally with 7 values, the median is the 4th value = 10. With 8 values, the median is the average of the 4th and 5th values after sorting. Adding 30 appends it to the high end. The new 4th value is unchanged (it was the original 4th), but the 5th value is the original 5th. If the original 5th value = 10, the new median = (10 + 10)/2 = 10 (unchanged). If the original 5th value > 10, the new median > 10 (increases). So the median could increase or stay the same — but cannot decrease. The mean definitely increases; the median may or may not increase.',
     wrongAnswerExplanations: {
-      A: 'Saying the median "stays the same" is too strong — adding 30 can shift the median upward depending on the distribution of the other values.',
-      B: 'The median does not necessarily increase; if enough values are clustered near 10, the median position (average of 4th and 5th) could remain 10.',
-      D: 'The mean cannot stay the same after adding a value of 30 that is above the current mean of 12.',
+      A: 'Saying the median "stays the same" is too strong. If the original 5th value exceeded 10, the new median (average of 4th and 5th) would be above 10, so the median could increase.',
+      B: 'The median does not necessarily increase. If all values from position 4 through 5 equal 10, the new median remains 10. "Must be true" requires certainty.',
+      D: 'The mean cannot stay the same: adding 30 (which exceeds the current mean of 12) to the sum and increasing the count by 1 must raise the mean.',
     },
   },
 
@@ -228,7 +228,7 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     correctAnswer: '1/2',
     acceptableAnswers: ['1/2', '.5', '0.5', '15/30'],
     explanation:
-      'We need P(French | Spanish) = P(French and Spanish) / P(Spanish). The number of students who study both is 15. The number who study Spanish is 30. Conditional probability = 15/30 = 1/2.',
+      'We need P(French | Spanish). Among the 30 students who study Spanish, 15 also study French. P(French | Spanish) = 15/30 = 1/2.',
   },
 
   {
@@ -240,20 +240,20 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'Which of the following is equivalent to x² − 10x + 29?',
+      'The height h (in feet) of a projectile t seconds after launch is modeled by h(t) = −16t² + 80t + 6. What is the maximum height, in feet, reached by the projectile?',
     choices: [
-      { label: 'A', text: '(x − 5)² + 4' },
-      { label: 'B', text: '(x − 5)² − 4' },
-      { label: 'C', text: '(x + 5)² + 4' },
-      { label: 'D', text: '(x − 10)² + 29' },
+      { label: 'A', text: '106' },
+      { label: 'B', text: '100' },
+      { label: 'C', text: '112' },
+      { label: 'D', text: '120' },
     ],
     correctAnswer: 'A',
     explanation:
-      'Complete the square: x² − 10x + 29 = (x² − 10x + 25) + 4 = (x − 5)² + 4. The vertex form is (x − 5)² + 4.',
+      'The maximum occurs at t = −b/(2a) = −80/(2 × −16) = −80/(−32) = 2.5 seconds. h(2.5) = −16(2.5)² + 80(2.5) + 6 = −16(6.25) + 200 + 6 = −100 + 200 + 6 = 106 feet.',
     wrongAnswerExplanations: {
-      B: '(x − 5)² − 4 = x² − 10x + 25 − 4 = x² − 10x + 21, which has a different constant term.',
-      C: '(x + 5)² + 4 = x² + 10x + 25 + 4 = x² + 10x + 29, with the wrong sign on the middle term.',
-      D: '(x − 10)² + 29 = x² − 20x + 100 + 29 = x² − 20x + 129, which is entirely different.',
+      B: '100 feet results from computing h(2.5) = −16(6.25) + 80(2.5) = −100 + 200 = 100, omitting the initial height constant +6.',
+      C: '112 feet may arise from computing h(2) = −16(4) + 80(2) + 6 = −64 + 160 + 6 = 102 then rounding incorrectly, or from using t = −80/(−16) = 5 (omitting the 2 in 2a): h(5) = −16(25) + 400 + 6 = 6.',
+      D: '120 feet results from treating −16(2.5²) as −16(5) = −80 instead of −16(6.25) = −100, giving −80 + 200 + 6 = 126, then subtracting 6 again incorrectly.',
     },
   },
 
@@ -266,20 +266,20 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'If f(x) = x² − 4x and g(x) = 2x − 7, for how many values of x does f(x) = g(x)?',
+      'The functions f(x) = x² − 4x and g(x) = 2x − 7 are graphed in the xy-plane. At how many points do the graphs intersect, and what is the sum of the x-coordinates of those intersection points?',
     choices: [
-      { label: 'A', text: 'Zero' },
-      { label: 'B', text: 'One' },
-      { label: 'C', text: 'Two' },
-      { label: 'D', text: 'Three' },
+      { label: 'A', text: 'They intersect at 1 point; x-coordinate = 3' },
+      { label: 'B', text: 'They do not intersect' },
+      { label: 'C', text: 'They intersect at 2 points; sum of x-coordinates = 6' },
+      { label: 'D', text: 'They intersect at 2 points; sum of x-coordinates = 4' },
     ],
     correctAnswer: 'C',
     explanation:
-      'Set f(x) = g(x): x² − 4x = 2x − 7. Rearrange: x² − 6x + 7 = 0. Compute the discriminant: b² − 4ac = (−6)² − 4(1)(7) = 36 − 28 = 8. Since 8 > 0, there are two distinct real solutions. The parabola and the line intersect at exactly two points.',
+      'Set x² − 4x = 2x − 7 → x² − 6x + 7 = 0. Discriminant = (−6)² − 4(1)(7) = 36 − 28 = 8 > 0: two distinct real solutions. By Vieta\'s formulas, the sum of the roots = −(−6)/1 = 6. The graphs intersect at 2 points with x-coordinates summing to 6.',
     wrongAnswerExplanations: {
-      A: 'Zero intersections would require the discriminant to be negative. Here the discriminant is 8 > 0, so two intersections exist.',
-      B: 'One intersection would require the discriminant to equal zero (the line is tangent to the parabola). Here the discriminant is 8, not 0.',
-      D: 'Three intersections are impossible when one equation is linear and the other is quadratic — there can be at most two.',
+      A: 'One intersection would require the discriminant to equal 0. Here discriminant = 8 ≠ 0, so there are two intersections, not one.',
+      B: 'No intersection would require the discriminant to be negative. Here discriminant = 8 > 0, so two intersections exist.',
+      D: 'Sum = 4 would require the coefficient of x in x² − 6x + 7 = 0 to be −4. By Vieta\'s formulas the sum of roots equals −(coefficient of x)/1 = 6, not 4.',
     },
   },
 
@@ -301,11 +301,11 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     ],
     correctAnswer: 'A',
     explanation:
-      'Factor the numerator: x² − 9 = (x − 3)(x + 3). Factor the denominator: x² − x − 6 = (x − 3)(x + 2). Cancel the common factor (x − 3): (x − 3)(x + 3)/[(x − 3)(x + 2)] = (x + 3)/(x + 2), valid for x ≠ 3.',
+      'Numerator: x² − 9 = (x − 3)(x + 3). Denominator: x² − x − 6 = (x − 3)(x + 2). Cancel (x − 3): result is (x + 3)/(x + 2), valid for x ≠ 3 and x ≠ −2.',
     wrongAnswerExplanations: {
-      B: '(x − 3)/(x − 2) incorrectly factors the denominator as (x − 3)(x − 2), but x² − x − 6 = (x − 3)(x + 2).',
-      C: '(x + 3)/(x − 2) uses a correct numerator factor but incorrect denominator factoring.',
-      D: '(x − 3)/(x + 2) cancels the wrong factor from the numerator, leaving the (x − 3) term instead of (x + 3).',
+      B: '(x − 3)/(x − 2) results from incorrectly factoring the denominator as (x − 3)(x − 2); but x² − x − 6 ≠ (x − 3)(x − 2) because (x − 3)(x − 2) = x² − 5x + 6.',
+      C: '(x + 3)/(x − 2) gets the numerator factor right but uses the wrong denominator factor (x − 2) instead of (x + 2).',
+      D: '(x − 3)/(x + 2) cancels (x + 3) from the numerator instead of (x − 3), leaving the wrong remaining factor.',
     },
   },
 
@@ -322,7 +322,7 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     correctAnswer: '12',
     acceptableAnswers: ['12'],
     explanation:
-      'For exactly one real solution, the discriminant must equal zero. Here a = 3, b = −12, c = k. Discriminant: b² − 4ac = (−12)² − 4(3)(k) = 144 − 12k = 0 → 12k = 144 → k = 12.',
+      'For exactly one real solution, the discriminant equals zero: b² − 4ac = (−12)² − 4(3)(k) = 144 − 12k = 0 → k = 12.',
   },
 
   {
@@ -334,20 +334,20 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'The polynomial p(x) = x³ − 2x² − 5x + 6 has x = 1 as one of its roots. Which of the following shows the complete factored form of p(x)?',
+      'The polynomial p(x) = x³ − 2x² − 5x + 6 has x = 1 as a root. A student claims the other two roots are x = 3 and x = −2. Without multiplying out, which of the following correctly verifies this claim using Vieta\'s formulas?',
     choices: [
-      { label: 'A', text: '(x − 1)(x − 3)(x + 2)' },
-      { label: 'B', text: '(x − 1)(x + 3)(x − 2)' },
-      { label: 'C', text: '(x + 1)(x − 3)(x − 2)' },
-      { label: 'D', text: '(x − 1)(x − 3)(x − 2)' },
+      { label: 'A', text: 'Sum of all three roots: 1 + 3 + (−2) = 2, which equals −(−2)/1 = 2 ✓; product: 1 × 3 × (−2) = −6, which equals −6/1 = −6 ✓' },
+      { label: 'B', text: 'Sum of roots = 1 + 3 + 2 = 6; product = 1 × 3 × 2 = 6 ✓' },
+      { label: 'C', text: 'The roots must be 1, −3, and 2 because the constant term is 6 and the coefficient of x is −5' },
+      { label: 'D', text: 'p(3) = 27 − 18 − 15 + 6 = 0 ✓; p(−2) = −8 − 8 + 10 + 6 = 0 ✓; therefore the factorization is (x − 1)(x + 3)(x − 2)' },
     ],
     correctAnswer: 'A',
     explanation:
-      'Since x = 1 is a root, divide p(x) by (x − 1). Performing polynomial long division or synthetic division: x³ − 2x² − 5x + 6 ÷ (x − 1) gives x² − x − 6. Factor x² − x − 6 = (x − 3)(x + 2). Therefore p(x) = (x − 1)(x − 3)(x + 2). Verify: roots are x = 1, x = 3, x = −2. Check: p(3) = 27 − 18 − 15 + 6 = 0 ✓. p(−2) = −8 − 8 + 10 + 6 = 0 ✓.',
+      'For p(x) = x³ − 2x² − 5x + 6, Vieta\'s formulas give: sum of roots = 2 (coefficient of x² with sign flipped = −(−2)/1 = 2) and product of roots = −6 (constant term with alternating sign = −6/1 = −6). Roots 1, 3, −2: sum = 1 + 3 − 2 = 2 ✓; product = (1)(3)(−2) = −6 ✓. The sum of products of pairs also checks: (1)(3) + (1)(−2) + (3)(−2) = 3 − 2 − 6 = −5, matching the coefficient of x ✓.',
     wrongAnswerExplanations: {
-      B: '(x − 1)(x + 3)(x − 2) expands to x³ − 0x² − 5x + 6, which has coefficient 0 for x² instead of −2.',
-      C: '(x + 1)(x − 3)(x − 2) would have x = −1 as a root, but p(−1) = −1 − 2 + 5 + 6 = 8 ≠ 0.',
-      D: '(x − 1)(x − 3)(x − 2) has roots 1, 3, 2. Check: p(2) = 8 − 8 − 10 + 6 = −4 ≠ 0.',
+      B: 'Using all positive roots 1, 3, 2 gives sum = 6 ≠ 2 and product = 6 ≠ −6. This fails both Vieta checks; x = 2 is not a root since p(2) = 8 − 8 − 10 + 6 = −4 ≠ 0.',
+      C: 'Roots 1, −3, 2 give sum = 0 ≠ 2 and product = −6. While the product matches, the sum fails, so these cannot all be roots. Vieta\'s formulas require all conditions to hold simultaneously.',
+      D: 'The final factorization stated in D is (x − 1)(x + 3)(x − 2), which would have roots 1, −3, 2 — not 1, 3, −2. While the verification p(3) = 0 and p(−2) = 0 is correct, the stated factored form contradicts the verified roots, making D internally inconsistent.',
     },
   },
 
@@ -360,20 +360,20 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'A population of bacteria decreases by 20% every 3 hours. If the initial population is 5,000, which function gives the population P(t) after t hours?',
+      'A population of bacteria triples every 6 hours. The population starts at 500. A researcher wants the population to be between 10,000 and 15,000 (exclusive). Which of the following represents the number of complete 6-hour periods n after which this condition is first met?',
     choices: [
-      { label: 'A', text: 'P(t) = 5000(0.80)^(t/3)' },
-      { label: 'B', text: 'P(t) = 5000(0.20)^(3t)' },
-      { label: 'C', text: 'P(t) = 5000(0.80)^(3t)' },
-      { label: 'D', text: 'P(t) = 5000(1.20)^(t/3)' },
+      { label: 'A', text: 'n = 3' },
+      { label: 'B', text: 'n = 4' },
+      { label: 'C', text: 'n = 2' },
+      { label: 'D', text: 'n = 5' },
     ],
     correctAnswer: 'A',
     explanation:
-      'A 20% decrease means 80% remains each period. The period is 3 hours, so after t hours there are t/3 periods. The function is P(t) = 5000 · (0.80)^(t/3). Check: at t = 0, P = 5000 ✓. At t = 3, P = 5000 · 0.80 = 4000, which is a 20% decrease ✓.',
+      'After n periods, population = 500 · 3^n. n = 1: 500 · 3 = 1,500 (too low). n = 2: 500 · 9 = 4,500 (too low). n = 3: 500 · 27 = 13,500 (between 10,000 and 15,000 ✓). n = 4: 500 · 81 = 40,500 (too high). The condition is first met at n = 3.',
     wrongAnswerExplanations: {
-      B: '0.20 is the percent lost, not the percent remaining; using 0.20 as the base gives far too fast a decay.',
-      C: 'P(t) = 5000(0.80)^(3t) uses 3t as the exponent instead of t/3, making the decay rate 3 times too fast.',
-      D: '1.20 indicates a 20% increase per period, not a decrease.',
+      B: 'At n = 4, the population is 500 · 81 = 40,500, which exceeds 15,000. The condition is not met at n = 4.',
+      C: 'At n = 2, the population is 500 · 9 = 4,500, which is below 10,000. The condition is not yet met at n = 2.',
+      D: 'At n = 5, the population is 500 · 243 = 121,500, far above 15,000. This represents three periods beyond when the condition first fails the upper bound.',
     },
   },
 
@@ -390,7 +390,7 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     correctAnswer: '24',
     acceptableAnswers: ['24'],
     explanation:
-      'First compute f(1) = 2(1) + 3 = 5. Then compute g(f(1)) = g(5) = 5² − 1 = 25 − 1 = 24.',
+      'f(1) = 2(1) + 3 = 5. g(f(1)) = g(5) = 5² − 1 = 25 − 1 = 24.',
   },
 
   {
@@ -402,7 +402,7 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'What is the radius of the circle defined by the equation x² + y² − 6x + 8y − 11 = 0?',
+      'The equation x² + y² − 6x + 8y − 11 = 0 defines a circle in the xy-plane. What is the radius of this circle?',
     choices: [
       { label: 'A', text: '6' },
       { label: 'B', text: '7' },
@@ -411,11 +411,11 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     ],
     correctAnswer: 'A',
     explanation:
-      'Complete the square for x and y. Group: (x² − 6x) + (y² + 8y) = 11. Complete the square: (x² − 6x + 9) + (y² + 8y + 16) = 11 + 9 + 16 = 36. So (x − 3)² + (y + 4)² = 36. The radius is √36 = 6.',
+      'Complete the square: (x² − 6x + 9) + (y² + 8y + 16) = 11 + 9 + 16 = 36. So (x − 3)² + (y + 4)² = 36. Radius = √36 = 6.',
     wrongAnswerExplanations: {
-      B: 'r = 7 comes from computing √(9 + 16 + 11) = √36 = 6 but then incorrectly taking the square root of 49 instead of 36.',
-      C: 'r = 8 results from adding 9 + 16 but neglecting to add these to the right side, then computing √(11 + 64) ≈ 8.',
-      D: '√56 results from incorrectly completing the square with the wrong constants added.',
+      B: 'r = 7 would require r² = 49. A student who adds 9 + 16 = 25 to the right side but forgets to include 11 gets r² = 25, giving r = 5; another path to 7 is computing √(9 + 16 + 11 + 13) with an arithmetic error.',
+      C: 'r = 8 results from omitting 11 from the right side: 9 + 16 = 25 → r = 5. More likely, forgetting to add the completing-the-square constants to the right side, leaving r² = 11 + large number.',
+      D: 'r = √56 results from adding 9 + 16 = 25 to 11 correctly to get 36, but then computing the square root of (36 − something) or misreading the equation.',
     },
   },
 
@@ -428,20 +428,20 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'In a right triangle, one acute angle measures 30°. The side opposite the 60° angle has length 4√3. What is the length of the hypotenuse?',
+      'In a right triangle, one leg has length 5 and the hypotenuse has length 13. A second triangle is similar to the first, with its shortest side equal to 15. What is the length of the hypotenuse of the second triangle?',
     choices: [
-      { label: 'A', text: '4' },
-      { label: 'B', text: '8' },
-      { label: 'C', text: '6√3' },
-      { label: 'D', text: '12' },
+      { label: 'A', text: '25' },
+      { label: 'B', text: '39' },
+      { label: 'C', text: '32.5' },
+      { label: 'D', text: '35' },
     ],
     correctAnswer: 'B',
     explanation:
-      'In a 30-60-90 triangle, the sides are in ratio 1 : √3 : 2. The side opposite 60° has length (√3) × (short side). So √3 × s = 4√3 → s = 4. The hypotenuse = 2s = 2 × 4 = 8.',
+      'First triangle: legs 5 and 12 (since 5² + 12² = 25 + 144 = 169 = 13²), hypotenuse 13. The shortest side is 5. Second triangle has shortest side = 15. Scale factor = 15/5 = 3. Hypotenuse of second triangle = 3 × 13 = 39.',
     wrongAnswerExplanations: {
-      A: '4 is the length of the short leg (opposite 30°), not the hypotenuse.',
-      C: '6√3 results from multiplying 4√3 by √3 instead of dividing by √3 to find s, then doubling incorrectly.',
-      D: '12 results from multiplying 4√3 by the ratio √3 then multiplying again, overcounting the scaling.',
+      A: '25 results from multiplying the shortest side by itself (5 × 5 = 25) or from applying the scale factor to the wrong value, not to the hypotenuse of 13.',
+      C: '32.5 results from using a scale factor of 2.5 by treating the middle leg (12) as the shortest side: scale = 15/12 = 1.25... or from 13 × 2.5 = 32.5, where 2.5 is obtained by dividing 15 by 6 instead of 5.',
+      D: '35 results from applying the scale factor (3) to the other leg: 12 × 3 = 36, then rounding down or from adding the scale factor times a different side.',
     },
   },
 
@@ -454,20 +454,20 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'A solid consists of a cylinder of radius 3 and height 5 with a cone of radius 3 and height 4 placed on top of it. What is the total volume of the solid? (Use π = π; leave answer in terms of π.)',
+      'A silo consists of a cylinder of radius 3 and height 5 topped by a hemisphere of radius 3. What is the total volume of the silo, in terms of π?',
     choices: [
-      { label: 'A', text: '51π' },
-      { label: 'B', text: '57π' },
-      { label: 'C', text: '63π' },
-      { label: 'D', text: '75π' },
+      { label: 'A', text: '45π + 9π' },
+      { label: 'B', text: '45π + 18π' },
+      { label: 'C', text: '45π + 36π' },
+      { label: 'D', text: '27π + 18π' },
     ],
     correctAnswer: 'B',
     explanation:
-      'Volume of cylinder = πr²h = π(3²)(5) = 45π. Volume of cone = (1/3)πr²h = (1/3)π(9)(4) = 12π. Total = 45π + 12π = 57π.',
+      'Volume of cylinder = πr²h = π(9)(5) = 45π. Volume of hemisphere = (2/3)πr³ = (2/3)π(27) = 18π. Total = 45π + 18π = 63π.',
     wrongAnswerExplanations: {
-      A: '51π = 45π + 6π. The error is computing the cone volume as (1/3)πr·h = (1/3)π(3)(4) = 4π (using r instead of r²), which gives 45 + 4 = 49π; an alternate path producing 51π uses the incorrect formula (1/3)π(2r)h/2 — in any case, the cone volume must use r² = 9, not r = 3.',
-      C: '63π = 45π + 18π. The error is computing the cone volume as πr²h with the 1/3 factor missing but using h = 2 instead of h = 4: π(9)(2) = 18π. The correct cone formula always includes the 1/3 factor.',
-      D: '75π = 45π + 30π. The error is treating the cone as a cylinder of the same radius and height: π(9)(4) = 36π is far too large; with the addition error 45 + 30 = 75, the 1/3 factor was omitted and only part of r²h was used.',
+      A: '9π for the hemisphere results from computing (1/3)πr² × h with r = 3 and h = 1 (using the hemisphere formula incorrectly), or from (2/3)π(3²) = 6π... likely from applying the full sphere formula (4/3)πr³/4 = πr³/3 = 9π, confusing hemisphere with quarter-sphere.',
+      C: '36π for the hemisphere results from computing the full sphere volume (4/3)πr³ = (4/3)π(27) = 36π without halving it for the hemisphere.',
+      D: '27π for the cylinder results from computing πr²h = π(9)(3) = 27π using the hemisphere radius (3) as the height instead of the cylinder\'s height (5).',
     },
   },
 
@@ -480,20 +480,20 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'Triangle PQR is similar to triangle STU with PQ corresponding to ST and QR corresponding to TU. If PQ = 6, QR = 9, PR = 12, and ST = 10, what is the length of TU?',
+      'Triangle PQR is similar to triangle STU, with PQ corresponding to ST and QR corresponding to TU. In triangle PQR, the perimeter is 36 and PQ = 6. In triangle STU, ST = 10. What is the perimeter of triangle STU?',
     choices: [
-      { label: 'A', text: '12' },
-      { label: 'B', text: '15' },
-      { label: 'C', text: '18' },
-      { label: 'D', text: '20' },
+      { label: 'A', text: '48' },
+      { label: 'B', text: '60' },
+      { label: 'C', text: '54' },
+      { label: 'D', text: '72' },
     ],
     correctAnswer: 'B',
     explanation:
-      'Since the triangles are similar, the ratio of corresponding sides is constant. The ratio is ST/PQ = 10/6 = 5/3. Therefore TU = QR × (5/3) = 9 × (5/3) = 15.',
+      'Scale factor = ST/PQ = 10/6 = 5/3. Perimeters of similar figures scale by the same ratio: perimeter of STU = 36 × (5/3) = 60.',
     wrongAnswerExplanations: {
-      A: 'TU = 12 mistakenly uses PR (the third side of the original triangle) as TU without applying the scale factor.',
-      C: 'TU = 18 results from using a scale factor of 2 (doubling QR) instead of multiplying by 5/3.',
-      D: 'TU = 20 uses the scale factor 5/3 applied to PR = 12 rather than to QR = 9.',
+      A: '48 results from adding 4 (the difference ST − PQ = 10 − 6 = 4) to each of the three "sides" of the perimeter: 36 + 3(4) = 48. This incorrectly applies the additive difference rather than the multiplicative scale factor.',
+      C: '54 results from using a scale factor of 3/2 — for example, from 9/6 = 3/2 instead of the correct 10/6 = 5/3 — giving 36 × 1.5 = 54.',
+      D: '72 results from approximating the scale factor as 2 (rounding 10/6 ≈ 2) and multiplying 36 × 2 = 72.',
     },
   },
 
@@ -506,10 +506,10 @@ export const f5MathModule2HardQuestionsV2: MathQuestion[] = [
     difficulty: 'hard',
     type: 'grid_in',
     question:
-      'A circle has a radius of 9. A central angle of 80° intercepts an arc. What is the length of that arc? (Use π; express your answer in terms of π.)',
+      'A circle has a radius of 9. A central angle of 80° intercepts an arc. What is the length of that arc? (Express your answer in terms of π.)',
     correctAnswer: '4π',
     acceptableAnswers: ['4π', '4pi'],
     explanation:
-      'Arc length = (central angle / 360°) × 2πr = (80/360) × 2π(9) = (2/9) × 18π = 4π.',
+      'Arc length = (central angle / 360°) × 2πr = (80/360) × 2π(9) = (2/9) × 18π = 36π/9 = 4π.',
   },
 ]

@@ -19,9 +19,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: '3x + 7 = 22 → 3x = 15 → x = 5.',
     wrongAnswerExplanations: {
-      A: 'x = 3 gives 3(3) + 7 = 16, not 22.',
-      C: 'x = 7 gives 3(7) + 7 = 28, not 22.',
-      D: '15 is the value of 3x, not x.',
+      A: 'x = 3 comes from subtracting 7 incorrectly — students who compute 22 − 7 = 15 but then divide by 5 instead of 3 arrive here. Or they may mistakenly read the coefficient as 5 (since 3 + 7 = 10... some students divide 15 by 5 "because 5 looks right"). Checking: 3(3) + 7 = 16 ≠ 22.',
+      C: 'x = 7 is a very tempting wrong answer because 7 appears in the equation as the constant. Students who see "7" and treat it as the answer to x confuse the addend with the solution. Checking: 3(7) + 7 = 28 ≠ 22.',
+      D: 'x = 15 is the most common error — students correctly subtract 7 from both sides to get 3x = 15 but then forget to divide by 3, stopping one step early and reporting 3x as if it were x. The expression "3x = 15" looks like "x = 15" if students rush past the final division step.',
     },
   },
 
@@ -43,9 +43,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'y = 2x + b. Using (1, 5): 5 = 2(1) + b → b = 3.',
     wrongAnswerExplanations: {
-      A: 'b = 1 gives y = 2(1) + 1 = 3 at x = 1, not 5.',
-      B: 'b = 2 gives y = 4 at x = 1, not 5.',
-      D: '5 is the y-value at x = 1, not the y-intercept.',
+      A: 'b = 1 arises when students substitute incorrectly: they write 5 = 2 + b and compute b = 5 − 2 − 2 = 1, accidentally subtracting 2 twice. Checking: y = 2(1) + 1 = 3 at x = 1, which does not give y = 5.',
+      B: 'b = 2 is the slope itself. Students who confuse the slope (2) with the y-intercept select this choice. This happens when students skip the substitution step entirely and assume the y-intercept equals the slope because both use the same number "2."',
+      D: 'b = 5 is the most tempting error — 5 is the y-coordinate of the given point (1, 5), so students who associate "y-intercept" with "the y-value we were given" choose this. This confuses "y-value at a specific point" with "y-value when x = 0." The actual y-intercept requires setting x = 0: 5 = 2(1) + b → b = 3.',
     },
   },
 
@@ -67,9 +67,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'The one-time fee is $30 (constant) and the monthly cost is $20 per month, so C = 20m + 30.',
     wrongAnswerExplanations: {
-      A: 'This omits the $30 sign-up fee.',
-      B: 'This swaps the roles: the $30 is the fixed fee, not the monthly rate.',
-      D: 'This charges both amounts every month instead of $30 once.',
+      A: 'C = 20m omits the $30 sign-up fee entirely. Students who focus only on the recurring monthly charge and treat the one-time fee as already paid (or irrelevant to the function) arrive here. After m months the total cost would actually be $20m + $30, not just $20m.',
+      B: 'C = 30m + 20 swaps the roles of the two numbers: it charges $30 every month and adds $20 once. This is the most architecturally confusing wrong answer — both numbers appear, but students mix up which is the rate (monthly, goes with m) and which is the constant (one-time, has no m). The problem states the sign-up fee is $30 (paid once) and the monthly rate is $20 (paid each month).',
+      D: 'C = 50m adds both amounts together and charges the combined $50 every month, treating the one-time fee as if it were also monthly. Students who think "total cost per month is $30 + $20 = $50" make this error, but the $30 sign-up fee occurs only once regardless of how many months.',
     },
   },
 
@@ -91,9 +91,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'D',
     explanation: 'Add the equations: (x + y) + (x − y) = 10 + 4 → 2x = 14 → x = 7.',
     wrongAnswerExplanations: {
-      A: '3 is the value of y, not x.',
-      B: '5 is the average of the constants, not x.',
-      C: 'x = 6 gives y = 4, but then x − y = 2 ≠ 4.',
+      A: 'x = 3 is actually the value of y, not x. Students who solve the system correctly (x = 7, y = 3) but then read off y instead of x make this error. The question asks for x, so labeling the variables clearly during solving prevents this mistake.',
+      B: 'x = 5 comes from averaging the two constants: (10 + 4)/2 = 7... wait, that gives 7 actually. Students who instead try (10 − 4)/2 = 3 and pick the wrong result, or who try to find a "middle" value by halving one constant, arrive at 5. Checking: if x = 5 and x + y = 10 then y = 5, but x − y = 0 ≠ 4.',
+      C: 'x = 6 is the most tempting wrong answer for students who subtract the equations instead of adding them, or who make an arithmetic error in the final step. If x = 6 then from x + y = 10, y = 4, and checking x − y = 6 − 4 = 2 ≠ 4. The correct approach is to add (not subtract) the equations to eliminate y: (x + y) + (x − y) = 10 + 4 → 2x = 14 → x = 7.',
     },
   },
 
@@ -115,9 +115,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'D',
     explanation: '2x − 5 < 9 → 2x < 14 → x < 7. Only x = 5 is less than 7.',
     wrongAnswerExplanations: {
-      A: '7 is not less than 7; the inequality is strict.',
-      B: '8 > 7, so it does not satisfy x < 7.',
-      C: '9 > 7, so it does not satisfy x < 7.',
+      A: 'x = 7 is the boundary value of the solution set, not a solution to the strict inequality. Students who solve 2x − 5 < 9 → 2x < 14 → x < 7 correctly but then check whether 7 is "in" the answer sometimes assume the boundary belongs to the solution. But the inequality is strict (<, not ≤), so x = 7 gives 2(7) − 5 = 9, which is not less than 9.',
+      B: 'x = 8 gives 2(8) − 5 = 11, which is greater than 9, not less. Students who mis-solve to get x < 8 (perhaps subtracting 5 and then dividing 14 by 2 to get 7 but off by one) or who simply pick a "middle-ish" value select this. This is the most seductive wrong answer because 8 is close to the boundary.',
+      C: 'x = 9 gives 2(9) − 5 = 13 > 9, clearly not a solution. Students who add 5 to both sides instead of subtracting (getting 2x < 14 correct but from a different path) and then somehow arrive at 9, or who confuse the "9" in the inequality with the solution, select this choice.',
     },
   },
 
@@ -139,9 +139,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'Slope = (13 − 4)/(3 − 0) = 9/3 = 3. So h(x) = 3x + 4, and h(1) = 3 + 4 = 7.',
     wrongAnswerExplanations: {
-      A: 'h(1) = 5 would require a slope of 1, but the slope is 3.',
-      B: 'h(1) = 6 would require a slope of 2, not 3.',
-      D: '9 is the total change from x = 0 to x = 3, not h(1).',
+      A: 'h(1) = 5 arises if students assume the slope is 1 (the most "default" slope) and compute h(1) = 1(1) + 4 = 5. This bypasses computing the actual slope from the two given points. The real slope is (13 − 4)/(3 − 0) = 9/3 = 3, not 1.',
+      B: 'h(1) = 6 results from computing slope as (13 − 4)/(3 + 1) = 9/4 ≈ 2 (using the wrong denominator), then estimating h(1) ≈ 2(1) + 4 = 6. Students who add the x-values (0 + 3 ≠ 3 − 0) in the slope formula rather than subtract them arrive here. The denominator of the slope formula is x₂ − x₁ = 3 − 0 = 3, not 3 + 0 = 3 (coincidentally the same here, but the wrong student process gives slope = 9/4 ≈ 2 if they use x₁ + x₂ = 3 + 1 when evaluating at x = 1).',
+      D: 'h(1) = 9 is the most tempting error — 9 is the total rise from h(0) = 4 to h(3) = 13, and students who see "13 − 4 = 9" and then associate that number with h(1) (the next integer after 0) confuse total change over the interval with the function value at x = 1. The total rise of 9 happens over 3 steps, so each step adds 3, making h(1) = 4 + 3 = 7.',
     },
   },
 
@@ -177,9 +177,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'The ratio flour:sugar is 3:2. With 12 cups flour, that is 12/3 = 4 batches, so sugar = 4 × 2 = 8 cups.',
     wrongAnswerExplanations: {
-      A: '6 uses the ratio backward or a wrong scale factor.',
-      C: '9 = 3/4 × 12 does not follow from a 3:2 ratio.',
-      D: '18 scales sugar by the flour amount incorrectly.',
+      A: '6 cups arises from applying the ratio backward: treating the 3:2 as "2 parts flour per 3 parts sugar" and computing (2/3) × 12 = 8... but some students simplify the ratio differently. The most common path to 6: noticing 12 ÷ 2 = 6 and treating the "2" (cups of sugar) as the divisor when it should be part of a multiplier. The correct scale factor is 12 ÷ 3 = 4 (batches), then 4 × 2 = 8 cups of sugar.',
+      C: '9 cups comes from computing (3/4) × 12 = 9 — students who see the ratio 3:2 and form the fraction 3/4 (dividing one ratio number by another in the wrong way) then multiply by 12. This error treats the ratio parts as a fraction of the total (3 out of 3+1=4?) rather than a scale factor.',
+      D: '18 cups arises from the most careless ratio reversal: computing 12 × (3/2) = 18 by using flour:sugar = 3:2 but multiplying by 3/2 instead of 2/3. Students who recognize they need to scale the "2" but use the upside-down fraction (3/2 instead of 2/3) arrive here. Since 3/2 > 1, this gives MORE sugar than flour, which contradicts the recipe that calls for more flour than sugar.',
     },
   },
 
@@ -201,9 +201,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: '30% of 80 = 0.30 × 80 = 24.',
     wrongAnswerExplanations: {
-      A: '18 = 0.30 × 60 uses the wrong base.',
-      B: '21 is not 0.30 × 80.',
-      D: '27 = 0.30 × 90 uses the wrong base.',
+      A: '18 results from computing 30% of 60 instead of 30% of 80. Students who misread the base as 60 (perhaps confusing it with a nearby value) get 0.30 × 60 = 18. This is tempting because 18 is a "reasonable-looking" percentage-style answer.',
+      B: '21 does not result from a standard computational pathway, but students who compute 30% and then apply it to 70 (the complement of 30%) get 0.30 × 70 = 21. Some students also miscompute 0.30 × 80 as 21 through a decimal-placement slip (3 × 8 = 24 → 24 − 3 = 21 through informal arithmetic). The straightforward computation is 0.30 × 80 = 24.',
+      D: '27 results from computing 30% of 90 instead of 80. Students who misread 80 as 90 — easy to do under time pressure — get 0.30 × 90 = 27. This is the most seductive wrong answer because 27 is close to 24 and students may not double-check the base number.',
     },
   },
 
@@ -225,9 +225,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'Mean = (6 + 9 + 12 + 15 + 18)/5 = 60/5 = 12.',
     wrongAnswerExplanations: {
-      A: '10 undercounts the sum; the sum is 60, not 50.',
-      C: '13 does not equal 60/5.',
-      D: '15 is a value in the set, not the mean.',
+      A: '10 comes from summing only four of the five values and dividing by 4, or from computing the sum as 50 (skipping one value) and then dividing by 5. This is a careless computation error: 6 + 9 + 12 + 15 + 18 = 60, not 50.',
+      C: '13 arises from computing the correct sum of 60 but dividing by a wrong count. Students who count only the four non-median values (excluding 12, thinking it does not count because it is already "in the middle") divide 60 − 12 = 48 by 4 = 12... Actually students who add 1 to the count (dividing by 6 instead of 5) get 60/6 = 10, but students who add correctly and divide 65/5 = 13 miscount the sum as 65 (adding 15 + 18 = 34 instead of 33). The correct sum is 60 and count is 5.',
+      D: '15 is a value in the data set — the second-largest. Students who confuse "mean" with "largest value," "most common value," or "a representative value" sometimes identify a number from the list rather than computing. This error reflects a conceptual confusion between mean (calculated average) and a typical list member.',
     },
   },
 
@@ -249,9 +249,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'Total marbles = 5 + 3 + 2 = 10. P(blue) = 3/10.',
     wrongAnswerExplanations: {
-      B: '3/7 excludes some marbles from the total; the total is 10.',
-      C: '1/3 assumes three equally likely colors, but blue is 3 of 10.',
-      D: '1/2 is far more than the actual 3/10.',
+      B: '3/7 arises from computing blue/(red + yellow) = 3/(5 + 2) = 3/7 — using only the non-blue marbles as the denominator instead of the total. Students who interpret "probability of drawing blue" as "blue out of not-blue" rather than "blue out of all" make this error. The denominator must always be the total number of possible outcomes.',
+      C: '1/3 assumes each of the three colors is equally likely, which would mean P(blue) = 1/3. This is a classic "equal probability fallacy" — students assume that because there are three distinct colors, each has a one-third chance. But the actual counts matter: there are 5 red, 3 blue, and 2 yellow, so blue marbles make up 3 out of 10 total.',
+      D: '1/2 is the most seductive wrong answer. Students who round the total incorrectly (perhaps computing 5 + 3 = 8, then thinking "about half") or who add the blue marbles to something to get a denominator of 6 arrive near 1/2. Some students see 3 blue out of a total they mistakenly compute as 6 (forgetting to add the yellow marbles) and get 3/6 = 1/2. Always count every marble: 5 + 3 + 2 = 10.',
     },
   },
 
@@ -281,9 +281,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'y = 5(4) + 56 = 20 + 56 = 76.',
     wrongAnswerExplanations: {
-      A: '66 corresponds to x = 2, not x = 4.',
-      B: '72 uses an intercept of 52 instead of 56.',
-      D: '80 corresponds to x = 5, not x = 4.',
+      A: '66 is the predicted score at x = 2 hours, not x = 4. Students who miscount the x-value (reading "4 hours" as the 2nd data point on the graph, or miscounting data points) might substitute x = 2 instead of x = 4: y = 5(2) + 56 = 10 + 56 = 66. Always substitute the exact value given in the question.',
+      B: '72 arises from using the wrong y-intercept. If a student reads the intercept from the graph as approximately 52 instead of the given 56, they compute y = 5(4) + 52 = 20 + 52 = 72. This underscores why you should always use the equation given rather than visually estimating from a graph.',
+      D: '80 is the predicted score at x = 5 hours, not x = 4. Students who are off by one in counting data points on the graph — associating "4 hours" with the fifth plotted point rather than the fourth — substitute x = 5: y = 5(5) + 56 = 25 + 56 = 81 ≈ 80. Or students confuse the label "4 hours" with the fifth position in the data table (treating the list as 0-indexed starting from 1 hour). The correct substitution is x = 4.',
     },
   },
 
@@ -305,9 +305,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: '3(x + 2) + 2(x − 1) = 3x + 6 + 2x − 2 = 5x + 4.',
     wrongAnswerExplanations: {
-      B: 'This forgets to subtract 2 from the +6, keeping +8 instead of +4.',
-      C: 'This uses 6x, incorrectly combining coefficients (3 + 2 = 5, not 6).',
-      D: 'This subtracts the constants incorrectly (6 − 2 = 4, not −4).',
+      B: '5x + 8 is the most common error. Students correctly distribute to get 3x + 6 + 2x − 2 but then add the constants as +6 + 2 = +8 instead of +6 − 2 = +4, forgetting that the second distribution produces −2 (negative), not +2. This is a sign-tracking error in distribution: 2(x − 1) = 2x − 2, not 2x + 2.',
+      C: '6x + 4 comes from multiplying the coefficients (3 × 2 = 6) instead of adding them (3 + 2 = 5). Students who see two x-terms and multiply the coefficients together rather than collect like terms select this. Like terms are combined by addition/subtraction, not multiplication.',
+      D: '5x − 4 results from subtracting the constants in the wrong order or with a sign error: computing −6 + 2 = −4 instead of +6 − 2 = +4. Students who negate the +6 from 3(x + 2) — perhaps thinking the parentheses require subtraction — arrive here. The first distribution 3(x + 2) = 3x + 6 produces a positive constant.',
     },
   },
 
@@ -329,9 +329,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'x² = 9 → x = ±√9 = ±3.',
     wrongAnswerExplanations: {
-      A: 'x = −3 also works: (−3)² − 9 = 0.',
-      C: '±9 gives 81 − 9 = 72 ≠ 0.',
-      D: 'x = 0 gives −9 ≠ 0, and x = 9 gives 72 ≠ 0.',
+      A: '"x = 3 only" is a very common error. Students who take the square root of both sides and write x = √9 = 3 forget that squaring is not a one-to-one operation: both x = 3 and x = −3 satisfy x² = 9, because (−3)² = 9 as well. The equation x² = 9 has two solutions — one positive and one negative — whenever the right side is a positive number.',
+      C: '±9 comes from not taking the square root — students who solve x² = 9 and then treat the 9 directly as x instead of computing √9. They write x = ±9 as if the equation were x = ±9 rather than x² = 9. But 9² = 81 ≠ 9.',
+      D: '"x = 0 and x = 9" arises from treating the equation as a product equal to zero: students who rewrite x² − 9 = 0 as x(x − 9) = 0 (incorrect factoring — the correct factoring is (x − 3)(x + 3) = 0) then apply zero-product property to get x = 0 or x = 9. The correct factoring uses the difference of squares pattern: a² − b² = (a − b)(a + b).',
     },
   },
 
@@ -353,9 +353,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'f(4) = 4² − 2(4) = 16 − 8 = 8.',
     wrongAnswerExplanations: {
-      A: '4 = 4² − 2(4)... this miscomputes 16 − 8 as 4.',
-      B: '6 subtracts 2(5) instead of 2(4).',
-      D: '12 forgets to subtract, computing only 16 − 4.',
+      A: 'f(4) = 4 is reached by correctly computing 4² = 16 and 2(4) = 8 but then subtracting to get 16 − 8 = 4 instead of 8. This is a basic arithmetic slip: 16 − 8 = 8, not 4. Students under time pressure may subtract 8 from 16 and write the result of 16/4 = 4 by accident.',
+      B: 'f(4) = 6 comes from substituting x = 5 instead of x = 4: f(5) = 5² − 2(5) = 25 − 10 = 15... that gives 15, not 6. Alternatively, students compute f(4) = 4² − 2(4) = 16 − 10 = 6 by evaluating 2(4) as 10 through a mental slip. The coefficient 2 multiplied by the input 4 equals 8, not 10.',
+      D: 'f(4) = 12 is the most tempting wrong answer. Students who compute 4² = 16 correctly but then only subtract the constant term (instead of the whole 2x term) get 16 − 4 = 12. This error treats f(x) = x² − 2x as if it were x² − 2 (a different function). The subtracted term is 2x evaluated at x = 4: 2(4) = 8, not just 2.',
     },
   },
 
@@ -377,9 +377,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'D',
     explanation: 'Doubling each hour: 200 × 2³ = 200 × 8 = 1,600.',
     wrongAnswerExplanations: {
-      A: '600 = 200 × 3 adds instead of doubling.',
-      B: '800 = 200 × 4 uses only two doublings plus one, not 2³.',
-      C: '1,200 = 200 × 6 does not match repeated doubling.',
+      A: '600 results from linear thinking: students add 200 bacteria each hour for 3 hours (200 + 200 + 200 = 600) instead of doubling. This is the most common conceptual error — confusing additive growth (arithmetic) with multiplicative growth (exponential). "Doubles every hour" means each hour the count is multiplied by 2, not increased by 200.',
+      B: '800 comes from performing only two doublings instead of three: 200 → 400 → 800 (two steps). Students who count "3 hours" but apply the rule twice might stop at 800. Three hours of doubling requires multiplying by 2 three times: 200 × 2 × 2 × 2 = 200 × 8 = 1,600.',
+      C: '1,200 = 200 × 6 has no clean derivation from repeated doubling, but students who multiply 200 by the number of hours times 2 (200 × 3 × 2 = 1,200) make this error — treating the problem as "double for each hour linearly" rather than exponentially. This compounds the additive thinking in choice A with the coefficient 2.',
     },
   },
 
@@ -401,9 +401,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: '(x + 5)(x − 2) = x² − 2x + 5x − 10 = x² + 3x − 10.',
     wrongAnswerExplanations: {
-      B: 'This gets the sign of the middle term wrong: −2 + 5 = +3, not −3.',
-      C: 'This adds 5 and 2 instead of combining −2x and +5x.',
-      D: 'The constant is 5 × (−2) = −10, not +10.',
+      B: 'x² − 3x − 10 reverses the sign of the middle term. When expanding (x + 5)(x − 2) using FOIL, the outer terms give −2x and the inner terms give +5x, combining to −2x + 5x = +3x. Students who subtract instead of add (computing 5x − 2x or −5x + 2x) get −3x as the middle term. The signs are: Outer = x × (−2) = −2x; Inner = 5 × x = +5x; sum = +3x.',
+      C: 'x² + 7x − 10 comes from adding the constants (5 + 2 = 7) instead of multiplying/combining the x-terms. Some students confuse the FOIL Inner and Outer terms with a simple addition: they see "+5" and "−2" and add them as magnitudes (5 + 2 = 7) rather than forming the cross-terms −2x and +5x whose coefficient combination is 5 − 2 = +3.',
+      D: 'x² + 3x + 10 has the correct middle term (+3x) but the wrong sign on the constant. The constant in the expansion is always the product of the two constant terms: (+5) × (−2) = −10, not +10. Students who compute 5 × 2 = 10 and forget to account for the negative sign on the "−2" in (x − 2) get a positive constant. Always apply the sign: the second binomial is (x − 2), so the constant contribution is −2 × 5 = −10.',
     },
   },
 
@@ -439,9 +439,9 @@ export const f4MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'Area = πr² = π(5²) = 25π.',
     wrongAnswerExplanations: {
-      A: '10π = 2πr is the circumference, not the area.',
-      C: '50π doubles the correct area.',
-      D: '100π uses r = 10 (the diameter) instead of the radius.',
+      A: '10π = 2πr = 2π(5) is the circumference of the circle, not its area. Students who confuse the area formula (πr²) with the circumference formula (2πr) select this. Both formulas involve π and the radius, but circumference is linear in r while area is quadratic (r²). With r = 5: circumference = 10π, area = 25π.',
+      C: '50π = 2 × 25π doubles the correct area. Students who compute πr² = π(25) = 25π correctly but then think they need to multiply by 2 (perhaps confusing with the 2πr circumference formula or thinking the formula involves 2r²) arrive at 50π.',
+      D: '100π = π(10²) uses the diameter (10) instead of the radius (5) in the area formula. This is the most common geometry error: confusing radius and diameter. The problem states the radius is 5, so the area is π(5²) = 25π, not π(10²) = 100π. Always identify whether you are given radius or diameter before applying πr².',
     },
   },
 

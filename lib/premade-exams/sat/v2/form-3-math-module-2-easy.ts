@@ -21,9 +21,9 @@ export const f3MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'Subtract 9 from both sides: 4x = 20. Divide by 4: x = 5.',
     wrongAnswerExplanations: {
-      A: 'x = 4 gives 4(4) + 9 = 25 ≠ 29.',
-      C: 'x = 6 gives 4(6) + 9 = 33 ≠ 29.',
-      D: 'x = 7 gives 4(7) + 9 = 37 ≠ 29.',
+      A: 'x = 4 gives 4(4) + 9 = 25 ≠ 29. Students who add 9 to 29 first (getting 38) and then divide by 4 (getting 9.5, which they round to an integer near the choices) may arrive near 4. Alternatively, students who set up 4x = 29 − 9 correctly but make an arithmetic error (computing 20 ÷ 4 = 4 instead of 5) arrive here.',
+      C: 'x = 6 gives 4(6) + 9 = 33 ≠ 29. Students who add rather than subtract: 4x = 29 + 9 = 38 → x ≈ 9 (not 6) or who use a different equation — these paths don\'t cleanly produce 6. More likely, x = 6 is a trap for students who roughly estimate: "4 times something near 5 is close to 20, plus 9... maybe 6?"',
+      D: 'x = 7 gives 4(7) + 9 = 37 ≠ 29. Students who misread 29 as 37, or who add 9 + 29 = 38 and then compute 38/4 ≈ 9, rounding down to 7 or 8, may land here. A quick check 4(7) + 9 = 37 confirms this is wrong.',
     },
   },
 
@@ -45,9 +45,9 @@ export const f3MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'Distribute: 5x − 3 = 2x + 12 → 3x = 15.',
     wrongAnswerExplanations: {
-      A: '5 is the value of x, not 3x.',
-      B: '10 does not follow; 3x = 15.',
-      D: '18 would require x = 6, but solving gives x = 5.',
+      A: '5 is the value of x, not 3x. Students who correctly solve the equation (finding x = 5) but then answer the wrong question — reporting x instead of 3x — select this. The question asks for 3x, so the final step is 3 × 5 = 15. This error is about careful reading, not algebra.',
+      B: '10 has no clean derivation. A student might compute 3x = 15 correctly but then divide by 1.5 instead of stopping: 15/1.5 = 10. Or students who forget to distribute the 2 in 2(x + 6) get 5x − 3 = 2x + 6 → 3x = 9 → x = 3 → 3x = 9 (not 10). The path to 10 requires a specific mid-process error.',
+      D: '18 would require x = 6, which comes from incorrectly distributing the 2: students who write 2(x + 6) = 2x + 6 (forgetting to multiply 6 by 2) get 5x − 3 = 2x + 6 → 3x = 9 → x = 3 → 3x = 9. That\'s 9, not 18. Students who then multiply 3 × 6 = 18 (using the 6 from the equation) combine two errors.',
     },
   },
 
@@ -132,9 +132,9 @@ export const f3MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'From 3 − 2x > −1: −2x > −4 → x < 2. From 3 − 2x < 7: −2x < 4 → x > −2. Combined: −2 < x < 2.',
     wrongAnswerExplanations: {
-      B: 'The inequalities are strict (<), so the endpoints −2 and 2 are excluded.',
-      C: 'x < 2 captures only one bound; x must also exceed −2.',
-      D: 'x > −2 captures only one bound; x must also be less than 2.',
+      B: '−2 ≤ x ≤ 2 is the most tempting wrong answer because it has the correct values (−2 and 2) but the wrong type of inequality (closed instead of open). The original inequalities are strict (< not ≤), meaning −2 and 2 are not solutions: if x = −2, then 3 − 2(−2) = 7, which is not strictly less than 7. If x = 2, then 3 − 2(2) = −1, which is not strictly greater than −1. The endpoints are excluded.',
+      C: 'x < 2 captures the upper bound correctly but misses the lower bound entirely. Students who perform one step — solving 3 − 2x < 7 → x > −2 — and then only record the other step (−2x > −4 → x < 2) as a combined answer make this error. A compound inequality requires both bounds simultaneously.',
+      D: 'x > −2 captures the lower bound but misses the upper bound. Students who solve only 3 − 2x > −1 → −2x > −4 → x < 2 (and then mistakenly write x > −2 by forgetting to flip the sign when dividing by −2) make this error. Both bounds are needed, and the division by a negative number must flip each inequality.',
     },
   },
 
@@ -156,9 +156,9 @@ export const f3MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'Using point-slope form: y − 5 = (3/4)(x − 8) → y = (3/4)x − 6 + 5 → y = (3/4)x − 1. The y-intercept is −1.',
     wrongAnswerExplanations: {
-      B: 'y-intercept 0 would give y = (3/4)x; at x = 8, y = 6 ≠ 5.',
-      C: 'y-intercept 1 would give y = (3/4)x + 1; at x = 8, y = 7 ≠ 5.',
-      D: 'y-intercept 3 would give y = (3/4)x + 3; at x = 8, y = 9 ≠ 5.',
+      B: 'y-intercept 0 comes from students who compute (3/4)(8) = 6 and then set y = 6 when the actual y is 5, concluding that the y-intercept must be 0 (since y = mx would give 6). The error is computing (3/4)(8) = 6 and confusing 6 with 5, not noticing the discrepancy. Actually, y = (3/4)x at x = 8 gives 6 ≠ 5, so b = 5 − 6 = −1, not 0.',
+      C: 'y-intercept 1 is the most tempting wrong answer. Students who compute y − 5 = (3/4)(x − 8) = (3/4)x − 6 but then rearrange incorrectly — writing y = (3/4)x − 6 + 5 = (3/4)x − 1 (correct) but misreading −1 as 1 due to a sign error — arrive here. A quick check: (3/4)(8) + 1 = 7 ≠ 5.',
+      D: 'y-intercept 3 might come from students who skip the point-slope form entirely and guess a y-intercept from the numbers in the problem (3 from the numerator of the slope 3/4, or 3 as a "round" number close to some calculation). Verification: (3/4)(8) + 3 = 6 + 3 = 9 ≠ 5.',
     },
   },
 
@@ -206,9 +206,9 @@ export const f3MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'D',
     explanation: 'Factor: x² − 5x + 6 = (x − 2)(x − 3). Setting each factor to zero: x = 2 and x = 3.',
     wrongAnswerExplanations: {
-      A: '(1)(6) = 6 and 1 + 6 = 7 ≠ −5; these factors do not work.',
-      C: '(x+2)(x+3) = x² + 5x + 6, not x² − 5x + 6.',
-      B: '(x−5)(x−1) = x² − 6x + 5 ≠ x² − 5x + 6.',
+      A: 'x = 1 and x = 6 comes from noticing that 1 × 6 = 6 (matching the constant) and then using these as roots. However, 1 + 6 = 7, not 5, so these roots give (x − 1)(x − 6) = x² − 7x + 6, which doesn\'t match. The correct pair must satisfy both r + s = 5 AND r × s = 6, giving r = 2 and s = 3.',
+      C: '(x + 2)(x + 3) = x² + 5x + 6 has the correct factor magnitudes (2 and 3) but the wrong signs. A quadratic with a negative middle term (−5x) and positive constant (+6) requires both factors to be negative: (x − 2)(x − 3). Students who forget to carry the negative signs into the roots select this — they correctly identify 2 and 3 but then choose positive roots.',
+      B: '(x − 5)(x − 1) = x² − 6x + 5 has neither the correct sum (5 + 1 = 6, not 5) nor the correct product (5 × 1 = 5, not 6). Students who find numbers that are close (5 appears as the middle coefficient) or who confuse which coefficient determines the sum versus the product select this answer.',
     },
   },
 
@@ -230,9 +230,9 @@ export const f3MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'Factor: x² − x − 12 = (x − 4)(x + 3). Setting each to zero: x = 4 and x = −3.',
     wrongAnswerExplanations: {
-      A: '(x−3)(x+4) = x² + x − 12, with a positive middle term, not x² − x − 12.',
-      B: '(x−4)(x−3) = x² − 7x + 12, not x² − x − 12.',
-      D: '(x+4)(x+3) = x² + 7x + 12, not x² − x − 12.',
+      A: 'x = 3 and x = −4 gives (x − 3)(x + 4) = x² + x − 12. This has the right magnitudes (3 and 4) and the right constant (−12) but the wrong sign on the middle term (+x instead of −x). Students who correctly identify 4 and 3 as the magnitudes but assign the negative to the smaller factor (3) instead of the larger one (4) make this error. For x² − x − 12, the positive root must be 4 (larger) and the negative root must be −3 (smaller).',
+      B: 'x = 4 and x = 3 gives (x − 4)(x − 3) = x² − 7x + 12. Both factors are negative, which requires a positive constant term. Since x² − x − 12 has a negative constant (−12), one factor must be positive and one must be negative. Students who take 4 and 3 as both positive without checking the constant sign select this.',
+      D: 'x = −4 and x = −3 gives (x + 4)(x + 3) = x² + 7x + 12. Both roots negative produces both a positive middle term and a positive constant — neither matches x² − x − 12. This is the fully reversed-sign case, where students negate both roots instead of only one.',
     },
   },
 
@@ -278,9 +278,9 @@ export const f3MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'In vertex form h(x) = a(x − h)² + k, the vertex is at (h, k). Here a = −2, h = 1, k = 8, so the vertex is at (1, 8).',
     wrongAnswerExplanations: {
-      A: 'The vertex x-coordinate is h = 1 (not −1) because the form is (x − h)²; x = 1 makes the squared term zero.',
-      C: 'The vertex y-value k = 8 is positive, not −8.',
-      D: 'The value 1 in (x − 1)² means x = 1, not x = 2.',
+      A: '(−1, 8) results from misreading (x − 1)² as indicating x = −1. Students who read the vertex form as "the number in the parentheses with its sign attached" rather than "the value of x that makes the expression zero" make this error. In (x − h)², the vertex is at x = h (not x = −h). Since (x − 1)² = 0 when x = 1, the vertex is at x = 1, not x = −1.',
+      C: '(1, −8) has the correct x-coordinate but a negated y-coordinate. Students who correctly find x = 1 and then substitute into h(x), perhaps mishandling the −2 coefficient, may compute: −2(0)² + 8 = 8 correctly, but then think the vertex k-value is −k = −8 because the parabola opens downward. However, k in vertex form is already the y-value of the vertex — it does not need to be negated.',
+      D: '(2, 8) comes from reading "(x − 1)" as "x minus 1, so shift by 1 from x = 1, giving x = 2" — adding 1 to the x in the expression rather than solving (x − 1) = 0. The vertex occurs where the squared term equals zero: x − 1 = 0 → x = 1, not x = 2.',
     },
   },
 
@@ -319,9 +319,9 @@ export const f3MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'D',
     explanation: 'The net drain rate = 40 − 25 = 15 gallons per minute. Time = 1,800 / 15 = 120 minutes.',
     wrongAnswerExplanations: {
-      A: '45 = 1800/40 uses only the drain rate, ignoring the fill rate.',
-      B: '72 = 1800/25 uses only the fill rate.',
-      C: '90 does not correspond to the net rate of 15 gal/min.',
+      A: '45 = 1800/40 uses only the drain rate and ignores the fill rate entirely. Students who set up time = total volume ÷ drain rate without accounting for the simultaneous filling make this error. Since the pool is being refilled at 25 gal/min while draining, the net rate is only 40 − 25 = 15 gal/min — making the correct time much longer than 45 minutes.',
+      B: '72 = 1800/25 uses only the fill rate, which makes no sense physically (dividing volume by the fill rate would give the time to fill the pool, not empty it). Students who confuse fill and drain rates, or who accidentally use the wrong number, arrive here.',
+      C: '90 might come from computing 1800/(40 − 25 + 5) = 1800/20 = 90 — using a net rate of 20 instead of 15. This error could arise from adding or subtracting the rates incorrectly, or from combining 40 and 25 as 40/25 × something. The correct net drain rate is 40 − 25 = 15 gal/min.',
     },
   },
 
@@ -447,9 +447,9 @@ export const f3MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'sin(R) = 5/13 means the opposite side = 5 and hypotenuse = 13. The adjacent side = √(13² − 5²) = √144 = 12. So cos(R) = 12/13.',
     wrongAnswerExplanations: {
-      A: '5/12 = tan(R), not cos(R).',
-      C: '13/12 exceeds 1, which is impossible for a cosine value.',
-      D: '5/13 = sin(R), not cos(R).',
+      A: '5/12 = tan(R), not cos(R). Students who correctly identify the adjacent leg as 12 and the hypotenuse as 13 but then form the ratio opposite/adjacent (5/12) instead of adjacent/hypotenuse (12/13) confuse cosine with tangent. A memory aid: SOH CAH TOA — cos = Adjacent/Hypotenuse, tan = Opposite/Adjacent.',
+      C: '13/12 exceeds 1, which is impossible for any cosine value (cosine is always between −1 and 1 for real angles). This comes from inverting cos(R) = 12/13 to get 13/12 — perhaps confusing secant (1/cos) with cosine. Any fraction with hypotenuse in the numerator cannot be a valid sine or cosine ratio.',
+      D: '5/13 = sin(R), which is the ratio given in the problem, not the one asked for. This is the most tempting wrong answer for students who misread the question — it asks for cos(R), not sin(R) — or who assume the answer must be one of the ratios already mentioned. Students should note that sin(R) and cos(R) are complementary functions: sin(R) = cos(90° − R), and they use different sides.',
     },
   },
 
@@ -471,9 +471,9 @@ export const f3MathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'Circumference = 2πr = 20π → r = 10. Area = πr² = π(10)² = 100π.',
     wrongAnswerExplanations: {
-      A: 'This uses r instead of r² in the area formula.',
-      C: 'This uses the diameter (20) instead of the radius (10): π(20)² = 400π.',
-      D: '40π has no basis in the correct formula.',
+      A: '10π = π × r = π × 10 uses the radius directly instead of squaring it. Students who confuse the area formula A = πr² with the circumference formula C = 2πr, or who forget to square the radius, compute A = π × 10 = 10π. The squaring step is the most commonly forgotten step in area problems.',
+      C: '400π = π(20)² comes from using the full circumference value (20π → 20) as if it were the radius. Students who skip the step of dividing 20π by 2π to find r, and instead use 20 as r directly, get A = π(20)² = 400π. The correct chain: C = 2πr → r = C/(2π) = 20π/(2π) = 10.',
+      D: '40π is the product π × 40 = π × (10 + 30) or some other non-standard combination of numbers from the problem. One common route: students who compute r = 20π/π = 20 (forgetting the 2) and then use A = πr = π × 20 × 2 = 40π combine two errors. Another route: 2r = 20, so r = 10, and area = 2πr × 2 = 40π — confusing area with a doubled circumference.',
     },
   },
 

@@ -28,9 +28,9 @@ export const f3RwModule2EasyQuestionsV2: RWQuestion[] = [
     explanation:
       '"Replicate" means to copy or reproduce exactly, fitting the description of an enclosure that re-creates the animals\' natural habitat through native plants, water, and soil.',
     wrongAnswerExplanations: {
-      B: '"Overshadow" means to diminish the importance of something — not to recreate it.',
-      C: '"Replace" implies substituting one thing for another, but the passage describes mimicking the habitat, not substituting something in its place.',
-      D: '"Observe" means to watch, not to reproduce.',
+      B: '"Overshadow" means to make something seem less important by comparison. It is tempting because "overshadow" involves a kind of relationship between the enclosure and the original habitat — one eclipses the other. However, the passage describes incorporating native plants, water, and soil to recreate, not outshine, the natural environment.',
+      C: '"Replace" is the most tempting wrong answer. Like "replicate," "replace" involves substituting one thing for another. Students who think "the enclosure replaces the habitat" might select this. However, "replace" implies fully substituting and eliminating the original, whereas the enclosure is meant to mimic a habitat that still exists elsewhere; the animals simply aren\'t there anymore. "Replicate" specifically means to copy or reproduce, which is what the detailed list of native plants and matched soil describes.',
+      D: '"Observe" makes no grammatical or logical sense here: an enclosure cannot observe a habitat. Students who confuse the subject of the verb (the enclosure) with the scientists designing it might think "the scientists observe the habitat and recreate it" — but the blank needs a word describing what the enclosure does, not what the scientists do.',
     },
   },
 
@@ -82,9 +82,9 @@ export const f3RwModule2EasyQuestionsV2: RWQuestion[] = [
     explanation:
       '"Approximate" means close but not exact — fitting data derived from indirect proxies that introduce unresolvable uncertainty.',
     wrongAnswerExplanations: {
-      A: '"Redundant" means unnecessarily repeated, which is unrelated to measurement accuracy.',
-      B: '"Comprehensive" means thorough and complete, which is the opposite of the limitations being described.',
-      D: '"Precise" means exact and accurate — directly contradicted by the description of uncertainty.',
+      A: '"Redundant" means unnecessarily duplicated or repetitive. Students who think "the same temperature is measured multiple times through different proxies" and equate that with redundancy might select this. However, using multiple proxies is a methodological attempt to cross-check uncertain data, not to repeat the same measurement unnecessarily. "Redundant" does not describe a limitation; it describes excess repetition.',
+      B: '"Comprehensive" means thorough and covering all aspects. Students who think that researchers using multiple indirect proxies (tree rings and ice cores) have a comprehensive approach might choose this. But the passage says the data "cannot be fully resolved" — the proxies introduce uncertainty, not completeness. "Comprehensive" contradicts the limitation being described.',
+      D: '"Precise" is the most seductive wrong answer. It means exact and accurate — and the passage does discuss precision, but the point is that the data lacks it. Students who misread the sentence structure might think "climate records are precise at best" would make sense as a positive statement. But the phrase "at best" signals a maximum quality — not the best-case scenario of precision, but the best-case scenario of approximate accuracy. "Approximate at best" means even the most favorable reading of the data is only approximately correct.',
     },
   },
 
@@ -109,9 +109,9 @@ export const f3RwModule2EasyQuestionsV2: RWQuestion[] = [
     explanation:
       '"Minimized" means reduced in perceived importance, which fits the claim that later scholarship barely mentioned the treaty because its conflict was overshadowed.',
     wrongAnswerExplanations: {
-      A: '"Preserved" means kept intact, which does not match the claim of scholarly neglect.',
-      B: '"Celebrated" means praised and honored — the opposite of being underplayed.',
-      D: '"Questioned" implies doubt about validity, not neglect of significance.',
+      A: '"Preserved" is tempting because later scholarship could logically be said to have preserved (kept alive) awareness of the treaty — but the passage says most accounts "barely mentioned" it, indicating neglect, not careful preservation. Students who don\'t read the second half of the sentence carefully may assume later scholarship would have preserved a significant treaty.',
+      B: '"Celebrated" is the most clearly wrong answer — the passage says the treaty was ignored ("barely mentioned"), not honored. However, it is still a tempting choice for students who think a significant agreement would naturally receive celebratory attention from later historians.',
+      D: '"Questioned" is the most tempting wrong answer. If a treaty was "overshadowed" and not discussed much, one might assume that scholars who did mention it disputed its importance or validity. "Questioned" also sounds like a sophisticated scholarly activity — evaluating significance rather than merely overlooking it. However, the passage says most accounts barely mentioned it at all, not that they contested its significance. Neglect is different from questioning.',
     },
   },
 
@@ -144,9 +144,9 @@ export const f3RwModule2EasyQuestionsV2: RWQuestion[] = [
     explanation:
       'The passage contrasts fungi with plants (no photosynthesis) and then explains the mutualistic partnership some fungi form with plants — its purpose is to explain differences and relationships.',
     wrongAnswerExplanations: {
-      A: 'The passage emphasizes how fungi differ from plants, not that they should be reclassified as plants.',
-      C: 'No warning about consuming mushrooms is included.',
-      D: 'Nutritional value is never discussed.',
+      A: '"To argue that fungi should be reclassified as plants" is tempting because the passage does raise the question of classification — it opens by saying mushrooms are "not plants." Students who read this as the beginning of an argument about what fungi should be classified as may select this. But the passage argues that fungi belong to their own kingdom precisely by explaining how they differ from plants — making the case for their separate classification, not for reclassifying them as plants.',
+      C: '"To warn readers about the dangers of consuming wild mushrooms" is tempting because mushrooms are the first noun in the passage, and many readers associate mushrooms with the real-world warning about eating toxic varieties. But the passage contains no warning, no mention of toxicity, and no advice about foraging. Students who bring external knowledge about mushroom safety to the passage mistake their own assumptions for the text\'s content.',
+      D: '"To compare the nutritional value of fungi with that of plants" is tempting because the passage describes what fungi eat (they decompose matter or receive sugars from plants) and what plants eat (they produce sugars through photosynthesis). Students who interpret "what something eats" as nutritional content might infer a nutritional comparison. But the passage is about energy acquisition methods, not nutritional profiles for human consumption.',
     },
   },
 
@@ -300,9 +300,9 @@ export const f3RwModule2EasyQuestionsV2: RWQuestion[] = [
     explanation:
       'The passage mentions remains consistent with burial during early phases and astronomical alignments — supporting the claim that Stonehenge served multiple purposes.',
     wrongAnswerExplanations: {
-      A: 'The passage says construction spanned roughly 1,500 years in multiple phases, not a single phase.',
-      B: 'The passage says the monument faces the rising sun on the summer solstice, not the setting sun on the winter solstice.',
-      C: 'The passage states that purpose "remains debated," not that a consensus has been reached.',
+      A: '"Built in a single construction phase over several decades" directly contradicts the passage, which states construction "spanned roughly 1,500 years" in "multiple phases." Students who read quickly might register the long time span without noticing "multiple phases," assuming instead that the 1,500 years was one continuous project phase.',
+      B: '"Faces the setting sun on the winter solstice" contains two errors (setting/rising and winter/summer) that require a student to misremember both the direction of the sun and the season. The most tempting version of this error is confusing "summer" with "winter" — since both are solstices, and winter is the other one — without necessarily getting the sun direction wrong too.',
+      C: '"Archaeologists have reached a consensus that Stonehenge was primarily used for astronomical purposes" is the most seductive wrong answer. It is grounded in real content from the passage (astronomical alignments are explicitly described), and naming a specific function (astronomical observation) sounds authoritative and well-informed. The key error: the passage says purpose "remains debated," directly contradicting the claim of consensus. Students who focus on what the passage describes without noticing the hedge phrase will select this.',
     },
   },
 
@@ -339,9 +339,9 @@ export const f3RwModule2EasyQuestionsV2: RWQuestion[] = [
     explanation:
       'If bilingual children began speaking first words at the same age, this directly supports the finding that bilingualism does not delay a key developmental language milestone.',
     wrongAnswerExplanations: {
-      A: 'This addresses vocabulary breadth, but the researcher\'s specific conclusion concerns developmental timeline milestones, not vocabulary size.',
-      B: 'Spatial reasoning is outside the scope of the language development conclusion.',
-      C: 'Parental satisfaction is anecdotal and does not directly address developmental milestones.',
+      A: 'Choice A (combined vocabulary being equal to or larger than monolingual vocabulary) is the most tempting wrong answer. The passage actually mentions that bilingual children\'s per-language vocabularies are "slightly smaller," and Choice A addresses that apparent disadvantage directly by showing the combined total is not smaller. This is relevant and sounds convincing. However, the researcher\'s specific conclusion concerns developmental milestones — when children achieve language benchmarks (like first words) — not total vocabulary size. Vocabulary size and milestone timing are different dimensions of language development.',
+      B: 'Choice B (spatial reasoning) is outside the scope of language acquisition entirely. Students who know from external sources that bilingualism improves executive function (including spatial tasks) might select this, but the researcher\'s conclusion is specifically about language development timelines — not cognitive benefits in other domains.',
+      C: 'Parental satisfaction reports are anecdotal and subjective — parents who chose bilingual environments may be biased toward reporting positive outcomes. This does not directly address whether children hit developmental milestones at expected ages, which is what "does not delay development" means in objective terms.',
     },
   },
 
@@ -707,9 +707,9 @@ export const f3RwModule2EasyQuestionsV2: RWQuestion[] = [
     explanation:
       '"As a result" signals that what follows is an outcome of the decision described in the first sentence — improved teacher wellbeing and attendance are direct results of the policy change.',
     wrongAnswerExplanations: {
-      A: '"However" signals contrast or qualification, but the second sentence presents positive outcomes consistent with the policy rather than a complication.',
-      B: '"By contrast" introduces a point that stands in opposition to what came before, but improved outcomes align with rather than oppose the district\'s goals.',
-      D: '"That said" introduces a qualification or concession, but the second sentence is an additional benefit, not a qualification.',
+      A: '"However" signals that the second sentence introduces a complication, qualification, or contrast to the first. Students might read the transition as: "The district adopted a four-day week for financial reasons; however, it turns out teachers and students benefited too." This sounds like "however" because the teacher wellbeing and attendance were perhaps unintended benefits. But "however" signals opposition — as if the benefits somehow contradict or complicate the decision — when in fact they support and reinforce it. "As a result" captures the causal relationship correctly.',
+      B: '"By contrast" explicitly signals opposition. It would require the second sentence to describe something that stands against the first sentence\'s content. Since teachers feeling better and attendance improving are consistent with the school district\'s goals (not opposed to them), "by contrast" is clearly wrong — yet students who expect second sentences to introduce complications may reach for it.',
+      D: '"That said" is the most interesting wrong answer. It signals "despite what I just said" or "with that caveat in mind" — a soft concession. Students might read: "The district adopted the four-day week for cost reasons; that said, teachers reported less burnout" — as if teacher wellbeing slightly complicates or qualifies the financial motivation. But the positive outcomes are not qualifications; they are additional results of the same decision. A true "that said" sentence would introduce a downside or limit to the policy.',
     },
   },
 
@@ -733,9 +733,9 @@ export const f3RwModule2EasyQuestionsV2: RWQuestion[] = [
     explanation:
       '"However" signals contrast between the town\'s long reliance on fishing and the shift away from it — appropriate because the second sentence describes a departure from the established pattern.',
     wrongAnswerExplanations: {
-      A: '"Therefore" signals that the second sentence is a conclusion drawn from the first; the shift to eco-tourism is not a logical consequence of relying on fishing.',
-      B: '"Similarly" signals a parallel relationship, but the town is shifting away from fishing, not doing something similar to it.',
-      C: '"As a result" implies the diversification resulted from the century of fishing, not from the decline in fish populations.',
+      A: '"Therefore" signals that the second sentence is a logical conclusion derived from the first. A student might read: "The town relied on fishing for a century → therefore [i.e., because fishing is the foundation], local leaders are now adapting by investing in eco-tourism." But "therefore" implies the adaptation is a direct consequence of the reliance, not of the crisis threatening it. The second sentence describes change despite (not because of) the fishing tradition, which is why contrast is the right relationship.',
+      B: '"Similarly" signals that the second sentence parallels the first in some way. Students might construct: "The town relied on fishing for a century; similarly, it is now doubling down on aquaculture [also water-based]." But aquaculture and eco-tourism represent diversification away from fishing, not a continuation of the same pattern. Even if aquaculture is superficially water-based, the second sentence describes a departure from the established monoculture, not a similar approach.',
+      C: '"As a result" implies that the fish population decline and eco-tourism investment are a consequence of the century of fishing reliance. Students who read it as "they relied on fishing for a century → as a result, they now face problems → as a result, they diversified" have a multi-step chain that the passage compresses into one sentence. The "as a result" would need to refer back to the problems (described in the second clause of the second sentence: "fish populations declined") rather than to the century of fishing, making the transition word misaligned with where it appears.',
     },
   },
 
@@ -759,9 +759,9 @@ export const f3RwModule2EasyQuestionsV2: RWQuestion[] = [
     explanation:
       '"Interestingly" signals that the second sentence presents a noteworthy or perhaps unexpected observation — the contrast between fiction and non-fiction is surprising given that both cover human experience, making it genuinely interesting rather than simply contradictory.',
     wrongAnswerExplanations: {
-      A: '"Similarly" signals that the same pattern holds in a parallel case, but the second sentence describes a case where the benefit was not demonstrated — the opposite of similar.',
-      B: '"Therefore" implies the second sentence is a logical consequence of the first, but the absence of the same benefit in non-fiction readers is not a consequence of fiction readers gaining the benefit.',
-      C: '"Nevertheless" signals that something happens despite an obstacle, but the second sentence is not describing persistence in the face of difficulty — it is reporting an absence of effect.',
+      A: '"Similarly" signals that the second sentence presents an analogous result in a parallel case. Students might read: "Fiction improves emotional understanding; similarly, non-fiction also does [because both are reading]." But the second sentence says the benefit was NOT demonstrated for non-fiction readers — the exact opposite of "similarly." Students who expect reading in general to share benefits across genres may select this.',
+      B: '"Therefore" signals a logical consequence. Students might reason: "Fiction reading improves emotional understanding → therefore, the same effect was tested on non-fiction readers." But "therefore" in position [before the second sentence] would imply that the result of the first claim (fiction helping readers) logically produced the result described in the second. The absence of effect in non-fiction is not caused by the presence of effect in fiction — they are independent findings from different groups.',
+      C: '"Nevertheless" is the most tempting wrong answer. Students might read: "Fiction readers gain benefits [implying researchers expected non-fiction readers to gain them too]. Nevertheless, the same benefit was not found for non-fiction readers" — as if researchers tried to extend the finding despite doubts, but it failed. This reading makes intuitive sense. However, "nevertheless" implies overcoming an obstacle or acting despite difficulty: "X is true; nevertheless, Y still occurred." Here the second sentence is simply reporting an absence of effect, not describing something that persisted despite the first sentence\'s claim. "Interestingly" better captures the unexpected contrast without implying opposition or adversity.',
     },
   },
 

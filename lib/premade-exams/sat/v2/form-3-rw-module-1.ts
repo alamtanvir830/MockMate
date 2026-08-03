@@ -43,7 +43,7 @@ export const f3RwModule1QuestionsV2: RWQuestion[] = [
       'Which choice completes the text with the most logical and precise word or phrase?',
     choices: [
       { label: 'A', text: 'ambiguous' },
-      { label: 'B', text: 'inflammatory' },
+      { label: 'B', text: 'conciliatory' },
       { label: 'C', text: 'prescriptive' },
       { label: 'D', text: 'candid' },
     ],
@@ -51,9 +51,9 @@ export const f3RwModule1QuestionsV2: RWQuestion[] = [
     explanation:
       '"Ambiguous" means open to multiple interpretations. The passage describes remarks designed to avoid specifics so that different audiences could interpret them as they wished — a deliberate strategy of ambiguity.',
     wrongAnswerExplanations: {
-      B: '"Inflammatory" means provoking anger or hostility; the passage describes language designed to avoid controversy, not provoke it.',
-      C: '"Prescriptive" means providing specific rules or directions, which is the opposite of what the diplomat avoided.',
-      D: '"Candid" means direct and forthright, which contradicts the deliberate vagueness the passage describes.',
+      B: '"Conciliatory" means intended to reduce conflict or appease opposing parties. While the diplomat\'s speech was designed to avoid giving opponents language to challenge, the passage emphasizes that she committed to nothing — her speech was strategically non-committal, not actively soothing or peace-seeking. "Ambiguous" captures the interpretive openness more precisely than "conciliatory" captures the intent to calm.',
+      C: '"Prescriptive" means providing specific directives, rules, or targets. The passage says the diplomat deliberately avoided "specific timetables or binding targets" — so her speech was the opposite of prescriptive. This word describes what she chose not to do.',
+      D: '"Candid" means direct, frank, and forthright — sharing one\'s views openly without evasion. The passage describes the opposite: language designed to avoid commitment so that no one could pin her down. A candid diplomat would have stated her government\'s position plainly; this diplomat deliberately did not.',
     },
   },
 
@@ -129,15 +129,15 @@ export const f3RwModule1QuestionsV2: RWQuestion[] = [
       { label: 'A', text: 'prerequisite' },
       { label: 'B', text: 'consequence' },
       { label: 'C', text: 'corollary' },
-      { label: 'D', text: 'compromise' },
+      { label: 'D', text: 'cornerstone' },
     ],
     correctAnswer: 'A',
     explanation:
       '"Prerequisite" means a condition required before something can exist or be valid. The passage argues that medieval thinkers did not consider popular consent a required condition for legitimate rule — exactly what "prerequisite" captures.',
     wrongAnswerExplanations: {
-      B: '"Consequence" means a result or effect; popular sovereignty as a result of legitimate rule would be a different claim than popular sovereignty as a necessary condition for it.',
-      C: '"Corollary" means a proposition that follows directly from a proven one; it implies derivation, not necessity — subtly different from the required-condition meaning the passage needs.',
-      D: '"Compromise" means a settlement reached by mutual concession, which does not fit the logical relationship being described between popular consent and legitimate rule.',
+      B: '"Consequence" means a result or effect of something that precedes it. The passage is arguing about what medieval thinkers considered necessary before legitimate rule could exist — a prior condition, not a downstream result. Saying popular sovereignty was not a "consequence" of legitimate rule would mean something entirely different: that having a legitimate ruler doesn\'t guarantee popular sovereignty, which is not the historian\'s point.',
+      C: '"Corollary" means a proposition that follows necessarily from one already proven — it implies logical derivation from prior premises. This is the most tempting wrong answer because a corollary is logically connected to something else, similar to a prerequisite. But a prerequisite comes before and enables something; a corollary comes after and derives from it. Medieval theorists denied that legitimacy was derived from popular consent (so popular sovereignty wasn\'t a corollary of legitimacy), but the passage is actually arguing that consent wasn\'t required in the first place — a stronger and different claim.',
+      D: '"Cornerstone" means the most essential or foundational element of something. This is tempting because a cornerstone is fundamental, which might seem close to a prerequisite. However, "cornerstone" implies that popular sovereignty would be the central basis of legitimate rule — a positive affirmation of its centrality. The passage argues that medieval theorists did not even require popular sovereignty as a condition for legitimacy, let alone treat it as the foundational element.',
     },
   },
 
@@ -183,17 +183,17 @@ export const f3RwModule1QuestionsV2: RWQuestion[] = [
       'What is the main purpose of the third sentence ("Microcosm experiments . . . systems persisted")?',
     choices: [
       { label: 'A', text: 'To provide the evidence that led ecologists to revise the original assumption described in the first sentence' },
-      { label: 'B', text: 'To summarize the conclusion that the research ultimately reached about functional traits' },
-      { label: 'C', text: 'To illustrate that ecosystem stability cannot be studied in laboratory conditions' },
-      { label: 'D', text: 'To argue that microcosm experiments are methodologically superior to field studies' },
+      { label: 'B', text: 'To summarize the conclusion that the research ultimately reached about the relationship between diversity and functional traits' },
+      { label: 'C', text: 'To demonstrate that the original assumption about species diversity was correct when tested under controlled conditions' },
+      { label: 'D', text: 'To illustrate an exception that ultimately confirms the general principle that greater diversity always produces greater stability' },
     ],
     correctAnswer: 'A',
     explanation:
-      'The third sentence presents the experimental findings — diverse systems were more stable on average but also more variable, with some collapsing — that justified the "complicated picture" introduced in the second sentence and ultimately led to the revised conclusion in the fourth.',
+      'The third sentence presents the experimental findings — diverse systems were more stable on average but also more variable, with some collapsing — that justified the "complicated picture" introduced in the second sentence and ultimately led to the revised conclusion in the fourth. Its purpose is to supply the evidence that makes revision of the original assumption necessary.',
     wrongAnswerExplanations: {
-      B: 'The conclusion about functional traits appears in the fourth sentence, not the third; the third sentence provides the conflicting evidence that necessitates that conclusion.',
-      C: 'The passage does not question the validity of microcosm experiments; it uses them as evidence.',
-      D: 'The passage makes no comparison between microcosm experiments and field studies.',
+      B: 'The conclusion about functional traits appears in the fourth sentence, not the third. The third sentence presents the conflicting experimental data; the fourth sentence draws the conclusion that this complexity demands. Confusing the evidence-providing sentence with the conclusion-drawing sentence is the key error here.',
+      C: 'This is the most tempting wrong answer. The third sentence does say diverse assemblages "were indeed more stable on average" — which sounds like the original assumption is confirmed. But the third sentence immediately complicates this: diverse systems were also "more variable in outcome," with some collapsing. The purpose of the sentence is to show that diversity\'s effect is more complicated than the original assumption predicted, not to confirm that assumption.',
+      D: 'The third sentence does not frame its findings as an exception that ultimately confirms a general rule. The passage\'s resolution in the fourth sentence is that diversity is less important than functional traits — a significant revision of the original principle, not a confirmation of it with a caveat.',
     },
   },
 
@@ -210,18 +210,18 @@ export const f3RwModule1QuestionsV2: RWQuestion[] = [
     question:
       'Based on the two texts, how would Okafor most likely respond to Lindqvist\'s argument?',
     choices: [
-      { label: 'A', text: 'By contending that Lindqvist\'s concern about informal mentorship is valid but applies only to large organizations where hierarchies are rigid' },
+      { label: 'A', text: 'By accepting Lindqvist\'s premise that proximity-based mentorship is essential and arguing that remote companies should therefore return workers to offices' },
       { label: 'B', text: 'By arguing that the loss of proximity-based mentorship Lindqvist describes can be compensated for through deliberate structural substitutes' },
-      { label: 'C', text: 'By agreeing that remote work produces professionally underdeveloped workers and recommending hybrid arrangements' },
-      { label: 'D', text: 'By claiming that tacit knowledge is overrated and that formal onboarding documents are sufficient for professional development' },
+      { label: 'C', text: 'By agreeing that remote work produces professionally underdeveloped workers but arguing that the effect is concentrated in the first year of employment' },
+      { label: 'D', text: 'By arguing that Lindqvist\'s concern is based on tacit knowledge that is culturally specific and may not transfer across different organizational contexts' },
     ],
     correctAnswer: 'B',
     explanation:
       'Okafor\'s research shows that structured mentorship programs in remote environments produce comparable career outcomes to in-person settings. This is a direct response to Lindqvist\'s concern: the problem Lindqvist identifies can be addressed through deliberate program design rather than physical proximity.',
     wrongAnswerExplanations: {
-      A: 'Okafor\'s study examined companies of varying scales and drew no distinction based on organizational hierarchy or size.',
-      C: 'Okafor\'s findings contradict the conclusion that remote work produces underdeveloped workers and do not advocate for hybrid arrangements.',
-      D: 'Okafor does not address tacit knowledge or onboarding documents; the structured programs in the study include mentorship check-ins, not documentation.',
+      A: 'Okafor\'s research actually supports the opposite conclusion: remote companies with structured programs produced comparable outcomes to in-person firms, suggesting that returning to offices is not necessary. Okafor would not accept Lindqvist\'s premise if it implies in-person work is required for professional development.',
+      C: 'Okafor\'s findings contradict the conclusion that remote work produces professionally underdeveloped workers — they show comparable advancement rates, not just improvement after the first year. Nothing in Text 2 distinguishes effects by tenure or suggests the problem is temporary.',
+      D: 'Text 2 does not engage with the concept of tacit knowledge at all, nor does it make any cultural or contextual claims about what kinds of knowledge transfer differently. Okafor\'s response stays at the level of outcomes (career advancement rates), not at the level of knowledge theory. Responding about tacit knowledge would be Lindqvist\'s domain, not Okafor\'s.',
     },
   },
 
@@ -351,16 +351,16 @@ export const f3RwModule1QuestionsV2: RWQuestion[] = [
     choices: [
       { label: 'A', text: 'The hypothesis is fully supported: every community with more years of contact has a strictly higher loanword percentage than every community with fewer years' },
       { label: 'B', text: 'The hypothesis is partially supported: loanword percentages generally increase with contact duration, but Dunmore has slightly fewer loanwords than Crestwood despite longer contact' },
-      { label: 'C', text: 'The hypothesis is unsupported because Alberton has the fewest loanwords and the shortest contact period, making it an outlier' },
-      { label: 'D', text: 'The hypothesis is fully refuted: the data show no relationship between contact duration and loanword percentage' },
+      { label: 'C', text: 'The hypothesis is unsupported because Alberton has both the shortest contact period and the lowest loanword percentage, making it an outlier that skews the apparent relationship' },
+      { label: 'D', text: 'The hypothesis is fully refuted: the data show no consistent relationship between contact duration and loanword percentage because the increases are irregular' },
     ],
     correctAnswer: 'B',
     explanation:
-      'The data show a general upward trend (8%, 22%, 31%), but Dunmore (71 years) has 29% — slightly lower than Crestwood\'s (58 years) 31%. This is a minor exception to the otherwise positive trend, making the hypothesis partially but not fully supported.',
+      'The data show a general upward trend (8%, 22%, 31%), but Dunmore (71 years) has 29% — slightly lower than Crestwood\'s (58 years) 31%. This is a minor exception to the otherwise positive trend, making the hypothesis partially but not fully supported. A good data evaluation choice must be calibrated: acknowledging the trend without overclaiming full support.',
     wrongAnswerExplanations: {
-      A: 'The Dunmore/Crestwood pair violates strict monotonic increase, so the hypothesis is not fully supported without exception.',
-      C: 'Alberton having the shortest contact and fewest loanwords is consistent with the hypothesis, not an outlier.',
-      D: 'The overall trend is clearly positive; only one pair deviates slightly, so the hypothesis is not fully refuted.',
+      A: 'Choosing A requires that every community with more years also has a strictly higher loanword percentage. But Dunmore (71 years, 29%) has fewer loanwords than Crestwood (58 years, 31%), which directly violates a strict monotonic ordering. One exception is enough to rule out "fully supported."',
+      C: 'Alberton having the shortest contact and fewest loanwords is actually the data point most consistent with the hypothesis — it confirms the expected direction. An outlier would be a point that violates the trend, not one that confirms it. This choice misapplies the concept of "outlier" to the most on-trend data point.',
+      D: 'The overall trend across the four communities is clearly positive (8% → 22% → 31%, with one slight dip at Dunmore). "No consistent relationship" mischaracterizes a dataset with three out of four pairs in the expected direction. Calling the trend non-existent because increases are irregular sets an unrealistically strict standard for what "relationship" means in empirical data.',
     },
   },
 
@@ -377,18 +377,18 @@ export const f3RwModule1QuestionsV2: RWQuestion[] = [
     question:
       'A critic argues that the psychologist\'s data do not support the common recommendation to "space practice as widely as possible." Which finding from the data most directly supports this critique?',
     choices: [
-      { label: 'A', text: 'The massed group performed substantially worse than both spaced groups, confirming that any spacing is better than massing' },
-      { label: 'B', text: 'The highly spaced group outperformed the massed group by 14 percentage points' },
-      { label: 'C', text: 'The moderately spaced group outperformed the highly spaced group, suggesting that optimal spacing may not be maximal spacing' },
-      { label: 'D', text: 'All three groups performed below 80%, indicating that the vocabulary list may have been too difficult for accurate measurement' },
+      { label: 'A', text: 'The massed group (54%) performed substantially worse than both spaced groups, confirming that any amount of spacing is better than no spacing at all' },
+      { label: 'B', text: 'The highly spaced group (68%) outperformed the massed group (54%) by 14 percentage points, suggesting that extending the spacing interval provides meaningful benefits' },
+      { label: 'C', text: 'The moderately spaced group (71%) outperformed the highly spaced group (68%), suggesting that optimal spacing may not be maximal spacing' },
+      { label: 'D', text: 'All three groups performed below 80%, suggesting that the vocabulary list may have been too difficult to produce reliable retention differences across conditions' },
     ],
     correctAnswer: 'C',
     explanation:
       'The critic\'s argument is that "maximum spacing" is not the best prescription. The data show the moderately spaced group (71%) actually outperformed the highly spaced group (68%), meaning more spacing did not produce better retention. This directly supports the critique that the recommendation should not be to maximize spacing.',
     wrongAnswerExplanations: {
-      A: 'This finding confirms that spacing is better than massing — it supports spacing in general, not the critique that maximum spacing is suboptimal.',
-      B: 'The 14-point advantage of the highly spaced group over massing also supports the value of spacing generally, not the critique about maximizing it.',
-      D: 'The absolute performance levels do not address whether more spacing always produces better outcomes; this is irrelevant to the critic\'s specific argument.',
+      A: 'This finding confirms that spacing is better than massing — it supports spacing in general, not the critique that maximum spacing is suboptimal. In fact, showing that any spacing helps strengthens the general case for spacing and does nothing to challenge the specific claim that wider spacing is always better.',
+      B: 'The 14-point advantage of the highly spaced group over the massed group also supports the value of spacing generally — it shows that a highly spaced regimen beats massing. This is the most tempting wrong answer because it compares the highly spaced group favorably, which a student might think supports maximizing spacing. But the critic\'s argument is specifically that more spacing is not always better; to support that, the data must show the highest-spacing group underperforming a lower-spacing group.',
+      D: 'Absolute performance levels and task difficulty are irrelevant to the critic\'s specific argument about the value of maximizing spacing. Even if all groups performed below 80%, the relative ordering of the three groups (which condition produces the best retention) is what matters for evaluating the "space as widely as possible" claim.',
     },
   },
 
@@ -433,18 +433,18 @@ export const f3RwModule1QuestionsV2: RWQuestion[] = [
     question:
       'Based on Kuhn\'s framework as described in the passage, which of the following scenarios best illustrates a "revolutionary" rather than "normal" science episode?',
     choices: [
-      { label: 'A', text: 'A chemist uses established spectroscopy protocols to identify a previously uncharacterized mineral compound' },
-      { label: 'B', text: 'A physics department adopts a revised textbook because a new edition clarifies notation conventions' },
+      { label: 'A', text: 'A chemist uses established spectroscopy protocols to identify a previously unknown mineral compound and publishes the finding in a peer-reviewed journal' },
+      { label: 'B', text: 'A neuroscientist proposes a refinement to the dominant model of synaptic transmission that resolves a persistent anomaly without replacing the underlying framework' },
       { label: 'C', text: 'Younger geologists champion plate tectonics against the resistance of senior colleagues who had built careers on the theory of continental fixity' },
-      { label: 'D', text: 'A biologist applies evolutionary theory to explain the distribution of a newly discovered insect species' },
+      { label: 'D', text: 'A biologist discovers a new insect species and applies standard evolutionary phylogenetic methods to determine where it belongs in the tree of life' },
     ],
     correctAnswer: 'C',
     explanation:
       'Kuhn defines revolutionary science as a framework-replacing transition in which the old paradigm collapses amid resistance from established scientists and adoption by younger researchers. The plate tectonics scenario exactly matches this: an entire framework (continental fixity) replaced by a new one (plate tectonics), championed by younger scientists against senior resistance.',
     wrongAnswerExplanations: {
-      A: 'Applying established spectroscopy protocols to identify a new compound is normal science — problem-solving within an accepted framework.',
-      B: 'A textbook revision that clarifies notation is an incremental refinement within normal science, not a framework replacement.',
-      D: 'Applying evolutionary theory to explain a newly discovered species is normal science — using an accepted framework to solve a puzzle within it.',
+      A: 'Using established spectroscopy protocols to identify a new compound is textbook normal science — it solves a puzzle (what is this compound?) using accepted methods within an existing framework. The discovery is new, but the framework and protocols are not challenged or replaced.',
+      B: 'This is the most tempting wrong answer because it involves proposing a model refinement in response to a "persistent anomaly" — and anomalies, in Kuhn\'s framework, can accumulate to trigger revolutions. But this scenario describes a refinement that resolves the anomaly without replacing the underlying framework. That is normal science: accommodating anomalies within the paradigm, not replacing the paradigm. The revolutionary threshold requires framework collapse and replacement.',
+      D: 'Applying standard evolutionary phylogenetic methods to classify a newly discovered species is normal science — it uses an accepted framework (evolutionary theory and phylogenetics) to address a new puzzle (where does this species belong). The framework is applied, not questioned or replaced.',
     },
   },
 
@@ -692,11 +692,11 @@ export const f3RwModule1QuestionsV2: RWQuestion[] = [
     ],
     correctAnswer: 'D',
     explanation:
-      '"In practice" signals a contrast between what theory predicts and what empirical observation shows. The first sentence describes theoretical expectations; the second describes what actually occurs — precisely the contrast that "in practice" introduces.',
+      '"In practice" signals a contrast between what theory predicts and what empirical observation shows. The first sentence describes a theoretical claim (classical economists\' belief about equilibrium); the second describes what empirical studies actually find. The phrase "in practice" draws precisely this theory-versus-reality contrast.',
     wrongAnswerExplanations: {
-      A: '"Furthermore" adds a consistent or reinforcing point; the second sentence contradicts the first rather than adding to it.',
-      B: '"In other words" signals a restatement or clarification of what preceded; the second sentence presents contrary evidence, not a paraphrase.',
-      C: '"By extension" draws a logical inference from what was just stated, but the second sentence contradicts rather than extends the prior claim.',
+      A: '"Furthermore" adds information that reinforces or extends the previous point in the same direction. But the second sentence contradicts classical economic theory — it does not add to or strengthen it. A reader expecting reinforcement after "Furthermore" would be confused by evidence of persistent market failure.',
+      B: '"In other words" signals a restatement or clarification of what came before. The second sentence presents contradictory empirical evidence, not a paraphrase of the classical theory. These two sentences state opposing positions; they cannot be linked as if one restates the other.',
+      C: '"By extension" draws a logical inference or additional implication from what was just stated. It is tempting because it sounds like it builds on the previous claim. However, the second sentence contradicts classical theory rather than building on it — market failures are not a logical extension of the claim that free markets self-regulate to maximize welfare.',
     },
   },
 
@@ -720,11 +720,11 @@ export const f3RwModule1QuestionsV2: RWQuestion[] = [
     ],
     correctAnswer: 'B',
     explanation:
-      '"Strikingly" introduces the second sentence as a noteworthy observation about what the multiple evidence lines show. The logical relationship here is that despite coming from different measurement methods, all converge — a convergence the writer frames as remarkable and significant. "Strikingly" captures both the additive and the emphatic quality of that observation.',
+      '"Strikingly" introduces the second sentence as a noteworthy empirical observation: that despite coming from entirely different measurement methods and data sources, all lines of evidence converge on the same warming trend. The writer frames this convergence as remarkable — it is not logically required by the first sentence, but it is a striking consequence of the independence of the datasets. "Strikingly" captures both the additive quality (the second sentence extends the first) and the emphasis (the convergence is notable, not routine).',
     wrongAnswerExplanations: {
-      A: '"Therefore" implies the convergence is a logical deduction or result from the first sentence\'s list, but convergence across independent datasets is an empirical observation, not a conclusion derived by logic from listing them.',
-      C: '"By contrast" introduces an opposing point, but the second sentence reinforces and extends the first rather than opposing it.',
-      D: '"As a caveat" introduces a qualification or limitation, but the second sentence strengthens the evidence for warming rather than qualifying it.',
+      A: '"Therefore" implies the convergence is a logical conclusion that follows necessarily from listing the multiple evidence lines. But the fact that independent datasets converge is an empirical finding, not something that can be deduced logically from the mere existence of multiple methods. "Therefore" would be appropriate if convergence were somehow guaranteed by the setup; here it is a discovery worth noting.',
+      C: '"By contrast" introduces a sentence that opposes or contradicts the previous one. The second sentence reinforces and extends the first — both sentences support the same conclusion (strong evidence for anthropogenic warming). Using "by contrast" would imply the datasets diverge or undermine each other, which is the opposite of what the passage says.',
+      D: '"As a caveat" introduces a qualification or limitation that tempers the previous claim. The second sentence strengthens the evidence, not weakens it: convergence across independent datasets makes it less likely the signal is a methodological artifact. A caveat would be appropriate if the second sentence introduced a limitation of the evidence, such as data gaps or measurement uncertainties.',
     },
   },
 

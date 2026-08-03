@@ -21,9 +21,9 @@ export const f5MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'The center of the circle is the midpoint of the diameter: center = ((1 + 7)/2, (3 + (−1))/2) = (4, 1). The radius equals half the diameter length. Diameter length = √((7 − 1)² + (−1 − 3)²) = √(36 + 16) = √52. So r = √52 / 2, and r² = 52/4 = 13. The equation is (x − 4)² + (y − 1)² = 13.',
     wrongAnswerExplanations: {
-      B: 'Choice B uses r² = 52, which is the square of the full diameter length, not the radius squared. The radius is half the diameter, so r² = 52/4 = 13.',
-      C: 'Choice C uses an incorrect center. The midpoint of A(1, 3) and B(7, −1) is ((1+7)/2, (3+(−1))/2) = (4, 1), not (3, 1).',
-      D: 'Choice D uses y + 1 instead of y − 1, which would place the center at (4, −1). The correct center is (4, 1).',
+      B: 'Choice B is the most seductive error: students correctly compute the diameter length squared (d² = 6² + 4² = 52) but forget that the radius is half the diameter, so r² = d²/4 = 52/4 = 13, not 52. This is easy to miss because √52 appears in the working and students may copy it directly as r² rather than dividing by 4.',
+      C: 'Choice C has the correct radius (r² = 13) but an incorrect center. The midpoint formula gives x = (1 + 7)/2 = 8/2 = 4, not 3. Students who compute (7 − 1)/2 = 3 instead of (1 + 7)/2 = 4 are finding half the horizontal distance rather than the average x-coordinate.',
+      D: 'Choice D has the correct radius and x-coordinate of the center but a sign error in the y-component. The center y-coordinate is (3 + (−1))/2 = 2/2 = 1, giving (y − 1)² in the equation. Students who write (y + 1) have confused the sign of the center, placing it at (4, −1) instead of (4, 1).',
     },
   },
 
@@ -47,9 +47,9 @@ export const f5MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'First find the slope of line ℓ: m_ℓ = (−1 − 5) / (4 − (−2)) = −6 / 6 = −1. The slope of a line perpendicular to ℓ is the negative reciprocal: m_m = 1. Line m has slope 1 and passes through (3, 2): using point-slope form, y − 2 = 1(x − 3) → y = x − 1. The y-intercept is −1.',
     wrongAnswerExplanations: {
-      B: 'Choice B is incorrect. y = x would pass through the origin, but it does not pass through (3, 2) since 2 ≠ 3.',
-      C: 'Choice C is incorrect. A y-intercept of −3 would give y = x − 3. Checking the point (3, 2): 3 − 3 = 0 ≠ 2.',
-      D: 'Choice D is incorrect. A y-intercept of 5 would give y = x + 5, which has slope 1 but fails the point check: 3 + 5 = 8 ≠ 2.',
+      B: 'A y-intercept of 0 comes from using y = mx directly without applying the point-slope adjustment. Students who know the perpendicular slope is 1 but then write y = x instead of y − 2 = 1(x − 3) land here. Verification: y = x passes through (3, 3), not (3, 2).',
+      C: 'A y-intercept of −3 is a very tempting error: students who correctly write y = x + b and substitute (3, 2) to get 2 = 3 + b might solve b = 2 − 3 = −1, which gives the right answer, but those who compute b = −3 likely subtracted 3 on the wrong side, getting b = −(2 + 1) = −3.',
+      D: 'A y-intercept of 5 is also plausible: students who confuse slope with the original line ℓ (slope −1) may think the perpendicular slope is also −1 and solve y = −x + b using (3, 2): 2 = −3 + b → b = 5. That line has the right intercept structure but uses the wrong slope — the perpendicular to slope −1 has slope +1, not −1.',
     },
   },
 
@@ -143,9 +143,9 @@ export const f5MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       '3x − 7 > 8 → 3x > 15 → x > 5.',
     wrongAnswerExplanations: {
-      A: 'The inequality sign is flipped incorrectly; there is no division by a negative number here.',
-      B: '3x > 15 gives x > 5, not x > 3. Dividing 15 by 3 yields 5.',
-      D: 'The inequality direction is wrong and the value is negative, which cannot result from adding 7 and dividing by 3.',
+      A: 'Choice A flips the inequality sign without cause. A sign flip is only required when multiplying or dividing both sides by a negative number; here we divide by +3, so the direction is preserved. This is the most tempting wrong answer for students who mechanically flip the inequality every time they see a "≠" step in their work.',
+      B: 'Choice B has the correct direction but the wrong value. Students who add 7 to get 3x > 15 and then divide by 5 instead of 3 arrive at x > 3. This substitution error (treating the coefficient 3 as if it were 5) is particularly easy to make when the problem has already used the number 7.',
+      D: 'Choice D has both the wrong sign and wrong value. A negative result would require subtracting rather than adding 7. Students who misread the original as 3x − 7 < 8 and subtract 7 from both sides (getting 3x < 1) and then divide by a perceived negative coefficient might generate this, but it combines multiple errors simultaneously.',
     },
   },
 
@@ -213,9 +213,9 @@ export const f5MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'After a 20% discount: $80 × 0.80 = $64. After a 10% increase on $64: $64 × 1.10 = $70.40.',
     wrongAnswerExplanations: {
-      B: '$72 would result from applying a net 10% discount (20% − 10% = 10%), but the operations must be applied sequentially, not combined.',
-      C: '$74.40 is incorrect. The second increase is 10% of the discounted price ($64), not 10% of the original.',
-      D: '$78 = $80 × 0.975, which does not correspond to either operation correctly.',
+      B: 'Choice B ($72) is the most tempting wrong answer. Students who reason "20% off then 10% back on = net 10% off" compute $80 × 0.90 = $72. This seems logically sound but is wrong because the 10% increase applies to the already-discounted price ($64), not the original price. The percentage operations must be applied sequentially: $80 × 0.80 × 1.10 = $70.40, not $80 × 0.90.',
+      C: 'Choice C ($74.40) results from computing the 10% increase on the original $80 rather than on the discounted price: $80 − 16 + $8 = $72... or from some students computing $80 × 0.80 = $64 correctly but then adding 10% of the original $80 ($8) instead of 10% of $64 ($6.40). Either path yields $64 + $8 = $72, not $74.40. Actually $74.40 arises from $64 + 10.40, which would be 10% of $104, suggesting a compounding confusion.',
+      D: 'Choice D ($78) results from applying only the 10% increase without the 20% discount, or from computing a single net 2.5% discount: $80 × 0.975. This error suggests the student applied neither operation correctly — the answer is a hint that both sequential steps must be executed.',
     },
   },
 
@@ -241,9 +241,9 @@ export const f5MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'The mean of the seven values is (14 + 19 + k + 27 + 31 + 38 + 45) / 7 = (174 + k) / 7. If k is replaced by k + 8, the new mean is (174 + k + 8) / 7 = (182 + k) / 7. For the mean to remain unchanged, we need (182 + k) / 7 = (174 + k) / 7, which requires 182 + k = 174 + k → 182 = 174, a contradiction. So adding 8 to k always increases the mean by 8/7. There is no integer value of k in [19, 27] for which replacing k with k + 8 leaves the mean unchanged. The answer is D.',
     wrongAnswerExplanations: {
-      A: 'Choice A is incorrect. If k = 19, replacing it with 27 shifts the mean by +8/7. The mean always changes when any data value changes.',
-      B: 'Choice B is incorrect. If k = 23, replacing it with 31 changes the mean from (174 + 23)/7 = 28.1 to (174 + 31)/7 = 29.3. The mean increases.',
-      C: 'Choice C is incorrect. If k = 26, replacing it with 34 changes the mean. In all cases, changing one data value changes the sum and therefore the mean.',
+      A: 'Choice A (k = 19) is the easiest-looking option and tempts students who think the smallest k minimizes the effect of adding 8. But no matter which value of k is chosen, replacing k with k + 8 always adds exactly 8 to the sum and therefore always raises the mean by 8/7 ≈ 1.14. There is nothing special about k = 19 that would cancel this effect.',
+      B: 'Choice B (k = 23) is tempting because 23 is the median of the range [19, 27], and students might expect some symmetry property to hold at the midpoint. But replacing 23 with 31 both increases the median (the 4th value becomes larger) and increases the mean by 8/7. No value of k can satisfy "median increases but mean stays the same" because raising any single data point always raises the mean.',
+      C: 'Choice C (k = 26) is the most tempting because at k = 26, the current median is 27 (the 4th value). Replacing 26 with 34 would make 34 the new 4th value, increasing the median from 27 to 31 — the median does increase. However, the mean also increases from (174 + 26)/7 ≈ 28.57 to (174 + 34)/7 ≈ 29.71. Students seduced by the median condition alone may ignore the mean condition entirely.',
     },
   },
 
@@ -285,9 +285,9 @@ export const f5MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'Factor: x² − 7x + 12 = (x − 3)(x − 4) = 0. So x = 3 or x = 4. Check: 3 + 4 = 7 ✓ and 3 × 4 = 12 ✓.',
     wrongAnswerExplanations: {
-      A: '2 + 6 = 8 ≠ 7, and 2 × 6 = 12. The product is correct but the sum is not.',
-      C: 'These give (x + 3)(x + 4) = x² + 7x + 12, which has a positive middle term, not negative.',
-      D: '1 + 12 = 13 ≠ 7. Neither condition is satisfied.',
+      A: 'Choice A (x = 2 and x = 6) is the most tempting wrong answer because the product 2 × 6 = 12 matches the constant term. Students who focus only on "what two numbers multiply to 12?" without also checking "what two numbers add to −7?" select this pair. The correct pair must satisfy both: r + s = 7 and r × s = 12, giving 3 and 4, not 2 and 6.',
+      C: 'Choice C gives the right magnitudes (3 and 4) but the wrong signs. The equation x² − 7x + 12 has a negative middle term and positive constant, which requires both factors to be negative: (x − 3)(x − 4) = 0. Choosing (x + 3)(x + 4) = 0 would arise from x² + 7x + 12 = 0, where both signs are positive.',
+      D: 'Choice D (x = 1 and x = 12) comes from noticing that 1 × 12 = 12 and assuming any pair that multiplies to 12 is valid. But 1 + 12 = 13 ≠ 7, so this pair fails the sum condition. Students who find factors of 12 by listing (1, 12), (2, 6), (3, 4) and stop at the first pair without checking the sum make this error.',
     },
   },
 
@@ -313,9 +313,9 @@ export const f5MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'After each 6-year period, the amount is multiplied by 1/2. After n periods the amount is 960 · (1/2)^n. For this to fall below 20 grams, we need 960 · (1/2)^n < 20. Solving: (1/2)^n < 20/960 = 1/48, so 2^n > 48. Since 2⁵ = 32 < 48 and 2⁶ = 64 > 48, the smallest integer n is 6, meaning it first falls below 20 grams after 6 complete 6-year periods (i.e., after 36 years).',
     wrongAnswerExplanations: {
-      B: 'Choice B is incorrect. The inequality 960 · (1/2)^n > 20 would identify periods when the amount is still above 20 grams, not when it first falls below.',
-      C: 'Choice C is incorrect. 960 · 2^n grows over time (doubling), which does not model decay. A decaying quantity uses (1/2)^n, not 2^n.',
-      D: 'Choice D is incorrect. 960 − 6n is a linear model that decreases by 6 each period. Radioactive decay is exponential, not linear. This model would also predict negative amounts for large n.',
+      B: 'Choice B reverses the inequality direction. 960 · (1/2)^n > 20 identifies all periods when the amount is still above 20 grams — the opposite of what the question asks. Students who confuse "falls below 20" with "exceeds 20" select this. A useful check: at n = 0, 960 · 1 = 960 > 20 is true, but the amount has not fallen below 20 at period 0.',
+      C: 'Choice C uses 2^n (a growing exponential) instead of (1/2)^n (a decaying exponential). Both involve powers of 2, making this a very tempting error for students who remember "half-life involves 2" but write it as multiplication rather than division. 960 · 2^n would model doubling every 6 years — exactly the opposite of decay.',
+      D: 'Choice D uses a linear model (960 − 6n) that subtracts a constant 6 each period. While this might seem to reflect "halved every 6 years" (years ÷ 6), it confuses the period number n with the actual time elapsed in years, and linear subtraction cannot model exponential decay. This model also eventually goes negative, which is physically impossible for a mass.',
     },
   },
 
@@ -463,9 +463,9 @@ export const f5MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'Substitute x = 15: (15/3) − (2·15/5) = 5 − 6 = −1. So k = −1.',
     wrongAnswerExplanations: {
-      A: '15/3 = 5 and 2(15)/5 = 6. The difference is 5 − 6 = −1, not −3.',
-      C: 'The second term (6) is larger than the first (5), so the result is negative, not positive.',
-      D: 'This would require 15/3 − 2(15)/5 = 3, which gives 5 − 6 = −1 ≠ 3.',
+      A: 'Choice A results from computing 15/5 = 3 for the first term instead of 15/3 = 5, and then subtracting the second term: 3 − 6 = −3. This swapping of the denominators (dividing by 5 in the first fraction and by 3 in the second) is a tempting error when fractions appear close together.',
+      C: 'Choice C results from computing both terms correctly (5 and 6) but ignoring the subtraction direction, writing 6 − 5 = 1 instead of 5 − 6 = −1. Students who add the absolute values or reverse the order because they expect a positive answer land here.',
+      D: 'Choice D comes from substituting x = 15 but computing the first fraction as 15/(3 − 2) = 15/1 = 15 (subtracting the numerator coefficients) and the second as 15/5 = 3, then computing 15/5 = 3. The correct approach evaluates each fraction independently before subtracting.',
     },
   },
 
@@ -489,9 +489,9 @@ export const f5MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'For two distinct real solutions, the discriminant must be positive: b² − 4ac > 0. Here a = 1, b = −6, c = k. So (−6)² − 4(1)(k) > 0 → 36 − 4k > 0 → 4k < 36 → k < 9.',
     wrongAnswerExplanations: {
-      B: 'If k > 9, the discriminant 36 − 4k < 0, meaning no real solutions exist.',
-      C: 'If k = 9, the discriminant equals 0, which gives exactly one repeated solution, not two distinct ones.',
-      D: 'k < −9 is a subset of k < 9 and too restrictive; any k < 9 (not just k < −9) gives two solutions.',
+      B: 'Choice B is the most common error: students who set up 36 − 4k > 0 correctly and then divide by −4 forget to flip the inequality sign, writing k > 9 instead of k < 9. Dividing by −4 requires reversing the direction: 36 > 4k → k < 9.',
+      C: 'Choice C (k = 9) is what you need for exactly one repeated root (the "tangent" case), because the discriminant = 36 − 4(9) = 0. Students who confuse "two distinct real solutions" with "has real solutions at all" may choose this. The condition discriminant > 0 is needed for two distinct roots, not discriminant ≥ 0.',
+      D: 'Choice D (k < −9) is too restrictive. Any value of k less than 9 — including k = 0, k = −1, or k = 8 — gives a positive discriminant and therefore two distinct solutions. Students who confuse the boundary condition or who miscompute the discriminant boundary as 4k < −36 (rather than 4k < 36) arrive at k < −9.',
     },
   },
 
@@ -515,9 +515,9 @@ export const f5MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'Factor the numerator: x² − 9 = (x + 3)(x − 3). Factor the denominator: x² − x − 6 = (x − 3)(x + 2). Cancel the common factor (x − 3): (x + 3)(x − 3) / [(x − 3)(x + 2)] = (x + 3) / (x + 2).',
     wrongAnswerExplanations: {
-      A: '(x−3)/(x−3) = 1 for all valid x, which is not equivalent to the original expression.',
-      C: 'The numerator after canceling is (x + 3), not (x − 3).',
-      D: 'The denominator after canceling is (x + 2), not (x − 3).',
+      A: 'Choice A results from incorrectly factoring x² − 9 as (x − 3)(x − 3) and x² − x − 6 as (x − 3)(x − 3) as well, then canceling everything. In reality x² − 9 is a difference of squares: (x + 3)(x − 3). Students who forget the difference-of-squares pattern and write (x − 3)² in the numerator make this error, producing 1 as the "simplified" result.',
+      C: 'Choice C keeps the correct denominator (x + 2) but has the wrong numerator (x − 3) rather than (x + 3). This results from incorrectly factoring x² − 9 as (x − 3)² instead of (x + 3)(x − 3), then canceling one (x − 3) and being left with the other.',
+      D: 'Choice D has the correct numerator (x + 3) but the wrong denominator (x − 3) instead of (x + 2). This results from incorrectly factoring x² − x − 6 as (x − 3)(x + 3) instead of (x − 3)(x + 2), perhaps by mistakenly using +3 instead of +2 as the second factor. Students who check: does (x − 3)(x + 3) = x² − 9? Yes — but that is the numerator, not the denominator.',
     },
   },
 
@@ -541,9 +541,9 @@ export const f5MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'Height of both shapes: h = 2r. Volume of cylinder: V_cyl = πr²h = πr²(2r) = 2πr³. Volume of cone: V_cone = (1/3)πr²h = (1/3)πr²(2r) = (2/3)πr³. Fraction = V_cone / V_cyl = (2πr³/3) / (2πr³) = 1/3.',
     wrongAnswerExplanations: {
-      A: 'Choice A is incorrect. 1/6 would result from dividing the cone formula (1/3)πr²h by 2, but the denominator is the full cylinder volume 2πr³, not πr³.',
-      B: 'Choice B is incorrect. 1/4 does not correspond to either volume formula. The cone\'s volume is always 1/3 of the volume of a cylinder with the same base and height.',
-      D: 'Choice D is incorrect. 2/3 is the ratio of a sphere\'s volume to its circumscribed cylinder\'s volume — not the cone-to-cylinder ratio here.',
+      A: 'Choice A (1/6) results from correctly computing V_cone = (2/3)πr³ and V_cyl = 2πr³, but then computing 1/3 ÷ 2 = 1/6 — treating 1/3 as if it were the cone-to-cylinder ratio before accounting for the shared h = 2r. In reality the 1/3 factor in the cone formula cancels with the same h in the cylinder, and the final ratio is 1/3 regardless of the value of h. The error is thinking the h = 2r makes the cone extra small relative to a "standard" cylinder.',
+      B: 'Choice B (1/4) has no clean derivation but tempts students who vaguely recall "one-quarter" as the answer to some volume comparison. A common path: V_cone / V_cyl = [(1/3)πr²h] / [πr²h] = 1/3, so a student who misremembers the cone formula as (1/4)πr²h generates exactly this fraction.',
+      D: 'Choice D (2/3) is the most seductive wrong answer because it is a real and important ratio — but it applies to a sphere inscribed in a cylinder, not a cone. A hemisphere has volume (2/3)πr³ and its circumscribed cylinder has volume πr³, giving ratio 2/3. Students who confuse the cone-cylinder comparison with the sphere-cylinder comparison select this. The cone-to-cylinder ratio is always 1/3, by definition of the cone volume formula.',
     },
   },
 ]

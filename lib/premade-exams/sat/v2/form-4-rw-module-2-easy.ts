@@ -19,9 +19,9 @@ export const f4RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: '"Predictable" fits the contrast with "random": the turtles return to the same beaches yearly, so their routes can be foreseen.',
     wrongAnswerExplanations: {
-      A: '"Dangerous" describes risk, not the regularity the passage emphasizes.',
-      B: '"Brief" contradicts the fact that the turtles travel thousands of miles.',
-      D: '"Crowded" describes how many turtles share a route, not whether the route is regular.',
+      A: '"Dangerous" is tempting because the passage mentions that sea turtles travel "thousands of miles across open ocean," which is indeed a physically demanding and risky journey. Students who focus on the environment rather than the contrast with "random" may think "dangerous" fits. However, the passage is contrasting random versus regular movement, not safe versus dangerous travel.',
+      B: '"Brief" contradicts the passage directly — the turtles travel thousands of miles, which is the opposite of brief. Students who misread the passage or confuse "brief" with some other word might select this, but any reading of the passage shows that long-distance travel is a defining feature of the journey described.',
+      D: '"Crowded" is the most tempting wrong answer. The passage describes turtles returning to the same nesting beaches year after year, which does imply that many turtles converge on the same locations — a kind of crowding. Students who infer population density from the imagery of repeated returns might select "crowded." However, the contrast being drawn is with "random" — the passage says scientists thought the routes were random but they\'re not. "Crowded" describes density of turtles, not the regularity of the routes.',
     },
   },
 
@@ -43,9 +43,9 @@ export const f4RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'A',
     explanation: '"Unwavering" means steady and firm, which fits a dedication so consistent that she practiced even on holidays.',
     wrongAnswerExplanations: {
-      B: '"Unusual" describes rarity, not the steadiness the example illustrates.',
-      C: '"Occasional" means now and then, contradicting daily practice.',
-      D: '"Hesitant" means uncertain, the opposite of committed daily practice.',
+      B: '"Unusual" is tempting because daily practice even on holidays could reasonably be described as unusual — most people don\'t do this. Students who think the passage is calling attention to the rarity of such dedication, rather than its steadiness, select this. But "unusual" describes the frequency of an occurrence, not the quality of commitment being praised. The coordinator is praising the dedication as a trait, not commenting on how common or rare it is.',
+      C: '"Occasional" directly contradicts the passage, which says she "rarely let a day pass" without practicing. Students who skim and misread the example might select this, but careful reading shows she practiced daily, which is the opposite of occasional.',
+      D: '"Hesitant" means uncertain or reluctant, the opposite of committed. The passage gives an example of someone who practices every day even on holidays — this is the picture of confidence and commitment, not hesitation. Students who confuse "dedication" with "timidity about one\'s talent" might misread the passage tone and select this.',
     },
   },
 
@@ -67,9 +67,9 @@ export const f4RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'D',
     explanation: 'Participation exceeding every target signals a positive, eager response, which "enthusiasm" captures.',
     wrongAnswerExplanations: {
-      A: '"Indifference" means a lack of interest, contradicting the high participation.',
-      B: '"Confusion" would not explain participation that surpassed targets.',
-      C: '"Suspicion" implies distrust, inconsistent with residents eagerly joining.',
+      A: '"Indifference" is tempting because new government programs often do face public apathy. Students familiar with the challenges of civic programs might assume residents would be indifferent to a recycling initiative. But the evidence immediately following — participation exceeding every target within one month — is inconsistent with indifference. People who don\'t care don\'t participate at record rates.',
+      B: '"Confusion" is the most tempting wrong answer. Students might reason: "The program was new, so residents might have been confused about how to use it — and confused people might accidentally over-participate by doing it wrong." But "confusion" doesn\'t naturally explain participation that "exceeded every target." Successful programs aren\'t typically explained by confusion.',
+      C: '"Suspicion" is plausible in the sense that residents sometimes view new municipal programs with skepticism. However, the evidence (immediate participation exceeding all targets) is incompatible with a suspicious response. Suspicious residents might avoid the program or resist it — not join in overwhelming numbers.',
     },
   },
 
@@ -115,9 +115,9 @@ export const f4RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'A',
     explanation: 'The passage lists new services — internet, meeting rooms, tool lending, classes — to show that libraries now do much more than lend books.',
     wrongAnswerExplanations: {
-      B: 'The passage describes expansion, not a call to return to books alone.',
-      C: 'Internet access is one of several services listed, not singled out as most important.',
-      D: 'The passage does not discuss visitor numbers.',
+      B: '"Libraries should return to focusing only on books" is a direct misreading — the passage describes expansion positively, listing new services with an affirming tone ("for many communities, the library has become a center for far more than reading"). Nothing in the passage expresses nostalgia for book-only libraries or suggests the author prefers the old model.',
+      C: '"Internet access is the most important service libraries provide" is tempting because internet access is listed first among the new services, and many people associate modern libraries primarily with digital access. But the passage presents internet access as one item in a list alongside meeting rooms, tool lending, and classes — without ranking these or identifying any as most important.',
+      D: '"Fewer people visit libraries than in the past" could be inferred from general knowledge (some people believe this), but the passage says nothing about visitor trends. Students who import assumptions about declining library use into their reading of a passage that describes only service expansion make this error.',
     },
   },
 
@@ -235,9 +235,9 @@ export const f4RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: 'The claim is that handwriting improves memory. A finding that handwritten note-takers scored higher on a memory test directly supports it.',
     wrongAnswerExplanations: {
-      A: 'Typing being faster does not show that handwriting improves memory.',
-      B: 'A preference for typing says nothing about which method aids memory.',
-      D: 'Using different muscles does not address memory performance.',
+      A: '"Typing notes is faster than writing them by hand" is tempting because speed seems relevant to studying — if typing is faster, students can capture more information and therefore remember more. However, the claim is about which method aids memory better, not about capture speed. Speed of transcription doesn\'t directly translate to memory retention.',
+      B: '"Most students prefer to type their notes on a laptop" is tempting because preference might be taken as indirect evidence that typing works better for students (people prefer what works for them). However, preference is subjective and reflects factors like convenience, not memory outcomes. A finding about memory test scores is needed to directly support the claim.',
+      D: '"Handwriting and typing require different muscles" is true but completely irrelevant to memory retention. This choice describes a physiological difference without any connection to cognitive or memory outcomes. Students who think the muscle-memory argument connects physical repetition to information retention make this error, but the student\'s claim is about memory of content, not motor memory.',
     },
   },
 
@@ -326,9 +326,9 @@ export const f4RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'D',
     explanation: 'Because frogs disappear from polluted water, a steady rise in the frog population over ten years supports the claim that the water quality improved.',
     wrongAnswerExplanations: {
-      A: 'The pond\'s size does not indicate whether its water quality improved.',
-      B: 'The global range of frogs says nothing about this pond\'s water quality.',
-      C: 'The biologist\'s experience does not by itself show the water improved.',
+      A: '"The pond is larger than most others in the region" is tempting because pond size might affect population capacity — a larger pond could support more frogs. However, size alone doesn\'t address the specific claim about improved water quality over time. A larger pond could have poor water quality and still hold some frogs; what the biologist needs is evidence that quality specifically improved.',
+      B: '"Frogs are found on every continent except Antarctica" is background information about frogs\' general range — utterly unrelated to the specific condition of this particular pond. Students who think establishing that frogs naturally inhabit diverse environments supports the biologist\'s local observation make a scope error: global range says nothing about local water quality trends.',
+      C: '"The biologist has studied frogs for over twenty years" is tempting because extensive expertise could lend credibility to the claim. However, the claim is a factual assertion about water quality improvement — it needs evidence (data about the frog population) rather than credentials. A biologist with 20 years of experience who sees the same frog population hasn\'t proven improvement.',
     },
   },
 
@@ -350,9 +350,9 @@ export const f4RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: 'The passage explains that penguins\' feathers and fat trap heat and block cold water, which supports the conclusion that they can survive in very cold environments.',
     wrongAnswerExplanations: {
-      A: 'Waterproof feathers suit swimming; nothing suggests penguins cannot swim.',
-      B: 'The waterproofing helps them handle water, so they need not avoid it entirely.',
-      D: 'The features trap heat, so penguins lose heat slowly, not faster than other birds.',
+      A: '"Unable to swim in the ocean" is directly contradicted by the passage: the waterproof oil coating on penguins\' feathers is specifically designed to repel cold water while they swim. Students who confuse "cold water affects them" with "they cannot swim in cold water" make this error, but the passage explains features that enable cold-water swimming, not prevent it.',
+      B: '"Must avoid the water entirely" is also contradicted by the waterproofing feature described. The oil coating enables penguins to enter the water without getting soaked — they are built for it. Students who read "features that keep cold water away from the body" as implying that penguins should avoid cold water entirely misread the passage: keeping water away from the body is what makes swimming in cold water possible.',
+      D: '"Lose heat faster than most other birds" is directly contradicted by the passage. The features listed — overlapping feathers, waterproof oil, thick fat — are described as trapping heat and keeping cold water away. These are insulating mechanisms; penguins retain heat more effectively than most birds, not less. Students who misread the causal direction of the insulation description arrive at this opposite conclusion.',
     },
   },
 
@@ -542,9 +542,9 @@ export const f4RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'C',
     explanation: '"Indeed" signals confirmation or emphasis, reinforcing the idea that the trail\'s ending — the meadow view — is genuinely rewarding, as hikers affirm.',
     wrongAnswerExplanations: {
-      A: '"However" signals contrast, but the second sentence is consistent with and extends the first rather than contradicting it.',
-      B: '"For this reason" signals that what follows is a consequence of the preceding cause, but hikers\' opinions about the view are not caused by the trail\'s layout.',
-      D: '"By contrast" signals opposition between ideas, but the meadow view is the continuation of the trail experience, not a contrasting case.',
+      A: '"However" would signal that the second sentence contradicts or qualifies the first. Students might read: "The trail goes through forest and then opens onto a meadow; however, hikers say the meadow view is worth the climb" — as if the meadow view were an unexpected payoff despite something. But there\'s no obstacle in the first sentence; the meadow view confirms and rewards the experience described. "However" requires tension between the sentences that doesn\'t exist here.',
+      B: '"For this reason" implies that hikers\' opinions about the meadow view are a consequence of the trail\'s layout (forest then meadow opening). A student might read: "The trail reveals a meadow at the end; for this reason, hikers say it\'s worth the climb." This has a surface-level causal logic, but "for this reason" implies a logical or necessary consequence, whereas the hikers\' opinions are an affirmation of the experience, not a consequence of the design. "Indeed" confirms the value; "for this reason" over-determines it as a logical result.',
+      D: '"By contrast" would require the second sentence to present something opposite to the first. But the meadow opening described in the first sentence and the hikers\' positive view of it in the second are aligned — both describe the rewarding nature of the trail experience. There is nothing to contrast.',
     },
   },
 
@@ -614,9 +614,9 @@ export const f4RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'B',
     explanation: 'Because bees pollinate crops, a decline in bees could threaten crop production — a cause-and-effect relationship that "As a result" signals.',
     wrongAnswerExplanations: {
-      A: '"Nevertheless" signals contrast, but the second sentence follows logically from the first.',
-      C: '"In contrast" signals opposition, but the sentences are consistent, not opposed.',
-      D: '"Meanwhile" signals simultaneous events, not a consequence.',
+      A: '"Nevertheless" signals that something occurs despite an obstacle. Students might read: "Bees are important for pollination; nevertheless, a decline in bees could threaten crops" — as if the threatening consequence is surprising given the bees\' importance. But "nevertheless" would imply that the importance of bees somehow makes their decline less threatening, which reverses the logic. The threat logically follows from the importance.',
+      C: '"In contrast" would require the second sentence to present something opposed to the first. Since the first sentence establishes that bees are vital for crops, and the second says a decline in bees threatens crops, these are entirely consistent — the second is a direct logical extension of the first. There is nothing to contrast.',
+      D: '"Meanwhile" signals simultaneous events occurring at the same time in different places or among different agents. A student might use it: "Bees pollinate crops; meanwhile, bee populations are declining." But the sentence doesn\'t describe simultaneous events — it describes a logical consequence (fewer bees → threatened crops), not a parallel happening. "As a result" captures the causal relationship that "meanwhile" ignores.',
     },
   },
 
@@ -638,9 +638,9 @@ export const f4RwModule2EasyQuestionsV2: RWQuestion[] = [
     correctAnswer: 'B',
     explanation: 'The goal is to explain the causes of the population decline. Choice B names both causes — habitat loss and DDT — and explains how DDT harmed reproduction through eggshell thinning, directly addressing the question.',
     wrongAnswerExplanations: {
-      A: 'This describes recovery, not the causes of decline.',
-      C: 'This focuses on the ban and subsequent recovery, not on what caused the decline.',
-      D: 'This gives dates for listing and delisting but says nothing about why the population declined.',
+      A: '"The bald eagle was removed from the endangered species list in 2007 after its population recovered" is tempting because it uses specific information from the notes (the 2007 date and the recovery) and tells a complete story. However, the goal is to explain what caused the decline, not what reversed it. Recovery information answers "what fixed it?" not "what caused the problem in the first place?"',
+      C: '"The United States banned DDT in 1972, helping eagle populations begin to recover" is the most tempting wrong answer. It mentions DDT — one of the actual causes — but focuses on the ban and the recovery, not on how DDT damaged the population. Students who see "DDT" in the sentence and assume it directly addresses the cause of decline miss that this sentence explains the solution (the ban), not the problem (DDT\'s mechanism of damage).',
+      D: '"The bald eagle was listed as endangered in 1967 and removed from the list in 2007" provides only dates for listing and recovery without explaining any causes. This is pure chronology — students who think stating when the decline was recognized is equivalent to explaining why it occurred select this.',
     },
   },
 

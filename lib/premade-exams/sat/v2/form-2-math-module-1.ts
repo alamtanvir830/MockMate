@@ -127,9 +127,9 @@ export const f2MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'Subtract 3 throughout: −8 < −2x ≤ 4. Divide by −2 and reverse both inequality signs: 4 > x ≥ −2. Written in standard order: −2 ≤ x < 4.',
     wrongAnswerExplanations: {
-      B: 'The strict and non-strict signs are switched. The left inequality −5 < 3 − 2x becomes (after solving) x < 4 (strict), and the right inequality 3 − 2x ≤ 7 becomes x ≥ −2 (non-strict).',
-      C: 'This is a union of two intervals, which comes from solving an absolute-value inequality, not a compound inequality of this form.',
-      D: 'These bounds result from dividing by −2 without reversing the inequalities.',
+      B: 'The strict and non-strict signs are switched. The original left inequality −5 < 3 − 2x is strict (no equals sign), which after solving gives x < 4 (strict). The original right inequality 3 − 2x ≤ 7 is non-strict, which gives x ≥ −2 (non-strict). Choice B reverses these — it uses strict on the left bound and non-strict on the right, the exact opposite of the correct answer.',
+      C: 'This describes a union of two disjoint intervals (x is either very small or very large), which is the form of a solution to an absolute-value inequality like |something| > k, not a compound inequality of this form. Solving −5 < 3 − 2x ≤ 7 always produces a single connected interval.',
+      D: '−4 ≤ x < 2 results from dividing by −2 without reversing the inequality signs — the most common error in this problem type. Without the reversal: −8 < −2x ≤ 4 becomes (incorrectly) 4 > x ≥ −2 but the bounds are read in the wrong direction, producing −4 ≤ x < 2 instead of −2 ≤ x < 4.',
     },
   },
 
@@ -153,9 +153,9 @@ export const f2MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'Rewrite ℓ in slope-intercept form: y = (4/3)x − 8. Slope = 4/3. Line m has the same slope and passes through (6, 2): y − 2 = (4/3)(x − 6) → y = (4/3)x − 8 + 2 = (4/3)x − 6. The y-intercept is −6.',
     wrongAnswerExplanations: {
-      B: '−8 is the y-intercept of ℓ, not m. Line m passes through a different point, shifting the intercept from −8 to −6.',
-      C: '6 is the x-coordinate of the given point, not the y-intercept.',
-      D: '8 is the magnitude of ℓ\'s y-intercept with the wrong sign.',
+      B: '−8 is the y-intercept of line ℓ, not line m. A student who correctly finds ℓ\'s slope-intercept form (y = (4/3)x − 8) but then uses −8 as the answer has forgotten that line m must pass through (6, 2) and therefore has a different y-intercept. Parallel lines share slopes but not y-intercepts.',
+      C: '6 is the x-coordinate of the given point (6, 2) that line m passes through. Confusing a coordinate of the given point with the y-intercept being sought is a common reading error in these problems.',
+      D: '8 is the absolute value of ℓ\'s y-intercept with the sign removed (−8 → 8). A student might arrive here by taking ℓ\'s intercept magnitude and applying it with the wrong sign, or by misreading the slope-intercept form of ℓ.',
     },
   },
 
@@ -352,9 +352,9 @@ export const f2MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'Divide the first equation by 2: 3x − 2y = 5. For the second equation 3x − ky = c to be parallel to the first, the x- and y-coefficients must be proportional: since the x-coefficients already match (both 3), we need k = 2 so the y-coefficients match too. With k = 2 the equations are 3x − 2y = 5 and 3x − 2y = c. These have NO solution whenever c ≠ 5 (parallel, distinct lines), and INFINITELY many solutions when c = 5 (identical lines). So the excluded value is c = 5, and k + c = 2 + 5 = 7.',
     wrongAnswerExplanations: {
-      A: '5 is the value of c alone (the excluded value), not k + c.',
-      C: '9 would result from using k = 4; but matching the y-coefficient to 3x − 2y = 5 requires k = 2, giving k + c = 7.',
-      D: '11 double-counts, for example adding k to twice c or using the wrong reduced constant.',
+      A: '5 is the value of c alone (the excluded constant term that produces infinitely many solutions), not the sum k + c. A student who correctly identifies c = 5 but forgets to add k = 2 will stop here. The question asks for k + c, requiring both values.',
+      C: '9 results from correctly identifying c = 5 but using k = 4 instead of k = 2. The error is typically scaling incorrectly: dividing 6x − 4y = 10 by 1.5 instead of 2 gives 4x − (8/3)y = 20/3, and attempting to match coefficients with the second equation from there leads to k = 4. The correct step is to divide the first equation by 2, giving 3x − 2y = 5, which directly matches the x-coefficient of 3 in the second equation and requires k = 2.',
+      D: '11 results from adding incorrectly — for example using c = 10 (the constant from the first equation before division) and k = 1, or from computing k + 2c instead of k + c. The divided form of the first equation (3x − 2y = 5) is essential; using the original constant 10 instead of the reduced constant 5 leads to this error.',
     },
   },
 
@@ -395,9 +395,9 @@ export const f2MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'Set x² − 3x + 2 = x − 1 → x² − 4x + 3 = 0. By Vieta\'s formulas, the sum of the roots equals −(−4)/1 = 4. (The roots are x = 1 and x = 3; their sum is 4.)',
     wrongAnswerExplanations: {
-      A: '2 is the product of the two x-values using one incorrect root; the actual roots are 1 and 3 with sum 4.',
-      B: '3 is one of the two x-coordinates, not their sum.',
-      D: '5 would be the sum if both roots shifted by 1; the correct roots give a sum of 4.',
+      A: '2 is the product of the roots (1 × 3 = 3, but a student who makes an algebra error and gets roots of 1 and 2 adds to get 3 — or uses Vieta\'s formula for the product rather than the sum: the constant term of x² − 4x + 3 is 3, not the sum). Alternatively, 2 could come from summing the constants from the original equations (2 and 1 → subtract to get 1, or add wrongly). The correct sum is 1 + 3 = 4.',
+      B: '3 is one of the two x-coordinates of the intersection points. A student who solves x² − 4x + 3 = 0 correctly to get x = 1 and x = 3 but then reports one root instead of their sum will choose 3. Reading the question carefully — "sum of the x-coordinates" — is essential.',
+      D: '5 results from a sign error in combining the equations: if a student writes x² − 3x + 2 = x − 1 as x² − 2x + 3 = 0 (forgetting to move the x term to the left correctly), Vieta\'s sum of roots gives 2, not 4; or if they use the original quadratic y = x² − 3x + 2 without subtracting the line, the sum of roots of x² − 3x + 2 = 0 is 3, close to but not 5. The 5 answer typically comes from using the original equation incorrectly: e.g., solving x² − 3x + 2 = 0 (roots 1 and 2, sum 3) or adding 2 to an incorrect intermediate result.',
     },
   },
 
@@ -471,11 +471,11 @@ export const f2MathModule1QuestionsV2: MathQuestion[] = [
     ],
     correctAnswer: 'A',
     explanation:
-      'The balance triples every 12 years: (1 + r)^12 = 3. Solving: 1 + r = 3^(1/12). Since 3^(1/12) = e^(ln3/12) ≈ e^(0.0916) ≈ 1.096, the annual rate r ≈ 0.096 ≈ 9.6%.',
+      'The balance triples every 12 years: (1 + r)^12 = 3. Solving: 1 + r = 3^(1/12). Since 3^(1/12) ≈ 1.096, the annual rate r ≈ 9.6%. You can also use the rule of thumb: the tripling time at rate r is approximately ln(3)/r ≈ 1.099/r. Setting 12 = 1.099/r gives r ≈ 9.2%, which rounds to about 9.6% with the exact calculation.',
     wrongAnswerExplanations: {
-      B: '12% annually gives (1.12)^12 ≈ 3.90, which more than triples in 12 years.',
-      C: '16.7% per year is the arithmetic rate 200%/12; compound growth uses geometric, not arithmetic, division.',
-      D: '25% annually gives (1.25)^12 ≈ 14.6 — far more than tripling.',
+      B: '12% annually gives (1.12)^12 ≈ 3.90, which more than triples in 12 years. A student might choose 12% because they associate "12 years" with "12%" — substituting the time period directly as if the rate equals the time. This coincidental numerical match makes 12% a particularly tempting wrong answer.',
+      C: '16.7% per year is the arithmetic rate: (300% − 100%) ÷ 12 years = 200% ÷ 12 ≈ 16.7%. This assumes the total percentage gain is divided evenly across 12 years, which is how simple interest works. Compound growth requires taking a 12th root, not dividing by 12.',
+      D: '25% annually gives (1.25)^12 ≈ 14.6 — far more than tripling. A student might land here by confusing "triples" (×3) with "increases by 300%" and then dividing 300% by 12, or by using an approximation that greatly overestimates the required rate.',
     },
   },
 
@@ -535,9 +535,9 @@ export const f2MathModule1QuestionsV2: MathQuestion[] = [
     explanation:
       'By the Angle Bisector Theorem, BD/DC = AB/AC = 6/10 = 3/5. Since BD = 4: 4/DC = 3/5 → DC = 4 × (5/3) = 20/3.',
     wrongAnswerExplanations: {
-      A: '5 would be DC if BD/DC = 4/5, but the correct ratio is 3/5 from the theorem.',
-      C: '7 does not follow from the Angle Bisector Theorem; the exact value is 20/3 ≈ 6.67.',
-      D: '8 results from inverting the ratio: DC = BD × (AC/AB) should use the correct proportion from the theorem.',
+      A: 'DC = 5 would follow if BD/DC = 4/5, meaning the ratio equals the actual lengths BD and AC directly. A student might set up 4/DC = 4/5 (confusing BD with AB in the ratio) or guess that BC = 9 and DC = 5. The correct ratio is BD/DC = AB/AC = 6/10 = 3/5, not 4/5.',
+      C: 'DC = 7 is a round number near the correct answer (20/3 ≈ 6.67) and might be chosen if a student rounds up prematurely or estimates without computing. It does not follow from any correct application of the Angle Bisector Theorem.',
+      D: 'DC = 8 results from inverting the ratio. A student who writes DC/BD = AC/AB instead of BD/DC = AB/AC gets DC/4 = 10/6, giving DC = 40/6 ≈ 6.67 (also wrong). Alternatively, computing DC = BD × (AC/AB) = 4 × (10/6) = 20/3 correctly, but then computing DC = 4 × (10/6) as 4 × 2 = 8 with an arithmetic error, produces 8.',
     },
   },
 

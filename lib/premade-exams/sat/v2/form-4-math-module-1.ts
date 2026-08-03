@@ -19,9 +19,9 @@ export const f4MathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'Let m be the monthly fee. Total cost: 45 + 8m = 237 → 8m = 192 → m = 24. The monthly fee is $24.',
     wrongAnswerExplanations: {
-      A: '$21 gives 45 + 8(21) = 45 + 168 = 213, not 237.',
-      C: '$27 gives 45 + 8(27) = 45 + 216 = 261, not 237.',
-      D: '$30 gives 45 + 8(30) = 45 + 240 = 285, not 237.',
+      A: '$21 gives 45 + 8(21) = 213, not 237. A student might reach this by dividing the total $237 by 8 without first subtracting the enrollment fee: 237 ÷ 8 ≈ $29.63, which rounds toward nearby values.',
+      C: '$27 gives 45 + 8(27) = 261, not 237. This results from subtracting only the fee from the total before dividing: (237 − 45) ÷ 8 must be done correctly as 192 ÷ 8 = 24, not 192 ÷ 7 ≈ 27.',
+      D: '$30 gives 45 + 8(30) = 285, not 237. A student might reach this by ignoring the enrollment fee entirely and dividing 237 by a rounded value, or by mistakenly treating the 8 months as only 7.',
     },
   },
 
@@ -43,9 +43,9 @@ export const f4MathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'Step 1 — find the slope of ℓ: slope = (11 − 5)/(3 − 1) = 6/2 = 3. Step 2 — line m has the same slope (parallel) and passes through (0, −9), so its equation is y = 3x − 9. Step 3 — set y = 0: 3x − 9 = 0 → x = 3.',
     wrongAnswerExplanations: {
-      A: 'x = 1 gives y = 3(1) − 9 = −6, not 0.',
-      B: 'x = 2 gives y = 3(2) − 9 = −3, not 0. This error comes from dividing the y-intercept by the slope incorrectly.',
-      D: 'x = 4 gives y = 3(4) − 9 = 3, not 0. This error comes from using only the y-intercept magnitude without the correct slope.',
+      A: 'x = 1 gives y = 3(1) − 9 = −6, not 0. A student who correctly found the slope (3) but confused the x-intercept with the point where y = −9 might pick 1.',
+      B: 'x = 2 gives y = 3(2) − 9 = −3, not 0. This is the most common error: dividing the y-intercept magnitude (9) by the slope (3) in the wrong order — 9 ÷ 3 = 3, not setting y = 0 and solving, so a student may stop at x = 3 ÷ 1 or confuse which quantity to isolate.',
+      D: 'x = 4 gives y = 3(4) − 9 = 3, not 0. A student who found the slope correctly (3) and noted that the y-intercept of line m is −9 but then set up the x-intercept as (b/m) + 1 by off-by-one reasoning would land here.',
     },
   },
 
@@ -67,9 +67,9 @@ export const f4MathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'Substitute x = 5 into the function: f(5) = 3(5) + 2 = 15 + 2 = 17.',
     wrongAnswerExplanations: {
-      A: '13 = 3(5) − 2 subtracts 2 instead of adding 2.',
-      B: '15 = 3(5) forgets to add the constant +2.',
-      D: '19 uses 3(5) + 4 with the wrong constant.',
+      A: '13 comes from evaluating f(x) = 3x − 2 at x = 5: 15 − 2 = 13. A student who misread the +2 as −2 would choose this.',
+      B: '15 = 3(5) forgets to add the constant +2, treating the function as f(x) = 3x rather than 3x + 2.',
+      D: '19 comes from evaluating 3(5) + 4 = 19, substituting an incorrect constant (perhaps miscopying +2 as +4 from another problem).',
     },
   },
 
@@ -115,9 +115,9 @@ export const f4MathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: '450 + 25b ≤ 1200 → 25b ≤ 750 → b ≤ 30. The maximum is 30 boxes.',
     wrongAnswerExplanations: {
-      A: '18 uses only part of the remaining capacity and is not the maximum.',
-      B: '24 boxes weigh 600 kg; there is room for more.',
-      D: '48 ignores the 450 kg already loaded: 48 × 25 = 1200 alone exceeds the remaining capacity.',
+      A: '18 = 450 ÷ 25 — this divides the existing load by the box weight rather than determining how many more boxes fit in the remaining capacity.',
+      B: '24 boxes weigh 600 kg; total load would be 450 + 600 = 1,050 kg, leaving 150 kg of unused capacity. A student who subtracted incorrectly or used 1,050 as the limit might stop here.',
+      D: '48 = 1,200 ÷ 25 — this treats the full van capacity as the capacity for boxes, ignoring the 450 kg already loaded. This is the most tempting error: dividing the limit directly by the box weight.',
     },
   },
 
@@ -177,9 +177,9 @@ export const f4MathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'The sale price is 85% of the original: 0.85 × original = 68 → original = 68/0.85 = 80.',
     wrongAnswerExplanations: {
-      A: '$78.20 adds 15% of 68 back onto 68, which is not the correct reverse of a discount.',
-      C: '$83.00 does not satisfy 0.85 × price = 68.',
-      D: '$85.00 gives a sale price of 0.85 × 85 = $72.25, not $68.',
+      A: '$78.20 ≈ $68 × 1.15 — a student who adds 15% of the sale price back to the sale price rather than dividing by (1 − 0.15) gets this. The error is applying the percentage to the wrong base: the 15% discount was taken from the original price, so the original must be found by dividing by 0.85, not by multiplying the sale price by 1.15.',
+      C: '$83.00 lies between the sale price ($68) and the correct answer ($80), and might result from averaging the two extremes or from a misremembered formula — but 0.85 × 83 ≈ 70.55, which does not equal 68.',
+      D: '$85.00 is the most tempting distractor: a student might notice that 15% of $80 = $12, not $17, and try rounding up to $85. But 0.85 × $85 = $72.25, not $68 — the correct check is 0.85 × $80 = $68.',
     },
   },
 
@@ -257,9 +257,9 @@ export const f4MathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'The vertex is at x = −(−8)/(2·2) = 8/4 = 2. f(2) = 2(4) − 8(2) + 5 = 8 − 16 + 5 = −3.',
     wrongAnswerExplanations: {
-      A: '−5 is not the minimum; f(2) = −3.',
-      C: '3 has the correct magnitude but the wrong sign.',
-      D: '5 is the y-intercept f(0), not the minimum value.',
+      A: '−5 is the constant term of the original function, not the minimum value. A student who reads the minimum directly off the function formula without completing the calculation might pick this.',
+      C: '3 has the correct magnitude but the wrong sign. A student who correctly finds f(2) = 8 − 16 + 5 but makes a sign error — perhaps computing |8 − 16 + 5| = |−3| = 3 — would choose this.',
+      D: '5 is the y-intercept f(0) = 2(0) − 8(0) + 5, not the minimum. Confusing the constant term of a quadratic with its minimum value is a very common error when students do not find the vertex.',
     },
   },
 
@@ -402,9 +402,9 @@ export const f4MathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'No solution means the lines are parallel: the x- and y-coefficient ratios match but the constants differ. 4/2 = 6/k → k = 6/2 = 3. Check: with k = 3, the second equation ×2 gives 4x + 6y = 14 ≠ 10, so the lines are parallel with no solution.',
     wrongAnswerExplanations: {
-      B: 'k = 4 gives non-proportional coefficients (4/2 ≠ 6/4), so the lines intersect.',
-      C: 'k = 6 does not make the x- and y-coefficient ratios equal.',
-      D: 'k = 12 gives 4/2 ≠ 6/12, so the lines are not parallel.',
+      B: 'k = 4 gives coefficient ratios 4/2 = 2 but 6/4 = 1.5, so the ratios are not equal and the lines are not parallel — they intersect at one point. A student who guesses that k must equal the coefficient of x in the second equation picks this.',
+      C: 'k = 6 is tempting because 6 appears in the first equation (4x + 6y = 10), but with k = 6 the ratios are 4/2 = 2 and 6/6 = 1, which are not equal — the lines cross rather than running parallel. A student who lifts the coefficient from the first equation without checking proportionality lands here.',
+      D: 'k = 12 makes the second equation 2x + 12y = 7. The ratios would be 4/2 = 2 and 6/12 = 0.5 — not equal, so the lines still intersect. A student who tries to double the y-coefficient without applying the same multiplier to the constant would get this.',
     },
   },
 
@@ -450,9 +450,9 @@ export const f4MathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'Factoring: (x − 2)(x − 5) = 0, so x = 2 or x = 5. Their sum is 2 + 5 = 7. (Equivalently, the sum of roots equals −b/a = 7.)',
     wrongAnswerExplanations: {
-      A: '3 is the difference of the roots (5 − 2), not the sum.',
-      B: '5 is one of the roots, not the sum of both.',
-      D: '10 is the product of the roots (2 × 5), not the sum.',
+      A: '3 is the difference of the roots (5 − 2), not their sum. By Vieta\'s formulas, the sum of roots equals −b/a = 7 and the difference has no direct formula — a student who confuses these operations picks 3.',
+      B: '5 is one of the two roots (from x − 5 = 0), not the sum of both roots. Stopping after finding one solution without completing the second would lead here.',
+      D: '10 is the product of the roots (2 × 5), which equals the constant term c in the factored equation — not the sum. By Vieta\'s, product = c/a = 10 and sum = −b/a = 7; confusing these two formulas is the key error.',
     },
   },
 
@@ -498,9 +498,9 @@ export const f4MathModule1QuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'The maximum occurs at the vertex. Complete the square: h(t) = −4t² + 24t + 7 = −4(t² − 6t) + 7 = −4(t² − 6t + 9 − 9) + 7 = −4(t − 3)² + 36 + 7 = −4(t − 3)² + 43. The vertex is at (3, 43), so the maximum height is 43 meters. (Alternatively, the vertex t-coordinate is −b/(2a) = −24/(2·(−4)) = 3, then h(3) = −4(9) + 24(3) + 7 = −36 + 72 + 7 = 43.)',
     wrongAnswerExplanations: {
-      A: '31 = 24 + 7 uses only the linear and constant terms and ignores the quadratic term at t = 3.',
-      B: '36 = −4(t − 3)² + 36 forgets to add back the +7 constant after completing the square.',
-      D: '79 results from evaluating h(0) + h(6) or another combination; it is not the vertex value.',
+      A: '31 = 24 + 7 — a student who evaluates h(t) at t = 0 (the launch height) gets 7, or who computes 24(3)/some-denominator + 7 and ignores the −4t² term, arrives near this value. This is the height if you set the quadratic term to zero rather than computing it at the vertex.',
+      B: '36 is the intermediate value obtained when completing the square: −4(t − 3)² + 36 comes from factoring but forgetting to add back the original constant of +7. This is the most seductive wrong answer for students who begin completing the square correctly but lose track of the constant.',
+      D: '79 = −4(9) + 24(6) + 7 = −36 + 144 + 7, which evaluates h at t = 6 (the time when the ball lands) rather than at the vertex t = 3. A student who solves h(t) = 0 and then evaluates h at one of the roots instead of at the midpoint of those roots would land here.',
     },
   },
 

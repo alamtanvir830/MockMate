@@ -22,9 +22,9 @@ export const mathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'Speed = 240 ÷ 4 = 60 mph. Distance in 7 hours = 60 × 7 = 420 miles.',
     wrongAnswerExplanations: {
-      A: '380 does not match any valid calculation from 60 mph × 7.',
-      B: '400 = 60 × 6.67, using the wrong number of hours.',
-      D: '480 = 240 × 2, doubling the distance instead of scaling by 7/4.',
+      A: '380 is a trap for students who compute 240 + (240/4) × (7 − 4) = 240 + 60 × 3 = 240 + 180 = 420 but make an arithmetic error adding: 240 + 140 = 380 (using 140 instead of 180). The path is right — find the unit rate and scale — but arithmetic slips produce this answer.',
+      B: '400 is the most tempting wrong answer. Students who round 60 mph to "about 57 mph" and multiply 57 × 7 ≈ 400, or who incorrectly compute the unit rate as 240/6 = 40 mph and multiply 40 × 10 = 400, land here. A quick check: 60 × 7 = 420, not 400.',
+      D: '480 = 240 × 2, which comes from noticing that 7 is "almost double" 4 and doubling 240. This is off because 7/4 = 1.75, not 2.0 — the correct approach is to multiply by the exact ratio 7/4, giving 240 × 7/4 = 420.',
     },
   },
 
@@ -46,9 +46,9 @@ export const mathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: '√75 = √(25 · 3) = √25 · √3 = 5√3.',
     wrongAnswerExplanations: {
-      B: '75 ÷ 9 is not an integer, so √9 cannot be factored out cleanly.',
-      C: '15 would mean √225 was factored out, but 75 ÷ 225 < 1.',
-      D: 'This uses 25 as the coefficient instead of √25 = 5.',
+      B: '3√5 results from trying to factor √75 as √9 × √(75/9). But 75 ÷ 9 = 8.33, which is not a perfect square, so this factoring doesn\'t produce a clean integer coefficient. Students who try to pull out √9 = 3 because 3 is "close" to a factor of 75 make this error — the correct perfect-square factor of 75 is 25, not 9.',
+      C: '15√3 would require 75 = 225 × (1/3), but 225 > 75, so this is impossible. Students who confuse √225 = 15 with √25 = 5 might write 15√3 as if they factored out 225 from 75, which is not possible since the factor must be at most 75.',
+      D: '25√3 results from correctly identifying that 25 is the largest perfect-square factor of 75 but writing 25 as the coefficient instead of √25 = 5. The rule is: √(a × b) = √a × √b → √25 × √3 = 5√3, not 25√3. This is the most common error on square-root simplification problems.',
     },
   },
 
@@ -70,9 +70,9 @@ export const mathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'Set up: 45 + 0.20m ≤ 105. Solve: 0.20m ≤ 60, so m ≤ 300. Maximum miles = 300.',
     wrongAnswerExplanations: {
-      B: '250 miles costs 45 + 0.20(250) = $95 — the customer still has $10 remaining.',
-      C: '275 miles costs 45 + 0.20(275) = $100 — still $5 under budget.',
-      D: '350 miles costs 45 + 0.20(350) = $115 — exceeds the $105 budget.',
+      B: '250 is the most common wrong answer. Students who subtract the flat fee correctly ($105 − $45 = $60) but then divide by $0.20 incorrectly — perhaps computing 60/0.20 = 30 and then multiplying 30 × 10 = 300 but making an off-by-one error — or who divide $60 by $0.24 (confusing the rate) get approximately 250. Verification: 45 + 0.20(250) = $95, which is $10 under budget, so the customer can drive further.',
+      C: '275 results from a slightly different route error: perhaps computing ($105 − $45) / $0.20 but treating the budget as $100 instead of $105 (a reading error), giving 55/0.20 = 275. Verification: 45 + 0.20(275) = $100, still under budget.',
+      D: '350 is a tempting overestimate that results from dividing the total budget by the per-mile rate without subtracting the flat fee first: $105 / $0.30 = 350, or $105 / $0.20 = 525 and then misreading the problem. Either way, 350 miles would cost $115, exceeding the $105 budget.',
     },
   },
 
@@ -118,9 +118,9 @@ export const mathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'Subtract 3 from all three parts: −1 − 3 ≤ 2x ≤ 9 − 3 → −4 ≤ 2x ≤ 6. Divide by 2: −2 ≤ x ≤ 3.',
     wrongAnswerExplanations: {
-      B: '−4 ≤ x ≤ 6 is the result before dividing by 2 — the division step was skipped.',
-      C: '0 ≤ x ≤ 6 subtracts 3 incorrectly: −1 − 3 ≠ 0.',
-      D: '−1 ≤ x ≤ 3 subtracts 3 from the right side but not the left side of the inequality.',
+      B: '−4 ≤ x ≤ 6 is the result after subtracting 3 from all parts (correctly getting −4 ≤ 2x ≤ 6) but forgetting the final step of dividing all parts by 2. This is the most common stopping-too-early error — the algebra is right up to the last operation.',
+      C: '0 ≤ x ≤ 6 comes from subtracting 3 from only the right and center parts (9 − 3 = 6, 2x − 3 → treating this as 2x; dividing to get x ≤ 3) but treating the left side as −1 + 3 = 0 (adding 3 instead of subtracting). Students who misapply the operation asymmetrically land here.',
+      D: '−1 ≤ x ≤ 3 is the most tempting wrong answer. It looks like the correct answer range but has the wrong lower bound. Students who subtract 3 from the right side (9 − 3 = 6, divide by 2 → 3) and divide the right bound correctly, but carry the original left bound (−1) without subtracting 3 (−1 − 3 = −4, divide by 2 → −2), produce this answer. The lower bound should be −2, not −1.',
     },
   },
 
@@ -142,9 +142,9 @@ export const mathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'The point (0, 4) is the y-intercept, so b = 4. With slope −3: y = −3x + 4.',
     wrongAnswerExplanations: {
-      A: 'The slope is −3, not 3.',
-      B: 'The y-intercept is +4, not −4.',
-      D: 'This confuses the slope and y-intercept values.',
+      A: 'y = 3x + 4 uses the wrong sign for the slope. The problem states slope = −3, so the x-coefficient must be negative. Students who drop the negative sign — perhaps because they think of "slope = 3" as the magnitude — select this answer. A quick check: at x = 1, this line gives y = 7, but the correct line gives y = 1.',
+      B: 'y = −3x − 4 has the correct slope (−3) but the wrong sign for the y-intercept. The point (0, 4) is given, meaning when x = 0, y = 4, so the y-intercept is +4. Students who misread (0, 4) as (0, −4) — perhaps confusing the coordinate pair — or who automatically negate both values select this answer.',
+      D: 'y = 4x − 3 swaps the roles of slope and y-intercept, using 4 as the slope and −3 as the y-intercept. Students who read the problem quickly and assign the numbers in the wrong positions make this error. The number 4 belongs in the y-intercept position (from the point (0, 4)), and −3 is the slope.',
     },
   },
 
@@ -214,9 +214,9 @@ export const mathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'Marked-up price = $120 × 1.50 = $180. Final price after 30% discount = $180 × 0.70 = $126.',
     wrongAnswerExplanations: {
-      B: '$144 = $120 × 1.20 — treats the net change as 50% − 30% = 20%, but percents apply to different bases.',
-      C: '$108 = $120 × 0.90 — subtracts 10% from the original cost instead of applying each change correctly.',
-      D: '$132 = $180 × (1 − 0.267) — uses an incorrect discount percentage.',
+      B: '$144 is the most tempting wrong answer. Students reason: "50% markup then 30% discount = net 20% increase," computing $120 × 1.20 = $144. This is wrong because the 30% discount applies to the marked-up price ($180), not the original cost. 30% of $180 = $54, and $180 − $54 = $126 — not 20% of $120. Percentages that apply to different bases cannot be combined by simple subtraction.',
+      C: '$108 comes from computing a net 10% discount on the original price: 50% up, 30% down → net 10% down? This is doubly wrong: first because the operations cannot be combined this way, and second because 30% discount on $180 is $54, not $12. Students who try to "shortcut" by combining percentages arrive here.',
+      D: '$132 is the hardest wrong answer to explain — it may come from computing 50% markup ($60) and subtracting 30% of the original cost (30% × $120 = $36): $120 + $60 − $36 = $144... or applying the 30% discount to the original $120 ($36 off) and then marking up: $84 × 1.5 = $126. The key error in $132 is applying the discount to a base other than the marked-up price.',
     },
   },
 
@@ -278,9 +278,9 @@ export const mathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'For exactly one real solution, the discriminant equals zero: b² − 4(1)(25) = 0 → b² = 100 → b = 10 (taking the positive value).\n\nDesmos method: Enter y = x² + bx + 25 and add a slider for b. Increase b from 0. When b = 10 the parabola just touches the x-axis at one point (tangent); for b < 10 there are no x-intercepts, and for b > 10 there are two.',
     wrongAnswerExplanations: {
-      A: 'b = 5: discriminant = 25 − 100 = −75 < 0 — no real solutions.',
-      C: 'b = 20: discriminant = 400 − 100 = 300 > 0 — two real solutions.',
-      D: 'b = 25: discriminant = 625 − 100 = 525 > 0 — two real solutions.',
+      A: 'b = 5 is tempting because 5 is the square root of the constant term (√25 = 5), and students may remember that "for a perfect square trinomial the middle coefficient relates to the square root of the constant." But b = 5 gives discriminant = 25 − 100 = −75 < 0, meaning no real solutions at all. For exactly one solution, the discriminant must be zero, requiring b² = 4(25) = 100, so b = 10, not 5.',
+      C: 'b = 20 appears because students who solve b² − 4ac = 0 and compute 4ac = 4(1)(25) = 100 might then take b = 100/5 = 20 instead of √100 = 10. Dividing by 5 instead of taking the square root is the arithmetic error. Verification: b = 20 gives discriminant = 400 − 100 = 300 > 0, yielding two real solutions, not one.',
+      D: 'b = 25 equals the constant term c, not the solution to b² = 100. Students who confuse "b must equal c in this type of problem" or who add the numbers in the equation (1 + 25 = 26 ≈ 25) arrive here. Verification: b = 25 gives discriminant = 625 − 100 = 525 > 0, again two real solutions.',
     },
   },
 
@@ -350,9 +350,9 @@ export const mathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'B',
     explanation: 'Factor: (x − 1)(x − 3) = 0, so x = 1 and x = 3. Sum = 1 + 3 = 4. (By Vieta\'s formulas, sum of roots = −b/a = −(−4)/1 = 4.)',
     wrongAnswerExplanations: {
-      A: '3 is the product of the roots (c/a), not the sum.',
-      C: '7 adds both roots and the constant term.',
-      D: '−4 misapplies Vieta\'s formula with the wrong sign.',
+      A: '3 is the product of the roots (by Vieta\'s formulas, product = c/a = 3/1 = 3), not the sum. Students who know Vieta\'s formulas but confuse which formula gives the sum versus the product select this. The sum is −b/a = −(−4)/1 = 4; the product is c/a = 3.',
+      C: '7 is obtained by adding all three coefficients: 1 + (−4) + 3 = 0... or perhaps adding the constant to the sum of roots: 4 + 3 = 7. Neither is the correct procedure. The sum of the x-intercepts is the sum of the roots of the equation, found by factoring or by Vieta\'s formula (−b/a), not by adding coefficients.',
+      D: '−4 comes from reading Vieta\'s formula incorrectly: sum of roots = b/a = −4/1 = −4, forgetting the negative sign. The correct formula is sum = −b/a. Since b = −4, the sum is −(−4)/1 = 4, not −4. This sign error is especially common when the b coefficient is itself negative.',
     },
   },
 
@@ -374,9 +374,9 @@ export const mathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'C',
     explanation: 'First evaluate g(2) = 2 + 3 = 5. Then f(g(2)) = f(5) = 5² = 25.',
     wrongAnswerExplanations: {
-      A: '7 = f(2) + g(2) = 4 + 3, which is not the composition.',
-      B: 'This computes g(f(2)) instead: f(2) = 4, g(4) = 7 — a different order.',
-      D: '49 results from computing f(g(4)) = f(7) = 49, using g(4) instead of g(2).',
+      A: '7 = f(2) + g(2) = 4 + 3, which applies both functions separately to x = 2 and adds them. This is the most common misreading of function composition: students see f(g(2)) and think "apply f to 2 and g to 2, then combine," rather than "apply g to 2 first, then apply f to that result."',
+      B: '13 comes from reversing the order of composition: computing g(f(2)) instead of f(g(2)). First apply f: f(2) = 4. Then apply g: g(4) = 4 + 3 = 7. That gives 7, not 13. Actually 13 might come from f(g(2)) computed as g(2)² + g(2) = 25 ≠ 13, or from computing g(f(3)) = g(9) = 12 ≠ 13. The key point is that f(g(2)) ≠ g(f(2)) — composition order matters.',
+      D: '49 = f(7) = 7² — students who first compute g(2) = 5 correctly but then compute g(5) = 8 (applying g twice instead of f) or who compute f(g(3)) instead of f(g(2)) by misreading the input arrive near this range. Actually 49 = f(7) = 7², which would arise from computing g(4) = 7 (an off-by-two error on the input) rather than g(2) = 5.',
     },
   },
 
@@ -422,9 +422,9 @@ export const mathModule2EasyQuestionsV2: MathQuestion[] = [
     correctAnswer: 'A',
     explanation: 'Arc length = (central angle / 360°) × 2πr = (80/360) × 2π(9) = (2/9) × 18π = 4π.',
     wrongAnswerExplanations: {
-      B: '2π = (80/360) × 2π(4.5) — uses half the radius.',
-      C: '8π results from using 160° (doubling the angle) instead of 80°.',
-      D: '9π/2 = (1/4) × 2π(9) uses 90° instead of 80°.',
+      B: '2π results from using half the radius (4.5 instead of 9): (80/360) × 2π(4.5) = (2/9) × 9π = 2π. Students who misread the radius as the diameter and halve it make this error. The problem states radius = 9, so the full radius should be used.',
+      C: '8π comes from doubling the central angle before applying the formula: (160/360) × 2π(9) = (4/9) × 18π = 8π. This error might arise from confusing a central angle with an inscribed angle (an inscribed angle is half the central angle it subtends, so students might think they need to double 80° to convert). No conversion is needed when the angle is already a central angle.',
+      D: '9π/2 is the most seductive wrong answer because it uses a "clean" fraction: (1/4) × 2π(9) = 9π/2, which comes from using 90° (a right angle) instead of 80°. Students who round 80° to the nearest "nice" angle or who misread 80° as 90° land here. The problem explicitly states 80°, so no rounding should occur.',
     },
   },
 
