@@ -1,9 +1,15 @@
 import Link from 'next/link'
+import { Fraunces } from 'next/font/google'
 import { Logo } from '@/components/shared/logo'
 import { Button } from '@/components/ui/button'
 import { HeroReviewsPanel } from '@/components/landing/StudentReviews'
 import { SocialProofCard } from '@/components/landing/SocialProofCard'
 import { TabletShowcase } from '@/components/landing/IPadShowcase'
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export default function LandingPage() {
   return (
@@ -128,7 +134,7 @@ export default function LandingPage() {
                   MockMate
                 </p>
 
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 leading-[1.08]">
+                <h1 className={`${fraunces.className} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-slate-900 leading-[1.08]`}>
                   Your standardized exam hub for{' '}
                   <span
                     className="bg-clip-text text-transparent"
