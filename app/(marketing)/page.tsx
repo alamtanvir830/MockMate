@@ -224,9 +224,36 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Features */}
-        <section id="features" className="py-24">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        {/* Features — wave background resumes below the trust strip */}
+        <section
+          id="features"
+          className="relative overflow-hidden py-24"
+          style={{ background: 'linear-gradient(150deg, #f0f3f7 0%, #e8ecf2 45%, #dde3ec 100%)' }}
+        >
+          {/* Wave layer — distinct gradient IDs (fwg1/fwg2) to avoid SVG id conflicts with hero */}
+          <div aria-hidden="true" className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+            <svg className="absolute w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1440 700">
+              <defs>
+                <linearGradient id="fwg1" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stopColor="#b8c8dc" stopOpacity="0.45" />
+                  <stop offset="50%"  stopColor="#c4d2e6" stopOpacity="0.36" />
+                  <stop offset="100%" stopColor="#b0c2d8" stopOpacity="0.22" />
+                </linearGradient>
+                <linearGradient id="fwg2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stopColor="#a8bcd2" stopOpacity="0.32" />
+                  <stop offset="60%"  stopColor="#b4c6de" stopOpacity="0.24" />
+                  <stop offset="100%" stopColor="#a2b6cc" stopOpacity="0.16" />
+                </linearGradient>
+              </defs>
+              <path d="M0,100 C200,20 480,180 780,95 C1060,14 1260,150 1440,80 L1440,700 L0,700 Z" fill="url(#fwg1)" />
+              <path d="M0,265 C260,165 560,325 860,248 C1080,190 1280,295 1440,228 L1440,700 L0,700 Z" fill="url(#fwg2)" />
+              <path d="M0,425 C240,355 540,445 840,382 C1060,338 1280,402 1440,362 L1440,700 L0,700 Z" fill="#aebece" fillOpacity="0.18" />
+              <ellipse cx="1300" cy="180" rx="360" ry="260" fill="#ccd8e8" fillOpacity="0.18" />
+            </svg>
+            <div style={{ position: 'absolute', top: '-60px', left: '-60px', width: '560px', height: '440px', background: 'radial-gradient(ellipse at 40% 40%, rgba(216,226,240,0.40) 0%, transparent 70%)', filter: 'blur(32px)', borderRadius: '50%' }} />
+          </div>
+
+          <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {features.map(({ icon, title, description }) => (
                 <div
@@ -395,6 +422,24 @@ const badges: Array<{ label: string; href: string; icon: React.ReactNode }> = [
     icon: (
       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+      </svg>
+    ),
+  },
+  {
+    label: 'SAT Reading & Writing Academy',
+    href: '/sat-rw-academy',
+    icon: (
+      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0118 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+      </svg>
+    ),
+  },
+  {
+    label: 'SAT Math & Desmos Academy',
+    href: '/sat-math-academy',
+    icon: (
+      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4.745 3A23.933 23.933 0 003 12c0 3.183.62 6.22 1.745 9M19.255 3A23.933 23.933 0 0121 12c0 3.183-.62 6.22-1.745 9M8.25 8.885l1.444-.89a.75.75 0 011.105.402l2.402 7.206a.75.75 0 001.104.401l1.445-.889m-8.25.75l.213.09a1.687 1.687 0 002.062-.617l4.45-6.676a1.688 1.688 0 012.062-.618l.213.09" />
       </svg>
     ),
   },
