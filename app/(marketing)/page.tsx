@@ -224,15 +224,6 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Value proposition strip */}
-        <section style={{ backgroundColor: '#F5FBF8' }} className="border-y border-emerald-100 py-12">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-              Practice with full SAT-style exams, review your score report, then drill your weakest areas with personalized question sets from the 700+ question Q-Bank.
-            </p>
-          </div>
-        </section>
-
         {/* Features */}
         <section id="features" className="py-24">
           <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
