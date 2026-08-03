@@ -79,7 +79,7 @@ function IntroScreen({ total, onStart }: { total: number; onStart: () => void })
             'Skill labels are hidden until you answer.',
           ].map(t => (
             <li key={t} className="flex items-start gap-2">
-              <span className="text-indigo-500 font-bold mt-0.5 shrink-0">✓</span>
+              <span className="text-brand-500 font-bold mt-0.5 shrink-0">✓</span>
               {t}
             </li>
           ))}
@@ -91,7 +91,7 @@ function IntroScreen({ total, onStart }: { total: number; onStart: () => void })
 
         <button
           onClick={onStart}
-          className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 transition-colors"
+          className="w-full rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 transition-colors"
         >
           Begin Mastery Check →
         </button>
@@ -141,7 +141,7 @@ function QuizScreen({ questions, onComplete }: QuizProps) {
         </span>
         <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
           <div
-            className="h-full rounded-full bg-indigo-500 transition-all"
+            className="h-full rounded-full bg-brand-500 transition-all"
             style={{ width: `${(currentIndex / questions.length) * 100}%` }}
           />
         </div>
@@ -168,7 +168,7 @@ function QuizScreen({ questions, onComplete }: QuizProps) {
               else if (isSelected) cls = 'border-red-400 bg-red-50 text-red-700'
               else cls = 'border-slate-200 bg-white text-slate-400'
             } else if (isSelected) {
-              cls = 'border-indigo-400 bg-indigo-50 text-indigo-800'
+              cls = 'border-brand-400 bg-brand-50 text-brand-800'
             }
             return (
               <button
@@ -207,7 +207,7 @@ function QuizScreen({ questions, onComplete }: QuizProps) {
         {revealed && (
           <button
             onClick={handleNext}
-            className="w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 transition-colors"
+            className="w-full rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold py-2 transition-colors"
           >
             {currentIndex + 1 >= questions.length ? 'See Results →' : 'Next Question →'}
           </button>
@@ -287,9 +287,9 @@ function ResultsScreen({ questions, answers, priorAccuracy }: ResultsProps) {
       {/* Overall score */}
       <div className={cn(
         'rounded-xl border p-5 text-center',
-        pct >= 85 ? 'border-emerald-300 bg-emerald-50' : pct >= 70 ? 'border-indigo-200 bg-indigo-50' : 'border-amber-200 bg-amber-50',
+        pct >= 85 ? 'border-emerald-300 bg-emerald-50' : pct >= 70 ? 'border-brand-200 bg-brand-50' : 'border-amber-200 bg-amber-50',
       )}>
-        <p className={cn('text-4xl font-bold', pct >= 85 ? 'text-emerald-700' : pct >= 70 ? 'text-indigo-700' : 'text-amber-700')}>
+        <p className={cn('text-4xl font-bold', pct >= 85 ? 'text-emerald-700' : pct >= 70 ? 'text-brand-700' : 'text-amber-700')}>
           {pct}%
         </p>
         <p className="text-sm text-slate-600 mt-1">{correct} of {total} correct on Mastery Check</p>
@@ -308,7 +308,7 @@ function ResultsScreen({ questions, answers, priorAccuracy }: ResultsProps) {
                 </span>
                 <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                   <div
-                    className={cn('h-full rounded-full', p >= 80 ? 'bg-emerald-500' : p >= 60 ? 'bg-indigo-500' : 'bg-amber-500')}
+                    className={cn('h-full rounded-full', p >= 80 ? 'bg-emerald-500' : p >= 60 ? 'bg-brand-500' : 'bg-amber-500')}
                     style={{ width: `${p}%` }}
                   />
                 </div>
@@ -331,7 +331,7 @@ function ResultsScreen({ questions, answers, priorAccuracy }: ResultsProps) {
                 <div className="flex items-center justify-between gap-2">
                   <a
                     href={`/sat-math-academy/lesson/${r.slug}`}
-                    className="text-[12px] text-indigo-700 hover:underline truncate max-w-[180px]"
+                    className="text-[12px] text-brand-700 hover:underline truncate max-w-[180px]"
                   >
                     {r.title}
                   </a>
@@ -349,7 +349,7 @@ function ResultsScreen({ questions, answers, priorAccuracy }: ResultsProps) {
                     )}
                     <span className={cn(
                       'font-medium',
-                      r.pct >= 80 ? 'text-emerald-600' : r.pct >= 60 ? 'text-indigo-600' : 'text-amber-600',
+                      r.pct >= 80 ? 'text-emerald-600' : r.pct >= 60 ? 'text-brand-600' : 'text-amber-600',
                     )}>
                       {r.pct}%
                     </span>
@@ -362,7 +362,7 @@ function ResultsScreen({ questions, answers, priorAccuracy }: ResultsProps) {
                   <div
                     className={cn(
                       'h-full rounded-full transition-all',
-                      r.pct >= 80 ? 'bg-emerald-500' : r.pct >= 60 ? 'bg-indigo-500' : 'bg-amber-500',
+                      r.pct >= 80 ? 'bg-emerald-500' : r.pct >= 60 ? 'bg-brand-500' : 'bg-amber-500',
                     )}
                     style={{ width: `${r.pct}%` }}
                   />
@@ -383,7 +383,7 @@ function ResultsScreen({ questions, answers, priorAccuracy }: ResultsProps) {
         </a>
         <a
           href="/sat-math-academy/capstones"
-          className="flex-1 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 text-center text-sm transition-colors"
+          className="flex-1 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 text-center text-sm transition-colors"
         >
           Capstones
         </a>

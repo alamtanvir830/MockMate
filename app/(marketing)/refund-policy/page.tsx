@@ -26,7 +26,7 @@ export default function RefundPolicyPage() {
         </LegalP>
         <LegalP>
           To request a refund, email us at{' '}
-          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">ranvi@mockmateapp.com</a>{' '}
+          <a href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">ranvi@mockmateapp.com</a>{' '}
           with the subject line "Refund Request" and include:
         </LegalP>
         <LegalList items={[
@@ -59,7 +59,7 @@ export default function RefundPolicyPage() {
       <LegalSection title="Disputes">
         <LegalP>
           If you believe you were charged incorrectly, please contact us at{' '}
-          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">ranvi@mockmateapp.com</a>{' '}
+          <a href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">ranvi@mockmateapp.com</a>{' '}
           before initiating a chargeback with your payment provider. We will work with you to resolve billing issues promptly. Initiating a chargeback without first contacting us may result in account suspension.
         </LegalP>
       </LegalSection>
@@ -73,7 +73,7 @@ export default function RefundPolicyPage() {
       <LegalSection title="Contact">
         <LegalP>
           For refund requests or billing questions, contact us at{' '}
-          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+          <a href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">
             ranvi@mockmateapp.com
           </a>.
         </LegalP>

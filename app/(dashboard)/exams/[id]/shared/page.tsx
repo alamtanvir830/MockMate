@@ -304,7 +304,7 @@ export default async function SharedExamPage({
     return (
       <div className="max-w-3xl mx-auto space-y-8">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-indigo-500 mb-1">Shared exam</p>
+          <p className="text-xs font-semibold uppercase tracking-wide text-brand-500 mb-1">Shared exam</p>
           <h1 className="text-2xl font-bold text-slate-900">Your Results</h1>
           <p className="mt-1 text-sm text-slate-500">
             {exam.title} ·{' '}
@@ -358,8 +358,8 @@ export default async function SharedExamPage({
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
-                <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center">
-                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4 text-indigo-500">
+                <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center">
+                  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4 text-brand-500">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
                   </svg>
                 </div>
@@ -456,7 +456,7 @@ export default async function SharedExamPage({
 
   return (
     <div className="max-w-3xl mx-auto space-y-4">
-      <div className="rounded-lg border border-indigo-100 bg-indigo-50 px-4 py-3 text-sm text-indigo-700">
+      <div className="rounded-lg border border-brand-100 bg-brand-50 px-4 py-3 text-sm text-brand-700">
         <strong>Shared exam</strong> — this is an independent attempt. Your results are yours alone and do not affect anyone else.
       </div>
       <ExamTaker exam={exam} questions={questions} submitAction={submitSharedExam} />

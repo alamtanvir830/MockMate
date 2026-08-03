@@ -185,7 +185,7 @@ export default async function ExamsPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <p className="font-semibold text-slate-900 truncate">{exam.title}</p>
-                      <span className="shrink-0 inline-flex items-center rounded-full bg-indigo-50 border border-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-600">
+                      <span className="shrink-0 inline-flex items-center rounded-full bg-brand-50 border border-brand-100 px-2 py-0.5 text-xs font-medium text-brand-600">
                         Shared
                       </span>
                     </div>
@@ -203,7 +203,7 @@ export default async function ExamsPage() {
                       View results
                     </Link>
                   ) : (
-                    <Link href={`/exams/${exam.id}/shared`} className="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors shrink-0">
+                    <Link href={`/exams/${exam.id}/shared`} className="text-sm font-medium text-brand-600 hover:text-brand-500 transition-colors shrink-0">
                       Take exam →
                     </Link>
                   )}

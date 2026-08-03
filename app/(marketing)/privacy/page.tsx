@@ -42,7 +42,7 @@ export default function PrivacyPage() {
           When you use AI-powered features (such as AI Performance Feedback on SAT practice results), your exam performance data is sent to an AI provider to generate a response. This data includes your answers, scores, and domain-level performance breakdown. We do not include personally identifiable information such as your name or email in AI prompts.
         </LegalP>
         <LegalP>
-          See our <Link href="/ai-disclosure" className="text-indigo-600 hover:underline">AI Disclosure</Link> for full details on how AI is used and its limitations.
+          See our <Link href="/ai-disclosure" className="text-brand-600 hover:underline">AI Disclosure</Link> for full details on how AI is used and its limitations.
         </LegalP>
       </LegalSection>
 
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
       <LegalSection title="8. Children's Privacy">
         <LegalP>
           MockMate is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected information from a child under 13, please contact us immediately at{' '}
-          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">ranvi@mockmateapp.com</a>{' '}
+          <a href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">ranvi@mockmateapp.com</a>{' '}
           and we will delete it promptly.
         </LegalP>
         <LegalP>
@@ -109,7 +109,7 @@ export default function PrivacyPage() {
         ]} />
         <LegalP>
           To exercise any of these rights, contact us at{' '}
-          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">ranvi@mockmateapp.com</a>.
+          <a href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">ranvi@mockmateapp.com</a>.
         </LegalP>
       </LegalSection>
 
@@ -136,7 +136,7 @@ export default function PrivacyPage() {
       <LegalSection title="Contact Us">
         <LegalP>
           For privacy-related questions or concerns, contact us at{' '}
-          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+          <a href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">
             ranvi@mockmateapp.com
           </a>.
         </LegalP>

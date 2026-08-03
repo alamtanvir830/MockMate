@@ -71,7 +71,7 @@ export function SATFormSelectorModal({
                     : completed
                       ? 'border-emerald-200 bg-emerald-50/30'
                       : isRec
-                        ? 'border-indigo-200 bg-indigo-50/30'
+                        ? 'border-brand-200 bg-brand-50/30'
                         : 'border-slate-200 bg-white',
                 )}
               >
@@ -81,7 +81,7 @@ export function SATFormSelectorModal({
                     'h-8 w-8 shrink-0 rounded-lg flex items-center justify-center text-sm font-bold',
                     !form.accessible
                       ? 'bg-slate-100 text-slate-400'
-                      : 'bg-indigo-50 text-indigo-600',
+                      : 'bg-brand-50 text-brand-600',
                   )}>
                     {form.formNumber}
                   </div>
@@ -96,7 +96,7 @@ export function SATFormSelectorModal({
                         SAT Form {form.formNumber}
                       </span>
                       {isRec && form.accessible && !completed && (
-                        <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full border bg-indigo-50 text-indigo-600 border-indigo-200">
+                        <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full border bg-brand-50 text-brand-600 border-brand-200">
                           Recommended
                         </span>
                       )}
@@ -164,7 +164,7 @@ export function SATFormSelectorModal({
                       <Link
                         href={form.startRoute}
                         onClick={onClose}
-                        className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 whitespace-nowrap"
+                        className="text-xs font-semibold text-brand-600 hover:text-brand-800 whitespace-nowrap"
                       >
                         Take Form {form.formNumber} →
                       </Link>

@@ -458,9 +458,9 @@ export function CreateExamForm() {
               className={cn(
                 'flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-semibold transition-colors',
                 s.id === step
-                  ? 'bg-indigo-600 text-white'
+                  ? 'bg-brand-600 text-white'
                   : s.id < step
-                  ? 'bg-indigo-100 text-indigo-600 hover:bg-indigo-200 cursor-pointer'
+                  ? 'bg-brand-100 text-brand-600 hover:bg-brand-200 cursor-pointer'
                   : 'bg-slate-100 text-slate-400 cursor-default',
               )}
             >
@@ -475,7 +475,7 @@ export function CreateExamForm() {
             <span
               className={cn(
                 'ml-2 text-xs font-medium hidden sm:block',
-                s.id === step ? 'text-indigo-700' : s.id < step ? 'text-indigo-500' : 'text-slate-400',
+                s.id === step ? 'text-brand-700' : s.id < step ? 'text-brand-500' : 'text-slate-400',
               )}
             >
               {s.label}
@@ -484,7 +484,7 @@ export function CreateExamForm() {
               <div
                 className={cn(
                   'flex-1 h-0.5 mx-3',
-                  s.id < step ? 'bg-indigo-200' : 'bg-slate-200',
+                  s.id < step ? 'bg-brand-200' : 'bg-slate-200',
                 )}
               />
             )}
@@ -591,8 +591,8 @@ export function CreateExamForm() {
                 className={cn(
                   'cursor-pointer rounded-lg border-2 border-dashed px-6 py-8 text-center transition-colors',
                   isDragOver
-                    ? 'border-indigo-400 bg-indigo-50'
-                    : 'border-slate-200 hover:border-indigo-300 hover:bg-slate-50',
+                    ? 'border-brand-400 bg-brand-50'
+                    : 'border-slate-200 hover:border-brand-300 hover:bg-slate-50',
                 )}
               >
                 <div className="flex flex-col items-center gap-2">
@@ -770,7 +770,7 @@ export function CreateExamForm() {
                   placeholder="Enter language"
                   value={customLanguage}
                   onChange={(e) => setCustomLanguage(e.target.value)}
-                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                  className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-400"
                 />
               )}
             </div>
@@ -794,8 +794,8 @@ export function CreateExamForm() {
                     className={cn(
                       'flex-1 rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors',
                       wantsAdvancedCustomization === true
-                        ? 'border-indigo-600 bg-indigo-600 text-white'
-                        : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                        ? 'border-brand-600 bg-brand-600 text-white'
+                        : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                     )}
                   >
                     Yes, customize my exam
@@ -851,7 +851,7 @@ export function CreateExamForm() {
                                 placeholder="0"
                                 value={adv[key]}
                                 onChange={(e) => updateAdv(key, e.target.value)}
-                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
                               />
                               <span className="text-xs text-slate-400">%</span>
                             </div>
@@ -876,8 +876,8 @@ export function CreateExamForm() {
                             className={cn(
                               'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
                               adv.overallDifficulty === opt
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                                ? 'border-brand-600 bg-brand-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                             )}
                           >
                             {opt}
@@ -905,7 +905,7 @@ export function CreateExamForm() {
                                 placeholder="0"
                                 value={adv[key]}
                                 onChange={(e) => updateAdv(key, e.target.value)}
-                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
                               />
                               <span className="text-xs text-slate-400">%</span>
                             </div>
@@ -945,7 +945,7 @@ export function CreateExamForm() {
                                 placeholder="0"
                                 value={adv[key]}
                                 onChange={(e) => updateAdv(key, e.target.value)}
-                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
                               />
                               <span className="text-xs text-slate-400">%</span>
                             </div>
@@ -979,7 +979,7 @@ export function CreateExamForm() {
                                 placeholder="0"
                                 value={adv[key]}
                                 onChange={(e) => updateAdv(key, e.target.value)}
-                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                                className="w-full rounded-md border border-slate-200 px-2 py-1.5 text-sm focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
                               />
                               <span className="text-xs text-slate-400">%</span>
                             </div>
@@ -1004,8 +1004,8 @@ export function CreateExamForm() {
                             className={cn(
                               'flex-1 rounded-lg border px-3 py-2 text-sm font-medium transition-colors',
                               adv.answerChoiceCount === n
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                                ? 'border-brand-600 bg-brand-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                             )}
                           >
                             {n} choices
@@ -1024,8 +1024,8 @@ export function CreateExamForm() {
                             className={cn(
                               'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
                               adv.answerSimilarity === opt
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                                ? 'border-brand-600 bg-brand-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                             )}
                           >
                             {opt}
@@ -1049,8 +1049,8 @@ export function CreateExamForm() {
                               className={cn(
                                 'flex-1 rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
                                 adv.trickiness === opt
-                                  ? 'border-indigo-600 bg-indigo-600 text-white'
-                                  : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                                  ? 'border-brand-600 bg-brand-600 text-white'
+                                  : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                               )}
                             >
                               {opt}
@@ -1073,7 +1073,7 @@ export function CreateExamForm() {
                               placeholder="e.g. 30"
                               value={adv.trickinessPercent}
                               onChange={(e) => updateAdv('trickinessPercent', e.target.value)}
-                              className="w-full rounded-md border border-slate-200 px-3 py-1.5 text-sm focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
+                              className="w-full rounded-md border border-slate-200 px-3 py-1.5 text-sm focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400"
                             />
                             <span className="text-sm text-slate-400">%</span>
                           </div>
@@ -1104,14 +1104,14 @@ export function CreateExamForm() {
                               key={value}
                               className={cn(
                                 'flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-colors',
-                                checked ? 'border-indigo-300 bg-indigo-50' : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
+                                checked ? 'border-brand-300 bg-brand-50' : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
                               )}
                             >
                               <input
                                 type="checkbox"
                                 checked={checked}
                                 onChange={() => toggleAdvMulti('questionSources', value)}
-                                className="h-4 w-4 rounded border-slate-300 text-indigo-600 accent-indigo-600"
+                                className="h-4 w-4 rounded border-slate-300 text-brand-600 accent-brand-600"
                               />
                               <span className="text-sm text-slate-700">{label}</span>
                             </label>
@@ -1136,7 +1136,7 @@ export function CreateExamForm() {
                       <button
                         type="button"
                         onClick={() => advExtraFilesRef.current?.click()}
-                        className="flex items-center gap-2 rounded-lg border border-dashed border-slate-200 px-4 py-3 text-sm text-slate-600 hover:border-indigo-300 hover:bg-indigo-50 transition-colors w-full justify-center"
+                        className="flex items-center gap-2 rounded-lg border border-dashed border-slate-200 px-4 py-3 text-sm text-slate-600 hover:border-brand-300 hover:bg-brand-50 transition-colors w-full justify-center"
                       >
                         <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-4 w-4">
                           <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
@@ -1173,8 +1173,8 @@ export function CreateExamForm() {
                             className={cn(
                               'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
                               adv.repetition === opt
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                                ? 'border-brand-600 bg-brand-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                             )}
                           >
                             {opt}
@@ -1193,8 +1193,8 @@ export function CreateExamForm() {
                             className={cn(
                               'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
                               adv.topicIntegration === opt
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                                ? 'border-brand-600 bg-brand-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                             )}
                           >
                             {opt}
@@ -1213,8 +1213,8 @@ export function CreateExamForm() {
                             className={cn(
                               'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
                               adv.calcIntensity === opt
-                                ? 'border-indigo-600 bg-indigo-600 text-white'
-                                : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                                ? 'border-brand-600 bg-brand-600 text-white'
+                                : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                             )}
                           >
                             {opt}
@@ -1238,8 +1238,8 @@ export function CreateExamForm() {
                               className={cn(
                                 'rounded-lg border px-4 py-2 text-sm font-medium transition-colors',
                                 checked
-                                  ? 'border-indigo-600 bg-indigo-600 text-white'
-                                  : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                                  ? 'border-brand-600 bg-brand-600 text-white'
+                                  : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                               )}
                             >
                               {opt}
@@ -1267,7 +1267,7 @@ export function CreateExamForm() {
                         value={adv.professorStyle}
                         onChange={(e) => updateAdv('professorStyle', e.target.value)}
                         rows={3}
-                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 resize-none"
+                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400 resize-none"
                       />
                     </div>
 
@@ -1281,7 +1281,7 @@ export function CreateExamForm() {
                         value={adv.commonMistakes}
                         onChange={(e) => updateAdv('commonMistakes', e.target.value)}
                         rows={3}
-                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 resize-none"
+                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400 resize-none"
                       />
                     </div>
 
@@ -1295,7 +1295,7 @@ export function CreateExamForm() {
                         value={adv.highYieldTopics}
                         onChange={(e) => updateAdv('highYieldTopics', e.target.value)}
                         rows={3}
-                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-indigo-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 resize-none"
+                        className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm placeholder:text-slate-400 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400 resize-none"
                       />
                     </div>
                   </div>
@@ -1335,8 +1335,8 @@ export function CreateExamForm() {
                   className={cn(
                     'flex-1 rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors',
                     isTimed
-                      ? 'border-indigo-600 bg-indigo-600 text-white'
-                      : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                      ? 'border-brand-600 bg-brand-600 text-white'
+                      : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                   )}
                 >
                   Timed
@@ -1393,7 +1393,7 @@ export function CreateExamForm() {
                           className={cn(
                             'flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-colors',
                             checked
-                              ? 'border-indigo-300 bg-indigo-50'
+                              ? 'border-brand-300 bg-brand-50'
                               : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50',
                           )}
                         >
@@ -1407,7 +1407,7 @@ export function CreateExamForm() {
                                   : [...prev, opt.value],
                               )
                             }
-                            className="h-4 w-4 rounded border-slate-300 text-indigo-600 accent-indigo-600"
+                            className="h-4 w-4 rounded border-slate-300 text-brand-600 accent-brand-600"
                           />
                           <span className="text-sm text-slate-700">{opt.label}</span>
                         </label>
@@ -1421,12 +1421,12 @@ export function CreateExamForm() {
               )}
 
               {standardizedExam === 'shsat' && (
-                <div className="rounded-lg border border-indigo-200 bg-indigo-50 p-4 space-y-3">
+                <div className="rounded-lg border border-brand-200 bg-brand-50 p-4 space-y-3">
                   <div>
-                    <p className="text-sm font-semibold text-indigo-900">
+                    <p className="text-sm font-semibold text-brand-900">
                       SHSAT Adaptive Mode (2026 format)
                     </p>
-                    <p className="text-xs text-indigo-700 mt-0.5">
+                    <p className="text-xs text-brand-700 mt-0.5">
                       Questions are tagged easy / medium / hard. During the exam, the difficulty
                       adjusts based on your answers — correct responses unlock harder questions,
                       incorrect responses step down to easier ones.
@@ -1438,8 +1438,8 @@ export function CreateExamForm() {
                     className={cn(
                       'flex w-full items-center justify-between rounded-lg border px-4 py-3 text-sm font-medium transition-colors',
                       isAdaptive
-                        ? 'border-indigo-400 bg-indigo-600 text-white'
-                        : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                        ? 'border-brand-400 bg-brand-600 text-white'
+                        : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                     )}
                   >
                     <span>Enable adaptive mode</span>
@@ -1447,7 +1447,7 @@ export function CreateExamForm() {
                       className={cn(
                         'ml-3 inline-flex h-5 w-9 shrink-0 rounded-full border-2 transition-colors',
                         isAdaptive
-                          ? 'border-indigo-300 bg-white/30'
+                          ? 'border-brand-300 bg-white/30'
                           : 'border-slate-300 bg-slate-200',
                       )}
                     >
@@ -1460,7 +1460,7 @@ export function CreateExamForm() {
                     </span>
                   </button>
                   {!isAdaptive && (
-                    <p className="text-xs text-indigo-700">
+                    <p className="text-xs text-brand-700">
                       Adaptive mode is off — questions will be generated but presented in a fixed order.
                     </p>
                   )}
@@ -1509,8 +1509,8 @@ export function CreateExamForm() {
                 className={cn(
                   'flex-1 rounded-lg border px-4 py-3 text-sm font-medium transition-colors',
                   wantsAccountability === true
-                    ? 'border-indigo-600 bg-indigo-600 text-white'
-                    : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                    ? 'border-brand-600 bg-brand-600 text-white'
+                    : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                 )}
               >
                 Yes, add friends
@@ -1569,7 +1569,7 @@ export function CreateExamForm() {
                   <button
                     type="button"
                     onClick={() => setVisibleFriends((v) => Math.min(v + 1, 3))}
-                    className="flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+                    className="flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors"
                   >
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -1616,8 +1616,8 @@ export function CreateExamForm() {
                   className={cn(
                     'flex-1 rounded-lg border px-4 py-3 text-sm font-medium transition-colors',
                     wantsToShare === true
-                      ? 'border-indigo-600 bg-indigo-600 text-white'
-                      : 'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:bg-indigo-50',
+                      ? 'border-brand-600 bg-brand-600 text-white'
+                      : 'border-slate-200 bg-white text-slate-700 hover:border-brand-200 hover:bg-brand-50',
                   )}
                 >
                   Yes, share with group
@@ -1630,7 +1630,7 @@ export function CreateExamForm() {
 
               {wantsToShare === true && (
                 <div className="space-y-4 mt-4">
-                  <div className="rounded-lg bg-indigo-50 border border-indigo-200 px-4 py-3 text-sm text-indigo-800">
+                  <div className="rounded-lg bg-brand-50 border border-brand-200 px-4 py-3 text-sm text-brand-800">
                     These people will be linked to the exact same generated exam — so they can access or take the same questions you created.
                   </div>
 
@@ -1687,7 +1687,7 @@ export function CreateExamForm() {
                   <button
                     type="button"
                     onClick={addSharedPerson}
-                    className="flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+                    className="flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors"
                   >
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

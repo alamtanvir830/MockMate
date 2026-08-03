@@ -18,7 +18,7 @@ const CATEGORY_COLORS: Record<NoteCategory, string> = {
   'General notes': 'bg-slate-100 text-slate-700',
   'Study planner': 'bg-blue-100 text-blue-700',
   'Professor notes': 'bg-purple-100 text-purple-700',
-  'Lecture notes': 'bg-indigo-100 text-indigo-700',
+  'Lecture notes': 'bg-brand-100 text-brand-700',
   'Speaker notes': 'bg-teal-100 text-teal-700',
   'Exam reminders': 'bg-amber-100 text-amber-700',
   'Other': 'bg-rose-100 text-rose-700',
@@ -149,7 +149,7 @@ export function NotesClient({ initialNotes }: Props) {
             <h1 className="text-lg font-semibold text-slate-900">Personal Notes</h1>
             <button
               onClick={() => setSelectedId('__new__')}
-              className="flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-700 transition-colors"
+              className="flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-700 transition-colors"
             >
               <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -166,7 +166,7 @@ export function NotesClient({ initialNotes }: Props) {
               placeholder="Search notes…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              className="w-full pl-9 pr-3 py-1.5 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-300"
             />
           </div>
         </div>
@@ -182,7 +182,7 @@ export function NotesClient({ initialNotes }: Props) {
               key={note.id}
               onClick={() => setSelectedId(note.id)}
               className={`w-full text-left px-4 py-3 border-b border-slate-100 hover:bg-slate-50 transition-colors ${
-                selectedId === note.id ? 'bg-indigo-50 border-l-2 border-l-indigo-500' : ''
+                selectedId === note.id ? 'bg-brand-50 border-l-2 border-l-brand-500' : ''
               }`}
             >
               <p className="text-sm font-medium text-slate-900 truncate">{note.title || 'Untitled'}</p>
@@ -259,7 +259,7 @@ export function NotesClient({ initialNotes }: Props) {
               placeholder="Start writing…"
               value={content}
               onChange={(e) => handleContentChange(e.target.value)}
-              className="flex-1 w-full resize-none bg-white border border-slate-200 rounded-xl p-4 text-sm text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-300 leading-relaxed"
+              className="flex-1 w-full resize-none bg-white border border-slate-200 rounded-xl p-4 text-sm text-slate-700 placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-300 leading-relaxed"
             />
 
             {/* Footer */}
@@ -281,7 +281,7 @@ export function NotesClient({ initialNotes }: Props) {
                 <button
                   onClick={handleCreate}
                   disabled={saving}
-                  className="rounded-lg bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+                  className="rounded-lg bg-brand-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-brand-700 disabled:opacity-50 transition-colors"
                 >
                   {saving ? 'Saving…' : 'Save note'}
                 </button>

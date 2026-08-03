@@ -128,7 +128,7 @@ const DIAGNOSTIC_STORAGE_KEY = 'sat_rw_diagnostic_progress'
 
 const CAPSTONE_BADGE_CLASS = 'bg-blue-50 text-blue-600 border-blue-200'
 const MASTERY_BADGE_CLASS = 'bg-rose-50 text-rose-500 border-rose-200'
-const FULL_SAT_BADGE_CLASS = 'bg-indigo-50 text-indigo-600 border-indigo-200'
+const FULL_SAT_BADGE_CLASS = 'bg-brand-50 text-brand-600 border-brand-200'
 const TRAINER_BADGE_CLASS = 'bg-emerald-50 text-emerald-700 border-emerald-200'
 
 const PREMIUM_LOCKED: Pick<PathItem, 'status' | 'statusLabel' | 'statusBadgeClass'> = {

@@ -117,11 +117,11 @@ function SetupScreen({ onStart }: { onStart: (mode: Mode, filter: DomainFilter) 
                 className={cn(
                   'rounded-lg border p-3 text-left transition-colors',
                   mode === m.value
-                    ? 'border-indigo-500 bg-indigo-50'
+                    ? 'border-brand-500 bg-brand-50'
                     : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50',
                 )}
               >
-                <p className={cn('text-sm font-semibold', mode === m.value ? 'text-indigo-700' : 'text-slate-800')}>
+                <p className={cn('text-sm font-semibold', mode === m.value ? 'text-brand-700' : 'text-slate-800')}>
                   {m.label}
                 </p>
                 <p className="text-[11px] text-slate-500 mt-0.5">{m.sub}</p>
@@ -140,7 +140,7 @@ function SetupScreen({ onStart }: { onStart: (mode: Mode, filter: DomainFilter) 
                 className={cn(
                   'rounded-full border px-3 py-1 text-[12px] font-medium transition-colors',
                   filter === f.value
-                    ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
+                    ? 'border-brand-500 bg-brand-50 text-brand-700'
                     : 'border-slate-200 text-slate-600 hover:border-slate-300',
                 )}
               >
@@ -150,13 +150,13 @@ function SetupScreen({ onStart }: { onStart: (mode: Mode, filter: DomainFilter) 
           </div>
         </div>
 
-        <div className="rounded-lg bg-indigo-50 border border-indigo-200 p-3 text-[12px] text-indigo-800">
+        <div className="rounded-lg bg-brand-50 border border-brand-200 p-3 text-[12px] text-brand-800">
           Skill labels are hidden during practice. You&apos;ll see the skill and domain only after answering.
         </div>
 
         <button
           onClick={() => onStart(mode, filter)}
-          className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 transition-colors"
+          className="w-full rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 transition-colors"
         >
           Start {MODE_COUNTS[mode]}-Question Mix →
         </button>
@@ -208,11 +208,11 @@ function SkillCheckPanel({ question, onIdentify, onNext }: SkillCheckProps) {
               {DOMAIN_SKILL_SLUGS[domain].map(slug => {
                 let cls = 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
                 if (revealed) {
-                  if (slug === question.skillSlug) cls = 'border-indigo-500 bg-indigo-50 text-indigo-800 font-semibold'
+                  if (slug === question.skillSlug) cls = 'border-brand-500 bg-brand-50 text-brand-800 font-semibold'
                   else if (slug === selected) cls = 'border-red-300 bg-red-50 text-red-700'
                   else cls = 'border-slate-100 bg-white text-slate-400'
                 } else if (slug === selected) {
-                  cls = 'border-indigo-400 bg-indigo-50 text-indigo-700'
+                  cls = 'border-brand-400 bg-brand-50 text-brand-700'
                 }
                 return (
                   <button
@@ -231,7 +231,7 @@ function SkillCheckPanel({ question, onIdentify, onNext }: SkillCheckProps) {
       </div>
 
       {revealed && (
-        <p className={cn('text-[12px] font-medium', correct ? 'text-indigo-700' : 'text-red-600')}>
+        <p className={cn('text-[12px] font-medium', correct ? 'text-brand-700' : 'text-red-600')}>
           {correct
             ? 'Correct identification!'
             : `This tested ${MATH_SKILL_DISPLAY_NAMES[question.skillSlug as keyof typeof MATH_SKILL_DISPLAY_NAMES] ?? question.skillSlug}.`}
@@ -240,7 +240,7 @@ function SkillCheckPanel({ question, onIdentify, onNext }: SkillCheckProps) {
 
       <button
         onClick={onNext}
-        className="w-full rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold py-2 transition-colors"
+        className="w-full rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold py-2 transition-colors"
       >
         Next Question →
       </button>
@@ -276,7 +276,7 @@ function QuestionCard({ question, index, total, onAnswer }: QuestionCardProps) {
         <span className="text-xs font-medium text-slate-500">Question {index + 1} of {total}</span>
         <div className="h-1.5 flex-1 rounded-full bg-slate-100 overflow-hidden">
           <div
-            className="h-full rounded-full bg-indigo-500 transition-all"
+            className="h-full rounded-full bg-brand-500 transition-all"
             style={{ width: `${(index / total) * 100}%` }}
           />
         </div>
@@ -298,11 +298,11 @@ function QuestionCard({ question, index, total, onAnswer }: QuestionCardProps) {
             const isRight = choice.label === question.correctAnswer
             let cls = 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 text-slate-700'
             if (revealed) {
-              if (isRight) cls = 'border-indigo-500 bg-indigo-50 text-indigo-800'
+              if (isRight) cls = 'border-brand-500 bg-brand-50 text-brand-800'
               else if (isSelected) cls = 'border-red-400 bg-red-50 text-red-700'
               else cls = 'border-slate-200 bg-white text-slate-400'
             } else if (isSelected) {
-              cls = 'border-indigo-400 bg-indigo-50 text-indigo-700'
+              cls = 'border-brand-400 bg-brand-50 text-brand-700'
             }
             return (
               <button
@@ -324,7 +324,7 @@ function QuestionCard({ question, index, total, onAnswer }: QuestionCardProps) {
         {revealed && (
           <div className={cn(
             'rounded-lg border p-3 text-sm',
-            isCorrect ? 'border-indigo-200 bg-indigo-50 text-indigo-800' : 'border-red-200 bg-red-50 text-red-800',
+            isCorrect ? 'border-brand-200 bg-brand-50 text-brand-800' : 'border-red-200 bg-red-50 text-red-800',
           )}>
             <p className="font-semibold mb-1">{isCorrect ? 'Correct' : 'Incorrect'}</p>
             <p className="text-[13px] leading-relaxed">{question.explanation}</p>
@@ -388,11 +388,11 @@ function SummaryScreen({ questions, answers, onRestart }: SummaryProps) {
 
       <div className={cn(
         'rounded-xl border p-5 text-center',
-        pct >= 85 ? 'border-indigo-300 bg-indigo-50' : pct >= 70 ? 'border-blue-200 bg-blue-50' : 'border-amber-200 bg-amber-50',
+        pct >= 85 ? 'border-brand-300 bg-brand-50' : pct >= 70 ? 'border-blue-200 bg-blue-50' : 'border-amber-200 bg-amber-50',
       )}>
         <p className={cn(
           'text-4xl font-bold',
-          pct >= 85 ? 'text-indigo-700' : pct >= 70 ? 'text-blue-700' : 'text-amber-700',
+          pct >= 85 ? 'text-brand-700' : pct >= 70 ? 'text-blue-700' : 'text-amber-700',
         )}>{pct}%</p>
         <p className="text-sm text-slate-600 mt-1">{correct} of {total} correct</p>
       </div>
@@ -412,7 +412,7 @@ function SummaryScreen({ questions, answers, onRestart }: SummaryProps) {
                 </span>
                 <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                   <div
-                    className={cn('h-full rounded-full', p >= 80 ? 'bg-indigo-500' : p >= 60 ? 'bg-blue-400' : 'bg-amber-400')}
+                    className={cn('h-full rounded-full', p >= 80 ? 'bg-brand-500' : p >= 60 ? 'bg-blue-400' : 'bg-amber-400')}
                     style={{ width: `${p}%` }}
                   />
                 </div>
@@ -431,12 +431,12 @@ function SummaryScreen({ questions, answers, onRestart }: SummaryProps) {
             const p = Math.round((data.correct / data.total) * 100)
             return (
               <div key={slug} className="flex items-center gap-3">
-                <Link href={`/sat-math-academy/lesson/${slug}`} className="text-[12px] text-indigo-600 hover:underline w-44 shrink-0 truncate">
+                <Link href={`/sat-math-academy/lesson/${slug}`} className="text-[12px] text-brand-600 hover:underline w-44 shrink-0 truncate">
                   {data.title}
                 </Link>
                 <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
                   <div
-                    className={cn('h-full rounded-full', p >= 80 ? 'bg-indigo-500' : p >= 60 ? 'bg-blue-400' : 'bg-amber-400')}
+                    className={cn('h-full rounded-full', p >= 80 ? 'bg-brand-500' : p >= 60 ? 'bg-blue-400' : 'bg-amber-400')}
                     style={{ width: `${p}%` }}
                   />
                 </div>
@@ -450,7 +450,7 @@ function SummaryScreen({ questions, answers, onRestart }: SummaryProps) {
       <div className="flex gap-3">
         <button
           onClick={onRestart}
-          className="flex-1 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 transition-colors"
+          className="flex-1 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 transition-colors"
         >
           Practice Again
         </button>

@@ -201,7 +201,7 @@ export function PremiumPlans({
                     'mt-6 w-full rounded-xl py-2.5 text-[14px] font-bold transition-colors disabled:opacity-60 disabled:cursor-not-allowed',
                     plan.featured
                       ? 'bg-amber-500 hover:bg-amber-600 text-white'
-                      : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                      : 'bg-brand-600 hover:bg-brand-700 text-white'
                   )}
                 >
                   {isLoading ? 'Opening checkout…' : plan.buttonLabel}

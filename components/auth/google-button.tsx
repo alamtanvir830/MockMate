@@ -75,7 +75,7 @@ export function GoogleButton({ next }: GoogleButtonProps) {
           'transition-colors',
           'hover:bg-slate-50 hover:border-slate-400',
           'active:bg-slate-100',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2',
           'disabled:cursor-not-allowed disabled:opacity-60',
         ].join(' ')}
       >

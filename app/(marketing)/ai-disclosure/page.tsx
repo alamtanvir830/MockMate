@@ -55,7 +55,7 @@ export default function AIDisclosurePage() {
           SAT practice scores on MockMate are calculated using a proprietary scoring algorithm, not by AI. However, AI may reference these scores when generating feedback. These scores are estimates only — they are not official SAT scores and do not predict your actual SAT score with certainty.
         </LegalP>
         <LegalP>
-          See our <Link href="/sat-disclaimer" className="text-indigo-600 hover:underline">SAT Disclaimer</Link> for more information about our SAT practice content.
+          See our <Link href="/sat-disclaimer" className="text-brand-600 hover:underline">SAT Disclaimer</Link> for more information about our SAT practice content.
         </LegalP>
       </LegalSection>
 
@@ -65,13 +65,13 @@ export default function AIDisclosurePage() {
         </LegalP>
         <LegalP>
           If you identify an error in an AI-generated question or explanation, please report it to{' '}
-          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">ranvi@mockmateapp.com</a>.
+          <a href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">ranvi@mockmateapp.com</a>.
         </LegalP>
       </LegalSection>
 
       <LegalSection title="Data Privacy in AI Processing">
         <LegalP>
-          Data sent to AI providers for processing is subject to those providers' data processing terms. MockMate does not use your exam content or performance data to train AI models. For full details on data handling, see our <Link href="/privacy" className="text-indigo-600 hover:underline">Privacy Policy</Link>.
+          Data sent to AI providers for processing is subject to those providers' data processing terms. MockMate does not use your exam content or performance data to train AI models. For full details on data handling, see our <Link href="/privacy" className="text-brand-600 hover:underline">Privacy Policy</Link>.
         </LegalP>
       </LegalSection>
 
@@ -84,7 +84,7 @@ export default function AIDisclosurePage() {
       <LegalSection title="Contact">
         <LegalP>
           Questions about our use of AI? Contact us at{' '}
-          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+          <a href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">
             ranvi@mockmateapp.com
           </a>.
         </LegalP>

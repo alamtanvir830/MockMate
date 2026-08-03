@@ -3,6 +3,22 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* ── MockMate brand palette (#44A5F0) ─────────────────────────────────── */
+  --color-brand-50: #F3FAFF;
+  --color-brand-100: #E3F3FF;
+  --color-brand-200: #C6E7FF;
+  --color-brand-300: #99D3FA;
+  --color-brand-400: #6ABCF5;
+  --color-brand-500: #44A5F0;
+  --color-brand-600: #2D8FD4;
+  --color-brand-700: #1F74B8;
+  --color-brand-800: #185D94;
+  --color-brand-900: #164D78;
+}
+
+:root {
+  --brand-focus-ring: rgba(68, 165, 240, 0.35);
 }
 
 * {

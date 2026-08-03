@@ -325,7 +325,7 @@ export function PerformanceClient({ entries: initialEntries, practiceExams }: Pr
             <p className="mt-1 text-sm text-slate-500">Add your first real exam score to start tracking your progress.</p>
             <button
               onClick={openAdd}
-              className="mt-4 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+              className="mt-4 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors"
             >
               Add entry
             </button>
@@ -395,7 +395,7 @@ export function PerformanceClient({ entries: initialEntries, practiceExams }: Pr
                     {/* Comparison insight */}
                     {linked && (
                       <div className="mt-2 flex flex-wrap gap-2">
-                        <span className="inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 text-xs text-indigo-700">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-brand-50 border border-brand-100 px-2.5 py-0.5 text-xs text-brand-700">
                           Practice: {practicePct !== null ? `${practicePct}%` : 'N/A'}
                         </span>
                         {diff !== null && (

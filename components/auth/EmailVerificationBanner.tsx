@@ -26,7 +26,7 @@ export function EmailVerificationBanner({ email }: { email: string }) {
           <button
             type="submit"
             disabled={pending}
-            className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 disabled:opacity-50 transition-colors"
+            className="text-xs font-semibold text-brand-600 hover:text-brand-700 disabled:opacity-50 transition-colors"
           >
             {pending ? 'Sending…' : 'Send verification email'}
           </button>

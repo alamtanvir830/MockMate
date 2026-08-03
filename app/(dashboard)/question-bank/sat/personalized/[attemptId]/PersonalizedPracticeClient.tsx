@@ -113,7 +113,7 @@ function SetCard({
       <div className="flex gap-2">
         <button
           onClick={() => onBegin(card.practiceUrl)}
-          className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[13px] py-2.5 rounded-lg transition-colors"
+          className="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[13px] py-2.5 rounded-lg transition-colors"
         >
           {isCompleted ? 'Retake' : 'Begin'}
         </button>
@@ -210,7 +210,7 @@ export function PersonalizedPracticeClient() {
     return (
       <div className="flex items-center justify-center min-h-[40vh]">
         <div className="flex items-center gap-3 text-sm text-slate-500">
-          <svg className="animate-spin h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24">
+          <svg className="animate-spin h-4 w-4 text-brand-600" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
           </svg>
@@ -224,7 +224,7 @@ export function PersonalizedPracticeClient() {
     return (
       <div className="max-w-2xl mx-auto py-16 px-4 text-center">
         <p className="text-slate-500 mb-4">This attempt could not be found.</p>
-        <Link href="/question-bank/sat" className="text-indigo-600 hover:underline text-[13px]">
+        <Link href="/question-bank/sat" className="text-brand-600 hover:underline text-[13px]">
           Back to SAT Question Bank
         </Link>
       </div>
@@ -255,12 +255,12 @@ export function PersonalizedPracticeClient() {
       </div>
 
       {/* Score summary strip */}
-      <div className="bg-gradient-to-r from-indigo-50 to-violet-50 border border-indigo-100 rounded-xl p-4 flex items-center gap-6 flex-wrap">
+      <div className="bg-gradient-to-r from-brand-50 to-violet-50 border border-brand-100 rounded-xl p-4 flex items-center gap-6 flex-wrap">
         <div className="text-center">
-          <p className="text-[26px] font-bold text-indigo-700">{attempt.totalScore}</p>
-          <p className="text-[10px] text-indigo-400 uppercase tracking-widest">Total</p>
+          <p className="text-[26px] font-bold text-brand-700">{attempt.totalScore}</p>
+          <p className="text-[10px] text-brand-400 uppercase tracking-widest">Total</p>
         </div>
-        <div className="h-8 w-px bg-indigo-200" />
+        <div className="h-8 w-px bg-brand-200" />
         <div className="text-center">
           <p className="text-[20px] font-bold text-violet-700">{attempt.rwScaled}</p>
           <p className="text-[10px] text-violet-400 uppercase tracking-widest">R&amp;W</p>
@@ -272,7 +272,7 @@ export function PersonalizedPracticeClient() {
         <div className="flex-1" />
         <Link
           href={`/premade/sat/${attempt.examId.replace('sat-', '')}/results/${attempt.id}`}
-          className="text-[12px] font-medium text-indigo-600 hover:underline whitespace-nowrap"
+          className="text-[12px] font-medium text-brand-600 hover:underline whitespace-nowrap"
         >
           View full results →
         </Link>

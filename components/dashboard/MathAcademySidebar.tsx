@@ -126,7 +126,7 @@ const ICONS = {
     </svg>
   ),
   menu: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4 text-indigo-600">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4 text-brand-600">
       <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
     </svg>
   ),
@@ -190,10 +190,10 @@ function NavContent({ pathname, collapsed, isPremium = true, onNavigate, firstFo
   }
 
   const linkBase = cn(
-    'flex items-center rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400',
+    'flex items-center rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400',
   )
-  const activeCls  = 'bg-indigo-50 text-indigo-700 font-semibold'
-  const inactiveCls = 'text-indigo-800 hover:bg-indigo-100 hover:text-indigo-900'
+  const activeCls  = 'bg-brand-50 text-brand-700 font-semibold'
+  const inactiveCls = 'text-brand-800 hover:bg-brand-100 hover:text-brand-900'
 
   // ── Collapsed mode ──────────────────────────────────────────────────────────
   if (collapsed) {
@@ -272,12 +272,12 @@ function NavContent({ pathname, collapsed, isPremium = true, onNavigate, firstFo
         aria-current={isActive ? 'page' : undefined}
         onClick={onNavigate}
         className={cn(
-          'flex items-center gap-2 rounded-lg py-1.5 pl-10 pr-3 text-[13px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400',
-          isActive ? 'text-indigo-700 font-medium bg-indigo-50/60' : 'text-indigo-700 hover:text-indigo-900 hover:bg-indigo-100',
+          'flex items-center gap-2 rounded-lg py-1.5 pl-10 pr-3 text-[13px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400',
+          isActive ? 'text-brand-700 font-medium bg-brand-50/60' : 'text-brand-700 hover:text-brand-900 hover:bg-brand-100',
           locked && 'opacity-60',
         )}
       >
-        <span className={cn('h-1 w-1 rounded-full shrink-0', isActive ? 'bg-indigo-500' : 'bg-indigo-300')} />
+        <span className={cn('h-1 w-1 rounded-full shrink-0', isActive ? 'bg-brand-500' : 'bg-brand-300')} />
         <span className="flex-1 min-w-0 truncate">{label}</span>
         {locked && ICONS.lock}
       </Link>
@@ -298,7 +298,7 @@ function NavContent({ pathname, collapsed, isPremium = true, onNavigate, firstFo
           onClick={() => setOpen(!open)}
           aria-expanded={open}
           className={cn(
-            'flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400',
+            'flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400',
             isActiveRoute ? activeCls : inactiveCls,
           )}
         >
@@ -328,20 +328,20 @@ function NavContent({ pathname, collapsed, isPremium = true, onNavigate, firstFo
       {expandedLink('/sat-math-academy', 'Course Home', ICONS.home, true, undefined, false)}
       {expandedLink('/sat-math-academy/diagnostic', 'Math Diagnostic', ICONS.diagnostic)}
 
-      <div className="my-1 border-t border-indigo-200/70" />
+      <div className="my-1 border-t border-brand-200/70" />
 
       {domainSection('Algebra', ICONS.algebra, algebraOpen, setAlgebraOpen, isAlgebraRoute, ALGEBRA_LESSONS)}
       {domainSection('Advanced Math', ICONS.advancedMath, advOpen, setAdvOpen, isAdvRoute, ADVANCED_MATH_LESSONS)}
       {domainSection('Problem-Solving & Data Analysis', ICONS.psda, psdaOpen, setPsdaOpen, isPsdaRoute, PSDA_LESSONS)}
       {domainSection('Geometry & Trigonometry', ICONS.geometry, geoOpen, setGeoOpen, isGeoRoute, GEO_TRIG_LESSONS)}
 
-      <div className="my-1 border-t border-indigo-200/70" />
+      <div className="my-1 border-t border-brand-200/70" />
 
       {expandedLink('/sat-math-academy/desmos-mastery', 'Desmos Mastery', ICONS.desmos)}
       {expandedLink('/sat-math-academy/desmos-sandbox', 'Desmos Sandbox', ICONS.sandbox)}
       {expandedLink('/sat-math-academy/review', 'Review Queue', ICONS.review)}
 
-      <div className="my-1 border-t border-indigo-200/70" />
+      <div className="my-1 border-t border-brand-200/70" />
 
       {expandedLink('/sat-math-academy/mixed-practice', 'Mixed Practice', ICONS.mixed)}
       {expandedLink('/sat-math-academy/capstones', 'Math Capstones', ICONS.capstone)}
@@ -374,17 +374,17 @@ export function MathAcademySidebar({ isPremium = true }: { isPremium?: boolean }
   return (
     <aside className={cn(
       'hidden md:flex flex-col shrink-0',
-      'border-r border-indigo-200 bg-indigo-50',
+      'border-r border-brand-200 bg-brand-50',
       'overflow-y-auto overflow-x-visible',
       'transition-[width] duration-200 ease-in-out',
       collapsed ? 'w-[60px]' : 'w-56',
     )}>
       <div className={cn(
-        'flex h-12 shrink-0 items-center border-b border-indigo-200',
+        'flex h-12 shrink-0 items-center border-b border-brand-200',
         collapsed ? 'justify-center px-1' : 'justify-between px-3',
       )}>
         {!collapsed && (
-          <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-700 truncate">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-brand-700 truncate">
             Math Academy
           </span>
         )}
@@ -392,7 +392,7 @@ export function MathAcademySidebar({ isPremium = true }: { isPremium?: boolean }
           onClick={toggleCollapsed}
           aria-label={collapsed ? 'Expand academy navigation' : 'Collapse academy navigation'}
           aria-expanded={!collapsed}
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-indigo-500 hover:bg-indigo-100 hover:text-indigo-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-brand-500 hover:bg-brand-100 hover:text-brand-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
         >
           {collapsed ? ICONS.chevronRight : ICONS.chevronLeft}
         </button>
@@ -439,13 +439,13 @@ function MobileDrawer({ open, onClose, isPremium = true }: { open: boolean; onCl
         role="dialog"
         aria-modal="true"
         aria-label="SAT Math & Desmos Academy navigation"
-        className="fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-indigo-50 shadow-xl"
+        className="fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-brand-50 shadow-xl"
       >
-        <div className="flex h-14 items-center justify-between border-b border-indigo-200 px-4">
-          <span className="text-sm font-semibold text-indigo-800">SAT Math & Desmos Academy</span>
+        <div className="flex h-14 items-center justify-between border-b border-brand-200 px-4">
+          <span className="text-sm font-semibold text-brand-800">SAT Math & Desmos Academy</span>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-indigo-400 hover:bg-indigo-100 hover:text-indigo-600 transition-colors"
+            className="rounded-lg p-1.5 text-brand-400 hover:bg-brand-100 hover:text-brand-600 transition-colors"
             aria-label="Close academy menu"
           >
             {ICONS.close}
@@ -468,7 +468,7 @@ export function MathAcademyMobileMenu({ isPremium = true }: { isPremium?: boolea
       <div className="md:hidden mb-4">
         <button
           onClick={() => setOpen(true)}
-          className="inline-flex items-center gap-2 rounded-lg border border-indigo-200 bg-indigo-50 px-3.5 py-2 text-sm font-medium text-indigo-800 hover:bg-indigo-100 transition-colors"
+          className="inline-flex items-center gap-2 rounded-lg border border-brand-200 bg-brand-50 px-3.5 py-2 text-sm font-medium text-brand-800 hover:bg-brand-100 transition-colors"
           aria-label="Open Math Academy navigation menu"
         >
           {ICONS.menu}

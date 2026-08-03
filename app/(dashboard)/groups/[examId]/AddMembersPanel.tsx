@@ -139,7 +139,7 @@ export function AddMembersPanel({ examId, existingEmails }: Props) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+        className="flex items-center gap-2 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors"
       >
         <svg
           fill="none"
@@ -222,7 +222,7 @@ export function AddMembersPanel({ examId, existingEmails }: Props) {
             <button
               type="button"
               onClick={addRow}
-              className="flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+              className="flex items-center gap-1.5 text-sm font-medium text-brand-600 hover:text-brand-700 transition-colors"
             >
               <svg
                 fill="none"

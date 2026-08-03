@@ -30,7 +30,7 @@ export default async function SATFreeTrialPage() {
               <>
                 <p className="text-[14px] font-semibold text-slate-900 mb-2">You already have SAT Premium</p>
                 <p className="text-[12px] text-slate-500 mb-4">Your account already has full access.</p>
-                <Link href="/premade/sat" className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[13px] py-2.5 rounded-xl text-center transition-colors">
+                <Link href="/premade/sat" className="block w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[13px] py-2.5 rounded-xl text-center transition-colors">
                   View SAT Practice Forms
                 </Link>
               </>
@@ -39,7 +39,7 @@ export default async function SATFreeTrialPage() {
               <>
                 <p className="text-[14px] font-semibold text-slate-900 mb-2">Trial Already Claimed</p>
                 <p className="text-[12px] text-slate-500 mb-4">You&apos;ve already used your free trial. Upgrade to keep full access.</p>
-                <Link href="/billing" className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[13px] py-2.5 rounded-xl text-center transition-colors">
+                <Link href="/billing" className="block w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[13px] py-2.5 rounded-xl text-center transition-colors">
                   View Plans
                 </Link>
               </>
@@ -48,7 +48,7 @@ export default async function SATFreeTrialPage() {
               <>
                 <p className="text-[14px] font-semibold text-slate-900 mb-2">Complete a Free SAT Exam First</p>
                 <p className="text-[12px] text-slate-500 mb-4">Take a free practice exam to unlock this offer. The trial is designed for students who&apos;ve already practiced.</p>
-                <Link href="/premade/sat" className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[13px] py-2.5 rounded-xl text-center transition-colors">
+                <Link href="/premade/sat" className="block w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[13px] py-2.5 rounded-xl text-center transition-colors">
                   Take a Free SAT Practice Exam
                 </Link>
               </>

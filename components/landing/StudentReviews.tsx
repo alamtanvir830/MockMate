@@ -211,7 +211,7 @@ export async function HeroReviewsPanel({ fadeBg }: HeroReviewsPanelProps = {}) {
   return (
     <div className="w-full h-full flex flex-col">
       <div className="mb-3 px-3 pt-3">
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-[#44A5F0] mb-1 leading-snug">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-brand-500 mb-1 leading-snug">
           Student Feedback from MockMate SAT Practice Forms
         </p>
         <p className="text-xs font-semibold text-slate-700">

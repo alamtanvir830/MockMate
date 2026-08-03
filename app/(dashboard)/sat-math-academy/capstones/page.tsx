@@ -74,7 +74,7 @@ export default function MathCapstonesPage() {
             'Capstone attempts do not appear in your SAT score history.',
           ].map(item => (
             <li key={item} className="flex items-start gap-2">
-              <span className="text-indigo-500 font-bold mt-0.5 shrink-0">✓</span>
+              <span className="text-brand-500 font-bold mt-0.5 shrink-0">✓</span>
               {item}
             </li>
           ))}
@@ -102,7 +102,7 @@ export default function MathCapstonesPage() {
               </div>
               <Link
                 href={`/sat-math-academy/capstones/${c.id}`}
-                className="shrink-0 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 transition-colors"
+                className="shrink-0 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2 transition-colors"
               >
                 Start Capstone →
               </Link>

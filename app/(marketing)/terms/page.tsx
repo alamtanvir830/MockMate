@@ -50,7 +50,7 @@ export default function TermsPage() {
           MockMate uses AI technology to generate practice questions, provide performance feedback, and offer study recommendations. AI-generated content may be incomplete, inaccurate, or outdated. You should use AI feedback as one of many study aids and not as the sole basis for your preparation.
         </LegalP>
         <LegalP>
-          By using features that generate AI responses, you consent to your exam performance data being processed to produce that feedback. See our <Link href="/ai-disclosure" className="text-indigo-600 hover:underline">AI Disclosure</Link> for full details.
+          By using features that generate AI responses, you consent to your exam performance data being processed to produce that feedback. See our <Link href="/ai-disclosure" className="text-brand-600 hover:underline">AI Disclosure</Link> for full details.
         </LegalP>
       </LegalSection>
 
@@ -87,7 +87,7 @@ export default function TermsPage() {
 
       <LegalSection title="9. Payments and Subscriptions">
         <LegalP>
-          Some features of MockMate may require a paid subscription. By subscribing, you agree to pay all applicable fees. Subscriptions automatically renew unless cancelled before the renewal date. See our <Link href="/refund-policy" className="text-indigo-600 hover:underline">Refund Policy</Link> for information about cancellations and refunds.
+          Some features of MockMate may require a paid subscription. By subscribing, you agree to pay all applicable fees. Subscriptions automatically renew unless cancelled before the renewal date. See our <Link href="/refund-policy" className="text-brand-600 hover:underline">Refund Policy</Link> for information about cancellations and refunds.
         </LegalP>
       </LegalSection>
 
@@ -117,7 +117,7 @@ export default function TermsPage() {
 
       <LegalSection title="13. Privacy">
         <LegalP>
-          Your use of the Service is also governed by our <Link href="/privacy" className="text-indigo-600 hover:underline">Privacy Policy</Link>, which is incorporated into these Terms by reference.
+          Your use of the Service is also governed by our <Link href="/privacy" className="text-brand-600 hover:underline">Privacy Policy</Link>, which is incorporated into these Terms by reference.
         </LegalP>
       </LegalSection>
 
@@ -151,7 +151,7 @@ export default function TermsPage() {
       <LegalSection title="Contact">
         <LegalP>
           For questions about these Terms, contact us at{' '}
-          <a href="mailto:ranvi@mockmateapp.com" className="text-indigo-600 hover:underline">
+          <a href="mailto:ranvi@mockmateapp.com" className="text-brand-600 hover:underline">
             ranvi@mockmateapp.com
           </a>.
         </LegalP>

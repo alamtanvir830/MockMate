@@ -392,7 +392,7 @@ function PracticePromptsSection({ prompts, hasMisses }: { prompts: PracticePromp
                   <div className="flex items-center gap-2 flex-wrap mb-0.5">
                     <span className={cn(
                       'text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0',
-                      p.section === 'rw' ? 'bg-indigo-50 text-indigo-600' : 'bg-emerald-50 text-emerald-700'
+                      p.section === 'rw' ? 'bg-brand-50 text-brand-600' : 'bg-emerald-50 text-emerald-700'
                     )}>
                       {p.section === 'rw' ? 'R&W' : 'Math'}
                     </span>
@@ -2269,7 +2269,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                         'w-full rounded-lg border px-3 py-2.5 text-[13px] text-slate-800 resize-none focus:outline-none focus:ring-2 transition-colors',
                         invalid
                           ? 'bg-red-50 border-red-200 focus:ring-red-200'
-                          : 'bg-white border-slate-200 focus:ring-indigo-200'
+                          : 'bg-white border-slate-200 focus:ring-brand-200'
                       )}
                     />
                     <div className="flex items-center justify-between mt-1">
@@ -2300,7 +2300,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   placeholder="1400 - College Board Exam 2"
                   rows={2}
                   maxLength={300}
-                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13px] text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-200 transition-colors min-h-[44px]"
+                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-[13px] text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-brand-200 transition-colors min-h-[44px]"
                 />
                 <p className="text-[11px] text-slate-400 mt-1">
                   You may include a score, practice-test source, prep company, tutor, book, course, or self-study resource.
@@ -2388,7 +2388,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                               setFeedbackReferrerEmailTouched(false)
                             }
                           }}
-                          className="accent-indigo-600 h-4 w-4"
+                          className="accent-brand-600 h-4 w-4"
                         />
                         <span className="text-[13px] text-slate-700 font-medium">{val ? 'Yes' : 'No'}</span>
                       </label>
@@ -2421,7 +2421,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                           'w-full rounded-lg border px-3 py-2.5 text-[13px] text-slate-800 focus:outline-none focus:ring-2 transition-colors',
                           feedbackReferrerNameTouched && !referralNameValid
                             ? 'bg-red-50 border-red-200 focus:ring-red-200'
-                            : 'bg-white border-slate-200 focus:ring-indigo-200'
+                            : 'bg-white border-slate-200 focus:ring-brand-200'
                         )}
                       />
                       {feedbackReferrerNameTouched && !referralNameValid && (
@@ -2450,7 +2450,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                           'w-full rounded-lg border px-3 py-2.5 text-[13px] text-slate-800 focus:outline-none focus:ring-2 transition-colors',
                           feedbackReferrerEmailTouched && !referralEmailValid
                             ? 'bg-red-50 border-red-200 focus:ring-red-200'
-                            : 'bg-white border-slate-200 focus:ring-indigo-200'
+                            : 'bg-white border-slate-200 focus:ring-brand-200'
                         )}
                       />
                       {feedbackReferrerEmailTouched && !referralEmailValid && (
@@ -2736,20 +2736,20 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   <div className={cn(
                     'flex-1 rounded-xl px-4 py-3.5 flex items-center justify-between gap-3',
                     satUpgradeUnlocked || isAdmin
-                      ? 'bg-gradient-to-r from-indigo-600 to-indigo-700'
+                      ? 'bg-gradient-to-r from-brand-600 to-brand-700'
                       : 'bg-gradient-to-r from-slate-700 to-slate-800'
                   )}>
                     <div className="min-w-0">
-                      <span className="text-[10px] font-bold text-indigo-200 uppercase tracking-widest">SAT PREMIUM</span>
+                      <span className="text-[10px] font-bold text-brand-200 uppercase tracking-widest">SAT PREMIUM</span>
                       <p className="text-white font-bold text-[14px] mt-0.5 mb-1 leading-snug">Personalized Practice Path</p>
-                      <p className="text-indigo-200 text-[11px] leading-snug">
+                      <p className="text-brand-200 text-[11px] leading-snug">
                         Targeted sets from MockMate&apos;s 700+ SAT Question Bank based on the skills you missed on this exam.
                       </p>
                     </div>
                     {satUpgradeUnlocked || isAdmin ? (
                       <Link
                         href={attemptIdRef.current ? `/question-bank/sat/personalized/${attemptIdRef.current}` : '/question-bank/sat'}
-                        className="shrink-0 bg-white text-indigo-700 font-semibold text-[12px] px-3.5 py-2 rounded-lg hover:bg-indigo-50 transition-colors whitespace-nowrap"
+                        className="shrink-0 bg-white text-brand-700 font-semibold text-[12px] px-3.5 py-2 rounded-lg hover:bg-brand-50 transition-colors whitespace-nowrap"
                       >
                         Start practicing →
                       </Link>
@@ -2764,12 +2764,12 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                   </div>
                 </div>
                 {/* "What is the Personalized Practice Path?" explanation box */}
-                <div className="mt-3 bg-indigo-50 border border-indigo-100 rounded-lg p-4 space-y-1.5">
-                  <p className="text-[11px] font-bold text-indigo-700 uppercase tracking-widest">What is the Personalized Practice Path?</p>
-                  <p className="text-[12px] text-indigo-900 leading-relaxed">
+                <div className="mt-3 bg-brand-50 border border-brand-100 rounded-lg p-4 space-y-1.5">
+                  <p className="text-[11px] font-bold text-brand-700 uppercase tracking-widest">What is the Personalized Practice Path?</p>
+                  <p className="text-[12px] text-brand-900 leading-relaxed">
                     Your Personalized Practice Path pulls targeted sets from MockMate&apos;s 700+ SAT Question Bank based on the skills you missed on this exam. It targets your weaknesses — not random topics — so every practice question counts.
                   </p>
-                  <p className="text-[12px] text-indigo-800 font-semibold">Scroll down to start your personalized sets.</p>
+                  <p className="text-[12px] text-brand-800 font-semibold">Scroll down to start your personalized sets.</p>
                 </div>
               </div>
             </div>
@@ -3213,7 +3213,7 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
 
         {/* Unlock CTA — shown on Form 1 results for non-admin users */}
         {showUnlockCTA && (
-          <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100 p-6">
+          <div className="bg-gradient-to-br from-brand-50 to-purple-50 rounded-xl border border-brand-100 p-6">
             <h2 className="text-lg font-bold text-slate-900 mb-1">Ready for the next exam?</h2>
             <p className="text-sm text-slate-600 mb-4">
               {"You've completed your free SAT Form 1. Subscribe to SAT Premium to retake Form 1 and practice with Forms 2, 3, 4, and 5."}
@@ -3223,13 +3223,13 @@ export default function SATExamTaker({ form, initialAttempt, skipPasswordGate, i
                 <>
                   <a
                     href="/premade/sat/form-2"
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-700 transition-colors"
                   >
                     Start Form 2 →
                   </a>
                   <a
                     href="/premade/sat/form-3"
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-indigo-200 px-5 py-2.5 text-sm font-semibold text-indigo-700 hover:bg-indigo-50 transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-white border border-brand-200 px-5 py-2.5 text-sm font-semibold text-brand-700 hover:bg-brand-50 transition-colors"
                   >
                     Start Form 3 →
                   </a>

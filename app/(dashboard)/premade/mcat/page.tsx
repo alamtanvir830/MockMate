@@ -35,8 +35,8 @@ export default function MCATPage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
         <div className="w-full max-w-sm bg-white rounded-xl border border-slate-200 shadow-sm p-8">
-          <div className="h-12 w-12 rounded-full bg-indigo-50 flex items-center justify-center mx-auto mb-5">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-6 w-6 text-indigo-500">
+          <div className="h-12 w-12 rounded-full bg-brand-50 flex items-center justify-center mx-auto mb-5">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-6 w-6 text-brand-500">
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
             </svg>
           </div>
@@ -48,13 +48,13 @@ export default function MCATPage() {
               value={input}
               onChange={e => { setInput(e.target.value); setError('') }}
               placeholder="Password"
-              className="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              className="w-full rounded-lg border border-slate-300 px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-400"
               autoFocus
             />
             {error && <p className="text-xs text-red-600">{error}</p>}
             <button
               type="submit"
-              className="w-full rounded-lg bg-indigo-600 text-white text-sm font-medium py-2.5 hover:bg-indigo-700 transition-colors"
+              className="w-full rounded-lg bg-brand-600 text-white text-sm font-medium py-2.5 hover:bg-brand-700 transition-colors"
             >
               Unlock
             </button>
@@ -67,7 +67,7 @@ export default function MCATPage() {
   return (
     <div className="max-w-3xl mx-auto py-10 px-4">
       <div className="flex items-center gap-2 text-sm text-slate-500 mb-6">
-        <Link href="/premade" className="hover:text-indigo-600 transition-colors">Pre-made Exams</Link>
+        <Link href="/premade" className="hover:text-brand-600 transition-colors">Pre-made Exams</Link>
         <span>/</span>
         <span className="text-slate-900 font-medium">MCAT</span>
       </div>
@@ -82,7 +82,7 @@ export default function MCATPage() {
           <ul className="space-y-1.5">
             {['230 questions across 4 sections', '6 hr 15 min total testing time', 'Chem/Phys · CARS · Bio/Biochem · Psych/Soc'].map(item => (
               <li key={item} className="flex items-center gap-2 text-sm text-slate-600">
-                <span className="h-1.5 w-1.5 rounded-full bg-indigo-300 shrink-0" />
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-300 shrink-0" />
                 {item}
               </li>
             ))}
@@ -111,12 +111,12 @@ export default function MCATPage() {
         {/* Form 1 — active */}
         <Link
           href="/premade/mcat/form-1"
-          className="rounded-xl border border-indigo-200 bg-white p-6 hover:border-indigo-400 hover:shadow-sm transition-all group flex flex-col"
+          className="rounded-xl border border-brand-200 bg-white p-6 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col"
         >
-          <div className="h-9 w-9 rounded-lg bg-indigo-50 flex items-center justify-center mb-4 shrink-0">
-            <span className="text-sm font-bold text-indigo-600">1</span>
+          <div className="h-9 w-9 rounded-lg bg-brand-50 flex items-center justify-center mb-4 shrink-0">
+            <span className="text-sm font-bold text-brand-600">1</span>
           </div>
-          <h2 className="font-semibold text-slate-900 group-hover:text-indigo-700 transition-colors mb-3">Form 1</h2>
+          <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-3">Form 1</h2>
           <ul className="space-y-1.5 mt-auto">
             {['4 sections', '230 questions', '6 hr 15 min', '472–528 score range'].map(d => (
               <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">

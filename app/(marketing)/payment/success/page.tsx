@@ -97,7 +97,7 @@ export default function PaymentSuccessPage() {
               SAT Premium is active. You now have access to SAT Forms 1–5, the 700+ question bank, and both SAT Academies.
             </p>
             <div className="space-y-2.5">
-              <Link href="/premade/sat" className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">
+              <Link href="/premade/sat" className="block w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">
                 View SAT Practice Forms
               </Link>
               <Link href="/question-bank/sat" className="block w-full bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">

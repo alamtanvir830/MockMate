@@ -54,7 +54,7 @@ function UnauthenticatedState() {
         <div className="space-y-2.5">
           <Link
             href="/login"
-            className="block w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
+            className="block w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center"
           >
             Sign In
           </Link>
@@ -102,7 +102,7 @@ function UnverifiedEmailState({ email }: { email: string }) {
         <div className="mt-5 pt-5 border-t border-slate-100 flex items-center justify-center gap-4">
           <Link
             href="/dashboard"
-            className="text-[13px] font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
+            className="text-[13px] font-semibold text-brand-600 hover:text-brand-800 transition-colors"
           >
             Return to Dashboard
           </Link>
