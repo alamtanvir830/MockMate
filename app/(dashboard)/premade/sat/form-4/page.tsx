@@ -67,6 +67,21 @@ export default async function SATForm4Page() {
     inProgressStartedAt: inProgressRow.data?.started_at ?? null,
   })
 
+  // Window expired and access denied — delete in-progress row so expired attempt
+  // data is not retained. Completed results are unaffected (separate table).
+  if (
+    !isAdmin &&
+    !satUpgradeUnlocked &&
+    access.lockReason === 'no-access' &&
+    inProgressRow.data
+  ) {
+    await supabase
+      .from('sat_in_progress_attempts')
+      .delete()
+      .eq('user_id', user.id)
+      .eq('form_number', 4)
+  }
+
   if (
     access.canStart ||
     access.canResume ||

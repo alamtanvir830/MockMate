@@ -9,7 +9,7 @@
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-// Mock the admin client (used by canNonPremiumAccessForm4Api for grace-period check)
+// Mock the admin client (used by canNonPremiumAccessForm4Api for expired-window cleanup)
 const mockAdminFrom = vi.fn()
 vi.mock('@/lib/supabase/admin', () => ({
   createAdminClient: vi.fn(() => ({ from: mockAdminFrom })),
@@ -22,6 +22,7 @@ function makeChain(overrides: Record<string, unknown> = {}) {
     not: vi.fn().mockReturnThis(),
     order: vi.fn().mockReturnThis(),
     limit: vi.fn().mockReturnThis(),
+    delete: vi.fn().mockReturnThis(),
     maybeSingle: vi.fn().mockResolvedValue({ data: null, error: null }),
     single: vi.fn().mockResolvedValue({ data: null, error: null }),
     upsert: vi.fn().mockResolvedValue({ error: null }),
@@ -227,10 +228,9 @@ describe('Test 9 — Completed Results remain accessible after expiration', () =
   })
 })
 
-describe('Test 10 — In-progress expiration behavior matches Form 3', () => {
-  it('canResume=true for in-progress attempt started before expiry (grace period)', () => {
+describe('Test 10 — In-progress attempts are locked once window expires (no grace period)', () => {
+  it('canResume=false for in-progress attempt when window has expired', () => {
     const window = makeExpiredWindow()
-    // started_at is before window expires_at
     const startedBeforeExpiry = new Date(new Date(window.expiresAt).getTime() - 60_000).toISOString()
     const access = resolveForm4Access({
       isAdmin: false,
@@ -240,13 +240,12 @@ describe('Test 10 — In-progress expiration behavior matches Form 3', () => {
       attemptId: 'attempt-789',
       inProgressStartedAt: startedBeforeExpiry,
     })
-    expect(access.canResume).toBe(true)
-    expect(access.accessSource).toBe('free-window-resume')
+    expect(access.canResume).toBe(false)
+    expect(access.lockReason).toBe('no-access')
   })
 
-  it('canResume=false for in-progress attempt started after expiry', () => {
+  it('canResume=false for any in-progress attempt after expiry regardless of start time', () => {
     const window = makeExpiredWindow()
-    // started_at is AFTER window expires_at — not eligible for grace period
     const startedAfterExpiry = new Date(new Date(window.expiresAt).getTime() + 60_000).toISOString()
     const access = resolveForm4Access({
       isAdmin: false,
@@ -257,6 +256,7 @@ describe('Test 10 — In-progress expiration behavior matches Form 3', () => {
       inProgressStartedAt: startedAfterExpiry,
     })
     expect(access.canResume).toBe(false)
+    expect(access.lockReason).toBe('no-access')
   })
 })
 
@@ -336,20 +336,12 @@ describe('canNonPremiumAccessForm4Api', () => {
     mockAdminFrom.mockReset()
   })
 
-  it('Test 16 — returns true during active window (no DB lookup needed)', async () => {
-    // The active-window check runs before the DB lookup, so mock not called
-    // We need to temporarily shift the window to be active around now
-    // Since the constants may or may not be active, we test the API helper
-    // by mocking the module constants — or we test indirectly via the resolver.
-    // This test validates the API helper's structure by checking a known expired case.
-    // For the active-window case, we rely on integration tests.
-    const chain = makeChain({
-      maybeSingle: vi.fn().mockResolvedValue({ data: null }),
-    })
+  it('Test 16 — returns a boolean (true during active window, false outside)', async () => {
+    // When the window is expired the helper calls delete() for cleanup.
+    // Set up a chain that handles the delete path.
+    const chain = makeChain()
     mockAdminFrom.mockReturnValue(chain)
 
-    // If window is expired, it falls through to DB lookup
-    // Simulate: no existing in-progress row → should return false
     const result = await canNonPremiumAccessForm4Api('user-1', 'attempt-1')
     // Whether true or false depends on whether the hardcoded window is active right now
     expect(typeof result).toBe('boolean')

@@ -66,7 +66,7 @@ export function Form4CountdownBanner({ expiresAt }: BannerProps) {
             SAT Form 4 is free for 72 hours
           </p>
           <p className="text-xs text-amber-700 mt-0.5">
-            Start Form 4 before the promotional window ends. An exam started before expiration can still be completed afterward.
+            Start Form 4 before the promotional window ends.
           </p>
           <p className="text-xs text-amber-600 mt-1">
             Expires: {formatLocalExpiry(expiresAt)}
@@ -111,7 +111,7 @@ export function Form4DashboardBanner({ expiresAt, actionHref, actionLabel }: Das
             SAT Form 4 is free for 72 hours
           </p>
           <p className="text-[12px] text-amber-700 leading-relaxed">
-            Start Form 4 before the promotional window ends. An exam started before expiration can still be completed afterward.
+            Start Form 4 before the promotional window ends.
           </p>
           <div className="mt-2 flex items-center gap-1.5">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 text-amber-600 shrink-0" aria-hidden="true">

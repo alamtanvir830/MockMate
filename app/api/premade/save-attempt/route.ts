@@ -84,7 +84,7 @@ export async function POST(req: NextRequest) {
       const { satUpgradeUnlocked } = await getEntitlements()
       if (!satUpgradeUnlocked) {
         const { canNonPremiumAccessForm4Api } = await import('@/lib/premade-exams/sat/form4-access')
-        const allowed = await canNonPremiumAccessForm4Api(user.id, body.localAttemptId)
+        const allowed = await canNonPremiumAccessForm4Api(user.id)
         if (!allowed) {
           return NextResponse.json({ error: 'SAT Form 4 free access has expired.' }, { status: 403 })
         }

@@ -22,7 +22,7 @@ export interface Form4FreeWindow {
 }
 
 export type Form4AttemptStatus = 'none' | 'in-progress' | 'completed' | 'feedback-required'
-export type Form4AccessSource  = 'admin' | 'premium' | 'free-window' | 'free-window-resume' | 'none'
+export type Form4AccessSource  = 'admin' | 'premium' | 'free-window' | 'none'
 
 export interface Form4AccessResult {
   formNumber: 4
@@ -64,14 +64,13 @@ export function getForm4FreeWindow(): Form4FreeWindow | null {
 
 // ── Central Form 4 access resolver (pure — no async calls) ───────────────────
 //
-// Priority order (mirrors Form 3):
+// Priority order:
 // 1. feedback-required → canViewResult + canCompleteFeedback
 // 2. completed → canViewResult
 // 3. admin → full access
 // 4. premium → full access
 // 5. active global free window → canStart (if none) or canResume (if in-progress)
-// 6. expired window + in-progress started before expiry → canResume only
-// 7. no access → lockReason set
+// 6. no access → lockReason set (no grace period — expired = locked)
 
 export function resolveForm4Access(opts: {
   isAdmin: boolean
@@ -79,9 +78,9 @@ export function resolveForm4Access(opts: {
   freeWindow: Form4FreeWindow | null
   attemptStatus: Form4AttemptStatus
   attemptId: string | null
-  inProgressStartedAt: string | null
+  inProgressStartedAt?: string | null // kept for call-site compat; unused — no grace period
 }): Form4AccessResult {
-  const { isAdmin, isPremium, freeWindow, attemptStatus, attemptId, inProgressStartedAt } = opts
+  const { isAdmin, isPremium, freeWindow, attemptStatus, attemptId } = opts
 
   const now = new Date()
   const serverNow = now.toISOString()
@@ -182,26 +181,7 @@ export function resolveForm4Access(opts: {
     }
   }
 
-  // Priority 6: expired window but in-progress attempt started before expiry
-  if (
-    attemptStatus === 'in-progress' &&
-    inProgressStartedAt != null &&
-    freeWindowExpiresAt != null &&
-    new Date(inProgressStartedAt) < new Date(freeWindowExpiresAt)
-  ) {
-    return {
-      ...base,
-      accessSource: 'free-window-resume',
-      canStart: false,
-      canResume: true,
-      canRetake: false,
-      canCompleteFeedback: false,
-      canViewResult: false,
-      lockReason: null,
-    }
-  }
-
-  // Priority 7: no access
+  // Priority 6: no access (window expired or never active — no grace period)
   return {
     ...base,
     accessSource: 'none',
@@ -218,49 +198,33 @@ export function resolveForm4Access(opts: {
 
 /**
  * Returns true if a non-premium user may access Form 4 via the API.
- * Uses hardcoded window constants — no DB query required.
- *
- * Allowed when:
- * - Global window is active (now between STARTS_AT and ENDS_AT), OR
- * - User has an existing in-progress row started before the window expired.
+ * Only allows access while the global window is active. There is no grace period —
+ * when the window expires all in-progress data is discarded.
  */
-export async function canNonPremiumAccessForm4Api(
-  userId: string,
-  localAttemptId: string,
-): Promise<boolean> {
+export async function canNonPremiumAccessForm4Api(userId: string): Promise<boolean> {
   const now = new Date()
 
   // No constants set → deny
   if (!FORM4_WINDOW_STARTS_AT || !FORM4_WINDOW_ENDS_AT) return false
 
-  // Window hasn't started yet → deny (no grace period to honor)
+  // Window hasn't started yet → deny
   if (new Date(FORM4_WINDOW_STARTS_AT) > now) return false
 
   // Active window → allow
   if (now < new Date(FORM4_WINDOW_ENDS_AT)) return true
 
-  // Window has expired — check grace period: allow if user's in-progress attempt
-  // started before the window closed.
+  // Window has expired — deny and clean up any in-progress row so expired
+  // attempt data is not retained beyond the promotional period.
   try {
     const { createAdminClient } = await import('@/lib/supabase/admin')
     const admin = createAdminClient()
-    const { data: existing } = await admin
+    await admin
       .from('sat_in_progress_attempts')
-      .select('local_attempt_id, started_at')
+      .delete()
       .eq('user_id', userId)
       .eq('form_number', 4)
-      .maybeSingle()
-
-    if (
-      existing &&
-      existing.local_attempt_id === localAttemptId &&
-      new Date(existing.started_at as string) < new Date(FORM4_WINDOW_ENDS_AT)
-    ) {
-      return true
-    }
   } catch {
-    // If admin client fails (e.g., missing env in test), fail safe → deny
-    return false
+    // Cleanup failure is non-fatal; page-level cleanup handles it on next load
   }
 
   return false
