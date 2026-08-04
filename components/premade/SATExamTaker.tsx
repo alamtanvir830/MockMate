@@ -2691,67 +2691,71 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
                   )}
                 </p>
                 {(rwScaled < 750 || mathScaled < 750) && (
-                  <div className="flex flex-wrap items-center gap-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Left column: R&W academy card + R&W lesson recommendations */}
                     {rwScaled < 750 && (
-                      <Link
-                        href="/sat-rw-academy"
-                        className="inline-flex w-fit max-w-full items-center gap-2.5 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3.5 hover:bg-emerald-100 transition-colors"
-                      >
-                        <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0 text-emerald-700">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                        </svg>
-                        <span className="text-[13px] font-semibold text-emerald-800">SAT Reading &amp; Writing Academy</span>
-                      </Link>
+                      <div>
+                        <Link
+                          href="/sat-rw-academy"
+                          className="inline-flex w-full items-center gap-2.5 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3.5 hover:bg-emerald-100 transition-colors"
+                        >
+                          <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0 text-emerald-700">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                          </svg>
+                          <span className="text-[13px] font-semibold text-emerald-800">SAT Reading &amp; Writing Academy</span>
+                        </Link>
+                        {rwRecs.length > 0 && (
+                          <div className="mt-3">
+                            <p className="text-[10px] font-semibold text-emerald-700 uppercase tracking-widest mb-1.5">Recommended lessons for you</p>
+                            <ul className="space-y-1">
+                              {rwRecs.map(rec => (
+                                <li key={rec.slug}>
+                                  <Link
+                                    href={rec.href}
+                                    className="flex items-center gap-1.5 text-[12px] text-emerald-800 hover:text-emerald-900 hover:underline"
+                                  >
+                                    <span className="h-1 w-1 rounded-full bg-emerald-400 shrink-0" />
+                                    {rec.title}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
                     )}
+                    {/* Right column: Math academy card + Math lesson recommendations */}
                     {mathScaled < 750 && (
-                      <Link
-                        href="/sat-math-academy"
-                        className="inline-flex w-fit max-w-full items-center gap-2.5 bg-violet-50 border border-violet-200 rounded-xl px-4 py-3.5 hover:bg-violet-100 transition-colors"
-                      >
-                        <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0 text-violet-700">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-                        </svg>
-                        <span className="text-[13px] font-semibold text-violet-800">SAT Math &amp; Desmos Academy</span>
-                      </Link>
+                      <div>
+                        <Link
+                          href="/sat-math-academy"
+                          className="inline-flex w-full items-center gap-2.5 bg-violet-50 border border-violet-200 rounded-xl px-4 py-3.5 hover:bg-violet-100 transition-colors"
+                        >
+                          <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0 text-violet-700">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                          </svg>
+                          <span className="text-[13px] font-semibold text-violet-800">SAT Math &amp; Desmos Academy</span>
+                        </Link>
+                        {mathRecs.length > 0 && (
+                          <div className="mt-3">
+                            <p className="text-[10px] font-semibold text-violet-700 uppercase tracking-widest mb-1.5">Recommended lessons for you</p>
+                            <ul className="space-y-1">
+                              {mathRecs.map(rec => (
+                                <li key={rec.slug}>
+                                  <Link
+                                    href={rec.href}
+                                    className="flex items-center gap-1.5 text-[12px] text-violet-800 hover:text-violet-900 hover:underline"
+                                  >
+                                    <span className="h-1 w-1 rounded-full bg-violet-400 shrink-0" />
+                                    {rec.title}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
                     )}
-                  </div>
-                )}
-                {/* R&W lesson recommendations */}
-                {rwScaled < 750 && rwRecs.length > 0 && (
-                  <div className="mt-3 ml-0.5">
-                    <p className="text-[10px] font-semibold text-emerald-700 uppercase tracking-widest mb-1.5">Recommended lessons for you</p>
-                    <ul className="space-y-1">
-                      {rwRecs.map(rec => (
-                        <li key={rec.slug}>
-                          <Link
-                            href={rec.href}
-                            className="flex items-center gap-1.5 text-[12px] text-emerald-800 hover:text-emerald-900 hover:underline"
-                          >
-                            <span className="h-1 w-1 rounded-full bg-emerald-400 shrink-0" />
-                            {rec.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {/* Math lesson recommendations */}
-                {mathScaled < 750 && mathRecs.length > 0 && (
-                  <div className="mt-3 ml-0.5">
-                    <p className="text-[10px] font-semibold text-violet-700 uppercase tracking-widest mb-1.5">Recommended lessons for you</p>
-                    <ul className="space-y-1">
-                      {mathRecs.map(rec => (
-                        <li key={rec.slug}>
-                          <Link
-                            href={rec.href}
-                            className="flex items-center gap-1.5 text-[12px] text-violet-800 hover:text-violet-900 hover:underline"
-                          >
-                            <span className="h-1 w-1 rounded-full bg-violet-400 shrink-0" />
-                            {rec.title}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
                   </div>
                 )}
               </div>
