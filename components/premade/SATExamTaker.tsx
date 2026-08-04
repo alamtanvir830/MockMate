@@ -29,6 +29,7 @@ import {
 import type { SATAIFeedback } from '@/app/api/sat-feedback/route'
 import { ExamSaveStatus, type SaveStatus } from '@/components/premade/ExamSaveStatus'
 import { SATTrialOffer } from '@/components/sat-trial/SATTrialOffer'
+import { getRWRecommendations, getMathRecommendations } from '@/lib/recommendations/sat-academy-recommendations'
 
 // ─── Phase state machine ───────────────────────────────────────────────────────
 type SATPhase =
@@ -2520,6 +2521,10 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
       }))
     )
 
+    const weakSkills = buildWeakSkills(allFlat)
+    const rwRecs = rwScaled < 750 ? getRWRecommendations(weakSkills) : []
+    const mathRecs = mathScaled < 750 ? getMathRecommendations(weakSkills) : []
+
     const filterTabs: { key: AnswerFilter; label: string }[] = [
       { key: 'all', label: 'All' },
       { key: 'incorrect', label: 'Incorrect' },
@@ -2624,6 +2629,16 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
               <p className="text-[11px] text-white/60 mb-1">Total Score</p>
               <p className="text-[42px] font-bold leading-none">{totalScore}</p>
               <p className="text-[11px] text-white/60">/ 1600</p>
+              <button
+                onClick={downloadPDF}
+                aria-label="Download PDF Score Report"
+                className="mt-3 flex items-center gap-1.5 mx-auto bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold px-3 py-1.5 rounded-lg transition-colors"
+              >
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-3.5 w-3.5 shrink-0">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                Download PDF
+              </button>
             </div>
           </div>
 
@@ -2644,19 +2659,7 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
           <p className="mt-3 text-[11px] text-slate-400">Scores are estimated for practice purposes only. This is not an official College Board result.</p>
         </div>
 
-        {/* PDF download */}
-        <div className="flex justify-center mt-6 mb-8">
-          <button
-            onClick={downloadPDF}
-            className="flex items-center gap-2 bg-[#1b3a5c] hover:bg-[#152d48] text-white text-[14px] font-semibold px-6 py-3 rounded-xl transition-colors shadow-sm"
-          >
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-5 w-5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-            </svg>
-            Download PDF Score Report
-          </button>
-        </div>
-
+        <div style={{ fontFamily: 'Arial, Helvetica, sans-serif' }}>
         {/* 3. Recommended Next Steps */}
         <div className="bg-white rounded-xl border border-slate-200 p-6">
           <h2 className="text-[18px] font-bold text-slate-900 mb-5">Recommended Next Steps</h2>
@@ -2711,6 +2714,44 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
                         <span className="text-[13px] font-semibold text-violet-800">SAT Math &amp; Desmos Academy</span>
                       </Link>
                     )}
+                  </div>
+                )}
+                {/* R&W lesson recommendations */}
+                {rwScaled < 750 && rwRecs.length > 0 && (
+                  <div className="mt-3 ml-0.5">
+                    <p className="text-[10px] font-semibold text-emerald-700 uppercase tracking-widest mb-1.5">Recommended lessons for you</p>
+                    <ul className="space-y-1">
+                      {rwRecs.map(rec => (
+                        <li key={rec.slug}>
+                          <Link
+                            href={rec.href}
+                            className="flex items-center gap-1.5 text-[12px] text-emerald-800 hover:text-emerald-900 hover:underline"
+                          >
+                            <span className="h-1 w-1 rounded-full bg-emerald-400 shrink-0" />
+                            {rec.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {/* Math lesson recommendations */}
+                {mathScaled < 750 && mathRecs.length > 0 && (
+                  <div className="mt-3 ml-0.5">
+                    <p className="text-[10px] font-semibold text-violet-700 uppercase tracking-widest mb-1.5">Recommended lessons for you</p>
+                    <ul className="space-y-1">
+                      {mathRecs.map(rec => (
+                        <li key={rec.slug}>
+                          <Link
+                            href={rec.href}
+                            className="flex items-center gap-1.5 text-[12px] text-violet-800 hover:text-violet-900 hover:underline"
+                          >
+                            <span className="h-1 w-1 rounded-full bg-violet-400 shrink-0" />
+                            {rec.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
               </div>
@@ -2787,6 +2828,7 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
               </div>
             </div>
           </div>
+        </div>
         </div>
 
         {/* Trial offer — server-side eligibility gated via trialEligible prop */}

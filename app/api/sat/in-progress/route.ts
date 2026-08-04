@@ -115,8 +115,22 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Forms 4 and 5: admin or Premium only
-  if ([4, 5].includes(body.formNumber) && !isAdmin) {
+  // Form 4: admin or Premium may always autosave.
+  // Non-premium users may autosave during the active free window,
+  // or if they already have an in-progress row (continuation after expiry).
+  if (body.formNumber === 4 && !isAdmin) {
+    const { satUpgradeUnlocked } = await getEntitlements()
+    if (!satUpgradeUnlocked) {
+      const { canNonPremiumAccessForm4Api } = await import('@/lib/premade-exams/sat/form4-access')
+      const allowed = await canNonPremiumAccessForm4Api(user.id, body.localAttemptId)
+      if (!allowed) {
+        return NextResponse.json({ error: 'SAT Form 4 free access has expired.' }, { status: 403 })
+      }
+    }
+  }
+
+  // Form 5: admin or Premium only
+  if (body.formNumber === 5 && !isAdmin) {
     const { satUpgradeUnlocked } = await getEntitlements()
     if (!satUpgradeUnlocked) {
       return NextResponse.json(
