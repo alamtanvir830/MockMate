@@ -582,22 +582,22 @@ export default async function SATPremadePage() {
             </span>
           </Link>
         ) : form4Access.canStart && form4Access.accessSource === 'free-window' ? (
-          <Link href="/premade/sat/form-4" className="rounded-xl border border-amber-200 bg-white p-5 hover:border-amber-400 hover:shadow-sm transition-all group flex flex-col">
+          <Link href="/premade/sat/form-4" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-2">
-              <div className="h-8 w-8 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-amber-600">4</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">4</span>
               </div>
-              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Free for 72 Hours</span>
+              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">Free for 72 Hours</span>
             </div>
             {form4Access.freeWindowExpiresAt && (
               <div className="mb-2">
                 <Form4CountdownBadge expiresAt={form4Access.freeWindowExpiresAt} />
               </div>
             )}
-            <h2 className="font-semibold text-slate-900 group-hover:text-amber-700 transition-colors mb-0.5">Form 4</h2>
-            <p className="text-[11px] text-amber-700">Available during the free access window.</p>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 4</h2>
+            <p className="text-[11px] text-brand-700">Available during the free access window.</p>
             <SatExamDetails />
-            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-amber-600 transition-colors">
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-600 transition-colors">
               Start Free SAT Form 4 →
             </span>
           </Link>
@@ -618,22 +618,22 @@ export default async function SATPremadePage() {
           </Link>
         ) : user && !isAdmin && !satUpgradeUnlocked && form4FreeWindow && form4AttemptStatus === 'none' ? (
           // Active free window but no attempt yet — show free window card
-          <Link href="/premade/sat/form-4" className="rounded-xl border border-amber-200 bg-white p-5 hover:border-amber-400 hover:shadow-sm transition-all group flex flex-col">
+          <Link href="/premade/sat/form-4" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-2">
-              <div className="h-8 w-8 rounded-lg bg-amber-50 flex items-center justify-center shrink-0">
-                <span className="text-sm font-bold text-amber-600">4</span>
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">4</span>
               </div>
-              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Free for 72 Hours</span>
+              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">Free for 72 Hours</span>
             </div>
             {form4FreeWindow.expiresAt && (
               <div className="mb-2">
                 <Form4CountdownBadge expiresAt={form4FreeWindow.expiresAt} />
               </div>
             )}
-            <h2 className="font-semibold text-slate-900 group-hover:text-amber-700 transition-colors mb-0.5">Form 4</h2>
-            <p className="text-[11px] text-amber-700">Start to begin your 72-hour free access window.</p>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 4</h2>
+            <p className="text-[11px] text-brand-700">Start to begin your 72-hour free access window.</p>
             <SatExamDetails />
-            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-amber-600 transition-colors">
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-600 transition-colors">
               Start Free SAT Form 4 →
             </span>
           </Link>
