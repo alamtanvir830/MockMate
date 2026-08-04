@@ -440,7 +440,7 @@ export const f4RwModule1QuestionsV2: RWQuestion[] = [
     domain: 'Standard English Conventions',
     skill: 'Boundaries',
     difficulty: 'medium',
-    stimulus: 'The Antikythera mechanism has puzzled researchers for more than a century _______ this ancient Greek device used dozens of interlocking bronze gears to predict the positions of the sun, moon, and planets.',
+    stimulus: 'The Antikythera mechanism has puzzled researchers for more than a century _______ ancient Greek device used dozens of interlocking bronze gears to predict the positions of the sun, moon, and planets.',
     question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
       { label: 'A', text: ', it' },
