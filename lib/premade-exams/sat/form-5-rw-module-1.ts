@@ -445,7 +445,7 @@ export const f5RwModule1Questions: RWQuestion[] = [
     choices: [
       { label: 'A', text: ', yet' },
       { label: 'B', text: '; a model' },
-      { label: 'C', text: ': the' },
+      { label: 'C', text: ':' },
       { label: 'D', text: '; however,' },
     ],
     correctAnswer: 'A',
