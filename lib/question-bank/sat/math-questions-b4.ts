@@ -294,23 +294,23 @@ export const mathQuestionsB4: QBQuestion[] = [
     questionType: 'multiple_choice',
     isWordProblem: true,
     question:
-      'Line p has the equation 4x − 3y = 12. Line q is perpendicular to line p and passes through the point (8, 1). At what point do lines p and q intersect?',
+      'Line p has the equation 4x − 3y = 12. Line q is perpendicular to line p and passes through the point (10, 1). At what point do lines p and q intersect?',
     choices: [
       { label: 'A', text: '(4, 4/3)' },
-      { label: 'B', text: '(5, 8/3)' },
-      { label: 'C', text: '(4, 4/3)' },
-      { label: 'D', text: '(8, −4)' },
+      { label: 'B', text: '(10, 1)' },
+      { label: 'C', text: '(5, 8/3)' },
+      { label: 'D', text: '(6, 4)' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation:
-      'Slope of p: rewrite as y = (4/3)x − 4, so slope = 4/3. Perpendicular slope = −3/4. Line q: y − 1 = −(3/4)(x − 8) → y = −(3/4)x + 6 + 1 = −(3/4)x + 7. Set equal to p: (4/3)x − 4 = −(3/4)x + 7. Multiply through by 12: 16x − 48 = −9x + 84 → 25x = 132 → x = 132/25 = 5.28. Then y = (4/3)(132/25) − 4 = 528/75 − 300/75 = 228/75 = 76/25 = 3.04. Hmm — let me recompute. 16x − 48 = −9x + 84 → 25x = 132 → x = 5.28 and y = −(3/4)(5.28) + 7 = −3.96 + 7 = 3.04. None of the listed choices match exactly with these decimals. Let me restate with cleaner numbers: 4x − 6y = 12 (slope 2/3), perpendicular slope −3/2, through (4, 2): y − 2 = −(3/2)(x − 4) → y = −(3/2)x + 8. Set equal: (2/3)x − 2 = −(3/2)x + 8. Multiply by 6: 4x − 12 = −9x + 48 → 13x = 60 → x = 60/13. Not clean either. Using the original problem: line p is 4x − 3y = 12 with slope 4/3. Perpendicular line q through (8,1): slope −3/4. y = −(3/4)x + 7. Intersection: (4/3)x − 4 = −(3/4)x + 7 → multiply by 12: 16x − 48 = −9x + 84 → 25x = 132 → x = 132/25. y = −(3/4)(132/25) + 7 = −99/25 + 175/25 = 76/25. Intersection = (132/25, 76/25) ≈ (5.28, 3.04). The answer closest to this is choice B (5, 8/3 ≈ 2.67), but let me verify B: does (5, 8/3) lie on p? 4(5) − 3(8/3) = 20 − 8 = 12 ✓. Does it lie on q? y = −(3/4)(5) + 7 = −15/4 + 28/4 = 13/4 = 3.25 ≠ 8/3 ≈ 2.67. So B is not exact. I need to redesign this question with cleaner arithmetic. Let line p be 3x + 4y = 24 (slope −3/4). Perpendicular slope = 4/3. Line q through (0, 6): y = (4/3)x + 6. Intersection with p: 3x + 4((4/3)x + 6) = 24 → 3x + (16/3)x + 24 = 24 → (9/3 + 16/3)x = 0 → 25x/3 = 0 → x = 0, y = 6. That is just the y-intercept. Let line p be 3x − 4y = 0 (through origin, slope 3/4). Perp slope −4/3, through (3, 4): y − 4 = −(4/3)(x − 3) → y = −(4/3)x + 8. Intersection: (3/4)x = −(4/3)x + 8. Multiply by 12: 9x = −16x + 96 → 25x = 96 → x = 96/25. Not clean. Use slope 3/4 and perp −4/3 with rational intersection: Let y = (3/4)x and y = −(4/3)x + c. Set equal: (3/4)x = −(4/3)x + c → x(3/4 + 4/3) = c → x(9/12 + 16/12) = c → x(25/12) = c → x = 12c/25. For x to be integer, c must be a multiple of 25. Let c = 25: intersection x = 12, y = 9. Line q passes through (12, 9) with slope −4/3. Another point on q: when x = 0, y = 25. So q passes through (0, 25) and (12, 9). The problem is getting unwieldy. I will construct the question so the intersection is a clean point. Let intersection be (6, 4). Line p through (6,4) with slope 4/3: y − 4 = (4/3)(x − 6) → y = (4/3)x − 8 + 4 = (4/3)x − 4. Check: at x=6, y=8−4=4 ✓. Perp slope = −3/4. Line q through (6, 4) with slope −3/4: that would mean q is perpendicular at the intersection point itself, but q must pass through a given point NOT on p. Choose another point on q: if q passes through (10, 1): slope = (1−4)/(10−6) = −3/4 ✓. So line q: passes through (10, 1) with slope −3/4. Now write the question: Line p has equation y = (4/3)x − 4. Line q is perpendicular to line p and passes through (10, 1). Where do they intersect? Answer: (6, 4). I will rewrite this question with these clean values.',
+      'Slope of p: rewrite 4x − 3y = 12 as y = (4/3)x − 4, so slope = 4/3. Perpendicular slope = −3/4. Line q through (10, 1): y − 1 = −(3/4)(x − 10) → y = −(3/4)x + 8.5. Set equal to p: (4/3)x − 4 = −(3/4)x + 8.5. Multiply by 12: 16x − 48 = −9x + 102 → 25x = 150 → x = 6. y = (4/3)(6) − 4 = 8 − 4 = 4. Verify on q: y = −(3/4)(6) + 8.5 = −4.5 + 8.5 = 4 ✓. Intersection = (6, 4).',
     wrongAnswerExplanations: {
-      A: 'This results from using the slope of line p for line q instead of the negative reciprocal.',
-      C: 'Same as A — a duplicate answer used as a distractor in the original question.',
-      D: 'This results from substituting the x-coordinate of the given point (8 or 10) back into line p without finding the true intersection.',
+      A: '(4, 4/3) lies on line p (4(4) − 3(4/3) = 16 − 4 = 12 ✓) but not on line q: y = −(3/4)(4) + 8.5 = 5.5 ≠ 4/3.',
+      B: '(10, 1) is the given point on line q, not the intersection. It is on q but not on p: 4(10) − 3(1) = 37 ≠ 12.',
+      C: '(5, 8/3) lies on line p (4(5) − 3(8/3) = 20 − 8 = 12 ✓) but not on line q: y = −(3/4)(5) + 8.5 = 4.75 ≠ 8/3.',
     },
     teachingPoint:
-      'Perpendicular lines have slopes that are negative reciprocals (m₁ × m₂ = −1). First rewrite line p in slope-intercept form to read off its slope, then build line q using the perpendicular slope and the given point. Finally, solve the system of two equations to find the intersection.',
+      'Perpendicular lines have slopes that are negative reciprocals (m₁ × m₂ = −1). Rewrite line p in slope-intercept form to read its slope, build line q using the perpendicular slope and given point, then solve the system to find the intersection. Always verify the answer satisfies both equations.',
     relatedSkills: ['Linear functions', 'Systems of two linear equations'],
   },
 
@@ -1483,22 +1483,22 @@ export const mathQuestionsB4: QBQuestion[] = [
     question:
       'A 25-foot ladder leans against a vertical wall. The base of the ladder is 7 feet from the wall. The ladder then slips so that its base is now 15 feet from the wall, and the ladder still touches the wall. How many feet did the top of the ladder slide down the wall?',
     choices: [
-      { label: 'A', text: '8' },
-      { label: 'B', text: '11' },
-      { label: 'C', text: '16' },
-      { label: 'D', text: '10' },
+      { label: 'A', text: '4' },
+      { label: 'B', text: '8' },
+      { label: 'C', text: '10' },
+      { label: 'D', text: '17' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'A',
     explanation:
-      'Initial height: h₁ = √(25² − 7²) = √(625 − 49) = √576 = 24 feet. After slipping: h₂ = √(25² − 15²) = √(625 − 225) = √400 = 20 feet. Distance slid down: 24 − 20 = 4 feet. Hmm — 4 is not a choice. Let me recheck: √576 = 24 ✓; √400 = 20 ✓; 24 − 20 = 4. The answer should be 4, not in the choices. Let me use a base slip from 7 to 24: h₁ = √(625 − 49) = 24; h₂ = √(625 − 576) = √49 = 7. Distance = 24 − 7 = 17. Still not in choices. Use 10-foot ladder, base slips from 6 to 8: h₁ = √(100−36)=8; h₂ = √(100−64)=6; diff=2. For C=16: ladder length 20, base 4 to 12: h₁=√(400−16)=√384≈19.6; h₂=√(400−144)=√256=16; diff≈3.6. Alternatively, ladder 17, base 8 to 15: h₁=√(289−64)=√225=15; h₂=√(289−225)=√64=8; diff=15−8=7. Still not 16. Let ladder=25, base 7 to 24: h₁=24, h₂=7, diff=17. Ladder=25, base 0 to 7: h₁=25, h₂=24, diff=1. Ladder=20, base 0 to 16: h₁=20, h₂=√(400-256)=√144=12; diff=8. A=8. Use ladder=20, base 0 to 16, diff=8. For C=16: ladder=20, base 12 to ...: wait: use ladder=20, base 0: h=20. Base to 12: h=√(400-144)=16. Diff=20-16=4. For diff=16, use ladder=20: h₁=20 (base=0), h₂=√(400-144)=16, diff=4. Let me try to get diff=C. Perhaps the choices correspond to different problems. I will reconstruct: 17-foot ladder, base moves from 8 to 15 feet. h₁ = √(289−64) = √225 = 15. h₂ = √(289−225) = √64 = 8. Distance slid = 15 − 8 = 7. Use 26-foot ladder, base 10 to 24: h₁=√(676−100)=√576=24; h₂=√(676−576)=√100=10; diff=14. Use 25-foot ladder, base 7 to 20: h₁=√(625−49)=√576=24; h₂=√(625−400)=√225=15; diff=9. Use 25-foot ladder, base 7 to 24: h₁=24, h₂=7, diff=17. None work cleanly for 16. Accept diff=4 with a=D=4 as the correct answer and redesign choices to include 4. Or use a 26-foot ladder, base goes from 10 to 10: no. Use the original numbers (25-ft ladder, base 7 to 15) with the correct answer being 4, and change the choices to include 4. Final correct answer: 4 feet. Revise choices to A=4, B=6, C=8, D=10, with A=4 correct.',
+      'Apply the Pythagorean theorem twice. Initial height: h₁ = √(25² − 7²) = √(625 − 49) = √576 = 24 feet. After slipping: h₂ = √(25² − 15²) = √(625 − 225) = √400 = 20 feet. Distance the top slid down: 24 − 20 = 4 feet.',
     wrongAnswerExplanations: {
-      B: 'Subtracting only the base distances (15 − 7 = 8) and using this as the height change ignores the Pythagorean theorem.',
-      C: 'Confusing the change in base (8) with the change in height.',
-      D: 'Using 25 − 15 = 10, treating the ladder as if it falls parallel to the ground rather than rotating.',
+      B: '8 = 15 − 7 — subtracting only the base distances without applying the Pythagorean theorem. The horizontal and vertical changes are not equal.',
+      C: '10 = 25 − 15 — treating the ladder as if it falls parallel to the ground rather than rotating about the base.',
+      D: '17 = 24 − 7 — mixing up the initial height (24) with the final base (15), or computing the distance between the two base positions incorrectly.',
     },
     teachingPoint:
-      'For a ladder sliding problem, apply the Pythagorean theorem twice to find each height, then subtract. The horizontal base change and the vertical slide are different because of the nonlinear relationship a² + b² = c².',
-    relatedSkills: ['Trigonometric ratios', 'Similar triangles'],
+      'For a sliding-ladder problem, apply the Pythagorean theorem at each position to find the height, then subtract. The horizontal base change and the vertical slide are not equal because a² + b² = c² is nonlinear — a small change in one leg produces a different change in the other.',
+    relatedSkills: ['Pythagorean theorem', 'Area and volume'],
   },
 
   {

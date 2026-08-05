@@ -67,6 +67,8 @@ export interface QBQuestion {
   timeTargetSeconds: number
   mistakeType: QBMistakeType
   questionType: QBQuestionType
+  /** false = retired from future practice sets; historical sessions still resolve it */
+  active?: boolean
   stimulus?: string
   /** Exact phrases in the stimulus to render with an underline */
   underlineTargets?: string[]

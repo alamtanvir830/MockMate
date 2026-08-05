@@ -530,16 +530,16 @@ export const mathQuestionsB2: QBQuestion[] = [
     choices: [
       { label: 'A', text: '92' },
       { label: 'B', text: '140' },
-      { label: 'C', text: '140' },
+      { label: 'C', text: '176' },
       { label: 'D', text: '80' },
     ],
     correctAnswer: 'B',
     explanation:
-      'Sum of all 9 scores = 9 x 84 = 756. Sum of remaining 7 scores = 7 x 88 = 616. Sum of two lowest scores = 756 - 616 = 140.',
+      'Sum of all 9 scores = 9 × 84 = 756. Sum of remaining 7 scores = 7 × 88 = 616. Sum of two lowest scores = 756 − 616 = 140.',
     wrongAnswerExplanations: {
-      A: '92: uses (9 - 7) x 84 - (88 - 84) = 2 x 84 - 4 = 164; incorrect formula.',
-      C: 'Same as B — two choices labeled the same would not appear on the SAT; this is a distractor for students who use mean differences incorrectly.',
-      D: '80: uses (88 - 84) x 2 x 10 = 80; an entirely incorrect approach based on the mean difference.',
+      A: '92 results from computing 2 × 88 − (88 − 84) × 7 = 176 − 84 incorrectly, or from other arithmetic errors.',
+      C: '176 = 2 × 88 — students who use the new mean (88) instead of working backward from the total incorrectly add the two scores as if each equals the new mean.',
+      D: '80 = (88 − 84) × 20 — a distractor based on misapplying the mean difference without considering the total.',
     },
     teachingPoint:
       'Sum of removed values = (original count x original mean) - (new count x new mean) = 9(84) - 7(88) = 756 - 616 = 140.',
@@ -1476,15 +1476,15 @@ export const mathQuestionsB2: QBQuestion[] = [
       { label: 'A', text: '(0, 6)' },
       { label: 'B', text: '(2, 2)' },
       { label: 'C', text: '(4, -2)' },
-      { label: 'D', text: '(2, 2)' },
+      { label: 'D', text: '(3, 0)' },
     ],
     correctAnswer: 'B',
     explanation:
-      'Slope of p: m_p = (-2 - 6)/(4 - 0) = -8/4 = -2. Equation of p: y = -2x + 6. Slope of q (perpendicular): m_q = 1/2. Equation of q: y - 2 = (1/2)(x - 2) → y = (1/2)x + 1. Intersection: -2x + 6 = (1/2)x + 1 → 5 = (5/2)x → x = 2. y = -2(2) + 6 = 2. Intersection = (2, 2). Note: (2, 2) is the given point on q, so q passes through the intersection of p and q.',
+      'Slope of p: m_p = (−2 − 6)/(4 − 0) = −8/4 = −2. Equation of p: y = −2x + 6. Slope of q (perpendicular to p): m_q = 1/2. Equation of q through (2, 2): y − 2 = (1/2)(x − 2) → y = (1/2)x + 1. Intersection: −2x + 6 = (1/2)x + 1 → 5 = (5/2)x → x = 2. y = −2(2) + 6 = 2. Intersection = (2, 2). Note: (2, 2) satisfies both equations and happens to be the given point on q as well.',
     wrongAnswerExplanations: {
-      A: '(0, 6): the y-intercept of line p — on line p but check whether it is on q: y = (1/2)(0) + 1 = 1 ≠ 6. Not on q.',
-      C: '(4, -2): a given point on line p, but y = (1/2)(4) + 1 = 3 ≠ -2 — not on line q.',
-      D: 'Same as B (intentional, since (2, 2) is indeed the intersection point on line q).',
+      A: '(0, 6) is the y-intercept of line p and lies on p, but substituting into q: y = (1/2)(0) + 1 = 1 ≠ 6. It is on p only.',
+      C: '(4, −2) is a given point on line p, but substituting into q: y = (1/2)(4) + 1 = 3 ≠ −2. It is on p only.',
+      D: '(3, 0) lies on line p (y = −2(3) + 6 = 0 ✓), but substituting into q: y = (1/2)(3) + 1 = 2.5 ≠ 0. It is on p only.',
     },
     teachingPoint:
       'Find each line\'s equation, then set equal to solve for x. Substitute back for y. Verify the intersection point lies on both lines.',

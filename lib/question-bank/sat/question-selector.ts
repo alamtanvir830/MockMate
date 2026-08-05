@@ -15,7 +15,9 @@ export function selectQuestions(
   config: QBPracticeSetConfig,
   seenIds: Set<string> = new Set(),
 ): QBQuestion[] {
-  let pool = allQuestions
+  // Exclude retired questions (active: false) from future practice sets.
+  // Retired questions remain in the array so historical session lookups still resolve.
+  let pool = allQuestions.filter(q => q.active !== false)
 
   if (config.section) {
     pool = pool.filter(q => q.section === config.section)
