@@ -56,7 +56,7 @@ export function getSatForm(
  * Throws if the ID does not match the expected pattern.
  */
 export function getFormNumberFromId(formId: string): number {
-  const match = /sat-form-(\d)$/.exec(formId)
+  const match = /sat-form-(\d+)$/.exec(formId)
   if (!match) throw new Error(`Cannot parse form number from ID: ${formId}`)
   return parseInt(match[1], 10)
 }

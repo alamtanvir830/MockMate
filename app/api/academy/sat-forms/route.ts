@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { hasSatPremium } from '@/lib/auth/server'
 
-const SAT_FORM_NUMBERS = [1, 2, 3, 4, 5] as const
+const SAT_FORM_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
 
 export interface SATFormInfo {
   formNumber: typeof SAT_FORM_NUMBERS[number]
