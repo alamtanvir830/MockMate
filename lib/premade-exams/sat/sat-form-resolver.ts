@@ -11,6 +11,7 @@ import { satForm6 } from './form-6'
 import { satForm7 } from './form-7'
 import { satForm8 } from './form-8'
 import { satForm9 } from './form-9'
+import { satForm10 } from './form-10'
 
 // V2 forms (active generation for new attempts)
 import { satForm1V2 } from './v2/form-1'
@@ -22,6 +23,7 @@ import { satForm6V2 } from './v2/form-6'
 import { satForm7V2 } from './v2/form-7'
 import { satForm8V2 } from './v2/form-8'
 import { satForm9V2 } from './v2/form-9'
+import { satForm10V2 } from './v2/form-10'
 
 const V1_FORMS: Record<number, SATForm> = {
   1: satForm1,
@@ -33,6 +35,7 @@ const V1_FORMS: Record<number, SATForm> = {
   7: satForm7,
   8: satForm8,
   9: satForm9,
+  10: satForm10,
 }
 
 const V2_FORMS: Record<number, SATForm> = {
@@ -45,6 +48,7 @@ const V2_FORMS: Record<number, SATForm> = {
   7: satForm7V2,
   8: satForm8V2,
   9: satForm9V2,
+  10: satForm10V2,
 }
 
 /**
