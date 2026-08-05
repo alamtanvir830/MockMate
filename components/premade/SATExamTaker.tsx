@@ -1071,7 +1071,7 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
   const saveToServer = useCallback(async (overrideSecsLeft?: number, overrideTimerRunning?: boolean) => {
     if (!attemptIdRef.current || isHistoryView) return
     const formNumber = parseInt(form.id.replace('sat-form-', ''), 10)
-    if (isNaN(formNumber) || formNumber < 1 || formNumber > 5) return
+    if (isNaN(formNumber) || formNumber < 1 || formNumber > 10) return
 
     if (!navigator.onLine) { setSaveStatus('offline'); return }
 
@@ -1175,7 +1175,7 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
     const handleBeforeUnload = () => {
       if (!attemptIdRef.current || isHistoryView) return
       const formNumber = parseInt(form.id.replace('sat-form-', ''), 10)
-      if (isNaN(formNumber) || formNumber < 1 || formNumber > 5) return
+      if (isNaN(formNumber) || formNumber < 1 || formNumber > 10) return
       const phaseTag = phase.tag
       const activePhaseTags = ['rw_directions', 'question', 'rw_break', 'section_break', 'math_directions', 'math_break', 'module_review']
       if (!activePhaseTags.includes(phaseTag)) return
