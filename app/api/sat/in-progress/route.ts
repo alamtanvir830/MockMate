@@ -21,7 +21,7 @@ interface InProgressBody {
 }
 
 function isValidFormNumber(n: unknown): n is number {
-  return typeof n === 'number' && Number.isInteger(n) && n >= 1 && n <= 5
+  return typeof n === 'number' && Number.isInteger(n) && n >= 1 && n <= 10
 }
 
 // GET ?formNumber=N — returns in-progress row for the authenticated user
@@ -131,6 +131,17 @@ export async function POST(req: NextRequest) {
 
   // Form 5: admin or Premium only
   if (body.formNumber === 5 && !isAdmin) {
+    const { satUpgradeUnlocked } = await getEntitlements()
+    if (!satUpgradeUnlocked) {
+      return NextResponse.json(
+        { error: 'SAT Premium is required for this form.' },
+        { status: 403 }
+      )
+    }
+  }
+
+  // Forms 6–10: admin or Premium only
+  if (body.formNumber >= 6 && body.formNumber <= 10 && !isAdmin) {
     const { satUpgradeUnlocked } = await getEntitlements()
     if (!satUpgradeUnlocked) {
       return NextResponse.json(

@@ -69,6 +69,13 @@ export default async function SATPremadePage() {
   // Form 5 state
   let form5ResultsAttemptId: string | null = null
 
+  // Forms 6–10 state
+  let form6ResultsAttemptId: string | null = null
+  let form7ResultsAttemptId: string | null = null
+  let form8ResultsAttemptId: string | null = null
+  let form9ResultsAttemptId: string | null = null
+  let form10ResultsAttemptId: string | null = null
+
   if (user) {
     const [
       form1Completed,
@@ -133,6 +140,22 @@ export default async function SATPremadePage() {
         .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 5)
         .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
     ])
+
+    // Fetch Forms 6–10 completed attempts in a separate parallel batch
+    const [form6Completed, form7Completed, form8Completed, form9Completed, form10Completed] =
+      await Promise.all([6, 7, 8, 9, 10].map(n =>
+        supabase
+          .from('standardized_exam_attempts')
+          .select('local_attempt_id')
+          .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', n)
+          .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle()
+      ))
+
+    form6ResultsAttemptId  = form6Completed.data?.local_attempt_id  ?? null
+    form7ResultsAttemptId  = form7Completed.data?.local_attempt_id  ?? null
+    form8ResultsAttemptId  = form8Completed.data?.local_attempt_id  ?? null
+    form9ResultsAttemptId  = form9Completed.data?.local_attempt_id  ?? null
+    form10ResultsAttemptId = form10Completed.data?.local_attempt_id ?? null
 
     form1ResultsAttemptId = form1Completed.data?.local_attempt_id ?? null
     const f1Row = form1AccessRow.data
@@ -264,7 +287,7 @@ export default async function SATPremadePage() {
 
       <ExamHistoryNotice />
 
-      {/* Form cards — 5 columns on xl, responsive below */}
+      {/* Form cards — 5 columns on xl (2 rows of 5 for Forms 1–10), responsive below */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
 
         {/* ── Form 1 ────────────────────────────────────────────────────── */}
@@ -707,6 +730,75 @@ export default async function SATPremadePage() {
             </Link>
           </div>
         )}
+
+        {/* ── Forms 6–10 (Premium-only) ─────────────────────────────────── */}
+        {([6, 7, 8, 9, 10] as const).map(n => {
+          const resultsAttemptId = [
+            form6ResultsAttemptId,
+            form7ResultsAttemptId,
+            form8ResultsAttemptId,
+            form9ResultsAttemptId,
+            form10ResultsAttemptId,
+          ][n - 6]
+
+          if (resultsAttemptId) {
+            return (
+              <div key={n} className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                    <span className="text-sm font-bold text-brand-600">{n}</span>
+                  </div>
+                  <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Completed</span>
+                </div>
+                <h2 className="font-semibold text-slate-900 mb-0.5">Form {n}</h2>
+                <p className="text-xs text-slate-400">You already completed this exam.</p>
+                <SatExamDetails />
+                <Link href={`/premade/sat/form-${n}/results/${resultsAttemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors">
+                  View Results →
+                </Link>
+              </div>
+            )
+          }
+
+          if (isAdmin || satUpgradeUnlocked) {
+            return (
+              <Link key={n} href={`/premade/sat/form-${n}`} className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                    <span className="text-sm font-bold text-brand-600">{n}</span>
+                  </div>
+                  {isAdmin && <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Admin</span>}
+                </div>
+                <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form {n}</h2>
+                <p className="text-xs text-slate-400">{isAdmin ? 'Full access' : 'SAT Premium'}</p>
+                <SatExamDetails />
+                <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
+                  Start Exam →
+                </span>
+              </Link>
+            )
+          }
+
+          return (
+            <div key={n} className="rounded-xl border border-slate-200 bg-slate-50 p-5 flex flex-col">
+              <div className="flex items-start justify-between mb-3">
+                <div className="h-8 w-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
+                  <span className="text-sm font-bold text-slate-400">{n}</span>
+                </div>
+                <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
+                  <PremiumStarIcon />
+                  SAT Premium
+                </span>
+              </div>
+              <h2 className="font-semibold text-slate-500 mb-0.5">Form {n}</h2>
+              <p className="text-xs text-slate-400">SAT Premium required.</p>
+              <SatExamDetails />
+              <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
+                Get SAT Premium
+              </Link>
+            </div>
+          )
+        })}
 
       </div>
     </div>

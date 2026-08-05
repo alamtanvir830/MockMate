@@ -26,10 +26,10 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json() as ModuleFeedbackBody
 
-    const validFormNumbers = [1, 2, 3, 4, 5]
+    const validFormNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     if (!validFormNumbers.includes(body.formNumber)) {
       return NextResponse.json(
-        { error: 'form_number must be 1, 2, 3, 4, or 5.' },
+        { error: 'form_number must be between 1 and 10.' },
         { status: 400 }
       )
     }

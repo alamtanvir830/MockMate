@@ -93,8 +93,8 @@ describe('getSatForm — throws on invalid form number', () => {
   it('throws for form 0', () => {
     expect(() => getSatForm(0, 1)).toThrow()
   })
-  it('throws for form 6', () => {
-    expect(() => getSatForm(6, 2)).toThrow()
+  it('throws for form 11 (above supported range)', () => {
+    expect(() => getSatForm(11, 2)).toThrow()
   })
 })
 

@@ -102,6 +102,17 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Forms 6–10: admin or Premium only
+    if (body.formNumber >= 6 && body.formNumber <= 10 && !isAdmin) {
+      const { satUpgradeUnlocked } = await getEntitlements()
+      if (!satUpgradeUnlocked) {
+        return NextResponse.json(
+          { error: 'SAT Premium is required for this form.' },
+          { status: 403 }
+        )
+      }
+    }
+
     const { user_name, user_email } = await resolveUserIdentity(supabase, user)
 
     // Compute attempt_number for this user + form

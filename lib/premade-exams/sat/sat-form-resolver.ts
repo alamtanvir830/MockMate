@@ -7,6 +7,11 @@ import { satForm2 } from './form-2'
 import { satForm3 } from './form-3'
 import { satForm4 } from './form-4'
 import { satForm5 } from './form-5'
+import { satForm6 } from './form-6'
+import { satForm7 } from './form-7'
+import { satForm8 } from './form-8'
+import { satForm9 } from './form-9'
+import { satForm10 } from './form-10'
 
 // V2 forms (active generation for new attempts)
 import { satForm1V2 } from './v2/form-1'
@@ -14,6 +19,11 @@ import { satForm2V2 } from './v2/form-2'
 import { satForm3V2 } from './v2/form-3'
 import { satForm4V2 } from './v2/form-4'
 import { satForm5V2 } from './v2/form-5'
+import { satForm6V2 } from './v2/form-6'
+import { satForm7V2 } from './v2/form-7'
+import { satForm8V2 } from './v2/form-8'
+import { satForm9V2 } from './v2/form-9'
+import { satForm10V2 } from './v2/form-10'
 
 const V1_FORMS: Record<number, SATForm> = {
   1: satForm1,
@@ -21,6 +31,11 @@ const V1_FORMS: Record<number, SATForm> = {
   3: satForm3,
   4: satForm4,
   5: satForm5,
+  6: satForm6,
+  7: satForm7,
+  8: satForm8,
+  9: satForm9,
+  10: satForm10,
 }
 
 const V2_FORMS: Record<number, SATForm> = {
@@ -29,6 +44,11 @@ const V2_FORMS: Record<number, SATForm> = {
   3: satForm3V2,
   4: satForm4V2,
   5: satForm5V2,
+  6: satForm6V2,
+  7: satForm7V2,
+  8: satForm8V2,
+  9: satForm9V2,
+  10: satForm10V2,
 }
 
 /**
@@ -56,7 +76,7 @@ export function getSatForm(
  * Throws if the ID does not match the expected pattern.
  */
 export function getFormNumberFromId(formId: string): number {
-  const match = /sat-form-(\d)$/.exec(formId)
+  const match = /sat-form-(\d+)$/.exec(formId)
   if (!match) throw new Error(`Cannot parse form number from ID: ${formId}`)
   return parseInt(match[1], 10)
 }
