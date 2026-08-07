@@ -5,27 +5,76 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Logo } from '@/components/shared/logo'
 import { cn } from '@/lib/utils'
+import {
+  type Workspace,
+  WORKSPACE_STORAGE_KEY,
+  getDefinitiveWorkspace,
+} from '@/lib/workspace/workspace'
 
-const navItems = [
-  { href: '/dashboard', label: 'Dashboard' },
-  { href: '/premade', label: 'Exam Forms (SAT)' },
+interface MobileNavItem {
+  href: string
+  label: string
+  premium?: boolean
+  exact?: boolean
+}
+
+function useWorkspace(pathname: string): Workspace {
+  const [workspace, setWorkspace] = useState<Workspace>(
+    () => getDefinitiveWorkspace(pathname) ?? 'sat',
+  )
+
+  useEffect(() => {
+    const definitive = getDefinitiveWorkspace(pathname)
+    if (definitive !== null) {
+      setWorkspace(definitive) // eslint-disable-line react-hooks/set-state-in-effect
+      try { localStorage.setItem(WORKSPACE_STORAGE_KEY, definitive) } catch { /* ignore */ }
+    } else {
+      try {
+        const stored = localStorage.getItem(WORKSPACE_STORAGE_KEY)
+        setWorkspace(stored === 'classroom' ? 'classroom' : 'sat')
+      } catch {
+        setWorkspace('sat')
+      }
+    }
+  }, [pathname])
+
+  return workspace
+}
+
+const SAT_NAV_ITEMS: MobileNavItem[] = [
+  { href: '/dashboard', label: 'Dashboard', exact: true },
+  { href: '/premade/sat', label: 'SAT Exam Forms' },
   { href: '/sat-rw-academy', label: 'SAT R&W Academy' },
   { href: '/sat-math-academy', label: 'SAT Math Academy' },
   { href: '/question-bank', label: 'Question Bank' },
   { href: '/exams', label: 'Exam History' },
-  { href: '/notes', label: 'Personal Notes' },
-  { href: '/groups', label: 'My Groups' },
   { href: '/performance', label: 'Performance' },
-  { href: '/exams/create', label: 'Create My Own Exam' },
+  { href: '/notes', label: 'Personal Notes' },
   { href: '/billing', label: 'Get SAT Premium', premium: true },
   { href: '/settings', label: 'Settings' },
 ]
+
+const CLASSROOM_NAV_ITEMS: MobileNavItem[] = [
+  { href: '/classroom/dashboard', label: 'Classroom Dashboard', exact: true },
+  { href: '/exams/create', label: 'Create Practice Exam' },
+  { href: '/exams', label: 'My Practice Exams' },
+  { href: '/groups', label: 'My Groups' },
+  { href: '/notes', label: 'Personal Notes' },
+  { href: '/settings', label: 'Settings' },
+]
+
+function getWorkspaceNavItems(workspace: Workspace): MobileNavItem[] {
+  return workspace === 'classroom' ? CLASSROOM_NAV_ITEMS : SAT_NAV_ITEMS
+}
 
 export function MobileHeader() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   const openBtnRef = useRef<HTMLButtonElement>(null)
   const closeBtnRef = useRef<HTMLButtonElement>(null)
+
+  const workspace = useWorkspace(pathname)
+  const navItems = getWorkspaceNavItems(workspace)
 
   // Close on route change
   useEffect(() => { setOpen(false) }, [pathname])
@@ -116,11 +165,26 @@ export function MobileHeader() {
 
         {/* Nav links */}
         <nav className="flex-1 overflow-y-auto px-3 py-3 space-y-0.5" aria-label="Main navigation">
-          {navItems.map(({ href, label, premium }) => {
-            const isActive =
-              href === '/dashboard'
-                ? pathname === '/dashboard'
-                : pathname.startsWith(href)
+          {/* Switch product */}
+          <Link
+            href="/choose-study-path"
+            onClick={close}
+            className="flex items-center gap-2.5 rounded-lg px-3 py-2.5 text-xs font-medium text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+          >
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-4 w-4 shrink-0" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+            </svg>
+            Switch product
+          </Link>
+          <div className="my-1 border-t border-slate-100" />
+          {navItems.map(({ href, label, premium, exact }) => {
+            const isActive = exact
+              ? pathname === href
+              : href === '/premade/sat'
+                ? pathname.startsWith('/premade/sat')
+                : href === '/classroom/dashboard'
+                  ? pathname.startsWith('/classroom')
+                  : pathname.startsWith(href)
             return (
               <Link
                 key={href}
