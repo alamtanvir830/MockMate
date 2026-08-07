@@ -20,10 +20,9 @@ import {
   type InProgressRow,
 } from '@/components/exams/PremadeAttemptsSection'
 
-function useWorkspace(pathname: string): Workspace {
-  const [workspace, setWorkspace] = useState<Workspace>(
-    () => getDefinitiveWorkspace(pathname) ?? 'sat',
-  )
+function useWorkspace(pathname: string): { workspace: Workspace; mounted: boolean } {
+  const [workspace, setWorkspace] = useState<Workspace>('sat')
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     const definitive = getDefinitiveWorkspace(pathname)
@@ -34,13 +33,12 @@ function useWorkspace(pathname: string): Workspace {
       try {
         const stored = localStorage.getItem(WORKSPACE_STORAGE_KEY)
         setWorkspace(stored === 'classroom' ? 'classroom' : 'sat')
-      } catch {
-        setWorkspace('sat')
-      }
+      } catch { /* ignore */ }
     }
+    setMounted(true)
   }, [pathname])
 
-  return workspace
+  return { workspace, mounted }
 }
 
 interface ExamsHistoryViewProps {
@@ -59,10 +57,22 @@ export function ExamsHistoryView({
   serverAttempts,
 }: ExamsHistoryViewProps) {
   const pathname = usePathname()
-  const workspace = useWorkspace(pathname)
+  const { workspace, mounted } = useWorkspace(pathname)
 
   const satAttemptCount = inProgressAttempts.length + serverAttempts.length
   const config = getExamsViewConfig(workspace, allExams.length, satAttemptCount)
+
+  if (!mounted) {
+    return (
+      <div className="space-y-6">
+        <div>
+          <div className="h-8 w-52 rounded-lg bg-slate-100 animate-pulse" />
+          <div className="mt-1 h-4 w-28 rounded bg-slate-100 animate-pulse" />
+        </div>
+        <div className="h-64 rounded-xl bg-slate-100 animate-pulse" />
+      </div>
+    )
+  }
 
   const completedSharedSet = new Set(completedSharedIds)
 
