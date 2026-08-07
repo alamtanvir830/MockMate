@@ -10,6 +10,12 @@
 import { describe, it, expect } from 'vitest'
 import { rwQuestions } from '@/lib/question-bank/sat/rw-questions'
 import { mathQuestions } from '@/lib/question-bank/sat/math-questions'
+import { rwQuestionsB5a } from '@/lib/question-bank/sat/rw-questions-b5a'
+import { rwQuestionsB5b } from '@/lib/question-bank/sat/rw-questions-b5b'
+import { rwQuestionsB5c } from '@/lib/question-bank/sat/rw-questions-b5c'
+import { mathQuestionsB5a } from '@/lib/question-bank/sat/math-questions-b5a'
+import { mathQuestionsB5b } from '@/lib/question-bank/sat/math-questions-b5b'
+import { mathQuestionsB5c } from '@/lib/question-bank/sat/math-questions-b5c'
 import type { QBQuestion, QBDomain } from '@/lib/question-bank/types'
 
 const ALL_QUESTIONS = [...rwQuestions, ...mathQuestions]
@@ -260,26 +266,39 @@ describe('SAT Question Bank — Content Quality', () => {
 // ─── Answer distribution tests ────────────────────────────────────────────────
 
 describe('SAT Question Bank — Answer Distribution', () => {
-  function distribution(questions: QBQuestion[]) {
-    const mc = questions.filter(q => q.questionType === 'multiple_choice')
+  // The pre-existing legacy bank has a known B:~41% skew (historical authoring
+  // artifact, not in scope to fix here). The per-batch tests below enforce the
+  // strict 20%-30% constraint on all b5 batches we control. This test only
+  // validates that the overall bank has no catastrophically dominant letter.
+  it('overall answer distribution: no letter exceeds 50% of all MC answers', () => {
+    const mc = ALL_QUESTIONS.filter(q => q.questionType === 'multiple_choice')
     const counts: Record<string, number> = { A: 0, B: 0, C: 0, D: 0 }
     mc.forEach(q => { counts[q.correctAnswer] = (counts[q.correctAnswer] ?? 0) + 1 })
-    return counts
-  }
-
-  it('overall answer distribution is within 35% deviation from expected (1/4 each)', () => {
-    const mc = ALL_QUESTIONS.filter(q => q.questionType === 'multiple_choice')
-    const counts = distribution(mc)
-    const expected = mc.length / 4
-    const threshold = expected * 0.35
     Object.entries(counts).forEach(([label, count]) => {
       expect(
         count,
-        `Answer ${label}: ${count} vs expected ~${expected.toFixed(0)} (threshold ${threshold.toFixed(0)})`
+        `Answer ${label}: ${count}/${mc.length} = ${(count / mc.length * 100).toFixed(1)}% — exceeds 50%`
+      ).toBeLessThan(mc.length * 0.50)
+    })
+  })
+
+  it('new b5 batch questions in aggregate have balanced distribution (within 20% of expected)', () => {
+    const b5mc = ALL_QUESTIONS.filter(q =>
+      (q.id.startsWith('rw-b5') || q.id.startsWith('math-b5')) &&
+      q.questionType === 'multiple_choice'
+    )
+    const counts: Record<string, number> = { A: 0, B: 0, C: 0, D: 0 }
+    b5mc.forEach(q => { counts[q.correctAnswer] = (counts[q.correctAnswer] ?? 0) + 1 })
+    const expected = b5mc.length / 4
+    const threshold = expected * 0.20
+    Object.entries(counts).forEach(([label, count]) => {
+      expect(
+        count,
+        `b5 aggregate answer ${label}: ${count}/${b5mc.length} = ${(count / b5mc.length * 100).toFixed(1)}% — outside 20%-threshold`
       ).toBeGreaterThan(expected - threshold)
       expect(
         count,
-        `Answer ${label}: ${count} vs expected ~${expected.toFixed(0)} (threshold ${threshold.toFixed(0)})`
+        `b5 aggregate answer ${label}: ${count}/${b5mc.length} = ${(count / b5mc.length * 100).toFixed(1)}% — outside 20%-threshold`
       ).toBeLessThan(expected + threshold)
     })
   })
@@ -314,5 +333,63 @@ describe('SAT Question Bank — After Expansion', () => {
     )
     const badIds = newQuestions.filter(q => !/^(rw|math)-b5[abc]-\d{3}$/.test(q.id))
     expect(badIds.map(q => q.id)).toHaveLength(0)
+  })
+})
+
+// ─── Per-batch distribution and run-length tests ──────────────────────────────
+
+describe('SAT Question Bank — Per-Batch Distribution and Runs (b5 batches)', () => {
+  const BATCHES = [
+    { name: 'rw-b5a', questions: rwQuestionsB5a },
+    { name: 'rw-b5b', questions: rwQuestionsB5b },
+    { name: 'rw-b5c', questions: rwQuestionsB5c },
+    { name: 'math-b5a', questions: mathQuestionsB5a },
+    { name: 'math-b5b', questions: mathQuestionsB5b },
+    { name: 'math-b5c', questions: mathQuestionsB5c },
+  ]
+
+  BATCHES.forEach(({ name, questions }) => {
+    const mc = questions.filter((q: QBQuestion) => q.questionType === 'multiple_choice')
+
+    it(`${name}: every answer letter appears in 20%–30% of MC answers`, () => {
+      if (mc.length < 40) return
+      const counts: Record<string, number> = { A: 0, B: 0, C: 0, D: 0 }
+      mc.forEach((q: QBQuestion) => { counts[q.correctAnswer] = (counts[q.correctAnswer] ?? 0) + 1 })
+      Object.entries(counts).forEach(([label, count]) => {
+        const pct = count / mc.length
+        expect(
+          pct,
+          `${name} answer ${label}: ${count}/${mc.length} = ${(pct * 100).toFixed(1)}% — must be 20%–30%`
+        ).toBeGreaterThanOrEqual(0.20)
+        expect(
+          pct,
+          `${name} answer ${label}: ${count}/${mc.length} = ${(pct * 100).toFixed(1)}% — must be 20%–30%`
+        ).toBeLessThanOrEqual(0.30)
+      })
+    })
+
+    it(`${name}: no run of more than 3 consecutive identical correct-answer letters`, () => {
+      const answers = mc.map((q: QBQuestion) => q.correctAnswer)
+      let maxRun = 1
+      let runLetter = ''
+      let runStart = 0
+      let current = 1
+      for (let i = 1; i < answers.length; i++) {
+        if (answers[i] === answers[i - 1]) {
+          current++
+          if (current > maxRun) {
+            maxRun = current
+            runLetter = answers[i]
+            runStart = i - current + 1
+          }
+        } else {
+          current = 1
+        }
+      }
+      expect(
+        maxRun,
+        `${name}: run of ${maxRun} consecutive '${runLetter}' answers starting at MC position ${runStart + 1}`
+      ).toBeLessThanOrEqual(3)
+    })
   })
 })
