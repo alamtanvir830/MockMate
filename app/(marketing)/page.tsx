@@ -320,7 +320,7 @@ export default function LandingPage() {
               </span>
             </h2>
             <p className="mt-4 text-lg text-slate-400">
-              Practice with 5 full-length SAT-style forms, get instant score feedback, and drill your weak areas with personalized question sets — all before test day.
+              Practice with 10 full-length SAT-style forms, get instant score feedback, and drill your weak areas with personalized question sets — all before test day.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link href="/signup?next=/premade/sat">
@@ -378,7 +378,7 @@ export default function LandingPage() {
 }
 
 const satPremiumFeatureLinks = [
-  { text: '5 full-length adaptive SAT exams', href: '/sat-practice-test' },
+  { text: '10 full-length adaptive SAT exams', href: '/sat-practice-test' },
   { text: '1,000+ question bank', href: '/sat-question-bank' },
   { text: 'SAT Reading and Writing Academy', href: '/sat-reading-writing-academy' },
   { text: 'SAT Math & Desmos Academy', href: '/sat-math-desmos-academy' },
