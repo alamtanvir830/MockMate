@@ -26,7 +26,7 @@ export default async function LandingPage() {
   // "Get A Free SAT Exam!": anonymous → /signup with SAT intent; authenticated → /premade/sat
   const signInHref = isAuthenticated ? '/choose-study-path' : '/login?next=/choose-study-path'
   const getStartedHref = isAuthenticated ? '/choose-study-path' : '/signup?next=/choose-study-path'
-  const freeSatHref = isAuthenticated ? '/premade/sat' : '/signup?next=/premade/sat'
+  const freeSatHref = isAuthenticated ? '/dashboard' : '/signup?next=/dashboard'
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
