@@ -6,6 +6,12 @@ import { usePathname } from 'next/navigation'
 import { Logo } from '@/components/shared/logo'
 import { cn } from '@/lib/utils'
 import { logout } from '@/app/actions/auth'
+import {
+  type Workspace,
+  WORKSPACE_STORAGE_KEY,
+  getDefinitiveWorkspace,
+  resolveWorkspace,
+} from '@/lib/workspace/workspace'
 
 interface SidebarProps {
   userEmail?: string
@@ -23,18 +29,29 @@ interface NavItem {
   inactiveIconClass?: string
 }
 
-type Workspace = 'sat' | 'classroom'
+function useWorkspace(pathname: string): Workspace {
+  // Seed with a definitive value when available, 'sat' otherwise (SSR-safe — no localStorage)
+  const [workspace, setWorkspace] = useState<Workspace>(
+    () => getDefinitiveWorkspace(pathname) ?? 'sat',
+  )
 
-function detectWorkspace(pathname: string): Workspace {
-  if (
-    pathname.startsWith('/classroom') ||
-    pathname.startsWith('/exams/create') ||
-    pathname.startsWith('/groups')
-  ) {
-    return 'classroom'
-  }
-  // SAT is the default workspace
-  return 'sat'
+  useEffect(() => {
+    const definitive = getDefinitiveWorkspace(pathname)
+    if (definitive !== null) {
+      setWorkspace(definitive) // eslint-disable-line react-hooks/set-state-in-effect
+      try { localStorage.setItem(WORKSPACE_STORAGE_KEY, definitive) } catch { /* ignore */ }
+    } else {
+      // Shared route — restore previously established context
+      try {
+        const stored = localStorage.getItem(WORKSPACE_STORAGE_KEY)
+        setWorkspace(stored === 'classroom' ? 'classroom' : 'sat')
+      } catch {
+        setWorkspace('sat')
+      }
+    }
+  }, [pathname])
+
+  return workspace
 }
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
@@ -113,6 +130,7 @@ const ICON_SETTINGS = (
 )
 
 // ── Workspace nav items ───────────────────────────────────────────────────────
+// Nav items kept in sync with SAT_NAV_HREFS / CLASSROOM_NAV_HREFS in lib/workspace/workspace.ts
 
 const SAT_NAV_ITEMS: NavItem[] = [
   { href: '/dashboard', label: 'Dashboard', exact: true, icon: ICON_DASHBOARD },
@@ -139,6 +157,9 @@ const CLASSROOM_NAV_ITEMS: NavItem[] = [
 function getWorkspaceNavItems(workspace: Workspace): NavItem[] {
   return workspace === 'classroom' ? CLASSROOM_NAV_ITEMS : SAT_NAV_ITEMS
 }
+
+// resolveWorkspace re-exported for mobile-header parity — both use the same pure function
+export { resolveWorkspace }
 
 const SIGN_OUT_ICON = (
   <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8} className="h-5 w-5 shrink-0">
@@ -186,7 +207,7 @@ export function Sidebar({ userEmail, userFullName, subscriptionTier = 'free' }: 
   const displayName = userFullName ?? userEmail?.split('@')[0] ?? 'Account'
   const initials = displayName.charAt(0).toUpperCase()
 
-  const workspace = detectWorkspace(pathname)
+  const workspace = useWorkspace(pathname)
   const navItems = getWorkspaceNavItems(workspace)
 
   // Read saved preference — guard for SSR

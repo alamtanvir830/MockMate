@@ -5,8 +5,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Logo } from '@/components/shared/logo'
 import { cn } from '@/lib/utils'
-
-type Workspace = 'sat' | 'classroom'
+import {
+  type Workspace,
+  WORKSPACE_STORAGE_KEY,
+  getDefinitiveWorkspace,
+} from '@/lib/workspace/workspace'
 
 interface MobileNavItem {
   href: string
@@ -15,15 +18,27 @@ interface MobileNavItem {
   exact?: boolean
 }
 
-function detectWorkspace(pathname: string): Workspace {
-  if (
-    pathname.startsWith('/classroom') ||
-    pathname.startsWith('/exams/create') ||
-    pathname.startsWith('/groups')
-  ) {
-    return 'classroom'
-  }
-  return 'sat'
+function useWorkspace(pathname: string): Workspace {
+  const [workspace, setWorkspace] = useState<Workspace>(
+    () => getDefinitiveWorkspace(pathname) ?? 'sat',
+  )
+
+  useEffect(() => {
+    const definitive = getDefinitiveWorkspace(pathname)
+    if (definitive !== null) {
+      setWorkspace(definitive) // eslint-disable-line react-hooks/set-state-in-effect
+      try { localStorage.setItem(WORKSPACE_STORAGE_KEY, definitive) } catch { /* ignore */ }
+    } else {
+      try {
+        const stored = localStorage.getItem(WORKSPACE_STORAGE_KEY)
+        setWorkspace(stored === 'classroom' ? 'classroom' : 'sat')
+      } catch {
+        setWorkspace('sat')
+      }
+    }
+  }, [pathname])
+
+  return workspace
 }
 
 const SAT_NAV_ITEMS: MobileNavItem[] = [
@@ -58,7 +73,7 @@ export function MobileHeader() {
   const openBtnRef = useRef<HTMLButtonElement>(null)
   const closeBtnRef = useRef<HTMLButtonElement>(null)
 
-  const workspace = detectWorkspace(pathname)
+  const workspace = useWorkspace(pathname)
   const navItems = getWorkspaceNavItems(workspace)
 
   // Close on route change
