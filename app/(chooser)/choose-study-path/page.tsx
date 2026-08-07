@@ -6,13 +6,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-// Brand blue per spec: #44A5F0
-// The (dashboard) layout handles authentication — unauthenticated users are
-// redirected to /login by the shared layout before this page renders.
-
 export default function ChooseStudyPathPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] px-4 py-12">
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-12">
       {/* Heading */}
       <div className="text-center mb-10 max-w-xl">
         <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">
@@ -82,9 +78,7 @@ export default function ChooseStudyPathPage() {
 
         {/* ── Card 2: MCAT (disabled, coming soon) ────────────────────── */}
         <div
-          role="article"
-          aria-disabled="true"
-          aria-label="MCAT — Coming soon"
+          aria-label="MCAT — Coming soon. This option is not yet available."
           className="
             flex flex-col rounded-2xl border-2 bg-white p-6
             border-slate-200 opacity-60 cursor-not-allowed select-none
@@ -117,15 +111,14 @@ export default function ChooseStudyPathPage() {
             MCAT practice exams and targeted preparation are coming to MockMate.
           </p>
 
-          {/* Disabled button */}
-          <div className="mt-6">
+          {/* Disabled button — span (not button/link) so it is not keyboard-reachable as an action */}
+          <div className="mt-6" aria-hidden="true">
             <span
               className="
                 inline-flex w-full items-center justify-center rounded-lg
                 px-4 py-2.5 text-sm font-bold text-slate-400 bg-slate-100
                 min-h-[44px] cursor-not-allowed
               "
-              aria-disabled="true"
             >
               Coming soon
             </span>
