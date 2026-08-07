@@ -26,7 +26,7 @@ export default async function SATForm2Page() {
   return (
     <UpgradeGate
       title="SAT Form 2 requires SAT Premium"
-      description="Subscribe to SAT Premium to unlock all 5 SAT practice forms, the 700+ question bank, and both SAT Academies."
+      description="Subscribe to SAT Premium to unlock all 5 SAT practice forms, the 1,000+ question bank, and both SAT Academies."
     />
   )
 }

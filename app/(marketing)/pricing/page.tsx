@@ -6,7 +6,7 @@ import { PremiumPlans } from '@/components/shared/premium-plans'
 export const metadata: Metadata = {
   title: 'Pricing | MockMate SAT Prep',
   description:
-    'MockMate plans start at $9.99/month, with a $24.99 3-month plan and $29.99 lifetime access. Every plan includes SAT Forms 1–5, a 700+ question bank, both academies, and score reports.',
+    'MockMate plans start at $9.99/month, with a $24.99 3-month plan and $29.99 lifetime access. Every plan includes SAT Forms 1–5, a 1,000+ question bank, both academies, and score reports.',
   alternates: { canonical: 'https://www.mockmateapp.com/pricing' },
   openGraph: {
     title: 'Pricing | MockMate SAT Prep',

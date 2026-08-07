@@ -67,7 +67,7 @@ export default function AboutPage() {
 
       <Section title="What We Built">
         <p>
-          MockMate brings together full-length adaptive SAT-style exams, a 700+ question
+          MockMate brings together full-length adaptive SAT-style exams, a 1,000+ question
           bank, a Reading and Writing Academy, a Math and Desmos Academy, and instant
           score reports — all in one place and one subscription.
         </p>

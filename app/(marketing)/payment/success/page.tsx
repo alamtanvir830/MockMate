@@ -94,7 +94,7 @@ export default function PaymentSuccessPage() {
             </div>
             <h1 className="text-xl font-bold text-slate-900 mb-1">You&apos;re subscribed!</h1>
             <p className="text-[13px] text-slate-500 mb-6 leading-relaxed">
-              SAT Premium is active. You now have access to SAT Forms 1–5, the 700+ question bank, and both SAT Academies.
+              SAT Premium is active. You now have access to SAT Forms 1–5, the 1,000+ question bank, and both SAT Academies.
             </p>
             <div className="space-y-2.5">
               <Link href="/premade/sat" className="block w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold text-[14px] py-2.5 rounded-xl transition-colors text-center">

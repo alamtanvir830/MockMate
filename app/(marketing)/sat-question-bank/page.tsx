@@ -8,7 +8,7 @@ import { buildSeoMetadata, SITE_URL } from '@/components/seo/seo-meta'
 const SLUG = '/sat-question-bank'
 
 export const metadata: Metadata = buildSeoMetadata({
-  title: 'SAT Question Bank: 700+ Math and Reading Questions | MockMate',
+  title: 'SAT Question Bank: 1,000+ Math and Reading Questions | MockMate',
   description:
     'Practice SAT-style Math and Reading and Writing questions by domain, skill, and difficulty with detailed explanations and targeted practice sets.',
   slug: SLUG,
@@ -28,7 +28,7 @@ const jsonLd = [
     '@type': 'Dataset',
     name: 'MockMate SAT-Style Question Bank',
     description:
-      '700+ independently created SAT-style Math and Reading and Writing questions organized by domain, skill, and difficulty, each with a worked explanation.',
+      '1,000+ independently created SAT-style Math and Reading and Writing questions organized by domain, skill, and difficulty, each with a worked explanation.',
     url: `${SITE_URL}${SLUG}`,
     creator: { '@type': 'Organization', name: 'MockMate' },
     keywords: [
@@ -67,7 +67,7 @@ export default function SatQuestionBankPage() {
 
       <Section title="Question Count">
         <p>
-          The bank holds 700+ SAT-style questions covering both sections of the Digital
+          The bank holds 1,000+ SAT-style questions covering both sections of the Digital
           SAT, split across Reading and Writing and Math. Every question is independently
           created in the Digital SAT style and comes with a full explanation.
         </p>

@@ -53,7 +53,7 @@ export default async function SATForm1Page() {
     return (
       <UpgradeGate
         title="SAT Form 1 requires SAT Premium"
-        description="SAT Form 1 is now included in SAT Premium. Try the free SAT Form 2 instead, or subscribe to unlock all 5 forms, the 700+ question bank, and both SAT Academies."
+        description="SAT Form 1 is now included in SAT Premium. Try the free SAT Form 2 instead, or subscribe to unlock all 5 forms, the 1,000+ question bank, and both SAT Academies."
       />
     )
   }

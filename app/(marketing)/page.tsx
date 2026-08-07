@@ -379,7 +379,7 @@ export default function LandingPage() {
 
 const satPremiumFeatureLinks = [
   { text: '5 full-length adaptive SAT exams', href: '/sat-practice-test' },
-  { text: '700+ question bank', href: '/sat-question-bank' },
+  { text: '1,000+ question bank', href: '/sat-question-bank' },
   { text: 'SAT Reading and Writing Academy', href: '/sat-reading-writing-academy' },
   { text: 'SAT Math & Desmos Academy', href: '/sat-math-desmos-academy' },
   { text: 'Personalized score reports', href: '/sat-score-reports' },
@@ -388,7 +388,7 @@ const satPremiumFeatureLinks = [
 
 const badges: Array<{ label: string; href: string; icon: React.ReactNode }> = [
   {
-    label: '700+ SAT Question Bank',
+    label: '1,000+ SAT Question Bank',
     href: '/sat-question-bank',
     icon: (
       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -465,7 +465,7 @@ const features = [
     ),
   },
   {
-    title: '700+ question Q-Bank',
+    title: '1,000+ question Q-Bank',
     description:
       'Filter by domain, skill, and difficulty. Build targeted sets that drill your weakest areas — all independently created SAT-style questions.',
     icon: (
@@ -529,6 +529,6 @@ const steps = [
     number: '4',
     title: 'Strengthen your weak areas',
     description:
-      'Target the skills holding back your score with the 700+ question Q-Bank, the SAT Reading & Writing Academy, and the SAT Math & Desmos Academy — all in one place.',
+      'Target the skills holding back your score with the 1,000+ question Q-Bank, the SAT Reading & Writing Academy, and the SAT Math & Desmos Academy — all in one place.',
   },
 ]

@@ -51,7 +51,7 @@ const STEPS: Array<{ title: string; body: React.ReactNode }> = [
   },
   {
     title: 'Practice targeted question sets',
-    body: 'Drill those weak domains in the 700+ question bank with focused, skill-specific sets.',
+    body: 'Drill those weak domains in the 1,000+ question bank with focused, skill-specific sets.',
   },
   {
     title: 'Study focused lessons',

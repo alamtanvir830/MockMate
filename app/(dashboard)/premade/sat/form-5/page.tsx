@@ -9,7 +9,7 @@ export default async function SATForm5Page() {
     return (
       <UpgradeGate
         title="SAT Form 5 — Locked"
-        description="Subscribe to SAT Premium to unlock SAT Forms 1–5, the 700+ question bank, and both SAT Academies."
+        description="Subscribe to SAT Premium to unlock SAT Forms 1–5, the 1,000+ question bank, and both SAT Academies."
       />
     )
   }

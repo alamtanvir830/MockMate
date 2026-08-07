@@ -28,7 +28,7 @@ export default async function QuestionBankPage() {
             <p className="text-[11px] font-semibold text-white/70 tracking-widest uppercase mb-2">SAT Premium</p>
             <h2 className="text-xl font-bold text-white">Unlock the SAT Question Bank</h2>
             <p className="text-amber-100 text-[13px] mt-2 leading-relaxed max-w-sm mx-auto">
-              Practice the exact Reading, Writing, and Math skills holding back your score with 700+ targeted SAT-style questions.
+              Practice the exact Reading, Writing, and Math skills holding back your score with 1,000+ targeted SAT-style questions.
             </p>
           </div>
 

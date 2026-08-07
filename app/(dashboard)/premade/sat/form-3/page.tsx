@@ -85,7 +85,7 @@ export default async function SATForm3Page() {
   return (
     <UpgradeGate
       title="SAT Form 3 — Free Access Window Ended"
-      description="The free promotional access window for SAT Form 3 has ended. Subscribe to SAT Premium to access all 5 SAT practice forms, the 700+ question bank, and both SAT Academies."
+      description="The free promotional access window for SAT Form 3 has ended. Subscribe to SAT Premium to access all 5 SAT practice forms, the 1,000+ question bank, and both SAT Academies."
     />
   )
 }

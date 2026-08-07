@@ -59,7 +59,7 @@ export default function DigitalSatPrepPage() {
         Everything You Need to Prepare for the Digital SAT
       </h1>
       <p className="mt-4 max-w-3xl text-lg text-slate-600">
-        MockMate combines full-length adaptive SAT-style practice tests, a 700+ question
+        MockMate combines full-length adaptive SAT-style practice tests, a 1,000+ question
         bank, focused Reading and Writing and Math courses, and detailed score reports
         into one connected study workflow — so every practice session moves you toward a
         higher score.
@@ -103,7 +103,7 @@ export default function DigitalSatPrepPage() {
 
       <Section title="SAT Question Bank">
         <p>
-          Beyond full forms, MockMate offers a 700+ question bank organized by domain,
+          Beyond full forms, MockMate offers a 1,000+ question bank organized by domain,
           skill, and difficulty. Instead of random drills, you practice targeted sets —
           for example, only Words in Context at a medium difficulty — so your time goes
           straight to the skills that need work. Every question includes a worked
@@ -181,7 +181,7 @@ export default function DigitalSatPrepPage() {
           New users get 48-hour free access to Forms 1, 2, and 3 so you can take a full
           practice test before paying anything. Paid plans start at $9.99/month, with a
           3-month plan at $24.99 and lifetime access at $29.99. Every plan includes SAT
-          Forms 1–5, the 700+ question bank, both academies, and personalized score
+          Forms 1–5, the 1,000+ question bank, both academies, and personalized score
           reports.
         </p>
         <p>

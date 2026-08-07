@@ -327,7 +327,7 @@ export default async function DashboardPage() {
                 Unlock all 5 SAT Practice Forms
               </p>
               <p className="text-[12px] text-amber-700 leading-relaxed">
-                Get SAT Premium for full access to Forms 1–5, the 700+ question bank, and both SAT Academies.
+                Get SAT Premium for full access to Forms 1–5, the 1,000+ question bank, and both SAT Academies.
               </p>
             </div>
             <Link href="/billing" className="shrink-0">
