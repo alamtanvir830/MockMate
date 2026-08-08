@@ -32,7 +32,8 @@ function useWorkspace(pathname: string): Workspace {
     } else {
       try {
         const stored = localStorage.getItem(WORKSPACE_STORAGE_KEY)
-        setWorkspace(stored === 'classroom' ? 'classroom' : 'sat')
+        const ws: Workspace = stored === 'classroom' ? 'classroom' : stored === 'mcat' ? 'mcat' : 'sat'
+        setWorkspace(ws)
       } catch {
         setWorkspace('sat')
       }
@@ -55,6 +56,15 @@ const SAT_NAV_ITEMS: MobileNavItem[] = [
   { href: '/settings', label: 'Settings' },
 ]
 
+const MCAT_NAV_ITEMS: MobileNavItem[] = [
+  { href: '/mcat/dashboard', label: 'MCAT Dashboard', exact: true },
+  { href: '/premade/mcat', label: 'MCAT Practice Exams' },
+  { href: '/question-bank/mcat', label: 'MCAT Question Bank' },
+  { href: '/exams', label: 'Exam History' },
+  { href: '/notes', label: 'Personal Notes' },
+  { href: '/settings', label: 'Settings' },
+]
+
 const CLASSROOM_NAV_ITEMS: MobileNavItem[] = [
   { href: '/classroom/dashboard', label: 'Classroom Dashboard', exact: true },
   { href: '/exams/create', label: 'Create Practice Exam' },
@@ -65,7 +75,9 @@ const CLASSROOM_NAV_ITEMS: MobileNavItem[] = [
 ]
 
 function getWorkspaceNavItems(workspace: Workspace): MobileNavItem[] {
-  return workspace === 'classroom' ? CLASSROOM_NAV_ITEMS : SAT_NAV_ITEMS
+  if (workspace === 'classroom') return CLASSROOM_NAV_ITEMS
+  if (workspace === 'mcat') return MCAT_NAV_ITEMS
+  return SAT_NAV_ITEMS
 }
 
 export function MobileHeader() {

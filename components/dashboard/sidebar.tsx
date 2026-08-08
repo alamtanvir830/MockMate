@@ -45,7 +45,8 @@ function useWorkspace(pathname: string): Workspace {
       // Shared route — restore previously established context
       try {
         const stored = localStorage.getItem(WORKSPACE_STORAGE_KEY)
-        setWorkspace(stored === 'classroom' ? 'classroom' : 'sat')
+        const ws: Workspace = stored === 'classroom' ? 'classroom' : stored === 'mcat' ? 'mcat' : 'sat'
+        setWorkspace(ws)
       } catch {
         setWorkspace('sat')
       }
@@ -146,6 +147,15 @@ const SAT_NAV_ITEMS: NavItem[] = [
   { href: '/settings', label: 'Settings', icon: ICON_SETTINGS },
 ]
 
+const MCAT_NAV_ITEMS: NavItem[] = [
+  { href: '/mcat/dashboard', label: 'MCAT Dashboard', exact: true, icon: ICON_DASHBOARD },
+  { href: '/premade/mcat', label: 'MCAT Practice Exams', icon: ICON_EXAM_FORMS },
+  { href: '/question-bank/mcat', label: 'MCAT Question Bank', inactiveClass: 'text-emerald-700 hover:bg-slate-100 hover:text-emerald-900', inactiveIconClass: 'text-emerald-600', icon: ICON_QUESTION_BANK },
+  { href: '/exams', label: 'Exam History', icon: ICON_HISTORY },
+  { href: '/notes', label: 'Personal Notes', icon: ICON_NOTES },
+  { href: '/settings', label: 'Settings', icon: ICON_SETTINGS },
+]
+
 const CLASSROOM_NAV_ITEMS: NavItem[] = [
   { href: '/classroom/dashboard', label: 'Classroom Dashboard', exact: true, icon: ICON_DASHBOARD },
   { href: '/exams/create', label: 'Create Practice Exam', icon: ICON_CREATE_EXAM },
@@ -156,7 +166,9 @@ const CLASSROOM_NAV_ITEMS: NavItem[] = [
 ]
 
 function getWorkspaceNavItems(workspace: Workspace): NavItem[] {
-  return workspace === 'classroom' ? CLASSROOM_NAV_ITEMS : SAT_NAV_ITEMS
+  if (workspace === 'classroom') return CLASSROOM_NAV_ITEMS
+  if (workspace === 'mcat') return MCAT_NAV_ITEMS
+  return SAT_NAV_ITEMS
 }
 
 // resolveWorkspace re-exported for mobile-header parity — both use the same pure function
