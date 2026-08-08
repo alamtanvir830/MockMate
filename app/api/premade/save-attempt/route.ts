@@ -192,7 +192,21 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    return NextResponse.json({ ok: true, attemptNumber })
+    // Compute trial eligibility after the insert — the new attempt row is committed,
+    // so getSatTrialEligibility will find it and evaluate all four conditions correctly.
+    // Admin users are never eligible; skip the DB round-trips.
+    let trialEligible = false
+    if (!isAdmin) {
+      try {
+        const { getSatTrialEligibility } = await import('@/lib/sat-trial/eligibility')
+        const trialInfo = await getSatTrialEligibility(user.id)
+        trialEligible = trialInfo.eligible
+      } catch {
+        // Non-fatal — the results-page server component re-checks on navigation
+      }
+    }
+
+    return NextResponse.json({ ok: true, attemptNumber, trialEligible })
   } catch (err) {
     console.error('save-attempt error:', err)
     return NextResponse.json({ error: 'Internal error' }, { status: 500 })

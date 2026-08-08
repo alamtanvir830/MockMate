@@ -979,6 +979,9 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false)
   const [feedbackError, setFeedbackError] = useState('')
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle')
+  // Initialized from prop; updated to true once save-attempt response confirms eligibility.
+  // Allows trial offer to appear in the live results view without a manual refresh.
+  const [trialEligibleState, setTrialEligibleState] = useState(trialEligible)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   // Wall-clock deadline for the active module timer — used to reconcile after
   // tab backgrounding, laptop sleep, or browser-throttled intervals.
@@ -1548,7 +1551,15 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
         responses,
         contentVersion,
       }),
-    }).catch(() => { /* silent — localStorage is the source of truth */ })
+    })
+      .then(res => res.ok ? res.json() : null)
+      .then((data: { ok?: boolean; trialEligible?: boolean } | null) => {
+        // Server computes eligibility after the DB row is committed — no race condition.
+        if (data?.trialEligible === true) {
+          setTrialEligibleState(true)
+        }
+      })
+      .catch(() => { /* silent — localStorage is the source of truth */ })
   // only save once when entering results — intentionally omitting reactive deps
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase.tag])
@@ -2609,6 +2620,9 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
           </div>
         </div>
 
+        {/* Trial offer — top placement, above score card */}
+        {trialEligibleState && <SATTrialOffer />}
+
         {/* 1. Score summary */}
         <div className="bg-white rounded-xl border border-slate-200 p-6">
           <h2 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-4">MockMate Estimated SAT Score</h2>
@@ -2835,10 +2849,8 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
         </div>
         </div>
 
-        {/* Trial offer — server-side eligibility gated via trialEligible prop */}
-        {trialEligible && (
-          <SATTrialOffer />
-        )}
+        {/* Trial offer — bottom placement, between Next Steps and Performance Analysis */}
+        {trialEligibleState && <SATTrialOffer />}
 
         {/* 4. Performance Analysis */}
         <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
