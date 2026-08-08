@@ -19,6 +19,8 @@ import {
   type ServerAttemptRow,
   type InProgressRow,
 } from '@/components/exams/PremadeAttemptsSection'
+import { loadAllMCATAttempts } from '@/lib/premade-exams/mcat/attempt-store'
+import type { MCATAttempt } from '@/lib/premade-exams/mcat/types'
 
 function useWorkspace(pathname: string): { workspace: Workspace; mounted: boolean } {
   const [workspace, setWorkspace] = useState<Workspace>('sat')
@@ -32,13 +34,19 @@ function useWorkspace(pathname: string): { workspace: Workspace; mounted: boolea
     } else {
       try {
         const stored = localStorage.getItem(WORKSPACE_STORAGE_KEY)
-        setWorkspace(stored === 'classroom' ? 'classroom' : 'sat')
+        const ws: Workspace = stored === 'classroom' ? 'classroom' : stored === 'mcat' ? 'mcat' : 'sat'
+        setWorkspace(ws)
       } catch { /* ignore */ }
     }
     setMounted(true)
   }, [pathname])
 
   return { workspace, mounted }
+}
+
+function mcatResultsUrl(attempt: MCATAttempt): string {
+  const form = attempt.examId === 'mcat-form-1' ? 'form-1' : attempt.examId.replace('mcat-', '')
+  return `/premade/mcat/${form}/results/${attempt.id}`
 }
 
 interface ExamsHistoryViewProps {
@@ -58,9 +66,14 @@ export function ExamsHistoryView({
 }: ExamsHistoryViewProps) {
   const pathname = usePathname()
   const { workspace, mounted } = useWorkspace(pathname)
+  const [mcatAttempts, setMcatAttempts] = useState<MCATAttempt[]>([])
+
+  useEffect(() => {
+    setMcatAttempts(loadAllMCATAttempts())
+  }, [])
 
   const satAttemptCount = inProgressAttempts.length + serverAttempts.length
-  const config = getExamsViewConfig(workspace, allExams.length, satAttemptCount)
+  const config = getExamsViewConfig(workspace, allExams.length, satAttemptCount, mcatAttempts.length)
 
   if (!mounted) {
     return (
@@ -101,6 +114,49 @@ export function ExamsHistoryView({
           inProgressAttempts={inProgressAttempts}
           serverAttempts={serverAttempts}
         />
+      )}
+
+      {/* MCAT workspace view */}
+      {config.showMcatExams && (
+        <Card padded={false}>
+          {mcatAttempts.length === 0 ? (
+            <div className="px-6 py-16 text-center">
+              <p className="font-medium text-slate-700">No MCAT attempts yet</p>
+              <p className="mt-1 text-sm text-slate-400">
+                Complete a practice exam to see your history here
+              </p>
+              <Link href="/premade/mcat" className="inline-block mt-4">
+                <Button size="sm">Take a practice exam</Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="divide-y divide-slate-100">
+              {mcatAttempts.map((attempt) => (
+                <div
+                  key={attempt.id}
+                  className="flex items-center gap-4 px-6 py-5 hover:bg-slate-50 transition-colors"
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-slate-900 truncate">{attempt.examTitle}</p>
+                    <p className="text-sm text-slate-400 mt-0.5">
+                      Score: {attempt.totalScore} · {new Date(attempt.completedAt).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      })}
+                    </p>
+                  </div>
+                  <Link
+                    href={mcatResultsUrl(attempt)}
+                    className="text-sm font-medium text-emerald-600 hover:text-emerald-500 transition-colors shrink-0"
+                  >
+                    View results
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
+        </Card>
       )}
 
       {/* Classroom workspace view */}
