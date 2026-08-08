@@ -324,10 +324,10 @@ export default async function DashboardPage() {
             <div className="min-w-0">
               <p className="text-[10px] font-bold text-amber-600 uppercase tracking-widest mb-1">SAT Premium</p>
               <p className="text-[15px] font-bold text-amber-900 leading-snug mb-1">
-                Unlock all 5 SAT Practice Forms
+                Unlock all 10 SAT Exam Forms
               </p>
               <p className="text-[12px] text-amber-700 leading-relaxed">
-                Get SAT Premium for full access to Forms 1–5, the 1,000+ question bank, and both SAT Academies.
+                Get SAT Premium for full access to all 10 exam forms, the 1,000+ question bank, and both SAT Academies.
               </p>
             </div>
             <Link href="/billing" className="shrink-0">
@@ -381,7 +381,7 @@ export default async function DashboardPage() {
       {/* Pre-made Exams — primary section */}
       <div>
         <div className="mb-4">
-          <h2 className="text-lg font-bold text-slate-900">Pre-made Exams</h2>
+          <h2 className="text-lg font-bold text-slate-900">Exam Forms</h2>
           <p className="text-sm text-slate-500 mt-0.5">Full-length adaptive practice exams, ready to go.</p>
         </div>
         <div>
@@ -427,7 +427,7 @@ export default async function DashboardPage() {
               <p className="font-bold text-base leading-snug text-slate-900">
                 {satCardState.tag === 'upgraded'
                   ? isLegacyLifetime ? 'SAT Practice Forms — lifetime access' : 'SAT Practice Forms — active subscription'
-                  : 'SAT Practice Exams'}
+                  : 'SAT Exam Forms 1–10'}
               </p>
               {satCardState.tag === 'admin' && (
                 <p className="mt-1 text-xs text-amber-600">Admin testing mode: timer disabled</p>
@@ -457,7 +457,7 @@ export default async function DashboardPage() {
               )}
               {satCardState.tag === 'default' && !showForm3Banner && !showForm4Banner && (
                 <p className="mt-1 text-xs text-slate-500">
-                  Get SAT Premium to unlock all 5 full-length adaptive SAT practice forms.
+                  Get SAT Premium to unlock all 10 full-length adaptive SAT exam forms.
                 </p>
               )}
 
@@ -474,7 +474,7 @@ export default async function DashboardPage() {
               )}
 
               <p className="mt-2 text-xs text-slate-400">Adaptive · Full length · 98 questions · 2 hr 14 min</p>
-              <p className="mt-0.5 text-xs text-slate-400">Forms 1–5 available with SAT Premium.</p>
+              <p className="mt-0.5 text-xs text-slate-400">All 10 exam forms available with SAT Premium.</p>
             </div>
 
             {/* SAT card action button */}
@@ -486,7 +486,7 @@ export default async function DashboardPage() {
                   ? 'bg-brand-500 hover:bg-brand-600'
                   : 'bg-blue-600 hover:bg-blue-700'
               }`}>
-                View SAT Exam Forms
+                View All 10 Exam Forms
               </button>
             </Link>
           </div>
