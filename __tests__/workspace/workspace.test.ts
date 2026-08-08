@@ -55,8 +55,8 @@ describe('getDefinitiveWorkspace — Classroom routes', () => {
 })
 
 describe('getDefinitiveWorkspace — shared routes return null', () => {
-  it('test 12: /groups → null (shared)', () => {
-    expect(getDefinitiveWorkspace('/groups')).toBeNull()
+  it('test 12: /groups → classroom (Groups is Classroom-only)', () => {
+    expect(getDefinitiveWorkspace('/groups')).toBe('classroom')
   })
 
   it('test 13: /notes → null (shared)', () => {
@@ -79,11 +79,12 @@ describe('getDefinitiveWorkspace — shared routes return null', () => {
 // ── resolveWorkspace — shared routes preserve context ────────────────────────
 
 describe('resolveWorkspace — shared routes preserve stored workspace', () => {
-  it('test 17: SAT → /groups preserves sat', () => {
-    expect(resolveWorkspace('/groups', 'sat')).toBe('sat')
+  it('test 17: /groups → classroom regardless of stored (Groups is Classroom-only)', () => {
+    expect(resolveWorkspace('/groups', 'sat')).toBe('classroom')
+    expect(resolveWorkspace('/groups', 'mcat')).toBe('classroom')
   })
 
-  it('test 18: Classroom → /groups preserves classroom', () => {
+  it('test 18: Classroom → /groups resolves classroom (definitive)', () => {
     expect(resolveWorkspace('/groups', 'classroom')).toBe('classroom')
   })
 
@@ -112,10 +113,13 @@ describe('resolveWorkspace — shared routes preserve stored workspace', () => {
   })
 
   it('test 25: shared route with no stored context defaults to sat', () => {
-    expect(resolveWorkspace('/groups', null)).toBe('sat')
     expect(resolveWorkspace('/notes', null)).toBe('sat')
     expect(resolveWorkspace('/settings', null)).toBe('sat')
     expect(resolveWorkspace('/exams', null)).toBe('sat')
+  })
+
+  it('test 25b: /groups with no stored context → classroom (definitive, not sat default)', () => {
+    expect(resolveWorkspace('/groups', null)).toBe('classroom')
   })
 })
 

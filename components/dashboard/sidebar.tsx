@@ -142,7 +142,6 @@ const SAT_NAV_ITEMS: NavItem[] = [
   { href: '/question-bank', label: 'Question Bank', inactiveClass: 'text-red-800 hover:bg-slate-100 hover:text-red-900', inactiveIconClass: 'text-red-700', icon: ICON_QUESTION_BANK },
   { href: '/exams', label: 'Exam History', icon: ICON_HISTORY },
   { href: '/performance', label: 'Performance', icon: ICON_PERFORMANCE },
-  { href: '/groups', label: 'My Groups', icon: ICON_GROUPS },
   { href: '/notes', label: 'Personal Notes', icon: ICON_NOTES },
   { href: '/billing', label: 'Get SAT Premium', premium: true, icon: ICON_PREMIUM },
   { href: '/settings', label: 'Settings', icon: ICON_SETTINGS },
@@ -153,7 +152,6 @@ const MCAT_NAV_ITEMS: NavItem[] = [
   { href: '/premade/mcat', label: 'MCAT Practice Exams', icon: ICON_EXAM_FORMS },
   { href: '/question-bank/mcat', label: 'MCAT Question Bank', inactiveClass: 'text-emerald-700 hover:bg-slate-100 hover:text-emerald-900', inactiveIconClass: 'text-emerald-600', icon: ICON_QUESTION_BANK },
   { href: '/exams', label: 'Exam History', icon: ICON_HISTORY },
-  { href: '/groups', label: 'My Groups', icon: ICON_GROUPS },
   { href: '/notes', label: 'Personal Notes', icon: ICON_NOTES },
   { href: '/settings', label: 'Settings', icon: ICON_SETTINGS },
 ]

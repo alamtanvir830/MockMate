@@ -51,7 +51,6 @@ const SAT_NAV_ITEMS: MobileNavItem[] = [
   { href: '/question-bank', label: 'Question Bank' },
   { href: '/exams', label: 'Exam History' },
   { href: '/performance', label: 'Performance' },
-  { href: '/groups', label: 'My Groups' },
   { href: '/notes', label: 'Personal Notes' },
   { href: '/billing', label: 'Get SAT Premium', premium: true },
   { href: '/settings', label: 'Settings' },
@@ -62,7 +61,6 @@ const MCAT_NAV_ITEMS: MobileNavItem[] = [
   { href: '/premade/mcat', label: 'MCAT Practice Exams' },
   { href: '/question-bank/mcat', label: 'MCAT Question Bank' },
   { href: '/exams', label: 'Exam History' },
-  { href: '/groups', label: 'My Groups' },
   { href: '/notes', label: 'Personal Notes' },
   { href: '/settings', label: 'Settings' },
 ]

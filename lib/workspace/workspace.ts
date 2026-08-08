@@ -11,7 +11,6 @@ export const SAT_NAV_HREFS = [
   '/question-bank',
   '/exams',
   '/performance',
-  '/groups',
   '/notes',
   '/billing',
   '/settings',
@@ -22,7 +21,6 @@ export const MCAT_NAV_HREFS = [
   '/premade/mcat',
   '/question-bank/mcat',
   '/exams',
-  '/groups',
   '/notes',
   '/settings',
 ] as const
@@ -45,7 +43,9 @@ export function getDefinitiveWorkspace(pathname: string): Workspace | null {
   // Classroom-specific routes
   if (
     pathname.startsWith('/classroom') ||
-    pathname.startsWith('/exams/create')
+    pathname.startsWith('/exams/create') ||
+    pathname === '/groups' ||
+    pathname.startsWith('/groups/')
   ) {
     return 'classroom'
   }
@@ -73,7 +73,7 @@ export function getDefinitiveWorkspace(pathname: string): Workspace | null {
     return 'sat'
   }
 
-  // Shared routes: /groups, /notes, /settings, /exams, /question-bank/history, /choose-study-path
+  // Shared routes: /notes, /settings, /exams, /question-bank/history, /choose-study-path
   return null
 }
 
