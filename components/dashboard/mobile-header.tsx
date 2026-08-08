@@ -9,6 +9,7 @@ import {
   type Workspace,
   WORKSPACE_STORAGE_KEY,
   getDefinitiveWorkspace,
+  isNavItemActive,
 } from '@/lib/workspace/workspace'
 
 interface MobileNavItem {
@@ -178,13 +179,7 @@ export function MobileHeader() {
           </Link>
           <div className="my-1 border-t border-slate-100" />
           {navItems.map(({ href, label, premium, exact }) => {
-            const isActive = exact
-              ? pathname === href
-              : href === '/premade/sat'
-                ? pathname.startsWith('/premade/sat')
-                : href === '/classroom/dashboard'
-                  ? pathname.startsWith('/classroom')
-                  : pathname.startsWith(href)
+            const isActive = isNavItemActive(href, pathname, exact)
             return (
               <Link
                 key={href}
