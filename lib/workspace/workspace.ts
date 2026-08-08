@@ -70,3 +70,29 @@ export function resolveWorkspace(
   if (definitive !== null) return definitive
   return stored ?? 'sat'
 }
+
+/**
+ * Returns whether a nav item with the given href should be shown as active
+ * for the current pathname. Extracted from sidebar/mobile-header so the
+ * logic is testable and kept in sync.
+ *
+ * Key special cases:
+ * - /exams: active on /exams and /exams/<id>/... but NOT /exams/create*
+ *   (prevents "My Practice Exams" and "Create Practice Exam" being active together)
+ * - /classroom/dashboard: active for all /classroom/* sub-routes
+ * - /premade/sat, /sat-rw-academy, /sat-math-academy: prefix match
+ */
+export function isNavItemActive(href: string, pathname: string, exact?: boolean): boolean {
+  if (exact) return pathname === href
+
+  if (href === '/sat-rw-academy') return pathname.startsWith('/sat-rw-academy')
+  if (href === '/sat-math-academy') return pathname.startsWith('/sat-math-academy')
+  if (href === '/premade/sat') return pathname.startsWith('/premade/sat')
+  if (href === '/classroom/dashboard') return pathname.startsWith('/classroom')
+  if (href === '/exams') {
+    return pathname === '/exams' ||
+      (pathname.startsWith('/exams/') && !pathname.startsWith('/exams/create'))
+  }
+
+  return pathname === href || pathname.startsWith(href + '/')
+}

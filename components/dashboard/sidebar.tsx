@@ -11,6 +11,7 @@ import {
   WORKSPACE_STORAGE_KEY,
   getDefinitiveWorkspace,
   resolveWorkspace,
+  isNavItemActive,
 } from '@/lib/workspace/workspace'
 
 interface SidebarProps {
@@ -292,16 +293,7 @@ export function Sidebar({ userEmail, userFullName, subscriptionTier = 'free' }: 
         )}
       >
         {navItems.map(({ href, label, icon, premium, exact, inactiveClass, inactiveIconClass }) => {
-          const isActive = exact
-            ? pathname === href
-            : pathname === href || pathname.startsWith(href + '/')
-          // Academy routes: active on any nested path
-          const effectiveActive =
-            href === '/sat-rw-academy' ? pathname.startsWith('/sat-rw-academy') :
-            href === '/sat-math-academy' ? pathname.startsWith('/sat-math-academy') :
-            href === '/premade/sat' ? pathname.startsWith('/premade/sat') :
-            href === '/classroom/dashboard' ? pathname.startsWith('/classroom') :
-            isActive
+          const effectiveActive = isNavItemActive(href, pathname, exact)
 
           if (collapsed) {
             return (
