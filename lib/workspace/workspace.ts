@@ -11,6 +11,7 @@ export const SAT_NAV_HREFS = [
   '/question-bank',
   '/exams',
   '/performance',
+  '/groups',
   '/notes',
   '/billing',
   '/settings',
@@ -21,6 +22,7 @@ export const MCAT_NAV_HREFS = [
   '/premade/mcat',
   '/question-bank/mcat',
   '/exams',
+  '/groups',
   '/notes',
   '/settings',
 ] as const
