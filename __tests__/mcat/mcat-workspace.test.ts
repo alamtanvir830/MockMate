@@ -105,13 +105,10 @@ describe('MCAT nav hrefs content', () => {
     expect(MCAT_NAV_HREFS).not.toContain('/performance')
   })
 
-  it('test 21: MCAT_NAV_HREFS contains /groups (shared across all three workspaces)', () => {
-    expect(MCAT_NAV_HREFS).toContain('/groups')
-  })
-
-  it('test 21b: MCAT_NAV_HREFS does not contain Classroom-exclusive items', () => {
+  it('test 21: MCAT_NAV_HREFS does not contain Classroom-exclusive items', () => {
     expect(MCAT_NAV_HREFS).not.toContain('/classroom/dashboard')
     expect(MCAT_NAV_HREFS).not.toContain('/exams/create')
+    expect(MCAT_NAV_HREFS).not.toContain('/groups')
   })
 })
 

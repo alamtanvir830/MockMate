@@ -29,11 +29,11 @@ describe('chooser → workspace classification', () => {
   })
 })
 
-// ── Group 2: SAT nav completeness ────────────────────────────────────────────
+// ── Group 2: SAT nav — completeness and exclusions ───────────────────────────
 
 describe('SAT nav completeness', () => {
-  it('SAT_NAV_HREFS contains /groups (My Groups)', () => {
-    expect(SAT_NAV_HREFS).toContain('/groups')
+  it('SAT_NAV_HREFS does NOT contain /groups (Groups is Classroom-only)', () => {
+    expect(SAT_NAV_HREFS).not.toContain('/groups')
   })
 
   it('SAT_NAV_HREFS contains /performance', () => {
@@ -58,14 +58,15 @@ describe('SAT nav completeness', () => {
   it('SAT_NAV_HREFS does not contain Classroom-exclusive items', () => {
     expect(SAT_NAV_HREFS).not.toContain('/classroom/dashboard')
     expect(SAT_NAV_HREFS).not.toContain('/exams/create')
+    expect(SAT_NAV_HREFS).not.toContain('/groups')
   })
 })
 
-// ── Group 3: MCAT nav completeness ───────────────────────────────────────────
+// ── Group 3: MCAT nav — completeness and exclusions ──────────────────────────
 
 describe('MCAT nav completeness', () => {
-  it('MCAT_NAV_HREFS contains /groups (My Groups)', () => {
-    expect(MCAT_NAV_HREFS).toContain('/groups')
+  it('MCAT_NAV_HREFS does NOT contain /groups (Groups is Classroom-only)', () => {
+    expect(MCAT_NAV_HREFS).not.toContain('/groups')
   })
 
   it('MCAT_NAV_HREFS does not contain SAT performance or billing', () => {
@@ -81,30 +82,39 @@ describe('MCAT nav completeness', () => {
   it('MCAT_NAV_HREFS does not contain Classroom-exclusive items', () => {
     expect(MCAT_NAV_HREFS).not.toContain('/classroom/dashboard')
     expect(MCAT_NAV_HREFS).not.toContain('/exams/create')
+    expect(MCAT_NAV_HREFS).not.toContain('/groups')
   })
 })
 
-// ── Group 4: /groups is a shared route in all three workspaces ────────────────
+// ── Group 4: /groups is a Classroom-definitive route ─────────────────────────
 
-describe('/groups shared route preserves workspace context', () => {
-  it('/groups with stored=sat → sat', () => {
-    expect(resolveWorkspace('/groups', 'sat')).toBe('sat')
+describe('/groups is definitively Classroom', () => {
+  it('/groups → getDefinitiveWorkspace = classroom', () => {
+    expect(getDefinitiveWorkspace('/groups')).toBe('classroom')
   })
 
-  it('/groups with stored=mcat → mcat', () => {
-    expect(resolveWorkspace('/groups', 'mcat')).toBe('mcat')
+  it('/groups/some-id → getDefinitiveWorkspace = classroom', () => {
+    expect(getDefinitiveWorkspace('/groups/abc-123')).toBe('classroom')
   })
 
-  it('/groups with stored=classroom → classroom', () => {
+  it('resolveWorkspace(/groups, sat) → classroom (URL wins over stored)', () => {
+    expect(resolveWorkspace('/groups', 'sat')).toBe('classroom')
+  })
+
+  it('resolveWorkspace(/groups, mcat) → classroom (URL wins over stored)', () => {
+    expect(resolveWorkspace('/groups', 'mcat')).toBe('classroom')
+  })
+
+  it('resolveWorkspace(/groups, classroom) → classroom', () => {
     expect(resolveWorkspace('/groups', 'classroom')).toBe('classroom')
   })
 
-  it('/groups with stored=null → sat (safe default)', () => {
-    expect(resolveWorkspace('/groups', null)).toBe('sat')
+  it('resolveWorkspace(/groups, null) → classroom', () => {
+    expect(resolveWorkspace('/groups', null)).toBe('classroom')
   })
 
-  it('/groups is not a definitive route (null)', () => {
-    expect(getDefinitiveWorkspace('/groups')).toBeNull()
+  it('CLASSROOM_NAV_HREFS contains /groups', () => {
+    expect(CLASSROOM_NAV_HREFS).toContain('/groups')
   })
 })
 
@@ -139,7 +149,7 @@ describe('six product-switch transitions via definitive routes', () => {
 // ── Group 6: Shared routes preserve context across all three products ─────────
 
 describe('shared routes preserve context — all three products', () => {
-  const sharedRoutes = ['/exams', '/notes', '/settings', '/groups', '/question-bank/history']
+  const sharedRoutes = ['/exams', '/notes', '/settings', '/question-bank/history']
 
   for (const route of sharedRoutes) {
     it(`${route} with stored=sat → sat`, () => {
@@ -204,41 +214,31 @@ describe('MCAT access and security invariants', () => {
     const satCfg = getExamsViewConfig('sat', ...counts)
     const mcatCfg = getExamsViewConfig('mcat', ...counts)
     const classroomCfg = getExamsViewConfig('classroom', ...counts)
-    // All three receive the same underlying counts — only display flags differ
     expect(satCfg.showSatExams).toBe(true)
     expect(mcatCfg.showMcatExams).toBe(true)
     expect(classroomCfg.showClassroomExams).toBe(true)
-    // No workspace enables another workspace's sections
     expect(satCfg.showMcatExams).toBe(false)
     expect(mcatCfg.showSatExams).toBe(false)
     expect(classroomCfg.showMcatExams).toBe(false)
   })
 
-  it('MCAT entitlement gate (/premade/mcat) is separate from workspace — workspace=mcat does not grant access', () => {
-    // This is an architectural invariant: getDefinitiveWorkspace returns 'mcat' for
-    // /premade/mcat, but the page itself carries a sessionStorage gate (PASSWORD = 'downstate123').
-    // resolveWorkspace returning 'mcat' only affects navigation display, not gate state.
+  it('MCAT entitlement gate (/premade/mcat) is separate from workspace', () => {
     expect(getDefinitiveWorkspace('/premade/mcat')).toBe('mcat')
-    // The workspace module has no concept of "unlocked" — it is purely display logic
     expect(typeof resolveWorkspace('/premade/mcat', null)).toBe('string')
   })
 
-  it('MCAT QB (/question-bank/mcat) is definitively mcat — accessible to all authenticated users', () => {
-    // No gate on QB; workspace classification is used only for nav display
+  it('MCAT QB (/question-bank/mcat) is definitively mcat', () => {
     expect(getDefinitiveWorkspace('/question-bank/mcat')).toBe('mcat')
   })
 
-  it('/mcat/dashboard is definitively mcat — no gate', () => {
+  it('/mcat/dashboard is definitively mcat', () => {
     expect(getDefinitiveWorkspace('/mcat/dashboard')).toBe('mcat')
   })
 
   it('localStorage manipulation cannot grant data access — workspace is navigation context only', () => {
-    // Setting stored='mcat' resolves shared routes to mcat workspace, but
-    // getDefinitiveWorkspace is URL-driven. A user setting stored='mcat' in localStorage
-    // while visiting a SAT route still sees SAT workspace.
-    expect(resolveWorkspace('/dashboard', 'mcat')).toBe('sat') // URL wins
-    expect(resolveWorkspace('/premade/sat', 'mcat')).toBe('sat') // URL wins
-    expect(resolveWorkspace('/billing', 'mcat')).toBe('sat') // URL wins
+    expect(resolveWorkspace('/dashboard', 'mcat')).toBe('sat')
+    expect(resolveWorkspace('/premade/sat', 'mcat')).toBe('sat')
+    expect(resolveWorkspace('/billing', 'mcat')).toBe('sat')
   })
 })
 
@@ -306,5 +306,11 @@ describe('URL-first workspace resolution for refresh and direct nav', () => {
     expect(resolveWorkspace('/dashboard', 'mcat')).toBe('sat')
     expect(resolveWorkspace('/dashboard', 'classroom')).toBe('sat')
     expect(resolveWorkspace('/dashboard', null)).toBe('sat')
+  })
+
+  it('direct /groups visit always yields classroom regardless of stored', () => {
+    expect(resolveWorkspace('/groups', 'sat')).toBe('classroom')
+    expect(resolveWorkspace('/groups', 'mcat')).toBe('classroom')
+    expect(resolveWorkspace('/groups', null)).toBe('classroom')
   })
 })
