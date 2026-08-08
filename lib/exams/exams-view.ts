@@ -7,6 +7,7 @@ export interface ExamsViewConfig {
   showClassroomExams: boolean
   showSharedExams: boolean
   showSatExams: boolean
+  showMcatExams: boolean
 }
 
 /**
@@ -17,6 +18,7 @@ export function getExamsViewConfig(
   workspace: Workspace,
   classroomExamCount: number,
   satAttemptCount: number,
+  mcatAttemptCount: number = 0,
 ): ExamsViewConfig {
   if (workspace === 'classroom') {
     return {
@@ -26,6 +28,19 @@ export function getExamsViewConfig(
       showClassroomExams: true,
       showSharedExams: true,
       showSatExams: false,
+      showMcatExams: false,
+    }
+  }
+
+  if (workspace === 'mcat') {
+    return {
+      title: 'MCAT Exam History',
+      subtitle: `${mcatAttemptCount} attempt${mcatAttemptCount !== 1 ? 's' : ''} total`,
+      showNewExamButton: false,
+      showClassroomExams: false,
+      showSharedExams: false,
+      showSatExams: false,
+      showMcatExams: true,
     }
   }
 
@@ -36,5 +51,6 @@ export function getExamsViewConfig(
     showClassroomExams: false,
     showSharedExams: false,
     showSatExams: true,
+    showMcatExams: false,
   }
 }
