@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 // ── Centralized social-proof count ────────────────────────────────────────────
 // Update this one constant to change the number everywhere on the landing page.
 // Do not derive this from auth.users, profile rows, or any private data.
-export const LANDING_USER_COUNT_LABEL = '1,095+'
+export const LANDING_USER_COUNT_LABEL = '1,100+'
 
 const AVATARS = [
   { initials: 'S', bg: '#dbeafe', color: 'var(--color-brand-500)' },
