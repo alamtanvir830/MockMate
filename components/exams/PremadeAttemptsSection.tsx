@@ -39,7 +39,7 @@ interface DisplayAttempt {
   inLocalStorage: boolean
 }
 
-interface InProgressRow {
+export interface InProgressRow {
   local_attempt_id: string
   form_number: number
   answers: Record<string, string>
