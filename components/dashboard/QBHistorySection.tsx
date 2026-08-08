@@ -15,14 +15,20 @@ function AccuracyColor(acc: number) {
   return 'text-red-500'
 }
 
-export function QBHistorySection() {
+interface QBHistorySectionProps {
+  satOnly?: boolean
+}
+
+export function QBHistorySection({ satOnly }: QBHistorySectionProps = {}) {
   const [entries, setEntries] = useState<QBHistoryEntry[]>([])
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    setEntries(loadAllQBHistory().slice(0, 5))
+    const all = loadAllQBHistory()
+    const filtered = satOnly ? all.filter(e => e.test === 'SAT') : all
+    setEntries(filtered.slice(0, 5))
     setLoaded(true)
-  }, [])
+  }, [satOnly])
 
   return (
     <div>
@@ -52,7 +58,7 @@ export function QBHistorySection() {
       ) : entries.length === 0 ? (
         <div className="bg-white border border-slate-200 rounded-xl p-6 text-center">
           <p className="text-slate-500 text-sm font-medium">No question bank practice sets yet.</p>
-          <p className="text-slate-400 text-xs mt-1">Complete an SAT or MCAT practice set to see your history here.</p>
+          <p className="text-slate-400 text-xs mt-1">{satOnly ? 'Complete an SAT practice set to see your history here.' : 'Complete an SAT or MCAT practice set to see your history here.'}</p>
           <Link
             href="/question-bank"
             className="inline-block mt-4 text-sm font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 px-4 py-2 rounded-lg transition-colors"
