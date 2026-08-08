@@ -91,14 +91,16 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Form 5: admin or Premium only
+    // Form 5: admin or Premium always allowed.
+    // Non-premium users may submit during the active free window.
     if (body.formNumber === 5 && !isAdmin) {
       const { satUpgradeUnlocked } = await getEntitlements()
       if (!satUpgradeUnlocked) {
-        return NextResponse.json(
-          { error: 'SAT Premium is required for this form.' },
-          { status: 403 }
-        )
+        const { canNonPremiumAccessForm5Api } = await import('@/lib/premade-exams/sat/form5-access')
+        const allowed = await canNonPremiumAccessForm5Api(user.id)
+        if (!allowed) {
+          return NextResponse.json({ error: 'SAT Form 5 free access has expired.' }, { status: 403 })
+        }
       }
     }
 

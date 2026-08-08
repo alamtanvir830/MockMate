@@ -51,6 +51,10 @@ vi.mock('@/lib/premade-exams/sat/form4-access', () => ({
   canNonPremiumAccessForm4Api: vi.fn().mockResolvedValue(false),
 }))
 
+vi.mock('@/lib/premade-exams/sat/form5-access', () => ({
+  canNonPremiumAccessForm5Api: vi.fn().mockResolvedValue(false),
+}))
+
 // --- Helpers ---
 
 const NORMAL_USER = { id: 'user-123', email: 'user@example.com' }
@@ -144,7 +148,7 @@ describe('POST /api/premade/save-attempt — Forms 4 and 5 entitlement gate', ()
     expect(body.error).toContain('SAT Form 4')
   })
 
-  it('blocks non-premium user from submitting Form 5', async () => {
+  it('blocks non-premium user from submitting Form 5 when promo window is expired', async () => {
     mockGetUser.mockResolvedValue({ data: { user: NORMAL_USER } })
     mockGetEntitlements.mockResolvedValue({ satUpgradeUnlocked: false })
 
@@ -154,7 +158,7 @@ describe('POST /api/premade/save-attempt — Forms 4 and 5 entitlement gate', ()
 
     expect(res.status).toBe(403)
     const body = await res.json()
-    expect(body.error).toContain('SAT Premium')
+    expect(body.error).toContain('SAT Form 5')
   })
 
   it('allows premium user to submit Form 4', async () => {
@@ -227,7 +231,7 @@ describe('POST /api/sat/in-progress — Forms 4 and 5 entitlement gate', () => {
     expect(body.error).toContain('SAT Form 4')
   })
 
-  it('blocks non-premium user from autosaving Form 5', async () => {
+  it('blocks non-premium user from autosaving Form 5 when promo window is expired', async () => {
     mockGetUser.mockResolvedValue({ data: { user: NORMAL_USER } })
     mockGetEntitlements.mockResolvedValue({ satUpgradeUnlocked: false })
 
@@ -237,7 +241,7 @@ describe('POST /api/sat/in-progress — Forms 4 and 5 entitlement gate', () => {
 
     expect(res.status).toBe(403)
     const body = await res.json()
-    expect(body.error).toContain('SAT Premium')
+    expect(body.error).toContain('SAT Form 5')
   })
 
   it('allows premium user to autosave Form 4', async () => {
