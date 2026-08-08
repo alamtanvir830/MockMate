@@ -148,18 +148,20 @@ describe('SAT workspace regression', () => {
   })
 })
 
-// ── Group 7: MCAT remains disabled ───────────────────────────────────────────
+// ── Group 7: MCAT is now a live workspace (Phase 5A) ─────────────────────────
 
-describe('MCAT remains disabled', () => {
-  it('test 29: /mcat routes are not definitively classified (getDefinitiveWorkspace returns null)', () => {
-    expect(getDefinitiveWorkspace('/mcat')).toBeNull()
-    expect(getDefinitiveWorkspace('/mcat/dashboard')).toBeNull()
-    expect(getDefinitiveWorkspace('/mcat/question-bank')).toBeNull()
+describe('MCAT workspace is enabled (Phase 5A)', () => {
+  it('test 29: /mcat routes are definitively classified as mcat', () => {
+    expect(getDefinitiveWorkspace('/mcat')).toBe('mcat')
+    expect(getDefinitiveWorkspace('/mcat/dashboard')).toBe('mcat')
+    expect(getDefinitiveWorkspace('/question-bank/mcat')).toBe('mcat')
   })
 
-  it('test 30: neither SAT_NAV_HREFS nor CLASSROOM_NAV_HREFS contain any MCAT paths', () => {
-    const allHrefs = [...SAT_NAV_HREFS, ...CLASSROOM_NAV_HREFS]
-    expect(allHrefs.some((h) => h.includes('mcat'))).toBe(false)
+  it('test 30: neither SAT_NAV_HREFS nor CLASSROOM_NAV_HREFS contain MCAT-specific paths', () => {
+    expect(SAT_NAV_HREFS).not.toContain('/mcat/dashboard')
+    expect(SAT_NAV_HREFS).not.toContain('/premade/mcat')
+    expect(CLASSROOM_NAV_HREFS).not.toContain('/mcat/dashboard')
+    expect(CLASSROOM_NAV_HREFS).not.toContain('/premade/mcat')
   })
 })
 
