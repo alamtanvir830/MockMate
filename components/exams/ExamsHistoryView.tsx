@@ -69,7 +69,7 @@ export function ExamsHistoryView({
   const [mcatAttempts, setMcatAttempts] = useState<MCATAttempt[]>([])
 
   useEffect(() => {
-    setMcatAttempts(loadAllMCATAttempts())
+    setMcatAttempts(loadAllMCATAttempts()) // eslint-disable-line react-hooks/set-state-in-effect
   }, [])
 
   const satAttemptCount = inProgressAttempts.length + serverAttempts.length
