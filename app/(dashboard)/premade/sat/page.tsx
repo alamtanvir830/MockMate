@@ -7,6 +7,7 @@ import { SatForm1BadgeCountdown } from '@/components/sat/SatForm1Countdown'
 import { ExamHistoryNotice } from '@/components/premade/ExamHistoryNotice'
 import { Form3CountdownBanner, Form3CountdownBadge } from '@/components/sat/Form3Countdown'
 import { Form4CountdownBanner, Form4CountdownBadge } from '@/components/sat/Form4Countdown'
+import { Form5CountdownBanner, Form5CountdownBadge } from '@/components/sat/Form5Countdown'
 import { SatExamDetails } from '@/components/sat/SatExamDetails'
 import {
   getGlobalForm3Window,
@@ -18,6 +19,11 @@ import {
   resolveForm4Access,
 } from '@/lib/premade-exams/sat/form4-access'
 import type { Form4AttemptStatus } from '@/lib/premade-exams/sat/form4-access'
+import {
+  getForm5FreeWindow,
+  resolveForm5Access,
+} from '@/lib/premade-exams/sat/form5-access'
+import type { Form5AttemptStatus } from '@/lib/premade-exams/sat/form5-access'
 
 export const dynamic = 'force-dynamic'
 
@@ -68,6 +74,11 @@ export default async function SATPremadePage() {
 
   // Form 5 state
   let form5ResultsAttemptId: string | null = null
+  let form5HasInProgress = false
+  let form5FeedbackRequired = false
+  let form5InProgressAttemptId: string | null = null
+  let form5InProgressStartedAt: string | null = null
+  let form5FreeWindow = null as ReturnType<typeof getForm5FreeWindow>
 
   // Forms 6–10 state
   let form6ResultsAttemptId: string | null = null
@@ -90,6 +101,8 @@ export default async function SATPremadePage() {
       form4InProgress,
       form4FeedbackRow,
       form5Completed,
+      form5InProgress,
+      form5FeedbackRow,
     ] = await Promise.all([
       supabase
         .from('standardized_exam_attempts')
@@ -139,6 +152,14 @@ export default async function SATPremadePage() {
         .select('local_attempt_id')
         .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 5)
         .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
+      supabase
+        .from('sat_in_progress_attempts')
+        .select('local_attempt_id, started_at').eq('user_id', user.id).eq('form_number', 5).maybeSingle(),
+      supabase
+        .from('standardized_exam_attempts')
+        .select('local_attempt_id, ai_feedback')
+        .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 5)
+        .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
     ])
 
     // Fetch Forms 6–10 completed attempts in a separate parallel batch
@@ -175,6 +196,15 @@ export default async function SATPremadePage() {
     form4InProgressStartedAt = form4InProgress.data?.started_at ?? null
     form4FreeWindow = getForm4FreeWindow()
     form5ResultsAttemptId = form5Completed.data?.local_attempt_id ?? null
+    form5HasInProgress = !!form5InProgress.data
+    form5InProgressAttemptId = form5InProgress.data?.local_attempt_id ?? null
+    form5InProgressStartedAt = form5InProgress.data?.started_at ?? null
+    form5FreeWindow = getForm5FreeWindow()
+
+    const f5row = form5FeedbackRow.data as { local_attempt_id: string; ai_feedback: unknown } | null
+    if (f5row && !f5row.ai_feedback) {
+      form5FeedbackRequired = true
+    }
 
     const f3row = form3FeedbackRow.data as { local_attempt_id: string; ai_feedback: unknown } | null
     if (f3row && !f3row.ai_feedback) {
@@ -225,6 +255,25 @@ export default async function SATPremadePage() {
     attemptStatus: form4AttemptStatus,
     attemptId: form4AttemptId,
     inProgressStartedAt: form4InProgressStartedAt,
+  })
+
+  const form5Completed = !!form5ResultsAttemptId
+
+  const form5AttemptStatus: Form5AttemptStatus =
+    form5FeedbackRequired ? 'feedback-required'
+    : form5Completed ? 'completed'
+    : form5HasInProgress ? 'in-progress'
+    : 'none'
+
+  const form5AttemptId = form5ResultsAttemptId ?? form5InProgressAttemptId ?? null
+
+  const form5Access = resolveForm5Access({
+    isAdmin,
+    isPremium: satUpgradeUnlocked,
+    freeWindow: form5FreeWindow,
+    attemptStatus: form5AttemptStatus,
+    attemptId: form5AttemptId,
+    inProgressStartedAt: form5InProgressStartedAt,
   })
 
   return (
@@ -283,6 +332,11 @@ export default async function SATPremadePage() {
       {/* Form 4 global countdown banner */}
       {form4Access.freeWindowExpiresAt && form4Access.accessSource === 'free-window' && (
         <Form4CountdownBanner expiresAt={form4Access.freeWindowExpiresAt} />
+      )}
+
+      {/* Form 5 global countdown banner */}
+      {form5Access.freeWindowExpiresAt && form5Access.accessSource === 'free-window' && (
+        <Form5CountdownBanner expiresAt={form5Access.freeWindowExpiresAt} />
       )}
 
       <ExamHistoryNotice />
@@ -680,8 +734,23 @@ export default async function SATPremadePage() {
           </div>
         )}
 
-        {/* ── Form 5 ────────────────────────────────────────────────────── */}
-        {form5ResultsAttemptId ? (
+        {/* ── Form 5 — global 48-hour free window ───────────────────────── */}
+        {form5ResultsAttemptId && form5FeedbackRequired ? (
+          <div className="rounded-xl border border-amber-200 bg-white p-5 flex flex-col">
+            <div className="flex items-start justify-between mb-3">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">5</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Feedback</span>
+            </div>
+            <h2 className="font-semibold text-slate-900 mb-0.5">Form 5</h2>
+            <p className="text-xs text-slate-400">Complete your feedback to unlock full results.</p>
+            <SatExamDetails />
+            <Link href={`/premade/sat/form-5/results/${form5ResultsAttemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
+              Complete Feedback →
+            </Link>
+          </div>
+        ) : form5ResultsAttemptId && !form5FeedbackRequired ? (
           <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
@@ -696,7 +765,42 @@ export default async function SATPremadePage() {
               View Results →
             </Link>
           </div>
-        ) : isAdmin || satUpgradeUnlocked ? (
+        ) : form5Access.canResume ? (
+          <Link href="/premade/sat/form-5" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
+            <div className="flex items-start justify-between mb-3">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">5</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">In Progress</span>
+            </div>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 5</h2>
+            <p className="text-xs text-slate-400">Resume where you left off.</p>
+            <SatExamDetails />
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
+              Resume SAT Form 5 →
+            </span>
+          </Link>
+        ) : form5Access.canStart && form5Access.accessSource === 'free-window' ? (
+          <Link href="/premade/sat/form-5" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
+            <div className="flex items-start justify-between mb-2">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">5</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">Free for 48 Hours</span>
+            </div>
+            {form5Access.freeWindowExpiresAt && (
+              <div className="mb-2">
+                <Form5CountdownBadge expiresAt={form5Access.freeWindowExpiresAt} />
+              </div>
+            )}
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 5</h2>
+            <p className="text-[11px] text-brand-700">Available during the free access window.</p>
+            <SatExamDetails />
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-600 transition-colors">
+              Take Form 5 Free →
+            </span>
+          </Link>
+        ) : form5Access.canStart && (isAdmin || satUpgradeUnlocked) ? (
           <Link href="/premade/sat/form-5" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
@@ -709,6 +813,27 @@ export default async function SATPremadePage() {
             <SatExamDetails />
             <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
               Start Exam →
+            </span>
+          </Link>
+        ) : user && !isAdmin && !satUpgradeUnlocked && form5FreeWindow && form5AttemptStatus === 'none' ? (
+          // Active free window but no attempt yet — show free window card
+          <Link href="/premade/sat/form-5" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
+            <div className="flex items-start justify-between mb-2">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">5</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">Free for 48 Hours</span>
+            </div>
+            {form5FreeWindow.expiresAt && (
+              <div className="mb-2">
+                <Form5CountdownBadge expiresAt={form5FreeWindow.expiresAt} />
+              </div>
+            )}
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 5</h2>
+            <p className="text-[11px] text-brand-700">Start to begin your 48-hour free access window.</p>
+            <SatExamDetails />
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-600 transition-colors">
+              Take Form 5 Free →
             </span>
           </Link>
         ) : (

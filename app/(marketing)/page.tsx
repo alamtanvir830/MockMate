@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { HeroReviewsPanel } from '@/components/landing/StudentReviews'
 import { SocialProofCard } from '@/components/landing/SocialProofCard'
 import { TabletShowcase } from '@/components/landing/IPadShowcase'
+import { createClient } from '@/lib/supabase/server'
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -12,7 +13,21 @@ const fraunces = Fraunces({
   variable: '--font-fraunces',
 })
 
-export default function LandingPage() {
+export const dynamic = 'force-dynamic'
+
+export default async function LandingPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  const isAuthenticated = !!user
+
+  // Nav button destinations vary by auth state.
+  // "Sign in": anonymous → /login with generic intent; authenticated → /choose-study-path
+  // "Get started free": anonymous → /signup with generic intent; authenticated → /choose-study-path
+  // "Get A Free SAT Exam!": anonymous → /signup with SAT intent; authenticated → /premade/sat
+  const signInHref = isAuthenticated ? '/choose-study-path' : '/login?next=/choose-study-path'
+  const getStartedHref = isAuthenticated ? '/choose-study-path' : '/signup?next=/choose-study-path'
+  const freeSatHref = isAuthenticated ? '/dashboard' : '/signup?next=/dashboard'
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       {/* Nav */}
@@ -29,10 +44,10 @@ export default function LandingPage() {
               </a>
             </nav>
             <div className="flex items-center gap-3">
-              <Link href="/login" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
+              <Link href={signInHref} className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
                 Sign in
               </Link>
-              <Link href="/signup">
+              <Link href={getStartedHref}>
                 <Button size="sm" className="bg-brand-600 hover:bg-brand-700">Get started free</Button>
               </Link>
             </div>
@@ -151,7 +166,7 @@ export default function LandingPage() {
 
                 {/* CTA buttons */}
                 <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
-                  <Link href="/signup?next=/premade/sat">
+                  <Link href={freeSatHref}>
                     <Button
                       size="lg"
                       className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 whitespace-nowrap"
@@ -323,7 +338,7 @@ export default function LandingPage() {
               Practice with 10 full-length SAT-style forms, get instant score feedback, and drill your weak areas with personalized question sets — all before test day.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/signup?next=/premade/sat">
+              <Link href={freeSatHref}>
                 <Button size="lg" className="bg-brand-600 hover:bg-brand-700">
                   Start Free SAT Practice
                 </Button>

@@ -10,9 +10,9 @@ function siteUrl() {
 }
 
 function safeNextRedirect(next: FormDataEntryValue | null): string {
-  if (typeof next !== 'string' || !next) return '/dashboard'
-  if (!next.startsWith('/') || next.startsWith('//')) return '/dashboard'
-  if (/[a-zA-Z][a-zA-Z0-9+\-.]*:/.test(next)) return '/dashboard'
+  if (typeof next !== 'string' || !next) return '/choose-study-path'
+  if (!next.startsWith('/') || next.startsWith('//')) return '/choose-study-path'
+  if (/[a-zA-Z][a-zA-Z0-9+\-.]*:/.test(next)) return '/choose-study-path'
   return next
 }
 

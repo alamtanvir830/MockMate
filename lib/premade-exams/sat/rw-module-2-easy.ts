@@ -456,7 +456,7 @@ export const rwModule2EasyQuestions: RWQuestion[] = [
     domain: 'Standard English Conventions',
     skill: 'Boundaries',
     difficulty: 'easy',
-    stimulus: `The platypus is one of the few venomous mammals in the world _______ males have spurs on their hind legs that can deliver a painful venom during mating season.`,
+    stimulus: `The platypus is one of the few venomous mammals in the world _______ spurs on their hind legs that can deliver a painful venom during mating season.`,
     question: `Which choice completes the text so that it conforms to the conventions of Standard English?`,
     choices: [
       { label: 'A', text: '; males have' },

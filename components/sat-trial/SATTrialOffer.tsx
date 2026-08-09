@@ -31,8 +31,8 @@ function CheckIcon({ className }: { className?: string }) {
 }
 
 const BENEFITS = [
-  'All 5 SAT Practice Forms (Forms 1–5)',
-  '700+ SAT Question Bank questions',
+  'All 10 SAT Practice Forms (Forms 1–10)',
+  '1,000+ SAT Question Bank questions',
   'SAT R&W Academy & Math Academy',
   'Personalized Practice Path',
 ]
