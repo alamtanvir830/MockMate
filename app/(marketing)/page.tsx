@@ -146,7 +146,7 @@ export default function LandingPage() {
                 </h1>
 
                 <p className="mt-6 text-base sm:text-lg text-slate-800 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                  Take realistic SAT-style practice exams and targeted practice with high-quality questions reviewed by students, former test takers, and high scorers.
+                  Take realistic SAT-style practice exams and targeted practice with high-quality questions reviewed by high scorers and former test takers.
                 </p>
 
                 {/* CTA buttons */}
