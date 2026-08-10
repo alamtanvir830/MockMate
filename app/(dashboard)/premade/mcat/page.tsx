@@ -164,6 +164,25 @@ export default function MCATPage() {
             ))}
           </ul>
         </Link>
+
+        {/* Form 4 — active */}
+        <Link
+          href="/premade/mcat/form-4"
+          className="rounded-xl border border-brand-200 bg-white p-6 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col"
+        >
+          <div className="h-9 w-9 rounded-lg bg-brand-50 flex items-center justify-center mb-4 shrink-0">
+            <span className="text-sm font-bold text-brand-600">4</span>
+          </div>
+          <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-3">Form 4</h2>
+          <ul className="space-y-1.5 mt-auto">
+            {['4 sections', '230 questions', '6 hr 15 min', '472–528 score range'].map(d => (
+              <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />
+                {d}
+              </li>
+            ))}
+          </ul>
+        </Link>
       </div>
 
       <p className="mt-8 text-xs text-slate-400 text-center">
