@@ -1,6 +1,8 @@
 import type { MCATQBQuestion } from './types'
+import { chemPhysQuestions2 } from './chem-phys-2'
+import { chemPhysQuestions3 } from './chem-phys-3'
 
-export const chemPhysQuestions: MCATQBQuestion[] = [
+const chemPhysQuestionsBase: MCATQBQuestion[] = [
   // ── Passage 1: Enzyme Kinetics (Q001–Q003) ──────────────────────────────────
   {
     id: 'mcat-qb-cp-001',
@@ -3745,4 +3747,10 @@ Despite its success with hydrogen, the Bohr model fails for multi-electron atoms
     teachingPoint: 'Common ion effect on Ksp: (1) Write Ksp expression. (2) Substitute [common ion] ≈ added concentration (when s << added). (3) Solve for s. Note: Ag₂CrO₄ → 2Ag⁺ + CrO₄²⁻; Ksp = [Ag⁺]²[CrO₄²⁻] (Ag⁺ is SQUARED). Pure water: Ksp = (2s)²(s) = 4s³. Common ion (C M of Ag⁺): Ksp = C²·s → s = Ksp/C². Le Chatelier: adding common ion shifts equilibrium toward less dissolution.',
     relatedTopics: ['Ksp common ion effect', 'Silver chromate molar solubility', 'Le Chatelier solubility equilibrium', 'Solubility product calculation', 'Common ion suppression'],
   },
+]
+
+export const chemPhysQuestions: MCATQBQuestion[] = [
+  ...chemPhysQuestionsBase,
+  ...chemPhysQuestions2,
+  ...chemPhysQuestions3,
 ]
