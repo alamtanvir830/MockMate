@@ -1,0 +1,15 @@
+import type { MCATForm } from '../types'
+import { chemPhysSection2 } from './chem-phys'
+import { carsSection2 } from './cars'
+import { bioBiochemSection2 } from './bio-biochem'
+import { psychSocSection2 } from './psych-soc'
+
+export const mcatForm2: MCATForm = {
+  id: 'mcat-form-2',
+  title: 'MCAT Practice Exam Form 2',
+  totalQuestions: 230,
+  totalTimeMinutes: 375,
+  disclaimer:
+    'This is an unofficial MockMate MCAT-style practice exam. It is not affiliated with, endorsed by, or produced by the Association of American Medical Colleges (AAMC). All questions are original. "MCAT" is a registered trademark of the AAMC.',
+  sections: [chemPhysSection2, carsSection2, bioBiochemSection2, psychSocSection2],
+}

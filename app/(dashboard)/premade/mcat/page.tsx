@@ -127,15 +127,24 @@ export default function MCATPage() {
           </ul>
         </Link>
 
-        {/* Form 2 — coming soon */}
-        <div className="relative rounded-xl border border-slate-200 bg-white p-6 opacity-60 cursor-not-allowed select-none">
-          <span className="absolute top-3 right-3 text-xs font-medium bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">Soon</span>
-          <div className="h-9 w-9 rounded-lg bg-slate-100 flex items-center justify-center mb-4">
-            <span className="text-sm font-bold text-slate-400">2</span>
+        {/* Form 2 — active */}
+        <Link
+          href="/premade/mcat/form-2"
+          className="rounded-xl border border-brand-200 bg-white p-6 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col"
+        >
+          <div className="h-9 w-9 rounded-lg bg-brand-50 flex items-center justify-center mb-4 shrink-0">
+            <span className="text-sm font-bold text-brand-600">2</span>
           </div>
-          <h2 className="font-semibold text-slate-500 mb-1">Form 2</h2>
-          <p className="text-xs text-slate-400">Coming soon</p>
-        </div>
+          <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-3">Form 2</h2>
+          <ul className="space-y-1.5 mt-auto">
+            {['4 sections', '230 questions', '6 hr 15 min', '472–528 score range'].map(d => (
+              <li key={d} className="text-xs text-slate-400 flex items-center gap-1.5">
+                <span className="h-1 w-1 rounded-full bg-slate-200 shrink-0" />
+                {d}
+              </li>
+            ))}
+          </ul>
+        </Link>
 
         {/* Form 3 — coming soon */}
         <div className="relative rounded-xl border border-slate-200 bg-white p-6 opacity-60 cursor-not-allowed select-none">

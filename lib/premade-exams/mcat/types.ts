@@ -104,6 +104,8 @@ export interface MCATAttempt {
   examId: string
   examTitle: string
   completedAt: string
+  contentVersion: string       // e.g. 'v1' — which content revision was active
+  scoringVersion: string       // e.g. 'mcat-estimate-v1' — which scoring curve was used
   // Section scaled scores (118-132 each)
   chemPhysScore: number
   carsScore: number

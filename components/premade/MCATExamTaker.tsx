@@ -122,6 +122,11 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
   const [attemptId] = useState(() => uid())
 
   // ── Timer ────────────────────────────────────────────────────────────────────
+  // Wall-clock deadlines prevent timer drift when the browser throttles setInterval
+  // in background tabs (Chrome/Firefox both throttle to ~1 tick/second at best).
+  const sectionDeadlinesRef = useRef<(number | null)[]>(form.sections.map(() => null))
+  const breakDeadlineRef = useRef<number | null>(null)
+
   const stopTimer = useCallback(() => {
     setTimerActive(false)
     if (timerRef.current) clearInterval(timerRef.current)
@@ -132,28 +137,41 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
     timerRef.current = setInterval(() => {
       if (phase.tag === 'question' || phase.tag === 'section_review') {
         const sIdx = (phase as { sIdx: number }).sIdx
-        setSectionTimers(prev => {
-          const next = [...prev]
-          if (next[sIdx] > 0) {
-            next[sIdx]--
-          } else {
-            stopTimer()
-            goToNextAfterSection(sIdx)
-          }
-          return next
-        })
+        const deadline = sectionDeadlinesRef.current[sIdx]
+        if (deadline === null) return
+        const remaining = Math.max(0, Math.floor((deadline - Date.now()) / 1000))
+        setSectionTimers(prev => { const next = [...prev]; next[sIdx] = remaining; return next })
+        if (remaining === 0) { stopTimer(); goToNextAfterSection(sIdx) }
       } else if (phase.tag === 'break') {
-        setBreakSecsLeft(prev => {
-          if (prev <= 1) {
-            stopTimer()
-            startNextSection((phase as { afterSIdx: number }).afterSIdx + 1)
-            return 0
-          }
-          return prev - 1
-        })
+        const deadline = breakDeadlineRef.current
+        if (deadline === null) return
+        const remaining = Math.max(0, Math.floor((deadline - Date.now()) / 1000))
+        setBreakSecsLeft(remaining)
+        if (remaining === 0) { stopTimer(); startNextSection((phase as { afterSIdx: number }).afterSIdx + 1) }
       }
-    }, 1000)
+    }, 500)
     return () => { if (timerRef.current) clearInterval(timerRef.current) }
+  }, [timerActive, phase]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Reconcile immediately when the tab comes back to the foreground
+  useEffect(() => {
+    function onVisibility() {
+      if (document.visibilityState !== 'visible' || !timerActive) return
+      if (phase.tag === 'question' || phase.tag === 'section_review') {
+        const sIdx = (phase as { sIdx: number }).sIdx
+        const deadline = sectionDeadlinesRef.current[sIdx]
+        if (deadline === null) return
+        const remaining = Math.max(0, Math.floor((deadline - Date.now()) / 1000))
+        setSectionTimers(prev => { const next = [...prev]; next[sIdx] = remaining; return next })
+        if (remaining === 0) { stopTimer(); goToNextAfterSection(sIdx) }
+      } else if (phase.tag === 'break') {
+        const deadline = breakDeadlineRef.current
+        if (deadline === null) return
+        setBreakSecsLeft(Math.max(0, Math.floor((deadline - Date.now()) / 1000)))
+      }
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => document.removeEventListener('visibilitychange', onVisibility)
   }, [timerActive, phase]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function startTimer() { setTimerActive(true) }
@@ -182,6 +200,7 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
   function goToNextAfterSection(sIdx: number) {
     const sec = form.sections[sIdx]
     if (sec.breakAfterMinutes) {
+      breakDeadlineRef.current = Date.now() + sec.breakAfterMinutes * 60 * 1000
       setBreakSecsLeft(sec.breakAfterMinutes * 60)
       setPhase({ tag: 'break', afterSIdx: sIdx })
       startTimer()
@@ -200,6 +219,10 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
 
   // ── Navigation ───────────────────────────────────────────────────────────────
   function goToQuestion(sIdx: number, qIdx: number) {
+    // Set wall-clock deadline the first time a section is entered
+    if (sectionDeadlinesRef.current[sIdx] === null) {
+      sectionDeadlinesRef.current[sIdx] = Date.now() + form.sections[sIdx].timeMinutes * 60 * 1000
+    }
     setPhase({ tag: 'question', sIdx, qIdx })
     if (!timerActive) startTimer()
   }
@@ -246,6 +269,8 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
       examId: form.id,
       examTitle: form.title,
       completedAt: new Date().toISOString(),
+      contentVersion: 'v1',
+      scoringVersion: 'mcat-estimate-v1',
       ...scores,
       chemPhysCorrect: sectionCorrect[0],
       chemPhysTotal: sectionTotal[0],

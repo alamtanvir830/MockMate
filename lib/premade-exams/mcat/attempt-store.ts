@@ -2,11 +2,19 @@ import type { MCATAttempt } from './types'
 
 const STORAGE_KEY = 'mockmate_mcat_attempts_v1'
 
+function normalize(a: MCATAttempt): MCATAttempt {
+  return {
+    contentVersion: 'v1',
+    scoringVersion: 'mcat-estimate-v1',
+    ...a,
+  }
+}
+
 function readStorage(): MCATAttempt[] {
   if (typeof window === 'undefined') return []
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? (JSON.parse(raw) as MCATAttempt[]) : []
+    return raw ? (JSON.parse(raw) as MCATAttempt[]).map(normalize) : []
   } catch {
     return []
   }
