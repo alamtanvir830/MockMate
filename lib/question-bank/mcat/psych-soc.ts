@@ -1,6 +1,8 @@
 import type { MCATQBQuestion } from './types'
+import { psychSocQuestions2 } from './psych-soc-2'
+import { psychSocQuestions3 } from './psych-soc-3'
 
-export const psychSocQuestions: MCATQBQuestion[] = [
+const psychSocQuestionsBase: MCATQBQuestion[] = [
   // ── Passage 1: Social Determinants and Health Disparities (Q001–Q003) ─────────
   {
     id: 'mcat-qb-ps-001',
@@ -2996,4 +2998,10 @@ Subsequent research has extended the stereotype threat framework in several dire
     teachingPoint: 'Social loafing: (1) Definition: reduced individual effort in group tasks when contributions are unidentifiable. (2) Classic study: Ringelmann rope-pulling (less force per person in larger groups). (3) Mechanism: diffusion of responsibility + perceived dispensability of individual effort. (4) Elimination: making individual contributions identifiable, increasing task importance, increasing group cohesion, or making individuals feel personally accountable. Contrast: Social facilitation (presence of others → enhanced simple task performance) vs. Social loafing (group membership → reduced individual effort due to anonymity).',
     relatedTopics: ['Social loafing', 'Ringelmann effect', 'Group performance', 'Diffusion of responsibility', 'Social loafing vs facilitation'],
   },
+]
+
+export const psychSocQuestions: MCATQBQuestion[] = [
+  ...psychSocQuestionsBase,
+  ...psychSocQuestions2,
+  ...psychSocQuestions3,
 ]
