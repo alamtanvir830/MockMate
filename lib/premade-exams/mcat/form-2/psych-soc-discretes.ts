@@ -100,16 +100,17 @@ export const psDiscretes: MCATQuestion[] = [
     question: 'The Implicit Association Test (IAT) measures:',
     choices: [
       { label: 'A', text: 'Explicit, consciously held attitudes that participants are willing to report on surveys' },
-      { label: 'B', text: 'The strength of automatic associations between concepts in memory, reflecting attitudes that may be unconscious or not endorsed at the explicit level' },
+      { label: 'B', text: 'The degree of social desirability bias in attitude surveys' },
       { label: 'C', text: 'Working memory capacity and processing speed' },
-      { label: 'D', text: 'The degree of social desirability bias in attitude surveys' },
+      { label: 'D', text: 'The strength of automatic associations between concepts in memory, reflecting attitudes that may be unconscious or not endorsed at the explicit level' },
     ],
-    correctAnswer: 'B',
-    explanation: 'The IAT (Greenwald et al., 1998) measures reaction time to sorting pairings of concepts and attributes (e.g., "Black faces + good" vs. "Black faces + bad") to reveal the strength of automatic (implicit) mental associations. Faster categorization of a pairing indicates stronger association in memory. Implicit associations often differ from explicitly stated attitudes — people may consciously endorse racial equality but have implicit racial associations that are revealed by the IAT. B is correct. A describes explicit attitude measures (surveys, Likert scales). C (working memory) is irrelevant to the IAT construct. D (social desirability) is partially the point — IAT claims to access attitudes beneath socially desirable responding, but the question asks what it measures, not why it was developed.',
+    correctAnswer: 'D',
+    explanation: 'The IAT (Greenwald et al., 1998) measures reaction time to sorting pairings of concepts and attributes (e.g., "Black faces + good" vs. "Black faces + bad") to reveal the strength of automatic (implicit) mental associations. Faster categorization of a pairing indicates stronger association in memory. Implicit associations often differ from explicitly stated attitudes — people may consciously endorse racial equality but have implicit racial associations that are revealed by the IAT. D is correct. A describes explicit attitude measures (surveys, Likert scales). C (working memory) is irrelevant to the IAT construct. B (social desirability) is partially the point — IAT claims to access attitudes beneath socially desirable responding, but the question asks what it measures, not why it was developed.',
     wrongAnswerExplanations: {
       A: 'Explicit attitudes are measured by direct survey methods. The IAT\'s purpose is specifically to access attitudes that may not be consciously accessible or that participants might not report accurately.',
       C: 'The IAT uses reaction times, but the construct it measures is association strength (implicit attitudes), not working memory or processing speed per se.',
-      D: 'Social desirability bias is a reason for using implicit measures (to bypass motivated responding), but it is not what the IAT measures. The IAT measures automatic association strength.',
+          B: 'Social desirability bias is a reason for using implicit measures (to bypass motivated responding), but it is not what the IAT measures. The IAT measures automatic association strength.',
+          
     },
     teachingPoint: 'IAT = implicit measure: measures automatic cognitive associations via reaction time. Implicit ≠ explicit: someone can have a pro-diversity explicit attitude (survey response) and an anti-diversity implicit association (IAT result). Clinical relevance: implicit provider bias has been associated with disparities in pain management, diagnostic accuracy, and patient-provider communication.',
     relatedTopics: ['IAT', 'implicit attitudes', 'explicit attitudes', 'automatic association', 'implicit bias'],

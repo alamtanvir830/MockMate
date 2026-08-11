@@ -16,16 +16,17 @@ export const psDiscretes5: MCATQuestion[] = [
     question: 'Which neurotransmitter is the primary inhibitory neurotransmitter in the CNS, and is the target of benzodiazepines and barbiturates?',
     choices: [
       { label: 'A', text: 'Glutamate — the primary excitatory neurotransmitter' },
-      { label: 'B', text: 'GABA (gamma-aminobutyric acid) — the primary inhibitory neurotransmitter' },
+      { label: 'B', text: 'Serotonin — involved in mood, sleep, and appetite regulation' },
       { label: 'C', text: 'Dopamine — involved in reward and motor control' },
-      { label: 'D', text: 'Serotonin — involved in mood, sleep, and appetite regulation' },
+      { label: 'D', text: 'GABA (gamma-aminobutyric acid) — the primary inhibitory neurotransmitter' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation: 'GABA (gamma-aminobutyric acid) is the primary inhibitory neurotransmitter in the CNS. GABA-A receptors are ligand-gated Cl⁻ channels; when GABA or GABA-A agonists bind, Cl⁻ influx hyperpolarizes the neuron (IPSP). Benzodiazepines are positive allosteric modulators of GABA-A (increase Cl⁻ channel opening frequency). Barbiturates also modulate GABA-A (increase Cl⁻ channel opening duration — more dangerous overdose profile). Glutamate (A) is the primary EXCITATORY neurotransmitter. Dopamine and serotonin are monoamines with more complex modulatory roles.',
     wrongAnswerExplanations: {
       A: 'Glutamate is the primary EXCITATORY neurotransmitter (via AMPA, NMDA, and kainate receptors). GABA is inhibitory — the opposite.',
       C: 'Dopamine is a monoamine (catecholamine) involved in reward, motor control (basal ganglia), and neuroendocrine function. It is not the primary inhibitory neurotransmitter.',
-      D: 'Serotonin is a monoamine (indolamine) involved in mood, sleep, appetite, and GI motility. It is not primarily inhibitory in the classical sense — it has complex modulatory effects through multiple receptor subtypes.',
+          B: 'Serotonin is a monoamine (indolamine) involved in mood, sleep, appetite, and GI motility. It is not primarily inhibitory in the classical sense — it has complex modulatory effects through multiple receptor subtypes.',
+          
     },
     teachingPoint: 'GABA-glutamate balance: GABA (inhibitory) and glutamate (excitatory) are the primary balance pair in the CNS. Disruption → seizures (too little GABA or too much glutamate). GABA-A = Cl⁻ channel. GABA-B = K⁺ channel (metabotropic). Benzodiazepines = frequency. Barbiturates = duration. Alcohol potentiates GABA-A and blocks NMDA (excitatory glutamate receptor).',
     relatedTopics: ['GABA inhibitory neurotransmitter', 'benzodiazepine GABA-A', 'neurotransmitter CNS inhibitory', 'GABA glutamate balance'],
@@ -205,16 +206,17 @@ export const psDiscretes5: MCATQuestion[] = [
     question: 'Medicalization refers to defining previously non-medical conditions or behaviors as medical problems requiring medical intervention. Which of the following is the BEST example of medicalization?',
     choices: [
       { label: 'A', text: 'Diagnosing a bacterial pneumonia and prescribing antibiotics' },
-      { label: 'B', text: 'Defining childhood hyperactivity and inattention (previously seen as "being a difficult child") as ADHD requiring pharmacological treatment' },
+      { label: 'B', text: 'Identifying a new infectious disease and developing a vaccine' },
       { label: 'C', text: 'Recommending exercise and dietary changes for a patient with mild hyperlipidemia' },
-      { label: 'D', text: 'Identifying a new infectious disease and developing a vaccine' },
+      { label: 'D', text: 'Defining childhood hyperactivity and inattention (previously seen as "being a difficult child") as ADHD requiring pharmacological treatment' },
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation: 'Medicalization (Conrad, Zola): the process by which non-medical human conditions, behaviors, or experiences come to be defined and treated as medical problems. ADHD: childhood behavior previously understood as "difficult" or "poorly behaved" (a social/disciplinary framing) was redefined as a neurodevelopmental medical disorder requiring pharmacological intervention (stimulants). This is medicalization: a social behavior problem → medical diagnosis → medical treatment. A — bacterial pneumonia is an established biological illness; diagnosing it is not medicalization (it was always a medical condition). C — recommending lifestyle changes for hyperlipidemia is standard medical management of an established medical condition. D — identifying a new infectious disease is medical discovery, not medicalization of a previously social/behavioral condition.',
     wrongAnswerExplanations: {
       A: 'Bacterial pneumonia is caused by a pathogen and has clear biological markers (fever, infiltrates on CXR, bacteria on culture). Treating it with antibiotics is not medicalization — it was always a medical condition.',
       C: 'Hyperlipidemia is a recognized cardiovascular risk factor with biological measurement (lipid panels). Recommending lifestyle changes is not medicalization — it is evidence-based management of an established risk marker.',
-      D: 'Identifying a new infectious disease is medical discovery. Medicalization specifically refers to redefining non-medical phenomena (behaviors, experiences, life stages) as medical. A new infectious disease was always medical — it was just unknown.',
+          B: 'Identifying a new infectious disease is medical discovery. Medicalization specifically refers to redefining non-medical phenomena (behaviors, experiences, life stages) as medical. A new infectious disease was always medical — it was just unknown.',
+          
     },
     teachingPoint: 'Medicalization examples: ADHD, normal sadness → depression, menopause, baldness, shyness → social anxiety, childbirth, alcoholism, obesity. Drivers: pharmaceutical industry (creating markets), medical profession expanding scope, patient demand, cultural tolerance for deviance decreasing. Benefits: reduces stigma, enables treatment access. Risks: overdiagnosis, overtreatment, pathologizing normal variation, social control. Related: biomedicalization = more expansive, risk-based, technologically intensive medicalization (genetic risk screening, enhancement medicine).',
     relatedTopics: ['medicalization sociology', 'ADHD medicalization', 'Conrad medicalization', 'social control medicalization'],
