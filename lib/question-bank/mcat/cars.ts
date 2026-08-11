@@ -1,6 +1,8 @@
 import type { MCATQBQuestion } from './types'
+import { carsQuestions2 } from './cars-2'
+import { carsQuestions3 } from './cars-3'
 
-export const carsQuestions: MCATQBQuestion[] = [
+const carsQuestionsBase: MCATQBQuestion[] = [
   // ── Passage 1: Moral Epistemology (Q001–Q006) ─────────────────────────────────
   {
     id: 'mcat-qb-cars-001',
@@ -3572,4 +3574,10 @@ Contemporary philosophers have largely moved toward institutional theories, infl
     teachingPoint: 'CARS: Questions about motivation for a theory require identifying the specific PROBLEM the theory was developed to solve. Track the passage\'s causal narrative: Duchamp\'s Fountain (1917) → object with no formal or expressive art-making properties claims art status → standard theories (formalism, expressivism) cannot explain this → Danto observes the artworld confers status → Dickie systematizes into institutional theory. The motivation is: explaining ready-mades and avant-garde works that lack the properties earlier theories required.',
     relatedTopics: ['Institutional theory motivation', 'Duchamp challenge to formalism', 'Avant-garde art theory gap', 'CARS causal narrative', 'Ready-made art history'],
   },
+]
+
+export const carsQuestions: MCATQBQuestion[] = [
+  ...carsQuestionsBase,
+  ...carsQuestions2,
+  ...carsQuestions3,
 ]
