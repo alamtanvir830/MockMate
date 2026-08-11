@@ -373,21 +373,13 @@ export const bioBiochemQuestions3: MCATQBQuestion[] = [
     passageText: BB3_PASSAGE_9,
     question: 'A researcher creates an E. coli mutant in which the two consecutive Trp codons in the trpL leader ORF are changed to Ala codons. What would be the predicted effect on trp operon expression?',
     choices: [
-      { label: 'A', text: 'The operon would be constitutively repressed because ribosomes would always terminate at the leader region' },
-      { label: 'B', text: 'The operon expression would be unaffected because attenuation depends only on the repressor, not on the leader ORF sequence' },
-      { label: 'C', text: 'Constitutive high-level expression, because ribosomes never stall at the (now Ala) codons regardless of tryptophan levels' },
-      { label: 'D', text: 'The structural genes would never be transcribed because Ala codons prevent ribosome entry into the leader ORF' },
-    ],
-    correctAnswer: 'D',
-    explanation: 'Choice D is actually incorrect — let me reconsider. C is correct. If Trp codons are replaced by Ala codons, ribosomes can always decode these codons (Ala-tRNA is always abundant). Ribosome stalling at the Trp codons was the mechanism that prevented terminator formation when Trp was scarce. Without stalling, the ribosome always runs through to the end of trpL, and the terminator always forms, constitutively terminating transcription before the structural genes. Wait — that would be constitutive repression, not constitutive expression.\n\nLet me re-examine: When ribosomes run PAST the Trp codons (fast, Trp abundant) → terminator forms → OFF. When ribosomes stall AT Trp codons (Trp scarce) → antiterminator forms → ON. If Trp→Ala: ribosomes always run through (like Trp-abundant state) → terminator always forms → constitutive OFF.\n\nSo the answer should be constitutive repression (A), not C. But I already wrote C as correct. Let me fix this question.',
-    choices: [
       { label: 'A', text: 'The trp structural genes would be constitutively expressed because the terminator stem-loop could never form without ribosome stalling' },
       { label: 'B', text: 'Expression would be unaffected because attenuation depends only on the repressor, not on leader codon identity' },
       { label: 'C', text: 'The ribosome would constitutively run through the leader ORF without stalling, causing the terminator to always form and constitutively silencing the structural genes via attenuation' },
       { label: 'D', text: 'Ala codons would prevent ribosome entry into the leader ORF entirely, preventing the trp repressor from functioning' },
     ],
     correctAnswer: 'C',
-    explanation: 'Wait, I need to reconsider this more carefully.\n\nAttenuation works as follows:\n- When Trp is abundant: ribosomes translate trpL quickly through the Trp codons → ribosome occupies region 1 of the leader mRNA → regions 3-4 pair (terminator hairpin) → transcription terminates\n- When Trp is scarce: ribosomes stall at Trp codons → region 1 occupied by stalled ribosome → regions 2-3 pair (antiterminator) → region 4 cannot pair → transcription reads through\n\nIf Trp→Ala: ribosomes always translate through quickly (Ala-tRNA always available) → same as Trp-abundant scenario → terminator always forms → constitutive silencing by attenuation.\n\nBut repressor control still applies separately. With Trp abundant repressor also represses. With Trp scarce, repressor is off, but attenuation (Ala instead of Trp) would still terminate. So the genes would be constitutively silenced by attenuation even when Trp is scarce (when repressor is off).\n\nSo Choice C is: "ribosome constitutively runs through, terminator always forms, structural genes constitutively silenced." That IS correct. Let me verify choice A says "constitutively expressed" (opposite). Yes, A says constitutively expressed (wrong). So C is the correct answer.\n\nBut wait - I already labeled correctAnswer as D above by mistake. Let me fix the whole question with corrected choices.',
+    explanation: 'Choice C is correct. Attenuation depends on ribosome stalling at Trp codons. When Trp is scarce, ribosomes stall → antiterminator hairpin forms → RNA pol reads through → genes expressed. When Trp is abundant, ribosomes run through quickly → terminator hairpin forms → transcription terminates. Replacing Trp codons with Ala codons means Ala-tRNA is always available → ribosomes always run through without stalling → terminator always forms → structural genes constitutively silenced by attenuation, even when Trp is scarce and the repressor is inactive.',
     wrongAnswerExplanations: {
       A: 'If the terminator always forms (ribosome always runs through without stalling), the structural genes would be constitutively silenced, not constitutively expressed. A is the opposite of what would happen.',
       B: 'Attenuation is a distinct regulatory mechanism from repressor control. Changing leader codon identity directly disrupts attenuation, which is mediated by ribosome stalling — not by the repressor. Expression would be significantly affected.',
@@ -470,8 +462,6 @@ export const bioBiochemQuestions3: MCATQBQuestion[] = [
       { label: 'C', text: 'Glutamine only, which amidates ammonia and carries it to the liver' },
       { label: 'D', text: 'Urea itself, which is synthesized in peripheral tissues and transported to the liver for excretion' },
     ],
-    correctAnswer: 'D',
-    explanation: 'Choice D is incorrect. Let me reconsider. The main molecules that carry nitrogen from peripheral tissues to the liver are alanine (glucose-alanine cycle) and glutamine. Alanine is the primary carrier from muscle (alanine aminotransferase converts pyruvate + glutamate → alanine + α-ketoglutarate, then alanine goes to liver where it is deaminated). Glutamine carries ammonia from most other tissues. Free NH4+ is toxic and is not transported in blood in significant amounts. So the correct answer should be A.\n\nLet me fix the correctAnswer.',
     correctAnswer: 'A',
     explanation: 'Choice A is correct. The glucose-alanine cycle transfers amino groups from muscle to liver: in muscle, transamination converts amino acid nitrogen to alanine (pyruvate + glutamate → alanine + α-ketoglutarate via ALT). Alanine is exported to the blood and taken up by liver, where it is transaminated back to pyruvate and glutamate. The amino group enters the urea cycle, and pyruvate undergoes gluconeogenesis (glucose is returned to muscle). Glutamine is the other major nitrogen carrier, especially from non-muscle tissues.',
     wrongAnswerExplanations: {
@@ -904,8 +894,6 @@ export const bioBiochemQuestions3: MCATQBQuestion[] = [
       { label: 'C', text: 'Natural selection acts on phenotypes, and if phenotypic variation has a heritable basis, differential reproductive success changes allele frequencies over generations' },
       { label: 'D', text: 'Natural selection and genetic drift produce identical outcomes because both change allele frequencies in a population' },
     ],
-    correctAnswer: 'A',
-    explanation: 'Actually, Choice A is incorrect because natural selection acts on phenotypes, not directly on genotypes. Let me reconsider — C is correct.',
     correctAnswer: 'C',
     explanation: 'Choice C is correct. Natural selection acts on phenotype (the observable traits), not directly on genotype. If phenotypic variation is heritable (has a genetic basis), individuals with higher fitness (better survival and reproduction) pass more copies of their alleles to the next generation. Over time, this changes allele frequencies. The key requirements: heritable phenotypic variation, differential reproductive success, and sufficient time.',
     wrongAnswerExplanations: {
@@ -987,8 +975,6 @@ export const bioBiochemQuestions3: MCATQBQuestion[] = [
       { label: 'C', text: 'To proofread mRNA sequences and correct misincorporated nucleotides during transcription' },
       { label: 'D', text: 'To transport processed mRNA from the nucleus to the ribosome in the cytoplasm' },
     ],
-    correctAnswer: 'D',
-    explanation: 'Choice D is incorrect. B is correct. Let me fix.',
     correctAnswer: 'B',
     explanation: 'Choice B is correct. The spliceosome is a large ribonucleoprotein complex (composed of five snRNPs: U1, U2, U4, U5, U6) that recognizes consensus splice sites (5\' splice site, branch point, 3\' splice site) in pre-mRNA. It catalyzes two transesterification reactions: (1) branch point A attacks the 5\' splice site → lariat intermediate; (2) 3\'-OH of the 5\' exon attacks the 3\' splice site → exons joined, intron lariat released. The result is mRNA with exons spliced together.',
     wrongAnswerExplanations: {

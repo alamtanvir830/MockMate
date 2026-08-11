@@ -10,7 +10,7 @@ export const carsSection4: MCATSection = {
   seededCount: 53,
   timeMinutes: 90,
   breakAfterMinutes: 30,
-  breakType: 'mandatory',
+  breakType: 'long',
   passages: [...carsPassages4_01to05, ...carsPassages4_06to09],
   discreteQuestions: [],
 }

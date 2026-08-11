@@ -8,7 +8,7 @@ export const carsPassages4_01to05: MCATPassage[] = [
     sectionId: 'cars',
     passageNumber: 1,
     title: 'The Paradox of Tolerance and Liberal Societies',
-    text: `The philosopher Karl Popper articulated what he called the paradox of tolerance in the 1940s: a society that is tolerant without limit will eventually be seized upon by the intolerant, who will then destroy tolerance. From this observation, Popper derived a practical conclusion — tolerance cannot be unlimited. Those who promote intolerance must themselves be suppressed, if necessary by force, to preserve the conditions under which tolerance can exist. It is a peculiar philosophical result: tolerance, as a value, demands that we practice intolerance toward those who would abolish it.
+    passageText: `The philosopher Karl Popper articulated what he called the paradox of tolerance in the 1940s: a society that is tolerant without limit will eventually be seized upon by the intolerant, who will then destroy tolerance. From this observation, Popper derived a practical conclusion — tolerance cannot be unlimited. Those who promote intolerance must themselves be suppressed, if necessary by force, to preserve the conditions under which tolerance can exist. It is a peculiar philosophical result: tolerance, as a value, demands that we practice intolerance toward those who would abolish it.
 
 This paradox has attracted renewed attention in democratic societies grappling with the rise of extremist movements. Critics of liberal frameworks argue that liberalism, by extending procedural neutrality to all political actors, inadvertently provides the machinery of its own undoing. Elections, free speech protections, and rights of assembly, designed to protect individuals from state authority, also protect those who seek to use these mechanisms to dismantle constitutional governance altogether. The liberal framework cannot, in this view, distinguish between the dissenter who seeks to reform it and the revolutionary who seeks to destroy it.
 
@@ -26,7 +26,7 @@ The paradox of tolerance thus opens into a larger debate about the conditions un
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'According to the passage, Popper\'s paradox of tolerance leads to which conclusion?',
         choices: [
@@ -53,7 +53,7 @@ The paradox of tolerance thus opens into a larger debate about the conditions un
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Critics of liberal frameworks, as described in the passage, argue that liberalism\'s procedural neutrality:',
         choices: [
@@ -80,7 +80,7 @@ The paradox of tolerance thus opens into a larger debate about the conditions un
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The passage suggests that defenders of liberal institutions would most likely view which of the following responses to extremism as appropriate?',
         choices: [
@@ -107,7 +107,7 @@ The paradox of tolerance thus opens into a larger debate about the conditions un
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The deliberative democracy position (paragraph 4) differs from the other positions primarily in that it:',
         choices: [
@@ -134,7 +134,7 @@ The paradox of tolerance thus opens into a larger debate about the conditions un
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The final paragraph poses a dilemma between two views of democracy. Which best characterizes the risk associated with the second view (democracy requires substantive value commitments)?',
         choices: [
@@ -161,7 +161,7 @@ The paradox of tolerance thus opens into a larger debate about the conditions un
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'The author\'s tone throughout the passage is best described as:',
         choices: [
@@ -187,7 +187,7 @@ The paradox of tolerance thus opens into a larger debate about the conditions un
     sectionId: 'cars',
     passageNumber: 2,
     title: 'Memory, Narrative, and the Self',
-    text: `The philosopher Derek Parfit proposed a thought experiment that has become a touchstone for discussions of personal identity: if your brain were gradually replaced, neuron by neuron, with silicon chips that replicated each neuron's function exactly, would "you" survive the process? At what point, if any, would the resulting entity cease to be you? The question is designed to expose the inadequacy of simple physical continuity as a criterion for personal identity, but it also raises a deeper puzzle — what exactly we mean by personal identity in the first place.
+    passageText: `The philosopher Derek Parfit proposed a thought experiment that has become a touchstone for discussions of personal identity: if your brain were gradually replaced, neuron by neuron, with silicon chips that replicated each neuron's function exactly, would "you" survive the process? At what point, if any, would the resulting entity cease to be you? The question is designed to expose the inadequacy of simple physical continuity as a criterion for personal identity, but it also raises a deeper puzzle — what exactly we mean by personal identity in the first place.
 
 One influential answer is the narrative theory of identity, associated with philosophers including Paul Ricoeur and Charles Taylor. On this view, a person is not a bare physical entity but a story: the self is constituted by the narrative we construct about who we are, where we have come from, and where we are going. Memory is central to this project. The past is not simply something that happened to us; it is the raw material we organize into a life story that gives our choices and actions meaning. To remember well is to be the kind of person who can give an account of themselves — not just to others but to themselves.
 
@@ -205,7 +205,7 @@ A further complication arises from the malleability of memory. Decades of psycho
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Parfit\'s thought experiment (paragraph 1) is primarily intended to:',
         choices: [
@@ -232,7 +232,7 @@ A further complication arises from the malleability of memory. Decades of psycho
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'According to narrative identity theory as described in the passage, what is the role of memory?',
         choices: [
@@ -259,7 +259,7 @@ A further complication arises from the malleability of memory. Decades of psycho
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The cross-cultural critique of narrative identity theory (paragraph 4) suggests that:',
         choices: [
@@ -286,7 +286,7 @@ A further complication arises from the malleability of memory. Decades of psycho
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The final paragraph\'s observation that "the self is a story being constantly rewritten by an author who is herself a product of the story she is telling" is best understood as pointing to:',
         choices: [
@@ -313,7 +313,7 @@ A further complication arises from the malleability of memory. Decades of psycho
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'The clinical implication described in paragraph 3 (patients with severe autobiographical amnesia) most directly supports which claim of narrative identity theory?',
         choices: [
@@ -339,7 +339,7 @@ A further complication arises from the malleability of memory. Decades of psycho
     sectionId: 'cars',
     passageNumber: 3,
     title: 'The Economics of Attention',
-    text: `Herbert Simon observed decades before the internet made it undeniable: "A wealth of information creates a poverty of attention." Information is not inherently valuable; its value is determined by the capacity to process and act on it. When information is abundant, the scarce resource is not data but the human attention required to evaluate it. The information economy of the twenty-first century has confirmed and amplified this insight at a scale Simon could not have anticipated.
+    passageText: `Herbert Simon observed decades before the internet made it undeniable: "A wealth of information creates a poverty of attention." Information is not inherently valuable; its value is determined by the capacity to process and act on it. When information is abundant, the scarce resource is not data but the human attention required to evaluate it. The information economy of the twenty-first century has confirmed and amplified this insight at a scale Simon could not have anticipated.
 
 The term "attention economy" describes a system in which human attention is the primary commodity bought and sold. Digital platforms derive revenue not by selling products to users but by selling users' attention to advertisers. The product of Facebook, Twitter, and YouTube is not social connection, information, or entertainment — these are the bait. The product is the sustained, monetizable attention of hundreds of millions of users. This inversion of the conventional consumer relationship has implications that economic analysis has only recently begun to address seriously.
 
@@ -357,7 +357,7 @@ Proposed remedies range across the spectrum from market mechanisms to regulatory
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Simon\'s observation that "a wealth of information creates a poverty of attention" is used in the passage to make which point?',
         choices: [
@@ -384,7 +384,7 @@ Proposed remedies range across the spectrum from market mechanisms to regulatory
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'The passage characterizes the attention economy as an "inversion" of conventional consumer markets primarily because:',
         choices: [
@@ -411,7 +411,7 @@ Proposed remedies range across the spectrum from market mechanisms to regulatory
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The passage describes the relationship between platform incentives and social pathologies (paragraph 4) as "structural, not conspiratorial." This distinction is best understood as:',
         choices: [
@@ -438,7 +438,7 @@ Proposed remedies range across the spectrum from market mechanisms to regulatory
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'Which proposed remedy would most directly address the misalignment between platform incentives and user welfare, according to the passage?',
         choices: [
@@ -465,7 +465,7 @@ Proposed remedies range across the spectrum from market mechanisms to regulatory
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Critics of proposed remedies, as described in paragraph 5, would most likely agree with which statement?',
         choices: [
@@ -491,7 +491,7 @@ Proposed remedies range across the spectrum from market mechanisms to regulatory
     sectionId: 'cars',
     passageNumber: 4,
     title: 'The Art Museum in the Age of Reproduction',
-    text: `Walter Benjamin's famous essay "The Work of Art in the Age of Mechanical Reproduction" (1935) argued that photographic reproduction strips the artwork of what he called its "aura" — the sense of unique presence and historical situatedness that attaches to the original. The aura of a painting is inseparable from its being here, now, in this particular time and place. Reproduction, Benjamin argued, annihilates this aura by making the image infinitely reproducible, detachable from its site, and consumable across multiple contexts simultaneously. The photograph of the Mona Lisa is not the Mona Lisa; it is a different kind of object entirely.
+    passageText: `Walter Benjamin's famous essay "The Work of Art in the Age of Mechanical Reproduction" (1935) argued that photographic reproduction strips the artwork of what he called its "aura" — the sense of unique presence and historical situatedness that attaches to the original. The aura of a painting is inseparable from its being here, now, in this particular time and place. Reproduction, Benjamin argued, annihilates this aura by making the image infinitely reproducible, detachable from its site, and consumable across multiple contexts simultaneously. The photograph of the Mona Lisa is not the Mona Lisa; it is a different kind of object entirely.
 
 The implications Benjamin drew were political as much as aesthetic. With aura dissolved by reproduction, artworks could no longer serve as objects of ritual veneration — the cult of the original, he argued, was inseparable from a certain conservative political disposition. Art freed from aura could be put to work as an instrument of political education and mobilization. Here Benjamin showed his Marxist colors: the democratization of art through reproduction was not a loss to be mourned but a revolutionary possibility to be exploited.
 
@@ -509,7 +509,7 @@ The practical implications for museum policy are significant. If the authenticit
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'According to Benjamin, as described in the passage, what does "aura" refer to?',
         choices: [
@@ -519,7 +519,7 @@ The practical implications for museum policy are significant. If the authenticit
           { label: 'D', text: 'The technical quality of photographic reproduction' },
         ],
         correctAnswer: 'B',
-        explanation: 'Paragraph 1: "'aura' — the sense of unique presence and historical situatedness that attaches to the original." B directly quotes this definition. A introduces monetary value, not discussed in this context. C confuses aura with aesthetic response. D is unrelated to aura, which is about the original\'s uniqueness, not reproduction quality.',
+        explanation: "Paragraph 1: \"'aura' — the sense of unique presence and historical situatedness that attaches to the original.\" B directly quotes this definition. A introduces monetary value, not discussed in this context. C confuses aura with aesthetic response. D is unrelated to aura, which is about the original's uniqueness, not reproduction quality.",
         wrongAnswerExplanations: {
           A: 'The passage does not define aura in terms of monetary value. Aura is about presence and historical situatedness.',
           C: 'The passage does not define aura as viewers\' emotional responses. Aura is a property of the original object related to its unique presence.',
@@ -536,7 +536,7 @@ The practical implications for museum policy are significant. If the authenticit
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The passage\'s claim that "the museum itself is already a form of decontextualization" (paragraph 3) most directly challenges which of Benjamin\'s claims?',
         choices: [
@@ -563,7 +563,7 @@ The practical implications for museum policy are significant. If the authenticit
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The view that "aura is a cultural construction maintained by institutions" (paragraph 4) leads to which conclusion about digital reproduction of artworks?',
         choices: [
@@ -590,7 +590,7 @@ The practical implications for museum policy are significant. If the authenticit
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'According to paragraph 5, which best describes why the in-person museum experience would still differ from a digital encounter with a work?',
         choices: [
@@ -617,7 +617,7 @@ The practical implications for museum policy are significant. If the authenticit
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Benjamin\'s political argument about art reproduction (paragraph 2) is that:',
         choices: [
@@ -643,7 +643,7 @@ The practical implications for museum policy are significant. If the authenticit
     sectionId: 'cars',
     passageNumber: 5,
     title: 'The Problem of Scientific Consensus',
-    text: `Scientists and philosophers of science have long distinguished between the process of science — the ongoing, contentious, self-correcting enterprise of inquiry — and the products of science — the bodies of well-confirmed knowledge that emerge from that process. This distinction matters for understanding what scientific consensus means and when it deserves deference. A consensus is not merely a majority vote among scientists; it is the outcome of sustained inquiry, experimental testing, replication, peer review, and the gradual convergence of independent lines of evidence. The scientific consensus on anthropogenic climate change, vaccine safety, and the age of the universe is of this durable, evidence-convergent kind.
+    passageText: `Scientists and philosophers of science have long distinguished between the process of science — the ongoing, contentious, self-correcting enterprise of inquiry — and the products of science — the bodies of well-confirmed knowledge that emerge from that process. This distinction matters for understanding what scientific consensus means and when it deserves deference. A consensus is not merely a majority vote among scientists; it is the outcome of sustained inquiry, experimental testing, replication, peer review, and the gradual convergence of independent lines of evidence. The scientific consensus on anthropogenic climate change, vaccine safety, and the age of the universe is of this durable, evidence-convergent kind.
 
 The legitimate lessons of the philosophy of science — that all scientific knowledge is revisable, that paradigm shifts do occur, that the sociology of science involves power dynamics — have been misappropriated by those who seek to manufacture doubt about established scientific findings. The tobacco industry's campaign against evidence of smoking's harms pioneered techniques of doubt manufacture that have since been applied to climate science and vaccine safety: commissioning contradictory research, amplifying minority dissent, and insisting that scientific "controversy" existed when expert consensus was actually strong. These techniques exploit the genuine epistemic virtue of scientific humility — the acknowledgment that all findings are provisional — to create the false impression that established findings are genuinely uncertain.
 
@@ -659,7 +659,7 @@ These criteria do not resolve all cases and can themselves be weaponized — the
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'The passage argues that legitimate scientific consensus is characterized primarily by:',
         choices: [
@@ -686,7 +686,7 @@ These criteria do not resolve all cases and can themselves be weaponized — the
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'According to the passage, "manufactured doubt" techniques exploit which genuine feature of scientific practice?',
         choices: [
@@ -713,7 +713,7 @@ These criteria do not resolve all cases and can themselves be weaponized — the
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The passage\'s attitude toward the criteria for distinguishing genuine controversy from manufactured doubt (paragraph 3) is best described as:',
         choices: [
@@ -740,7 +740,7 @@ These criteria do not resolve all cases and can themselves be weaponized — the
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The passage claims that treating all claims of scientific controversy as equally credible is "epistemically indefensible." This conclusion is best supported by which argument in the passage?',
         choices: [
@@ -767,7 +767,7 @@ These criteria do not resolve all cases and can themselves be weaponized — the
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Which of the following would MOST undermine the credibility of a dissenting scientific claim, according to the indicators described in paragraph 3?',
         choices: [

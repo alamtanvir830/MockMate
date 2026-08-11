@@ -4,9 +4,9 @@ const STORAGE_KEY = 'mockmate_mcat_attempts_v1'
 
 function normalize(a: MCATAttempt): MCATAttempt {
   return {
-    contentVersion: 'v1',
-    scoringVersion: 'mcat-estimate-v1',
     ...a,
+    contentVersion: a.contentVersion ?? 'v1',
+    scoringVersion: a.scoringVersion ?? 'mcat-estimate-v1',
   }
 }
 

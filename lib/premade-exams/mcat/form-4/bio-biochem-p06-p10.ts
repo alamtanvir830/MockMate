@@ -8,7 +8,7 @@ export const bbPassages4_06to10: MCATPassage[] = [
     sectionId: 'bio-biochem',
     passageNumber: 6,
     title: 'Cell Cycle and Cancer Biology',
-    text: `The eukaryotic cell cycle is divided into interphase (G1, S, G2) and mitosis (M phase). During S phase, the entire genome is replicated. Mitosis segregates the duplicated chromosomes into two daughter cells, followed by cytokinesis. Progression through the cycle is regulated by cyclin-dependent kinases (CDKs), whose activity requires association with regulatory cyclins. CDK activity peaks at specific cell cycle transitions: cyclin D/CDK4/6 in G1, cyclin E/CDK2 at G1/S, cyclin A/CDK2 in S phase, and cyclin B/CDK1 at G2/M.
+    passageText: `The eukaryotic cell cycle is divided into interphase (G1, S, G2) and mitosis (M phase). During S phase, the entire genome is replicated. Mitosis segregates the duplicated chromosomes into two daughter cells, followed by cytokinesis. Progression through the cycle is regulated by cyclin-dependent kinases (CDKs), whose activity requires association with regulatory cyclins. CDK activity peaks at specific cell cycle transitions: cyclin D/CDK4/6 in G1, cyclin E/CDK2 at G1/S, cyclin A/CDK2 in S phase, and cyclin B/CDK1 at G2/M.
 
 The restriction point (R point) in late G1 is a critical checkpoint: before R, cells require mitogens (growth factors) to continue proliferating; after R, they are committed to division even in the absence of mitogens. The retinoblastoma protein (Rb) is the molecular gatekeeper of the R point. Hypophosphorylated Rb sequesters the E2F transcription factor, preventing transcription of S-phase genes (DHFR, cyclin E, DNA polymerase). Cyclin D/CDK4/6 (activated by mitogenic signaling) phosphorylates Rb, releasing E2F, which drives transcription of genes needed for S phase entry. Cyclin E/CDK2 completes Rb phosphorylation, creating a positive feedback loop.
 
@@ -156,7 +156,7 @@ Tumor suppressor genes (e.g., Rb, p53, APC, BRCA1/2) restrain cell division; the
     sectionId: 'bio-biochem',
     passageNumber: 7,
     title: 'Lipid Metabolism and Fatty Acid Oxidation',
-    text: `Fatty acids are stored as triacylglycerols (TAGs) in adipose tissue and serve as a major fuel source during fasting and exercise. Mobilization begins with lipolysis: hormone-sensitive lipase (HSL) and adipose triglyceride lipase (ATGL) hydrolyze TAGs, releasing fatty acids that bind albumin in the plasma and are transported to peripheral tissues.
+    passageText: `Fatty acids are stored as triacylglycerols (TAGs) in adipose tissue and serve as a major fuel source during fasting and exercise. Mobilization begins with lipolysis: hormone-sensitive lipase (HSL) and adipose triglyceride lipase (ATGL) hydrolyze TAGs, releasing fatty acids that bind albumin in the plasma and are transported to peripheral tissues.
 
 Fatty acid oxidation (β-oxidation) occurs in the mitochondrial matrix. Before oxidation, fatty acids are activated by acyl-CoA synthetase (forming fatty acyl-CoA) in a reaction that consumes 2 ATP equivalents (ATP → AMP + 2 Pi). Long-chain fatty acyl-CoA crosses the inner mitochondrial membrane via the carnitine shuttle: the acyl group is transferred to carnitine by carnitine acyltransferase I (CPT-I) on the outer membrane, transported through the membrane as acylcarnitine by a translocase, and transferred back to CoA by CPT-II on the inner membrane. Malonyl-CoA (the first committed intermediate of fatty acid synthesis) inhibits CPT-I, preventing futile cycling of fatty acid synthesis and oxidation.
 
@@ -306,7 +306,7 @@ Malonyl-CoA inhibition of CPT-I represents a key regulatory mechanism: in the fe
     sectionId: 'bio-biochem',
     passageNumber: 8,
     title: 'Immunity: Adaptive Immune Response',
-    text: `The adaptive immune system provides antigen-specific immunity through two primary cellular effectors: B cells (humoral immunity, antibody-mediated) and T cells (cellular immunity). Both develop from hematopoietic stem cells in the bone marrow; T cells complete maturation in the thymus (positive and negative selection), while B cells mature in the bone marrow.
+    passageText: `The adaptive immune system provides antigen-specific immunity through two primary cellular effectors: B cells (humoral immunity, antibody-mediated) and T cells (cellular immunity). Both develop from hematopoietic stem cells in the bone marrow; T cells complete maturation in the thymus (positive and negative selection), while B cells mature in the bone marrow.
 
 T cell activation requires two signals: (1) T cell receptor (TCR) recognition of antigen peptide presented in the MHC groove (MHC class I for CD8⁺ cytotoxic T cells, MHC class II for CD4⁺ helper T cells); and (2) co-stimulation (CD28 on T cell binding B7 on antigen-presenting cells). Without co-stimulation, TCR signaling induces anergy (unresponsiveness) rather than activation. Activated CD4⁺ helper T cells (Th cells) provide help to B cells (CD40L-CD40 interaction + cytokines) and to CD8⁺ T cells (IL-2). Th1 cells secrete IFN-γ (activate macrophages, promote CTL responses); Th2 cells secrete IL-4, IL-5, IL-13 (promote B cell class switching to IgE, eosinophil activation, allergy); Th17 cells secrete IL-17 (neutrophil recruitment, autoimmunity).
 
@@ -456,7 +456,7 @@ The passage of time between primary and secondary immune responses reflects the 
     sectionId: 'bio-biochem',
     passageNumber: 9,
     title: 'Genetics: Mendelian Inheritance and Exceptions',
-    text: `Mendel's laws of segregation and independent assortment describe the transmission of alleles through sexual reproduction. Segregation: each diploid organism carries two alleles for each gene; these alleles separate during meiosis, producing gametes with one allele each. Independent assortment: alleles at different loci segregate independently (when genes are on different chromosomes). These laws apply to many traits but have notable exceptions.
+    passageText: `Mendel's laws of segregation and independent assortment describe the transmission of alleles through sexual reproduction. Segregation: each diploid organism carries two alleles for each gene; these alleles separate during meiosis, producing gametes with one allele each. Independent assortment: alleles at different loci segregate independently (when genes are on different chromosomes). These laws apply to many traits but have notable exceptions.
 
 Linked genes (on the same chromosome) do not assort independently. Recombination between linked genes (crossing over in meiosis I) can separate linked alleles, producing recombinant gametes. Recombination frequency = (recombinant progeny)/(total progeny) × 100%; 1% recombination = 1 centimorgan (cM). Genes more than 50 cM apart (or on different chromosomes) assort independently; genes less than 50 cM apart are linked.
 
@@ -606,7 +606,7 @@ Sex-linked traits are encoded on sex chromosomes. X-linked recessive traits (e.g
     sectionId: 'bio-biochem',
     passageNumber: 10,
     title: 'Signal Transduction Pathways',
-    text: `Cells receive and integrate signals from their environment through receptor-mediated signaling. Hydrophilic ligands (peptide hormones, growth factors, cytokines) cannot cross the plasma membrane and bind cell-surface receptors. Hydrophobic ligands (steroid hormones, thyroid hormone) cross the membrane and bind intracellular receptors that directly regulate gene transcription.
+    passageText: `Cells receive and integrate signals from their environment through receptor-mediated signaling. Hydrophilic ligands (peptide hormones, growth factors, cytokines) cannot cross the plasma membrane and bind cell-surface receptors. Hydrophobic ligands (steroid hormones, thyroid hormone) cross the membrane and bind intracellular receptors that directly regulate gene transcription.
 
 Receptor tyrosine kinases (RTKs) are a major class of cell-surface receptors. Ligand binding (e.g., EGF, insulin, PDGF) induces receptor dimerization and trans-autophosphorylation of tyrosine residues in the intracellular domain. Phosphotyrosines serve as docking sites for SH2 domain-containing proteins (e.g., Grb2, PI3K, PLCγ). RTK activation initiates multiple downstream cascades: (1) Ras-MAPK pathway (proliferation, differentiation); (2) PI3K-Akt pathway (survival, growth, metabolism); (3) PLCγ-IP3/DAG-PKC pathway (various responses).
 

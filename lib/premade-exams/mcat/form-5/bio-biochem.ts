@@ -11,7 +11,7 @@ export const bioBiochemSection5: MCATSection = {
   seededCount: 59,
   timeMinutes: 95,
   breakAfterMinutes: 10,
-  breakType: 'optional',
+  breakType: 'short',
   passages: [...bbPassages5_01to05, ...bbPassages5_06to10],
   discreteQuestions: bbDiscretes5,
 }

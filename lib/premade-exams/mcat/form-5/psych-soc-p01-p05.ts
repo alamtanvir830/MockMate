@@ -8,7 +8,7 @@ export const psPassages5_01to05: MCATPassage[] = [
     sectionId: 'psych-soc',
     passageNumber: 1,
     title: 'Social Cognition: Attribution and Perception',
-    text: `Social cognition encompasses the mental processes people use to perceive, interpret, and respond to other people and social situations. A central domain of social cognition is attribution — the process of explaining the causes of behavior. Fritz Heider's foundational work distinguished internal attributions (explaining behavior by reference to personal dispositions, traits, or abilities) from external attributions (explaining behavior by reference to situational factors).
+    passageText: `Social cognition encompasses the mental processes people use to perceive, interpret, and respond to other people and social situations. A central domain of social cognition is attribution — the process of explaining the causes of behavior. Fritz Heider's foundational work distinguished internal attributions (explaining behavior by reference to personal dispositions, traits, or abilities) from external attributions (explaining behavior by reference to situational factors).
 
 The fundamental attribution error (FAE) describes the tendency to overweight dispositional explanations and underweight situational factors when explaining others' behavior. Classic demonstrations include the quiz show study (Ross, 1977), in which observers rated questioners as more knowledgeable than contestants even though the questioner role was randomly assigned — a purely situational advantage. Actors and observers show a systematic difference: the actor-observer bias holds that we attribute our own behavior to situations (because we see our own situational context clearly) while attributing others' behavior to dispositions (because we see only others' behavior, not their context).
 
@@ -185,7 +185,7 @@ A researcher studies attribution patterns in medical contexts, finding that phys
     sectionId: 'psych-soc',
     passageNumber: 2,
     title: 'Memory Systems and Encoding',
-    text: `Memory is not a single system but a collection of distinct neurological processes. Atkinson and Shiffrin's modal model distinguishes sensory memory (brief, high-capacity, modality-specific), short-term memory (STM; limited capacity ~7±2 items; ~18-30 seconds without rehearsal), and long-term memory (LTM; theoretically unlimited capacity and duration). Baddeley's working memory model replaced the unitary STM with a multicomponent system: a central executive (attentional control), a phonological loop (verbal/acoustic information), a visuospatial sketchpad (visual/spatial information), and an episodic buffer (integration of information).
+    passageText: `Memory is not a single system but a collection of distinct neurological processes. Atkinson and Shiffrin's modal model distinguishes sensory memory (brief, high-capacity, modality-specific), short-term memory (STM; limited capacity ~7±2 items; ~18-30 seconds without rehearsal), and long-term memory (LTM; theoretically unlimited capacity and duration). Baddeley's working memory model replaced the unitary STM with a multicomponent system: a central executive (attentional control), a phonological loop (verbal/acoustic information), a visuospatial sketchpad (visual/spatial information), and an episodic buffer (integration of information).
 
 Long-term memory is divided into declarative (explicit) memory — accessible to conscious awareness — and non-declarative (implicit) memory — unconscious. Declarative memory includes episodic memory (autobiographical events with temporal and spatial context) and semantic memory (general knowledge, facts, and concepts independent of specific episodes). Non-declarative memory includes procedural memory (skills and habits), priming, and classical conditioning.
 
@@ -335,7 +335,7 @@ Levels of processing theory (Craik and Lockhart) holds that deeper encoding lead
     sectionId: 'psych-soc',
     passageNumber: 3,
     title: 'Social Stratification and Health Disparities',
-    text: `Social stratification refers to the hierarchical organization of society into layers (strata) based on socioeconomic status (SES), race, gender, and other markers of social position. SES is typically operationalized through income, education, and occupational prestige. Stratification is consequential for health: lower SES is associated with higher rates of morbidity, mortality, and mental illness across virtually all health outcomes studied.
+    passageText: `Social stratification refers to the hierarchical organization of society into layers (strata) based on socioeconomic status (SES), race, gender, and other markers of social position. SES is typically operationalized through income, education, and occupational prestige. Stratification is consequential for health: lower SES is associated with higher rates of morbidity, mortality, and mental illness across virtually all health outcomes studied.
 
 Several mechanisms link SES to health. Material deprivation (lack of access to nutritious food, safe housing, medical care) operates directly. Psychosocial pathways operate indirectly: chronic exposure to subordinate social positions activates the hypothalamic-pituitary-adrenal (HPA) axis and sympatho-adrenomedullary system, elevating cortisol and catecholamines, which over time contribute to cardiovascular disease, immune dysregulation, and accelerated cellular aging. Allostatic load — the cumulative physiological burden of chronic stress — is elevated in lower-SES populations.
 
@@ -485,7 +485,7 @@ Sociological perspectives on stratification differ: functionalism holds that ine
     sectionId: 'psych-soc',
     passageNumber: 4,
     title: 'Learning Theory: Classical and Operant Conditioning',
-    text: `Learning is defined as a relatively permanent change in behavior or knowledge as a result of experience. Two fundamental forms of associative learning are classical conditioning (Pavlov) and operant conditioning (Skinner).
+    passageText: `Learning is defined as a relatively permanent change in behavior or knowledge as a result of experience. Two fundamental forms of associative learning are classical conditioning (Pavlov) and operant conditioning (Skinner).
 
 In classical conditioning, a neutral stimulus (CS) is paired with an unconditioned stimulus (UCS) that naturally elicits an unconditioned response (UCR). After repeated pairings, the CS alone elicits a conditioned response (CR). Key phenomena include extinction (CS presented without UCS → CR diminishes), spontaneous recovery (CR reappears after a rest period following extinction), stimulus generalization (similar stimuli elicit the CR), and stimulus discrimination (training distinguishes the CS from similar stimuli).
 
@@ -635,7 +635,7 @@ Observational learning (Bandura) extends learning beyond direct experience: peop
     sectionId: 'psych-soc',
     passageNumber: 5,
     title: 'Perception and Consciousness',
-    text: `Perception involves the interpretation of sensory information to construct meaningful representations of the external world. While sensation refers to the raw detection of stimuli by sensory organs, perception involves active cognitive processing that is influenced by expectations, attention, prior knowledge, and context.
+    passageText: `Perception involves the interpretation of sensory information to construct meaningful representations of the external world. While sensation refers to the raw detection of stimuli by sensory organs, perception involves active cognitive processing that is influenced by expectations, attention, prior knowledge, and context.
 
 Signal detection theory (SDT) provides a framework for understanding how observers make decisions in the presence of sensory uncertainty. SDT distinguishes the observer's sensitivity (d') — the ability to distinguish signal from noise — from their response criterion (β) — the decision threshold that determines how much evidence is needed before reporting detection. A conservative criterion means the observer requires more evidence to report a signal (fewer hits, fewer false alarms); a liberal criterion means they report a signal on less evidence (more hits, more false alarms). Crucially, SDT shows that hits and false alarms are not independent — changing the criterion changes both.
 

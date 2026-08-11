@@ -48,6 +48,7 @@ export interface MCATQuestion {
 export interface MCATPassage {
   id: string
   sectionId: string
+  passageNumber?: number
   title: string
   passageText: string
   figures?: MCATFigure[]

@@ -8,7 +8,7 @@ export const carsPassages5_01to05: MCATPassage[] = [
     sectionId: 'cars',
     passageNumber: 1,
     title: 'The Limits of Expertise',
-    text: `Expertise is typically conceptualized as deep, reliable knowledge within a defined domain — the product of deliberate practice, pattern recognition, and the accumulation of case-specific experience. Yet research on expert performance reveals a paradox: experts frequently outperform novices within their domain while simultaneously making systematic errors that novices avoid, particularly when domain-irrelevant biases intrude.
+    passageText: `Expertise is typically conceptualized as deep, reliable knowledge within a defined domain — the product of deliberate practice, pattern recognition, and the accumulation of case-specific experience. Yet research on expert performance reveals a paradox: experts frequently outperform novices within their domain while simultaneously making systematic errors that novices avoid, particularly when domain-irrelevant biases intrude.
 
 Philip Tetlock's landmark study of political forecasters found that experts — economists, political scientists, foreign policy analysts — performed only marginally better than chance over a twenty-year period when their predictions were evaluated against actual outcomes. The "foxes" — generalists who drew on multiple frameworks — outperformed the "hedgehogs" — specialists committed to a single dominant idea. Tetlock's conclusion was not that expertise is worthless, but that it is domain-specific: expertise in explaining the past does not translate smoothly into predicting the future, particularly in complex, nonlinear systems.
 
@@ -185,7 +185,7 @@ The implication is not that expertise should be distrusted but that it should be
     sectionId: 'cars',
     passageNumber: 2,
     title: 'The Philosophy of Historical Causation',
-    text: `Historians disagree about the nature of historical explanation. The debate is at its sharpest on the question of causation: what counts as a cause of a historical event, and how should causal claims be evaluated?
+    passageText: `Historians disagree about the nature of historical explanation. The debate is at its sharpest on the question of causation: what counts as a cause of a historical event, and how should causal claims be evaluated?
 
 One tradition, associated with positivist historiography, holds that historical explanation is fundamentally similar to scientific explanation: to explain an event is to subsume it under a general causal law. An adequate historical explanation identifies the antecedent conditions and the covering law (a universal generalization) under which the event necessarily follows. This view demands that historical claims be empirically verifiable and that narrative accounts be translatable into law-like statements.
 
@@ -337,7 +337,7 @@ The most defensible position may be that historical explanation is genuinely plu
     sectionId: 'cars',
     passageNumber: 3,
     title: 'The Digital Attention Economy and Democratic Discourse',
-    text: `The commercialization of online attention has produced an epistemic environment that many scholars argue is fundamentally hostile to the requirements of democratic deliberation. The attention economy — in which platforms compete for user engagement to sell advertising — creates powerful incentives to maximize outrage, novelty, and tribal affiliation rather than to promote reflection, accuracy, or cross-cutting dialogue.
+    passageText: `The commercialization of online attention has produced an epistemic environment that many scholars argue is fundamentally hostile to the requirements of democratic deliberation. The attention economy — in which platforms compete for user engagement to sell advertising — creates powerful incentives to maximize outrage, novelty, and tribal affiliation rather than to promote reflection, accuracy, or cross-cutting dialogue.
 
 The mechanism is straightforward: algorithmic recommendation systems optimize for engagement, and research consistently shows that emotionally provocative, identity-affirming content generates more engagement than nuanced, uncertain, or disconfirming content. This creates a feedback loop: users receive more content that confirms their existing views, become more confident in those views, and become less tolerant of alternative perspectives. The result — often called "filter bubbles" or "echo chambers" — is an epistemic fragmentation that many argue makes collective problem-solving more difficult.
 
@@ -460,7 +460,7 @@ A more defensible position may be that the attention economy creates selective c
     sectionId: 'cars',
     passageNumber: 4,
     title: 'The Autonomy of Art',
-    text: `The question of whether art is autonomous — whether it can be understood and evaluated independently of the social, political, and biographical circumstances of its production — has divided aestheticians since the Romantic period. The autonomy thesis holds that aesthetic value is intrinsic: the work of art contains within itself the resources for its own appreciation and evaluation. To properly understand a painting or a poem, one need only attend to the work itself — its formal properties, internal coherence, and achieved emotional effects — rather than to who painted it, when, or under what political conditions.
+    passageText: `The question of whether art is autonomous — whether it can be understood and evaluated independently of the social, political, and biographical circumstances of its production — has divided aestheticians since the Romantic period. The autonomy thesis holds that aesthetic value is intrinsic: the work of art contains within itself the resources for its own appreciation and evaluation. To properly understand a painting or a poem, one need only attend to the work itself — its formal properties, internal coherence, and achieved emotional effects — rather than to who painted it, when, or under what political conditions.
 
 The autonomy thesis has intuitive appeal: great works of literature can be appreciated across centuries and cultures, suggesting that aesthetic value transcends its historical occasion. It also supports the practice of formalism — close reading of textual or visual properties without recourse to contextual information — which has been an extraordinarily productive critical methodology.
 
@@ -610,7 +610,7 @@ A middle position suggests that these perspectives are not exclusive. Works of a
     sectionId: 'cars',
     passageNumber: 5,
     title: 'Moral Luck and Responsibility',
-    text: `Thomas Nagel's influential essay on moral luck identifies a deep tension within ordinary moral practice. We standardly hold people responsible only for what is within their control — this is the control principle, or what Nagel calls the Kantian intuition. Yet our actual moral judgments routinely depend on factors that are entirely outside the agent's control. Nagel identifies four types of moral luck: resultant luck (e.g., whether a drunk driver hits a pedestrian); circumstantial luck (whether one is born in a time and place that makes moral transgression possible or tempting); constitutive luck (the dispositions, temperament, and character traits one is born with or develops through unchosen circumstances); and causal luck (whether one's choices are causally determined by prior causes).
+    passageText: `Thomas Nagel's influential essay on moral luck identifies a deep tension within ordinary moral practice. We standardly hold people responsible only for what is within their control — this is the control principle, or what Nagel calls the Kantian intuition. Yet our actual moral judgments routinely depend on factors that are entirely outside the agent's control. Nagel identifies four types of moral luck: resultant luck (e.g., whether a drunk driver hits a pedestrian); circumstantial luck (whether one is born in a time and place that makes moral transgression possible or tempting); constitutive luck (the dispositions, temperament, and character traits one is born with or develops through unchosen circumstances); and causal luck (whether one's choices are causally determined by prior causes).
 
 The problem is that once we take the control principle seriously, the domain of moral responsibility appears to shrink dramatically. If what one does is substantially influenced by genetic endowments, early childhood experiences, and social circumstances — none of which are chosen — then it becomes unclear how much of one's character and conduct is genuinely "one's own."
 

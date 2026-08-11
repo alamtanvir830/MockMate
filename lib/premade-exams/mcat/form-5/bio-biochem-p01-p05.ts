@@ -8,7 +8,7 @@ export const bbPassages5_01to05: MCATPassage[] = [
     sectionId: 'bio-biochem',
     passageNumber: 1,
     title: 'Enzyme Kinetics and Allosteric Regulation',
-    text: `Enzyme kinetics describe the rates of enzyme-catalyzed reactions as a function of substrate concentration. For most enzymes, this relationship follows Michaelis-Menten kinetics, where the reaction rate (v) is given by: v = Vmax[S] / (Km + [S]). Vmax is the maximum reaction velocity and Km is the substrate concentration at which v = Vmax/2. A lower Km indicates higher affinity for substrate.
+    passageText: `Enzyme kinetics describe the rates of enzyme-catalyzed reactions as a function of substrate concentration. For most enzymes, this relationship follows Michaelis-Menten kinetics, where the reaction rate (v) is given by: v = Vmax[S] / (Km + [S]). Vmax is the maximum reaction velocity and Km is the substrate concentration at which v = Vmax/2. A lower Km indicates higher affinity for substrate.
 
 Allosteric enzymes deviate from Michaelis-Menten kinetics, exhibiting sigmoidal (S-shaped) v vs. [S] curves rather than hyperbolic curves. These enzymes have multiple subunits with cooperative binding: binding of substrate to one subunit increases the affinity of other subunits for substrate (positive cooperativity). Allosteric regulators bind at sites distinct from the active site, causing conformational changes that either activate or inhibit the enzyme.
 
@@ -158,7 +158,7 @@ In a research experiment, cells were treated with a compound that irreversibly i
     sectionId: 'bio-biochem',
     passageNumber: 2,
     title: 'DNA Repair Mechanisms',
-    text: `Faithful transmission of genetic information requires effective DNA repair systems that correct damage caused by replication errors, reactive oxygen species, UV radiation, and chemical mutagens. Several distinct repair pathways have evolved to handle different types of lesions.
+    passageText: `Faithful transmission of genetic information requires effective DNA repair systems that correct damage caused by replication errors, reactive oxygen species, UV radiation, and chemical mutagens. Several distinct repair pathways have evolved to handle different types of lesions.
 
 Base excision repair (BER) corrects small, non-helix-distorting lesions such as oxidized or deaminated bases. A DNA glycosylase recognizes and removes the damaged base, leaving an apurinic/apyrimidinic (AP) site. AP endonuclease then cleaves the phosphodiester backbone, followed by DNA polymerase β filling in the correct nucleotide, and DNA ligase sealing the nick.
 
@@ -308,7 +308,7 @@ Mismatch repair (MMR) corrects replication errors — mismatched base pairs and 
     sectionId: 'bio-biochem',
     passageNumber: 3,
     title: 'Membrane Transport and Ion Channels',
-    text: `Cell membranes are selectively permeable barriers that regulate the passage of ions, nutrients, and signaling molecules. Transport across membranes occurs via several mechanisms: passive diffusion (down concentration gradients, no energy required), facilitated diffusion (via channels or carriers, down gradients, no ATP), primary active transport (directly uses ATP hydrolysis), and secondary active transport (uses ion gradients established by primary active transport).
+    passageText: `Cell membranes are selectively permeable barriers that regulate the passage of ions, nutrients, and signaling molecules. Transport across membranes occurs via several mechanisms: passive diffusion (down concentration gradients, no energy required), facilitated diffusion (via channels or carriers, down gradients, no ATP), primary active transport (directly uses ATP hydrolysis), and secondary active transport (uses ion gradients established by primary active transport).
 
 The Na+/K+-ATPase is the quintessential primary active transport protein. For every ATP hydrolyzed, it pumps 3 Na+ out of and 2 K+ into the cell, maintaining the low intracellular Na+ and high intracellular K+ concentrations that drive secondary transport and electrical signaling. This pump is electrogenic: the net export of one positive charge per cycle creates a small outward current.
 
@@ -458,7 +458,7 @@ Research has shown that ouabain, a cardiac glycoside, specifically inhibits the 
     sectionId: 'bio-biochem',
     passageNumber: 4,
     title: 'Protein Structure and Folding',
-    text: `Proteins fold into specific three-dimensional structures that are necessary for their function. The primary structure (amino acid sequence) determines higher-order structure. Secondary structure elements — α-helices and β-sheets — are stabilized by hydrogen bonds between backbone carbonyl (C=O) and amino (N-H) groups. Tertiary structure refers to the overall three-dimensional fold, stabilized by hydrophobic interactions, hydrogen bonds, ionic interactions, and disulfide bonds (in oxidizing environments). Quaternary structure is the arrangement of multiple polypeptide subunits.
+    passageText: `Proteins fold into specific three-dimensional structures that are necessary for their function. The primary structure (amino acid sequence) determines higher-order structure. Secondary structure elements — α-helices and β-sheets — are stabilized by hydrogen bonds between backbone carbonyl (C=O) and amino (N-H) groups. Tertiary structure refers to the overall three-dimensional fold, stabilized by hydrophobic interactions, hydrogen bonds, ionic interactions, and disulfide bonds (in oxidizing environments). Quaternary structure is the arrangement of multiple polypeptide subunits.
 
 Protein folding in the cell is assisted by molecular chaperones such as Hsp70 and the GroEL/GroES chaperonin system. Chaperones prevent premature or incorrect aggregation of nascent polypeptides by binding to exposed hydrophobic regions; they facilitate correct folding in an ATP-dependent manner. Without chaperones, many proteins would misfold or aggregate — particularly under stress conditions.
 
@@ -608,7 +608,7 @@ Several diseases are caused by protein misfolding and aggregation: Alzheimer's d
     sectionId: 'bio-biochem',
     passageNumber: 5,
     title: 'Immune System: Innate and Adaptive Immunity',
-    text: `The immune system operates through two broad arms: innate immunity (fast, non-specific, present from birth) and adaptive immunity (slow, specific, acquired through exposure). Innate immunity includes physical barriers (skin, mucus), phagocytes (neutrophils, macrophages), natural killer cells, and the complement system. Pattern recognition receptors (PRRs) such as Toll-like receptors (TLRs) recognize conserved pathogen-associated molecular patterns (PAMPs).
+    passageText: `The immune system operates through two broad arms: innate immunity (fast, non-specific, present from birth) and adaptive immunity (slow, specific, acquired through exposure). Innate immunity includes physical barriers (skin, mucus), phagocytes (neutrophils, macrophages), natural killer cells, and the complement system. Pattern recognition receptors (PRRs) such as Toll-like receptors (TLRs) recognize conserved pathogen-associated molecular patterns (PAMPs).
 
 Adaptive immunity involves lymphocytes: B cells produce antibodies (humoral immunity) and T cells mediate cell-mediated immunity. CD4+ helper T cells (Th) activate B cells and CD8+ cytotoxic T cells (CTLs); CD8+ CTLs kill infected cells by inducing apoptosis. T cell receptor (TCR) diversity is generated by V(D)J recombination. B cell receptor (BCR) diversity arises similarly; upon activation, B cells undergo somatic hypermutation and class switching in germinal centers.
 

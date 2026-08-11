@@ -11,7 +11,7 @@ export const psychSocSection4: MCATSection = {
   seededCount: 59,
   timeMinutes: 95,
   breakAfterMinutes: 0,
-  breakType: 'none',
+  breakType: null,
   passages: [...psPassages4_01to05, ...psPassages4_06to09],
   discreteQuestions: psDiscretes4,
 }

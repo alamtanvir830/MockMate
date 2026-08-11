@@ -8,7 +8,7 @@ export const bbPassages5_06to10: MCATPassage[] = [
     sectionId: 'bio-biochem',
     passageNumber: 6,
     title: 'Cell Cycle and Cancer Biology',
-    text: `The cell cycle comprises four phases: G1 (gap 1 — growth), S (DNA synthesis), G2 (gap 2 — preparation for division), and M (mitosis). Progression through the cycle is controlled by cyclin-dependent kinases (CDKs), whose activity requires binding to cyclin partners. Cyclin levels oscillate through the cell cycle, activating CDKs at appropriate times.
+    passageText: `The cell cycle comprises four phases: G1 (gap 1 — growth), S (DNA synthesis), G2 (gap 2 — preparation for division), and M (mitosis). Progression through the cycle is controlled by cyclin-dependent kinases (CDKs), whose activity requires binding to cyclin partners. Cyclin levels oscillate through the cell cycle, activating CDKs at appropriate times.
 
 Key regulatory checkpoints prevent cells with DNA damage or incomplete replication from progressing. The G1/S checkpoint is regulated by the retinoblastoma protein (Rb). Mitogenic signals lead to CDK4/6-cyclin D phosphorylation of Rb, releasing the transcription factor E2F, which drives expression of S-phase genes. The G2/M checkpoint ensures DNA replication is complete before mitosis; the spindle assembly checkpoint ensures all chromosomes are properly attached to spindle microtubules before anaphase.
 
@@ -158,7 +158,7 @@ p53 ("guardian of the genome") responds to DNA damage by inducing cell cycle arr
     sectionId: 'bio-biochem',
     passageNumber: 7,
     title: 'Muscle Physiology and Contraction',
-    text: `Skeletal muscle contraction is driven by the sliding filament mechanism. Each sarcomere consists of thick filaments (myosin) and thin filaments (actin, tropomyosin, troponin complex). At rest, tropomyosin blocks myosin-binding sites on actin. Motor neuron stimulation causes acetylcholine release at the neuromuscular junction → muscle cell depolarization → action potential propagation along the T-tubules → calcium release from the sarcoplasmic reticulum (SR) via ryanodine receptors → Ca2+ binds troponin C → conformational change → tropomyosin shifts → myosin-binding sites on actin exposed.
+    passageText: `Skeletal muscle contraction is driven by the sliding filament mechanism. Each sarcomere consists of thick filaments (myosin) and thin filaments (actin, tropomyosin, troponin complex). At rest, tropomyosin blocks myosin-binding sites on actin. Motor neuron stimulation causes acetylcholine release at the neuromuscular junction → muscle cell depolarization → action potential propagation along the T-tubules → calcium release from the sarcoplasmic reticulum (SR) via ryanodine receptors → Ca2+ binds troponin C → conformational change → tropomyosin shifts → myosin-binding sites on actin exposed.
 
 The cross-bridge cycle: (1) Myosin head (in ADP+Pi state) binds actin → power stroke (myosin moves toward the Z-disk, pulling the thin filament; ADP+Pi released). (2) ATP binds myosin → actomyosin complex dissociates. (3) ATP hydrolysis (ATPase) → myosin cocks (returns to high-energy state). Rigor mortis occurs when ATP is depleted — myosin heads remain bound to actin without ATP to break the actomyosin bond.
 
@@ -308,7 +308,7 @@ Muscle fiber types: Type I (slow-twitch): abundant mitochondria, high oxidative 
     sectionId: 'bio-biochem',
     passageNumber: 8,
     title: 'Genetics: Meiosis and Inheritance',
-    text: `Meiosis generates haploid gametes from diploid cells through two successive divisions without intervening DNA replication. Meiosis I (reductive division) separates homologous chromosomes; meiosis II (equatorial division) separates sister chromatids. Genetic diversity arises through two mechanisms: independent assortment of homologous chromosomes and crossing over (homologous recombination) during prophase I.
+    passageText: `Meiosis generates haploid gametes from diploid cells through two successive divisions without intervening DNA replication. Meiosis I (reductive division) separates homologous chromosomes; meiosis II (equatorial division) separates sister chromatids. Genetic diversity arises through two mechanisms: independent assortment of homologous chromosomes and crossing over (homologous recombination) during prophase I.
 
 Crossing over occurs when non-sister chromatids of homologous chromosomes exchange segments at chiasmata. This creates new combinations of alleles (recombinant chromosomes). Genes located far apart on the same chromosome (or on different chromosomes) assort independently; genes located close together show genetic linkage (travel together more often than expected by chance).
 
@@ -458,7 +458,7 @@ Genomic imprinting is a phenomenon where the expression of a gene depends on the
     sectionId: 'bio-biochem',
     passageNumber: 9,
     title: 'Hormonal Regulation: The Endocrine System',
-    text: `Hormones coordinate physiological responses across distant tissues. The hypothalamic-pituitary axis is the master regulator of many endocrine functions. The hypothalamus releases releasing hormones (e.g., GnRH, TRH, CRH) that stimulate the anterior pituitary to release tropic hormones (FSH, LH, TSH, ACTH, GH). These tropic hormones act on target endocrine glands to produce final hormones (estrogen, testosterone, thyroid hormone, cortisol) that exert negative feedback on both the hypothalamus and pituitary.
+    passageText: `Hormones coordinate physiological responses across distant tissues. The hypothalamic-pituitary axis is the master regulator of many endocrine functions. The hypothalamus releases releasing hormones (e.g., GnRH, TRH, CRH) that stimulate the anterior pituitary to release tropic hormones (FSH, LH, TSH, ACTH, GH). These tropic hormones act on target endocrine glands to produce final hormones (estrogen, testosterone, thyroid hormone, cortisol) that exert negative feedback on both the hypothalamus and pituitary.
 
 Insulin and glucagon regulate blood glucose. Insulin (secreted by pancreatic β-cells in response to hyperglycemia) promotes glucose uptake into muscle and adipose tissue (via GLUT4 translocation), glycogen synthesis, and lipogenesis. Glucagon (secreted by α-cells in response to hypoglycemia) promotes glycogenolysis, gluconeogenesis, and lipolysis. These hormones have opposing effects — a push-pull system maintaining euglycemia.
 
@@ -608,7 +608,7 @@ Cortisol (a glucocorticoid secreted by the adrenal cortex in response to ACTH) h
     sectionId: 'bio-biochem',
     passageNumber: 10,
     title: 'Lipid Metabolism and Transport',
-    text: `Fatty acids are a major fuel source, particularly in prolonged fasting and exercise. Triglycerides (triacylglycerols) stored in adipose tissue are hydrolyzed by hormone-sensitive lipase (HSL), releasing free fatty acids (FFAs) into the bloodstream. FFAs travel bound to albumin to target tissues, where they undergo β-oxidation.
+    passageText: `Fatty acids are a major fuel source, particularly in prolonged fasting and exercise. Triglycerides (triacylglycerols) stored in adipose tissue are hydrolyzed by hormone-sensitive lipase (HSL), releasing free fatty acids (FFAs) into the bloodstream. FFAs travel bound to albumin to target tissues, where they undergo β-oxidation.
 
 β-Oxidation occurs in the mitochondrial matrix. Long-chain fatty acids are activated to acyl-CoA in the cytoplasm, then transported across the inner mitochondrial membrane by the carnitine shuttle (carnitine acyltransferase I and II). Each round of β-oxidation cleaves off a 2-carbon acetyl-CoA unit, generating FADH₂ and NADH. Acetyl-CoA enters the TCA cycle; FADH₂ and NADH feed oxidative phosphorylation. A 16-carbon fatty acid (palmitate) generates 7 rounds of β-oxidation → 8 acetyl-CoA + 7 FADH₂ + 7 NADH.
 

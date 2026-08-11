@@ -11,7 +11,7 @@ export const chemPhysSection4: MCATSection = {
   seededCount: 59,
   timeMinutes: 95,
   breakAfterMinutes: 10,
-  breakType: 'optional',
+  breakType: 'short',
   passages: [...cpPassages4_01to05, ...cpPassages4_06to10],
   discreteQuestions: cpDiscretes4,
 }

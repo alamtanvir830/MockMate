@@ -8,7 +8,7 @@ export const carsPassages4_06to09: MCATPassage[] = [
     sectionId: 'cars',
     passageNumber: 6,
     title: 'The Philosophy of Translation',
-    text: `The Italian saying "traduttore, traditore" — translator, traitor — captures a suspicion about translation that runs deep in literary culture: the translator who renders a text into another language has necessarily betrayed something essential about the original. Every translation is an interpretation, and every interpretation involves choices that exclude other choices. To translate Dante into English is to choose one register of English over others, one set of sonic textures over others, one approach to the tercets over others — and each choice is also a refusal. The question is not whether something is lost in translation but what, exactly, is lost and how much it matters.
+    passageText: `The Italian saying "traduttore, traditore" — translator, traitor — captures a suspicion about translation that runs deep in literary culture: the translator who renders a text into another language has necessarily betrayed something essential about the original. Every translation is an interpretation, and every interpretation involves choices that exclude other choices. To translate Dante into English is to choose one register of English over others, one set of sonic textures over others, one approach to the tercets over others — and each choice is also a refusal. The question is not whether something is lost in translation but what, exactly, is lost and how much it matters.
 
 Walter Benjamin offered a more optimistic account in his essay "The Task of the Translator" (1923). For Benjamin, the relationship between original and translation is not one of original to inferior copy but of related organisms: original and translation are complementary expressions of a common underlying truth. The translation does not fail to reach the original; it extends it into a new linguistic space, revealing facets of meaning that the original could not express within its own linguistic limits. A faithful translation, in Benjamin's sense, is not one that reproduces every word but one that captures the "intention" behind the words — what the text is reaching toward, which no single language can fully express.
 
@@ -26,7 +26,7 @@ The debate between formal and dynamic approaches to translation encodes a deeper
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Benjamin\'s view of translation (paragraph 2) differs from the "traduttore, traditore" view primarily in that Benjamin:',
         choices: [
@@ -53,7 +53,7 @@ The debate between formal and dynamic approaches to translation encodes a deeper
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Nida\'s concept of "dynamic equivalence" (paragraph 3) prioritizes:',
         choices: [
@@ -80,7 +80,7 @@ The debate between formal and dynamic approaches to translation encodes a deeper
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'Critics of dynamic equivalence (paragraph 4) argue that it confuses translation with adaptation because:',
         choices: [
@@ -107,7 +107,7 @@ The debate between formal and dynamic approaches to translation encodes a deeper
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The final paragraph suggests that the choice between formal and dynamic equivalence depends on:',
         choices: [
@@ -134,7 +134,7 @@ The debate between formal and dynamic approaches to translation encodes a deeper
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Benjamin\'s view that a faithful translation captures "the intention behind the words" has been criticized in the passage as:',
         choices: [
@@ -161,7 +161,7 @@ The debate between formal and dynamic approaches to translation encodes a deeper
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Which of the following best represents the "traduttore, traditore" view of translation?',
         choices: [
@@ -187,7 +187,7 @@ The debate between formal and dynamic approaches to translation encodes a deeper
     sectionId: 'cars',
     passageNumber: 7,
     title: 'Populism and Democratic Theory',
-    text: `Political scientists have struggled to define populism with precision, partly because the term is used pejoratively by those who wish to dismiss certain political movements and defensively by those movements themselves. Despite definitional difficulties, most scholars identify a core logic: populism divides the political world into two opposed camps — the "pure people" and the "corrupt elite" — and claims that politics should express the will of the people rather than the interests of the elite. This logic is, in Cas Mudde's influential formulation, a "thin ideology" — it lacks the substantive content of socialism or conservatism and must be combined with a thicker ideological tradition to generate policy positions.
+    passageText: `Political scientists have struggled to define populism with precision, partly because the term is used pejoratively by those who wish to dismiss certain political movements and defensively by those movements themselves. Despite definitional difficulties, most scholars identify a core logic: populism divides the political world into two opposed camps — the "pure people" and the "corrupt elite" — and claims that politics should express the will of the people rather than the interests of the elite. This logic is, in Cas Mudde's influential formulation, a "thin ideology" — it lacks the substantive content of socialism or conservatism and must be combined with a thicker ideological tradition to generate policy positions.
 
 The relationship between populism and democracy is contested. Some scholars argue that populism is fundamentally at odds with liberal democracy, which protects minority rights, institutional constraints, and judicial review against simple majority will. On this view, the populist insistence on unmediated popular sovereignty — the will of "the people" expressed directly without the interference of institutions — undermines the rule of law and the rights that protect individuals from majorities. Populist leaders who use democratic elections to gain power and then proceed to weaken courts, press, and civil society are exhibiting the anti-liberal face of populism.
 
@@ -205,7 +205,7 @@ These three perspectives — populism as democratic threat, populism as democrat
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Mudde\'s characterization of populism as a "thin ideology" (paragraph 1) means that populism:',
         choices: [
@@ -232,7 +232,7 @@ These three perspectives — populism as democratic threat, populism as democrat
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'The view that "populism is democracy\'s shadow" (paragraph 3) implies that:',
         choices: [
@@ -259,7 +259,7 @@ These three perspectives — populism as democratic threat, populism as democrat
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'Mouffe\'s prescription for responding to right-wing populism (paragraph 4) is best described as:',
         choices: [
@@ -286,7 +286,7 @@ These three perspectives — populism as democratic threat, populism as democrat
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Which best describes the passage\'s overall approach to the question of whether populism threatens democracy?',
         choices: [
@@ -313,7 +313,7 @@ These three perspectives — populism as democratic threat, populism as democrat
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'The passage notes that "populism" is used "pejoratively by those who wish to dismiss certain political movements and defensively by those movements themselves." This observation most directly supports which claim?',
         choices: [
@@ -340,7 +340,7 @@ These three perspectives — populism as democratic threat, populism as democrat
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'A populist leader who wins a democratic election and then weakens the courts and press is cited in the passage as evidence for which view?',
         choices: [
@@ -366,7 +366,7 @@ These three perspectives — populism as democratic threat, populism as democrat
     sectionId: 'cars',
     passageNumber: 8,
     title: 'The Ethics of Humanitarian Intervention',
-    text: `The principle of state sovereignty has been a cornerstone of the international order since the Peace of Westphalia in 1648. States are sovereign within their borders; other states may not intervene in their domestic affairs. This principle provides the legal foundation of international relations and protects even small and weak states from the predatory ambitions of their more powerful neighbors. But sovereignty has also served as a shield behind which governments have committed atrocities against their own populations, immune from external accountability.
+    passageText: `The principle of state sovereignty has been a cornerstone of the international order since the Peace of Westphalia in 1648. States are sovereign within their borders; other states may not intervene in their domestic affairs. This principle provides the legal foundation of international relations and protects even small and weak states from the predatory ambitions of their more powerful neighbors. But sovereignty has also served as a shield behind which governments have committed atrocities against their own populations, immune from external accountability.
 
 The humanitarian intervention debates of the 1990s — following the Rwandan genocide and the Srebrenica massacre — forced a confrontation with this tension. The international community had stood by while systematic mass murder was committed within sovereign borders. The question was whether the norms of sovereignty that permit governments to massacre their own citizens deserve the moral respect that state sovereignty traditionally commands. Critics of non-intervention argued that sovereignty is not an end in itself but derives its legitimacy from a government's capacity to protect its population; a government that turns on its population forfeits its claim to sovereign immunity.
 
@@ -384,7 +384,7 @@ Despite these criticisms, most international lawyers and scholars accept that ab
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'The passage argues that critics of non-intervention derived their position from which claim about sovereignty?',
         choices: [
@@ -411,7 +411,7 @@ Despite these criticisms, most international lawyers and scholars accept that ab
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'R2P (Responsibility to Protect) was intended to navigate between which two positions?',
         choices: [
@@ -438,7 +438,7 @@ Despite these criticisms, most international lawyers and scholars accept that ab
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The "selectivity problem" in humanitarian intervention (paragraph 4) refers to:',
         choices: [
@@ -465,7 +465,7 @@ Despite these criticisms, most international lawyers and scholars accept that ab
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'The passage\'s final paragraph indicates that the scholarly consensus has shifted to:',
         choices: [
@@ -492,7 +492,7 @@ Despite these criticisms, most international lawyers and scholars accept that ab
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'The passage states that sovereignty has "also served as a shield behind which governments have committed atrocities against their own populations." The word "also" is significant because it:',
         choices: [
@@ -519,7 +519,7 @@ Despite these criticisms, most international lawyers and scholars accept that ab
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'Which of the following best illustrates the "implementation problem" with humanitarian intervention, as described in paragraph 4?',
         choices: [
@@ -545,7 +545,7 @@ Despite these criticisms, most international lawyers and scholars accept that ab
     sectionId: 'cars',
     passageNumber: 9,
     title: 'The Urban Public Space',
-    text: `The sociologist Ray Oldenburg described "third places" — social environments outside the home (first place) and workplace (second place) — as essential to the social fabric of communities. Coffee shops, parks, barbershops, libraries, and plazas function as third places: open to all, free or cheap to use, and structured around conversation and sociability rather than economic exchange. Oldenburg argued that the decline of third places in American life — replaced by privatized shopping malls, car-dependent suburbs, and screen-mediated interaction — has impoverished civic life and weakened the social ties that hold communities together.
+    passageText: `The sociologist Ray Oldenburg described "third places" — social environments outside the home (first place) and workplace (second place) — as essential to the social fabric of communities. Coffee shops, parks, barbershops, libraries, and plazas function as third places: open to all, free or cheap to use, and structured around conversation and sociability rather than economic exchange. Oldenburg argued that the decline of third places in American life — replaced by privatized shopping malls, car-dependent suburbs, and screen-mediated interaction — has impoverished civic life and weakened the social ties that hold communities together.
 
 The design of public urban space has long been recognized as having political consequences. William H. Whyte's observations of New York City plazas in the 1970s and 1980s found that small design details — the presence of ledges people could sit on, the direction sunlight fell, the proximity of food vendors — had dramatic effects on whether plazas attracted diverse populations or remained deserted. Jane Jacobs had argued similarly that urban vitality emerged from fine-grained mixing: small blocks, mixed uses, buildings of varying age, and density sufficient to support the constant presence of people on the street. Both writers saw urban design as a fundamentally democratic enterprise: space that invites the full range of a city's population to occupy it on equal terms creates conditions for the kind of casual, repeated encounters that build social trust.
 
@@ -563,7 +563,7 @@ The resolution of this debate turns partly on empirical questions — whether PO
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Oldenburg\'s "third places" (paragraph 1) are distinguished from other social environments by:',
         choices: [
@@ -590,7 +590,7 @@ The resolution of this debate turns partly on empirical questions — whether PO
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Whyte\'s observations about plaza design (paragraph 2) are used to support which claim?',
         choices: [
@@ -617,7 +617,7 @@ The resolution of this debate turns partly on empirical questions — whether PO
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'Defenders of POPS (paragraph 4) would most likely respond to concerns about exclusion by arguing:',
         choices: [
@@ -644,7 +644,7 @@ The resolution of this debate turns partly on empirical questions — whether PO
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The passage suggests the POPS debate ultimately involves which two types of questions?',
         choices: [
@@ -671,7 +671,7 @@ The resolution of this debate turns partly on empirical questions — whether PO
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Both Whyte and Jacobs are cited in paragraph 2 to support which shared claim?',
         choices: [
@@ -698,7 +698,7 @@ The resolution of this debate turns partly on empirical questions — whether PO
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The passage states that "a space that excludes the homeless is not a public space in any meaningful sense, whatever its legal designation." This claim rests on which assumption?',
         choices: [
@@ -725,7 +725,7 @@ The resolution of this debate turns partly on empirical questions — whether PO
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'Oldenburg\'s argument that the decline of third places "has impoverished civic life" would be most weakened by which finding?',
         choices: [
@@ -752,7 +752,7 @@ The resolution of this debate turns partly on empirical questions — whether PO
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'hard',
         question: 'The passage mentions that Jacobs argued for "density sufficient to support the constant presence of people on the street." How does this claim relate to the POPS debate discussed later?',
         choices: [
@@ -779,7 +779,7 @@ The resolution of this debate turns partly on empirical questions — whether PO
         discipline: 'CARS',
         contentCategory: 'CARS',
         foundationalConcept: 'CARS',
-        scientificSkill: 'CARS',
+        scientificSkill: 'Skill 1',
         difficulty: 'medium',
         question: 'According to the passage, the "POPS problem" arises from:',
         choices: [

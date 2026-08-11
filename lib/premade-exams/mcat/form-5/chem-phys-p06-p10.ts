@@ -8,7 +8,7 @@ export const cpPassages5_06to10: MCATPassage[] = [
     sectionId: 'chem-phys',
     passageNumber: 6,
     title: 'Fluid Dynamics and Blood Flow',
-    text: `Fluid mechanics describes the behavior of liquids and gases. For an ideal fluid (incompressible, non-viscous), the continuity equation expresses conservation of mass: A₁v₁ = A₂v₂, where A is cross-sectional area and v is fluid velocity. Where the tube narrows, velocity increases; where it widens, velocity decreases.
+    passageText: `Fluid mechanics describes the behavior of liquids and gases. For an ideal fluid (incompressible, non-viscous), the continuity equation expresses conservation of mass: A₁v₁ = A₂v₂, where A is cross-sectional area and v is fluid velocity. Where the tube narrows, velocity increases; where it widens, velocity decreases.
 
 Bernoulli's equation expresses conservation of energy for an ideal fluid: P + ½ρv² + ρgh = constant, where P is pressure, ρ is fluid density, v is velocity, and h is height. In horizontal flow (Δh = 0), increased velocity is accompanied by decreased pressure.
 
@@ -158,7 +158,7 @@ Turbulent flow occurs when the Reynolds number (Re = ρvd/η, where d is vessel 
     sectionId: 'chem-phys',
     passageNumber: 7,
     title: 'Organic Chemistry: Carbonyl Reactions',
-    text: `Carbonyl compounds (aldehydes and ketones) are electrophilic at the carbon atom due to the polarity of the C=O bond. This electrophilicity makes them reactive toward nucleophilic addition. Nucleophiles attack the carbonyl carbon; the carbonyl oxygen becomes the new leaving group in subsequent steps.
+    passageText: `Carbonyl compounds (aldehydes and ketones) are electrophilic at the carbon atom due to the polarity of the C=O bond. This electrophilicity makes them reactive toward nucleophilic addition. Nucleophiles attack the carbonyl carbon; the carbonyl oxygen becomes the new leaving group in subsequent steps.
 
 Key reactions of aldehydes and ketones include:
 1. Nucleophilic addition with water (hydration): forms a geminal diol (unstable for most ketones)
@@ -286,7 +286,7 @@ Oxidation of aldehydes produces carboxylic acids (Tollens' test — silver mirro
     sectionId: 'chem-phys',
     passageNumber: 8,
     title: 'Waves: Sound and Doppler Effect',
-    text: `Sound is a longitudinal mechanical wave characterized by alternating compressions and rarefactions of the medium. The speed of sound depends on the medium: faster in denser/stiffer materials. In air at 20°C, sound travels at approximately 343 m/s. The frequency (f), wavelength (λ), and speed (v) are related: v = fλ. The intensity of sound (I) is related to its amplitude squared; intensity level in decibels (dB): β = 10 log(I/I₀), where I₀ = 10⁻¹² W/m².
+    passageText: `Sound is a longitudinal mechanical wave characterized by alternating compressions and rarefactions of the medium. The speed of sound depends on the medium: faster in denser/stiffer materials. In air at 20°C, sound travels at approximately 343 m/s. The frequency (f), wavelength (λ), and speed (v) are related: v = fλ. The intensity of sound (I) is related to its amplitude squared; intensity level in decibels (dB): β = 10 log(I/I₀), where I₀ = 10⁻¹² W/m².
 
 The Doppler effect describes the change in observed frequency when the source or observer is in motion relative to the medium. The Doppler equation:
 f_obs = f_source × (v_sound ± v_observer) / (v_sound ∓ v_source)
@@ -412,7 +412,7 @@ The resonance frequency of a closed tube (one closed end) is: fn = nv/(4L), wher
     sectionId: 'chem-phys',
     passageNumber: 9,
     title: 'Amino Acids, Peptides, and Protein Chemistry',
-    text: `Amino acids are the building blocks of proteins. Each amino acid has an amino group (−NH₃⁺ at physiological pH), a carboxyl group (−COO⁻ at physiological pH), a hydrogen, and a side chain (R group), all attached to the α-carbon. Amino acids are zwitterionic at physiological pH (net charge depends on the pKa of ionizable groups).
+    passageText: `Amino acids are the building blocks of proteins. Each amino acid has an amino group (−NH₃⁺ at physiological pH), a carboxyl group (−COO⁻ at physiological pH), a hydrogen, and a side chain (R group), all attached to the α-carbon. Amino acids are zwitterionic at physiological pH (net charge depends on the pKa of ionizable groups).
 
 At pH = pI (isoelectric point), an amino acid has net zero charge and will not migrate in an electric field. The pI can be calculated as the average of the two pKa values flanking the neutral form. For amino acids with ionizable side chains (acidic or basic), the pI calculation requires identifying the two pKa values surrounding the neutral (net-zero) species.
 
@@ -535,7 +535,7 @@ The Edman degradation sequentially removes and identifies N-terminal amino acids
     sectionId: 'chem-phys',
     passageNumber: 10,
     title: 'Nuclear Chemistry and Radioactive Decay',
-    text: `Radioactive decay involves the spontaneous transformation of an unstable nucleus into a more stable configuration with emission of particles and/or electromagnetic radiation. The three major decay types are:
+    passageText: `Radioactive decay involves the spontaneous transformation of an unstable nucleus into a more stable configuration with emission of particles and/or electromagnetic radiation. The three major decay types are:
 
 1. Alpha (α) decay: emission of an α-particle (⁴₂He). The daughter nucleus has atomic number Z−2 and mass number A−4. Alpha particles have low penetrance (stopped by paper); high ionizing ability.
 

@@ -8,7 +8,7 @@ export const cpPassages5_01to05: MCATPassage[] = [
     sectionId: 'chem-phys',
     passageNumber: 1,
     title: 'Acid-Base Chemistry and Buffer Systems',
-    text: `Biological systems rely on buffer systems to maintain stable pH. The carbonic acid/bicarbonate buffer in blood operates by the equilibrium: CO₂(aq) + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻. The Henderson-Hasselbalch equation describes the relationship between pH, pKa, and the ratio of base to acid in a buffer: pH = pKa + log([A⁻]/[HA]).
+    passageText: `Biological systems rely on buffer systems to maintain stable pH. The carbonic acid/bicarbonate buffer in blood operates by the equilibrium: CO₂(aq) + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻. The Henderson-Hasselbalch equation describes the relationship between pH, pKa, and the ratio of base to acid in a buffer: pH = pKa + log([A⁻]/[HA]).
 
 A researcher prepares three buffer solutions using acetic acid (Ka = 1.8 × 10⁻⁵, pKa = 4.74) and sodium acetate:
 
@@ -137,7 +137,7 @@ Titration of a weak acid with a strong base proceeds in stages: before the equiv
     sectionId: 'chem-phys',
     passageNumber: 2,
     title: 'Electrochemistry and Redox Reactions',
-    text: `Electrochemical cells convert chemical energy to electrical energy (galvanic cells) or electrical energy to chemical energy (electrolytic cells). In a galvanic cell, oxidation occurs at the anode (negative electrode) and reduction occurs at the cathode (positive electrode). The cell potential (E°cell) is calculated from standard reduction potentials: E°cell = E°cathode − E°anode.
+    passageText: `Electrochemical cells convert chemical energy to electrical energy (galvanic cells) or electrical energy to chemical energy (electrolytic cells). In a galvanic cell, oxidation occurs at the anode (negative electrode) and reduction occurs at the cathode (positive electrode). The cell potential (E°cell) is calculated from standard reduction potentials: E°cell = E°cathode − E°anode.
 
 Standard reduction potentials at 25°C (selected values):
 | Half-reaction | E° (V) |
@@ -294,7 +294,7 @@ In electrolysis, the minimum voltage required is the reverse of the spontaneous 
     sectionId: 'chem-phys',
     passageNumber: 3,
     title: 'Thermodynamics: Gibbs Free Energy and Equilibrium',
-    text: `The Gibbs free energy (G) determines whether a chemical reaction proceeds spontaneously under constant temperature and pressure. The relationship ΔG = ΔH − TΔS indicates that both enthalpy and entropy changes contribute to spontaneity. A reaction is spontaneous when ΔG < 0.
+    passageText: `The Gibbs free energy (G) determines whether a chemical reaction proceeds spontaneously under constant temperature and pressure. The relationship ΔG = ΔH − TΔS indicates that both enthalpy and entropy changes contribute to spontaneity. A reaction is spontaneous when ΔG < 0.
 
 The standard Gibbs free energy change (ΔG°) is related to the equilibrium constant (Keq) by: ΔG° = −RT ln(Keq), where R = 8.314 J/(mol·K). Under non-standard conditions: ΔG = ΔG° + RT ln(Q). A positive ΔG° (Keq < 1) means products are disfavored at equilibrium; a negative ΔG° (Keq > 1) means products are favored.
 
@@ -420,7 +420,7 @@ The reaction is carried out at standard conditions in an industrial setting usin
     sectionId: 'chem-phys',
     passageNumber: 4,
     title: 'Light, Optics, and Vision',
-    text: `Light exhibits both wave and particle properties. As a wave, light is characterized by its wavelength (λ), frequency (ν), and speed (c = λν ≈ 3 × 10⁸ m/s in vacuum). The electromagnetic spectrum spans radio waves through gamma rays; visible light occupies approximately 400–700 nm.
+    passageText: `Light exhibits both wave and particle properties. As a wave, light is characterized by its wavelength (λ), frequency (ν), and speed (c = λν ≈ 3 × 10⁸ m/s in vacuum). The electromagnetic spectrum spans radio waves through gamma rays; visible light occupies approximately 400–700 nm.
 
 The lens equation relates object distance (do), image distance (di), and focal length (f): 1/do + 1/di = 1/f. Magnification m = −di/do. For a converging (convex) lens: real, inverted images form when the object is beyond the focal point. A virtual, upright, magnified image forms when the object is inside the focal point (as in a magnifying glass).
 
@@ -516,7 +516,7 @@ A thin lens of focal length f has a power P = 1/f (in diopters, D, when f is in 
     sectionId: 'chem-phys',
     passageNumber: 5,
     title: 'Kinetics: Reaction Rates and Rate Laws',
-    text: `Chemical kinetics describes the rates of chemical reactions. The rate of a reaction can be expressed as the change in concentration of reactants or products over time. For the general reaction aA + bB → cC + dD, the rate = k[A]^m[B]^n, where k is the rate constant, and m and n are the reaction orders with respect to A and B (determined experimentally, not from stoichiometry).
+    passageText: `Chemical kinetics describes the rates of chemical reactions. The rate of a reaction can be expressed as the change in concentration of reactants or products over time. For the general reaction aA + bB → cC + dD, the rate = k[A]^m[B]^n, where k is the rate constant, and m and n are the reaction orders with respect to A and B (determined experimentally, not from stoichiometry).
 
 The overall reaction order is m + n. For a first-order reaction: rate = k[A], integrated rate law: ln[A] = ln[A]₀ − kt, half-life t₁/₂ = 0.693/k (independent of initial concentration). For a second-order reaction: rate = k[A]², integrated rate law: 1/[A] = 1/[A]₀ + kt, half-life t₁/₂ = 1/(k[A]₀) (dependent on initial concentration).
 
