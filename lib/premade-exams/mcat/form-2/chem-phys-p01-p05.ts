@@ -493,6 +493,7 @@ log Keq = nE°/0.0592`,
         explanation: 'log Keq = nE°/0.0592 = (2 × 1.10)/0.0592 = 2.20/0.0592 ≈ 37.2. Therefore Keq ≈ 10³⁷·², an enormously large value confirming the reaction strongly favors products (zinc dissolves, copper deposits). Options A and C describe the same numerical result; A is the primary answer without redundant explanation.',
         wrongAnswerExplanations: {
           B: '10²³ would require nE°/0.0592 ≈ 23, implying nE° ≈ 1.36 V. With E°cell = 1.10 V and n = 2, nE° = 2.20, not 1.36.',
+          C: 'The numerical answer (10³⁷) is correct but Choice C is a distractor that restates Choice A with an added explanatory phrase. Both A and C give the same value; A is the unambiguous primary answer.',
           D: 'Keq = 1 (log Keq = 0) would require E° = 0, indicating no net driving force. The large positive E°cell = 1.10 V guarantees a very large Keq.',
         },
         teachingPoint: 'log Keq = nE°/0.0592. For Zn-Cu: log Keq = (2)(1.10)/0.0592 ≈ 37. This huge Keq means the reaction is essentially irreversible under normal conditions — zinc will spontaneously dissolve as copper plates out.',
