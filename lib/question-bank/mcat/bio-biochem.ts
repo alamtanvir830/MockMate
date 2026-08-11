@@ -1,6 +1,8 @@
 import type { MCATQBQuestion } from './types'
+import { bioBiochemQuestions2 } from './bio-biochem-2'
+import { bioBiochemQuestions3 } from './bio-biochem-3'
 
-export const bioBiochemQuestions: MCATQBQuestion[] = [
+const bioBiochemQuestionsBase: MCATQBQuestion[] = [
   // ── Passage 1: Chaperone Proteins and Protein Folding (Q001–Q003) ─────────────
   {
     id: 'mcat-qb-bb-001',
@@ -3487,4 +3489,10 @@ At chromosomal ends, telomeric DNA shortens with each round of replication becau
     teachingPoint: 'Skeletal muscle excitation-contraction coupling: Action potential → T-tubule → DHPR → RyR1 → SR Ca²⁺ release → cytoplasmic [Ca²⁺] rises from ~0.1 μM to ~10 μM → Ca²⁺ binds TnC (TnC has 4 Ca²⁺ binding sites: 2 structural, 2 regulatory) → TnI-actin interaction released → tropomyosin shifts ~35° around actin helix → exposes 7 actin monomers → myosin cross-bridges form. Relaxation: SERCA (SR Ca²⁺-ATPase) pumps Ca²⁺ back into SR → [Ca²⁺] drops → TnI reassociates with actin → tropomyosin returns → inhibition restored. Smooth muscle difference: Ca²⁺-calmodulin → MLCK → phospho-myosin → cross-bridges.',
     relatedTopics: ['Excitation-contraction coupling skeletal', 'Troponin C calcium binding', 'Tropomyosin myosin binding sites', 'T-tubule DHPR RyR1', 'Smooth vs skeletal muscle regulation'],
   },
+]
+
+export const bioBiochemQuestions: MCATQBQuestion[] = [
+  ...bioBiochemQuestionsBase,
+  ...bioBiochemQuestions2,
+  ...bioBiochemQuestions3,
 ]
