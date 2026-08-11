@@ -261,16 +261,17 @@ export const psychSocQuestions2: MCATQBQuestion[] = [
     question: 'Research across cultures has found that the fundamental attribution error is less pronounced in collectivist cultures (e.g., East Asian) compared to individualist cultures (e.g., North American). Which of the following explanations is most consistent with the passage?',
     choices: [
       { label: 'A', text: 'Collectivist cultures have more accurate attribution abilities due to superior education systems' },
-      { label: 'B', text: 'Collectivist cultures show higher consensus in behavior, which Kelley\'s model predicts would lead to stimulus attribution rather than dispositional attribution' },
+      { label: 'B', text: 'In collectivist cultures, situational and contextual explanations for behavior are more salient and normatively appropriate, reducing over-reliance on dispositional explanations' },
       { label: 'C', text: 'The fundamental attribution error is eliminated in collectivist cultures because group membership replaces individual attribution entirely' },
-      { label: 'D', text: 'In collectivist cultures, situational and contextual explanations for behavior are more salient and normatively appropriate, reducing over-reliance on dispositional explanations' },
+      { label: 'D', text: 'Collectivist cultures show higher consensus in behavior, which Kelley\'s model predicts would lead to stimulus attribution rather than dispositional attribution' },
     ],
-    correctAnswer: 'D',
-    explanation: 'Choice D is correct. The passage notes that FAE involves "over-attributing others\' behavior to dispositional factors and under-attributing situational factors." Cultural psychology research shows that individualist cultures emphasize personal agency and dispositional explanation, making dispositional attribution the default. Collectivist cultures emphasize social context, relationships, and situational constraints, making situational explanations more cognitively available and culturally appropriate — reducing FAE. This is consistent with the passage\'s framework where FAE reflects under-weighting situational factors.',
+    correctAnswer: 'B',
+    explanation: 'Choice B is correct. The passage notes that FAE involves "over-attributing others\' behavior to dispositional factors and under-attributing situational factors." Cultural psychology research shows that individualist cultures emphasize personal agency and dispositional explanation, making dispositional attribution the default. Collectivist cultures emphasize social context, relationships, and situational constraints, making situational explanations more cognitively available and culturally appropriate — reducing FAE. This is consistent with the passage\'s framework where FAE reflects under-weighting situational factors.',
     wrongAnswerExplanations: {
       A: 'There is no evidence that educational quality differences account for cultural variation in FAE. The difference is cultural (attribution style), not educational.',
       C: 'FAE is reduced, not eliminated, in collectivist cultures. Attribution of behavior to individual dispositions still occurs; it is just less automatic. Also, group membership replacing individual attribution is not a mechanism described in the passage or consistent with attribution research.',
-          B: 'Higher consensus in a culture would predict stimulus attribution for specific behaviors under Kelley\'s model, but this doesn\'t directly explain reduced FAE across all situations. Cultural salience of situational factors is the more direct explanation.',
+      D: 'Higher consensus in a culture would predict stimulus attribution for specific behaviors under Kelley\'s model, but this doesn\'t directly explain reduced FAE across all situations. Cultural salience of situational factors is the more direct explanation.',
+      
           
     },
     teachingPoint: 'FAE is a Western (individualist) culture phenomenon. Collectivist cultures show reduced FAE because situational context is more cognitively salient and normatively appropriate as an explanation. Cross-cultural variation in attribution style is well-documented and testable on the MCAT.',
@@ -877,15 +878,15 @@ export const psychSocQuestions2: MCATQBQuestion[] = [
     choices: [
       { label: 'A', text: 'Agoraphobia, because the patient avoids public spaces' },
       { label: 'B', text: 'Obsessive-Compulsive Disorder, because the patient has intrusive thoughts about being judged' },
-      { label: 'C', text: 'Panic Disorder, because social situations trigger intense fear' },
-      { label: 'D', text: 'Social Anxiety Disorder (Social Phobia), because intense fear of social situations with avoidance and significant impairment is the defining feature' },
+      { label: 'C', text: 'Social Anxiety Disorder (Social Phobia), because intense fear of social situations with avoidance and significant impairment is the defining feature' },
+      { label: 'D', text: 'Panic Disorder, because social situations trigger intense fear' },
     ],
-    correctAnswer: 'D',
-    explanation: 'Choice D is correct. Social Anxiety Disorder (SAD) is defined by: marked, persistent fear of social situations where the person may be scrutinized by others; fear of humiliation or negative evaluation; situations avoided or endured with intense distress; and impairment lasting ≥6 months. The description matches perfectly. SAD is one of the most common anxiety disorders and often co-occurs with depression.',
+    correctAnswer: 'C',
+    explanation: 'Choice C is correct. Social Anxiety Disorder (SAD) is defined by: marked, persistent fear of social situations where the person may be scrutinized by others; fear of humiliation or negative evaluation; situations avoided or endured with intense distress; and impairment lasting ≥6 months. The description matches perfectly. SAD is one of the most common anxiety disorders and often co-occurs with depression.',
     wrongAnswerExplanations: {
       A: 'Agoraphobia is fear and avoidance of situations where escape might be difficult or help unavailable during a panic attack (e.g., crowds, open spaces, public transportation) — not specifically about social evaluation or humiliation. The defining feature here is fear of negative social evaluation.',
-      C: 'Panic Disorder involves recurrent unexpected panic attacks and persistent worry about future attacks — not specifically focused on social situations or fear of social humiliation. Panic attacks can occur in SAD, but panic disorder is not the primary diagnosis here.',
-          B: 'OCD involves intrusive, unwanted thoughts (obsessions) and repetitive behaviors (compulsions) performed to reduce anxiety. Social anxiety involves situational fear, not the classic OCD cycle of obsession → compulsion → temporary relief.',
+      B: 'OCD involves intrusive, unwanted thoughts (obsessions) and repetitive behaviors (compulsions) performed to reduce anxiety. Social anxiety involves situational fear, not the classic OCD cycle of obsession → compulsion → temporary relief.',
+      D: 'Panic Disorder involves recurrent unexpected panic attacks and persistent worry about future attacks — not specifically focused on social situations or fear of social humiliation. Panic attacks can occur in SAD, but panic disorder is not the primary diagnosis here.',
           
     },
     teachingPoint: 'Social Anxiety Disorder: fear of social scrutiny/humiliation, avoidance, ≥6 months, significant impairment. Distinguish from: shyness (normal), specific phobia (fear of object/situation, not evaluation), agoraphobia (fear of panic in public), and avoidant personality disorder (more pervasive).',
