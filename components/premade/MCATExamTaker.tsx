@@ -98,6 +98,7 @@ interface Props {
 export function MCATExamTaker({ form, initialAttempt }: Props) {
   const flatSections = buildFlat(form)
   const isReview = !!initialAttempt
+  const formNumber = parseInt(form.id.replace('mcat-form-', ''), 10)
 
   const [phase, setPhase] = useState<MCATPhase>(
     isReview ? { tag: 'results' } : { tag: 'welcome' }
@@ -120,6 +121,10 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
   const [aiFeedbackLoading, setAIFeedbackLoading] = useState(false)
   const [aiFeedbackError, setAIFeedbackError] = useState('')
   const [attemptId] = useState(() => uid())
+
+  // Track current phase in a ref so async callbacks can read it without stale closures
+  const phaseRef = useRef(phase)
+  useEffect(() => { phaseRef.current = phase }, [phase])
 
   // ── Timer ────────────────────────────────────────────────────────────────────
   // Wall-clock deadlines prevent timer drift when the browser throttles setInterval
@@ -176,9 +181,7 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
 
   function startTimer() { setTimerActive(true) }
 
-  // Save in-progress state to localStorage after every answer or bookmark change.
-  // This is a localStorage save (not server-side), so it resolves synchronously.
-  // A brief 300ms delay creates a visible "Saving… → Saved" UX without being misleading.
+  // Save in-progress state to localStorage and Supabase after every answer/bookmark change.
   useEffect(() => {
     if (isReview) return
     if (!Object.keys(answers).length && !bookmarks.size) return
@@ -193,9 +196,35 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
       } catch {
         setSaveStatus('error')
       }
+
+      // Fire-and-forget Supabase in-progress save (degrades silently if table missing or unauthenticated)
+      const cur = phaseRef.current
+      const sIdx = (cur.tag === 'question' || cur.tag === 'section_review')
+        ? (cur as { sIdx: number }).sIdx : null
+      const qIdx = cur.tag === 'question' ? (cur as { qIdx: number }).qIdx : null
+      const sectionDeadlines: Record<string, string> = {}
+      sectionDeadlinesRef.current.forEach((d, i) => {
+        if (d !== null) sectionDeadlines[String(i)] = new Date(d).toISOString()
+      })
+      void fetch('/api/mcat/in-progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formNumber,
+          localAttemptId: attemptId,
+          answers: { ...answers },
+          bookmarks: [...bookmarks],
+          currentSectionIdx: sIdx,
+          currentQuestionIdx: qIdx,
+          sectionDeadlineAt: sIdx !== null && sectionDeadlinesRef.current[sIdx] !== null
+            ? new Date(sectionDeadlinesRef.current[sIdx]!).toISOString() : null,
+          sectionDeadlines,
+          contentVersion: 'v1',
+        }),
+      }).catch(() => { /* degrade silently */ })
     }, 300)
     return () => clearTimeout(timer)
-  }, [answers, bookmarks, attemptId, isReview])
+  }, [answers, bookmarks, attemptId, isReview, formNumber])
 
   function goToNextAfterSection(sIdx: number) {
     const sec = form.sections[sIdx]
@@ -289,6 +318,37 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
     setLiveAttempt(newAttempt)
     setPhase({ tag: 'results' })
     fetchAIFeedback(newAttempt)
+
+    // Fire-and-forget Supabase persistence (degrades silently if not authenticated or table missing)
+    void fetch('/api/mcat/save-attempt', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        localAttemptId: attemptId,
+        formNumber,
+        examTitle: form.title,
+        contentVersion: newAttempt.contentVersion,
+        scoringVersion: newAttempt.scoringVersion,
+        completedAt: newAttempt.completedAt,
+        chemPhysScore: newAttempt.chemPhysScore,
+        carsScore: newAttempt.carsScore,
+        bioBiochemScore: newAttempt.bioBiochemScore,
+        psychSocScore: newAttempt.psychSocScore,
+        totalScore: newAttempt.totalScore,
+        chemPhysCorrect: sectionCorrect[0],
+        chemPhysTotal: sectionTotal[0],
+        carsCorrect: sectionCorrect[1],
+        carsTotal: sectionTotal[1],
+        bioBiochemCorrect: sectionCorrect[2],
+        bioBiochemTotal: sectionTotal[2],
+        psychSocCorrect: sectionCorrect[3],
+        psychSocTotal: sectionTotal[3],
+        answers,
+        bookmarks: [...bookmarks],
+      }),
+    }).catch(() => {})
+
+    void fetch(`/api/mcat/in-progress?formNumber=${formNumber}`, { method: 'DELETE' }).catch(() => {})
   }
 
   async function fetchAIFeedback(a: MCATAttempt) {
@@ -308,6 +368,12 @@ export function MCATExamTaker({ form, initialAttempt }: Props) {
         const fb = (await res.json()) as MCATAIFeedback
         setAIFeedback(fb)
         updateMCATAttempt(a.id, { aiFeedback: fb })
+        // Persist AI feedback to Supabase (fire-and-forget)
+        void fetch('/api/mcat/save-attempt', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ localAttemptId: a.id, aiFeedback: fb }),
+        }).catch(() => {})
       }
     } finally {
       setAIFeedbackLoading(false)
