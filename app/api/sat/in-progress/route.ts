@@ -142,8 +142,21 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Forms 6–10: admin or Premium only
-  if (body.formNumber >= 6 && body.formNumber <= 10 && !isAdmin) {
+  // Form 6: admin or Premium always allowed.
+  // Non-premium users may autosave during the active free window.
+  if (body.formNumber === 6 && !isAdmin) {
+    const { satUpgradeUnlocked } = await getEntitlements()
+    if (!satUpgradeUnlocked) {
+      const { canNonPremiumAccessForm6Api } = await import('@/lib/premade-exams/sat/form6-access')
+      const allowed = await canNonPremiumAccessForm6Api(user.id)
+      if (!allowed) {
+        return NextResponse.json({ error: 'SAT Form 6 free access has expired.' }, { status: 403 })
+      }
+    }
+  }
+
+  // Forms 7–10: admin or Premium only
+  if (body.formNumber >= 7 && body.formNumber <= 10 && !isAdmin) {
     const { satUpgradeUnlocked } = await getEntitlements()
     if (!satUpgradeUnlocked) {
       return NextResponse.json(

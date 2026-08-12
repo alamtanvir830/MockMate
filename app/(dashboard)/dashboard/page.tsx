@@ -12,7 +12,7 @@ import { hasSatPremium, isLegacyLifetimeUser } from '@/lib/auth/server'
 import { EmailVerificationBanner } from '@/components/auth/EmailVerificationBanner'
 import { Form3DashboardBanner, Form3CountdownBadge } from '@/components/sat/Form3Countdown'
 import { Form4DashboardBanner, Form4CountdownBadge } from '@/components/sat/Form4Countdown'
-import { Form5DashboardBanner, Form5CountdownBadge } from '@/components/sat/Form5Countdown'
+import { Form6DashboardBanner, Form6CountdownBadge } from '@/components/sat/Form6Countdown'
 import {
   getGlobalForm3Window,
   resolveForm3Access,
@@ -24,10 +24,10 @@ import {
 } from '@/lib/premade-exams/sat/form4-access'
 import type { Form4AttemptStatus } from '@/lib/premade-exams/sat/form4-access'
 import {
-  getForm5FreeWindow,
-  resolveForm5Access,
-} from '@/lib/premade-exams/sat/form5-access'
-import type { Form5AttemptStatus } from '@/lib/premade-exams/sat/form5-access'
+  getForm6FreeWindow,
+  resolveForm6Access,
+} from '@/lib/premade-exams/sat/form6-access'
+import type { Form6AttemptStatus } from '@/lib/premade-exams/sat/form6-access'
 import type { Exam } from '@/types'
 
 type SatCardState =
@@ -206,26 +206,26 @@ export default async function DashboardPage() {
     form4Access.accessSource === 'free-window' &&
     (form4Access.canStart || form4Access.canResume)
 
-  // ── Form 5 free-window state (non-premium, non-admin only) ─────────────
-  const form5FreeWindow = getForm5FreeWindow()
-  let form5InProgressAttemptId: string | null = null
-  let form5InProgressStartedAt: string | null = null
-  let form5AttemptStatus: Form5AttemptStatus = 'none'
+  // ── Form 6 free-window state (non-premium, non-admin only) ─────────────
+  const form6FreeWindow = getForm6FreeWindow()
+  let form6InProgressAttemptId: string | null = null
+  let form6InProgressStartedAt: string | null = null
+  let form6AttemptStatus: Form6AttemptStatus = 'none'
 
-  if (user && !isAdminUser && !hasPremium && form5FreeWindow) {
+  if (user && !isAdminUser && !hasPremium && form6FreeWindow) {
     const now = new Date()
     const windowActive =
-      new Date(form5FreeWindow.startsAt) <= now &&
-      now < new Date(form5FreeWindow.expiresAt)
+      new Date(form6FreeWindow.startsAt) <= now &&
+      now < new Date(form6FreeWindow.expiresAt)
 
     if (windowActive) {
-      const [form5Completed, form5InProgress] = await Promise.all([
+      const [form6Completed, form6InProgress] = await Promise.all([
         supabase
           .from('standardized_exam_attempts')
           .select('local_attempt_id, ai_feedback')
           .eq('user_id', user.id)
           .eq('exam_type', 'SAT')
-          .eq('form_number', 5)
+          .eq('form_number', 6)
           .not('completed_at', 'is', null)
           .order('completed_at', { ascending: false })
           .limit(1)
@@ -234,36 +234,36 @@ export default async function DashboardPage() {
           .from('sat_in_progress_attempts')
           .select('local_attempt_id, started_at')
           .eq('user_id', user.id)
-          .eq('form_number', 5)
+          .eq('form_number', 6)
           .maybeSingle(),
       ])
 
-      const f5row = form5Completed.data as { local_attempt_id: string; ai_feedback: unknown } | null
-      const form5FeedbackRequired = !!(f5row && !f5row.ai_feedback)
-      const form5CompletedAttemptId = f5row?.local_attempt_id ?? null
-      form5InProgressAttemptId = form5InProgress.data?.local_attempt_id ?? null
-      form5InProgressStartedAt = (form5InProgress.data?.started_at as string | undefined) ?? null
+      const f6row = form6Completed.data as { local_attempt_id: string; ai_feedback: unknown } | null
+      const form6FeedbackRequired = !!(f6row && !f6row.ai_feedback)
+      const form6CompletedAttemptId = f6row?.local_attempt_id ?? null
+      form6InProgressAttemptId = form6InProgress.data?.local_attempt_id ?? null
+      form6InProgressStartedAt = (form6InProgress.data?.started_at as string | undefined) ?? null
 
-      form5AttemptStatus =
-        form5FeedbackRequired ? 'feedback-required'
-        : !!form5CompletedAttemptId ? 'completed'
-        : !!form5InProgressAttemptId ? 'in-progress'
+      form6AttemptStatus =
+        form6FeedbackRequired ? 'feedback-required'
+        : !!form6CompletedAttemptId ? 'completed'
+        : !!form6InProgressAttemptId ? 'in-progress'
         : 'none'
     }
   }
 
-  const form5Access = resolveForm5Access({
+  const form6Access = resolveForm6Access({
     isAdmin: isAdminUser,
     isPremium: hasPremium,
-    freeWindow: form5FreeWindow,
-    attemptStatus: form5AttemptStatus,
-    attemptId: form5InProgressAttemptId,
-    inProgressStartedAt: form5InProgressStartedAt,
+    freeWindow: form6FreeWindow,
+    attemptStatus: form6AttemptStatus,
+    attemptId: form6InProgressAttemptId,
+    inProgressStartedAt: form6InProgressStartedAt,
   })
 
-  const showForm5Banner = !isAdminUser && !hasPremium &&
-    form5Access.accessSource === 'free-window' &&
-    (form5Access.canStart || form5Access.canResume)
+  const showForm6Banner = !isAdminUser && !hasPremium &&
+    form6Access.accessSource === 'free-window' &&
+    (form6Access.canStart || form6Access.canResume)
 
   // Owned exams
   const { data: exams } = await supabase
@@ -317,17 +317,17 @@ export default async function DashboardPage() {
         <EmailVerificationBanner email={user.email} />
       )}
 
-      {/* Top banner — Form 5 free-window active (most urgent current promo) */}
-      {user && showForm5Banner && (
-        <Form5DashboardBanner
-          expiresAt={form5Access.freeWindowExpiresAt!}
-          actionHref="/premade/sat/form-5"
-          actionLabel="Take Form 5 Free"
+      {/* Top banner — Form 6 free-window active (most urgent current promo) */}
+      {user && showForm6Banner && (
+        <Form6DashboardBanner
+          expiresAt={form6Access.freeWindowExpiresAt!}
+          actionHref="/premade/sat/form-6"
+          actionLabel="Take Form 6 Free"
         />
       )}
 
       {/* Top banner — Form 4 free-window active (shown above Form 3 — more urgent) */}
-      {user && showForm4Banner && !showForm5Banner && (
+      {user && showForm4Banner && !showForm6Banner && (
         <Form4DashboardBanner
           expiresAt={form4Access.freeWindowExpiresAt!}
           actionHref="/premade/sat"
@@ -336,7 +336,7 @@ export default async function DashboardPage() {
       )}
 
       {/* Top banner — Form 3 free access (active window) */}
-      {user && showForm3Banner && form3Action && form3Access.accessSource === 'free-window' && (
+      {user && showForm3Banner && form3Action && !showForm6Banner && form3Access.accessSource === 'free-window' && (
         <Form3DashboardBanner
           expiresAt={form3Access.freeWindowExpiresAt!}
           actionHref={form3Action.href}
@@ -345,7 +345,7 @@ export default async function DashboardPage() {
       )}
 
       {/* Top banner — Form 3 valid ongoing attempt (window expired but exam started/completed) */}
-      {user && showForm3Banner && form3Action && form3Access.accessSource !== 'free-window' && (() => {
+      {user && showForm3Banner && form3Action && !showForm6Banner && form3Access.accessSource !== 'free-window' && (() => {
         const isResult = form3Access.canViewResult
         const isFeedback = form3Access.canCompleteFeedback
         const bannerClass = isResult
@@ -392,7 +392,7 @@ export default async function DashboardPage() {
       })()}
 
       {/* SAT Premium upsell banner — only when no promo access is active */}
-      {user && !isAdminUser && !hasPremium && !showForm3Banner && !showForm4Banner && !showForm5Banner && (
+      {user && !isAdminUser && !hasPremium && !showForm3Banner && !showForm4Banner && !showForm6Banner && (
         <div className="rounded-xl bg-amber-50 border border-amber-200 p-5">
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div className="min-w-0">
@@ -462,14 +462,14 @@ export default async function DashboardPage() {
 
           {/* SAT card */}
           <div className={`rounded-xl border-2 bg-white p-5 flex flex-col gap-3 shadow-sm ${
-            showForm5Banner ? 'border-brand-200 shadow-brand-50' :
+            showForm6Banner ? 'border-brand-200 shadow-brand-50' :
             showForm3Banner ? 'border-amber-200 shadow-amber-50' :
             showForm4Banner ? 'border-brand-200 shadow-brand-50' :
             'border-blue-200 shadow-blue-50'
           }`}>
             <div className="flex items-start justify-between gap-3">
               <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
-                showForm5Banner ? 'bg-brand-100 text-brand-600' :
+                showForm6Banner ? 'bg-brand-100 text-brand-600' :
                 showForm3Banner ? 'bg-amber-100 text-amber-600' :
                 showForm4Banner ? 'bg-brand-100 text-brand-600' :
                 'bg-blue-100 text-blue-600'
@@ -487,16 +487,16 @@ export default async function DashboardPage() {
                     {isLegacyLifetime ? 'Lifetime' : 'Premium'}
                   </span>
                 )}
-                {satCardState.tag === 'default' && !showForm3Banner && !showForm4Banner && (
+                {satCardState.tag === 'default' && !showForm3Banner && !showForm4Banner && !showForm6Banner && (
                   <span className="inline-flex items-center rounded-full bg-blue-50 border border-blue-200 px-2 py-0.5 text-xs font-medium text-blue-600">Pre-made</span>
                 )}
-                {showForm5Banner && (
-                  <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-xs font-semibold text-brand-700">Form 5 Free</span>
+                {showForm6Banner && (
+                  <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-xs font-semibold text-brand-700">Form 6 Free</span>
                 )}
-                {showForm3Banner && (
+                {showForm3Banner && !showForm6Banner && (
                   <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-xs font-semibold text-amber-700">Form 3 Free</span>
                 )}
-                {showForm4Banner && !showForm5Banner && (
+                {showForm4Banner && !showForm6Banner && (
                   <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-xs font-semibold text-brand-700">Form 4 Free</span>
                 )}
               </div>
@@ -527,38 +527,38 @@ export default async function DashboardPage() {
                     : 'SAT Form 3 is free during your active 48-hour access window.'}
                 </p>
               )}
-              {satCardState.tag === 'default' && showForm5Banner && (
+              {satCardState.tag === 'default' && showForm6Banner && (
                 <p className="mt-1 text-xs text-brand-600 font-medium">
-                  {form5Access.canResume
-                    ? 'Resume your Form 5 exam before the free window closes.'
-                    : 'SAT Form 5 is free for 48 hours — start before the window closes.'}
+                  {form6Access.canResume
+                    ? 'Resume your Form 6 exam before the free window closes.'
+                    : 'SAT Form 6 is free for 72 hours — start before the window closes.'}
                 </p>
               )}
-              {satCardState.tag === 'default' && showForm4Banner && !showForm3Banner && !showForm5Banner && (
+              {satCardState.tag === 'default' && showForm4Banner && !showForm3Banner && !showForm6Banner && (
                 <p className="mt-1 text-xs text-brand-600 font-medium">
                   {form4Access.canResume
                     ? 'Resume your Form 4 exam before the free window closes.'
                     : 'SAT Form 4 is free for 72 hours — start before the window closes.'}
                 </p>
               )}
-              {satCardState.tag === 'default' && !showForm3Banner && !showForm4Banner && !showForm5Banner && (
+              {satCardState.tag === 'default' && !showForm3Banner && !showForm4Banner && !showForm6Banner && (
                 <p className="mt-1 text-xs text-slate-500">
                   Get SAT Premium to unlock all 10 full-length adaptive SAT exam forms.
                 </p>
               )}
 
               {/* Compact countdown badge inside the card — only when window is active */}
-              {showForm5Banner && form5Access.freeWindowExpiresAt && (
+              {showForm6Banner && form6Access.freeWindowExpiresAt && (
                 <div className="mt-2">
-                  <Form5CountdownBadge expiresAt={form5Access.freeWindowExpiresAt} />
+                  <Form6CountdownBadge expiresAt={form6Access.freeWindowExpiresAt} />
                 </div>
               )}
-              {showForm3Banner && form3Access.accessSource === 'free-window' && form3Access.freeWindowExpiresAt && (
+              {showForm3Banner && !showForm6Banner && form3Access.accessSource === 'free-window' && form3Access.freeWindowExpiresAt && (
                 <div className="mt-2">
                   <Form3CountdownBadge expiresAt={form3Access.freeWindowExpiresAt} />
                 </div>
               )}
-              {showForm4Banner && !showForm5Banner && form4Access.freeWindowExpiresAt && (
+              {showForm4Banner && !showForm6Banner && form4Access.freeWindowExpiresAt && (
                 <div className="mt-2">
                   <Form4CountdownBadge expiresAt={form4Access.freeWindowExpiresAt} />
                 </div>
@@ -569,9 +569,9 @@ export default async function DashboardPage() {
             </div>
 
             {/* SAT card action button */}
-            <Link href={showForm5Banner ? '/premade/sat/form-5' : '/premade/sat'}>
+            <Link href={showForm6Banner ? '/premade/sat/form-6' : '/premade/sat'}>
               <button className={`w-full rounded-lg text-white text-sm font-bold px-4 py-2.5 transition-colors min-h-[44px] ${
-                showForm5Banner
+                showForm6Banner
                   ? 'bg-brand-600 hover:bg-brand-700'
                   : showForm3Banner
                   ? 'bg-amber-500 hover:bg-amber-600'
@@ -579,7 +579,7 @@ export default async function DashboardPage() {
                   ? 'bg-brand-500 hover:bg-brand-600'
                   : 'bg-blue-600 hover:bg-blue-700'
               }`}>
-                {showForm5Banner ? 'Take Form 5 Free' : 'View All 10 Exam Forms'}
+                {showForm6Banner ? 'Take Form 6 Free' : 'View All 10 Exam Forms'}
               </button>
             </Link>
           </div>
