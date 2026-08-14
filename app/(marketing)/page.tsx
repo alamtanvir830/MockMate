@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Fraunces } from 'next/font/google'
 import { Logo } from '@/components/shared/logo'
@@ -6,6 +7,29 @@ import { HeroReviewsPanel } from '@/components/landing/StudentReviews'
 import { SocialProofCard } from '@/components/landing/SocialProofCard'
 import { TabletShowcase } from '@/components/landing/IPadShowcase'
 import { createClient } from '@/lib/supabase/server'
+
+export const metadata: Metadata = {
+  title: 'Digital SAT Prep: 10 Practice Tests + 1,000+ Questions | MockMate',
+  description:
+    'Take a free full-length Digital SAT practice test, then sharpen weak skills with 1,000+ targeted question bank questions and Academy lessons — all in one affordable platform.',
+  alternates: { canonical: 'https://www.mockmateapp.com/' },
+  openGraph: {
+    title: 'Digital SAT Prep: 10 Practice Tests + 1,000+ Questions | MockMate',
+    description:
+      'Take a free full-length Digital SAT practice test, then sharpen weak skills with 1,000+ targeted question bank questions and Academy lessons — all in one affordable platform.',
+    url: 'https://www.mockmateapp.com/',
+    siteName: 'MockMate',
+    images: [{ url: 'https://www.mockmateapp.com/opengraph-image', width: 1200, height: 630 }],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Digital SAT Prep: 10 Practice Tests + 1,000+ Questions | MockMate',
+    description:
+      'Take a free full-length Digital SAT practice test, then sharpen weak skills with 1,000+ targeted question bank questions and Academy lessons — all in one affordable platform.',
+    images: ['https://www.mockmateapp.com/opengraph-image'],
+  },
+}
 
 const fraunces = Fraunces({
   subsets: ['latin'],

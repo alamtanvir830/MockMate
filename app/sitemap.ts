@@ -5,8 +5,6 @@ const NEW_PAGE_DATE = '2026-07-30T00:00:00Z'
 const SEO_UPDATE_DATE = '2026-08-14T00:00:00Z'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const homeLastModified = new Date().toISOString()
-
   const updatedPages: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }> = [
     { path: '/digital-sat-prep', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/sat-practice-test', priority: 0.9, changeFrequency: 'monthly' },
@@ -39,7 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: `${BASE}/`,
-      lastModified: homeLastModified,
+      lastModified: SEO_UPDATE_DATE,
       changeFrequency: 'weekly',
       priority: 1,
     },
