@@ -9,14 +9,14 @@ import { TabletShowcase } from '@/components/landing/IPadShowcase'
 import { createClient } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
-  title: 'Digital SAT Prep: 10 Practice Tests + 1,000+ Questions | MockMate',
+  title: { absolute: 'Your Standardized Exam Hub for Affordable Test Prep | MockMate' },
   description:
-    'Take a free full-length Digital SAT practice test, then sharpen weak skills with 1,000+ targeted question bank questions and Academy lessons — all in one affordable platform.',
+    'Affordable standardized-test prep with realistic practice exams, targeted question banks, detailed explanations, and performance insights.',
   alternates: { canonical: 'https://www.mockmateapp.com/' },
   openGraph: {
-    title: 'Digital SAT Prep: 10 Practice Tests + 1,000+ Questions | MockMate',
+    title: 'Your Standardized Exam Hub for Affordable Test Prep | MockMate',
     description:
-      'Take a free full-length Digital SAT practice test, then sharpen weak skills with 1,000+ targeted question bank questions and Academy lessons — all in one affordable platform.',
+      'Affordable standardized-test prep with realistic practice exams, targeted question banks, detailed explanations, and performance insights.',
     url: 'https://www.mockmateapp.com/',
     siteName: 'MockMate',
     images: [{ url: 'https://www.mockmateapp.com/opengraph-image', width: 1200, height: 630 }],
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Digital SAT Prep: 10 Practice Tests + 1,000+ Questions | MockMate',
+    title: 'Your Standardized Exam Hub for Affordable Test Prep | MockMate',
     description:
-      'Take a free full-length Digital SAT practice test, then sharpen weak skills with 1,000+ targeted question bank questions and Academy lessons — all in one affordable platform.',
+      'Affordable standardized-test prep with realistic practice exams, targeted question banks, detailed explanations, and performance insights.',
     images: ['https://www.mockmateapp.com/opengraph-image'],
   },
 }
