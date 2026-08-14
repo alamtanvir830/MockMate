@@ -128,8 +128,9 @@ describe('SAT workspace regression', () => {
     expect(SAT_NAV_HREFS).toContain('/premade/sat')
   })
 
-  it('test 25: SAT_NAV_HREFS contains /question-bank', () => {
-    expect(SAT_NAV_HREFS).toContain('/question-bank')
+  it('test 25: SAT_NAV_HREFS contains /question-bank/sat (direct SAT QB link)', () => {
+    expect(SAT_NAV_HREFS).toContain('/question-bank/sat')
+    expect(SAT_NAV_HREFS).not.toContain('/question-bank')
   })
 
   it('test 26: SAT_NAV_HREFS contains /sat-rw-academy and /sat-math-academy', () => {

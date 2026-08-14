@@ -48,7 +48,7 @@ const SAT_NAV_ITEMS: MobileNavItem[] = [
   { href: '/premade/sat', label: 'SAT Exam Forms' },
   { href: '/sat-rw-academy', label: 'SAT R&W Academy' },
   { href: '/sat-math-academy', label: 'SAT Math Academy' },
-  { href: '/question-bank', label: 'Question Bank' },
+  { href: '/question-bank/sat', label: 'Question Bank' },
   { href: '/exams', label: 'Exam History' },
   { href: '/performance', label: 'Performance' },
   { href: '/notes', label: 'Personal Notes' },

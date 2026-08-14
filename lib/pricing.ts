@@ -74,8 +74,8 @@ export const SAT_PREMIUM_PLAN_CARDS: SatPremiumPlanDisplay[] = [
 ]
 
 export const SAT_PREMIUM_CARD_FEATURES: string[] = [
-  'SAT Exam Forms 1–5',
-  '700+ question bank',
+  '10 Full-Length SAT Practice Exams',
+  '1,000+ Question Bank Questions',
   'SAT Reading & Writing Academy',
   'SAT Math & Desmos Academy',
   'Personalized score reports',

@@ -85,7 +85,7 @@ export function PremiumPlans({
           {isMonthlySubscriber ? 'Your plan' : 'Choose your plan'}
         </h2>
         <p className="text-[14px] text-slate-500 mt-2 max-w-xl mx-auto">
-          Unlock SAT Forms 1–5, the 700+ question bank, both SAT Academies, and personalized score reports.
+          Unlock 10 full-length SAT practice exams, the 1,000+ question bank, both SAT Academies, and personalized score reports.
         </p>
       </div>
 

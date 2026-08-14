@@ -412,7 +412,7 @@ const badges: Array<{ label: string; href: string; icon: React.ReactNode }> = [
     ),
   },
   {
-    label: 'SAT Forms 1–5',
+    label: '10 Full-Length SAT Practice Exams',
     href: '/sat-practice-test',
     icon: (
       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

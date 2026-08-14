@@ -7,8 +7,8 @@ export interface SATFeature {
 export const SAT_PREMIUM_FEATURES: SATFeature[] = [
   {
     id: 'sat-forms',
-    title: 'SAT Practice Test Forms 1–5',
-    description: 'Full-length computer-adaptive SAT practice exams with detailed score feedback.',
+    title: '10 Full-Length SAT Practice Exams',
+    description: 'Practice with 10 full-length computer-adaptive SAT exams with detailed score feedback.',
   },
   {
     id: 'rw-academy',
@@ -24,9 +24,9 @@ export const SAT_PREMIUM_FEATURES: SATFeature[] = [
   },
   {
     id: 'question-bank',
-    title: 'SAT Question Bank Access',
+    title: '1,000+ SAT Question Bank Questions',
     description:
-      'Practice 700+ targeted Reading, Writing, and Math questions with personalized sets based on your weak areas.',
+      'Practice 1,000+ targeted Reading, Writing, and Math questions with personalized sets based on your weak areas.',
   },
   {
     id: 'score-reports',

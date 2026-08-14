@@ -151,7 +151,8 @@ describe('SAT nav items', () => {
   })
 
   it('test 29: SAT nav contains expected direct destinations', () => {
-    expect(SAT_NAV_HREFS).toContain('/question-bank')
+    expect(SAT_NAV_HREFS).toContain('/question-bank/sat')
+    expect(SAT_NAV_HREFS).not.toContain('/question-bank')
     expect(SAT_NAV_HREFS).toContain('/sat-rw-academy')
     expect(SAT_NAV_HREFS).toContain('/sat-math-academy')
     expect(SAT_NAV_HREFS).toContain('/dashboard')
@@ -163,6 +164,7 @@ describe('Classroom nav items', () => {
     expect(CLASSROOM_NAV_HREFS).not.toContain('/premade/sat')
     expect(CLASSROOM_NAV_HREFS).not.toContain('/premade')
     expect(CLASSROOM_NAV_HREFS).not.toContain('/question-bank')
+    expect(CLASSROOM_NAV_HREFS).not.toContain('/question-bank/sat')
     expect(CLASSROOM_NAV_HREFS).not.toContain('/sat-rw-academy')
     expect(CLASSROOM_NAV_HREFS).not.toContain('/sat-math-academy')
     expect(CLASSROOM_NAV_HREFS).not.toContain('/billing')

@@ -139,7 +139,7 @@ const SAT_NAV_ITEMS: NavItem[] = [
   { href: '/premade/sat', label: 'SAT Exam Forms', icon: ICON_EXAM_FORMS },
   { href: '/sat-rw-academy', label: 'SAT R&W Academy', inactiveClass: 'text-emerald-700 hover:bg-slate-100 hover:text-emerald-900', inactiveIconClass: 'text-emerald-600', icon: ICON_RW_ACADEMY },
   { href: '/sat-math-academy', label: 'SAT Math Academy', inactiveClass: 'text-violet-700 hover:bg-slate-100 hover:text-violet-900', inactiveIconClass: 'text-violet-600', icon: ICON_MATH_ACADEMY },
-  { href: '/question-bank', label: 'Question Bank', inactiveClass: 'text-red-800 hover:bg-slate-100 hover:text-red-900', inactiveIconClass: 'text-red-700', icon: ICON_QUESTION_BANK },
+  { href: '/question-bank/sat', label: 'Question Bank', inactiveClass: 'text-red-800 hover:bg-slate-100 hover:text-red-900', inactiveIconClass: 'text-red-700', icon: ICON_QUESTION_BANK },
   { href: '/exams', label: 'Exam History', icon: ICON_HISTORY },
   { href: '/performance', label: 'Performance', icon: ICON_PERFORMANCE },
   { href: '/notes', label: 'Personal Notes', icon: ICON_NOTES },

@@ -8,7 +8,7 @@ export const SAT_NAV_HREFS = [
   '/premade/sat',
   '/sat-rw-academy',
   '/sat-math-academy',
-  '/question-bank',
+  '/question-bank/sat',
   '/exams',
   '/performance',
   '/notes',
@@ -113,6 +113,11 @@ export function isNavItemActive(href: string, pathname: string, exact?: boolean)
   if (href === '/classroom/dashboard') return pathname.startsWith('/classroom')
   if (href === '/mcat/dashboard') return pathname.startsWith('/mcat')
   if (href === '/question-bank/mcat') return pathname.startsWith('/question-bank/mcat')
+  if (href === '/question-bank/sat') {
+    return pathname.startsWith('/question-bank/sat') ||
+      (pathname === '/question-bank') ||
+      (pathname.startsWith('/question-bank/') && !pathname.startsWith('/question-bank/mcat') && !pathname.startsWith('/question-bank/history'))
+  }
   if (href === '/question-bank') {
     return pathname === '/question-bank' ||
       (pathname.startsWith('/question-bank/') && !pathname.startsWith('/question-bank/mcat'))

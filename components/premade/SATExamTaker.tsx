@@ -2254,8 +2254,8 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
     }
 
     const SAT_PREMIUM_FEATURES = [
-      'SAT Exam Forms 1–5',
-      '700+ question bank',
+      '10 Full-Length SAT Practice Exams',
+      '1,000+ Question Bank Questions',
       'SAT Reading & Writing Academy',
       'SAT Math & Desmos Academy',
       'Unlimited access while subscribed',
@@ -2815,7 +2815,7 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
                       <span className="text-[10px] font-bold text-brand-200 uppercase tracking-widest">SAT PREMIUM</span>
                       <p className="text-white font-bold text-[14px] mt-0.5 mb-1 leading-snug">Personalized Practice Path</p>
                       <p className="text-brand-200 text-[11px] leading-snug">
-                        Targeted sets from MockMate&apos;s 700+ SAT Question Bank based on the skills you missed on this exam.
+                        Targeted sets from MockMate&apos;s 1,000+ SAT Question Bank based on the skills you missed on this exam.
                       </p>
                     </div>
                     {satUpgradeUnlocked || isAdmin ? (
@@ -2839,7 +2839,7 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
                 <div className="mt-3 bg-brand-50 border border-brand-100 rounded-lg p-4 space-y-1.5">
                   <p className="text-[11px] font-bold text-brand-700 uppercase tracking-widest">What is the Personalized Practice Path?</p>
                   <p className="text-[12px] text-brand-900 leading-relaxed">
-                    Your Personalized Practice Path pulls targeted sets from MockMate&apos;s 700+ SAT Question Bank based on the skills you missed on this exam. It targets your weaknesses — not random topics — so every practice question counts.
+                    Your Personalized Practice Path pulls targeted sets from MockMate&apos;s 1,000+ SAT Question Bank based on the skills you missed on this exam. It targets your weaknesses — not random topics — so every practice question counts.
                   </p>
                   <p className="text-[12px] text-brand-800 font-semibold">Scroll down to start your personalized sets.</p>
                 </div>
