@@ -2,16 +2,20 @@ import type { MetadataRoute } from 'next'
 
 const BASE = 'https://www.mockmateapp.com'
 const NEW_PAGE_DATE = '2026-07-30T00:00:00Z'
+const SEO_UPDATE_DATE = '2026-08-14T00:00:00Z'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const homeLastModified = new Date().toISOString()
 
-  const newPages: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }> = [
+  const updatedPages: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }> = [
     { path: '/digital-sat-prep', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/sat-practice-test', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/sat-question-bank', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/sat-reading-writing-academy', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/sat-math-desmos-academy', priority: 0.8, changeFrequency: 'monthly' },
+  ]
+
+  const newPages: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }> = [
     { path: '/sat-score-reports', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/how-mockmate-works', priority: 0.7, changeFrequency: 'monthly' },
     { path: '/how-we-review-sat-content', priority: 0.6, changeFrequency: 'monthly' },
@@ -39,6 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 1,
     },
+    ...updatedPages.map((page) => ({
+      url: `${BASE}${page.path}`,
+      lastModified: SEO_UPDATE_DATE,
+      changeFrequency: page.changeFrequency,
+      priority: page.priority,
+    })),
     ...newPages.map((page) => ({
       url: `${BASE}${page.path}`,
       lastModified: NEW_PAGE_DATE,

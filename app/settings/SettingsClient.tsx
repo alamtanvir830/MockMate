@@ -440,7 +440,7 @@ function BillingSection({
   return (
     <div className="space-y-3">
       <p className="text-[13px] text-slate-600 leading-relaxed">
-        Upgrade to SAT Premium to unlock SAT Forms 1–5, the 1,000+ question bank, the SAT Reading &amp; Writing Academy,
+        Upgrade to SAT Premium to unlock all 10 SAT Practice Exams, the 1,000+ question bank, the SAT Reading &amp; Writing Academy,
         the SAT Math &amp; Desmos Academy, personalized score reports, and full access while subscribed.
       </p>
       <Link

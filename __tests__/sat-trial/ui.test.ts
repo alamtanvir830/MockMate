@@ -143,14 +143,14 @@ describe('SATTrialOffer — handleStartTrial logic', () => {
   // ── 5. Component content verification ───────────────────────────────────────
   it('verifies trial features list is complete', () => {
     const features = [
-      'All 5 SAT Practice Forms (Forms 1–5)',
-      '700+ SAT Question Bank questions',
+      'All 10 SAT Practice Forms (Forms 1–10)',
+      '1,000+ SAT Question Bank questions',
       'SAT R&W Academy & Math Academy',
       'Personalized Practice Path',
     ]
     expect(features).toHaveLength(4)
-    expect(features[0]).toContain('Forms 1–5')
-    expect(features[1]).toContain('700+')
+    expect(features[0]).toContain('Forms 1–10')
+    expect(features[1]).toContain('1,000+')
     expect(features[2]).toContain('Academy')
     expect(features[3]).toContain('Personalized')
   })

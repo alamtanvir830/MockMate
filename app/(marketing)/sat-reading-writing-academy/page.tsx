@@ -8,9 +8,9 @@ import { buildSeoMetadata, SITE_URL } from '@/components/seo/seo-meta'
 const SLUG = '/sat-reading-writing-academy'
 
 export const metadata: Metadata = buildSeoMetadata({
-  title: 'SAT Reading and Writing Course | MockMate Academy',
+  title: 'SAT Reading and Writing Practice | MockMate Academy',
   description:
-    'Study Digital SAT Reading and Writing skills with focused lessons, examples, strategy guidance, and targeted SAT-style practice.',
+    'Practice and improve every Digital SAT Reading and Writing skill — Information and Ideas, Craft and Structure, Expression of Ideas, and Standard English Conventions — with lessons and targeted SAT-style questions.',
   slug: SLUG,
 })
 
@@ -18,10 +18,10 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'SAT Reading and Writing Course',
+    name: 'SAT Reading and Writing Practice',
     url: `${SITE_URL}${SLUG}`,
     description:
-      'Study Digital SAT Reading and Writing skills with focused lessons, examples, strategy guidance, and targeted SAT-style practice.',
+      'Practice and improve every Digital SAT Reading and Writing skill with lessons, strategy guidance, and targeted SAT-style questions.',
   },
   {
     '@context': 'https://schema.org',

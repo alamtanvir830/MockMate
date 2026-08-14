@@ -57,7 +57,7 @@ export default function SatQuestionBankPage() {
       <JsonLd data={jsonLd} />
 
       <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-        Practice SAT Math and Reading and Writing Questions
+        SAT Question Bank: 1,000+ Practice Questions
       </h1>
       <p className="mt-4 max-w-3xl text-lg text-slate-600">
         The MockMate question bank lets you practice by domain, skill, and difficulty

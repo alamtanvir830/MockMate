@@ -581,7 +581,7 @@ function buildPathItems(
     id: 'sat-full-exam', type: 'full_exam', rowNum: 8,
     title: 'Take a Full-Length SAT Exam',
     description: 'Apply your math progress in a full-length computer-adaptive SAT-style exam that also includes Reading and Writing.',
-    details: 'Choose SAT Forms 1–5 · Math + Reading & Writing · MockMate estimated SAT score',
+    details: 'Choose SAT Forms 1–10 · Math + Reading & Writing · MockMate estimated SAT score',
     category: 'Full SAT Exam', categoryBadgeClass: FULL_SAT_BADGE_CLASS,
     status: satStatus, statusLabel: satStatusLabel, statusBadgeClass: satStatusBadgeClass,
     lockReason: satLockReason,

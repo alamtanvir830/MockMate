@@ -8,7 +8,7 @@ import { buildSeoMetadata, SITE_URL } from '@/components/seo/seo-meta'
 const SLUG = '/digital-sat-prep'
 
 export const metadata: Metadata = buildSeoMetadata({
-  title: 'Digital SAT Prep: Practice Tests, Courses & Questions | MockMate',
+  title: 'Digital SAT Prep: Practice Tests, Question Bank & Courses | MockMate',
   description:
     'Prepare for the Digital SAT with adaptive SAT-style practice tests, targeted questions, Reading and Writing lessons, Math and Desmos lessons, and detailed score reports.',
   slug: SLUG,
@@ -19,6 +19,7 @@ const jsonLd = [
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     name: 'Digital SAT Prep',
+    alternateName: 'Digital SAT Preparation',
     description:
       'Prepare for the Digital SAT with adaptive SAT-style practice tests, targeted questions, Reading and Writing lessons, Math and Desmos lessons, and detailed score reports.',
     url: `${SITE_URL}${SLUG}`,
@@ -82,11 +83,11 @@ export default function DigitalSatPrepPage() {
 
       <Section title="Full-Length SAT-Style Practice">
         <p>
-          MockMate includes five full-length adaptive SAT-style forms (Form 1 through
-          Form 5). Each form contains 98 questions and runs 134 minutes across two
-          Reading and Writing modules and two Math modules — the same structure you meet
-          on test day. Forms are module-adaptive, so they respond to how you perform
-          rather than serving the same fixed set of questions to everyone.
+          MockMate includes 10 full-length adaptive SAT-style forms (Forms 1 through 10).
+          Each form contains 98 questions and runs 134 minutes across two Reading and
+          Writing modules and two Math modules — the same structure you meet on test day.
+          Forms are module-adaptive, so they respond to how you perform rather than
+          serving the same fixed set of questions to everyone.
         </p>
       </Section>
 
@@ -180,9 +181,9 @@ export default function DigitalSatPrepPage() {
         <p>
           New users get 48-hour free access to Forms 1, 2, and 3 so you can take a full
           practice test before paying anything. Paid plans start at $9.99/month, with a
-          3-month plan at $24.99 and lifetime access at $29.99. Every plan includes SAT
-          Forms 1–5, the 1,000+ question bank, both academies, and personalized score
-          reports.
+          3-month plan at $24.99 and lifetime access at $29.99. Every plan includes all
+          10 SAT Practice Exams, the 1,000+ question bank, both academies, and
+          personalized score reports.
         </p>
         <p>
           <Link href="/pricing" className="font-medium text-emerald-600 hover:text-emerald-700">

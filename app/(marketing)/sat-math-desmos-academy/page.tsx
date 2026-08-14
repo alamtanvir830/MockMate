@@ -8,9 +8,9 @@ import { buildSeoMetadata, SITE_URL } from '@/components/seo/seo-meta'
 const SLUG = '/sat-math-desmos-academy'
 
 export const metadata: Metadata = buildSeoMetadata({
-  title: 'SAT Math and Desmos Course | MockMate Academy',
+  title: 'SAT Math and Desmos Practice | MockMate Academy',
   description:
-    'Prepare for Digital SAT Math with focused Algebra, Advanced Math, data analysis, geometry, and practical Desmos strategies.',
+    'Practice Digital SAT Math across all 21 skills — Algebra, Advanced Math, data analysis, geometry — plus Desmos graphing strategies for the digital calculator on test day.',
   slug: SLUG,
 })
 
@@ -18,10 +18,10 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'SAT Math and Desmos Course',
+    name: 'SAT Math and Desmos Practice',
     url: `${SITE_URL}${SLUG}`,
     description:
-      'Prepare for Digital SAT Math with focused Algebra, Advanced Math, data analysis, geometry, and practical Desmos strategies.',
+      'Practice Digital SAT Math across all 21 skills, plus Desmos graphing strategies for the digital calculator on test day.',
   },
   {
     '@context': 'https://schema.org',
