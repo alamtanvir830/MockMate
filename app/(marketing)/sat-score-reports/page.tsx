@@ -106,7 +106,7 @@ export default function ScoreReportsPage() {
           <li>Retest with another form to confirm improvement.</li>
         </ol>
         <p>
-          <Link href="/sat-question-bank" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
             Practice weak skills in the question bank →
           </Link>
         </p>

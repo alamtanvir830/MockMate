@@ -91,8 +91,8 @@ export default function ReviewPracticeTestArticle() {
       <p className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-4 text-[14px] leading-relaxed text-slate-600">
         <strong className="text-slate-700">Shallow:</strong> &ldquo;I got B. The answer was C.&rdquo;
       </p>
-      <p className="mt-2 rounded-lg border border-emerald-100 bg-emerald-50 p-4 text-[14px] leading-relaxed text-slate-600">
-        <strong className="text-emerald-700">Useful:</strong> &ldquo;Why did B look right to me? What specific clue in the passage or question pointed to C? What concept did I miss or overlook? What step will I do differently next time?&rdquo;
+      <p className="mt-2 rounded-lg border border-brand-100 bg-brand-50 p-4 text-[14px] leading-relaxed text-slate-600">
+        <strong className="text-brand-600">Useful:</strong> &ldquo;Why did B look right to me? What specific clue in the passage or question pointed to C? What concept did I miss or overlook? What step will I do differently next time?&rdquo;
       </p>
       <P>
         Articulating the answer to those four questions out loud or in writing locks the
@@ -125,11 +125,11 @@ export default function ReviewPracticeTestArticle() {
       </P>
       <P>
         MockMate&apos;s{' '}
-        <Link href="/sat-question-bank" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
           question bank
         </Link>{' '}
         groups questions by skill and difficulty, and your{' '}
-        <Link href="/sat-score-reports" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-score-reports" className="font-medium text-brand-500 hover:text-brand-600">
           score report
         </Link>{' '}
         points you straight to your weakest domains. Use the report to name the skill,
@@ -143,12 +143,12 @@ export default function ReviewPracticeTestArticle() {
         Academy lesson first, then return to targeted practice to confirm understanding.
       </P>
       <P>
-        <Link href="/sat-reading-writing-academy" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-reading-writing-academy" className="font-medium text-brand-500 hover:text-brand-600">
           Reading and Writing Academy lessons →
         </Link>
       </P>
       <P>
-        <Link href="/sat-math-desmos-academy" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-math-desmos-academy" className="font-medium text-brand-500 hover:text-brand-600">
           Math and Desmos Academy lessons →
         </Link>
       </P>
@@ -172,17 +172,17 @@ export default function ReviewPracticeTestArticle() {
         <p className="font-semibold text-slate-800">Related</p>
         <ul className="ml-5 list-disc space-y-1 text-slate-700">
           <li>
-            <Link href="/sat-practice-test" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/sat-practice-test" className="font-medium text-brand-500 hover:text-brand-600">
               Take a full-length SAT practice test
             </Link>
           </li>
           <li>
-            <Link href="/resources/how-many-sat-practice-tests" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/resources/how-many-sat-practice-tests" className="font-medium text-brand-500 hover:text-brand-600">
               How many SAT practice tests should you take?
             </Link>
           </li>
           <li>
-            <Link href="/sat-question-bank" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
               Practice your weak skills in the SAT Question Bank
             </Link>
           </li>

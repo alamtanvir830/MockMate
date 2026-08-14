@@ -43,11 +43,11 @@ export default function ContactPage() {
         We read and respond to every message. The fastest way to reach us is email.
       </p>
 
-      <div className="mt-8 rounded-xl border border-emerald-200 bg-emerald-50 p-6">
-        <h2 className="text-sm font-semibold text-emerald-900">Support email</h2>
+      <div className="mt-8 rounded-xl border border-brand-200 bg-brand-50 p-6">
+        <h2 className="text-sm font-semibold text-brand-800">Support email</h2>
         <a
           href={`mailto:${SUPPORT_EMAIL}`}
-          className="mt-1 block text-lg font-bold text-emerald-700 hover:text-emerald-800"
+          className="mt-1 block text-lg font-bold text-brand-600 hover:text-brand-700"
         >
           {SUPPORT_EMAIL}
         </a>
@@ -70,7 +70,7 @@ export default function ContactPage() {
         <p className="mt-3 text-[15px] leading-relaxed text-slate-700">
           If you spot an error in a specific question or explanation, you can report it
           directly while practicing, or email us with the details. Reports feed into our{' '}
-          <Link href="/how-we-review-sat-content" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/how-we-review-sat-content" className="font-medium text-brand-500 hover:text-brand-600">
             content review process
           </Link>
           , and corrections apply to all future attempts.
@@ -80,11 +80,11 @@ export default function ContactPage() {
       <section className="mt-10">
         <h2 className="text-xl font-bold text-slate-900">Helpful links</h2>
         <ul className="mt-3 ml-5 list-disc space-y-1 text-[15px] text-slate-700">
-          <li><Link href="/privacy" className="font-medium text-emerald-600 hover:text-emerald-700">Privacy Policy</Link></li>
-          <li><Link href="/terms" className="font-medium text-emerald-600 hover:text-emerald-700">Terms of Service</Link></li>
-          <li><Link href="/refund-policy" className="font-medium text-emerald-600 hover:text-emerald-700">Refund Policy</Link></li>
-          <li><Link href="/about" className="font-medium text-emerald-600 hover:text-emerald-700">About MockMate</Link></li>
-          <li><Link href="/how-we-review-sat-content" className="font-medium text-emerald-600 hover:text-emerald-700">How We Review Content</Link></li>
+          <li><Link href="/privacy" className="font-medium text-brand-500 hover:text-brand-600">Privacy Policy</Link></li>
+          <li><Link href="/terms" className="font-medium text-brand-500 hover:text-brand-600">Terms of Service</Link></li>
+          <li><Link href="/refund-policy" className="font-medium text-brand-500 hover:text-brand-600">Refund Policy</Link></li>
+          <li><Link href="/about" className="font-medium text-brand-500 hover:text-brand-600">About MockMate</Link></li>
+          <li><Link href="/how-we-review-sat-content" className="font-medium text-brand-500 hover:text-brand-600">How We Review Content</Link></li>
         </ul>
       </section>
 

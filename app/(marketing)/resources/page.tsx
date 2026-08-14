@@ -103,15 +103,15 @@ function ArticleCard({ article }: { article: Article }) {
   return (
     <Link
       href={article.href}
-      className="group rounded-xl border border-slate-200 p-6 transition-colors hover:border-emerald-300 hover:bg-emerald-50/40"
+      className="group rounded-xl border border-slate-200 p-6 transition-colors hover:border-brand-300 hover:bg-brand-50/40"
     >
-      <h3 className="text-lg font-semibold text-slate-900 group-hover:text-emerald-700">
+      <h3 className="text-lg font-semibold text-slate-900 group-hover:text-brand-600">
         {article.title}
       </h3>
       <p className="mt-2 text-[15px] leading-relaxed text-slate-700">
         {article.description}
       </p>
-      <span className="mt-3 inline-block text-sm font-medium text-emerald-600">
+      <span className="mt-3 inline-block text-sm font-medium text-brand-500">
         Read the guide →
       </span>
     </Link>

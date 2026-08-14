@@ -99,11 +99,11 @@ export default function AboutPage() {
       <Section title="How to Contact Us">
         <p>
           Questions, feedback, or billing issues? Email{' '}
-          <a href="mailto:ranvi@mockmateapp.com" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <a href="mailto:ranvi@mockmateapp.com" className="font-medium text-brand-500 hover:text-brand-600">
             ranvi@mockmateapp.com
           </a>{' '}
           or visit our{' '}
-          <Link href="/contact" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/contact" className="font-medium text-brand-500 hover:text-brand-600">
             contact page
           </Link>
           .

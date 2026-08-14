@@ -154,11 +154,11 @@ export default function SatQuestionBankPage() {
 
       <Section title="Explore More">
         <ul className="ml-5 list-disc space-y-1">
-          <li><Link href="/digital-sat-prep" className="font-medium text-emerald-600 hover:text-emerald-700">Digital SAT Prep overview</Link></li>
-          <li><Link href="/sat-practice-test" className="font-medium text-emerald-600 hover:text-emerald-700">SAT Practice Test</Link></li>
-          <li><Link href="/sat-reading-writing-academy" className="font-medium text-emerald-600 hover:text-emerald-700">Reading and Writing Academy</Link></li>
-          <li><Link href="/sat-math-desmos-academy" className="font-medium text-emerald-600 hover:text-emerald-700">Math and Desmos Academy</Link></li>
-          <li><Link href="/pricing" className="font-medium text-emerald-600 hover:text-emerald-700">Pricing</Link></li>
+          <li><Link href="/digital-sat-prep" className="font-medium text-brand-500 hover:text-brand-600">Digital SAT Prep overview</Link></li>
+          <li><Link href="/sat-practice-test" className="font-medium text-brand-500 hover:text-brand-600">SAT Practice Test</Link></li>
+          <li><Link href="/sat-reading-writing-academy" className="font-medium text-brand-500 hover:text-brand-600">Reading and Writing Academy</Link></li>
+          <li><Link href="/sat-math-desmos-academy" className="font-medium text-brand-500 hover:text-brand-600">Math and Desmos Academy</Link></li>
+          <li><Link href="/pricing" className="font-medium text-brand-500 hover:text-brand-600">Pricing</Link></li>
         </ul>
       </Section>
 

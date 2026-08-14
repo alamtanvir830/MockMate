@@ -196,7 +196,7 @@ export default function HowManySatPracticeTestsPage() {
       <ol className="mt-3 ml-5 list-decimal space-y-2 text-[15px] text-slate-700">
         <li>
           Review every error thoroughly.{' '}
-          <Link href="/resources/how-to-review-an-sat-practice-test" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/resources/how-to-review-an-sat-practice-test" className="font-medium text-brand-500 hover:text-brand-600">
             Use a repeatable review method
           </Link>{' '}
           — not just &quot;I got this one wrong.&quot;
@@ -206,7 +206,7 @@ export default function HowManySatPracticeTestsPage() {
         </li>
         <li>
           Do targeted question-bank practice on those specific skills in the{' '}
-          <Link href="/sat-question-bank" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
             SAT Question Bank
           </Link>
           .
@@ -225,17 +225,17 @@ export default function HowManySatPracticeTestsPage() {
         <p className="font-semibold text-slate-800">Related</p>
         <ul className="ml-5 list-disc space-y-1 text-slate-700">
           <li>
-            <Link href="/sat-practice-test" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/sat-practice-test" className="font-medium text-brand-500 hover:text-brand-600">
               Take a full-length SAT practice test
             </Link>
           </li>
           <li>
-            <Link href="/resources/how-to-review-an-sat-practice-test" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/resources/how-to-review-an-sat-practice-test" className="font-medium text-brand-500 hover:text-brand-600">
               How to review an SAT practice test
             </Link>
           </li>
           <li>
-            <Link href="/digital-sat-prep" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/digital-sat-prep" className="font-medium text-brand-500 hover:text-brand-600">
               Digital SAT prep overview
             </Link>
           </li>

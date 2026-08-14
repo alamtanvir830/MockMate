@@ -80,7 +80,7 @@ export default function HowMockMateWorksPage() {
       <ol className="mt-10 space-y-6">
         {STEPS.map((step, i) => (
           <li key={step.title} className="flex gap-4">
-            <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-emerald-600 text-sm font-bold text-white">
+            <span className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-brand-500 text-sm font-bold text-white">
               {i + 1}
             </span>
             <div>
@@ -94,7 +94,7 @@ export default function HowMockMateWorksPage() {
       <div className="mt-10 flex flex-wrap gap-3">
         <Link
           href="/signup?next=/premade/sat"
-          className="rounded-lg bg-emerald-600 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-700"
+          className="rounded-lg bg-brand-500 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-600"
         >
           Start Free Practice Test
         </Link>

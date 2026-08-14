@@ -24,7 +24,7 @@ export function SeoNav() {
           className="text-xl font-bold tracking-tight text-slate-900"
           aria-label="MockMate home"
         >
-          Mock<span className="text-emerald-600">Mate</span>
+          Mock<span className="text-brand-500">Mate</span>
         </Link>
 
         {/* Desktop links */}
@@ -33,14 +33,14 @@ export function SeoNav() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-slate-600 transition-colors hover:text-emerald-600"
+              className="text-sm font-medium text-slate-600 transition-colors hover:text-brand-500"
             >
               {link.label}
             </Link>
           ))}
           <Link
             href="/signup"
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-emerald-700"
+            className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
           >
             Start Free
           </Link>
@@ -98,7 +98,7 @@ export function SeoNav() {
             <Link
               href="/signup"
               onClick={() => setOpen(false)}
-              className="mt-2 rounded-lg bg-emerald-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-emerald-700"
+              className="mt-2 rounded-lg bg-brand-500 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-brand-600"
             >
               Start Free
             </Link>

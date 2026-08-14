@@ -104,7 +104,7 @@ export default function ReadingWritingAcademyPage() {
           skill, then immediately practice it on SAT-style items so the strategy sticks.
         </p>
         <p>
-          <Link href="/sat-question-bank" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
             Practice R&W skills in the question bank →
           </Link>
         </p>
@@ -138,7 +138,7 @@ export default function ReadingWritingAcademyPage() {
           Academy lessons, practice question-bank sets, then retake a form.
         </p>
         <p>
-          <Link href="/how-mockmate-works" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/how-mockmate-works" className="font-medium text-brand-500 hover:text-brand-600">
             See the full study cycle →
           </Link>
         </p>

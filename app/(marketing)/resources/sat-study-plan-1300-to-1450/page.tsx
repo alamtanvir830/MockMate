@@ -63,7 +63,7 @@ export default function StudyPlan1300Article() {
         volume on hard questions specifically. Because the Digital SAT&apos;s harder Module
         2 is where the top score ranges live, your practice should skew toward that
         difficulty. Understanding the{' '}
-        <Link href="/resources/how-digital-sat-adaptive-modules-work" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/resources/how-digital-sat-adaptive-modules-work" className="font-medium text-brand-500 hover:text-brand-600">
           adaptive module structure
         </Link>{' '}
         helps you see why the hardest questions matter most.
@@ -100,11 +100,11 @@ export default function StudyPlan1300Article() {
         Keep taking full-length forms under real timing to build stamina and pacing. Expect
         some variation between forms — a harder form can produce a lower total without
         meaning you regressed. Judge progress by your{' '}
-        <Link href="/sat-score-reports" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-score-reports" className="font-medium text-brand-500 hover:text-brand-600">
           domain and skill breakdown
         </Link>
         , not the raw number on any single test. For more on this, see{' '}
-        <Link href="/resources/why-harder-sat-practice-tests-can-lower-your-score" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/resources/why-harder-sat-practice-tests-can-lower-your-score" className="font-medium text-brand-500 hover:text-brand-600">
           why harder practice tests can lower your score
         </Link>
         .
@@ -113,7 +113,7 @@ export default function StudyPlan1300Article() {
       <H2>Keep practice targeted</H2>
       <P>
         Every full test should feed a short, targeted practice list. Use MockMate&apos;s{' '}
-        <Link href="/sat-question-bank" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
           question bank
         </Link>{' '}
         to drill the exact hard skills your reports flag. At this level, precision practice

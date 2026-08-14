@@ -108,7 +108,7 @@ export default function DesmosArticle() {
       </P>
       <P>
         The best way to build this judgment is practice. MockMate&apos;s{' '}
-        <Link href="/sat-math-desmos-academy" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-math-desmos-academy" className="font-medium text-brand-500 hover:text-brand-600">
           Math and Desmos Academy
         </Link>{' '}
         includes a Desmos sandbox and skill lessons so the tool feels automatic — and so

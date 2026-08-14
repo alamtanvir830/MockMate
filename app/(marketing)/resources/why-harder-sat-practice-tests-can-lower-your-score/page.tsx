@@ -85,7 +85,7 @@ export default function HarderTestsArticle() {
       </P>
       <P>
         MockMate&apos;s{' '}
-        <Link href="/sat-score-reports" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-score-reports" className="font-medium text-brand-500 hover:text-brand-600">
           score reports
         </Link>{' '}
         break performance down by domain and skill so you can see whether a lower total
@@ -102,7 +102,7 @@ export default function HarderTestsArticle() {
       </P>
       <P>
         You can practice specific weak skills in the{' '}
-        <Link href="/sat-question-bank" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
           question bank
         </Link>{' '}
         after every form, closing the exact gaps a harder test exposed.

@@ -186,7 +186,7 @@ export default function MostAccurateSatPracticeTestsPage() {
         carefully and use it to drive focused practice.{' '}
         <Link
           href="/resources/how-to-review-an-sat-practice-test"
-          className="font-medium text-emerald-600 hover:text-emerald-700"
+          className="font-medium text-brand-500 hover:text-brand-600"
         >
           Read the practice-test review guide →
         </Link>
@@ -196,17 +196,17 @@ export default function MostAccurateSatPracticeTestsPage() {
         <p className="font-semibold text-slate-800">Related</p>
         <ul className="ml-5 list-disc space-y-1 text-slate-700">
           <li>
-            <Link href="/sat-practice-test" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/sat-practice-test" className="font-medium text-brand-500 hover:text-brand-600">
               Take a full-length SAT practice test
             </Link>
           </li>
           <li>
-            <Link href="/resources/bluebook-sat-practice-tests" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/resources/bluebook-sat-practice-tests" className="font-medium text-brand-500 hover:text-brand-600">
               How to use Bluebook SAT practice tests effectively
             </Link>
           </li>
           <li>
-            <Link href="/sat-question-bank" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
               Practice SAT skills by domain in the question bank
             </Link>
           </li>

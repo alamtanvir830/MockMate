@@ -152,7 +152,7 @@ export default function MathDesmosAcademyPage() {
           especially the skills your score report flags as weak.
         </p>
         <p>
-          <Link href="/sat-question-bank" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
             Practice Math skills in the question bank →
           </Link>
         </p>

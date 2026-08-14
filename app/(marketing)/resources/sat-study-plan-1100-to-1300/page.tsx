@@ -75,11 +75,11 @@ export default function StudyPlan1100Article() {
       </P>
       <P>
         MockMate&apos;s{' '}
-        <Link href="/sat-reading-writing-academy" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-reading-writing-academy" className="font-medium text-brand-500 hover:text-brand-600">
           Reading and Writing Academy
         </Link>{' '}
         and{' '}
-        <Link href="/sat-math-desmos-academy" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-math-desmos-academy" className="font-medium text-brand-500 hover:text-brand-600">
           Math and Desmos Academy
         </Link>{' '}
         are organized exactly this way, skill by skill.
@@ -88,7 +88,7 @@ export default function StudyPlan1100Article() {
       <H2>Do targeted practice, not random drills</H2>
       <P>
         After each lesson, practice the matching skill in the{' '}
-        <Link href="/sat-question-bank" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
           question bank
         </Link>
         . Targeted sets reinforce what you just learned and build accuracy on your weak
@@ -116,7 +116,7 @@ export default function StudyPlan1100Article() {
       <P>
         Repeat the cycle — diagnose, learn, practice, retest — and your weak domains will
         shrink week by week. For the full workflow, see{' '}
-        <Link href="/how-mockmate-works" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/how-mockmate-works" className="font-medium text-brand-500 hover:text-brand-600">
           how MockMate works
         </Link>
         .

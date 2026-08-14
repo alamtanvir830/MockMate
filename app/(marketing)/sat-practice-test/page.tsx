@@ -68,7 +68,7 @@ export default function SatPracticeTestPage() {
       <div className="mt-6">
         <Link
           href="/signup?next=/premade/sat"
-          className="inline-block rounded-lg bg-emerald-600 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-700"
+          className="inline-block rounded-lg bg-brand-500 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-600"
         >
           Start a Free SAT Practice Test
         </Link>
@@ -91,7 +91,7 @@ export default function SatPracticeTestPage() {
           enough to complete a full practice test before subscribing.
         </p>
         <p>
-          <Link href="/pricing" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/pricing" className="font-medium text-brand-500 hover:text-brand-600">
             Compare plans →
           </Link>
         </p>
@@ -142,7 +142,7 @@ export default function SatPracticeTestPage() {
           where points were lost and where preparation is already strong.
         </p>
         <p>
-          <Link href="/sat-score-reports" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/sat-score-reports" className="font-medium text-brand-500 hover:text-brand-600">
             See how score reports work →
           </Link>
         </p>
@@ -184,17 +184,17 @@ export default function SatPracticeTestPage() {
           <li>Take another full-length form to confirm improvement.</li>
         </ol>
         <p>
-          <Link href="/sat-question-bank" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
             Practice targeted skills in the SAT Question Bank →
           </Link>
         </p>
         <p>
-          <Link href="/sat-reading-writing-academy" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/sat-reading-writing-academy" className="font-medium text-brand-500 hover:text-brand-600">
             Study Reading and Writing skills →
           </Link>
         </p>
         <p>
-          <Link href="/sat-math-desmos-academy" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/sat-math-desmos-academy" className="font-medium text-brand-500 hover:text-brand-600">
             Study Math and Desmos skills →
           </Link>
         </p>
@@ -244,22 +244,22 @@ export default function SatPracticeTestPage() {
       <Section title="Related Guides">
         <ul className="ml-5 list-disc space-y-1">
           <li>
-            <Link href="/resources/most-accurate-sat-practice-tests" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/resources/most-accurate-sat-practice-tests" className="font-medium text-brand-500 hover:text-brand-600">
               Which SAT practice test is most accurate?
             </Link>
           </li>
           <li>
-            <Link href="/resources/bluebook-sat-practice-tests" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/resources/bluebook-sat-practice-tests" className="font-medium text-brand-500 hover:text-brand-600">
               How to use Bluebook SAT practice tests effectively
             </Link>
           </li>
           <li>
-            <Link href="/resources/how-many-sat-practice-tests" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/resources/how-many-sat-practice-tests" className="font-medium text-brand-500 hover:text-brand-600">
               How many SAT practice tests should you take?
             </Link>
           </li>
           <li>
-            <Link href="/resources/how-to-review-an-sat-practice-test" className="font-medium text-emerald-600 hover:text-emerald-700">
+            <Link href="/resources/how-to-review-an-sat-practice-test" className="font-medium text-brand-500 hover:text-brand-600">
               How to review an SAT practice test
             </Link>
           </li>

@@ -69,7 +69,7 @@ export default function DigitalSatPrepPage() {
       <div className="mt-6 flex flex-wrap gap-3">
         <Link
           href="/signup?next=/premade/sat"
-          className="rounded-lg bg-emerald-600 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-700"
+          className="rounded-lg bg-brand-500 px-5 py-3 text-sm font-semibold text-white hover:bg-brand-600"
         >
           Start Free Practice Test
         </Link>
@@ -120,7 +120,7 @@ export default function DigitalSatPrepPage() {
           directly to matching question sets.
         </p>
         <p>
-          <Link href="/sat-reading-writing-academy" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/sat-reading-writing-academy" className="font-medium text-brand-500 hover:text-brand-600">
             Explore the Reading and Writing Academy →
           </Link>
         </p>
@@ -134,7 +134,7 @@ export default function DigitalSatPrepPage() {
           day.
         </p>
         <p>
-          <Link href="/sat-math-desmos-academy" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/sat-math-desmos-academy" className="font-medium text-brand-500 hover:text-brand-600">
             Explore the Math and Desmos Academy →
           </Link>
         </p>
@@ -148,7 +148,7 @@ export default function DigitalSatPrepPage() {
           which need targeted practice.
         </p>
         <p>
-          <Link href="/sat-score-reports" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/sat-score-reports" className="font-medium text-brand-500 hover:text-brand-600">
             See how score reports work →
           </Link>
         </p>
@@ -163,7 +163,7 @@ export default function DigitalSatPrepPage() {
           <li><strong>Retest</strong> — take another form to confirm improvement.</li>
         </ol>
         <p>
-          <Link href="/how-mockmate-works" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/how-mockmate-works" className="font-medium text-brand-500 hover:text-brand-600">
             See the full MockMate study cycle →
           </Link>
         </p>
@@ -186,7 +186,7 @@ export default function DigitalSatPrepPage() {
           personalized score reports.
         </p>
         <p>
-          <Link href="/pricing" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/pricing" className="font-medium text-brand-500 hover:text-brand-600">
             Compare plans →
           </Link>
         </p>

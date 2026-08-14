@@ -101,11 +101,11 @@ export default function AdaptiveModulesArticle() {
       </P>
       <P>
         You can see this in action by taking a{' '}
-        <Link href="/sat-practice-test" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-practice-test" className="font-medium text-brand-500 hover:text-brand-600">
           full-length practice test
         </Link>
         , then reviewing your{' '}
-        <Link href="/sat-score-reports" className="font-medium text-emerald-600 hover:text-emerald-700">
+        <Link href="/sat-score-reports" className="font-medium text-brand-500 hover:text-brand-600">
           score report
         </Link>{' '}
         to see how each module contributed.

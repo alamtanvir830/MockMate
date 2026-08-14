@@ -129,7 +129,7 @@ export default function HowWeReviewContentPage() {
           sees the question next.
         </p>
         <p>
-          <Link href="/contact" className="font-medium text-emerald-600 hover:text-emerald-700">
+          <Link href="/contact" className="font-medium text-brand-500 hover:text-brand-600">
             Report a content issue →
           </Link>
         </p>

@@ -58,7 +58,7 @@ export function SeoFooter() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-sm text-slate-600 transition-colors hover:text-emerald-600"
+                      className="text-sm text-slate-600 transition-colors hover:text-brand-500"
                     >
                       {link.label}
                     </Link>
@@ -74,7 +74,7 @@ export function SeoFooter() {
             Questions or feedback? Email us at{' '}
             <a
               href={`mailto:${SUPPORT_EMAIL}`}
-              className="font-medium text-emerald-600 hover:text-emerald-700"
+              className="font-medium text-brand-500 hover:text-brand-600"
             >
               {SUPPORT_EMAIL}
             </a>
