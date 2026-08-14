@@ -10,7 +10,7 @@ const SLUG = '/sat-practice-test'
 export const metadata: Metadata = buildSeoMetadata({
   title: 'SAT Practice Tests: 10 Full-Length Digital SAT Exams | MockMate',
   description:
-    'Take free, full-length computer-adaptive Digital SAT practice tests. 10 SAT-style exams with instant 400–1600 score reports, detailed domain breakdowns, and worked explanations.',
+    'Take a free full-length Digital SAT practice test, then prepare with 10 SAT-style exams, detailed score reports, domain breakdowns, and worked explanations.',
   slug: SLUG,
 })
 

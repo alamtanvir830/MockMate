@@ -8,7 +8,7 @@ import { buildSeoMetadata, SITE_URL } from '@/components/seo/seo-meta'
 const SLUG = '/sat-question-bank'
 
 export const metadata: Metadata = buildSeoMetadata({
-  title: 'SAT Question Bank: 1,000+ Math and Reading Questions | MockMate',
+  title: 'SAT Question Bank: 1,000+ Math & Reading/Writing Questions | MockMate',
   description:
     'Practice SAT-style Math and Reading and Writing questions by domain, skill, and difficulty with detailed explanations and targeted practice sets.',
   slug: SLUG,
@@ -26,7 +26,7 @@ const jsonLd = [
   {
     '@context': 'https://schema.org',
     '@type': 'Dataset',
-    name: 'MockMate SAT-Style Question Bank',
+    name: 'MockMate SAT Question Bank: Math & Reading/Writing',
     description:
       '1,000+ independently created SAT-style Math and Reading and Writing questions organized by domain, skill, and difficulty, each with a worked explanation.',
     url: `${SITE_URL}${SLUG}`,
