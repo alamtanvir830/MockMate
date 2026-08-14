@@ -11,6 +11,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/sat-question-bank', priority: 0.9, changeFrequency: 'monthly' },
     { path: '/sat-reading-writing-academy', priority: 0.8, changeFrequency: 'monthly' },
     { path: '/sat-math-desmos-academy', priority: 0.8, changeFrequency: 'monthly' },
+    { path: '/resources', priority: 0.7, changeFrequency: 'weekly' },
+    { path: '/resources/most-accurate-sat-practice-tests', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/resources/bluebook-sat-practice-tests', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/resources/how-many-sat-practice-tests', priority: 0.7, changeFrequency: 'monthly' },
   ]
 
   const newPages: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }> = [
@@ -19,7 +23,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/how-we-review-sat-content', priority: 0.6, changeFrequency: 'monthly' },
     { path: '/about', priority: 0.6, changeFrequency: 'monthly' },
     { path: '/contact', priority: 0.5, changeFrequency: 'monthly' },
-    { path: '/resources', priority: 0.7, changeFrequency: 'weekly' },
     { path: '/resources/how-digital-sat-adaptive-modules-work', priority: 0.6, changeFrequency: 'monthly' },
     { path: '/resources/how-to-review-an-sat-practice-test', priority: 0.6, changeFrequency: 'monthly' },
     { path: '/resources/why-harder-sat-practice-tests-can-lower-your-score', priority: 0.6, changeFrequency: 'monthly' },

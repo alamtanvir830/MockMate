@@ -241,6 +241,31 @@ export default function SatPracticeTestPage() {
         </div>
       </Section>
 
+      <Section title="Related Guides">
+        <ul className="ml-5 list-disc space-y-1">
+          <li>
+            <Link href="/resources/most-accurate-sat-practice-tests" className="font-medium text-emerald-600 hover:text-emerald-700">
+              Which SAT practice test is most accurate?
+            </Link>
+          </li>
+          <li>
+            <Link href="/resources/bluebook-sat-practice-tests" className="font-medium text-emerald-600 hover:text-emerald-700">
+              How to use Bluebook SAT practice tests effectively
+            </Link>
+          </li>
+          <li>
+            <Link href="/resources/how-many-sat-practice-tests" className="font-medium text-emerald-600 hover:text-emerald-700">
+              How many SAT practice tests should you take?
+            </Link>
+          </li>
+          <li>
+            <Link href="/resources/how-to-review-an-sat-practice-test" className="font-medium text-emerald-600 hover:text-emerald-700">
+              How to review an SAT practice test
+            </Link>
+          </li>
+        </ul>
+      </Section>
+
       <IndependenceCallout />
     </SeoPageLayout>
   )

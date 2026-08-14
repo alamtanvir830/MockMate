@@ -8,6 +8,7 @@ const NAV_LINKS: Array<{ label: string; href: string }> = [
   { label: 'SAT Practice Test', href: '/sat-practice-test' },
   { label: 'Question Bank', href: '/sat-question-bank' },
   { label: 'Courses', href: '/sat-reading-writing-academy' },
+  { label: 'Resources', href: '/resources' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'About', href: '/about' },
 ]
