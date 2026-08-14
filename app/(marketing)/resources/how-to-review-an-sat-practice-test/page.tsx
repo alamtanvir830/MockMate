@@ -23,6 +23,7 @@ const jsonLd = buildArticleJsonLd({
   description: DESCRIPTION,
   slug: SLUG,
   datePublished: '2026-07-01',
+  dateModified: '2026-08-14',
 })
 
 function P({ children }: { children: React.ReactNode }) {
@@ -40,7 +41,7 @@ export default function ReviewPracticeTestArticle() {
       <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
         {TITLE}
       </h1>
-      <ArticleByline />
+      <ArticleByline published="July 2026" updated="August 14, 2026" />
 
       <P>
         Taking a practice test is the easy part. The score gain comes from the review, and
