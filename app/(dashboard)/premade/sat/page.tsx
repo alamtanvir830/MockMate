@@ -9,6 +9,7 @@ import { Form3CountdownBanner, Form3CountdownBadge } from '@/components/sat/Form
 import { Form4CountdownBanner, Form4CountdownBadge } from '@/components/sat/Form4Countdown'
 import { Form5CountdownBanner, Form5CountdownBadge } from '@/components/sat/Form5Countdown'
 import { Form6CountdownBanner, Form6CountdownBadge } from '@/components/sat/Form6Countdown'
+import { Form7CountdownBanner, Form7CountdownBadge } from '@/components/sat/Form7Countdown'
 import { SatExamDetails } from '@/components/sat/SatExamDetails'
 import {
   getGlobalForm3Window,
@@ -30,6 +31,11 @@ import {
   resolveForm6Access,
 } from '@/lib/premade-exams/sat/form6-access'
 import type { Form6AttemptStatus } from '@/lib/premade-exams/sat/form6-access'
+import {
+  getForm7FreeWindow,
+  resolveForm7Access,
+} from '@/lib/premade-exams/sat/form7-access'
+import type { Form7AttemptStatus } from '@/lib/premade-exams/sat/form7-access'
 
 export const dynamic = 'force-dynamic'
 
@@ -94,8 +100,15 @@ export default async function SATPremadePage() {
   let form6InProgressStartedAt: string | null = null
   let form6FreeWindow = null as ReturnType<typeof getForm6FreeWindow>
 
-  // Forms 7–10 state
+  // Form 7 state
   let form7ResultsAttemptId: string | null = null
+  let form7HasInProgress = false
+  let form7FeedbackRequired = false
+  let form7InProgressAttemptId: string | null = null
+  let form7InProgressStartedAt: string | null = null
+  let form7FreeWindow = null as ReturnType<typeof getForm7FreeWindow>
+
+  // Forms 8–10 state
   let form8ResultsAttemptId: string | null = null
   let form9ResultsAttemptId: string | null = null
   let form10ResultsAttemptId: string | null = null
@@ -191,20 +204,57 @@ export default async function SATPremadePage() {
         .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
     ])
 
-    // Fetch Forms 7–10 completed attempts in a separate parallel batch
-    const [form7Completed, form8Completed, form9Completed, form10Completed] =
-      await Promise.all([7, 8, 9, 10].map(n =>
-        supabase
-          .from('standardized_exam_attempts')
-          .select('local_attempt_id')
-          .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', n)
-          .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle()
-      ))
+    // Fetch Form 7 full state + Forms 8–10 completed attempts in a parallel batch
+    const [
+      form7CompletedRow,
+      form7InProgressRow,
+      form7FeedbackQueryRow,
+      form8CompletedRow,
+      form9CompletedRow,
+      form10CompletedRow,
+    ] = await Promise.all([
+      supabase
+        .from('standardized_exam_attempts')
+        .select('local_attempt_id')
+        .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 7)
+        .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
+      supabase
+        .from('sat_in_progress_attempts')
+        .select('local_attempt_id, started_at').eq('user_id', user.id).eq('form_number', 7).maybeSingle(),
+      supabase
+        .from('standardized_exam_attempts')
+        .select('local_attempt_id, ai_feedback')
+        .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 7)
+        .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
+      supabase
+        .from('standardized_exam_attempts')
+        .select('local_attempt_id')
+        .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 8)
+        .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
+      supabase
+        .from('standardized_exam_attempts')
+        .select('local_attempt_id')
+        .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 9)
+        .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
+      supabase
+        .from('standardized_exam_attempts')
+        .select('local_attempt_id')
+        .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 10)
+        .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
+    ])
 
-    form7ResultsAttemptId  = form7Completed.data?.local_attempt_id  ?? null
-    form8ResultsAttemptId  = form8Completed.data?.local_attempt_id  ?? null
-    form9ResultsAttemptId  = form9Completed.data?.local_attempt_id  ?? null
-    form10ResultsAttemptId = form10Completed.data?.local_attempt_id ?? null
+    form7ResultsAttemptId   = form7CompletedRow.data?.local_attempt_id   ?? null
+    form7HasInProgress      = !!form7InProgressRow.data
+    form7InProgressAttemptId = form7InProgressRow.data?.local_attempt_id ?? null
+    form7InProgressStartedAt = form7InProgressRow.data?.started_at       ?? null
+    form7FreeWindow          = getForm7FreeWindow()
+    const f7row = form7FeedbackQueryRow.data as { local_attempt_id: string; ai_feedback: unknown } | null
+    if (f7row && !f7row.ai_feedback) {
+      form7FeedbackRequired = true
+    }
+    form8ResultsAttemptId  = form8CompletedRow.data?.local_attempt_id  ?? null
+    form9ResultsAttemptId  = form9CompletedRow.data?.local_attempt_id  ?? null
+    form10ResultsAttemptId = form10CompletedRow.data?.local_attempt_id ?? null
 
     form1ResultsAttemptId = form1Completed.data?.local_attempt_id ?? null
     const f1Row = form1AccessRow.data
@@ -333,6 +383,25 @@ export default async function SATPremadePage() {
     inProgressStartedAt: form6InProgressStartedAt,
   })
 
+  const form7Completed = !!form7ResultsAttemptId
+
+  const form7AttemptStatus: Form7AttemptStatus =
+    form7FeedbackRequired ? 'feedback-required'
+    : form7Completed ? 'completed'
+    : form7HasInProgress ? 'in-progress'
+    : 'none'
+
+  const form7AttemptId = form7ResultsAttemptId ?? form7InProgressAttemptId ?? null
+
+  const form7Access = resolveForm7Access({
+    isAdmin,
+    isPremium: satUpgradeUnlocked,
+    freeWindow: form7FreeWindow,
+    attemptStatus: form7AttemptStatus,
+    attemptId: form7AttemptId,
+    inProgressStartedAt: form7InProgressStartedAt,
+  })
+
   return (
     <div className="py-10">
       <div className="flex items-center gap-2 text-sm text-slate-500 mb-6">
@@ -399,6 +468,11 @@ export default async function SATPremadePage() {
       {/* Form 6 global countdown banner */}
       {form6Access.freeWindowExpiresAt && form6Access.accessSource === 'free-window' && (
         <Form6CountdownBanner expiresAt={form6Access.freeWindowExpiresAt} />
+      )}
+
+      {/* Form 7 global countdown banner */}
+      {form7Access.freeWindowExpiresAt && form7Access.accessSource === 'free-window' && (
+        <Form7CountdownBanner expiresAt={form7Access.freeWindowExpiresAt} />
       )}
 
       <ExamHistoryNotice />
@@ -1040,14 +1114,135 @@ export default async function SATPremadePage() {
           </div>
         )}
 
-        {/* ── Forms 7–10 (Premium-only) ─────────────────────────────────── */}
-        {([7, 8, 9, 10] as const).map(n => {
+        {/* ── Form 7 — global 72-hour free window ───────────────────────── */}
+        {form7ResultsAttemptId && form7FeedbackRequired ? (
+          <div className="rounded-xl border border-amber-200 bg-white p-5 flex flex-col">
+            <div className="flex items-start justify-between mb-3">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">7</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Feedback</span>
+            </div>
+            <h2 className="font-semibold text-slate-900 mb-0.5">Form 7</h2>
+            <p className="text-xs text-slate-400">Complete your feedback to unlock full results.</p>
+            <SatExamDetails />
+            <Link href={`/premade/sat/form-7/results/${form7ResultsAttemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
+              Complete Feedback →
+            </Link>
+          </div>
+        ) : form7ResultsAttemptId && !form7FeedbackRequired ? (
+          <div className="rounded-xl border border-emerald-200 bg-white p-5 flex flex-col">
+            <div className="flex items-start justify-between mb-3">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">7</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">Completed</span>
+            </div>
+            <h2 className="font-semibold text-slate-900 mb-0.5">Form 7</h2>
+            <p className="text-xs text-slate-400">You already completed this exam.</p>
+            <SatExamDetails />
+            <Link href={`/premade/sat/form-7/results/${form7ResultsAttemptId}`} className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-xs font-semibold text-white hover:bg-emerald-700 transition-colors">
+              View Results →
+            </Link>
+          </div>
+        ) : form7Access.canResume ? (
+          <Link href="/premade/sat/form-7" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
+            <div className="flex items-start justify-between mb-3">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">7</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">In Progress</span>
+            </div>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 7</h2>
+            <p className="text-xs text-slate-400">Resume where you left off.</p>
+            <SatExamDetails />
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
+              Resume SAT Form 7 →
+            </span>
+          </Link>
+        ) : form7Access.canStart && form7Access.accessSource === 'free-window' ? (
+          <Link href="/premade/sat/form-7" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
+            <div className="flex items-start justify-between mb-2">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">7</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">Free for 72 Hours</span>
+            </div>
+            {form7Access.freeWindowExpiresAt && (
+              <div className="mb-2">
+                <Form7CountdownBadge expiresAt={form7Access.freeWindowExpiresAt} />
+              </div>
+            )}
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 7</h2>
+            <p className="text-[11px] text-brand-700">Available during the free access window.</p>
+            <SatExamDetails />
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-600 transition-colors">
+              Take Form 7 Free →
+            </span>
+          </Link>
+        ) : form7Access.canStart && (isAdmin || satUpgradeUnlocked) ? (
+          <Link href="/premade/sat/form-7" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
+            <div className="flex items-start justify-between mb-3">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">7</span>
+              </div>
+              {isAdmin && <span className="inline-flex items-center rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">Admin</span>}
+            </div>
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 7</h2>
+            <p className="text-xs text-slate-400">{isAdmin ? 'Full access' : 'SAT Premium'}</p>
+            <SatExamDetails />
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
+              Start Exam →
+            </span>
+          </Link>
+        ) : user && !isAdmin && !satUpgradeUnlocked && form7FreeWindow && new Date(form7FreeWindow.startsAt) <= new Date() && new Date() < new Date(form7FreeWindow.expiresAt) && form7AttemptStatus === 'none' ? (
+          // Active free window but no attempt yet — show free window card
+          <Link href="/premade/sat/form-7" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
+            <div className="flex items-start justify-between mb-2">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">7</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">Free for 72 Hours</span>
+            </div>
+            {form7FreeWindow.expiresAt && (
+              <div className="mb-2">
+                <Form7CountdownBadge expiresAt={form7FreeWindow.expiresAt} />
+              </div>
+            )}
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 7</h2>
+            <p className="text-[11px] text-brand-700">Start to begin your 72-hour free access window.</p>
+            <SatExamDetails />
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-600 transition-colors">
+              Take Form 7 Free →
+            </span>
+          </Link>
+        ) : (
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-5 flex flex-col">
+            <div className="flex items-start justify-between mb-3">
+              <div className="h-8 w-8 rounded-lg bg-slate-100 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-slate-400">7</span>
+              </div>
+              <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
+                <PremiumStarIcon />
+                SAT Premium
+              </span>
+            </div>
+            <h2 className="font-semibold text-slate-500 mb-0.5">Form 7</h2>
+            <p className="text-xs text-slate-400">SAT Premium required.</p>
+            <SatExamDetails />
+            <Link href="/billing" className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 text-xs font-semibold text-white hover:bg-amber-600 transition-colors">
+              Get SAT Premium
+            </Link>
+          </div>
+        )}
+
+        {/* ── Forms 8–10 (Premium-only) ─────────────────────────────────── */}
+        {([8, 9, 10] as const).map(n => {
           const resultsAttemptId = [
-            form7ResultsAttemptId,
             form8ResultsAttemptId,
             form9ResultsAttemptId,
             form10ResultsAttemptId,
-          ][n - 7]
+          ][n - 8]
 
           if (resultsAttemptId) {
             return (
