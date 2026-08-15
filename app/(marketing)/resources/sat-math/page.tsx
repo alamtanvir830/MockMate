@@ -4,6 +4,7 @@ import { SeoPageLayout } from '@/components/seo/SeoPageLayout'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { IndependenceCallout } from '@/components/seo/IndependenceCallout'
 import { buildSeoMetadata, SITE_URL } from '@/components/seo/seo-meta'
+import { buildBreadcrumbJsonLd } from '@/components/seo/article-jsonld'
 
 const SLUG = '/resources/sat-math'
 
@@ -45,19 +46,26 @@ const GEO_SKILLS: SkillEntry[] = []
 
 const ALL_LINKED_SKILLS = [...ALGEBRA_SKILLS, ...ADVANCED_MATH_SKILLS]
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: 'SAT Math Skills Hub',
-  url: `${SITE_URL}${SLUG}`,
-  description:
-    'A practical guide to all four Digital SAT Math domains with skill-specific strategy articles and resources.',
-  hasPart: ALL_LINKED_SKILLS.map((s) => ({
-    '@type': 'Article',
-    headline: s.title,
-    url: `${SITE_URL}${s.href}`,
-  })),
-}
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'SAT Math Skills Hub',
+    url: `${SITE_URL}${SLUG}`,
+    description:
+      'A practical guide to all four Digital SAT Math domains with skill-specific strategy articles and resources.',
+    hasPart: ALL_LINKED_SKILLS.map((s) => ({
+      '@type': 'Article',
+      headline: s.title,
+      url: `${SITE_URL}${s.href}`,
+    })),
+  },
+  buildBreadcrumbJsonLd([
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources' },
+    { name: 'SAT Math' },
+  ]),
+]
 
 function SkillCard({ skill }: { skill: SkillEntry }) {
   return (

@@ -23,6 +23,12 @@ const jsonLd = buildArticleJsonLd({
   description: DESCRIPTION,
   slug: SLUG,
   datePublished: '2026-08-15',
+  breadcrumbs: [
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources' },
+    { name: 'SAT Reading & Writing', href: '/resources/sat-reading-writing' },
+    { name: 'Words in Context' },
+  ],
 })
 
 function P({ children }: { children: React.ReactNode }) {

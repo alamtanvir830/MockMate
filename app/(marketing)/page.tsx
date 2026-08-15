@@ -46,6 +46,9 @@ const homepageJsonLd = [
     name: 'MockMate',
     url: SITE_URL,
     logo: `${SITE_URL}/opengraph-image`,
+    description:
+      'MockMate is an independent, affordable standardized test prep platform offering adaptive SAT-style practice exams, a 1,000+ question bank, and focused Reading, Writing, and Math courses.',
+    email: 'ranvi@mockmateapp.com',
   },
   {
     '@context': 'https://schema.org',

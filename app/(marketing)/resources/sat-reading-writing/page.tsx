@@ -4,6 +4,7 @@ import { SeoPageLayout } from '@/components/seo/SeoPageLayout'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { IndependenceCallout } from '@/components/seo/IndependenceCallout'
 import { buildSeoMetadata, SITE_URL } from '@/components/seo/seo-meta'
+import { buildBreadcrumbJsonLd } from '@/components/seo/article-jsonld'
 
 const SLUG = '/resources/sat-reading-writing'
 
@@ -58,24 +59,31 @@ const STANDARD_ENGLISH: SkillEntry[] = [
   },
 ]
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: 'SAT Reading & Writing Skills Hub',
-  url: `${SITE_URL}${SLUG}`,
-  description:
-    'A practical guide to all four SAT Reading & Writing domains with skill-specific strategy articles and resources.',
-  hasPart: [
-    ...INFORMATION_IDEAS,
-    ...CRAFT_STRUCTURE,
-    ...EXPRESSION_IDEAS,
-    ...STANDARD_ENGLISH,
-  ].map((s) => ({
-    '@type': 'Article',
-    headline: s.title,
-    url: `${SITE_URL}${s.href}`,
-  })),
-}
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'SAT Reading & Writing Skills Hub',
+    url: `${SITE_URL}${SLUG}`,
+    description:
+      'A practical guide to all four SAT Reading & Writing domains with skill-specific strategy articles and resources.',
+    hasPart: [
+      ...INFORMATION_IDEAS,
+      ...CRAFT_STRUCTURE,
+      ...EXPRESSION_IDEAS,
+      ...STANDARD_ENGLISH,
+    ].map((s) => ({
+      '@type': 'Article',
+      headline: s.title,
+      url: `${SITE_URL}${s.href}`,
+    })),
+  },
+  buildBreadcrumbJsonLd([
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources' },
+    { name: 'SAT Reading & Writing' },
+  ]),
+]
 
 function SkillCard({ skill }: { skill: SkillEntry }) {
   return (
