@@ -3,6 +3,7 @@ import type { MetadataRoute } from 'next'
 const BASE = 'https://www.mockmateapp.com'
 const NEW_PAGE_DATE = '2026-07-30T00:00:00Z'
 const SEO_UPDATE_DATE = '2026-08-14T00:00:00Z'
+const SKILL_PAGE_DATE = '2026-08-15T00:00:00Z'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const updatedPages: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }> = [
@@ -37,6 +38,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/ai-disclosure', priority: 0.3, changeFrequency: 'yearly' },
   ]
 
+  const skillPages: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }> = [
+    { path: '/resources/sat-reading-writing', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/resources/sat-math', priority: 0.7, changeFrequency: 'monthly' },
+    { path: '/resources/sat-transitions-practice', priority: 0.6, changeFrequency: 'monthly' },
+    { path: '/resources/sat-words-in-context-practice', priority: 0.6, changeFrequency: 'monthly' },
+    { path: '/resources/sat-command-of-evidence-practice', priority: 0.6, changeFrequency: 'monthly' },
+    { path: '/resources/sat-boundaries-grammar', priority: 0.6, changeFrequency: 'monthly' },
+    { path: '/resources/sat-rhetorical-synthesis', priority: 0.6, changeFrequency: 'monthly' },
+    { path: '/resources/sat-algebra-practice', priority: 0.6, changeFrequency: 'monthly' },
+    { path: '/resources/sat-systems-of-equations', priority: 0.6, changeFrequency: 'monthly' },
+    { path: '/resources/sat-quadratic-equations', priority: 0.6, changeFrequency: 'monthly' },
+  ]
+
   return [
     {
       url: `${BASE}/`,
@@ -53,6 +67,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...newPages.map((page) => ({
       url: `${BASE}${page.path}`,
       lastModified: NEW_PAGE_DATE,
+      changeFrequency: page.changeFrequency,
+      priority: page.priority,
+    })),
+    ...skillPages.map((page) => ({
+      url: `${BASE}${page.path}`,
+      lastModified: SKILL_PAGE_DATE,
       changeFrequency: page.changeFrequency,
       priority: page.priority,
     })),
