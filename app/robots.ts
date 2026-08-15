@@ -22,7 +22,6 @@ export default function robots(): MetadataRoute.Robots {
           '/reading-speed/',
           '/settings/',
           '/join/',
-          '/payment/',
           '/api/',
           '/auth/',
         ],
