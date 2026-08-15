@@ -156,6 +156,16 @@ export default function MathDesmosAcademyPage() {
             Practice Math skills in the question bank →
           </Link>
         </p>
+        <p>
+          <Link href="/sat-practice-test" className="font-medium text-brand-500 hover:text-brand-600">
+            Take a full-length SAT practice test to apply what you&apos;ve learned →
+          </Link>
+        </p>
+        <p>
+          <Link href="/resources/how-to-use-desmos-on-the-digital-sat" className="font-medium text-brand-500 hover:text-brand-600">
+            Read the guide: How to Use Desmos on Digital SAT Math →
+          </Link>
+        </p>
       </Section>
 
       <IndependenceCallout />

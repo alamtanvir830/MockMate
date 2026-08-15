@@ -31,6 +31,7 @@ const COLUMNS: FooterColumn[] = [
       { label: 'Contact', href: '/contact' },
       { label: 'Resources', href: '/resources' },
       { label: 'Pricing', href: '/pricing' },
+      { label: 'How We Review Content', href: '/how-we-review-sat-content' },
     ],
   },
   {

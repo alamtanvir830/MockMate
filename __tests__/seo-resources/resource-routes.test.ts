@@ -274,10 +274,9 @@ describe('Resource pages use IndependenceCallout', () => {
 // ── Existing SEO regression ────────────────────────────────────────────────────
 
 describe('Prior SEO metadata remains intact', () => {
-  it('homepage title contains 10 Practice Tests + 1,000+', () => {
+  it('homepage title reflects broad standardized-test brand positioning', () => {
     const content = readPage('')
-    expect(content).toContain('10 Practice Tests')
-    expect(content).toContain('1,000+')
+    expect(content).toContain('Your Standardized Exam Hub for Affordable Test Prep')
   })
 
   it('sat-practice-test title contains 10 Full-Length Digital SAT Exams', () => {

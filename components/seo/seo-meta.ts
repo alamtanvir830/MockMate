@@ -18,7 +18,7 @@ export function buildSeoMetadata({
 }): Metadata {
   const url = `${SITE_URL}${slug}`
   return {
-    title,
+    title: { absolute: title },
     description,
     alternates: { canonical: url },
     openGraph: {

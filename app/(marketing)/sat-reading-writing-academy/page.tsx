@@ -142,6 +142,21 @@ export default function ReadingWritingAcademyPage() {
             See the full study cycle →
           </Link>
         </p>
+        <p>
+          <Link href="/sat-practice-test" className="font-medium text-brand-500 hover:text-brand-600">
+            Take a full-length SAT practice test →
+          </Link>
+        </p>
+        <p>
+          <Link href="/digital-sat-prep" className="font-medium text-brand-500 hover:text-brand-600">
+            Overview of all MockMate Digital SAT prep tools →
+          </Link>
+        </p>
+        <p>
+          <Link href="/resources" className="font-medium text-brand-500 hover:text-brand-600">
+            Browse SAT study guides and resources →
+          </Link>
+        </p>
       </Section>
 
       <IndependenceCallout />

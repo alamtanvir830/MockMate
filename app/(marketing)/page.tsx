@@ -7,6 +7,8 @@ import { HeroReviewsPanel } from '@/components/landing/StudentReviews'
 import { SocialProofCard } from '@/components/landing/SocialProofCard'
 import { TabletShowcase } from '@/components/landing/IPadShowcase'
 import { createClient } from '@/lib/supabase/server'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { SITE_URL } from '@/components/seo/seo-meta'
 
 export const metadata: Metadata = {
   title: { absolute: 'Your Standardized Exam Hub for Affordable Test Prep | MockMate' },
@@ -37,6 +39,22 @@ const fraunces = Fraunces({
   variable: '--font-fraunces',
 })
 
+const homepageJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'MockMate',
+    url: SITE_URL,
+    logo: `${SITE_URL}/opengraph-image`,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'MockMate',
+    url: SITE_URL,
+  },
+]
+
 export const dynamic = 'force-dynamic'
 
 export default async function LandingPage() {
@@ -54,6 +72,7 @@ export default async function LandingPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
+      <JsonLd data={homepageJsonLd} />
       {/* Nav */}
       <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/80 backdrop-blur-sm">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">

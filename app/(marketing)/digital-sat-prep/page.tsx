@@ -89,6 +89,11 @@ export default function DigitalSatPrepPage() {
           Forms are module-adaptive, so they respond to how you perform rather than
           serving the same fixed set of questions to everyone.
         </p>
+        <p>
+          <Link href="/sat-practice-test" className="font-medium text-brand-500 hover:text-brand-600">
+            See how the full-length SAT practice tests work →
+          </Link>
+        </p>
       </Section>
 
       <Section title="Module-Adaptive Routing">
@@ -109,6 +114,11 @@ export default function DigitalSatPrepPage() {
           for example, only Words in Context at a medium difficulty — so your time goes
           straight to the skills that need work. Every question includes a worked
           explanation.
+        </p>
+        <p>
+          <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
+            Explore the SAT Question Bank →
+          </Link>
         </p>
       </Section>
 

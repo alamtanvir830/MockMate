@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     description:
       'Take your first free standardized exam and practice with affordable SAT, MCAT, SHSAT, and question bank tools built for students.',
     siteName: 'MockMate',
-    url: 'https://mockmateapp.com',
+    url: 'https://www.mockmateapp.com/',
     type: 'website',
     images: [
       {
