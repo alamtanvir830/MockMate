@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { isMockMateAdmin } from '@/lib/auth/admin'
 import { getEntitlements } from '@/lib/entitlements'
+import { isAttemptStaleForForm } from '@/lib/premade-exams/sat/version-constants'
 
 interface InProgressBody {
   formNumber: number
@@ -17,7 +18,7 @@ interface InProgressBody {
   currentQuestionIdx: number | null
   secsLeft: number | null
   timerRunning: boolean
-  contentVersion?: 1 | 2
+  contentVersion?: 1 | 2 | 3
 }
 
 function isValidFormNumber(n: unknown): n is number {
@@ -65,7 +66,7 @@ export async function GET(req: NextRequest) {
       moduleDeadlineAt: data.module_deadline_at as string | null,
       startedAt: data.started_at as string,
       // null / missing → undefined → normalizes to V1 at the client
-      contentVersion: (data.content_version ?? undefined) as 1 | 2 | undefined,
+      contentVersion: (data.content_version ?? undefined) as 1 | 2 | 3 | undefined,
     },
   })
 }
@@ -177,6 +178,18 @@ export async function POST(req: NextRequest) {
         { status: 403 }
       )
     }
+  }
+
+  // Stale-version guard: reject saves from outdated clients that carry a content
+  // version below the minimum required for this form. A 409 tells the client its
+  // local attempt is stale and it must restart with the current version.
+  // Only triggers when the client explicitly sends an outdated version (undefined
+  // means an old client without version awareness — we let it through).
+  if (body.contentVersion !== undefined && isAttemptStaleForForm(body.formNumber, body.contentVersion)) {
+    return NextResponse.json(
+      { error: 'stale_version', message: 'This attempt uses outdated content. Please refresh and start a new attempt.' },
+      { status: 409 },
+    )
   }
 
   // Resolve identity server-side — never trust client-supplied name/email.

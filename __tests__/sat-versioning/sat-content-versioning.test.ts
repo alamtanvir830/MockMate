@@ -2,8 +2,11 @@ import { describe, it, expect } from 'vitest'
 import {
   SAT_CONTENT_VERSION_V1,
   SAT_CONTENT_VERSION_V2,
+  SAT_CONTENT_VERSION_V3,
   CURRENT_SAT_CONTENT_VERSION,
+  FORM_MINIMUM_VERSION,
   normalizeSatContentVersion,
+  isAttemptStaleForForm,
 } from '@/lib/premade-exams/sat/version-constants'
 import { getSatForm } from '@/lib/premade-exams/sat/sat-form-resolver'
 import { satForm1 } from '@/lib/premade-exams/sat/form-1'
@@ -16,13 +19,17 @@ import { satForm2V2 } from '@/lib/premade-exams/sat/v2/form-2'
 import { satForm3V2 } from '@/lib/premade-exams/sat/v2/form-3'
 import { satForm4V2 } from '@/lib/premade-exams/sat/v2/form-4'
 import { satForm5V2 } from '@/lib/premade-exams/sat/v2/form-5'
+import { satForm7V3 } from '@/lib/premade-exams/sat/v3/form-7'
 
 // ─── Version constants ────────────────────────────────────────────────────────
 
 describe('SAT content version constants', () => {
   it('V1 is 1', () => expect(SAT_CONTENT_VERSION_V1).toBe(1))
   it('V2 is 2', () => expect(SAT_CONTENT_VERSION_V2).toBe(2))
-  it('CURRENT is V2', () => expect(CURRENT_SAT_CONTENT_VERSION).toBe(2))
+  it('V3 is 3', () => expect(SAT_CONTENT_VERSION_V3).toBe(3))
+  it('CURRENT is V3', () => expect(CURRENT_SAT_CONTENT_VERSION).toBe(3))
+  it('FORM_MINIMUM_VERSION[7] is 3', () => expect(FORM_MINIMUM_VERSION[7]).toBe(3))
+  it('FORM_MINIMUM_VERSION[1] is undefined (no minimum for form 1)', () => expect(FORM_MINIMUM_VERSION[1]).toBeUndefined())
 })
 
 // ─── normalizeSatContentVersion ───────────────────────────────────────────────
@@ -30,6 +37,7 @@ describe('SAT content version constants', () => {
 describe('normalizeSatContentVersion', () => {
   it('1 → V1', () => expect(normalizeSatContentVersion(1)).toBe(1))
   it('2 → V2', () => expect(normalizeSatContentVersion(2)).toBe(2))
+  it('3 → V3', () => expect(normalizeSatContentVersion(3)).toBe(3))
   it('undefined → V1 (backward compat)', () => expect(normalizeSatContentVersion(undefined)).toBe(1))
   it('null → V1 (backward compat)', () => expect(normalizeSatContentVersion(null)).toBe(1))
   it('0 → V1 (fail safe)', () => expect(normalizeSatContentVersion(0)).toBe(1))
@@ -40,6 +48,19 @@ describe('normalizeSatContentVersion', () => {
     const oldAttempt = { answers: {}, rwM2Type: 'easy' } // no contentVersion
     expect(normalizeSatContentVersion((oldAttempt as Record<string, unknown>).contentVersion)).toBe(1)
   })
+})
+
+// ─── isAttemptStaleForForm ────────────────────────────────────────────────────
+
+describe('isAttemptStaleForForm', () => {
+  it('Form 7 + V1 stored → stale', () => expect(isAttemptStaleForForm(7, 1)).toBe(true))
+  it('Form 7 + V2 stored → stale', () => expect(isAttemptStaleForForm(7, 2)).toBe(true))
+  it('Form 7 + V3 stored → not stale', () => expect(isAttemptStaleForForm(7, 3)).toBe(false))
+  it('Form 7 + undefined stored → stale (normalizes to V1)', () => expect(isAttemptStaleForForm(7, undefined)).toBe(true))
+  it('Form 1 + V1 stored → not stale (no minimum set)', () => expect(isAttemptStaleForForm(1, 1)).toBe(false))
+  it('Form 1 + V2 stored → not stale', () => expect(isAttemptStaleForForm(1, 2)).toBe(false))
+  it('Form 6 + V2 stored → not stale (no minimum set)', () => expect(isAttemptStaleForForm(6, 2)).toBe(false))
+  it('Form 8 + V2 stored → not stale (no minimum set)', () => expect(isAttemptStaleForForm(8, 2)).toBe(false))
 })
 
 // ─── getSatForm resolver ──────────────────────────────────────────────────────
@@ -84,8 +105,35 @@ describe('getSatForm — V2 forms', () => {
   it('returns form 5 V2 for contentVersion=2', () => {
     expect(getSatForm(5, 2)).toBe(satForm5V2)
   })
-  it('CURRENT_SAT_CONTENT_VERSION resolves V2', () => {
-    expect(getSatForm(1, CURRENT_SAT_CONTENT_VERSION)).toBe(satForm1V2)
+  // Form 7 V2 is still accessible for completed-attempt review
+  it('returns Form 7 V2 for contentVersion=2', () => {
+    const f7v2 = getSatForm(7, 2)
+    expect(f7v2.id).toBe('sat-form-7')
+    expect(f7v2).not.toBe(satForm7V3)
+  })
+})
+
+describe('getSatForm — V3 forms', () => {
+  it('returns Form 7 V3 for contentVersion=3', () => {
+    expect(getSatForm(7, 3)).toBe(satForm7V3)
+  })
+  it('Form 7 V3 id is sat-form-7', () => {
+    expect(satForm7V3.id).toBe('sat-form-7')
+  })
+  it('CURRENT_SAT_CONTENT_VERSION resolves Form 7 V3', () => {
+    expect(getSatForm(7, CURRENT_SAT_CONTENT_VERSION)).toBe(satForm7V3)
+  })
+  it('Form 1 with V3 falls through to V2 (no V3 content for form 1)', () => {
+    expect(getSatForm(1, 3)).toBe(satForm1V2)
+  })
+  it('Form 6 with V3 falls through to V2', () => {
+    expect(getSatForm(6, 3)).not.toBeUndefined()
+  })
+  it('Form 8 with V3 falls through to V2', () => {
+    expect(getSatForm(8, 3)).not.toBeUndefined()
+  })
+  it('Form 7 V3 and V2 are different objects', () => {
+    expect(getSatForm(7, 3)).not.toBe(getSatForm(7, 2))
   })
 })
 
@@ -231,14 +279,20 @@ describe('V1 answer key snapshot (Form 3 Math M2H)', () => {
   })
 })
 
-// ─── New attempt receives V2 ───────────────────────────────────────────────────
+// ─── New attempt receives V3 ───────────────────────────────────────────────────
 
 describe('New attempt content version', () => {
-  it('CURRENT_SAT_CONTENT_VERSION is 2', () => {
-    expect(CURRENT_SAT_CONTENT_VERSION).toBe(2)
+  it('CURRENT_SAT_CONTENT_VERSION is 3', () => {
+    expect(CURRENT_SAT_CONTENT_VERSION).toBe(3)
   })
 
-  it('resolving CURRENT for form 1 returns V2 form', () => {
+  it('resolving CURRENT for form 7 returns V3 form', () => {
+    const resolved = getSatForm(7, CURRENT_SAT_CONTENT_VERSION)
+    expect(resolved).toBe(satForm7V3)
+    expect(resolved).not.toBe(getSatForm(7, 2))
+  })
+
+  it('resolving CURRENT for form 1 still returns V2 (no V3 for form 1)', () => {
     const resolved = getSatForm(1, CURRENT_SAT_CONTENT_VERSION)
     expect(resolved).toBe(satForm1V2)
     expect(resolved).not.toBe(satForm1)
@@ -267,6 +321,21 @@ describe('Historical attempt backward compat', () => {
     expect(getSatForm(4, version)).toBe(satForm4V2)
   })
 
+  it('Form 7 attempt with contentVersion=2 resolves to V2 form (completed attempt review)', () => {
+    const stored = { contentVersion: 2 }
+    const version = normalizeSatContentVersion(stored.contentVersion)
+    const form = getSatForm(7, version)
+    // Must NOT be V3 — a completed V2 Form 7 review must show V2 questions
+    expect(form).not.toBe(satForm7V3)
+    expect(form.id).toBe('sat-form-7')
+  })
+
+  it('Form 7 attempt with contentVersion=3 resolves to V3 form', () => {
+    const stored = { contentVersion: 3 }
+    const version = normalizeSatContentVersion(stored.contentVersion)
+    expect(getSatForm(7, version)).toBe(satForm7V3)
+  })
+
   it('changing V2 form does not affect V1 form object', () => {
     const v1 = getSatForm(3, 1)
     const v2 = getSatForm(3, 2)
@@ -276,5 +345,84 @@ describe('Historical attempt backward compat', () => {
     const v1Q = v1.sections[1].modules[2].questions[0]
     const v2Q = v2.sections[1].modules[2].questions[0]
     expect(v1Q).not.toBe(v2Q)
+  })
+})
+
+// ─── Form 7 V3 structure invariants ───────────────────────────────────────────
+
+describe('Form 7 V3 module structure', () => {
+  it('has 27/27/27 RW questions', () => {
+    const rw = satForm7V3.sections[0]
+    expect(rw.modules.map(m => m.questions.length)).toEqual([27, 27, 27])
+  })
+
+  it('has 22/22/22 Math questions', () => {
+    const math = satForm7V3.sections[1]
+    expect(math.modules.map(m => m.questions.length)).toEqual([22, 22, 22])
+  })
+
+  it('module types are routing / easy / hard for both sections', () => {
+    for (const section of satForm7V3.sections) {
+      const types = section.modules.map(m => m.type)
+      expect(types).toEqual(['routing', 'easy', 'hard'])
+    }
+  })
+
+  it('all module IDs use f7v3- prefix', () => {
+    const moduleIds = satForm7V3.sections.flatMap(s => s.modules.map(m => m.id))
+    for (const id of moduleIds) {
+      expect(id, `Module ID '${id}' should start with 'f7v3-'`).toMatch(/^f7v3-/)
+    }
+  })
+
+  it('all question IDs use sat-f7-v3- prefix', () => {
+    const allIds = satForm7V3.sections.flatMap(s =>
+      s.modules.flatMap(m => m.questions.map(q => q.id))
+    )
+    const bad = allIds.filter(id => !id.startsWith('sat-f7-v3-'))
+    expect(bad, `Non-V3 IDs found: ${bad.join(', ')}`).toHaveLength(0)
+  })
+
+  it('no duplicate question IDs within Form 7 V3', () => {
+    const allIds = satForm7V3.sections.flatMap(s =>
+      s.modules.flatMap(m => m.questions.map(q => q.id))
+    )
+    const unique = new Set(allIds)
+    expect(unique.size, 'Form 7 V3 has duplicate question IDs').toBe(allIds.length)
+  })
+
+  it('V3 IDs do not overlap with V2 IDs', () => {
+    const v2 = getSatForm(7, 2)
+    const v2Ids = new Set(
+      v2.sections.flatMap(s => s.modules.flatMap(m => m.questions.map(q => q.id)))
+    )
+    const v3Ids = satForm7V3.sections.flatMap(s =>
+      s.modules.flatMap(m => m.questions.map(q => q.id))
+    )
+    const overlap = v3Ids.filter(id => v2Ids.has(id))
+    expect(overlap, `V3/V2 ID overlap: ${overlap.join(', ')}`).toHaveLength(0)
+  })
+
+  it('Math M1 has 16 MC and 6 grid_in questions', () => {
+    const mathM1 = satForm7V3.sections[1].modules[0]
+    const mc = mathM1.questions.filter(q => (q as { type?: string }).type === 'multiple_choice')
+    const gridIn = mathM1.questions.filter(q => (q as { type?: string }).type === 'grid_in')
+    expect(mc).toHaveLength(16)
+    expect(gridIn).toHaveLength(6)
+  })
+
+  it('Math M2-Hard has 16 MC and 6 grid_in questions', () => {
+    const mathM2H = satForm7V3.sections[1].modules[2]
+    const mc = mathM2H.questions.filter(q => (q as { type?: string }).type === 'multiple_choice')
+    const gridIn = mathM2H.questions.filter(q => (q as { type?: string }).type === 'grid_in')
+    expect(mc).toHaveLength(16)
+    expect(gridIn).toHaveLength(6)
+  })
+
+  it('Form 7 V3 Math M2-Hard contains hard-difficulty questions', () => {
+    const mathM2H = satForm7V3.sections[1].modules[2]
+    const hardQs = mathM2H.questions.filter(q => (q as { difficulty?: string }).difficulty === 'hard')
+    // Hard module should have a meaningful number of hard questions
+    expect(hardQs.length).toBeGreaterThanOrEqual(10)
   })
 })
