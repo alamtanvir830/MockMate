@@ -18,7 +18,7 @@ import type {
   SATGraphData,
 } from '@/lib/premade-exams/sat/types'
 import { saveAttempt, updateAttempt, loadAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
-import { type SATContentVersion, CURRENT_SAT_CONTENT_VERSION, normalizeSatContentVersion } from '@/lib/premade-exams/sat/version-constants'
+import { type SATContentVersion, CURRENT_SAT_CONTENT_VERSION, normalizeSatContentVersion, isAttemptStaleForForm } from '@/lib/premade-exams/sat/version-constants'
 import { rwSkillToAcademySlug } from '@/lib/academy/skill-mapping'
 import { buildPersonalizedSets, type PersonalizedSetCard } from '@/lib/question-bank/sat/personalized-sets'
 import {
@@ -928,7 +928,7 @@ interface InProgressData {
   currentQuestionIdx: number | null
   moduleDeadlineAt: string | null
   startedAt: string
-  contentVersion?: 1 | 2
+  contentVersion?: 1 | 2 | 3
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
@@ -996,6 +996,9 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
   const saveToServerRef = useRef<(() => Promise<void>) | null>(null)
   const [inProgressAttempt, setInProgressAttempt] = useState<InProgressData | null>(null)
   const [showResumePrompt, setShowResumePrompt] = useState(false)
+  // True when the server rejects a save with 409 (stale content version).
+  // The exam has been updated since this tab was opened — user must reload.
+  const [showStaleContentBanner, setShowStaleContentBanner] = useState(false)
 
   const rwSection = form.sections[0]
   const mathSection = form.sections[1]
@@ -1108,6 +1111,13 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
           contentVersion,
         }),
       })
+      // 409 means this tab's content version is stale — the exam was updated.
+      // Stop retrying and show a banner prompting the user to reload.
+      if (res.status === 409) {
+        setShowStaleContentBanner(true)
+        setSaveStatus('error')
+        return
+      }
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       setSaveStatus('saved')
       saveRetryCountRef.current = 0
@@ -1215,10 +1225,15 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
     fetch(`/api/sat/in-progress?formNumber=${formNumber}`)
       .then(r => r.json())
       .then((data: { attempt: InProgressData | null }) => {
-        if (data.attempt) {
-          setInProgressAttempt(data.attempt)
-          setShowResumePrompt(true)
+        if (!data.attempt) return
+        // If the stored attempt uses outdated content for this form, silently
+        // delete it and start fresh rather than resuming with wrong questions.
+        if (isAttemptStaleForForm(formNumber, data.attempt.contentVersion)) {
+          fetch(`/api/sat/in-progress?formNumber=${formNumber}`, { method: 'DELETE' }).catch(() => {})
+          return
         }
+        setInProgressAttempt(data.attempt)
+        setShowResumePrompt(true)
       })
       .catch(() => {})
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1912,6 +1927,24 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
             saveStatusEl={!isHistoryView ? <ExamSaveStatus status={saveStatus} /> : undefined}
           />
 
+          {showStaleContentBanner && (
+            <div className="shrink-0 bg-amber-50 border-b border-amber-200 px-4 py-2.5 flex items-center gap-3">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4 text-amber-600 shrink-0">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
+              <p className="text-[12px] text-amber-800 font-medium flex-1">
+                This exam has been updated. Progress can no longer be saved.{' '}
+                <button
+                  onClick={() => window.location.reload()}
+                  className="underline hover:no-underline font-semibold"
+                >
+                  Reload the page
+                </button>{' '}
+                to continue with the updated version.
+              </p>
+            </div>
+          )}
+
           <div className="flex-1 overflow-y-auto">
             <div className="max-w-3xl mx-auto px-4 py-6">
               {stimulus && (
@@ -2109,6 +2142,23 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
             <span className="flex-1 text-white text-[13px] font-semibold">{headerLabel}</span>
             {!isHistoryView && <ExamSaveStatus status={saveStatus} />}
           </div>
+          {showStaleContentBanner && (
+            <div className="shrink-0 bg-amber-50 border-b border-amber-200 px-4 py-2.5 flex items-center gap-3">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} className="h-4 w-4 text-amber-600 shrink-0">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
+              <p className="text-[12px] text-amber-800 font-medium flex-1">
+                This exam has been updated. Progress can no longer be saved.{' '}
+                <button
+                  onClick={() => window.location.reload()}
+                  className="underline hover:no-underline font-semibold"
+                >
+                  Reload the page
+                </button>{' '}
+                to continue with the updated version.
+              </p>
+            </div>
+          )}
           <div className="flex-1 overflow-y-auto p-6">
             <div className="max-w-2xl mx-auto">
               <div className="flex items-start justify-between mb-5">
