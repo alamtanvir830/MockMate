@@ -208,7 +208,7 @@ export default function SatReadingWritingHub() {
       <section className="mt-10">
         <h2 className="text-xl font-bold text-slate-900">Where to go next</h2>
         <div className="mt-4 flex flex-col gap-2 text-[15px]">
-          <Link href="/resources/sat-reading-writing-academy" className="text-brand-600 hover:underline">→ MockMate SAT R&amp;W Academy — lessons for all 11 skills</Link>
+          <Link href="/sat-reading-writing-academy" className="text-brand-600 hover:underline">→ MockMate SAT R&amp;W Academy — lessons for all 11 skills</Link>
           <Link href="/resources/how-digital-sat-adaptive-modules-work" className="text-brand-600 hover:underline">→ How Digital SAT adaptive modules work</Link>
           <Link href="/resources" className="text-brand-600 hover:underline">→ All SAT resources</Link>
           <Link href="/sat-practice-test" className="text-brand-600 hover:underline">→ Take a free full-length SAT practice test</Link>

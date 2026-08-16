@@ -435,12 +435,27 @@ describe('Hub pages link back to /resources', () => {
   })
 })
 
+// ── Hub pages link to academy (not broken /resources/sat-reading-writing-academy) ─
+
+describe('Hub pages link to correct Academy URLs', () => {
+  it('sat-reading-writing hub links to /sat-reading-writing-academy (not /resources/...)', () => {
+    const content = readPage('resources/sat-reading-writing')
+    expect(content).toContain('/sat-reading-writing-academy')
+    expect(content).not.toContain('/resources/sat-reading-writing-academy')
+  })
+
+  it('sat-math hub links to /sat-math-desmos-academy (not /resources/...)', () => {
+    const content = readPage('resources/sat-math')
+    expect(content).toContain('/sat-math-desmos-academy')
+    expect(content).not.toContain('/resources/sat-math-desmos-academy')
+  })
+})
+
 // ── Non-cannibalization: new pages do NOT duplicate existing pages ─────────────
 
 describe('New skill pages serve different intent than existing pages', () => {
   it('sat-transitions-practice is distinct from how-to-use-desmos (different domain)', () => {
     const transitions = readPage('resources/sat-transitions-practice')
-    const desmos = readPage('resources/how-to-use-desmos-on-the-digital-sat')
     // Transitions page should not be mostly about Desmos
     const desmosCount = (transitions.match(/[Dd]esmos/g) ?? []).length
     const transitionsCount = (transitions.match(/[Tt]ransition/g) ?? []).length
@@ -448,7 +463,6 @@ describe('New skill pages serve different intent than existing pages', () => {
   })
 
   it('sat-algebra-practice is distinct from sat-quadratic-equations', () => {
-    const algebra = readPage('resources/sat-algebra-practice')
     const quadratics = readPage('resources/sat-quadratic-equations')
     // Quadratics page should mention "quadratic" more than "linear"
     const quadraticMentions = (quadratics.match(/[Qq]uadratic/g) ?? []).length

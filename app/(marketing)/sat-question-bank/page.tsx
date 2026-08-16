@@ -159,6 +159,8 @@ export default function SatQuestionBankPage() {
           <li><Link href="/sat-reading-writing-academy" className="font-medium text-brand-500 hover:text-brand-600">Reading and Writing Academy</Link></li>
           <li><Link href="/sat-math-desmos-academy" className="font-medium text-brand-500 hover:text-brand-600">Math and Desmos Academy</Link></li>
           <li><Link href="/pricing" className="font-medium text-brand-500 hover:text-brand-600">Pricing</Link></li>
+          <li><Link href="/resources/sat-reading-writing" className="font-medium text-brand-500 hover:text-brand-600">SAT Reading &amp; Writing skills guide</Link></li>
+          <li><Link href="/resources/sat-math" className="font-medium text-brand-500 hover:text-brand-600">SAT Math skills guide</Link></li>
         </ul>
       </Section>
 

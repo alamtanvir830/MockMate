@@ -166,6 +166,11 @@ export default function MathDesmosAcademyPage() {
             Read the guide: How to Use Desmos on Digital SAT Math →
           </Link>
         </p>
+        <p>
+          <Link href="/resources/sat-math" className="font-medium text-brand-500 hover:text-brand-600">
+            SAT Math: all domains, skills, and strategy guides →
+          </Link>
+        </p>
       </Section>
 
       <IndependenceCallout />

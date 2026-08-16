@@ -157,6 +157,11 @@ export default function ReadingWritingAcademyPage() {
             Browse SAT study guides and resources →
           </Link>
         </p>
+        <p>
+          <Link href="/resources/sat-reading-writing" className="font-medium text-brand-500 hover:text-brand-600">
+            SAT Reading &amp; Writing: skills, domains, and strategies →
+          </Link>
+        </p>
       </Section>
 
       <IndependenceCallout />
