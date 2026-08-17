@@ -18,7 +18,8 @@ import type {
   SATGraphData,
 } from '@/lib/premade-exams/sat/types'
 import { saveAttempt, updateAttempt, loadAttempt, type PremadeAttempt } from '@/lib/premade-exams/sat/attempt-store'
-import { type SATContentVersion, CURRENT_SAT_CONTENT_VERSION, normalizeSatContentVersion, isAttemptStaleForForm } from '@/lib/premade-exams/sat/version-constants'
+import { type SATContentVersion, getLatestSatContentVersion, normalizeSatContentVersion, isAttemptStaleForForm } from '@/lib/premade-exams/sat/version-constants'
+import { getFormNumberFromId } from '@/lib/premade-exams/sat/sat-form-resolver'
 import { rwSkillToAcademySlug } from '@/lib/academy/skill-mapping'
 import { buildPersonalizedSets, type PersonalizedSetCard } from '@/lib/question-bank/sat/personalized-sets'
 import {
@@ -937,10 +938,11 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
 
   // Content version for this attempt:
   //   - history view: use the stored attempt's version (falls back to V1 for old attempts)
-  //   - new attempt:  use the explicitly passed contentVersionProp, or CURRENT_SAT_CONTENT_VERSION
+  //   - new attempt:  use the explicitly passed contentVersionProp (always set by SATExamTakerClient);
+  //                   the fallback derives per-form latest from form.id as a safety net
   const contentVersion: SATContentVersion = isHistoryView
     ? normalizeSatContentVersion(initialAttempt?.contentVersion)
-    : (contentVersionProp ?? CURRENT_SAT_CONTENT_VERSION)
+    : (contentVersionProp ?? getLatestSatContentVersion(getFormNumberFromId(form.id)))
 
   // ── Exam state ─────────────────────────────────────────────────────────────
   const [phase, setPhase] = useState<SATPhase>(isHistoryView ? { tag: 'results' } : { tag: 'welcome' })

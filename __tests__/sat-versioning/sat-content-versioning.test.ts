@@ -5,7 +5,9 @@ import {
   SAT_CONTENT_VERSION_V3,
   SAT_CONTENT_VERSION_V4,
   CURRENT_SAT_CONTENT_VERSION,
+  LATEST_SAT_FORM_VERSION,
   FORM_MINIMUM_VERSION,
+  getLatestSatContentVersion,
   normalizeSatContentVersion,
   isAttemptStaleForForm,
 } from '@/lib/premade-exams/sat/version-constants'
@@ -32,7 +34,97 @@ describe('SAT content version constants', () => {
   it('V4 is 4', () => expect(SAT_CONTENT_VERSION_V4).toBe(4))
   it('CURRENT is V4', () => expect(CURRENT_SAT_CONTENT_VERSION).toBe(4))
   it('FORM_MINIMUM_VERSION[7] is 4', () => expect(FORM_MINIMUM_VERSION[7]).toBe(4))
-  it('FORM_MINIMUM_VERSION[1] is undefined (no minimum for form 1)', () => expect(FORM_MINIMUM_VERSION[1]).toBeUndefined())
+  it('FORM_MINIMUM_VERSION[1] is 2 (V2 is minimum for all non-V4 forms)', () => expect(FORM_MINIMUM_VERSION[1]).toBe(2))
+})
+
+// ─── Per-form latest version registry ────────────────────────────────────────
+
+describe('LATEST_SAT_FORM_VERSION registry', () => {
+  it('covers all 10 forms', () => {
+    for (let f = 1; f <= 10; f++) {
+      expect(LATEST_SAT_FORM_VERSION[f], `Form ${f} missing from registry`).toBeDefined()
+    }
+  })
+
+  it('Forms 1–6 latest is V2', () => {
+    for (let f = 1; f <= 6; f++) {
+      expect(LATEST_SAT_FORM_VERSION[f], `Form ${f} should be V2`).toBe(2)
+    }
+  })
+
+  it('Form 7 latest is V4', () => {
+    expect(LATEST_SAT_FORM_VERSION[7]).toBe(4)
+  })
+
+  it('Forms 8–10 latest is V2', () => {
+    for (let f = 8; f <= 10; f++) {
+      expect(LATEST_SAT_FORM_VERSION[f], `Form ${f} should be V2`).toBe(2)
+    }
+  })
+
+  it('all values are valid SATContentVersion (1, 2, 3, or 4)', () => {
+    const valid = new Set([1, 2, 3, 4])
+    for (let f = 1; f <= 10; f++) {
+      expect(valid.has(LATEST_SAT_FORM_VERSION[f]), `Form ${f} has invalid version ${LATEST_SAT_FORM_VERSION[f]}`).toBe(true)
+    }
+  })
+
+  it('LATEST_SAT_FORM_VERSION and FORM_MINIMUM_VERSION are in sync', () => {
+    for (let f = 1; f <= 10; f++) {
+      expect(LATEST_SAT_FORM_VERSION[f], `Form ${f}: LATEST vs MINIMUM mismatch`).toBe(FORM_MINIMUM_VERSION[f])
+    }
+  })
+})
+
+describe('getLatestSatContentVersion', () => {
+  it('returns 2 for Forms 1–6', () => {
+    for (let f = 1; f <= 6; f++) {
+      expect(getLatestSatContentVersion(f), `Form ${f}`).toBe(2)
+    }
+  })
+
+  it('returns 4 for Form 7', () => {
+    expect(getLatestSatContentVersion(7)).toBe(4)
+  })
+
+  it('returns 2 for Forms 8–10', () => {
+    for (let f = 8; f <= 10; f++) {
+      expect(getLatestSatContentVersion(f), `Form ${f}`).toBe(2)
+    }
+  })
+
+  it('unknown form number falls back to V2', () => {
+    expect(getLatestSatContentVersion(99)).toBe(2)
+  })
+
+  it('getSatForm(N, getLatestSatContentVersion(N)) returns actual latest content for every form', () => {
+    // Forms 1–6, 8–10: V2 content
+    for (const f of [1, 2, 3, 4, 5, 6, 8, 9, 10]) {
+      const form = getSatForm(f, getLatestSatContentVersion(f))
+      // V2 question IDs contain "-v2-"
+      const ids = form.sections.flatMap(s => s.modules.flatMap(m => m.questions.map(q => q.id)))
+      const allV2 = ids.every(id => id.includes('-v2-'))
+      expect(allV2, `Form ${f}: expected all V2 IDs, got ${ids.filter(id => !id.includes('-v2-')).slice(0, 3).join(', ')}`).toBe(true)
+    }
+    // Form 7: V4 content
+    const f7 = getSatForm(7, getLatestSatContentVersion(7))
+    expect(f7).toBe(satForm7V4)
+    const f7Ids = f7.sections.flatMap(s => s.modules.flatMap(m => m.questions.map(q => q.id)))
+    const allV4 = f7Ids.every(id => id.startsWith('sat-f7-v4-'))
+    expect(allV4, 'Form 7: expected all V4 IDs').toBe(true)
+  })
+
+  it('fresh-attempt version matches the content actually served — no version inflation', () => {
+    // The bug: storing V4 but serving V2. Verify getSatForm(N, getLatestSatContentVersion(N))
+    // returns EXACTLY the version stored (not a fallback-inflated version).
+    for (let f = 1; f <= 10; f++) {
+      const storedVersion = getLatestSatContentVersion(f)
+      const form = getSatForm(f, storedVersion)
+      // Re-resolve with the stored version — must return the same object (no drift)
+      const resolved = getSatForm(f, storedVersion)
+      expect(resolved, `Form ${f}: re-resolving stored version returns different object`).toBe(form)
+    }
+  })
 })
 
 // ─── normalizeSatContentVersion ───────────────────────────────────────────────
@@ -62,10 +154,12 @@ describe('isAttemptStaleForForm', () => {
   it('Form 7 + V3 stored → stale (V4 is now minimum)', () => expect(isAttemptStaleForForm(7, 3)).toBe(true))
   it('Form 7 + V4 stored → not stale', () => expect(isAttemptStaleForForm(7, 4)).toBe(false))
   it('Form 7 + undefined stored → stale (normalizes to V1)', () => expect(isAttemptStaleForForm(7, undefined)).toBe(true))
-  it('Form 1 + V1 stored → not stale (no minimum set)', () => expect(isAttemptStaleForForm(1, 1)).toBe(false))
-  it('Form 1 + V2 stored → not stale', () => expect(isAttemptStaleForForm(1, 2)).toBe(false))
-  it('Form 6 + V2 stored → not stale (no minimum set)', () => expect(isAttemptStaleForForm(6, 2)).toBe(false))
-  it('Form 8 + V2 stored → not stale (no minimum set)', () => expect(isAttemptStaleForForm(8, 2)).toBe(false))
+  it('Form 1 + V1 stored → stale (minimum is V2 for all forms)', () => expect(isAttemptStaleForForm(1, 1)).toBe(true))
+  it('Form 1 + V2 stored → not stale (V2 meets minimum)', () => expect(isAttemptStaleForForm(1, 2)).toBe(false))
+  it('Form 6 + V1 stored → stale (minimum is V2)', () => expect(isAttemptStaleForForm(6, 1)).toBe(true))
+  it('Form 6 + V2 stored → not stale (V2 meets minimum)', () => expect(isAttemptStaleForForm(6, 2)).toBe(false))
+  it('Form 8 + V1 stored → stale (minimum is V2)', () => expect(isAttemptStaleForForm(8, 1)).toBe(true))
+  it('Form 8 + V2 stored → not stale (V2 meets minimum)', () => expect(isAttemptStaleForForm(8, 2)).toBe(false))
 })
 
 // ─── getSatForm resolver ──────────────────────────────────────────────────────

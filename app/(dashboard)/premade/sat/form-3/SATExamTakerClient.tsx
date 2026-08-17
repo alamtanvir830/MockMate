@@ -2,7 +2,7 @@
 
 import SATExamTaker from '@/components/premade/SATExamTaker'
 import { getSatForm } from '@/lib/premade-exams/sat/sat-form-resolver'
-import { CURRENT_SAT_CONTENT_VERSION } from '@/lib/premade-exams/sat/version-constants'
+import { getLatestSatContentVersion } from '@/lib/premade-exams/sat/version-constants'
 import { Form3CountdownBadge } from '@/components/sat/Form3Countdown'
 
 interface Props {
@@ -23,7 +23,7 @@ export default function SATExamTakerClient({ isAdmin, freeWindowExpiresAt, showC
           <Form3CountdownBadge expiresAt={freeWindowExpiresAt} />
         </div>
       )}
-      <SATExamTaker form={getSatForm(3, CURRENT_SAT_CONTENT_VERSION)} contentVersion={CURRENT_SAT_CONTENT_VERSION} skipPasswordGate isAdmin={isAdmin ?? false} />
+      <SATExamTaker form={getSatForm(3, getLatestSatContentVersion(3))} contentVersion={getLatestSatContentVersion(3)} skipPasswordGate isAdmin={isAdmin ?? false} />
     </div>
   )
 }
