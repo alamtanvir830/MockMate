@@ -501,7 +501,7 @@ export default async function SATPremadePage() {
         <Form7CountdownBanner expiresAt={form7Access.freeWindowExpiresAt} />
       )}
 
-      {/* Form 7 rolling promo countdown banner (per-user 36-hour, after global window ends) */}
+      {/* Form 7 rolling promo countdown banner (per-user 24-hour, after global window ends) */}
       {form7RollingAccess.expiresAt && form7RollingAccess.accessSource === 'rolling-promo' && (
         <RollingPromoCountdownBanner expiresAt={form7RollingAccess.expiresAt} formNumber={7} />
       )}
@@ -1253,13 +1253,13 @@ export default async function SATPremadePage() {
             </span>
           </Link>
         ) : form7RollingAccess.canStart ? (
-          // Rolling per-user 36-hour promo — window active, no attempt yet
+          // Rolling per-user 24-hour promo — window active, no attempt yet
           <Link href="/premade/sat/form-7" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-2">
               <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
                 <span className="text-sm font-bold text-brand-600">7</span>
               </div>
-              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">Free for 36 Hours</span>
+              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">Free for 24 Hours</span>
             </div>
             {form7RollingAccess.expiresAt && (
               <div className="mb-2">
@@ -1267,7 +1267,7 @@ export default async function SATPremadePage() {
               </div>
             )}
             <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 7</h2>
-            <p className="text-[11px] text-brand-700">Your personal 36-hour free window is running.</p>
+            <p className="text-[11px] text-brand-700">Your personal 24-hour free window is running.</p>
             <SatExamDetails />
             <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-600 transition-colors">
               Take Form 7 Free →

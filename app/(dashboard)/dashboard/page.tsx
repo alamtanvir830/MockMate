@@ -337,11 +337,11 @@ export default async function DashboardPage() {
     form7Access.accessSource === 'free-window' &&
     (form7Access.canStart || form7Access.canResume)
 
-  // ── Rolling promo (per-user 36-hour window, starts when global Form 7 promo ends) ──
+  // ── Rolling promo (per-user 24-hour window, starts when global Form 7 promo ends) ──
   let rollingPromoAccess: RollingPromoAccessResult | null = null
 
   if (user && !isAdminUser && !hasPremium && isRollingPromoLive()) {
-    // Creates the row on first dashboard visit, starting the 36-hour timer.
+    // Creates the row on first dashboard visit, starting the 24-hour timer.
     // getOrCreateRollingPromoAccess checks user.created_at eligibility internally.
     const promoRow = await getOrCreateRollingPromoAccess(supabase, user)
     if (promoRow) {
@@ -445,7 +445,7 @@ export default async function DashboardPage() {
         />
       )}
 
-      {/* Rolling promo banner — per-user 36-hour window after global Form 7 promo ends */}
+      {/* Rolling promo banner — per-user 24-hour window after global Form 7 promo ends */}
       {user && showRollingPromoBanner && rollingPromoAccess?.expiresAt && rollingPromoAccess.assignedFormNumber && (
         <RollingPromoDashboardBanner
           expiresAt={rollingPromoAccess.expiresAt}
@@ -686,7 +686,7 @@ export default async function DashboardPage() {
                 <p className="mt-1 text-xs text-brand-600 font-medium">
                   {rollingPromoAccess.canResume
                     ? `Resume your Form ${rollingPromoAccess.assignedFormNumber} exam before your personal window closes.`
-                    : `SAT Form ${rollingPromoAccess.assignedFormNumber} is free for 36 hours — your personal window is running.`}
+                    : `SAT Form ${rollingPromoAccess.assignedFormNumber} is free for 24 hours — your personal window is running.`}
                 </p>
               )}
               {satCardState.tag === 'default' && showForm6Banner && !showForm7Banner && !showRollingPromoBanner && (

@@ -1,7 +1,7 @@
 // ── Rolling Per-User SAT Free Exam Promo ──────────────────────────────────────
 //
 // After the global Form 7 window expires on 2026-08-17T19:00:00Z, every NEW
-// eligible user (signed up on or after promoStartsAt) gets a personal 36-hour
+// eligible user (signed up on or after promoStartsAt) gets a personal 24-hour
 // access window to ONE free SAT exam, starting on their first dashboard visit.
 //
 // To rotate the free exam form: change formNumber in ROLLING_PROMO_CONFIG.
@@ -14,7 +14,7 @@ import type { SupabaseClient, User } from '@supabase/supabase-js'
 
 export const ROLLING_PROMO_CONFIG = {
   formNumber: 7,                        // Change this ONE value to rotate the free SAT exam
-  durationHours: 36,
+  durationHours: 24,
   promoStartsAt: '2026-08-17T19:00:00Z', // Must match FORM7_WINDOW_ENDS_AT in form7-access.ts
 } as const
 
@@ -95,7 +95,7 @@ export async function getOrCreateRollingPromoAccess(
 
   if (existing) return existing as RollingPromoAccessRow
 
-  // First visit — start the 36-hour clock now using the service-role client
+  // First visit — start the 24-hour clock now using the service-role client
   const now = Date.now()
   const newRow: RollingPromoAccessRow = {
     user_id: user.id,

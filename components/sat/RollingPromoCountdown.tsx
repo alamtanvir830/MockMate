@@ -101,7 +101,7 @@ export function RollingPromoDashboardBanner({
         <p className="text-[15px] font-bold text-brand-900 leading-snug mb-1">
           {parts.expired
             ? `Your free access to SAT Form ${formNumber} has expired.`
-            : `SAT Form ${formNumber} is free for 36 hours — start before your window closes.`}
+            : `SAT Form ${formNumber} is free for 24 hours — start before your window closes.`}
         </p>
         <p className="text-[12px] text-brand-700 leading-relaxed">
           {parts.expired
@@ -139,7 +139,7 @@ export function RollingPromoCountdownBanner({
           Personal Access Window — SAT Form {formNumber}
         </p>
         <p className="text-[13px] text-brand-800 font-medium">
-          Your 36-hour free window expires in{' '}
+          Your 24-hour free window expires in{' '}
           <span className="font-bold">{toBannerText(parts)}</span>.
         </p>
       </div>

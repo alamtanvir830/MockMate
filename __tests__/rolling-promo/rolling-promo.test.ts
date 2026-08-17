@@ -19,7 +19,7 @@ function makeRow(overrides: Partial<RollingPromoAccessRow> = {}): RollingPromoAc
     email: 'user@test.com',
     promo_form_number: 7,
     access_started_at: new Date(now).toISOString(),
-    access_expires_at: new Date(now + 36 * 60 * 60 * 1000).toISOString(),
+    access_expires_at: new Date(now + 24 * 60 * 60 * 1000).toISOString(),
     reason: 'rolling_promo_36h_first_visit',
     ...overrides,
   }
@@ -28,7 +28,7 @@ function makeRow(overrides: Partial<RollingPromoAccessRow> = {}): RollingPromoAc
 function expiredRow(): RollingPromoAccessRow {
   const past = Date.now() - 1000
   return makeRow({
-    access_started_at: new Date(past - 36 * 60 * 60 * 1000).toISOString(),
+    access_started_at: new Date(past - 24 * 60 * 60 * 1000).toISOString(),
     access_expires_at: new Date(past).toISOString(),
   })
 }
@@ -40,8 +40,8 @@ describe('ROLLING_PROMO_CONFIG', () => {
     expect(ROLLING_PROMO_CONFIG.formNumber).toBe(7)
   })
 
-  it('B: durationHours is 36', () => {
-    expect(ROLLING_PROMO_CONFIG.durationHours).toBe(36)
+  it('B: durationHours is 24', () => {
+    expect(ROLLING_PROMO_CONFIG.durationHours).toBe(24)
   })
 
   it('C: promoStartsAt matches FORM7_WINDOW_ENDS_AT cutover', () => {

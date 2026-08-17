@@ -53,7 +53,7 @@ function makeRollingRow(overrides: Partial<RollingPromoAccessRow> = {}): Rolling
     email: 'test@example.com',
     promo_form_number: 7,
     access_started_at: new Date(now).toISOString(),
-    access_expires_at: new Date(now + 36 * 60 * 60 * 1000).toISOString(),
+    access_expires_at: new Date(now + 24 * 60 * 60 * 1000).toISOString(),
     reason: 'rolling_promo_36h_first_visit',
     ...overrides,
   }
@@ -65,7 +65,7 @@ function expiredRollingRow(): RollingPromoAccessRow {
     user_id: 'user-test',
     email: 'test@example.com',
     promo_form_number: 7,
-    access_started_at: new Date(past - 36 * 60 * 60 * 1000).toISOString(),
+    access_started_at: new Date(past - 24 * 60 * 60 * 1000).toISOString(),
     access_expires_at: new Date(past).toISOString(),
     reason: 'rolling_promo_36h_first_visit',
   }
