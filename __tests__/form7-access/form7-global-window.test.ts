@@ -193,7 +193,7 @@ describe('Non-premium promo window timing', () => {
 
   it('Test 19 — one second before end → active', () => {
     // Set time to 1 second before the window closes
-    vi.setSystemTime(new Date('2026-08-18T12:04:59Z'))
+    vi.setSystemTime(new Date('2026-08-18T00:04:59Z'))
     const r = resolveForm7Access({ isAdmin: false, isPremium: false, freeWindow: window, attemptStatus: 'none', attemptId: null })
     expect(r.globalWindowExpired).toBe(false)
     expect(r.canStart).toBe(true)
@@ -201,7 +201,7 @@ describe('Non-premium promo window timing', () => {
 
   it('Test 20 — exactly at end → inactive', () => {
     // Set time to exactly when the window closes
-    vi.setSystemTime(new Date('2026-08-18T12:05:00Z'))
+    vi.setSystemTime(new Date('2026-08-18T00:05:00Z'))
     const r = resolveForm7Access({ isAdmin: false, isPremium: false, freeWindow: window, attemptStatus: 'none', attemptId: null })
     expect(r.globalWindowExpired).toBe(true)
     expect(r.canStart).toBe(false)
@@ -216,9 +216,9 @@ describe('Non-premium promo window timing', () => {
     expect(r.lockReason).toBe('no-access')
   })
 
-  it('Test 22 — window duration is exactly 72 hours (259200 seconds)', () => {
+  it('Test 22 — window duration is exactly 60 hours (216000 seconds)', () => {
     const durationMs = new Date(FORM7_WINDOW_ENDS_AT).getTime() - new Date(FORM7_WINDOW_STARTS_AT).getTime()
-    expect(durationMs).toBe(72 * 60 * 60 * 1000)
+    expect(durationMs).toBe(60 * 60 * 60 * 1000)
   })
 })
 
