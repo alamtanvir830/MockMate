@@ -129,7 +129,7 @@ export async function POST(req: NextRequest) {
           canAccessRollingPromoFormApi(user.id, 7),
         ])
         if (!globalAllowed && !rollingAllowed) {
-          return NextResponse.json({ error: 'SAT Form 7 free access has expired.' }, { status: 403 })
+          return NextResponse.json({ error: 'SAT Form 7 free access has expired.', code: 'PROMO_ACCESS_EXPIRED' }, { status: 403 })
         }
       }
     }

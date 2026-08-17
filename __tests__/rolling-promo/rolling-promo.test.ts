@@ -45,7 +45,7 @@ describe('ROLLING_PROMO_CONFIG', () => {
   })
 
   it('C: promoStartsAt matches FORM7_WINDOW_ENDS_AT cutover', () => {
-    expect(ROLLING_PROMO_CONFIG.promoStartsAt).toBe('2026-08-18T00:05:00Z')
+    expect(ROLLING_PROMO_CONFIG.promoStartsAt).toBe('2026-08-17T19:00:00Z')
   })
 })
 
@@ -54,7 +54,7 @@ describe('ROLLING_PROMO_CONFIG', () => {
 describe('isRollingPromoLive', () => {
   it('D: returns false before promoStartsAt', () => {
     vi.useFakeTimers()
-    vi.setSystemTime(new Date('2026-08-17T23:59:59Z'))
+    vi.setSystemTime(new Date('2026-08-17T18:59:59Z'))
     expect(isRollingPromoLive()).toBe(false)
     vi.useRealTimers()
   })

@@ -97,23 +97,6 @@ export default async function SATForm7Page() {
     rollingAccess.canViewResult ||
     rollingAccess.canCompleteFeedback
 
-  // Global window expired + rolling promo also expired/absent → clean up in-progress row.
-  // Rolling promo users in an active window keep their in-progress data.
-  const rollingPromoActive = rollingAccess.accessSource === 'rolling-promo' && !rollingAccess.isExpired
-  if (
-    !isAdmin &&
-    !satUpgradeUnlocked &&
-    access.lockReason === 'no-access' &&
-    !rollingPromoActive &&
-    inProgressRow.data
-  ) {
-    await supabase
-      .from('sat_in_progress_attempts')
-      .delete()
-      .eq('user_id', user.id)
-      .eq('form_number', 7)
-  }
-
   if (hasAnyAccess) {
     // Prefer rolling promo expiresAt when it's the active source
     const freeWindowExpiresAt =
@@ -129,6 +112,17 @@ export default async function SATForm7Page() {
         isAdmin={isAdmin}
         freeWindowExpiresAt={freeWindowExpiresAt}
         showCountdown={showCountdown}
+      />
+    )
+  }
+
+  // Non-premium user with an unfinished in-progress attempt whose promo window has expired.
+  // Preserve the attempt (do NOT delete) — Premium resume restores it via normal flow.
+  if (!isAdmin && !satUpgradeUnlocked && inProgressRow.data) {
+    return (
+      <UpgradeGate
+        title="Your free exam access has expired"
+        description="Your free exam access window has ended. Upgrade to SAT Premium to continue preparing with all 10 full-length adaptive SAT exams, 1,000+ SAT practice questions, the Reading & Writing Academy, Math & Desmos Academy, and personalized score reports."
       />
     )
   }

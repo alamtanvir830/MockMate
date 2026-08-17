@@ -1001,6 +1001,9 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
   // True when the server rejects a save with 409 (stale content version).
   // The exam has been updated since this tab was opened — user must reload.
   const [showStaleContentBanner, setShowStaleContentBanner] = useState(false)
+  // True when the server returns 403 PROMO_ACCESS_EXPIRED — free window ended mid-exam.
+  // Stops all further saves/retries and shows the paywall overlay.
+  const [promoAccessExpired, setPromoAccessExpired] = useState(false)
 
   const rwSection = form.sections[0]
   const mathSection = form.sections[1]
@@ -1119,6 +1122,19 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
         setShowStaleContentBanner(true)
         setSaveStatus('error')
         return
+      }
+      // 403 PROMO_ACCESS_EXPIRED means the free access window ended mid-exam.
+      // Stop all retries and show the paywall overlay — do NOT loop "Unable to save".
+      if (res.status === 403) {
+        let code: string | undefined
+        try { code = (await res.json() as { code?: string }).code } catch { /* ignore */ }
+        if (code === 'PROMO_ACCESS_EXPIRED') {
+          if (saveRetryTimerRef.current) clearTimeout(saveRetryTimerRef.current)
+          saveRetryCountRef.current = 99
+          setPromoAccessExpired(true)
+          setSaveStatus('error')
+          return
+        }
       }
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       setSaveStatus('saved')
@@ -1609,6 +1625,51 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
     setFeedbackSubmitting(false); setFeedbackError('')
   }, [])
 
+
+  // ─── Promo-access-expired overlay ────────────────────────────────────────────
+  // Shown when the server returns 403 PROMO_ACCESS_EXPIRED on an autosave.
+  // Covers the exam UI; directs user to upgrade without destroying saved progress.
+  if (promoAccessExpired) {
+    return (
+      <div className="fixed inset-0 z-[100] bg-white flex items-center justify-center p-6">
+        <div className="max-w-md w-full bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
+          <div className="bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 px-6 py-8 text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white/15">
+              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} className="h-7 w-7 text-white">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-bold text-white">Your free exam access has expired</h2>
+          </div>
+          <div className="px-6 py-5 space-y-4">
+            <p className="text-[13px] text-slate-600 leading-relaxed">
+              Your free exam access window has ended. Upgrade to SAT Premium to continue preparing with all 10 full-length adaptive SAT exams, 1,000+ SAT practice questions, the Reading &amp; Writing Academy, Math &amp; Desmos Academy, and personalized score reports.
+            </p>
+            <p className="text-[12px] text-slate-500 bg-slate-50 rounded-lg px-3 py-2.5 border border-slate-200">
+              Your progress has been saved. If you upgrade to SAT Premium, you can resume this exam from where you left off.
+            </p>
+            <button
+              onClick={async () => {
+                try {
+                  const res = await fetch('/api/stripe/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                  })
+                  if (res.ok) {
+                    const { url } = await res.json() as { url: string }
+                    window.location.href = url
+                  }
+                } catch { /* ignore — user can retry */ }
+              }}
+              className="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold text-[15px] py-3 rounded-xl transition-colors"
+            >
+              View SAT Premium
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   // ─────────────────────────────────────────────────────────────────────────
   // PHASE: WELCOME
