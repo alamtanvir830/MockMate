@@ -9,6 +9,9 @@ import {
   resolveForm7Access,
 } from '@/lib/premade-exams/sat/form7-access'
 import type { Form7AttemptStatus } from '@/lib/premade-exams/sat/form7-access'
+import {
+  resolveRollingPromoAccess,
+} from '@/lib/premade-exams/sat/rolling-promo'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,7 +28,7 @@ export default async function SATForm7Page() {
 
   const freeWindow = getForm7FreeWindow()
 
-  const [inProgressRow, completedRow] = await Promise.all([
+  const [inProgressRow, completedRow, rollingPromoRow] = await Promise.all([
     supabase
       .from('sat_in_progress_attempts')
       .select('local_attempt_id, started_at')
@@ -41,6 +44,14 @@ export default async function SATForm7Page() {
       .not('completed_at', 'is', null)
       .order('completed_at', { ascending: false })
       .limit(1)
+      .maybeSingle(),
+    // Read rolling promo row (SELECT only — creation happens on dashboard visit).
+    // Only users with promo_form_number=7 in the DB row can access via this path.
+    supabase
+      .from('sat_rolling_promo_access')
+      .select('user_id, email, promo_form_number, access_started_at, access_expires_at, reason')
+      .eq('user_id', user.id)
+      .eq('promo_form_number', 7)
       .maybeSingle(),
   ])
 
@@ -67,12 +78,33 @@ export default async function SATForm7Page() {
     inProgressStartedAt: inProgressRow.data?.started_at ?? null,
   })
 
-  // Window expired and access denied — delete in-progress row so expired attempt
-  // data is not retained. Completed results are unaffected (separate table).
+  // Check rolling promo access (only relevant after the global window expires)
+  const rollingAccess = resolveRollingPromoAccess({
+    isAdmin,
+    isPremium: satUpgradeUnlocked,
+    promoRow: rollingPromoRow.data ?? null,
+    attemptStatus,
+    attemptId,
+  })
+
+  const hasAnyAccess =
+    access.canStart ||
+    access.canResume ||
+    access.canViewResult ||
+    access.canCompleteFeedback ||
+    rollingAccess.canStart ||
+    rollingAccess.canResume ||
+    rollingAccess.canViewResult ||
+    rollingAccess.canCompleteFeedback
+
+  // Global window expired + rolling promo also expired/absent → clean up in-progress row.
+  // Rolling promo users in an active window keep their in-progress data.
+  const rollingPromoActive = rollingAccess.accessSource === 'rolling-promo' && !rollingAccess.isExpired
   if (
     !isAdmin &&
     !satUpgradeUnlocked &&
     access.lockReason === 'no-access' &&
+    !rollingPromoActive &&
     inProgressRow.data
   ) {
     await supabase
@@ -82,17 +114,21 @@ export default async function SATForm7Page() {
       .eq('form_number', 7)
   }
 
-  if (
-    access.canStart ||
-    access.canResume ||
-    access.canViewResult ||
-    access.canCompleteFeedback
-  ) {
+  if (hasAnyAccess) {
+    // Prefer rolling promo expiresAt when it's the active source
+    const freeWindowExpiresAt =
+      rollingAccess.accessSource === 'rolling-promo'
+        ? rollingAccess.expiresAt
+        : access.freeWindowExpiresAt
+    const showCountdown =
+      access.accessSource === 'free-window' ||
+      rollingAccess.accessSource === 'rolling-promo'
+
     return (
       <SATExamTakerClient
         isAdmin={isAdmin}
-        freeWindowExpiresAt={access.freeWindowExpiresAt}
-        showCountdown={access.accessSource === 'free-window'}
+        freeWindowExpiresAt={freeWindowExpiresAt}
+        showCountdown={showCountdown}
       />
     )
   }

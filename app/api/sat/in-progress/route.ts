@@ -157,13 +157,17 @@ export async function POST(req: NextRequest) {
   }
 
   // Form 7: admin or Premium always allowed.
-  // Non-premium users may autosave during the active free window.
+  // Non-premium users may autosave during the active global window OR their rolling promo window.
   if (body.formNumber === 7 && !isAdmin) {
     const { satUpgradeUnlocked } = await getEntitlements()
     if (!satUpgradeUnlocked) {
       const { canNonPremiumAccessForm7Api } = await import('@/lib/premade-exams/sat/form7-access')
-      const allowed = await canNonPremiumAccessForm7Api(user.id)
-      if (!allowed) {
+      const { canAccessRollingPromoFormApi } = await import('@/lib/premade-exams/sat/rolling-promo')
+      const [globalAllowed, rollingAllowed] = await Promise.all([
+        canNonPremiumAccessForm7Api(user.id),
+        canAccessRollingPromoFormApi(user.id, 7),
+      ])
+      if (!globalAllowed && !rollingAllowed) {
         return NextResponse.json({ error: 'SAT Form 7 free access has expired.' }, { status: 403 })
       }
     }

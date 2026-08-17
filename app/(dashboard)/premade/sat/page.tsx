@@ -36,6 +36,12 @@ import {
   resolveForm7Access,
 } from '@/lib/premade-exams/sat/form7-access'
 import type { Form7AttemptStatus } from '@/lib/premade-exams/sat/form7-access'
+import { RollingPromoCountdownBanner, RollingPromoCountdownBadge } from '@/components/sat/RollingPromoCountdown'
+import {
+  resolveRollingPromoAccess,
+  isRollingPromoLive,
+} from '@/lib/premade-exams/sat/rolling-promo'
+import type { RollingPromoAccessRow } from '@/lib/premade-exams/sat/rolling-promo'
 
 export const dynamic = 'force-dynamic'
 
@@ -107,6 +113,7 @@ export default async function SATPremadePage() {
   let form7InProgressAttemptId: string | null = null
   let form7InProgressStartedAt: string | null = null
   let form7FreeWindow = null as ReturnType<typeof getForm7FreeWindow>
+  let form7RollingPromoRow: RollingPromoAccessRow | null = null
 
   // Forms 8–10 state
   let form8ResultsAttemptId: string | null = null
@@ -212,6 +219,7 @@ export default async function SATPremadePage() {
       form8CompletedRow,
       form9CompletedRow,
       form10CompletedRow,
+      form7RollingPromoResult,
     ] = await Promise.all([
       supabase
         .from('standardized_exam_attempts')
@@ -241,6 +249,15 @@ export default async function SATPremadePage() {
         .select('local_attempt_id')
         .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 10)
         .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
+      // Read rolling promo row if the promo period has started (SELECT only — dashboard creates it)
+      isRollingPromoLive()
+        ? supabase
+            .from('sat_rolling_promo_access')
+            .select('user_id, email, promo_form_number, access_started_at, access_expires_at, reason')
+            .eq('user_id', user.id)
+            .eq('promo_form_number', 7)
+            .maybeSingle()
+        : Promise.resolve({ data: null, error: null }),
     ])
 
     form7ResultsAttemptId   = form7CompletedRow.data?.local_attempt_id   ?? null
@@ -248,6 +265,7 @@ export default async function SATPremadePage() {
     form7InProgressAttemptId = form7InProgressRow.data?.local_attempt_id ?? null
     form7InProgressStartedAt = form7InProgressRow.data?.started_at       ?? null
     form7FreeWindow          = getForm7FreeWindow()
+    form7RollingPromoRow     = (form7RollingPromoResult.data as RollingPromoAccessRow | null) ?? null
     const f7row = form7FeedbackQueryRow.data as { local_attempt_id: string; ai_feedback: unknown } | null
     if (f7row && !f7row.ai_feedback) {
       form7FeedbackRequired = true
@@ -402,6 +420,14 @@ export default async function SATPremadePage() {
     inProgressStartedAt: form7InProgressStartedAt,
   })
 
+  const form7RollingAccess = resolveRollingPromoAccess({
+    isAdmin,
+    isPremium: satUpgradeUnlocked,
+    promoRow: form7RollingPromoRow,
+    attemptStatus: form7AttemptStatus,
+    attemptId: form7AttemptId,
+  })
+
   return (
     <div className="py-10">
       <div className="flex items-center gap-2 text-sm text-slate-500 mb-6">
@@ -473,6 +499,11 @@ export default async function SATPremadePage() {
       {/* Form 7 global countdown banner */}
       {form7Access.freeWindowExpiresAt && form7Access.accessSource === 'free-window' && (
         <Form7CountdownBanner expiresAt={form7Access.freeWindowExpiresAt} />
+      )}
+
+      {/* Form 7 rolling promo countdown banner (per-user 36-hour, after global window ends) */}
+      {form7RollingAccess.expiresAt && form7RollingAccess.accessSource === 'rolling-promo' && (
+        <RollingPromoCountdownBanner expiresAt={form7RollingAccess.expiresAt} formNumber={7} />
       )}
 
       <ExamHistoryNotice />
@@ -1114,7 +1145,7 @@ export default async function SATPremadePage() {
           </div>
         )}
 
-        {/* ── Form 7 — global 72-hour free window ───────────────────────── */}
+        {/* ── Form 7 — global 72-hour free window + rolling per-user promo ─ */}
         {form7ResultsAttemptId && form7FeedbackRequired ? (
           <div className="rounded-xl border border-amber-200 bg-white p-5 flex flex-col">
             <div className="flex items-start justify-between mb-3">
@@ -1145,7 +1176,7 @@ export default async function SATPremadePage() {
               View Results →
             </Link>
           </div>
-        ) : form7Access.canResume ? (
+        ) : (form7Access.canResume || form7RollingAccess.canResume) ? (
           <Link href="/premade/sat/form-7" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
@@ -1155,6 +1186,11 @@ export default async function SATPremadePage() {
             </div>
             <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 7</h2>
             <p className="text-xs text-slate-400">Resume where you left off.</p>
+            {form7RollingAccess.expiresAt && form7RollingAccess.accessSource === 'rolling-promo' && (
+              <div className="mt-1 mb-1">
+                <RollingPromoCountdownBadge expiresAt={form7RollingAccess.expiresAt} />
+              </div>
+            )}
             <SatExamDetails />
             <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
               Resume SAT Form 7 →
@@ -1196,7 +1232,7 @@ export default async function SATPremadePage() {
             </span>
           </Link>
         ) : user && !isAdmin && !satUpgradeUnlocked && form7FreeWindow && new Date(form7FreeWindow.startsAt) <= new Date() && new Date() < new Date(form7FreeWindow.expiresAt) && form7AttemptStatus === 'none' ? (
-          // Active free window but no attempt yet — show free window card
+          // Active global free window but no attempt yet — show free window card
           <Link href="/premade/sat/form-7" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-2">
               <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
@@ -1211,6 +1247,27 @@ export default async function SATPremadePage() {
             )}
             <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 7</h2>
             <p className="text-[11px] text-brand-700">Start to begin your 72-hour free access window.</p>
+            <SatExamDetails />
+            <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-600 transition-colors">
+              Take Form 7 Free →
+            </span>
+          </Link>
+        ) : form7RollingAccess.canStart ? (
+          // Rolling per-user 36-hour promo — window active, no attempt yet
+          <Link href="/premade/sat/form-7" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
+            <div className="flex items-start justify-between mb-2">
+              <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                <span className="text-sm font-bold text-brand-600">7</span>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">Free for 36 Hours</span>
+            </div>
+            {form7RollingAccess.expiresAt && (
+              <div className="mb-2">
+                <RollingPromoCountdownBadge expiresAt={form7RollingAccess.expiresAt} />
+              </div>
+            )}
+            <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 7</h2>
+            <p className="text-[11px] text-brand-700">Your personal 36-hour free window is running.</p>
             <SatExamDetails />
             <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-600 transition-colors">
               Take Form 7 Free →
