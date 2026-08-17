@@ -151,17 +151,17 @@ export const f7MathModule2EasyQuestionsV4: MathQuestion[] = [
     type: 'multiple_choice',
     question: 'Which value of x satisfies the inequality 3x − 4 ≤ 14?',
     choices: [
-      { label: 'A', text: '7' },
-      { label: 'B', text: '8' },
-      { label: 'C', text: '6' },
+      { label: 'A', text: '6' },
+      { label: 'B', text: '7' },
+      { label: 'C', text: '8' },
       { label: 'D', text: '9' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'A',
     explanation:
       'Solve: 3x − 4 ≤ 14 → 3x ≤ 18 → x ≤ 6. The only choice not exceeding 6 is x = 6. Check: 3(6) − 4 = 14 ≤ 14. ✓',
     wrongAnswerExplanations: {
-      A: 'x = 7 gives 3(7) − 4 = 21 − 4 = 17, which is greater than 14. The inequality requires x ≤ 6.',
-      B: 'x = 8 gives 3(8) − 4 = 24 − 4 = 20, which is greater than 14. The inequality requires x ≤ 6.',
+      B: 'x = 7 gives 3(7) − 4 = 21 − 4 = 17, which is greater than 14. The inequality requires x ≤ 6.',
+      C: 'x = 8 gives 3(8) − 4 = 24 − 4 = 20, which is greater than 14. The inequality requires x ≤ 6.',
       D: 'x = 9 gives 3(9) − 4 = 27 − 4 = 23, which is greater than 14. The inequality requires x ≤ 6.',
     },
   },

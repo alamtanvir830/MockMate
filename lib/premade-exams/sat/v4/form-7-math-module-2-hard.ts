@@ -149,7 +149,6 @@ export const f7MathModule2HardQuestionsV4: MathQuestion[] = [
     explanation:
       'Factor the denominators: x² − 9 = (x − 3)(x + 3) and x² − x − 6 = (x − 3)(x + 2). The first fraction becomes (x − 3)(x + 3)/[(x − 3)(x + 2)] = (x + 3)/(x + 2), valid for x ≠ 3. Now both fractions share the denominator (x + 2): (x + 3)/(x + 2) + (x − 2)/(x + 2) = (x + 3 + x − 2)/(x + 2) = (2x + 1)/(x + 2). Verify at x = 1: (−8)/(−6) + (−1)/3 = 4/3 − 1/3 = 1, and (2(1)+1)/(1+2) = 3/3 = 1 ✓.',
     wrongAnswerExplanations: {
-      A: '',
       B: '(x + 1)/(x − 3) comes from incorrectly cancelling (x + 2) factors in the sum rather than combining over a common denominator.',
       C: '(2x − 1)/(x − 2) results from a sign error when combining the numerators: writing (x + 3) + (x − 2) = 2x − 1 instead of 2x + 1.',
       D: '(x² − 4)/(x² − x − 6) is found by adding the original numerators without first simplifying the first fraction — a failure to cancel the (x − 3) factor.',
@@ -157,15 +156,11 @@ export const f7MathModule2HardQuestionsV4: MathQuestion[] = [
   },
 
   // ─── Q05 · 8/10 · Advanced Math · Nonlinear equations in one variable ─────────
-  // VERIFY: Solve √(3x + 4) = x − 2. Square both sides: 3x + 4 = x² − 4x + 4 → x² − 7x = 0 → x(x−7) = 0.
-  // Solutions: x = 0 or x = 7.
-  // Check x = 0: √(0+4) = 2 but 0 − 2 = −2. 2 ≠ −2. Extraneous ✗.
-  // Check x = 7: √(21+4) = √25 = 5 and 7 − 2 = 5. 5 = 5 ✓.
-  // Only solution x = 7.
-  // Now ask: what is the extraneous solution value + valid solution value = 0 + 7 = 7.
-  // Or ask: what is the sum of ALL solutions to the equation before checking domain? 0 + 7 = 7.
-  // Question asks for product of all values of x satisfying the squared equation minus the valid solution = 0 − 7 or something non-trivial.
-  // Better: ask what value(s) satisfy x² − 7x = 0 but not the original; answer is x = 0.
+  // VERIFY: Solve √(x + 6) = x. Square both sides: x + 6 = x² → x² − x − 6 = 0 → (x − 3)(x + 2) = 0.
+  // Solutions to squared equation: x = 3 or x = −2.
+  // Check x = −2: √(−2 + 6) = √4 = 2, but right side = −2. 2 ≠ −2. Extraneous ✗.
+  // Check x = 3: √(3 + 6) = √9 = 3, and right side = 3. 3 = 3. ✓
+  // Only valid solution: x = 3. Sum of valid solutions = 3.
   {
     id: 'sat-f7-v4-math-m2h-q05',
     section: 'math',
@@ -175,20 +170,20 @@ export const f7MathModule2HardQuestionsV4: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'How many real solutions does the equation √(3x + 4) = x − 2 have, and what is the sum of those solutions?',
+      'How many real solutions does the equation √(x + 6) = x have, and what is the sum of those solutions?',
     choices: [
-      { label: 'A', text: 'One solution; sum is 7' },
-      { label: 'B', text: 'Two solutions; sum is 7' },
-      { label: 'C', text: 'One solution; sum is 0' },
-      { label: 'D', text: 'Two solutions; sum is 0' },
+      { label: 'A', text: 'One solution; sum is 3' },
+      { label: 'B', text: 'Two solutions; sum is 1' },
+      { label: 'C', text: 'One solution; sum is −2' },
+      { label: 'D', text: 'Two solutions; sum is 3' },
     ],
     correctAnswer: 'A',
     explanation:
-      'Squaring both sides: 3x + 4 = (x − 2)² = x² − 4x + 4, which gives x² − 7x = 0, so x(x − 7) = 0, yielding x = 0 or x = 7. Check x = 0: √4 = 2 but 0 − 2 = −2; since 2 ≠ −2, x = 0 is extraneous. Check x = 7: √25 = 5 and 7 − 2 = 5 ✓. There is exactly one real solution, x = 7, and its sum is 7. Note: the domain restriction requires x − 2 ≥ 0, i.e., x ≥ 2, which immediately rules out x = 0.',
+      'Square both sides: x + 6 = x², so x² − x − 6 = 0, which factors as (x − 3)(x + 2) = 0, giving x = 3 or x = −2. Check x = −2: √(−2 + 6) = √4 = 2, but the right side is −2; since 2 ≠ −2, x = −2 is extraneous. Check x = 3: √(3 + 6) = √9 = 3 ✓. There is exactly one real solution, x = 3, with sum 3. Note: the square root is always non-negative, so x = √(x+6) ≥ 0, which immediately rules out x = −2.',
     wrongAnswerExplanations: {
-      B: 'Two solutions with sum 7 results from accepting both x = 0 and x = 7 without checking for extraneous roots — a common error when squaring equations.',
-      C: 'One solution with sum 0 results from correctly identifying one solution but mistakenly choosing x = 0 (the extraneous root) instead of x = 7.',
-      D: 'Two solutions with sum 0 would arise only if the solutions were opposites; this would require x = ±k, which is not the case here.',
+      B: 'Two solutions with sum 1 results from accepting both x = 3 and x = −2 (sum = 3 + (−2) = 1) without checking for extraneous roots. Since √(x+6) ≥ 0, the solution x = −2 fails: √4 = 2 ≠ −2.',
+      C: 'One solution with sum −2 results from keeping the extraneous root x = −2 and discarding the valid root x = 3. Always substitute back into the original equation — x = 3 satisfies √9 = 3 ✓, while x = −2 gives √4 = 2 ≠ −2.',
+      D: 'Two solutions with sum 3 would require two valid roots that sum to 3; however, only x = 3 satisfies the original equation.',
     },
   },
 
@@ -499,24 +494,17 @@ export const f7MathModule2HardQuestionsV4: MathQuestion[] = [
   // ─── Q14 · 8-9/10 · Problem-Solving and Data Analysis · Percentages ─────────────
   // VERIFY: Price A = P. Increases by 20%: new price = 1.2P.
   // Then decreases by d%: final = 1.2P · (1 − d/100) = P · 0.96 (a 4% net decrease).
-  // 1.2(1 − d/100) = 0.96 → 1 − d/100 = 0.96/1.2 = 0.8 → d/100 = 0.2 → d = 20.
-  //
-  // Twist: Store B starts at 1.5P, decreases by 30%, then increases by r%.
-  // After decrease: 1.5P · 0.70 = 1.05P. After increase: 1.05P · (1 + r/100).
-  // Both stores end at the same final price: 1.05P(1 + r/100) = 0.96P.
-  // 1 + r/100 = 0.96/1.05 = 32/35. r/100 = −3/35. r is negative — a decrease!
-  // So Store B must decrease further: 1 − r/100 = 32/35? Let Store B's second change be a decrease of r%.
-  // 1.05P(1 − r/100) = 0.96P → 1 − r/100 = 96/105 = 32/35 → r/100 = 3/35 → r = 60/7 ≈ 8.57. Non-integer.
-  // Redesign: ask only about the single-store problem. What percent decrease brings 120% of P back to P?
-  // 1.2P(1−d/100)=P → d=100/6 ≈ 16.67%. Ugly. Use: back to 90% of P.
-  // 1.2P(1−d/100) = 0.9P → 1−d/100 = 0.75 → d = 25.
-  // Combine with a second twist: after the 25% decrease, what single percent increase returns to 1.2P?
-  // 0.9P(1+r/100)=1.2P → 1+r/100 = 4/3 → r = 100/3 ≈ 33.33%. Non-integer.
-  // Final clean design: Three-step percent problem.
-  // A laptop costs $800. After a 25% increase, then a 20% decrease, then a tax of 10%, what is the final price?
-  // $800 × 1.25 = $1000. × 0.80 = $800. × 1.10 = $880. Answer = $880.
-  // Question asks what percentage of the original $800 is the final price: 880/800 = 110%. An 10% net increase.
-  // Make it harder: ask for the minimum percent increase in step 3 if the final price must exceed $850.
+  // VERIFY: A jacket is marked up 25%, then marked down 20% from the marked-up price.
+  // Net factor: 1.25 × 0.80 = 1.00. Final price = 100% of original → 0% net change.
+  // The counterintuitive result is that the compounded changes cancel each other exactly.
+  // Choices test three specific misconceptions:
+  //   A ($96): Only reverses the 25% increase — ignores the 20% decrease.
+  //   B ($114): Treats net change as a simple +5% (adds 25 − 20), so original = 120/1.05 ≈ 114.
+  //   C ($120): Correct — 1.25 × 0.80 = 1.00, so final equals original.
+  //   D ($150): Only reverses the 20% decrease — ignores the 25% increase.
+  // Verify C: 120 × 1.25 = 150; 150 × 0.80 = 120 ✓.
+  // Verify A is wrong: 96 × 1.25 = 120; 120 × 0.80 = 96 ≠ 120 ✗.
+  // Verify D is wrong: 150 × 1.25 = 187.50; 187.50 × 0.80 = 150 ≠ 120 ✗.
   {
     id: 'sat-f7-v4-math-m2h-q14',
     section: 'math',
@@ -526,20 +514,20 @@ export const f7MathModule2HardQuestionsV4: MathQuestion[] = [
     difficulty: 'hard',
     type: 'multiple_choice',
     question:
-      'The price of a jacket was increased by 25%, then decreased by 20%. If the price after these two changes is $120, what was the original price of the jacket, and what single percent change from the original price equals this final price?',
+      'The price of a jacket was first increased by 25%, then decreased by 20% from the increased price. The final price is $120. What was the original price of the jacket, in dollars?',
     choices: [
-      { label: 'A', text: 'Original price $120; 0% change' },
-      { label: 'B', text: 'Original price $120; no change' },
-      { label: 'C', text: 'Original price $96; 25% increase' },
-      { label: 'D', text: 'Original price $120; the final price equals the original price' },
+      { label: 'A', text: '$96' },
+      { label: 'B', text: '$114' },
+      { label: 'C', text: '$120' },
+      { label: 'D', text: '$150' },
     ],
-    correctAnswer: 'D',
+    correctAnswer: 'C',
     explanation:
-      'Let the original price be P. After a 25% increase: 1.25P. After a 20% decrease: 1.25P × 0.80 = 1.00P. So the final price equals the original price. Since the final price is $120, the original price was also $120. The net effect of a 25% increase followed by a 20% decrease is 1.25 × 0.80 = 1.00, which is a 0% net change. All of A, B, and D say the original is $120; D most precisely explains why.',
+      'Let P be the original price. After a 25% increase: 1.25P. After a 20% decrease from that: 1.25P × 0.80 = 1.00P. The two changes cancel exactly, so the final price equals the original price. Since the final price is $120, the original price was also $120. Verify: $120 × 1.25 = $150; $150 × 0.80 = $120 ✓. The key insight is that a 25% increase followed by a 20% decrease does NOT produce a 5% net change — it produces a 0% net change because the 20% decrease is applied to the already-inflated price.',
     wrongAnswerExplanations: {
-      A: 'Choice A states the correct original price and that there is a 0% change, which is accurate. However, D provides a more complete and explanatory statement of the same fact and is the best answer in context.',
-      B: 'Choice B is essentially equivalent to D but less precise about what "no change" means quantitatively.',
-      C: 'Original price $96 results from computing: final/(1.25 − 0.20) = 120/1.05 ≈ 114, or from working backward incorrectly as 120/(1.25 + 0.20) = 120/1.45 ≈ 83, or confusing the operations. A 25% increase from $96 would give $120, but then the 20% decrease gives $96, not $120.',
+      A: '$96 results from reversing only the 25% increase: $120 ÷ 1.25 = $96. This ignores the 20% decrease. Verify that $96 is wrong: $96 × 1.25 = $120, then $120 × 0.80 = $96 ≠ $120.',
+      B: '$114 results from treating the two percent changes as a simple sum: 25% − 20% = 5% net increase, giving $120 ÷ 1.05 ≈ $114. Percent changes compound multiplicatively, not additively: the net factor is 1.25 × 0.80 = 1.00, not 1.05.',
+      D: '$150 results from reversing only the 20% decrease: $120 ÷ 0.80 = $150. This ignores the 25% increase. Verify: $150 × 1.25 = $187.50, then $187.50 × 0.80 = $150 ≠ $120.',
     },
   },
 
