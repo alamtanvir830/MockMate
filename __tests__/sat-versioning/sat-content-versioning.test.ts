@@ -655,3 +655,88 @@ describe('Form 7 V4 module structure', () => {
     expect(satForm7V4).not.toBe(getSatForm(7, 2))
   })
 })
+
+// ─── V4 save-path regression (DB constraint bug) ─────────────────────────────
+//
+// Root cause: content_version CHECK constraint in production only allowed
+// values 1, 2, 3. Any write with content_version=4 was rejected by the DB,
+// causing the API to return 500 and the client to show "Unable to save".
+//
+// These tests prove that the full TypeScript save-path for Form 7 V4 produces
+// and preserves content_version=4 without being normalized away.
+
+describe('Form 7 V4 save-path regression', () => {
+  it('getLatestSatContentVersion(7) returns 4 — this is what the autosave sends', () => {
+    expect(getLatestSatContentVersion(7)).toBe(4)
+  })
+
+  it('normalizeSatContentVersion(4) returns 4 — V4 is not normalized away', () => {
+    expect(normalizeSatContentVersion(4)).toBe(4)
+  })
+
+  it('normalizeSatContentVersion(4) !== 2 — V4 does not silently become V2', () => {
+    expect(normalizeSatContentVersion(4)).not.toBe(2)
+  })
+
+  it('normalizeSatContentVersion(4) !== 3 — V4 does not silently become V3', () => {
+    expect(normalizeSatContentVersion(4)).not.toBe(3)
+  })
+
+  it('getSatForm(7, 4) returns the V4 form — resolver delivers V4 content', () => {
+    expect(getSatForm(7, 4)).toBe(satForm7V4)
+  })
+
+  it('getSatForm(7, getLatestSatContentVersion(7)) returns V4 — end-to-end', () => {
+    expect(getSatForm(7, getLatestSatContentVersion(7))).toBe(satForm7V4)
+  })
+
+  it('isAttemptStaleForForm(7, 4) is false — a V4 in-progress attempt is NOT stale', () => {
+    expect(isAttemptStaleForForm(7, 4)).toBe(false)
+  })
+
+  it('isAttemptStaleForForm(7, 3) is true — a V3 in-progress attempt IS stale and must restart', () => {
+    expect(isAttemptStaleForForm(7, 3)).toBe(true)
+  })
+
+  it('isAttemptStaleForForm(7, 2) is true — a V2 in-progress attempt IS stale', () => {
+    expect(isAttemptStaleForForm(7, 2)).toBe(true)
+  })
+
+  it('isAttemptStaleForForm(7, 1) is true — a V1 in-progress attempt IS stale', () => {
+    expect(isAttemptStaleForForm(7, 1)).toBe(true)
+  })
+
+  it('completed Form 7 V2 result review resolves to V2 form (not V4) — immutable', () => {
+    const stored = { contentVersion: 2 }
+    const resolvedVersion = normalizeSatContentVersion(stored.contentVersion)
+    const form = getSatForm(7, resolvedVersion)
+    expect(form).not.toBe(satForm7V4)
+    expect(form).not.toBe(satForm7V3)
+    expect(resolvedVersion).toBe(2)
+  })
+
+  it('completed Form 7 V3 result review resolves to V3 form (not V4) — immutable', () => {
+    const stored = { contentVersion: 3 }
+    const resolvedVersion = normalizeSatContentVersion(stored.contentVersion)
+    const form = getSatForm(7, resolvedVersion)
+    expect(form).toBe(satForm7V3)
+    expect(form).not.toBe(satForm7V4)
+  })
+
+  it('Forms 1–6, 8–10 fresh attempts use V2 (not V4) — no version inflation', () => {
+    for (const f of [1, 2, 3, 4, 5, 6, 8, 9, 10]) {
+      expect(getLatestSatContentVersion(f), `Form ${f} should produce V2`).toBe(2)
+    }
+  })
+
+  it('Form 7 fresh attempt version (4) passes the stale guard — API would accept it', () => {
+    const version = getLatestSatContentVersion(7)
+    const isStale = isAttemptStaleForForm(7, version)
+    expect(version).toBe(4)
+    expect(isStale).toBe(false)
+  })
+
+  it('FORM_MINIMUM_VERSION[7] equals getLatestSatContentVersion(7) — no gap between min and latest', () => {
+    expect(FORM_MINIMUM_VERSION[7]).toBe(getLatestSatContentVersion(7))
+  })
+})
