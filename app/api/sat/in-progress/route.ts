@@ -18,7 +18,7 @@ interface InProgressBody {
   currentQuestionIdx: number | null
   secsLeft: number | null
   timerRunning: boolean
-  contentVersion?: 1 | 2 | 3
+  contentVersion?: 1 | 2 | 3 | 4
 }
 
 function isValidFormNumber(n: unknown): n is number {
@@ -66,7 +66,7 @@ export async function GET(req: NextRequest) {
       moduleDeadlineAt: data.module_deadline_at as string | null,
       startedAt: data.started_at as string,
       // null / missing → undefined → normalizes to V1 at the client
-      contentVersion: (data.content_version ?? undefined) as 1 | 2 | 3 | undefined,
+      contentVersion: (data.content_version ?? undefined) as 1 | 2 | 3 | 4 | undefined,
     },
   })
 }

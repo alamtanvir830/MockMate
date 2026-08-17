@@ -36,7 +36,7 @@ interface SaveAttemptBody {
   submittedAnswers: Record<string, string>
   completedAt: string
   responses: QuestionResponse[]
-  contentVersion?: 1 | 2 | 3
+  contentVersion?: 1 | 2 | 3 | 4
 }
 
 interface UpdateFeedbackBody {

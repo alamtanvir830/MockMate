@@ -25,9 +25,13 @@ import { satForm8V2 } from './v2/form-8'
 import { satForm9V2 } from './v2/form-9'
 import { satForm10V2 } from './v2/form-10'
 
-// V3 forms (active generation for new attempts on rebuilt forms)
+// V3 forms (immutable — completed V3 attempts must resolve to these)
 // Only Form 7 has V3 content. All other forms fall through to V2.
 import { satForm7V3 } from './v3/form-7'
+
+// V4 forms (active generation for new attempts on rebuilt forms)
+// Only Form 7 has V4 content. All other forms fall through to V2.
+import { satForm7V4 } from './v4/form-7'
 
 const V1_FORMS: Record<number, SATForm> = {
   1: satForm1,
@@ -61,13 +65,19 @@ const V3_FORMS: Partial<Record<number, SATForm>> = {
   7: satForm7V3,
 }
 
+// Forms that have dedicated V4 content. For forms not listed here,
+// V4 requests fall through to V2 (same content, no disruption).
+const V4_FORMS: Partial<Record<number, SATForm>> = {
+  7: satForm7V4,
+}
+
 /**
  * Returns the SATForm for a given form number and content version.
  * The contentVersion must come from the stored attempt — never inferred
  * from current date, login state, or any other runtime signal.
  *
  * Missing / undefined contentVersion → V1 (backward-compatible).
- * V3 requests for forms without dedicated V3 content fall through to V2.
+ * V4/V3 requests for forms without dedicated content fall through to V2.
  */
 export function getSatForm(
   formNumber: number,
@@ -75,7 +85,9 @@ export function getSatForm(
 ): SATForm {
   const version = normalizeSatContentVersion(contentVersion)
   let form: SATForm | undefined
-  if (version === 3) {
+  if (version === 4) {
+    form = V4_FORMS[formNumber] ?? V2_FORMS[formNumber]
+  } else if (version === 3) {
     form = V3_FORMS[formNumber] ?? V2_FORMS[formNumber]
   } else if (version === 2) {
     form = V2_FORMS[formNumber]

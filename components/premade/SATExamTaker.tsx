@@ -928,7 +928,7 @@ interface InProgressData {
   currentQuestionIdx: number | null
   moduleDeadlineAt: string | null
   startedAt: string
-  contentVersion?: 1 | 2 | 3
+  contentVersion?: 1 | 2 | 3 | 4
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
