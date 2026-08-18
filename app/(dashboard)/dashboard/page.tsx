@@ -440,7 +440,7 @@ export default async function DashboardPage() {
       {user && showForm7Banner && (
         <Form7DashboardBanner
           expiresAt={form7Access.freeWindowExpiresAt!}
-          actionHref="/premade/sat/form-7"
+          actionHref="/premade/sat"
           actionLabel="Take Form 7 Free"
         />
       )}
@@ -450,7 +450,7 @@ export default async function DashboardPage() {
         <RollingPromoDashboardBanner
           expiresAt={rollingPromoAccess.expiresAt}
           formNumber={rollingPromoAccess.assignedFormNumber}
-          actionHref={`/premade/sat/form-${rollingPromoAccess.assignedFormNumber}`}
+          actionHref="/premade/sat"
           actionLabel={`Take Form ${rollingPromoAccess.assignedFormNumber} Free`}
         />
       )}
@@ -742,8 +742,8 @@ export default async function DashboardPage() {
 
             {/* SAT card action button */}
             <Link href={
-              showForm7Banner ? '/premade/sat/form-7' :
-              (showRollingPromoBanner && rollingPromoAccess?.assignedFormNumber) ? `/premade/sat/form-${rollingPromoAccess.assignedFormNumber}` :
+              showForm7Banner ? '/premade/sat' :
+              showRollingPromoBanner ? '/premade/sat' :
               showForm6Banner ? '/premade/sat/form-6' :
               '/premade/sat'
             }>

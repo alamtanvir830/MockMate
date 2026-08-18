@@ -38,10 +38,11 @@ import {
 import type { Form7AttemptStatus } from '@/lib/premade-exams/sat/form7-access'
 import { RollingPromoCountdownBanner, RollingPromoCountdownBadge } from '@/components/sat/RollingPromoCountdown'
 import {
+  ROLLING_PROMO_CONFIG,
   resolveRollingPromoAccess,
   isRollingPromoLive,
 } from '@/lib/premade-exams/sat/rolling-promo'
-import type { RollingPromoAccessRow } from '@/lib/premade-exams/sat/rolling-promo'
+import type { RollingPromoAccessRow, RollingPromoAttemptStatus } from '@/lib/premade-exams/sat/rolling-promo'
 
 export const dynamic = 'force-dynamic'
 
@@ -113,7 +114,10 @@ export default async function SATPremadePage() {
   let form7InProgressAttemptId: string | null = null
   let form7InProgressStartedAt: string | null = null
   let form7FreeWindow = null as ReturnType<typeof getForm7FreeWindow>
-  let form7RollingPromoRow: RollingPromoAccessRow | null = null
+  let rollingPromoRow: RollingPromoAccessRow | null = null
+  // In-progress state for the promo form when it's not Form 7 (Form 7 handled by form7HasInProgress)
+  let promoFormHasInProgress = false
+  let promoFormInProgressAttemptId: string | null = null
 
   // Forms 8–10 state
   let form8ResultsAttemptId: string | null = null
@@ -219,7 +223,8 @@ export default async function SATPremadePage() {
       form8CompletedRow,
       form9CompletedRow,
       form10CompletedRow,
-      form7RollingPromoResult,
+      rollingPromoResult,
+      promoFormInProgressResult,
     ] = await Promise.all([
       supabase
         .from('standardized_exam_attempts')
@@ -249,13 +254,22 @@ export default async function SATPremadePage() {
         .select('local_attempt_id')
         .eq('user_id', user.id).eq('exam_type', 'SAT').eq('form_number', 10)
         .not('completed_at', 'is', null).order('completed_at', { ascending: false }).limit(1).maybeSingle(),
-      // Read rolling promo row if the promo period has started (SELECT only — dashboard creates it)
+      // Read rolling promo row for the current campaign form (SELECT only — dashboard creates it)
       isRollingPromoLive()
         ? supabase
             .from('sat_rolling_promo_access')
             .select('user_id, email, promo_form_number, access_started_at, access_expires_at, reason')
             .eq('user_id', user.id)
-            .eq('promo_form_number', 7)
+            .eq('promo_form_number', ROLLING_PROMO_CONFIG.formNumber)
+            .maybeSingle()
+        : Promise.resolve({ data: null, error: null }),
+      // Fetch in-progress row for the promo form when it's not Form 7 (Form 7 is handled by form7InProgressRow)
+      isRollingPromoLive() && ROLLING_PROMO_CONFIG.formNumber !== 7
+        ? supabase
+            .from('sat_in_progress_attempts')
+            .select('local_attempt_id')
+            .eq('user_id', user.id)
+            .eq('form_number', ROLLING_PROMO_CONFIG.formNumber)
             .maybeSingle()
         : Promise.resolve({ data: null, error: null }),
     ])
@@ -265,7 +279,11 @@ export default async function SATPremadePage() {
     form7InProgressAttemptId = form7InProgressRow.data?.local_attempt_id ?? null
     form7InProgressStartedAt = form7InProgressRow.data?.started_at       ?? null
     form7FreeWindow          = getForm7FreeWindow()
-    form7RollingPromoRow     = (form7RollingPromoResult.data as RollingPromoAccessRow | null) ?? null
+    rollingPromoRow          = (rollingPromoResult.data as RollingPromoAccessRow | null) ?? null
+    if (ROLLING_PROMO_CONFIG.formNumber !== 7) {
+      promoFormHasInProgress = !!(promoFormInProgressResult.data)
+      promoFormInProgressAttemptId = (promoFormInProgressResult.data as { local_attempt_id: string } | null)?.local_attempt_id ?? null
+    }
     const f7row = form7FeedbackQueryRow.data as { local_attempt_id: string; ai_feedback: unknown } | null
     if (f7row && !f7row.ai_feedback) {
       form7FeedbackRequired = true
@@ -420,12 +438,27 @@ export default async function SATPremadePage() {
     inProgressStartedAt: form7InProgressStartedAt,
   })
 
-  const form7RollingAccess = resolveRollingPromoAccess({
+  // Compute attempt status and ID for whichever form is the current promo
+  const promoFormN = ROLLING_PROMO_CONFIG.formNumber
+  const promoFormResultsAttemptId =
+    promoFormN === 7 ? form7ResultsAttemptId :
+    promoFormN === 8 ? form8ResultsAttemptId :
+    promoFormN === 9 ? form9ResultsAttemptId :
+    form10ResultsAttemptId
+  const promoHasInProgress = promoFormN === 7 ? form7HasInProgress : promoFormHasInProgress
+  const promoAttemptStatus: RollingPromoAttemptStatus =
+    promoFormN === 7 ? form7AttemptStatus :
+    (promoFormResultsAttemptId ? 'completed' : promoHasInProgress ? 'in-progress' : 'none')
+  const promoAttemptId =
+    promoFormN === 7 ? form7AttemptId :
+    (promoFormResultsAttemptId ?? promoFormInProgressAttemptId)
+
+  const rollingPromoAccess = resolveRollingPromoAccess({
     isAdmin,
     isPremium: satUpgradeUnlocked,
-    promoRow: form7RollingPromoRow,
-    attemptStatus: form7AttemptStatus,
-    attemptId: form7AttemptId,
+    promoRow: rollingPromoRow,
+    attemptStatus: promoAttemptStatus,
+    attemptId: promoAttemptId,
   })
 
   return (
@@ -502,8 +535,8 @@ export default async function SATPremadePage() {
       )}
 
       {/* Form 7 rolling promo countdown banner (per-user 24-hour, after global window ends) */}
-      {form7RollingAccess.expiresAt && form7RollingAccess.accessSource === 'rolling-promo' && (
-        <RollingPromoCountdownBanner expiresAt={form7RollingAccess.expiresAt} formNumber={7} />
+      {rollingPromoAccess.expiresAt && rollingPromoAccess.accessSource === 'rolling-promo' && rollingPromoAccess.assignedFormNumber && (
+        <RollingPromoCountdownBanner expiresAt={rollingPromoAccess.expiresAt} formNumber={rollingPromoAccess.assignedFormNumber} />
       )}
 
       <ExamHistoryNotice />
@@ -1176,7 +1209,7 @@ export default async function SATPremadePage() {
               View Results →
             </Link>
           </div>
-        ) : (form7Access.canResume || form7RollingAccess.canResume) ? (
+        ) : (form7Access.canResume || (rollingPromoAccess.assignedFormNumber === 7 && rollingPromoAccess.canResume)) ? (
           <Link href="/premade/sat/form-7" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-3">
               <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
@@ -1186,9 +1219,9 @@ export default async function SATPremadePage() {
             </div>
             <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 7</h2>
             <p className="text-xs text-slate-400">Resume where you left off.</p>
-            {form7RollingAccess.expiresAt && form7RollingAccess.accessSource === 'rolling-promo' && (
+            {rollingPromoAccess.assignedFormNumber === 7 && rollingPromoAccess.expiresAt && rollingPromoAccess.accessSource === 'rolling-promo' && (
               <div className="mt-1 mb-1">
-                <RollingPromoCountdownBadge expiresAt={form7RollingAccess.expiresAt} />
+                <RollingPromoCountdownBadge expiresAt={rollingPromoAccess.expiresAt} />
               </div>
             )}
             <SatExamDetails />
@@ -1252,7 +1285,7 @@ export default async function SATPremadePage() {
               Take Form 7 Free →
             </span>
           </Link>
-        ) : form7RollingAccess.canStart ? (
+        ) : (rollingPromoAccess.assignedFormNumber === 7 && rollingPromoAccess.canStart) ? (
           // Rolling per-user 24-hour promo — window active, no attempt yet
           <Link href="/premade/sat/form-7" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-2">
@@ -1261,9 +1294,9 @@ export default async function SATPremadePage() {
               </div>
               <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">Free for 24 Hours</span>
             </div>
-            {form7RollingAccess.expiresAt && (
+            {rollingPromoAccess.expiresAt && (
               <div className="mb-2">
-                <RollingPromoCountdownBadge expiresAt={form7RollingAccess.expiresAt} />
+                <RollingPromoCountdownBadge expiresAt={rollingPromoAccess.expiresAt} />
               </div>
             )}
             <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form 7</h2>
@@ -1317,6 +1350,56 @@ export default async function SATPremadePage() {
                   View Results →
                 </Link>
               </div>
+            )
+          }
+
+          // Rolling promo: resume in-progress exam
+          if (rollingPromoAccess.assignedFormNumber === n && rollingPromoAccess.canResume) {
+            return (
+              <Link key={n} href={`/premade/sat/form-${n}`} className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
+                <div className="flex items-start justify-between mb-3">
+                  <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                    <span className="text-sm font-bold text-brand-600">{n}</span>
+                  </div>
+                  <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">In Progress</span>
+                </div>
+                {rollingPromoAccess.expiresAt && (
+                  <div className="mt-1 mb-1">
+                    <RollingPromoCountdownBadge expiresAt={rollingPromoAccess.expiresAt} />
+                  </div>
+                )}
+                <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form {n}</h2>
+                <p className="text-xs text-slate-400">Resume where you left off.</p>
+                <SatExamDetails />
+                <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-700 transition-colors">
+                  Resume SAT Form {n} →
+                </span>
+              </Link>
+            )
+          }
+
+          // Rolling promo: start free exam
+          if (rollingPromoAccess.assignedFormNumber === n && rollingPromoAccess.canStart) {
+            return (
+              <Link key={n} href={`/premade/sat/form-${n}`} className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="h-8 w-8 rounded-lg bg-brand-50 flex items-center justify-center shrink-0">
+                    <span className="text-sm font-bold text-brand-600">{n}</span>
+                  </div>
+                  <span className="inline-flex items-center rounded-full bg-brand-50 border border-brand-200 px-2 py-0.5 text-[10px] font-semibold text-brand-700">Free for 24 Hours</span>
+                </div>
+                {rollingPromoAccess.expiresAt && (
+                  <div className="mb-2">
+                    <RollingPromoCountdownBadge expiresAt={rollingPromoAccess.expiresAt} />
+                  </div>
+                )}
+                <h2 className="font-semibold text-slate-900 group-hover:text-brand-700 transition-colors mb-0.5">Form {n}</h2>
+                <p className="text-[11px] text-brand-700">Your personal 24-hour free window is running.</p>
+                <SatExamDetails />
+                <span className="mt-auto inline-flex items-center justify-center gap-1.5 rounded-lg bg-brand-500 px-4 py-2 text-xs font-semibold text-white group-hover:bg-brand-600 transition-colors">
+                  Take Form {n} Free →
+                </span>
+              </Link>
             )
           }
 
