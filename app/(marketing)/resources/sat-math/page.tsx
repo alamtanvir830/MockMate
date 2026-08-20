@@ -9,9 +9,9 @@ import { buildBreadcrumbJsonLd } from '@/components/seo/article-jsonld'
 const SLUG = '/resources/sat-math'
 
 export const metadata: Metadata = buildSeoMetadata({
-  title: 'SAT Math: Skills, Strategies & Practice | MockMate',
+  title: 'Digital SAT Math Practice & Desmos Calculator Guide | MockMate',
   description:
-    'Complete guide to Digital SAT Math. Covers all four domains — Algebra, Advanced Math, Problem-Solving & Data Analysis, and Geometry & Trigonometry — with targeted strategies for each skill area.',
+    'Prepare for Digital SAT Math with practice questions, key math topics, Desmos calculator strategies, adaptive practice, and targeted SAT Math review.',
   slug: SLUG,
 })
 
@@ -139,7 +139,7 @@ export default function SatMathHub() {
       </div>
 
       <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-        SAT Math
+        Digital SAT Math Practice &amp; Desmos Guide
       </h1>
       <p className="mt-4 max-w-3xl text-lg text-slate-600">
         The Digital SAT Math section contains 44 questions across two adaptive modules.

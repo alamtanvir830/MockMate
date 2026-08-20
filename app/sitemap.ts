@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 
 const BASE = 'https://www.mockmateapp.com'
 const NEW_PAGE_DATE = '2026-07-30T00:00:00Z'
-const SEO_UPDATE_DATE = '2026-08-14T00:00:00Z'
+const SEO_UPDATE_DATE = '2026-08-19T00:00:00Z'
 const SKILL_PAGE_DATE = '2026-08-15T00:00:00Z'
 
 export default function sitemap(): MetadataRoute.Sitemap {

@@ -23,6 +23,13 @@ const jsonLd = buildArticleJsonLd({
   description: DESCRIPTION,
   slug: SLUG,
   datePublished: '2026-07-01',
+  dateModified: '2026-08-19',
+  breadcrumbs: [
+    { name: 'Home', href: '/' },
+    { name: 'Resources', href: '/resources' },
+    { name: 'SAT Math', href: '/resources/sat-math' },
+    { name: TITLE },
+  ],
 })
 
 function P({ children }: { children: React.ReactNode }) {
@@ -37,10 +44,20 @@ export default function DesmosArticle() {
     <SeoPageLayout>
       <JsonLd data={jsonLd} />
 
+      <div className="text-sm text-slate-500 mb-4">
+        <Link href="/" className="hover:text-brand-600">Home</Link>
+        <span className="mx-1.5">›</span>
+        <Link href="/resources" className="hover:text-brand-600">Resources</Link>
+        <span className="mx-1.5">›</span>
+        <Link href="/resources/sat-math" className="hover:text-brand-600">SAT Math</Link>
+        <span className="mx-1.5">›</span>
+        <span>{TITLE}</span>
+      </div>
+
       <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
         {TITLE}
       </h1>
-      <ArticleByline />
+      <ArticleByline published="July 2026" updated="August 19, 2026" />
 
       <P>
         The Digital SAT includes a built-in Desmos graphing calculator you can use on every
@@ -89,6 +106,15 @@ export default function DesmosArticle() {
         pattern quickly.
       </P>
 
+      <H2>Using sliders to explore parameters</H2>
+      <P>
+        Desmos lets you define a variable as a slider — for example, type <code>y = ax + b</code>{' '}
+        and Desmos creates sliders for <em>a</em> and <em>b</em>. This is useful on questions
+        that ask how changing a constant affects a graph, or when matching a graph to an
+        equation from the choices. Drag the slider and watch the curve move; the answer is
+        often immediately obvious.
+      </P>
+
       <H2>When algebra is faster</H2>
       <P>
         Desmos is not always the answer. For simple arithmetic, one-step linear equations,
@@ -112,8 +138,43 @@ export default function DesmosArticle() {
           Math and Desmos Academy
         </Link>{' '}
         includes a Desmos sandbox and skill lessons so the tool feels automatic — and so
-        you learn when to skip it.
+        you learn when to skip it. You can also drill specific{' '}
+        <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
+          SAT Math questions by skill
+        </Link>{' '}
+        in the question bank to build fluency with Desmos in the context of real question types.
       </P>
+
+      <div className="mt-10 space-y-2 text-[15px]">
+        <p className="font-semibold text-slate-800">Related</p>
+        <ul className="ml-5 list-disc space-y-1 text-slate-700">
+          <li>
+            <Link href="/resources/sat-math" className="font-medium text-brand-500 hover:text-brand-600">
+              SAT Math: all four domains and skill strategies
+            </Link>
+          </li>
+          <li>
+            <Link href="/sat-math-desmos-academy" className="font-medium text-brand-500 hover:text-brand-600">
+              MockMate Math &amp; Desmos Academy
+            </Link>
+          </li>
+          <li>
+            <Link href="/sat-question-bank" className="font-medium text-brand-500 hover:text-brand-600">
+              SAT Math question bank — practice by skill
+            </Link>
+          </li>
+          <li>
+            <Link href="/resources/sat-algebra-practice" className="font-medium text-brand-500 hover:text-brand-600">
+              Algebra: linear equations &amp; functions
+            </Link>
+          </li>
+          <li>
+            <Link href="/resources/sat-systems-of-equations" className="font-medium text-brand-500 hover:text-brand-600">
+              Systems of equations — Desmos strategy
+            </Link>
+          </li>
+        </ul>
+      </div>
 
       <IndependenceCallout />
     </SeoPageLayout>
