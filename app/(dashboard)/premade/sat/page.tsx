@@ -893,7 +893,7 @@ export default async function SATPremadePage() {
               Start Exam →
             </span>
           </Link>
-        ) : user && !isAdmin && !satUpgradeUnlocked && form4FreeWindow && form4AttemptStatus === 'none' ? (
+        ) : user && !isAdmin && !satUpgradeUnlocked && form4FreeWindow && new Date() < new Date(form4FreeWindow.expiresAt) && form4AttemptStatus === 'none' ? (
           // Active free window but no attempt yet — show free window card
           <Link href="/premade/sat/form-4" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-2">
@@ -1015,7 +1015,7 @@ export default async function SATPremadePage() {
               Start Exam →
             </span>
           </Link>
-        ) : user && !isAdmin && !satUpgradeUnlocked && form5FreeWindow && form5AttemptStatus === 'none' ? (
+        ) : user && !isAdmin && !satUpgradeUnlocked && form5FreeWindow && new Date() < new Date(form5FreeWindow.expiresAt) && form5AttemptStatus === 'none' ? (
           // Active free window but no attempt yet — show free window card
           <Link href="/premade/sat/form-5" className="rounded-xl border border-brand-200 bg-white p-5 hover:border-brand-400 hover:shadow-sm transition-all group flex flex-col">
             <div className="flex items-start justify-between mb-2">
