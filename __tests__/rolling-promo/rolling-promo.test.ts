@@ -36,8 +36,8 @@ function expiredRow(): RollingPromoAccessRow {
 // ── Config ────────────────────────────────────────────────────────────────────
 
 describe('ROLLING_PROMO_CONFIG', () => {
-  it('A: formNumber is 7', () => {
-    expect(ROLLING_PROMO_CONFIG.formNumber).toBe(7)
+  it('A: formNumber is 8', () => {
+    expect(ROLLING_PROMO_CONFIG.formNumber).toBe(8)
   })
 
   it('B: durationHours is 24', () => {

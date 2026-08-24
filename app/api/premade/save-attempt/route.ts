@@ -134,14 +134,19 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Forms 8–10: admin or Premium only
+    // Forms 8–10: admin or Premium always allowed.
+    // Non-premium users may submit during their active rolling promo window (assigned form only).
     if (body.formNumber >= 8 && body.formNumber <= 10 && !isAdmin) {
       const { satUpgradeUnlocked } = await getEntitlements()
       if (!satUpgradeUnlocked) {
-        return NextResponse.json(
-          { error: 'SAT Premium is required for this form.' },
-          { status: 403 }
-        )
+        const { canAccessRollingPromoFormApi } = await import('@/lib/premade-exams/sat/rolling-promo')
+        const rollingAllowed = await canAccessRollingPromoFormApi(user.id, body.formNumber)
+        if (!rollingAllowed) {
+          return NextResponse.json(
+            { error: 'SAT Premium is required for this form.', code: 'PROMO_ACCESS_EXPIRED' },
+            { status: 403 }
+          )
+        }
       }
     }
 

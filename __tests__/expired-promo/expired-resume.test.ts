@@ -257,6 +257,6 @@ describe('Campaign versioning: rotating promo form does not affect existing user
     const r = resolveRollingPromoAccess({ isAdmin: false, isPremium: false, promoRow: null, attemptStatus: 'none', attemptId: null })
     expect(r.assignedFormNumber).toBeNull()
     // The actual form will be ROLLING_PROMO_CONFIG.formNumber at the time the row is created
-    expect(ROLLING_PROMO_CONFIG.formNumber).toBe(7)
+    expect(ROLLING_PROMO_CONFIG.formNumber).toBe(8)
   })
 })

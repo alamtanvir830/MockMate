@@ -13,7 +13,7 @@ import type { SupabaseClient, User } from '@supabase/supabase-js'
 // ── Single config location ────────────────────────────────────────────────────
 
 export const ROLLING_PROMO_CONFIG = {
-  formNumber: 7,                        // Change this ONE value to rotate the free SAT exam
+  formNumber: 8 as number,              // Change this ONE value to rotate the free SAT exam
   durationHours: 24,
   promoStartsAt: '2026-08-17T19:00:00Z', // Must match FORM7_WINDOW_ENDS_AT in form7-access.ts
 } as const
