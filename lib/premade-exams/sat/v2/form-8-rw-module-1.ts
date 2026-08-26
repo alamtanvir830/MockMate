@@ -94,7 +94,7 @@ export const f8RwModule1QuestionsV2: RWQuestion[] = [
       'The urban rooftop farm produced over two thousand pounds of vegetables last summer _______ the harvest was donated to local food banks serving families in need.',
     question: 'Which choice completes the text so that it conforms to the conventions of Standard English?',
     choices: [
-      { label: 'A', text: 'summer, and the' },
+      { label: 'A', text: 'summer, however the' },
       { label: 'B', text: 'summer the' },
       { label: 'C', text: 'summer; the' },
       { label: 'D', text: 'summer, the' },
@@ -103,7 +103,7 @@ export const f8RwModule1QuestionsV2: RWQuestion[] = [
     explanation:
       'Both parts of the sentence are independent clauses. A semicolon correctly joins two independent clauses without a coordinating conjunction, making choice C the only grammatically correct option.',
     wrongAnswerExplanations: {
-      A: 'Choice A uses "and" after the comma, which would work as a coordinating conjunction joining two independent clauses, but the original blank does not include "and" — the full phrasing given is "summer, and the," which changes the sentence structure from what is presented.',
+      A: '"However" is a conjunctive adverb, not a coordinating conjunction. A comma before a conjunctive adverb cannot join two independent clauses; this creates a comma splice. The correct punctuation would be a semicolon: "summer; however, the harvest..."',
       B: 'Joining two independent clauses with no punctuation or conjunction creates a run-on sentence.',
       D: 'A comma alone between two independent clauses creates a comma splice, which violates Standard English conventions.',
     },
@@ -438,12 +438,12 @@ export const f8RwModule1QuestionsV2: RWQuestion[] = [
       { label: 'C', text: 'which,' },
       { label: 'D', text: 'and which' },
     ],
-    correctAnswer: 'C',
+    correctAnswer: 'B',
     explanation:
-      'The clause "which draws visitors from dozens of surrounding counties" is a nonrestrictive relative clause providing additional information about the festival. Nonrestrictive clauses are set off by commas; the opening comma after "festival" must be paired with a comma after the clause (before "has"), and the clause must begin with "which" — giving choice C.',
+      'The clause "which draws visitors from dozens of surrounding counties" is a nonrestrictive relative clause providing additional information about the festival. The stimulus already supplies both flanking commas — one after "festival" and one after "counties" — so the blank needs only "which" to complete the relative pronoun. Choice B, "which," slots in cleanly, giving the correctly punctuated nonrestrictive clause.',
     wrongAnswerExplanations: {
       A: '"That" introduces a restrictive relative clause, which is not set off by commas; but a comma already appears after "festival," signaling that the clause is nonrestrictive, so "that" is incorrect here.',
-      B: '"Which" without a comma would leave the opening comma after "festival" unpaired, creating a punctuation error.',
+      C: '"Which," adds a spurious comma immediately after the relative pronoun, giving "festival, which, draws visitors…" — an ungrammatical double-comma construction. The closing comma is already present in the stimulus after "counties," so no additional comma is needed inside the blank.',
       D: '"And which" would require a parallel clause joined by "and," but no such parallel structure exists in the sentence.',
     },
   },
@@ -490,11 +490,11 @@ export const f8RwModule1QuestionsV2: RWQuestion[] = [
       { label: 'A', text: 'Likewise,' },
       { label: 'B', text: 'As a result,' },
       { label: 'C', text: 'For example,' },
-      { label: 'D', text: 'Other scholars, however,' },
+      { label: 'D', text: 'However,' },
     ],
     correctAnswer: 'D',
     explanation:
-      '"Other scholars, however," introduces a contrasting perspective held by a different group of historians, directly signaling that the second sentence qualifies the claim made in the first. The word "however" marks the contrast while "other scholars" identifies the source of the alternative view.',
+      '"However," marks a logical contrast between the two scholarly positions. The second sentence challenges the claim made in the first, and "however" is the precise adversative transition that signals this shift. Because the sentence that follows the blank already begins "other scholars caution," the transition only needs the contrast signal — not another reference to "other scholars."',
     wrongAnswerExplanations: {
       A: '"Likewise" signals agreement or similarity; but the second sentence challenges the first sentence\'s claim, so a contrast marker is needed.',
       B: '"As a result" implies the second sentence is a consequence of the first; but cautioning about uneven impact is not a result of calling the press transformative.',
