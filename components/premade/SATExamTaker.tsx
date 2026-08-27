@@ -2,7 +2,15 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
+import { Source_Serif_4 } from 'next/font/google'
 import { cn } from '@/lib/utils'
+
+const sourceSerif4 = Source_Serif_4({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-source-serif-4',
+  display: 'swap',
+})
 import { StimulusRenderer } from '@/components/exam/StimulusRenderer'
 import { MathText } from '@/components/exam/MathText'
 import { SATGraph } from '@/components/exam/SATGraph'
@@ -789,9 +797,9 @@ function ReferenceModal({ onClose }: { onClose: () => void }) {
 
 // ─── Stable overlay wrappers (defined outside main component so React never
 //     remounts them on timer ticks or other state changes) ────────────────────
-function ExamWrapper({ children, className }: { children: React.ReactNode; className?: string }) {
+function ExamWrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className={cn('fixed inset-0 z-50 bg-[#eef0f4] flex flex-col overflow-hidden', className)}>
+    <div className={cn('fixed inset-0 z-50 bg-white flex flex-col overflow-hidden', sourceSerif4.variable)}>
       {children}
     </div>
   )
@@ -933,7 +941,7 @@ interface InProgressData {
 }
 
 // ─── Main component ────────────────────────────────────────────────────────────
-export default function SATExamTaker({ form, initialAttempt, contentVersion: contentVersionProp, skipPasswordGate, isAdmin = false, allowRetake = true, showUnlockCTA = false, satUpgradeUnlocked = false, countdownText, trialEligible = false, variant }: { form: SATForm; initialAttempt?: PremadeAttempt; contentVersion?: SATContentVersion; skipPasswordGate?: boolean; isAdmin?: boolean; allowRetake?: boolean; showUnlockCTA?: boolean; satUpgradeUnlocked?: boolean; countdownText?: string; trialEligible?: boolean; variant?: 'paper' }) {
+export default function SATExamTaker({ form, initialAttempt, contentVersion: contentVersionProp, skipPasswordGate, isAdmin = false, allowRetake = true, showUnlockCTA = false, satUpgradeUnlocked = false, countdownText, trialEligible = false }: { form: SATForm; initialAttempt?: PremadeAttempt; contentVersion?: SATContentVersion; skipPasswordGate?: boolean; isAdmin?: boolean; allowRetake?: boolean; showUnlockCTA?: boolean; satUpgradeUnlocked?: boolean; countdownText?: string; trialEligible?: boolean }) {
   const isHistoryView = !!initialAttempt
 
   // Content version for this attempt:
@@ -1970,7 +1978,7 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
     const isLastInModule = phase.qIdx === qTotal - 1
 
     return (
-      <ExamWrapper className={variant === 'paper' ? 'bg-white' : undefined}>
+      <ExamWrapper>
         {refOpen && <ReferenceModal onClose={() => setRefOpen(false)} />}
         <div className="flex flex-1 min-h-0 overflow-hidden">
           <div className="flex flex-col flex-1 min-w-0">
@@ -2012,13 +2020,8 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
             <div className="max-w-3xl mx-auto px-4 py-6">
               {stimulus && (
                 <div
-                  className={cn(
-                    'mb-4 leading-[1.85]',
-                    variant === 'paper'
-                      ? 'bg-white border border-[#D1D2D4] p-5 text-[15px] text-[#221F20]'
-                      : 'bg-white rounded-xl border border-slate-200 p-5 text-[13px] text-slate-800'
-                  )}
-                  style={variant === 'paper' ? { fontFamily: '"Source Serif 4", "Source Serif", Georgia, "Times New Roman", serif' } : undefined}
+                  className="mb-4 leading-[1.85] bg-white border border-[#D1D2D4] p-5 text-[15px] text-[#221F20]"
+                  style={{ fontFamily: '"Source Serif 4", "Source Serif", Georgia, "Times New Roman", serif' }}
                 >
                   <StimulusRenderer text={stimulus} underlineTargets={underlineTargets} />
                 </div>
@@ -2029,49 +2032,27 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
                 </div>
               )}
 
-              <div className={cn(
-                variant === 'paper' ? 'bg-white border border-[#D1D2D4]' : 'bg-white rounded-xl border border-slate-200 p-5'
-              )}>
-                {variant === 'paper' ? (
-                  // Paper-style: question number header bar
-                  <div className="flex items-center bg-[#D1D2D4]">
-                    <div className="bg-[#221F20] px-3 py-1.5 flex items-center justify-center min-w-[2.5rem] text-center">
-                      <span className="text-white text-[13px] font-bold">{qNum}</span>
-                    </div>
-                    {bookmarked && (
-                      <span className="ml-3 text-[11px] font-semibold text-[#221F20] flex items-center gap-1">
-                        <svg fill="currentColor" viewBox="0 0 24 24" className="h-3 w-3">
-                          <path d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-                        </svg>
-                        Marked for Review
-                      </span>
-                    )}
+              <div className="bg-white border border-[#D1D2D4]">
+                {/* Question number header bar */}
+                <div className="flex items-center bg-[#D1D2D4]">
+                  <div className="bg-[#221F20] px-3 py-1.5 flex items-center justify-center min-w-[2.5rem] text-center">
+                    <span className="text-white text-[13px] font-bold">{qNum}</span>
                   </div>
-                ) : (
-                  // Default: domain/skill label
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
-                      {q.domain} · {getSkill(q)}
+                  {bookmarked && (
+                    <span className="ml-3 text-[11px] font-semibold text-[#221F20] flex items-center gap-1">
+                      <svg fill="currentColor" viewBox="0 0 24 24" className="h-3 w-3">
+                        <path d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+                      </svg>
+                      Marked for Review
                     </span>
-                    {bookmarked && (
-                      <span className="text-[10px] font-semibold text-amber-500 uppercase tracking-widest flex items-center gap-1">
-                        <svg fill="currentColor" viewBox="0 0 24 24" className="h-3 w-3">
-                          <path d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-                        </svg>
-                        Marked for Review
-                      </span>
-                    )}
-                  </div>
-                )}
+                  )}
+                </div>
 
                 <div
-                  className={variant === 'paper' ? 'p-5' : undefined}
-                  style={variant === 'paper' ? { fontFamily: '"Source Serif 4", "Source Serif", Georgia, "Times New Roman", serif' } : undefined}
+                  className="p-5"
+                  style={{ fontFamily: '"Source Serif 4", "Source Serif", Georgia, "Times New Roman", serif' }}
                 >
-                  <p className={cn(
-                    'leading-snug mb-5',
-                    variant === 'paper' ? 'text-[15px] text-[#221F20] font-normal leading-relaxed' : 'text-[14px] text-slate-900 font-medium'
-                  )}>
+                  <p className="text-[15px] text-[#221F20] font-normal leading-relaxed mb-5">
                     {phase.section === 'math' ? <MathText text={q.question} /> : q.question}
                   </p>
 
@@ -2089,9 +2070,7 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
                                 'shrink-0 w-7 flex items-center justify-center rounded-lg border transition-colors text-[9px] font-mono font-bold',
                                 struckOut
                                   ? 'border-red-300 bg-red-50 text-red-500 hover:bg-red-100'
-                                  : variant === 'paper'
-                                  ? 'border-[#D1D2D4] bg-white text-[#D1D2D4] hover:border-[#221F20] hover:text-[#221F20]'
-                                  : 'border-slate-200 bg-white text-slate-300 hover:border-slate-300 hover:text-slate-500'
+                                  : 'border-[#D1D2D4] bg-white text-[#D1D2D4] hover:border-[#221F20] hover:text-[#221F20]'
                               )}
                             >
                               {struckOut ? '↺' : 'A̶B̶C̶'}
@@ -2100,21 +2079,15 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
                               onClick={() => setAnswer(q.id, choice.label)}
                               className={cn(
                                 'flex-1 text-left flex items-start gap-3 px-4 py-3 rounded-lg border text-[13px] transition-all',
-                                variant === 'paper'
-                                  ? selected
-                                    ? 'border-[#221F20] bg-[#221F20]/5 text-[#221F20]'
-                                    : 'border-[#D1D2D4] bg-white text-[#221F20] hover:border-[#221F20] hover:bg-[#221F20]/5'
-                                  : selected
-                                  ? 'border-[#1d4ed8] bg-blue-50 text-[#1d4ed8]'
-                                  : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50',
+                                selected
+                                  ? 'border-[#221F20] bg-[#221F20]/5 text-[#221F20]'
+                                  : 'border-[#D1D2D4] bg-white text-[#221F20] hover:border-[#221F20] hover:bg-[#221F20]/5',
                                 struckOut && 'opacity-40'
                               )}
                             >
                               <span className={cn(
                                 'shrink-0 h-5 w-5 rounded-full border-2 flex items-center justify-center text-[10px] font-bold mt-0.5',
-                                variant === 'paper'
-                                  ? selected ? 'border-[#221F20] bg-[#221F20] text-white' : 'border-[#221F20] text-[#221F20]'
-                                  : selected ? 'border-[#1d4ed8] bg-[#1d4ed8] text-white' : 'border-slate-300 text-slate-500'
+                                selected ? 'border-[#221F20] bg-[#221F20] text-white' : 'border-[#221F20] text-[#221F20]'
                               )}>
                                 {choice.label}
                               </span>
@@ -2136,15 +2109,10 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
                         value={currentAnswer}
                         onChange={e => setAnswer(q.id, e.target.value)}
                         placeholder="e.g. 4, 3/4, .75"
-                        className={cn(
-                          'w-48 border-2 rounded-lg px-4 py-2 text-[14px] font-mono focus:outline-none transition-colors',
-                          variant === 'paper'
-                            ? 'border-[#D1D2D4] text-[#221F20] focus:border-[#221F20]'
-                            : 'border-slate-200 text-slate-900 focus:border-[#1d4ed8]'
-                        )}
+                        className="w-48 border-2 border-[#D1D2D4] rounded-lg px-4 py-2 text-[14px] font-mono text-[#221F20] focus:border-[#221F20] focus:outline-none transition-colors"
                       />
                       <p className="text-[11px] text-slate-400 mt-2">
-                        Answer preview: <span className="font-semibold text-slate-700">{currentAnswer || '—'}</span>
+                        Answer preview: <span className="font-semibold text-[#221F20]">{currentAnswer || '—'}</span>
                       </p>
                     </div>
                   )}
@@ -2156,10 +2124,7 @@ export default function SATExamTaker({ form, initialAttempt, contentVersion: con
                 {isLastInModule && (
                   <button
                     onClick={handleNext}
-                    className={cn(
-                      'text-white text-[13px] font-semibold px-5 py-2.5 rounded-lg transition-colors',
-                      variant === 'paper' ? 'bg-[#221F20] hover:bg-[#3a3637]' : 'bg-[#1d4ed8] hover:bg-[#1e40af]'
-                    )}
+                    className="bg-[#221F20] hover:bg-[#3a3637] text-white text-[13px] font-semibold px-5 py-2.5 rounded-lg transition-colors"
                   >
                     {phase.slot === 'm1' ? 'Go to Review →' : phase.section === 'rw' ? 'Go to Review →' : 'Go to Review →'}
                   </button>
