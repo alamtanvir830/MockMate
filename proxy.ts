@@ -1,9 +1,9 @@
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
+import { hasSatPremium } from '@/lib/auth/server'
 
 const PROTECTED = ['/dashboard', '/exams', '/groups', '/settings']
 const AUTH_ONLY = ['/login', '/signup']
-const ACADEMY_ADMIN_EMAIL = 'ranvi.contact@gmail.com'
 
 export async function proxy(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request })
@@ -56,13 +56,7 @@ export async function proxy(request: NextRequest) {
       url.pathname = '/login'
       return NextResponse.redirect(url)
     }
-    const subStatus = user.user_metadata?.sat_subscription_status as string | undefined
-    const hasActiveSub = subStatus === 'active' || subStatus === 'past_due' || subStatus === 'trialing'
-    const hasPremium =
-      user.email === ACADEMY_ADMIN_EMAIL ||
-      user.user_metadata?.sat_upgrade_unlocked === true ||
-      hasActiveSub
-    if (!hasPremium) {
+    if (!hasSatPremium(user)) {
       const url = request.nextUrl.clone()
       url.pathname = '/billing'
       return NextResponse.redirect(url)
@@ -76,13 +70,7 @@ export async function proxy(request: NextRequest) {
       url.pathname = '/login'
       return NextResponse.redirect(url)
     }
-    const subStatus = user.user_metadata?.sat_subscription_status as string | undefined
-    const hasActiveSub = subStatus === 'active' || subStatus === 'past_due' || subStatus === 'trialing'
-    const hasPremium =
-      user.email === ACADEMY_ADMIN_EMAIL ||
-      user.user_metadata?.sat_upgrade_unlocked === true ||
-      hasActiveSub
-    if (!hasPremium) {
+    if (!hasSatPremium(user)) {
       const url = request.nextUrl.clone()
       url.pathname = '/billing'
       return NextResponse.redirect(url)
