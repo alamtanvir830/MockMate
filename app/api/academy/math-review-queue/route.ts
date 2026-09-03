@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { hasSatPremium } from '@/lib/auth/server'
+import { getFreshAuthUser } from '@/lib/entitlements'
 
 // Stage → days until next review (same schedule as R&W Academy)
 const STAGE_INTERVALS: Record<number, number> = { 0: 1, 1: 3, 2: 7, 3: 14 }
@@ -15,7 +16,7 @@ export async function GET() {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
-    if (!hasSatPremium(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
+    if (!hasSatPremium(await getFreshAuthUser(user))) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
 
     const now = new Date().toISOString()
     const { data: items, error, count } = await supabase
@@ -51,7 +52,7 @@ export async function POST(req: NextRequest) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
-    if (!hasSatPremium(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
+    if (!hasSatPremium(await getFreshAuthUser(user))) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
 
     const body = await req.json() as ReviewBody
 

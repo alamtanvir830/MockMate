@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { ACADEMY_SKILL_SLUGS } from '@/lib/academy/skill-mapping'
 import { hasSatPremium } from '@/lib/auth/server'
+import { getFreshAuthUser } from '@/lib/entitlements'
 
 const CAPSTONE_AVAILABLE: Record<string, boolean> = {
   'capstone-1': true,
@@ -14,7 +15,7 @@ export async function GET() {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
-    if (!hasSatPremium(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
+    if (!hasSatPremium(await getFreshAuthUser(user))) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
 
     const { data: attempts, error } = await supabase
       .from('sat_rw_academy_attempts')

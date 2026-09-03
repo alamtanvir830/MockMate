@@ -20,6 +20,7 @@ import { DIAGNOSTIC_V3_M2_ADVANCED_QUESTIONS } from '@/lib/academy/diagnostic-qu
 import { SKILL_DISPLAY_NAMES, ACADEMY_SKILL_SLUGS } from '@/lib/academy/skill-mapping'
 import { allSkills } from '@/lib/academy'
 import { hasSatPremium } from '@/lib/auth/server'
+import { getFreshAuthUser } from '@/lib/entitlements'
 
 interface ResponseItem {
   questionId: string
@@ -91,7 +92,7 @@ export async function POST(req: NextRequest) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
-    if (!hasSatPremium(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
+    if (!hasSatPremium(await getFreshAuthUser(user))) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
 
     const rawBody = await req.json() as {
       responses: ResponseItem[]

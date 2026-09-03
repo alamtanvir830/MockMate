@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { hasSatPremium } from '@/lib/auth/server'
+import { getFreshAuthUser } from '@/lib/entitlements'
 
 const SAT_FORM_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const
 
@@ -39,7 +40,7 @@ export async function GET() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
 
-    const satPremium = hasSatPremium(user)
+    const satPremium = hasSatPremium(await getFreshAuthUser(user))
 
     // Fetch all completed SAT form attempts for this user
     const [attemptsResult, masteryResult] = await Promise.all([

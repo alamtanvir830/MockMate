@@ -23,18 +23,37 @@ export interface EntitlementData {
   satPurchaseExpiresAt?: string
 }
 
+/**
+ * Re-reads a user's metadata from the admin API instead of the session JWT.
+ *
+ * The Stripe webhook writes entitlement updates via admin.auth.admin.updateUserById,
+ * which does not push a new access token to the user's existing browser session.
+ * Until that session's JWT naturally refreshes, supabase.auth.getUser() keeps
+ * returning pre-purchase metadata. Every SAT Premium gate must check entitlement
+ * against this fresh read (or getEntitlements()/getFreshAuthUser()) instead of
+ * calling hasSatPremium()/getQBAccess() on the raw session user directly.
+ */
+async function getFreshUserMetadata(userId: string): Promise<Record<string, unknown>> {
+  const admin = createAdminClient()
+  const { data } = await admin.auth.admin.getUserById(userId)
+  return (data?.user?.user_metadata ?? {}) as Record<string, unknown>
+}
+
+/** Fresh-metadata equivalent of the session user, for hasSatPremium()/getQBAccess() gates. */
+export async function getFreshAuthUser(
+  user: { id: string; email?: string | null } | null | undefined
+): Promise<{ email?: string | null; user_metadata: Record<string, unknown> } | null> {
+  if (!user) return null
+  return { email: user.email, user_metadata: await getFreshUserMetadata(user.id) }
+}
+
 export async function getEntitlements(): Promise<EntitlementData> {
   try {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return { satUpgradeUnlocked: false, isLegacyLifetime: false }
 
-    // For the billing page and form gates, read fresh metadata from the admin API
-    // to bypass JWT cache staleness after webhook-triggered updates.
-    const admin = createAdminClient()
-    const { data: freshData } = await admin.auth.admin.getUserById(user.id)
-    const meta = (freshData?.user?.user_metadata ?? user.user_metadata ?? {}) as Record<string, unknown>
-
+    const meta = await getFreshUserMetadata(user.id)
     const freshUser = { email: user.email, user_metadata: meta }
 
     return {

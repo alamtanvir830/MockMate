@@ -8,6 +8,7 @@ import {
 } from '@/lib/academy/math/diagnostic-questions'
 import { MATH_SKILL_DISPLAY_NAMES } from '@/lib/academy/math/skill-mapping'
 import { hasSatPremium } from '@/lib/auth/server'
+import { getFreshAuthUser } from '@/lib/entitlements'
 
 interface ResponseItem {
   questionId: string
@@ -71,7 +72,7 @@ export async function POST(req: NextRequest) {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 })
-    if (!hasSatPremium(user)) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
+    if (!hasSatPremium(await getFreshAuthUser(user))) return NextResponse.json({ error: 'SAT Premium required' }, { status: 403 })
 
     const body = await req.json() as { responses: ResponseItem[]; clientToken?: string }
     const { responses, clientToken } = body

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { hasSatPremium } from '@/lib/auth/server'
+import { getFreshAuthUser } from '@/lib/entitlements'
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
@@ -26,7 +27,7 @@ export default async function DashboardLayout({
   }
 
   const fullName = user.user_metadata?.full_name as string | undefined
-  const isPremium = hasSatPremium(user)
+  const isPremium = hasSatPremium(await getFreshAuthUser(user))
 
   return (
     <div className="flex h-dvh bg-slate-50 overflow-hidden">

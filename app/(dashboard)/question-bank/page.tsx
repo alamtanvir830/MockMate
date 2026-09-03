@@ -1,13 +1,14 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { getQBAccess } from '@/lib/question-bank/access'
+import { getFreshAuthUser } from '@/lib/entitlements'
 import { SAT_PREMIUM_FEATURES } from '@/lib/sat-premium-features'
 import Link from 'next/link'
 
 export default async function QuestionBankPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  const access = getQBAccess(user)
+  const access = getQBAccess(await getFreshAuthUser(user))
 
   // Premium and admin users go directly to the SAT Question Bank.
   // /question-bank is definitively SAT workspace; no multi-product chooser needed.

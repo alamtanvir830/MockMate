@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { createClient } from '@/lib/supabase/server'
 import { hasSatPremium, isAdminUser } from '@/lib/auth/server'
+import { getFreshAuthUser } from '@/lib/entitlements'
 import { consumeAiQuota } from '@/lib/security/aiDailyQuota'
 
 // Deferred init — avoids "Missing credentials" error during Next.js build
@@ -50,7 +51,7 @@ export async function POST(req: NextRequest) {
     // Resolve caller's access level server-side
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
-    const isPremium = user ? hasSatPremium(user) : false
+    const isPremium = user ? hasSatPremium(await getFreshAuthUser(user)) : false
     const isAdmin = user ? isAdminUser(user) : false
     const hasFullAccess = isPremium || isAdmin
 

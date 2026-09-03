@@ -4,8 +4,12 @@
  * Usage (server-side, in route handlers or Server Components):
  *   const supabase = await createClient()
  *   const { data: { user } } = await supabase.auth.getUser()
- *   const access = getQBAccess(user)
+ *   const access = getQBAccess(await getFreshAuthUser(user))
  *   if (!access.hasPremiumAccess) redirect('/question-bank?locked=1')
+ *
+ * Always pass getFreshAuthUser(user) (from '@/lib/entitlements'), never the raw
+ * session user — the session JWT can lag behind webhook-written entitlement
+ * updates until it naturally refreshes.
  */
 
 import { isAdminUser, hasSatPremium } from '@/lib/auth/server'
